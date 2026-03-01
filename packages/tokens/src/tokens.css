@@ -1,0 +1,35 @@
+/*
+ * Ragnar Design System - Token Architecture
+ *
+ * Three-layer token system:
+ *   Layer 1: Primitives  → Raw values (colors, spacing, radius, sizing, viewports)
+ *   Layer 2: Modes       → Semantic aliases that adapt to Light, Dim, Dark
+ *   Layer 3: Themes      → Component-level tokens for different visual identities
+ *
+ * Usage:
+ *   <html data-mode="light" data-theme="Classic Retro">
+ *   Primitives are always available via :root
+ *   Mode sets semantic colors (backgrounds, foregrounds, palette tints)
+ *   Theme sets component tokens (action, container, interactive, etc.)
+ *
+ * Import order matters - each layer can reference the previous one.
+ */
+
+@import "./primitives.css";
+@import "./modes.css";
+@import "./themes.css";
+
+/* ============================================
+ * Base Styles
+ * ============================================ */
+
+@layer base {
+  * {
+    border-color: var(--backgrounds-quaternary);
+  }
+  body {
+    background-color: var(--backgrounds-primary);
+    color: var(--foregrounds-primary);
+    font-family: var(--font-body);
+  }
+}

@@ -1,0 +1,329 @@
+"use client"
+
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
+const contactSectionVariants = cva("w-full", {
+  variants: {
+    size: {
+      sm: "py-12",
+      default: "py-16",
+      lg: "py-24",
+    },
+  },
+  defaultVariants: {
+    size: "default",
+  },
+})
+
+export interface ContactSectionProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof contactSectionVariants> {}
+
+const ContactSection = React.forwardRef<HTMLDivElement, ContactSectionProps>(
+  ({ className, size, children, ...props }, ref) => {
+    return (
+      <section
+        ref={ref}
+        className={cn(contactSectionVariants({ size }), className)}
+        {...props}
+      >
+        <div className="container mx-auto px-4">{children}</div>
+      </section>
+    )
+  }
+)
+ContactSection.displayName = "ContactSection"
+
+const ContactContent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      "grid gap-12 lg:grid-cols-2",
+      className
+    )}
+    {...props}
+  />
+))
+ContactContent.displayName = "ContactContent"
+
+const ContactInfo = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("space-y-8", className)} {...props} />
+))
+ContactInfo.displayName = "ContactInfo"
+
+const ContactHeader = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("space-y-4", className)} {...props} />
+))
+ContactHeader.displayName = "ContactHeader"
+
+const ContactTitle = React.forwardRef<
+  HTMLHeadingElement,
+  React.HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => (
+  <h2
+    ref={ref}
+    className={cn(
+      "text-3xl font-bold tracking-tight text-foreground sm:text-4xl",
+      className
+    )}
+    {...props}
+  />
+))
+ContactTitle.displayName = "ContactTitle"
+
+const ContactDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <p
+    ref={ref}
+    className={cn("text-lg text-muted-foreground", className)}
+    {...props}
+  />
+))
+ContactDescription.displayName = "ContactDescription"
+
+const ContactDetails = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("space-y-4", className)} {...props} />
+))
+ContactDetails.displayName = "ContactDetails"
+
+export interface ContactDetailItemProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  icon?: React.ReactNode
+  label: string
+  value: string
+  href?: string
+}
+
+const ContactDetailItem = React.forwardRef<HTMLDivElement, ContactDetailItemProps>(
+  ({ className, icon, label, value, href, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn("flex items-start gap-4", className)}
+      {...props}
+    >
+      {icon && (
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+          {icon}
+        </div>
+      )}
+      <div>
+        <p className="text-sm font-medium text-muted-foreground">{label}</p>
+        {href ? (
+          <a
+            href={href}
+            className="text-foreground hover:text-primary hover:underline"
+          >
+            {value}
+          </a>
+        ) : (
+          <p className="text-foreground">{value}</p>
+        )}
+      </div>
+    </div>
+  )
+)
+ContactDetailItem.displayName = "ContactDetailItem"
+
+const ContactSocials = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("flex gap-4", className)} {...props} />
+))
+ContactSocials.displayName = "ContactSocials"
+
+export interface ContactSocialLinkProps
+  extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  label: string
+}
+
+const ContactSocialLink = React.forwardRef<HTMLAnchorElement, ContactSocialLinkProps>(
+  ({ className, label, children, ...props }, ref) => (
+    <a
+      ref={ref}
+      aria-label={label}
+      className={cn(
+        "flex h-10 w-10 items-center justify-center rounded-full bg-muted text-muted-foreground transition-colors hover:bg-primary hover:text-primary-foreground",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </a>
+  )
+)
+ContactSocialLink.displayName = "ContactSocialLink"
+
+// Contact form
+const contactFormVariants = cva("space-y-6", {
+  variants: {
+    variant: {
+      default: "",
+      card: "rounded-xl border bg-card p-6 shadow-sm md:p-8",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+})
+
+export interface ContactFormProps
+  extends React.FormHTMLAttributes<HTMLFormElement>,
+    VariantProps<typeof contactFormVariants> {}
+
+const ContactForm = React.forwardRef<HTMLFormElement, ContactFormProps>(
+  ({ className, variant, ...props }, ref) => (
+    <form
+      ref={ref}
+      className={cn(contactFormVariants({ variant }), className)}
+      {...props}
+    />
+  )
+)
+ContactForm.displayName = "ContactForm"
+
+const ContactFormRow = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("grid gap-4 sm:grid-cols-2", className)}
+    {...props}
+  />
+))
+ContactFormRow.displayName = "ContactFormRow"
+
+const ContactFormField = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("space-y-2", className)} {...props} />
+))
+ContactFormField.displayName = "ContactFormField"
+
+const ContactFormLabel = React.forwardRef<
+  HTMLLabelElement,
+  React.LabelHTMLAttributes<HTMLLabelElement> & { required?: boolean }
+>(({ className, required, children, ...props }, ref) => (
+  <label
+    ref={ref}
+    className={cn("text-sm font-medium text-foreground", className)}
+    {...props}
+  >
+    {children}
+    {required && <span className="ml-1 text-red-500">*</span>}
+  </label>
+))
+ContactFormLabel.displayName = "ContactFormLabel"
+
+const ContactFormInput = React.forwardRef<
+  HTMLInputElement,
+  React.InputHTMLAttributes<HTMLInputElement>
+>(({ className, ...props }, ref) => (
+  <input
+    ref={ref}
+    className={cn(
+      "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+      className
+    )}
+    {...props}
+  />
+))
+ContactFormInput.displayName = "ContactFormInput"
+
+const ContactFormTextarea = React.forwardRef<
+  HTMLTextAreaElement,
+  React.TextareaHTMLAttributes<HTMLTextAreaElement>
+>(({ className, ...props }, ref) => (
+  <textarea
+    ref={ref}
+    className={cn(
+      "flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+      className
+    )}
+    {...props}
+  />
+))
+ContactFormTextarea.displayName = "ContactFormTextarea"
+
+const ContactFormSelect = React.forwardRef<
+  HTMLSelectElement,
+  React.SelectHTMLAttributes<HTMLSelectElement>
+>(({ className, ...props }, ref) => (
+  <select
+    ref={ref}
+    className={cn(
+      "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+      className
+    )}
+    {...props}
+  />
+))
+ContactFormSelect.displayName = "ContactFormSelect"
+
+const ContactFormError = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <p
+    ref={ref}
+    className={cn("text-sm text-red-500", className)}
+    {...props}
+  />
+))
+ContactFormError.displayName = "ContactFormError"
+
+const ContactFormSuccess = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      "flex items-center gap-2 rounded-lg bg-green-50 p-4 text-green-700",
+      className
+    )}
+    {...props}
+  />
+))
+ContactFormSuccess.displayName = "ContactFormSuccess"
+
+export {
+  ContactSection,
+  ContactContent,
+  ContactInfo,
+  ContactHeader,
+  ContactTitle,
+  ContactDescription,
+  ContactDetails,
+  ContactDetailItem,
+  ContactSocials,
+  ContactSocialLink,
+  ContactForm,
+  ContactFormRow,
+  ContactFormField,
+  ContactFormLabel,
+  ContactFormInput,
+  ContactFormTextarea,
+  ContactFormSelect,
+  ContactFormError,
+  ContactFormSuccess,
+}

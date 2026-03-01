@@ -1,0 +1,48 @@
+{
+  "name": "@ragnar/native",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "storybook": "storybook dev -p 6008",
+    "build-storybook": "storybook build"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-native": ">=0.70.0"
+  },
+  "dependencies": {
+    "@ragnar/tokens": "workspace:*"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^8.1.0",
+    "@storybook/addon-interactions": "^8.1.0",
+    "@storybook/addon-links": "^8.1.0",
+    "@storybook/blocks": "^8.1.0",
+    "@storybook/react": "^8.1.0",
+    "@storybook/react-vite": "^8.1.0",
+    "@types/react": "^18.3.3",
+    "@types/react-native": "^0.72.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-native-web": "^0.19.12",
+    "storybook": "^8.1.0",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.0"
+  }
+}

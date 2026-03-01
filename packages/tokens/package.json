@@ -1,0 +1,30 @@
+{
+  "name": "@ragnar/tokens",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./css": "./dist/tokens.css",
+    "./tailwind": {
+      "import": "./dist/tailwind.js",
+      "require": "./dist/tailwind.js",
+      "types": "./dist/tailwind.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && cp src/tokens.css src/primitives.css src/modes.css src/themes.css dist/",
+    "dev": "tsc --watch"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
