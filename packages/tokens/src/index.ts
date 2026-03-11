@@ -14,14 +14,28 @@ export type Mode = (typeof modes)[number]
 // ============================================
 
 export const themes = [
-  "Classic Retro",
-  "Classic Black",
-  "Lime",
-  "Bold",
-  "Beige",
-  "Funky",
+  "classic-retro",
+  "classic-black",
+  "lime",
+  "bold",
+  "beige",
+  "funky",
 ] as const
 export type Theme = (typeof themes)[number]
+
+// ============================================
+// Available Spacing Scales
+// ============================================
+
+export const spacingScales = ["compact", "standard", "wide"] as const
+export type SpacingScale = (typeof spacingScales)[number]
+
+// ============================================
+// Available Curve Scales
+// ============================================
+
+export const curveScales = ["sharp", "slight", "sweeping", "rounded"] as const
+export type CurveScale = (typeof curveScales)[number]
 
 // ============================================
 // Color Palette Names
@@ -488,44 +502,44 @@ export const fontFamilies = {
 // ============================================
 
 export const themeTypekitIds: Record<Theme, string> = {
-  "Classic Retro": "asv6xjk",
-  "Classic Black": "asv6xjk",
-  Lime: "thm2fhy",
-  Bold: "ahw1otv",
-  Beige: "cml0bal",
-  Funky: "ffk3wmq",
+  "classic-retro": "asv6xjk",
+  "classic-black": "asv6xjk",
+  "lime": "thm2fhy",
+  "bold": "ahw1otv",
+  "beige": "cml0bal",
+  "funky": "ffk3wmq",
 }
 
 export const themeFonts: Record<
   Theme,
   { heading: string; body: string; typekitId: string }
 > = {
-  "Classic Retro": {
+  "classic-retro": {
     heading: "neue-haas-grotesk-display",
     body: "neue-haas-grotesk-text",
     typekitId: "asv6xjk",
   },
-  "Classic Black": {
+  "classic-black": {
     heading: "neue-haas-grotesk-display",
     body: "neue-haas-grotesk-text",
     typekitId: "asv6xjk",
   },
-  Lime: {
+  "lime": {
     heading: "articulat-cf",
     body: "proxima-nova",
     typekitId: "thm2fhy",
   },
-  Bold: {
+  "bold": {
     heading: "komu-new-f",
     body: "usual",
     typekitId: "ahw1otv",
   },
-  Beige: {
-    heading: "instrument-serif",
+  "beige": {
+    heading: "Instrument Serif",
     body: "soleil",
     typekitId: "cml0bal",
   },
-  Funky: {
+  "funky": {
     heading: "flood-std",
     body: "mundial",
     typekitId: "ffk3wmq",

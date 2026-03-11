@@ -25,12 +25,39 @@ const preview: Preview = {
       toolbar: {
         icon: "paintbrush",
         items: [
-          { value: "Classic Retro", title: "🔥 Classic Retro" },
-          { value: "Classic Black", title: "⬛ Classic Black" },
-          { value: "Lime", title: "🟢 Lime" },
-          { value: "Bold", title: "🔴 Bold" },
-          { value: "Beige", title: "🟤 Beige" },
-          { value: "Funky", title: "🟣 Funky" },
+          { value: "classic-retro", title: "🔥 Classic Retro" },
+          { value: "classic-black", title: "⬛ Classic Black" },
+          { value: "lime", title: "🟢 Lime" },
+          { value: "bold", title: "🔴 Bold" },
+          { value: "beige", title: "🟤 Beige" },
+          { value: "funky", title: "🟣 Funky" },
+        ],
+        dynamicTitle: true,
+      },
+    },
+    spacing: {
+      name: "Spacing",
+      description: "Spacing scale (Compact / Standard / Wide)",
+      toolbar: {
+        icon: "ruler",
+        items: [
+          { value: "compact", title: "Compact" },
+          { value: "standard", title: "Standard" },
+          { value: "wide", title: "Wide" },
+        ],
+        dynamicTitle: true,
+      },
+    },
+    curves: {
+      name: "Curves",
+      description: "Border radius scale (Sharp / Slight / Sweeping / Rounded)",
+      toolbar: {
+        icon: "circle",
+        items: [
+          { value: "sharp", title: "Sharp" },
+          { value: "slight", title: "Slight" },
+          { value: "sweeping", title: "Sweeping" },
+          { value: "rounded", title: "Rounded" },
         ],
         dynamicTitle: true,
       },
@@ -38,7 +65,9 @@ const preview: Preview = {
   },
   initialGlobals: {
     mode: "light",
-    theme: "Classic Retro",
+    theme: "classic-retro",
+    spacing: "standard",
+    curves: "slight",
   },
   parameters: {
     controls: {
@@ -51,18 +80,24 @@ const preview: Preview = {
   decorators: [
     (Story, context) => {
       const mode = context.globals.mode || "light"
-      const theme = context.globals.theme || "Classic Retro"
+      const theme = context.globals.theme || "classic-retro"
+      const spacing = context.globals.spacing || "standard"
+      const curves = context.globals.curves || "slight"
 
       // Set attributes on the document root for CSS variable resolution
       useEffect(() => {
         document.documentElement.setAttribute("data-mode", mode)
         document.documentElement.setAttribute("data-theme", theme)
+        document.documentElement.setAttribute("data-spacing", spacing)
+        document.documentElement.setAttribute("data-curves", curves)
 
         return () => {
           document.documentElement.removeAttribute("data-mode")
           document.documentElement.removeAttribute("data-theme")
+          document.documentElement.removeAttribute("data-spacing")
+          document.documentElement.removeAttribute("data-curves")
         }
-      }, [mode, theme])
+      }, [mode, theme, spacing, curves])
 
       // Swap Typekit stylesheet href when theme changes
       // The <link id="ragnar-typekit"> is pre-loaded in preview-head.html
@@ -89,6 +124,8 @@ const preview: Preview = {
         <div
           data-mode={mode}
           data-theme={theme}
+          data-spacing={spacing}
+          data-curves={curves}
           style={{ backgroundColor: bgColor, minHeight: "100vh" }}
         >
           <div className="p-4" style={{ color: "var(--foregrounds-primary)" }}>

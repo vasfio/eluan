@@ -21,7 +21,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc && cp src/tokens.css src/primitives.css src/modes.css src/themes.css dist/",
+    "build": "tsc && cp src/tokens.css src/primitives.css src/modes.css src/themes.css src/spacing.css src/curves.css dist/",
     "dev": "tsc --watch"
   },
   "devDependencies": {

@@ -1,0 +1,41 @@
+/* ============================================
+ * Spacing Scales
+ * Semantic spacing tokens that adapt to Compact, Standard, and Wide
+ * These reference primitive spacing tokens from Layer 1
+ * ============================================ */
+
+[data-spacing="compact"] {
+  --spacing-xxs: var(--spacing-space-0);
+  --spacing-xs: var(--spacing-space-2);
+  --spacing-s: var(--spacing-space-4);
+  --spacing-m: var(--spacing-space-8);
+  --spacing-l: var(--spacing-space-12);
+  --spacing-xl: var(--spacing-space-16);
+  --spacing-2xl: var(--spacing-space-20);
+  --spacing-3xl: var(--spacing-space-24);
+  --spacing-4xl: var(--spacing-space-32);
+}
+
+[data-spacing="standard"] {
+  --spacing-xxs: var(--spacing-space-2);
+  --spacing-xs: var(--spacing-space-4);
+  --spacing-s: var(--spacing-space-8);
+  --spacing-m: var(--spacing-space-12);
+  --spacing-l: var(--spacing-space-16);
+  --spacing-xl: var(--spacing-space-20);
+  --spacing-2xl: var(--spacing-space-24);
+  --spacing-3xl: var(--spacing-space-40);
+  --spacing-4xl: var(--spacing-space-80);
+}
+
+[data-spacing="wide"] {
+  --spacing-xxs: var(--spacing-space-4);
+  --spacing-xs: var(--spacing-space-8);
+  --spacing-s: var(--spacing-space-12);
+  --spacing-m: var(--spacing-space-16);
+  --spacing-l: var(--spacing-space-20);
+  --spacing-xl: var(--spacing-space-24);
+  --spacing-2xl: var(--spacing-space-32);
+  --spacing-3xl: var(--spacing-space-80);
+  --spacing-4xl: var(--spacing-space-160);
+}

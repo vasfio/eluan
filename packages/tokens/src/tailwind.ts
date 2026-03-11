@@ -128,7 +128,7 @@ export const ragnarPreset: Partial<Config> = {
 
         // ================================
         // Layer 3: Theme Component Colors
-        // Adapt to selected theme (Classic Retro, Lime, etc.)
+        // Adapt to selected theme (classic-retro, lime, etc.)
         // ================================
 
         // Action Primary
@@ -323,22 +323,33 @@ export const ragnarPreset: Partial<Config> = {
       },
 
       // ================================
-      // Border Radius (from primitives)
+      // Border Radius
+      // Semantic: rounded-sm, rounded-md, rounded-lg etc. → curves scale
+      // Primitives: rounded-[1], rounded-[2] etc. → raw values
       // ================================
       borderRadius: {
+        // Semantic (adapts to data-curves attribute)
         none: v("radius-radius-none"),
-        "1": v("radius-radius-1"),
-        "2": v("radius-radius-2"),
-        "4": v("radius-radius-4"),
-        "8": v("radius-radius-8"),
-        "12": v("radius-radius-12"),
-        "16": v("radius-radius-16"),
-        "20": v("radius-radius-20"),
-        "24": v("radius-radius-24"),
-        "32": v("radius-radius-32"),
-        "40": v("radius-radius-40"),
-        "80": v("radius-radius-80"),
+        xxs: v("curves-xxs"),
+        xs: v("curves-xs"),
+        sm: v("curves-sm"),
+        DEFAULT: v("curves-md"),
+        md: v("curves-md"),
+        lg: v("curves-lg"),
+        xl: v("curves-xl"),
         full: v("radius-radius-full"),
+        // Primitives (direct access)
+        "r-1": v("radius-radius-1"),
+        "r-2": v("radius-radius-2"),
+        "r-4": v("radius-radius-4"),
+        "r-8": v("radius-radius-8"),
+        "r-12": v("radius-radius-12"),
+        "r-16": v("radius-radius-16"),
+        "r-20": v("radius-radius-20"),
+        "r-24": v("radius-radius-24"),
+        "r-32": v("radius-radius-32"),
+        "r-40": v("radius-radius-40"),
+        "r-80": v("radius-radius-80"),
       },
 
       // ================================
