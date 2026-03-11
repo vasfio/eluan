@@ -1,57 +1,56 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { Media, MediaImage, MediaVideo, MediaFigure, MediaCaption } from "./media"
+import { Image, Video } from "./media"
 
-const meta: Meta<typeof Media> = {
+const meta: Meta<typeof Image> = {
   title: "Components/Media",
-  component: Media,
+  component: Image,
   tags: ["autodocs"],
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Image: Story = {
+export const ImageDefault: Story = {
   render: () => (
-    <Media className="max-w-md">
-      <MediaImage
-        src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
-        alt="Sample image"
-      />
-    </Media>
+    <Image
+      src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+      alt="Sample image"
+      ratio="video"
+      className="max-w-md"
+    />
   ),
 }
 
-export const WithCaption: Story = {
+export const ImageRounded: Story = {
   render: () => (
-    <MediaFigure className="max-w-md">
-      <MediaImage
-        src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
-        alt="Sample image"
-      />
-      <MediaCaption>Photo by Drew Beamer on Unsplash</MediaCaption>
-    </MediaFigure>
+    <Image
+      src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+      alt="Sample image"
+      ratio="square"
+      rounded="xl"
+      className="max-w-xs"
+    />
   ),
 }
 
-export const Video: Story = {
+export const ImageWithFallback: Story = {
   render: () => (
-    <Media className="max-w-md">
-      <MediaVideo
-        src="https://www.w3schools.com/html/mov_bbb.mp4"
-        controls
-      />
-    </Media>
+    <Image
+      src="https://broken-url.invalid/image.jpg"
+      alt="Broken image"
+      ratio="video"
+      fallback={<span className="text-muted-foreground text-sm">Image unavailable</span>}
+      className="max-w-md"
+    />
   ),
 }
 
-export const Rounded: Story = {
+export const VideoDefault: Story = {
   render: () => (
-    <Media className="max-w-md">
-      <MediaImage
-        src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
-        alt="Sample image"
-        className="rounded-lg"
-      />
-    </Media>
+    <Video
+      src="https://www.w3schools.com/html/mov_bbb.mp4"
+      ratio="video"
+      className="max-w-md"
+    />
   ),
 }
