@@ -17,10 +17,10 @@ importers:
 
   apps/storybook-native:
     dependencies:
-      '@frolda/ragnar-native':
+      '@vasf/ragnar-native':
         specifier: workspace:*
         version: link:../../packages/native
-      '@frolda/ragnar-tokens':
+      '@vasf/ragnar-tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
       expo:
@@ -72,7 +72,7 @@ importers:
 
   packages/core:
     dependencies:
-      '@frolda/ragnar-tokens':
+      '@vasf/ragnar-tokens':
         specifier: workspace:*
         version: link:../tokens
       '@radix-ui/react-accordion':
@@ -277,7 +277,7 @@ importers:
 
   packages/native:
     dependencies:
-      '@frolda/ragnar-tokens':
+      '@vasf/ragnar-tokens':
         specifier: workspace:*
         version: link:../tokens
       react-native:
@@ -350,10 +350,10 @@ importers:
 
   packages/web:
     dependencies:
-      '@frolda/ragnar-core':
+      '@vasf/ragnar-core':
         specifier: workspace:*
         version: link:../core
-      '@frolda/ragnar-tokens':
+      '@vasf/ragnar-tokens':
         specifier: workspace:*
         version: link:../tokens
       class-variance-authority:

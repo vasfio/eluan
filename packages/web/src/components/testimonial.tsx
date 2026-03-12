@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { Star, Quote } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Card, CardContent, Avatar, AvatarFallback, AvatarImage } from "@frolda/ragnar-core"
+import { Card, CardContent, Avatar, AvatarFallback, AvatarImage } from "@vasf/ragnar-core"
 
 const testimonialVariants = cva(
   "",

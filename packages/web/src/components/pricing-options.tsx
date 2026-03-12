@@ -3,9 +3,9 @@ import { Check } from "lucide-react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
-import { Button } from "@frolda/ragnar-core"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@frolda/ragnar-core"
-import { Badge } from "@frolda/ragnar-core"
+import { Button } from "@vasf/ragnar-core"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@vasf/ragnar-core"
+import { Badge } from "@vasf/ragnar-core"
 
 const pricingOptionsVariants = cva(
   "grid gap-6",

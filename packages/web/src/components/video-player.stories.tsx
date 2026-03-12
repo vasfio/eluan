@@ -6,7 +6,7 @@ import {
   VimeoEmbed,
   VideoModal,
 } from "./video-player"
-import { Button } from "@frolda/ragnar-core"
+import { Button } from "@vasf/ragnar-core"
 
 const meta: Meta<typeof VideoPlayer> = {
   title: "Web/VideoPlayer",

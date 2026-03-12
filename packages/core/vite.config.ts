@@ -50,7 +50,7 @@ export default defineConfig({
         'react',
         'react-dom',
         'react/jsx-runtime',
-        '@frolda/ragnar-tokens',
+        '@vasf/ragnar-tokens',
         ...radixPackages,
         'class-variance-authority',
         'clsx',

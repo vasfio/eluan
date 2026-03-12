@@ -11,7 +11,7 @@ import {
   FAQAnswer,
   FAQContact,
 } from "./faq-accordion"
-import { Button } from "@frolda/ragnar-core"
+import { Button } from "@vasf/ragnar-core"
 
 const meta: Meta<typeof FAQSection> = {
   title: "Web/FAQAccordion",

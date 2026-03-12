@@ -3,10 +3,10 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@frolda/ragnar-native": ["../../packages/native/src"],
-      "@frolda/ragnar-native/*": ["../../packages/native/src/*"],
-      "@frolda/ragnar-tokens": ["../../packages/tokens/src"],
-      "@frolda/ragnar-tokens/*": ["../../packages/tokens/src/*"]
+      "@vasf/ragnar-native": ["../../packages/native/src"],
+      "@vasf/ragnar-native/*": ["../../packages/native/src/*"],
+      "@vasf/ragnar-tokens": ["../../packages/tokens/src"],
+      "@vasf/ragnar-tokens/*": ["../../packages/tokens/src/*"]
     }
   },
   "include": [

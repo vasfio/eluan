@@ -16,7 +16,7 @@ import {
   CookiePreferenceItem,
   CookiePreferencesFooter,
 } from "./cookie-banner"
-import { Button } from "@frolda/ragnar-core"
+import { Button } from "@vasf/ragnar-core"
 
 const meta: Meta<typeof CookieBanner> = {
   title: "Web/CookieBanner",

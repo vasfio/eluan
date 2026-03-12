@@ -7,7 +7,7 @@ import {
   TextStyle,
   useColorScheme,
 } from "react-native"
-import { spacing, fontSizes } from "@frolda/ragnar-tokens"
+import { spacing, fontSizes } from "@vasf/ragnar-tokens"
 
 export interface SeparatorProps {
   /** Orientation of the separator */

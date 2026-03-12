@@ -9,7 +9,7 @@ import {
   Image,
   ScrollView,
 } from "react-native"
-import { spacing, radii, fontSizes } from "@frolda/ragnar-tokens"
+import { spacing, radii, fontSizes } from "@vasf/ragnar-tokens"
 
 export interface MediaItem {
   /**

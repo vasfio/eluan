@@ -7,7 +7,7 @@ import {
   TextProps,
   useColorScheme,
 } from "react-native"
-import { spacing, radii } from "@frolda/ragnar-tokens"
+import { spacing, radii } from "@vasf/ragnar-tokens"
 
 export interface CardProps extends ViewProps {
   children: React.ReactNode

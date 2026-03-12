@@ -1,5 +1,5 @@
 /* Ragnar Design System Tokens (Primitives → Modes → Themes) */
-@import "@frolda/ragnar-tokens/css";
+@import "@vasf/ragnar-tokens/css";
 
 @tailwind base;
 @tailwind components;

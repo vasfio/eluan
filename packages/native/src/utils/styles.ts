@@ -1,5 +1,5 @@
 import { StyleSheet, ViewStyle, TextStyle, ImageStyle } from "react-native"
-import { primitiveColors, radius, spacing, fontSizes, fontWeights } from "@frolda/ragnar-tokens"
+import { primitiveColors, radius, spacing, fontSizes, fontWeights } from "@vasf/ragnar-tokens"
 
 // Alias tokens to the names expected by createThemedStyles
 const colors = primitiveColors

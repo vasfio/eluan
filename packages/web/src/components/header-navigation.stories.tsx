@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { HeaderNavigation } from "./header-navigation"
-import { Button } from "@frolda/ragnar-core"
+import { Button } from "@vasf/ragnar-core"
 
 const meta: Meta<typeof HeaderNavigation> = {
   title: "Web/HeaderNavigation",

@@ -1,5 +1,5 @@
 {
-  "name": "@frolda/ragnar-tokens",
+  "name": "@vasf/ragnar-tokens",
   "version": "1.0.0",
   "type": "module",
   "main": "./dist/index.js",

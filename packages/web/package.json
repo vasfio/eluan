@@ -1,5 +1,5 @@
 {
-  "name": "@frolda/ragnar-web",
+  "name": "@vasf/ragnar-web",
   "version": "1.0.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -43,8 +43,8 @@
     }
   },
   "dependencies": {
-    "@frolda/ragnar-core": "workspace:*",
-    "@frolda/ragnar-tokens": "workspace:*",
+    "@vasf/ragnar-core": "workspace:*",
+    "@vasf/ragnar-tokens": "workspace:*",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.395.0",

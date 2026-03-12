@@ -7,5 +7,5 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["@frolda/ragnar-native"]
+  "ignore": ["@vasf/ragnar-native"]
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@frolda/ragnar-native",
+  "name": "@vasf/ragnar-native",
   "version": "1.0.0",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -31,7 +31,7 @@
     "react-native": ">=0.70.0"
   },
   "dependencies": {
-    "@frolda/ragnar-tokens": "workspace:*"
+    "@vasf/ragnar-tokens": "workspace:*"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^8.1.0",
