@@ -1,0 +1,97 @@
+name: Deploy Storybook to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build tokens
+        run: pnpm --filter @vasf/ragnar-tokens build
+
+      - name: Build core library
+        run: pnpm --filter @vasf/ragnar-core build
+
+      - name: Build core Storybook
+        run: pnpm --filter @vasf/ragnar-core build-storybook
+
+      - name: Build web Storybook
+        run: pnpm --filter @vasf/ragnar-web build-storybook
+
+      - name: Assemble site
+        run: |
+          mkdir -p _site/core _site/web
+          cp -r packages/core/storybook-static/* _site/core/
+          cp -r packages/web/storybook-static/* _site/web/
+          cat > _site/index.html << 'INDEXEOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Ragnar Storybook</title>
+            <style>
+              * { margin: 0; padding: 0; box-sizing: border-box; }
+              body { font-family: system-ui, -apple-system, sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #fafafa; }
+              .container { text-align: center; }
+              h1 { font-size: 2rem; font-weight: 700; margin-bottom: 2rem; color: #111; }
+              .links { display: flex; gap: 1.5rem; }
+              a { display: block; padding: 1.5rem 3rem; background: #111; color: #fff; text-decoration: none; border-radius: 8px; font-weight: 500; font-size: 1.1rem; transition: opacity 0.15s; }
+              a:hover { opacity: 0.85; }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <h1>Ragnar Design System</h1>
+              <div class="links">
+                <a href="./core/">Core</a>
+                <a href="./web/">Web</a>
+              </div>
+            </div>
+          </body>
+          </html>
+          INDEXEOF
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
