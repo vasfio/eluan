@@ -1,0 +1,25 @@
+import { render, screen } from "@testing-library/react";
+import { describe, it, expect } from "vitest";
+import { FormLabel } from "../form-label";
+
+describe("FormLabel", () => {
+  it("renders label text", () => {
+    render(<FormLabel htmlFor="email">Email address</FormLabel>);
+    expect(screen.getByText("Email address")).toBeInTheDocument();
+  });
+
+  it("associates with input via htmlFor", () => {
+    render(
+      <>
+        <FormLabel htmlFor="name">Name</FormLabel>
+        <input id="name" />
+      </>
+    );
+    expect(screen.getByLabelText("Name")).toBeInTheDocument();
+  });
+
+  it("forwards className", () => {
+    render(<FormLabel className="required">Field</FormLabel>);
+    expect(screen.getByText("Field")).toHaveClass("required");
+  });
+});

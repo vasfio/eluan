@@ -1,0 +1,47 @@
+{
+  "name": "ragnar",
+  "version": "1.0.0",
+  "description": "Ragnar design system — web and native components",
+  "type": "module",
+  "exports": {
+    "./core": {
+      "import": "./core/index.js",
+      "require": "./core/index.cjs",
+      "types": "./core/index.d.ts"
+    },
+    "./core/styles.css": "./core/styles.css",
+    "./web": {
+      "import": "./web/index.js",
+      "require": "./web/index.cjs",
+      "types": "./web/index.d.ts"
+    },
+    "./web/styles.css": "./web/styles.css",
+    "./native": {
+      "react-native": "./native/index.js",
+      "import": "./native/index.js",
+      "require": "./native/index.js",
+      "types": "./native/index.d.ts"
+    },
+    "./tokens": {
+      "import": "./tokens/index.js",
+      "types": "./tokens/index.d.ts"
+    },
+    "./tokens/css": "./tokens/tokens.css"
+  },
+  "files": ["core", "web", "native", "tokens", "README.md"],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-native": ">=0.70.0"
+  },
+  "peerDependenciesMeta": {
+    "react-native": { "optional": true },
+    "react-dom": { "optional": true }
+  },
+  "scripts": {
+    "build": "node build.mjs"
+  }
+}

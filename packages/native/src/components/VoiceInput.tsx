@@ -8,7 +8,7 @@ import {
   Animated,
   useColorScheme,
 } from "react-native"
-import { spacing, radii, fontSizes } from "@ragnar/tokens"
+import { spacing, radius as radii, fontSizes } from "@ragnar/tokens"
 
 export type VoiceInputState = "idle" | "listening" | "processing" | "error"
 

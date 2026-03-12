@@ -1,5 +1,10 @@
 import { StyleSheet, ViewStyle, TextStyle, ImageStyle } from "react-native"
-import { colors, darkColors, spacing, radii, fontSizes, fontWeights } from "@ragnar/tokens"
+import { primitiveColors, radius, spacing, fontSizes, fontWeights } from "@ragnar/tokens"
+
+// Alias tokens to the names expected by createThemedStyles
+const colors = primitiveColors
+const darkColors = primitiveColors
+const radii = radius
 
 type NamedStyles<T> = { [P in keyof T]: ViewStyle | TextStyle | ImageStyle }
 

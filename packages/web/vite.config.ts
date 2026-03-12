@@ -8,6 +8,7 @@ export default defineConfig({
     react(),
     dts({
       insertTypesEntry: true,
+      rollupTypes: false,
     }),
   ],
   resolve: {
@@ -19,11 +20,22 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
       name: 'RagnarWeb',
-      formats: ['es'],
-      fileName: 'index',
+      formats: ['es', 'cjs'],
+      fileName: (format) => (format === 'cjs' ? 'index.cjs' : 'index.js'),
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime', '@ragnar/core'],
+      external: [
+        'react',
+        'react-dom',
+        'react/jsx-runtime',
+        '@ragnar/core',
+        '@ragnar/tokens',
+        'class-variance-authority',
+        'clsx',
+        'tailwind-merge',
+        'lucide-react',
+        'three',
+      ],
       output: {
         globals: {
           react: 'React',
