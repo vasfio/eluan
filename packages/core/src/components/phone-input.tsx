@@ -2,6 +2,14 @@ import * as React from "react"
 import { Phone, ChevronDown, Check } from "lucide-react"
 import { cn } from "@/lib/utils"
 
+function assignRef<T>(ref: React.ForwardedRef<T>, value: T | null) {
+  if (typeof ref === "function") {
+    ref(value)
+  } else if (ref) {
+    ;(ref as React.MutableRefObject<T | null>).current = value
+  }
+}
+
 export interface Country {
   code: string
   name: string
@@ -90,7 +98,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
     const [phoneNumber, setPhoneNumber] = React.useState(value || "")
     const [search, setSearch] = React.useState("")
     const dropdownRef = React.useRef<HTMLDivElement>(null)
-    const inputRef = React.useRef<HTMLInputElement>(null)
+    const inputRef = React.useRef<HTMLInputElement | null>(null)
 
     React.useEffect(() => {
       if (value !== undefined) {
@@ -132,10 +140,6 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
       onChange?.(newValue, selectedCountry)
     }
 
-    const formatPhoneDisplay = () => {
-      return `${selectedCountry.dialCode} ${phoneNumber}`.trim()
-    }
-
     return (
       <div className="relative" ref={dropdownRef}>
         <div className="flex">
@@ -157,11 +161,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
               type="tel"
               ref={(node) => {
                 inputRef.current = node
-                if (typeof ref === "function") {
-                  ref(node)
-                } else if (ref) {
-                  ref.current = node
-                }
+                assignRef(ref, node)
               }}
               className={cn(
                 "flex h-10 w-full rounded-r-md border border-input bg-background pl-10 pr-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",

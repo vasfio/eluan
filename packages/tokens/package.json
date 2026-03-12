@@ -1,5 +1,5 @@
 {
-  "name": "@ragnar/tokens",
+  "name": "@frolda/ragnar-tokens",
   "version": "1.0.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -20,8 +20,11 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
-    "build": "tsc && cp src/tokens.css src/primitives.css src/modes.css src/themes.css src/spacing.css src/curves.css dist/",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && cp src/tokens.css src/primitives.css src/modes.css src/themes.css src/spacing.css src/curves.css dist/",
     "dev": "tsc --watch"
   },
   "devDependencies": {

@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
-import dts from 'vite-plugin-dts'
 
 // All @radix-ui/* packages used by core — externalized so consumers install them
 const radixPackages = [
@@ -33,13 +32,7 @@ const radixPackages = [
 ]
 
 export default defineConfig({
-  plugins: [
-    react(),
-    dts({
-      insertTypesEntry: true,
-      rollupTypes: false,
-    }),
-  ],
+  plugins: [react()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -57,7 +50,7 @@ export default defineConfig({
         'react',
         'react-dom',
         'react/jsx-runtime',
-        '@ragnar/tokens',
+        '@frolda/ragnar-tokens',
         ...radixPackages,
         'class-variance-authority',
         'clsx',

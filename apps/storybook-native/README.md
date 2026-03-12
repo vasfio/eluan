@@ -1,6 +1,6 @@
-# @ragnar/storybook-native
+# @frolda/storybook-native
 
-On-device Storybook for testing `@ragnar/native` components on iOS and Android.
+On-device Storybook for testing `@frolda/ragnar-native` components on iOS and Android.
 
 ## Getting Started
 
@@ -43,7 +43,7 @@ Then scan the QR code with the Expo Go app.
 
 ## Components Available
 
-The following components from `@ragnar/native` are included:
+The following components from `@frolda/ragnar-native` are included:
 
 ### Core Components
 - Button, Card, Input, TextArea

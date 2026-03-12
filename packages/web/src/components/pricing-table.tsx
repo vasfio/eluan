@@ -9,7 +9,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@ragnar/core"
+} from "@frolda/ragnar-core"
 
 export interface PricingPlan {
   id: string

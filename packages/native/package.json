@@ -1,5 +1,5 @@
 {
-  "name": "@ragnar/native",
+  "name": "@frolda/ragnar-native",
   "version": "1.0.0",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -17,7 +17,7 @@
     "src"
   ],
   "scripts": {
-    "build": "tsc || true",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "dev": "tsc --watch",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "storybook": "storybook dev -p 6008",
@@ -31,7 +31,7 @@
     "react-native": ">=0.70.0"
   },
   "dependencies": {
-    "@ragnar/tokens": "workspace:*"
+    "@frolda/ragnar-tokens": "workspace:*"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^8.1.0",

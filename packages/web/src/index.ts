@@ -1,5 +1,5 @@
-// @ragnar/web - Marketing & Web-specific Components
-// These components depend on @ragnar/core
+// @frolda/ragnar-web - Marketing & Web-specific Components
+// These components depend on @frolda/ragnar-core
 
 // ============================================
 // Marketing Sections

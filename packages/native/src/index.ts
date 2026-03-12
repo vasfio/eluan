@@ -1,8 +1,8 @@
-// @ragnar/native - React Native Components
-// These components mirror @ragnar/core but for React Native
+// @frolda/ragnar-native - React Native Components
+// These components mirror @frolda/ragnar-core but for React Native
 
 // Re-export tokens for convenience
-export * from "@ragnar/tokens"
+export * from "@frolda/ragnar-tokens"
 
 // ============================================
 // Core Components

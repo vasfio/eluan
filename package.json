@@ -7,19 +7,20 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "pnpm --filter @ragnar/core dev & pnpm --filter @ragnar/web dev",
-    "build": "pnpm -r build",
-    "build:tokens": "pnpm --filter @ragnar/tokens build",
-    "build:core": "pnpm --filter @ragnar/core build",
-    "build:web": "pnpm --filter @ragnar/web build",
-    "build:native": "pnpm --filter @ragnar/native build",
+    "dev": "pnpm --filter @frolda/ragnar-core dev & pnpm --filter @frolda/ragnar-web dev",
+    "build": "pnpm run build:publish",
+    "build:publish": "pnpm --filter @frolda/ragnar-tokens build && pnpm --filter @frolda/ragnar-core build && pnpm --filter @frolda/ragnar-web build",
+    "build:tokens": "pnpm --filter @frolda/ragnar-tokens build",
+    "build:core": "pnpm --filter @frolda/ragnar-core build",
+    "build:web": "pnpm --filter @frolda/ragnar-web build",
+    "build:native": "pnpm --filter @frolda/ragnar-native build",
     "lint": "pnpm -r lint",
-    "storybook": "pnpm --filter @ragnar/core storybook",
-    "storybook:web": "pnpm --filter @ragnar/web storybook",
+    "storybook": "pnpm --filter @frolda/ragnar-core storybook",
+    "storybook:web": "pnpm --filter @frolda/ragnar-web storybook",
     "test": "pnpm -r --filter './packages/core' --filter './packages/web' --filter './packages/native' run test",
     "test:coverage": "pnpm -r --filter './packages/core' --filter './packages/web' --filter './packages/native' run test:coverage",
-    "build:ragnar": "node packages/ragnar/build.mjs",
-    "publish:ragnar": "pnpm --filter ragnar publish --access public"
+    "version-packages": "pnpm dlx @changesets/cli version",
+    "release": "pnpm dlx @changesets/cli publish"
   },
   "devDependencies": {
     "@types/node": "^20.14.2",

@@ -7,7 +7,7 @@ import {
   Animated,
   Easing,
 } from "react-native"
-import { spacing, radii } from "@ragnar/tokens"
+import { spacing, radii } from "@frolda/ragnar-tokens"
 
 import type { DimensionValue } from "react-native"
 

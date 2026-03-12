@@ -1,4 +1,4 @@
-// Shader Components for @ragnar/web
+// Shader Components for @frolda/ragnar-web
 // Supports both OGL (lightweight) and Three.js/R3F (powerful) renderers
 
 // Core OGL Canvas (lightweight, ~25kb)

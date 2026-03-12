@@ -1,4 +1,4 @@
-// @ragnar/core - Core UI Components
+// @frolda/ragnar-core - Core UI Components
 // Re-export all components
 
 export * from "./components/accordion"

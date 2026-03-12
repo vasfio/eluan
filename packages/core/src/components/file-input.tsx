@@ -2,6 +2,14 @@ import * as React from "react"
 import { Upload, X, File, Image, FileText, Film, Music, Archive } from "lucide-react"
 import { cn } from "@/lib/utils"
 
+function assignRef<T>(ref: React.ForwardedRef<T>, value: T | null) {
+  if (typeof ref === "function") {
+    ref(value)
+  } else if (ref) {
+    ;(ref as React.MutableRefObject<T | null>).current = value
+  }
+}
+
 type FileType = "image" | "document" | "video" | "audio" | "archive" | "other"
 
 interface FileInfo {
@@ -93,7 +101,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
     const [files, setFiles] = React.useState<FileInfo[]>([])
     const [isDragging, setIsDragging] = React.useState(false)
     const [error, setError] = React.useState<string | null>(null)
-    const inputRef = React.useRef<HTMLInputElement>(null)
+    const inputRef = React.useRef<HTMLInputElement | null>(null)
 
     React.useEffect(() => {
       const fileInfos: FileInfo[] = value.map((file) => ({
@@ -160,11 +168,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
 
     const combinedRef = (node: HTMLInputElement) => {
       inputRef.current = node
-      if (typeof ref === "function") {
-        ref(node)
-      } else if (ref) {
-        ref.current = node
-      }
+      assignRef(ref, node)
     }
 
     if (variant === "dropzone") {

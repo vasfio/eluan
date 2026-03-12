@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.title}>@ragnar/native</Text>
+        <Text style={styles.title}>@frolda/ragnar-native</Text>
         <Text style={styles.subtitle}>Component Library</Text>
 
         <Link href="/storybook" asChild>

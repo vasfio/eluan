@@ -11,7 +11,7 @@ import {
   SectionListData,
   useColorScheme,
 } from "react-native"
-import { spacing, fontSizes } from "@ragnar/tokens"
+import { spacing, fontSizes } from "@frolda/ragnar-tokens"
 
 // ============================================
 // List Item Component

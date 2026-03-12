@@ -6,25 +6,28 @@ A comprehensive, multi-platform design system built with React and React Native.
 
 | Package | Description | Status |
 |---------|-------------|--------|
-| `@ragnar/tokens` | Shared design tokens (colors, spacing, typography) | ✅ Ready |
-| `@ragnar/core` | Core UI components (Button, Card, Dialog, etc.) | ✅ Ready |
-| `@ragnar/web` | Marketing & web-specific components (Hero, Pricing, etc.) | ✅ Ready |
-| `@ragnar/native` | React Native components | 🚧 In Progress |
+| `@frolda/ragnar-tokens` | Shared design tokens (colors, spacing, typography) | ✅ Ready |
+| `@frolda/ragnar-core` | Core UI components (Button, Card, Dialog, etc.) | ✅ Ready |
+| `@frolda/ragnar-web` | Marketing & web-specific components (Hero, Pricing, etc.) | ✅ Ready |
+| `@frolda/ragnar-native` | React Native components | 🚧 In Progress |
+
+The initial published release set is `@frolda/ragnar-tokens`, `@frolda/ragnar-core`, and `@frolda/ragnar-web`.
+`@frolda/ragnar-native` remains in the monorepo but is not part of the GitHub Actions release pipeline yet.
 
 ## Installation
 
 ```bash
 # Install core components for web
-npm install @ragnar/core
+npm install @frolda/ragnar-core
 
 # Install marketing components
-npm install @ragnar/web
+npm install @frolda/ragnar-web
 
 # Install React Native components
-npm install @ragnar/native
+npm install @frolda/ragnar-native
 
 # Install tokens only
-npm install @ragnar/tokens
+npm install @frolda/ragnar-tokens
 ```
 
 ## Usage
@@ -33,23 +36,23 @@ npm install @ragnar/tokens
 
 ```tsx
 // Core components
-import { Button, Card, Dialog } from '@ragnar/core'
-import '@ragnar/core/styles.css'
+import { Button, Card, Dialog } from '@frolda/ragnar-core'
+import '@frolda/ragnar-core/styles.css'
 
 // Marketing components
-import { Hero, PricingTable, Testimonial } from '@ragnar/web'
+import { Hero, PricingTable, Testimonial } from '@frolda/ragnar-web'
 ```
 
 ### React Native
 
 ```tsx
-import { Button, Card } from '@ragnar/native'
-import { colors, spacing } from '@ragnar/tokens'
+import { Button, Card } from '@frolda/ragnar-native'
+import { colors, spacing } from '@frolda/ragnar-tokens'
 ```
 
 ## Package Details
 
-### @ragnar/tokens
+### @frolda/ragnar-tokens
 
 Shared design tokens that work across all platforms:
 
@@ -62,7 +65,7 @@ Shared design tokens that work across all platforms:
 - Z-index scale
 - Breakpoints
 
-### @ragnar/core
+### @frolda/ragnar-core
 
 46+ UI components following shadcn/ui patterns:
 
@@ -74,7 +77,7 @@ Shared design tokens that work across all platforms:
 - **Advanced**: Calendar, Date Picker, DateTime Picker, Command, Carousel
 - **Custom**: Code Block, Rating, Rich Text Editor, Tree View, Stepper
 
-### @ragnar/web
+### @frolda/ragnar-web
 
 9 marketing-focused components:
 
@@ -88,7 +91,7 @@ Shared design tokens that work across all platforms:
 - **Quote**: Blockquotes with author attribution
 - **Testimonial**: Customer testimonials with ratings
 
-### @ragnar/native
+### @frolda/ragnar-native
 
 React Native equivalents using the same design tokens:
 
@@ -117,10 +120,10 @@ pnpm storybook:web
 ```
 ragnar/
 ├── packages/
-│   ├── tokens/      # @ragnar/tokens - Design tokens
-│   ├── core/        # @ragnar/core - Core UI components
-│   ├── web/         # @ragnar/web - Marketing components
-│   └── native/      # @ragnar/native - React Native components
+│   ├── tokens/      # @frolda/ragnar-tokens - Design tokens
+│   ├── core/        # @frolda/ragnar-core - Core UI components
+│   ├── web/         # @frolda/ragnar-web - Marketing components
+│   └── native/      # @frolda/ragnar-native - React Native components
 ├── package.json     # Root package.json with workspaces
 └── pnpm-workspace.yaml
 ```

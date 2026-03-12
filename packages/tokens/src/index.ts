@@ -1,6 +1,6 @@
 // Ragnar Design System - Token Exports
 // Three-layer architecture: Primitives → Modes → Themes
-// For CSS variable usage, import "@ragnar/tokens/css"
+// For CSS variable usage, import "@frolda/ragnar-tokens/css"
 
 // ============================================
 // Available Modes

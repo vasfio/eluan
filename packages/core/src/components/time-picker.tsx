@@ -179,12 +179,6 @@ const TimePicker = React.forwardRef<HTMLDivElement, TimePickerProps>(
       updateTime(hours, minutes, newPeriod)
     }
 
-    const displayValue = value || (
-      format === "24"
-        ? `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`
-        : `${hours}:${minutes.toString().padStart(2, "0")} ${period}`
-    )
-
     return (
       <div ref={containerRef} className={cn("relative", className)}>
         <div

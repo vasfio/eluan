@@ -8,7 +8,7 @@ import {
   useColorScheme,
   Pressable,
 } from "react-native"
-import { spacing, radii, fontSizes } from "@ragnar/tokens"
+import { spacing, radii, fontSizes } from "@frolda/ragnar-tokens"
 
 export interface AlertProps {
   /** Alert title */

@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "@ragnar/tokens/css";
+@import "@frolda/ragnar-tokens/css";
 
 @layer base {
   :root {

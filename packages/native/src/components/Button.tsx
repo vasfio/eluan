@@ -8,7 +8,7 @@ import {
   PressableProps,
   useColorScheme,
 } from "react-native"
-import { spacing, radii, fontSizes, fontWeights } from "@ragnar/tokens"
+import { spacing, radii, fontSizes, fontWeights } from "@frolda/ragnar-tokens"
 
 export interface ButtonProps extends Omit<PressableProps, "style"> {
   children: React.ReactNode

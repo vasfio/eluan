@@ -7,7 +7,7 @@ import {
   TextStyle,
   useColorScheme,
 } from "react-native"
-import { spacing, radii, fontSizes } from "@ragnar/tokens"
+import { spacing, radii, fontSizes } from "@frolda/ragnar-tokens"
 
 export interface BadgeProps {
   /** Badge content */

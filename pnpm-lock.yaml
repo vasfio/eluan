@@ -17,10 +17,10 @@ importers:
 
   apps/storybook-native:
     dependencies:
-      '@ragnar/native':
+      '@frolda/ragnar-native':
         specifier: workspace:*
         version: link:../../packages/native
-      '@ragnar/tokens':
+      '@frolda/ragnar-tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
       expo:
@@ -72,6 +72,9 @@ importers:
 
   packages/core:
     dependencies:
+      '@frolda/ragnar-tokens':
+        specifier: workspace:*
+        version: link:../tokens
       '@radix-ui/react-accordion':
         specifier: ^1.2.0
         version: 1.2.12(@types/react-dom@18.3.7(@types/react@18.3.28))(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -147,9 +150,6 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.2.8
         version: 1.2.8(@types/react-dom@18.3.7(@types/react@18.3.28))(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@ragnar/tokens':
-        specifier: workspace:*
-        version: link:../tokens
       '@tiptap/extension-placeholder':
         specifier: ^3.19.0
         version: 3.19.0(@tiptap/extensions@3.19.0(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0))
@@ -277,7 +277,7 @@ importers:
 
   packages/native:
     dependencies:
-      '@ragnar/tokens':
+      '@frolda/ragnar-tokens':
         specifier: workspace:*
         version: link:../tokens
       react-native:
@@ -339,18 +339,6 @@ importers:
         specifier: ^4.0.18
         version: 4.0.18(@types/node@20.19.32)(jiti@1.21.7)(jsdom@28.1.0)(lightningcss@1.27.0)(terser@5.46.0)(yaml@2.8.2)
 
-  packages/ragnar:
-    dependencies:
-      react:
-        specifier: ^18.0.0
-        version: 18.3.1
-      react-dom:
-        specifier: ^18.0.0
-        version: 18.3.1(react@18.3.1)
-      react-native:
-        specifier: '>=0.70.0'
-        version: 0.76.6(@babel/core@7.29.0)(@babel/preset-env@7.29.0(@babel/core@7.29.0))(@types/react@18.3.28)(react@18.3.1)
-
   packages/tokens:
     devDependencies:
       tailwindcss:
@@ -362,10 +350,10 @@ importers:
 
   packages/web:
     dependencies:
-      '@ragnar/core':
+      '@frolda/ragnar-core':
         specifier: workspace:*
         version: link:../core
-      '@ragnar/tokens':
+      '@frolda/ragnar-tokens':
         specifier: workspace:*
         version: link:../tokens
       class-variance-authority:
