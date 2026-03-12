@@ -15,7 +15,11 @@
     "build:native": "pnpm --filter @ragnar/native build",
     "lint": "pnpm -r lint",
     "storybook": "pnpm --filter @ragnar/core storybook",
-    "storybook:web": "pnpm --filter @ragnar/web storybook"
+    "storybook:web": "pnpm --filter @ragnar/web storybook",
+    "test": "pnpm -r --filter './packages/core' --filter './packages/web' --filter './packages/native' run test",
+    "test:coverage": "pnpm -r --filter './packages/core' --filter './packages/web' --filter './packages/native' run test:coverage",
+    "build:ragnar": "node packages/ragnar/build.mjs",
+    "publish:ragnar": "pnpm --filter ragnar publish --access public"
   },
   "devDependencies": {
     "@types/node": "^20.14.2",

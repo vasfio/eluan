@@ -25,6 +25,7 @@
     "dev": "tsc --watch"
   },
   "devDependencies": {
+    "tailwindcss": "^3.4.4",
     "typescript": "^5.4.5"
   }
 }

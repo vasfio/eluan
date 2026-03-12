@@ -1,12 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import {
-  Stepper,
-  StepperItem,
-  StepperTrigger,
-  StepperContent,
-  StepperTitle,
-  StepperDescription,
-} from "./stepper"
+import { useState } from "react"
+import { Stepper, StepperContent } from "./stepper"
 
 const meta: Meta<typeof Stepper> = {
   title: "Components/Stepper",
@@ -17,61 +11,54 @@ const meta: Meta<typeof Stepper> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+const steps = [
+  { id: "step-1", title: "Account", description: "Create your account" },
+  { id: "step-2", title: "Profile", description: "Set up your profile" },
+  { id: "step-3", title: "Complete", description: "Review and submit" },
+]
+
 export const Default: Story = {
-  render: () => (
-    <Stepper defaultValue="step-1" className="w-full">
-      <StepperItem value="step-1" completed>
-        <StepperTrigger>
-          <StepperTitle>Step 1</StepperTitle>
-          <StepperDescription>Description for step 1</StepperDescription>
-        </StepperTrigger>
-        <StepperContent>
-          <p className="text-sm text-muted-foreground">Content for step 1</p>
-        </StepperContent>
-      </StepperItem>
-      <StepperItem value="step-2">
-        <StepperTrigger>
-          <StepperTitle>Step 2</StepperTitle>
-          <StepperDescription>Description for step 2</StepperDescription>
-        </StepperTrigger>
-        <StepperContent>
-          <p className="text-sm text-muted-foreground">Content for step 2</p>
-        </StepperContent>
-      </StepperItem>
-      <StepperItem value="step-3">
-        <StepperTrigger>
-          <StepperTitle>Step 3</StepperTitle>
-          <StepperDescription>Description for step 3</StepperDescription>
-        </StepperTrigger>
-        <StepperContent>
-          <p className="text-sm text-muted-foreground">Content for step 3</p>
-        </StepperContent>
-      </StepperItem>
-    </Stepper>
-  ),
+  render: () => {
+    const [current, setCurrent] = useState(1)
+    return (
+      <div className="w-full space-y-4">
+        <Stepper
+          steps={steps}
+          currentStep={current}
+          onStepClick={setCurrent}
+          className="w-full"
+        />
+        {steps.map((step, i) => (
+          <StepperContent key={step.id} step={i} currentStep={current}>
+            <p className="text-sm text-muted-foreground">Content for {step.title}</p>
+          </StepperContent>
+        ))}
+      </div>
+    )
+  },
 }
 
 export const Vertical: Story = {
+  render: () => {
+    const [current, setCurrent] = useState(0)
+    return (
+      <Stepper
+        steps={steps}
+        currentStep={current}
+        orientation="vertical"
+        onStepClick={setCurrent}
+        className="w-64"
+      />
+    )
+  },
+}
+
+export const NoInteraction: Story = {
   render: () => (
-    <Stepper defaultValue="step-1" orientation="vertical" className="w-full">
-      <StepperItem value="step-1" completed>
-        <StepperTrigger>
-          <StepperTitle>Account</StepperTitle>
-          <StepperDescription>Create your account</StepperDescription>
-        </StepperTrigger>
-      </StepperItem>
-      <StepperItem value="step-2">
-        <StepperTrigger>
-          <StepperTitle>Profile</StepperTitle>
-          <StepperDescription>Set up your profile</StepperDescription>
-        </StepperTrigger>
-      </StepperItem>
-      <StepperItem value="step-3">
-        <StepperTrigger>
-          <StepperTitle>Complete</StepperTitle>
-          <StepperDescription>Review and submit</StepperDescription>
-        </StepperTrigger>
-      </StepperItem>
-    </Stepper>
+    <Stepper
+      steps={steps}
+      currentStep={1}
+      className="w-full"
+    />
   ),
 }
