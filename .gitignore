@@ -5,6 +5,7 @@ node_modules
 dist
 dist-ssr
 storybook-static
+storybook-dist
 
 # IDE
 .idea
