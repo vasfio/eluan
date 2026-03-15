@@ -1,5 +1,11 @@
 # @vasf/ragnar-tokens
 
+## 1.0.2
+
+### Patch Changes
+
+- Fix workspace protocol in published packages
+
 ## 1.0.1
 
 ### Patch Changes

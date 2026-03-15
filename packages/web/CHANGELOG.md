@@ -1,5 +1,14 @@
 # @vasf/ragnar-web
 
+## 1.0.2
+
+### Patch Changes
+
+- Fix workspace protocol in published packages
+- Updated dependencies
+  - @vasf/ragnar-tokens@1.0.2
+  - @vasf/ragnar-core@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes
