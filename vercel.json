@@ -1,5 +1,5 @@
 {
-  "buildCommand": "NODE_OPTIONS='--max_old_space_size=8192' pnpm -w run build:storybook",
+  "buildCommand": "NODE_OPTIONS='--max_old_space_size=8192' bash scripts/build-vercel.sh",
   "outputDirectory": "storybook-dist",
   "installCommand": "pnpm install"
 }
