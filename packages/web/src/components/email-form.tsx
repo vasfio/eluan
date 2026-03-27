@@ -130,10 +130,10 @@ const EmailForm = React.forwardRef<HTMLFormElement, EmailFormProps>(
           </Button>
         </form>
         {helperText && status === "idle" && (
-          <p className="mt-2 text-sm text-muted-foreground">{helperText}</p>
+          <p className="mt-2 text-sm text-[var(--foregrounds-tertiary)]">{helperText}</p>
         )}
         {status === "success" && successMessage && (
-          <p className="mt-2 text-sm text-green-600 dark:text-green-400">
+          <p className="mt-2 text-sm text-[var(--positive-fg)]">
             {successMessage}
           </p>
         )}

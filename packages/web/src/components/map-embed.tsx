@@ -185,90 +185,7 @@ function getBoundingBox(_lat: number, lng: number, zoom: number) {
   }
 }
 
-// Static map image (using OSM static tiles)
-export interface StaticMapProps
-  extends React.ImgHTMLAttributes<HTMLImageElement>,
-    VariantProps<typeof mapContainerVariants> {
-  /**
-   * Latitude
-   */
-  lat: number
-  /**
-   * Longitude
-   */
-  lng: number
-  /**
-   * Zoom level
-   * @default 15
-   */
-  zoom?: number
-  /**
-   * Map width in pixels
-   * @default 600
-   */
-  width?: number
-  /**
-   * Map height in pixels
-   * @default 400
-   */
-  height?: number
-  /**
-   * Container className
-   */
-  containerClassName?: string
-}
 
-const StaticMap = React.forwardRef<HTMLImageElement, StaticMapProps>(
-  (
-    {
-      className,
-      containerClassName,
-      rounded,
-      aspectRatio,
-      lat,
-      lng,
-      zoom = 15,
-      width = 600,
-      height = 400,
-      alt = "Map",
-      ...props
-    },
-    ref
-  ) => {
-    // Using OpenStreetMap static tiles
-    const tileX = Math.floor(((lng + 180) / 360) * Math.pow(2, zoom))
-    const tileY = Math.floor(
-      ((1 -
-        Math.log(
-          Math.tan((lat * Math.PI) / 180) +
-            1 / Math.cos((lat * Math.PI) / 180)
-        ) /
-          Math.PI) /
-        2) *
-        Math.pow(2, zoom)
-    )
-
-    const src = `https://tile.openstreetmap.org/${zoom}/${tileX}/${tileY}.png`
-
-    return (
-      <div
-        className={cn(
-          mapContainerVariants({ rounded, aspectRatio }),
-          containerClassName
-        )}
-      >
-        <img
-          ref={ref}
-          src={src}
-          alt={alt}
-          className={cn("h-full w-full object-cover", className)}
-          {...props}
-        />
-      </div>
-    )
-  }
-)
-StaticMap.displayName = "StaticMap"
 
 // Map with info card overlay
 export interface MapWithInfoProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -438,6 +355,5 @@ MapWithInfo.displayName = "MapWithInfo"
 export {
   GoogleMapEmbed,
   OpenStreetMapEmbed,
-  StaticMap,
   MapWithInfo,
 }

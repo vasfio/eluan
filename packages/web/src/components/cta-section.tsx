@@ -9,7 +9,7 @@ const ctaSectionVariants = cva("w-full", {
       default: "bg-background",
       muted: "bg-muted/50",
       primary: "bg-primary text-primary-foreground",
-      gradient: "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground",
+      gradient: "bg-[var(--action-primary-bg)] text-[var(--action-primary-fg)]",
       dark: "bg-zinc-900 text-white",
       bordered: "border-y bg-background",
     },
@@ -128,7 +128,7 @@ const CTACard = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-2xl bg-card p-8 shadow-lg md:p-12",
+      "rounded-2xl bg-[var(--container-bg)] p-8 md:p-12 border border-[var(--container-border-alt)]",
       className
     )}
     {...props}

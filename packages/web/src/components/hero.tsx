@@ -86,7 +86,7 @@ const HeroBadge = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      "mb-4 inline-flex items-center rounded-full border bg-muted px-4 py-1.5 text-sm font-medium text-muted-foreground",
+      "mb-4 inline-flex items-center rounded-full border bg-muted px-4 py-1.5 text-sm font-medium text-[var(--foregrounds-tertiary)]",
       className
     )}
     {...props}
@@ -101,7 +101,7 @@ const HeroTitle = React.forwardRef<
   <h1
     ref={ref}
     className={cn(
-      "max-w-4xl font-heading text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl",
+      "max-w-4xl w-full font-heading text-4xl font-semibold tracking-tight text-[var(--foregrounds-primary)] sm:text-5xl md:text-6xl lg:text-7xl",
       className
     )}
     {...props}
@@ -116,7 +116,7 @@ const HeroSubtitle = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl md:text-2xl",
+      "mt-6 max-w-2xl w-full text-lg text-[var(--foregrounds-tertiary)] sm:text-xl",
       className
     )}
     {...props}

@@ -29,8 +29,8 @@ const quoteVariants = cva(
 
 const textSizes = {
   sm: "text-base sm:text-lg",
-  default: "text-lg sm:text-xl md:text-2xl",
-  lg: "text-xl sm:text-2xl md:text-3xl",
+  default: "text-base sm:text-lg",
+  lg: "text-lg sm:text-xl",
 }
 
 export interface QuoteProps
@@ -48,7 +48,7 @@ const QuoteComponent = React.forwardRef<HTMLQuoteElement, QuoteProps>(
         {...props}
       >
         {showIcon && variant === "centered" && (
-          <QuoteIcon className="mx-auto mb-4 h-8 w-8 text-muted-foreground/30" />
+          <QuoteIcon className="mx-auto mb-4 h-8 w-8 text-[var(--foregrounds-tertiary)]/30" />
         )}
         {children}
       </blockquote>
@@ -64,7 +64,7 @@ const QuoteText = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "font-medium italic text-foreground leading-relaxed",
+      "font-normal text-[var(--foregrounds-secondary)] leading-relaxed",
       textSizes[size],
       className
     )}
@@ -126,7 +126,7 @@ const QuoteAuthorName = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <span
     ref={ref}
-    className={cn("font-semibold text-foreground", className)}
+    className={cn("font-medium text-[var(--foregrounds-primary)]", className)}
     {...props}
   />
 ))
@@ -138,7 +138,7 @@ const QuoteAuthorTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <span
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("text-sm text-[var(--foregrounds-tertiary)]", className)}
     {...props}
   />
 ))

@@ -39,9 +39,9 @@ const PricingTable = React.forwardRef<HTMLDivElement, PricingTableProps>(
     const renderCellValue = (value: boolean | string) => {
       if (typeof value === "boolean") {
         return value ? (
-          <Check className="mx-auto h-5 w-5 text-green-500" />
+          <Check className="mx-auto h-5 w-5 text-[var(--positive-fg)]" />
         ) : (
-          <X className="mx-auto h-5 w-5 text-muted-foreground/40" />
+          <X className="mx-auto h-5 w-5 text-[var(--foregrounds-tertiary)]/40" />
         )
       }
       return <span className="text-sm">{value}</span>
@@ -58,28 +58,31 @@ const PricingTable = React.forwardRef<HTMLDivElement, PricingTableProps>(
                   key={plan.id}
                   className={cn(
                     "text-center",
-                    plan.highlighted && "bg-primary/5"
+                    plan.highlighted && "bg-[var(--interactive-bg-alt2)]/20"
                   )}
                 >
                   <div className="flex flex-col gap-1">
-                    {plan.highlighted && (
-                      <span className="text-xs font-medium text-primary">
-                        Most Popular
-                      </span>
-                    )}
-                    <span className="font-heading text-lg font-semibold text-foreground">
+                    {/* Fixed height for eyebrow so all titles align regardless of badge presence */}
+                    <div className="h-5 flex items-center justify-center">
+                      {plan.highlighted && (
+                        <span className="text-[10px] font-medium text-[var(--action-primary-bg)] uppercase tracking-wider">
+                          Most Popular
+                        </span>
+                      )}
+                    </div>
+                    <span className="font-heading text-base font-semibold text-[var(--foregrounds-primary)]">
                       {plan.name}
                     </span>
-                    <div className="font-heading text-2xl font-bold text-foreground">
+                    <div className="font-heading text-2xl font-semibold text-[var(--foregrounds-primary)]">
                       {typeof plan.price === "number" ? `$${plan.price}` : plan.price}
                       {plan.period && (
-                        <span className="text-sm font-normal text-muted-foreground">
+                        <span className="text-sm font-normal text-[var(--foregrounds-tertiary)]">
                           /{plan.period}
                         </span>
                       )}
                     </div>
                     {plan.description && (
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-xs text-[var(--foregrounds-quinary)]">
                         {plan.description}
                       </span>
                     )}
@@ -97,7 +100,7 @@ const PricingTable = React.forwardRef<HTMLDivElement, PricingTableProps>(
                     key={plan.id}
                     className={cn(
                       "text-center",
-                      plan.highlighted && "bg-primary/5"
+                      plan.highlighted && "bg-[var(--interactive-bg-alt2)]/20"
                     )}
                   >
                     {renderCellValue(feature.values[plan.id] ?? false)}

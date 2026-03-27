@@ -54,7 +54,7 @@ const ComparisonTitle = React.forwardRef<
   <h2
     ref={ref}
     className={cn(
-      "font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl",
+      "font-heading text-3xl font-bold tracking-tight text-[var(--foregrounds-primary)] sm:text-4xl",
       className
     )}
     {...props}
@@ -69,7 +69,7 @@ const ComparisonDescription = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "mx-auto mt-4 max-w-2xl text-lg text-muted-foreground",
+      "mx-auto mt-4 max-w-2xl text-lg text-[var(--foregrounds-tertiary)]",
       className
     )}
     {...props}
@@ -95,7 +95,7 @@ const ComparisonTableInner = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <table
     ref={ref}
-    className={cn("w-full border-collapse text-left", className)}
+    className={cn("w-full border-collapse text-center", className)}
     {...props}
   />
 ))
@@ -115,7 +115,7 @@ const ComparisonTableBody = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <tbody
     ref={ref}
-    className={cn("divide-y divide-border", className)}
+    className={cn("[&>tr:nth-child(even)]:bg-[var(--backgrounds-secondary)]", className)}
     {...props}
   />
 ))
@@ -130,11 +130,11 @@ const ComparisonTableRow = React.forwardRef<
 ComparisonTableRow.displayName = "ComparisonTableRow"
 
 const comparisonHeaderCellVariants = cva(
-  "px-4 py-4 text-sm font-semibold",
+  "px-4 py-4 text-sm font-medium text-center",
   {
     variants: {
       highlight: {
-        true: "bg-primary/5",
+        true: "bg-[var(--interactive-bg-alt2)]/30",
         false: "",
       },
     },
@@ -160,10 +160,10 @@ const ComparisonHeaderCell = React.forwardRef<
 ))
 ComparisonHeaderCell.displayName = "ComparisonHeaderCell"
 
-const comparisonCellVariants = cva("px-4 py-4 text-sm", {
+const comparisonCellVariants = cva("px-4 py-4 text-sm text-center", {
   variants: {
     highlight: {
-      true: "bg-primary/5",
+      true: "bg-[var(--interactive-bg-alt2)]/30",
       false: "",
     },
   },
@@ -195,7 +195,7 @@ const ComparisonFeatureCell = React.forwardRef<
   <td
     ref={ref}
     className={cn(
-      "px-4 py-4 text-sm font-medium text-foreground",
+      "px-4 py-4 text-sm font-medium text-[var(--foregrounds-primary)] text-left",
       className
     )}
     {...props}
@@ -227,7 +227,7 @@ const ComparisonX = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <svg
     ref={ref}
-    className={cn("mx-auto h-5 w-5 text-muted-foreground/40", className)}
+    className={cn("mx-auto h-5 w-5 text-[var(--foregrounds-tertiary)]/40", className)}
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"
@@ -245,7 +245,7 @@ const ComparisonMinus = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <svg
     ref={ref}
-    className={cn("mx-auto h-5 w-5 text-muted-foreground/40", className)}
+    className={cn("mx-auto h-5 w-5 text-[var(--foregrounds-tertiary)]/40", className)}
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"
@@ -275,7 +275,7 @@ const ComparisonPlanName = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("font-heading font-semibold text-foreground", className)}
+    className={cn("font-heading font-semibold text-[var(--foregrounds-primary)]", className)}
     {...props}
   />
 ))
@@ -287,7 +287,7 @@ const ComparisonPlanPrice = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("mt-1 font-heading text-2xl font-bold text-foreground", className)}
+    className={cn("mt-1 font-heading text-2xl font-bold text-[var(--foregrounds-primary)]", className)}
     {...props}
   />
 ))
@@ -298,7 +298,7 @@ const ComparisonCategory = React.forwardRef<
   React.HTMLAttributes<HTMLTableRowElement>
 >(({ className, children, ...props }, ref) => (
   <tr ref={ref} className={cn("bg-muted/50", className)} {...props}>
-    <td colSpan={100} className="px-4 py-3 text-sm font-semibold text-foreground">
+    <td colSpan={100} className="px-4 py-3 text-sm font-semibold text-[var(--foregrounds-primary)]">
       {children}
     </td>
   </tr>

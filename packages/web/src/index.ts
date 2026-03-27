@@ -70,7 +70,6 @@ export * from "./components/app-download"
 // Visual Effects
 // ============================================
 
-export * from "./components/gradient-text"
 export * from "./components/marquee"
 export * from "./components/animated-counter"
 
