@@ -65,9 +65,9 @@ const timelineLineVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-border",
-        dashed: "border-l border-dashed border-border bg-transparent",
-        dotted: "border-l border-dotted border-border bg-transparent",
+        default: "bg-[var(--container-border-alt)]",
+        dashed: "border-l border-dashed border-[var(--container-border-alt)] bg-transparent",
+        dotted: "border-l border-dotted border-[var(--container-border-alt)] bg-transparent",
       },
     },
     defaultVariants: {
@@ -175,7 +175,7 @@ const TimelineTime = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <time
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("text-sm text-[var(--foregrounds-tertiary)]", className)}
     {...props}
   />
 ))
@@ -187,7 +187,7 @@ const TimelineDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-2 text-sm text-muted-foreground", className)}
+    className={cn("mt-2 text-sm text-[var(--foregrounds-tertiary)]", className)}
     {...props}
   />
 ))
@@ -225,7 +225,7 @@ const TimelineHorizontalLine = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "absolute left-[calc(50%+12px)] top-3 h-px w-[calc(100%-24px)] bg-border",
+      "absolute left-[calc(50%+12px)] top-3 h-px w-[calc(100%-24px)] bg-[var(--container-border-alt)]",
       className
     )}
     {...props}

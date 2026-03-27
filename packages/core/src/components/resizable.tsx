@@ -276,33 +276,36 @@ interface ResizableHandleProps extends React.HTMLAttributes<HTMLDivElement> {
   withHandle?: boolean
 }
 
-const ResizableHandle = React.forwardRef<HTMLDivElement, ResizableHandleProps>(
-  ({ className, withHandle = false, ...props }, ref) => {
+const ResizableHandle = React.forwardRef<HTMLDivElement, ResizableHandleProps & { index?: number }>(
+  ({ className, withHandle = false, index = 0, ...props }, ref) => {
     const { direction, startResize, isResizing } = React.useContext(
       ResizablePanelGroupContext
     )
-    const indexRef = React.useRef<number>(-1)
-
-    // Determine handle index based on DOM position
-    React.useEffect(() => {
-      const el = (ref as React.RefObject<HTMLDivElement>)?.current
-      if (!el) return
-      const parent = el.parentElement
-      if (!parent) return
-      const handles = Array.from(parent.querySelectorAll("[data-resizable-handle]"))
-      indexRef.current = handles.indexOf(el)
-    }, [ref])
+    const innerRef = React.useRef<HTMLDivElement>(null)
 
     const handleMouseDown = (e: React.MouseEvent) => {
       e.preventDefault()
-      if (indexRef.current >= 0) {
-        startResize(indexRef.current)
+      // Determine index from sibling position at runtime
+      const el = innerRef.current
+      if (el) {
+        const parent = el.parentElement
+        if (parent) {
+          const handles = Array.from(parent.querySelectorAll("[data-resizable-handle]"))
+          const idx = handles.indexOf(el)
+          startResize(idx >= 0 ? idx : index)
+          return
+        }
       }
+      startResize(index)
     }
 
     return (
       <div
-        ref={ref}
+        ref={(node) => {
+          (innerRef as React.MutableRefObject<HTMLDivElement | null>).current = node
+          if (typeof ref === "function") ref(node)
+          else if (ref) ref.current = node
+        }}
         data-resizable-handle
         className={cn(
           "relative flex items-center justify-center bg-border",
@@ -311,7 +314,7 @@ const ResizableHandle = React.forwardRef<HTMLDivElement, ResizableHandleProps>(
             : "h-px cursor-row-resize",
           "after:absolute after:inset-y-0 after:left-1/2 after:w-1 after:-translate-x-1/2",
           "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1",
-          isResizing && "bg-primary",
+          isResizing && "bg-[var(--interactive-bg-active)]",
           className
         )}
         onMouseDown={handleMouseDown}

@@ -81,7 +81,7 @@ const NavigationDrawer = React.forwardRef<
       ref={ref}
       data-collapsed={collapsed}
       className={cn(
-        "flex h-screen flex-col border-r bg-background transition-all duration-300",
+        "flex h-full flex-col border-r border-[var(--container-border)] bg-[var(--container-bg)] transition-all duration-300",
         collapsed ? "w-16" : "w-64",
         className
       )}
@@ -103,7 +103,7 @@ const NavigationDrawerHeader = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "flex h-14 items-center border-b px-4",
+        "flex h-14 items-center border-b border-[var(--container-border)] px-4",
         collapsed && "justify-center px-2",
         className
       )}
@@ -133,7 +133,7 @@ const NavigationDrawerFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("border-t p-2", className)}
+    className={cn("border-t border-[var(--container-border)] p-2", className)}
     {...props}
   />
 ))
@@ -167,12 +167,12 @@ const NavigationDrawerToggle = React.forwardRef<
 NavigationDrawerToggle.displayName = "NavigationDrawerToggle"
 
 const navigationDrawerItemVariants = cva(
-  "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+  "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-[var(--backgrounds-tertiary)] hover:text-[var(--foregrounds-primary)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-fg)]",
   {
     variants: {
       active: {
-        true: "bg-accent text-accent-foreground",
-        false: "text-muted-foreground",
+        true: "bg-[var(--interactive-bg-active)] text-[var(--interactive-fg-active)]",
+        false: "text-[var(--foregrounds-secondary)]",
       },
     },
     defaultVariants: {

@@ -101,25 +101,41 @@ function formatExpiry(value: string): string {
   return cleaned
 }
 
-const CardIcon = ({ type }: { type: CardType }) => {
-  const iconClasses = "h-6 w-6"
+// SVG logos for card processors — inline to avoid external image deps
+const VisaLogo = () => (
+  <svg viewBox="0 0 48 16" width="38" height="12" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <text x="0" y="13" fontFamily="Arial" fontWeight="800" fontSize="14" fill="#1A1F71" letterSpacing="-0.5">VISA</text>
+  </svg>
+)
 
+const MastercardLogo = () => (
+  <svg viewBox="0 0 36 24" width="36" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="13" cy="12" r="10" fill="#EB001B" />
+    <circle cx="23" cy="12" r="10" fill="#F79E1B" />
+    <path d="M18 4.8A10 10 0 0 1 22.2 12 10 10 0 0 1 18 19.2 10 10 0 0 1 13.8 12 10 10 0 0 1 18 4.8z" fill="#FF5F00" />
+  </svg>
+)
+
+const AmexLogo = () => (
+  <svg viewBox="0 0 50 16" width="40" height="13" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <text x="0" y="12" fontFamily="Arial" fontWeight="700" fontSize="11" fill="#2E77BC" letterSpacing="0.5">AMEX</text>
+  </svg>
+)
+
+const DiscoverLogo = () => (
+  <svg viewBox="0 0 64 16" width="52" height="13" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <text x="0" y="12" fontFamily="Arial" fontWeight="700" fontSize="10" fill="#F76F20" letterSpacing="0.2">DISCOVER</text>
+  </svg>
+)
+
+const CardIcon = ({ type }: { type: CardType }) => {
   switch (type) {
-    case "visa":
-      return <span className={cn(iconClasses, "text-blue-600 font-bold text-xs")}>VISA</span>
-    case "mastercard":
-      return (
-        <div className="flex -space-x-1">
-          <div className="h-4 w-4 rounded-full bg-red-500" />
-          <div className="h-4 w-4 rounded-full bg-yellow-500 opacity-80" />
-        </div>
-      )
-    case "amex":
-      return <span className={cn(iconClasses, "text-blue-500 font-bold text-xs")}>AMEX</span>
-    case "discover":
-      return <span className={cn(iconClasses, "text-orange-500 font-bold text-xs")}>DISC</span>
+    case "visa":      return <VisaLogo />
+    case "mastercard": return <MastercardLogo />
+    case "amex":      return <AmexLogo />
+    case "discover":  return <DiscoverLogo />
     default:
-      return <CreditCard className={cn(iconClasses, "text-muted-foreground")} />
+      return <CreditCard className="h-5 w-5 text-[var(--foregrounds-quinary)]" />
   }
 }
 
