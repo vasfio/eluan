@@ -10,7 +10,7 @@ import {
   Modal,
   Dimensions,
 } from "react-native"
-import { spacing, radii, fontSizes } from "@ragnar/tokens"
+import { spacing, radii, fontSizes } from "@vasf/ragnar-tokens"
 
 export interface ActionSheetOption {
   /** Unique key for the option */

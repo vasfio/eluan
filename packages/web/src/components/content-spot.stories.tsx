@@ -6,7 +6,7 @@ import {
   ContentSpotDescription,
   ContentSpotActions,
 } from "./content-spot"
-import { Button } from "@ragnar/core"
+import { Button } from "@vasf/ragnar-core"
 
 const meta: Meta<typeof ContentSpot> = {
   title: "Web/ContentSpot",

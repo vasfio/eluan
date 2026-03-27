@@ -2,6 +2,14 @@ import * as React from "react"
 import { Search, X, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
+function assignRef<T>(ref: React.ForwardedRef<T>, value: T | null) {
+  if (typeof ref === "function") {
+    ref(value)
+  } else if (ref) {
+    ;(ref as React.MutableRefObject<T | null>).current = value
+  }
+}
+
 export interface SearchInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "onChange"> {
   value?: string
@@ -131,8 +139,8 @@ export interface CommandSearchProps extends SearchInputProps {
 }
 
 const CommandSearch = React.forwardRef<HTMLInputElement, CommandSearchProps>(
-  ({ shortcutKey = "K", showShortcut = true, className, ...props }, ref) => {
-    const inputRef = React.useRef<HTMLInputElement>(null)
+  ({ shortcutKey = "K", showShortcut = true, className, onChange: _onChange, ...props }, ref) => {
+    const inputRef = React.useRef<HTMLInputElement | null>(null)
 
     React.useEffect(() => {
       const handleKeyDown = (e: KeyboardEvent) => {
@@ -148,11 +156,7 @@ const CommandSearch = React.forwardRef<HTMLInputElement, CommandSearchProps>(
 
     const combinedRef = (node: HTMLInputElement) => {
       inputRef.current = node
-      if (typeof ref === "function") {
-        ref(node)
-      } else if (ref) {
-        ref.current = node
-      }
+      assignRef(ref, node)
     }
 
     return (
@@ -201,7 +205,8 @@ const ExpandableSearch = React.forwardRef<HTMLInputElement, ExpandableSearchProp
   ) => {
     const [isExpanded, setIsExpanded] = React.useState(false)
     const [internalValue, setInternalValue] = React.useState(props.value || "")
-    const inputRef = React.useRef<HTMLInputElement>(null)
+    const inputRef = React.useRef<HTMLInputElement | null>(null)
+    const { onChange, ...inputProps } = props
 
     const handleFocus = () => setIsExpanded(true)
 
@@ -213,7 +218,7 @@ const ExpandableSearch = React.forwardRef<HTMLInputElement, ExpandableSearchProp
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setInternalValue(e.target.value)
-      props.onChange?.(e.target.value)
+      onChange?.(e.target.value)
     }
 
     const handleIconClick = () => {
@@ -223,11 +228,7 @@ const ExpandableSearch = React.forwardRef<HTMLInputElement, ExpandableSearchProp
 
     const combinedRef = (node: HTMLInputElement) => {
       inputRef.current = node
-      if (typeof ref === "function") {
-        ref(node)
-      } else if (ref) {
-        ref.current = node
-      }
+      assignRef(ref, node)
     }
 
     return (
@@ -262,7 +263,7 @@ const ExpandableSearch = React.forwardRef<HTMLInputElement, ExpandableSearchProp
           onFocus={handleFocus}
           onBlur={handleBlur}
           placeholder={placeholder}
-          {...props}
+          {...inputProps}
         />
       </div>
     )
@@ -328,7 +329,7 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
     const [internalValue, setInternalValue] = React.useState(value || "")
     const [highlightedIndex, setHighlightedIndex] = React.useState(-1)
     const containerRef = React.useRef<HTMLDivElement>(null)
-    const inputRef = React.useRef<HTMLInputElement>(null)
+    const inputRef = React.useRef<HTMLInputElement | null>(null)
     const listRef = React.useRef<HTMLDivElement>(null)
 
     React.useEffect(() => {
@@ -460,11 +461,7 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
 
     const combinedRef = (node: HTMLInputElement) => {
       inputRef.current = node
-      if (typeof ref === "function") {
-        ref(node)
-      } else if (ref) {
-        ref.current = node
-      }
+      assignRef(ref, node)
     }
 
     const renderOption = (option: AutocompleteOption, index: number) => (

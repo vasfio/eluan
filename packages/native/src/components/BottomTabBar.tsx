@@ -8,7 +8,7 @@ import {
   TextStyle,
   useColorScheme,
 } from "react-native"
-import { spacing, fontSizes } from "@ragnar/tokens"
+import { spacing, fontSizes } from "@vasf/ragnar-tokens"
 
 export interface TabItem {
   /**

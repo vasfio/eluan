@@ -8,7 +8,7 @@ import {
   NewsletterInput,
   NewsletterDisclaimer,
 } from "./newsletter"
-import { Button } from "@ragnar/core"
+import { Button } from "@vasf/ragnar-core"
 
 const meta: Meta<typeof Newsletter> = {
   title: "Web/Newsletter",

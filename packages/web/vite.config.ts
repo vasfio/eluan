@@ -1,16 +1,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
-import dts from 'vite-plugin-dts'
 
 export default defineConfig({
-  plugins: [
-    react(),
-    dts({
-      insertTypesEntry: true,
-      rollupTypes: false,
-    }),
-  ],
+  plugins: [react()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -28,8 +21,8 @@ export default defineConfig({
         'react',
         'react-dom',
         'react/jsx-runtime',
-        '@ragnar/core',
-        '@ragnar/tokens',
+        '@vasf/ragnar-core',
+        '@vasf/ragnar-tokens',
         'class-variance-authority',
         'clsx',
         'tailwind-merge',
@@ -40,7 +33,7 @@ export default defineConfig({
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
-          '@ragnar/core': 'RagnarCore',
+          '@vasf/ragnar-core': 'RagnarCore',
         },
         assetFileNames: 'styles.css',
       },

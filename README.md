@@ -6,25 +6,28 @@ A comprehensive, multi-platform design system built with React and React Native.
 
 | Package | Description | Status |
 |---------|-------------|--------|
-| `@ragnar/tokens` | Shared design tokens (colors, spacing, typography) | ✅ Ready |
-| `@ragnar/core` | Core UI components (Button, Card, Dialog, etc.) | ✅ Ready |
-| `@ragnar/web` | Marketing & web-specific components (Hero, Pricing, etc.) | ✅ Ready |
-| `@ragnar/native` | React Native components | 🚧 In Progress |
+| `@vasf/ragnar-tokens` | Shared design tokens (colors, spacing, typography) | ✅ Ready |
+| `@vasf/ragnar-core` | Core UI components (Button, Card, Dialog, etc.) | ✅ Ready |
+| `@vasf/ragnar-web` | Marketing & web-specific components (Hero, Pricing, etc.) | ✅ Ready |
+| `@vasf/ragnar-native` | React Native components | 🚧 In Progress |
+
+The initial published release set is `@vasf/ragnar-tokens`, `@vasf/ragnar-core`, and `@vasf/ragnar-web`.
+`@vasf/ragnar-native` remains in the monorepo but is not part of the GitHub Actions release pipeline yet.
 
 ## Installation
 
 ```bash
 # Install core components for web
-npm install @ragnar/core
+npm install @vasf/ragnar-core
 
 # Install marketing components
-npm install @ragnar/web
+npm install @vasf/ragnar-web
 
 # Install React Native components
-npm install @ragnar/native
+npm install @vasf/ragnar-native
 
 # Install tokens only
-npm install @ragnar/tokens
+npm install @vasf/ragnar-tokens
 ```
 
 ## Usage
@@ -33,23 +36,23 @@ npm install @ragnar/tokens
 
 ```tsx
 // Core components
-import { Button, Card, Dialog } from '@ragnar/core'
-import '@ragnar/core/styles.css'
+import { Button, Card, Dialog } from '@vasf/ragnar-core'
+import '@vasf/ragnar-core/styles.css'
 
 // Marketing components
-import { Hero, PricingTable, Testimonial } from '@ragnar/web'
+import { Hero, PricingTable, Testimonial } from '@vasf/ragnar-web'
 ```
 
 ### React Native
 
 ```tsx
-import { Button, Card } from '@ragnar/native'
-import { colors, spacing } from '@ragnar/tokens'
+import { Button, Card } from '@vasf/ragnar-native'
+import { colors, spacing } from '@vasf/ragnar-tokens'
 ```
 
 ## Package Details
 
-### @ragnar/tokens
+### @vasf/ragnar-tokens
 
 Shared design tokens that work across all platforms:
 
@@ -62,7 +65,7 @@ Shared design tokens that work across all platforms:
 - Z-index scale
 - Breakpoints
 
-### @ragnar/core
+### @vasf/ragnar-core
 
 46+ UI components following shadcn/ui patterns:
 
@@ -74,7 +77,7 @@ Shared design tokens that work across all platforms:
 - **Advanced**: Calendar, Date Picker, DateTime Picker, Command, Carousel
 - **Custom**: Code Block, Rating, Rich Text Editor, Tree View, Stepper
 
-### @ragnar/web
+### @vasf/ragnar-web
 
 9 marketing-focused components:
 
@@ -88,7 +91,7 @@ Shared design tokens that work across all platforms:
 - **Quote**: Blockquotes with author attribution
 - **Testimonial**: Customer testimonials with ratings
 
-### @ragnar/native
+### @vasf/ragnar-native
 
 React Native equivalents using the same design tokens:
 
@@ -117,10 +120,10 @@ pnpm storybook:web
 ```
 ragnar/
 ├── packages/
-│   ├── tokens/      # @ragnar/tokens - Design tokens
-│   ├── core/        # @ragnar/core - Core UI components
-│   ├── web/         # @ragnar/web - Marketing components
-│   └── native/      # @ragnar/native - React Native components
+│   ├── tokens/      # @vasf/ragnar-tokens - Design tokens
+│   ├── core/        # @vasf/ragnar-core - Core UI components
+│   ├── web/         # @vasf/ragnar-web - Marketing components
+│   └── native/      # @vasf/ragnar-native - React Native components
 ├── package.json     # Root package.json with workspaces
 └── pnpm-workspace.yaml
 ```

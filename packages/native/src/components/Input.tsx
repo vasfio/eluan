@@ -10,7 +10,7 @@ import {
   useColorScheme,
   Pressable,
 } from "react-native"
-import { spacing, radii, fontSizes } from "@ragnar/tokens"
+import { spacing, radii, fontSizes } from "@vasf/ragnar-tokens"
 
 export interface InputProps extends Omit<TextInputProps, "style"> {
   /** Label text displayed above the input */

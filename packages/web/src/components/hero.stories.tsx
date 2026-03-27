@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Hero, HeroBadge, HeroTitle, HeroSubtitle, HeroActions, HeroImage } from "./hero"
-import { Button } from "@ragnar/core"
+import { Button } from "@vasf/ragnar-core"
 
 const meta: Meta<typeof Hero> = {
   title: "Web/Hero",

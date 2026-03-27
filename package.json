@@ -7,23 +7,28 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "pnpm --filter @ragnar/core dev & pnpm --filter @ragnar/web dev",
-    "build": "pnpm -r build",
-    "build:tokens": "pnpm --filter @ragnar/tokens build",
-    "build:core": "pnpm --filter @ragnar/core build",
-    "build:web": "pnpm --filter @ragnar/web build",
-    "build:native": "pnpm --filter @ragnar/native build",
+    "dev": "pnpm --filter @vasf/ragnar-core dev & pnpm --filter @vasf/ragnar-web dev",
+    "build": "pnpm run build:publish",
+    "build:publish": "pnpm --filter @vasf/ragnar-tokens build && pnpm --filter @vasf/ragnar-core build && pnpm --filter @vasf/ragnar-web build",
+    "build:tokens": "pnpm --filter @vasf/ragnar-tokens build",
+    "build:core": "pnpm --filter @vasf/ragnar-core build",
+    "build:web": "pnpm --filter @vasf/ragnar-web build",
+    "build:native": "pnpm --filter @vasf/ragnar-native build",
     "lint": "pnpm -r lint",
-    "storybook": "pnpm --filter @ragnar/core storybook",
-    "storybook:web": "pnpm --filter @ragnar/web storybook",
+    "storybook": "pnpm --filter @vasf/ragnar-core storybook",
+    "storybook:web": "pnpm --filter @vasf/ragnar-web storybook",
     "test": "pnpm -r --filter './packages/core' --filter './packages/web' --filter './packages/native' run test",
     "test:coverage": "pnpm -r --filter './packages/core' --filter './packages/web' --filter './packages/native' run test:coverage",
-    "build:ragnar": "node packages/ragnar/build.mjs",
-    "publish:ragnar": "pnpm --filter ragnar publish --access public"
+    "build:storybook": "pnpm --filter @vasf/ragnar-tokens build && pnpm --filter @vasf/ragnar-core build && pnpm --filter @vasf/ragnar-core build-storybook && pnpm --filter @vasf/ragnar-web build-storybook && node scripts/assemble-storybook.mjs",
+    "version-packages": "pnpm dlx @changesets/cli version",
+    "release": "pnpm dlx @changesets/cli publish"
   },
   "devDependencies": {
     "@types/node": "^20.14.2",
     "typescript": "^5.4.5"
   },
-  "packageManager": "pnpm@9.0.0"
+  "packageManager": "pnpm@10.32.1",
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  }
 }

@@ -1,6 +1,6 @@
 {
-  "name": "@ragnar/web",
-  "version": "1.0.0",
+  "name": "@vasf/ragnar-web",
+  "version": "1.0.2",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -19,9 +19,12 @@
   "sideEffects": [
     "**/*.css"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "dev": "vite build --watch",
-    "build": "vite build && cp src/styles.css dist/styles.css",
+    "build": "rm -rf dist && vite build && tsc -p tsconfig.build.json && cp src/styles.css dist/styles.css",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "storybook": "storybook dev -p 6007",
     "build-storybook": "storybook build",
@@ -40,8 +43,8 @@
     }
   },
   "dependencies": {
-    "@ragnar/core": "workspace:*",
-    "@ragnar/tokens": "workspace:*",
+    "@vasf/ragnar-core": "workspace:*",
+    "@vasf/ragnar-tokens": "workspace:*",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.395.0",

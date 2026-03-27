@@ -18,7 +18,7 @@ import {
   ContactFormTextarea,
   ContactFormSelect,
 } from "./contact-form"
-import { Button } from "@ragnar/core"
+import { Button } from "@vasf/ragnar-core"
 import { Mail, Phone, MapPin, Twitter, Linkedin, Github } from "lucide-react"
 
 const meta: Meta<typeof ContactSection> = {

@@ -12,7 +12,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native"
-import { spacing, radii } from "@ragnar/tokens"
+import { spacing, radii } from "@vasf/ragnar-tokens"
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window")
 

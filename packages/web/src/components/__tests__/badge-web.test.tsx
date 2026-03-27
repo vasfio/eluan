@@ -1,4 +1,4 @@
-// Web package smoke tests — components that compose from @ragnar/core
+// Web package smoke tests — components that compose from @vasf/ragnar-core
 // These tests verify they render correctly in the web context
 
 import { render, screen } from "@testing-library/react";

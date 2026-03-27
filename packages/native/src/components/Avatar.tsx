@@ -9,7 +9,7 @@ import {
   ImageSourcePropType,
   useColorScheme,
 } from "react-native"
-import { radii, fontSizes } from "@ragnar/tokens"
+import { radii, fontSizes } from "@vasf/ragnar-tokens"
 
 export interface AvatarProps {
   /** Image source (uri or require) */

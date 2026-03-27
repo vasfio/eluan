@@ -1,5 +1,5 @@
-// @ragnar/web - Marketing & Web-specific Components
-// These components depend on @ragnar/core
+// @vasf/ragnar-web - Marketing & Web-specific Components
+// These components depend on @vasf/ragnar-core
 
 // ============================================
 // Marketing Sections
