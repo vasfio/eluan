@@ -9,7 +9,7 @@ import {
   TextInputProps,
   useColorScheme,
 } from "react-native"
-import { spacing, radii, fontSizes } from "@vasf/ragnar-tokens"
+import { spacing, radius, fontSizes } from "@vasf/ragnar-tokens"
 
 export interface TextAreaProps extends Omit<TextInputProps, "style" | "multiline"> {
   /** Label text displayed above the textarea */
@@ -85,7 +85,7 @@ export const TextArea = forwardRef<TextInput, TextAreaProps>(
     }
 
     const lineHeight = 20 // approximate line height
-    const minHeight = rows * lineHeight + spacing[4]
+    const minHeight = rows * lineHeight + 4
     const computedHeight = autoGrow ? height : undefined
 
     const themedStyles = {
@@ -178,13 +178,13 @@ const styles = StyleSheet.create({
   label: {
     fontSize: fontSizes.sm,
     fontWeight: "500",
-    marginBottom: spacing[1],
+    marginBottom: 2,
   },
   input: {
     borderWidth: 1,
-    borderRadius: radii.md,
-    paddingHorizontal: spacing[3],
-    paddingVertical: spacing[2],
+    borderRadius: 6,
+    paddingHorizontal: 4,
+    paddingVertical: 2,
     fontSize: fontSizes.base,
   },
   helperText: {
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: spacing[1],
+    marginTop: 2,
   },
   count: {
     fontSize: fontSizes.xs,

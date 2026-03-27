@@ -1,0 +1,345 @@
+/* ============================================
+ * LAYER 1: Primitives
+ * Raw design tokens - colors, radius, sizing, spacing, viewports
+ * Applied via data-theme="Mode 1" (default primitives)
+ * ============================================ */
+
+[data-theme="Mode 1"],
+:root {
+  /* ----------------------------------------
+   * Color Primitives
+   * ---------------------------------------- */
+
+  /* Blaze Orange */
+  --color-blazeorange-50: #fff6ed;
+  --color-blazeorange-100: #ffead3;
+  --color-blazeorange-200: #ffd1a7;
+  --color-blazeorange-300: #ffaf69;
+  --color-blazeorange-400: #ff7900;
+  --color-blazeorange-500: #ff5100;
+  --color-blazeorange-600: #fd2900;
+  --color-blazeorange-700: #d11600;
+  --color-blazeorange-800: #a61a00;
+  --color-blazeorange-900: #842007;
+  --color-blazeorange-950: #470d04;
+
+  /* Blue Chill */
+  --color-bluechill-50: #edfefd;
+  --color-bluechill-100: #cbfbfa;
+  --color-bluechill-200: #99f6f5;
+  --color-bluechill-300: #3decef;
+  --color-bluechill-400: #00d6e0;
+  --color-bluechill-500: #00bbc9;
+  --color-bluechill-600: #0096a9;
+  --color-bluechill-700: #007888;
+  --color-bluechill-800: #00606e;
+  --color-bluechill-900: #00505c;
+  --color-bluechill-950: #00333d;
+
+  /* Blue Ribbon */
+  --color-blueribbon-50: #eff6ff;
+  --color-blueribbon-100: #dbeaff;
+  --color-blueribbon-200: #bedaff;
+  --color-blueribbon-300: #8dc4ff;
+  --color-blueribbon-400: #529fff;
+  --color-blueribbon-500: #317aff;
+  --color-blueribbon-600: #2355ff;
+  --color-blueribbon-700: #213eef;
+  --color-blueribbon-800: #2135bf;
+  --color-blueribbon-900: #1f3593;
+  --color-blueribbon-950: #182258;
+
+  /* Boston Blue */
+  --color-bostonblue-50: #ecfdff;
+  --color-bostonblue-100: #d2f8ff;
+  --color-bostonblue-200: #a6f0ff;
+  --color-bostonblue-300: #57e4ff;
+  --color-bostonblue-400: #00cdfa;
+  --color-bostonblue-500: #00b4e5;
+  --color-bostonblue-600: #008fc2;
+  --color-bostonblue-700: #00729c;
+  --color-bostonblue-800: #005d7e;
+  --color-bostonblue-900: #0a4d69;
+  --color-bostonblue-950: #043247;
+
+  /* Cerise */
+  --color-cerise-50: #fdf2f6;
+  --color-cerise-100: #fce7ef;
+  --color-cerise-200: #fbcfe0;
+  --color-cerise-300: #fba7c7;
+  --color-cerise-400: #f76da2;
+  --color-cerise-500: #f14285;
+  --color-cerise-600: #df2066;
+  --color-cerise-700: #bf1751;
+  --color-cerise-800: #9d1945;
+  --color-cerise-900: #821d3e;
+  --color-cerise-950: #4d0c20;
+
+  /* Crimson */
+  --color-crimson-50: #fdf2f2;
+  --color-crimson-100: #fde3e4;
+  --color-crimson-200: #fcccce;
+  --color-crimson-300: #fca5a9;
+  --color-crimson-400: #f96c74;
+  --color-crimson-500: #f33f4b;
+  --color-crimson-600: #df1d30;
+  --color-crimson-700: #bb1727;
+  --color-crimson-800: #9a1b26;
+  --color-crimson-900: #7f1f27;
+  --color-crimson-950: #450c10;
+
+  /* Electric Lime */
+  --color-electriclime-50: #f9fee2;
+  --color-electriclime-100: #f1fcbf;
+  --color-electriclime-200: #e2f87e;
+  --color-electriclime-300: #ccf100;
+  --color-electriclime-400: #b3e200;
+  --color-electriclime-500: #98cb00;
+  --color-electriclime-600: #79a200;
+  --color-electriclime-700: #5e7a00;
+  --color-electriclime-800: #4d6100;
+  --color-electriclime-900: #425100;
+  --color-electriclime-950: #222d00;
+
+  /* Electric Violet */
+  --color-electricviolet-50: #f9f5ff;
+  --color-electricviolet-100: #f2e8fe;
+  --color-electricviolet-200: #e7d5ff;
+  --color-electricviolet-300: #d7b4ff;
+  --color-electricviolet-400: #bd7fff;
+  --color-electricviolet-500: #a750ff;
+  --color-electricviolet-600: #9329f4;
+  --color-electricviolet-700: #7d1ad5;
+  --color-electricviolet-800: #6a1eac;
+  --color-electricviolet-900: #561d88;
+  --color-electricviolet-950: #390b63;
+
+  /* Forest Green */
+  --color-forestgreen-50: #eeffec;
+  --color-forestgreen-100: #d6ffd5;
+  --color-forestgreen-200: #adffad;
+  --color-forestgreen-300: #60fd6a;
+  --color-forestgreen-400: #00ed00;
+  --color-forestgreen-500: #00d500;
+  --color-forestgreen-600: #00ae00;
+  --color-forestgreen-700: #008700;
+  --color-forestgreen-800: #006a00;
+  --color-forestgreen-900: #005806;
+  --color-forestgreen-950: #003102;
+
+  /* Gossamer */
+  --color-gossamer-50: #effefa;
+  --color-gossamer-100: #c5fdf1;
+  --color-gossamer-200: #87fae4;
+  --color-gossamer-300: #00f0d5;
+  --color-gossamer-400: #00d9be;
+  --color-gossamer-500: #00bea8;
+  --color-gossamer-600: #00998a;
+  --color-gossamer-700: #007a70;
+  --color-gossamer-800: #00615b;
+  --color-gossamer-900: #00504b;
+  --color-gossamer-950: #00302f;
+
+  /* Lochmara */
+  --color-lochmara-50: #f0f9ff;
+  --color-lochmara-100: #def1ff;
+  --color-lochmara-200: #b8e5ff;
+  --color-lochmara-300: #77d2ff;
+  --color-lochmara-400: #00b8ff;
+  --color-lochmara-500: #00a0fb;
+  --color-lochmara-600: #007fdb;
+  --color-lochmara-700: #0066b4;
+  --color-lochmara-800: #005693;
+  --color-lochmara-900: #014877;
+  --color-lochmara-950: #072d4d;
+
+  /* Mai Tai */
+  --color-maitai-50: #fefaef;
+  --color-maitai-100: #fdf1d4;
+  --color-maitai-200: #fbe1a6;
+  --color-maitai-300: #f9cd75;
+  --color-maitai-400: #f4b24b;
+  --color-maitai-500: #ef973f;
+  --color-maitai-600: #d57634;
+  --color-maitai-700: #ae562c;
+  --color-maitai-800: #8c4426;
+  --color-maitai-900: #713923;
+  --color-maitai-950: #3f1d0f;
+
+  /* Mono */
+  --color-mono-0: #ffffff;
+  --color-mono-50: #fafafa;
+  --color-mono-100: #f5f5f5;
+  --color-mono-200: #e5e5e5;
+  --color-mono-300: #d4d4d4;
+  --color-mono-400: #a1a1a1;
+  --color-mono-500: #737373;
+  --color-mono-600: #525252;
+  --color-mono-700: #404040;
+  --color-mono-800: #262626;
+  --color-mono-900: #171717;
+  --color-mono-950: #0a0a0a;
+
+  /* Purple Heart */
+  --color-purpleheart-50: #f0f2ff;
+  --color-purpleheart-100: #e4e7ff;
+  --color-purpleheart-200: #ced2ff;
+  --color-purpleheart-300: #aeb3ff;
+  --color-purpleheart-400: #8b85ff;
+  --color-purpleheart-500: #715aff;
+  --color-purpleheart-600: #6032f9;
+  --color-purpleheart-700: #5225dc;
+  --color-purpleheart-800: #4324b2;
+  --color-purpleheart-900: #3a278b;
+  --color-purpleheart-950: #231854;
+
+  /* Red Violet */
+  --color-redviolet-50: #fcf4fe;
+  --color-redviolet-100: #fae8f6;
+  --color-redviolet-200: #f7d0ee;
+  --color-redviolet-300: #f5aae2;
+  --color-redviolet-400: #f06fcc;
+  --color-redviolet-500: #e944b7;
+  --color-redviolet-600: #d62098;
+  --color-redviolet-700: #b7177b;
+  --color-redviolet-800: #971965;
+  --color-redviolet-900: #7c1d55;
+  --color-redviolet-950: #4d0b32;
+
+  /* Rock Spray */
+  --color-rockspray-50: #fff6ef;
+  --color-rockspray-100: #feebda;
+  --color-rockspray-200: #fdd584;
+  --color-rockspray-300: #fdb782;
+  --color-rockspray-400: #f88b4a;
+  --color-rockspray-500: #f66e31;
+  --color-rockspray-600: #e65527;
+  --color-rockspray-700: #bd4122;
+  --color-rockspray-800: #963621;
+  --color-rockspray-900: #78301f;
+  --color-rockspray-950: #40160e;
+
+  /* Sea Green */
+  --color-seagreen-50: #eafef4;
+  --color-seagreen-100: #ccfbe3;
+  --color-seagreen-200: #9cf6cd;
+  --color-seagreen-300: #44ecb2;
+  --color-seagreen-400: #00d88d;
+  --color-seagreen-500: #00c078;
+  --color-seagreen-600: #009b62;
+  --color-seagreen-700: #007c53;
+  --color-seagreen-800: #006243;
+  --color-seagreen-900: #00503a;
+  --color-seagreen-950: #002d22;
+
+  /* Teak */
+  --color-teak-50: #fcfbf3;
+  --color-teak-100: #f9f7e0;
+  --color-teak-200: #f6ecc2;
+  --color-teak-300: #eedda2;
+  --color-teak-400: #e0c787;
+  --color-teak-500: #ceaf78;
+  --color-teak-600: #ac8b5f;
+  --color-teak-700: #876747;
+  --color-teak-800: #6d503a;
+  --color-teak-900: #5a4231;
+  --color-teak-950: #332319;
+
+  /* Torch Red */
+  --color-torchred-50: #fff1f1;
+  --color-torchred-100: #ffe0e0;
+  --color-torchred-200: #ffc5c5;
+  --color-torchred-300: #ff999a;
+  --color-torchred-400: #ff4855;
+  --color-torchred-500: #ff0000;
+  --color-torchred-600: #fd0000;
+  --color-torchred-700: #d30000;
+  --color-torchred-800: #ad0000;
+  --color-torchred-900: #8e0002;
+  --color-torchred-950: #4d0000;
+
+  /* Violet Eggplant */
+  --color-violeteggplant-50: #fcf4fe;
+  --color-violeteggplant-100: #f9e9fd;
+  --color-violeteggplant-200: #f3d2fa;
+  --color-violeteggplant-300: #eeadf9;
+  --color-violeteggplant-400: #e578f5;
+  --color-violeteggplant-500: #d84aec;
+  --color-violeteggplant-600: #bf2bd0;
+  --color-violeteggplant-700: #a024ac;
+  --color-violeteggplant-800: #84218b;
+  --color-violeteggplant-900: #6d2271;
+  --color-violeteggplant-950: #470d4a;
+
+  /* ----------------------------------------
+   * Radius Primitives
+   * ---------------------------------------- */
+  --radius-radius-none: 0rem;
+  --radius-radius-1: 0.0625rem;
+  --radius-radius-2: 0.125rem;
+  --radius-radius-4: 0.25rem;
+  --radius-radius-8: 0.5rem;
+  --radius-radius-12: 0.75rem;
+  --radius-radius-16: 1rem;
+  --radius-radius-20: 1.25rem;
+  --radius-radius-24: 1.5rem;
+  --radius-radius-32: 2rem;
+  --radius-radius-40: 2.5rem;
+  --radius-radius-80: 5rem;
+  --radius-radius-full: 62.4375rem;
+
+  /* ----------------------------------------
+   * Sizing Primitives
+   * ---------------------------------------- */
+  --sizing-size-none: 0rem;
+  --sizing-size-xxs: 0.5rem;
+  --sizing-size-xs: 1rem;
+  --sizing-size-s: 1.5rem;
+  --sizing-size-m: 2rem;
+  --sizing-size-l: 2.5rem;
+  --sizing-size-xl: 3rem;
+  --sizing-size-xxl: 5rem;
+  --sizing-size-xxxl: 10rem;
+
+  /* ----------------------------------------
+   * Spacing Primitives
+   * ---------------------------------------- */
+  --spacing-space-0: 0rem;
+  --spacing-space-2: 0.125rem;
+  --spacing-space-4: 0.25rem;
+  --spacing-space-8: 0.5rem;
+  --spacing-space-12: 0.75rem;
+  --spacing-space-16: 1rem;
+  --spacing-space-20: 1.25rem;
+  --spacing-space-24: 1.5rem;
+  --spacing-space-32: 2rem;
+  --spacing-space-40: 2.5rem;
+  --spacing-space-48: 3rem;
+  --spacing-space-56: 3.5rem;
+  --spacing-space-64: 4rem;
+  --spacing-space-72: 4.5rem;
+  --spacing-space-80: 5rem;
+  --spacing-space-88: 5.5rem;
+  --spacing-space-96: 6rem;
+  --spacing-space-104: 6.5rem;
+  --spacing-space-112: 7rem;
+  --spacing-space-120: 7.5rem;
+  --spacing-space-144: 9rem;
+  --spacing-space-160: 10rem;
+  --spacing-space-240: 15rem;
+  --spacing-space-320: 20rem;
+
+  /* ----------------------------------------
+   * Viewport Primitives
+   * ---------------------------------------- */
+  --viewports-screen-xxs: 20rem;
+  --viewports-screen-xs: 25.875rem;
+  --viewports-screen-s: 30rem;
+  --viewports-screen-m: 46.75rem;
+  --viewports-screen-l: 64rem;
+  --viewports-screen-xl: 80rem;
+  --viewports-screen-2xl: 90rem;
+  --viewports-screen-3xl: 120rem;
+  --viewports-screen-4xl: 161.25rem;
+
+}

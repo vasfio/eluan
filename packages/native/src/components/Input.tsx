@@ -10,7 +10,7 @@ import {
   useColorScheme,
   Pressable,
 } from "react-native"
-import { spacing, radii, fontSizes } from "@vasf/ragnar-tokens"
+import { spacing, radius, fontSizes } from "@vasf/ragnar-tokens"
 
 export interface InputProps extends Omit<TextInputProps, "style"> {
   /** Label text displayed above the input */
@@ -231,19 +231,19 @@ const styles = StyleSheet.create({
   label: {
     fontSize: fontSizes.sm,
     fontWeight: "500",
-    marginBottom: spacing[1],
+    marginBottom: 2,
   },
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
-    borderRadius: radii.md,
+    borderRadius: 6,
     minHeight: 44,
   },
   input: {
     flex: 1,
-    paddingHorizontal: spacing[3],
-    paddingVertical: spacing[2],
+    paddingHorizontal: 4,
+    paddingVertical: 2,
     fontSize: fontSizes.base,
   },
   inputWithLeft: {
@@ -253,24 +253,24 @@ const styles = StyleSheet.create({
     paddingRight: 0,
   },
   leftElement: {
-    paddingLeft: spacing[3],
+    paddingLeft: 4,
   },
   rightElement: {
-    paddingRight: spacing[3],
+    paddingRight: 4,
   },
   helperText: {
     fontSize: fontSizes.xs,
-    marginTop: spacing[1],
+    marginTop: 2,
   },
   disabled: {
     opacity: 0.5,
   },
   toggleButton: {
-    paddingHorizontal: spacing[2],
-    paddingVertical: spacing[1],
+    paddingHorizontal: 2,
+    paddingVertical: 2,
   },
   clearButton: {
-    paddingHorizontal: spacing[2],
-    paddingVertical: spacing[1],
+    paddingHorizontal: 2,
+    paddingVertical: 2,
   },
 })

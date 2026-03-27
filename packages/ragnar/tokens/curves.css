@@ -1,0 +1,41 @@
+/* ============================================
+ * Curve Scales
+ * Semantic border-radius tokens that adapt to Sharp, Slight, Sweeping, and Rounded
+ * These reference primitive radius tokens from Layer 1
+ * ============================================ */
+
+[data-curves="sharp"] {
+  --curves-xxs: var(--radius-radius-none);
+  --curves-xs: var(--radius-radius-none);
+  --curves-sm: var(--radius-radius-none);
+  --curves-md: var(--radius-radius-none);
+  --curves-lg: var(--radius-radius-none);
+  --curves-xl: var(--radius-radius-none);
+}
+
+[data-curves="slight"] {
+  --curves-xxs: var(--radius-radius-1);
+  --curves-xs: var(--radius-radius-2);
+  --curves-sm: var(--radius-radius-4);
+  --curves-md: var(--radius-radius-8);
+  --curves-lg: var(--radius-radius-12);
+  --curves-xl: var(--radius-radius-16);
+}
+
+[data-curves="sweeping"] {
+  --curves-xxs: var(--radius-radius-4);
+  --curves-xs: var(--radius-radius-8);
+  --curves-sm: var(--radius-radius-12);
+  --curves-md: var(--radius-radius-16);
+  --curves-lg: var(--radius-radius-20);
+  --curves-xl: var(--radius-radius-40);
+}
+
+[data-curves="rounded"] {
+  --curves-xxs: var(--radius-radius-16);
+  --curves-xs: var(--radius-radius-20);
+  --curves-sm: var(--radius-radius-32);
+  --curves-md: var(--radius-radius-40);
+  --curves-lg: var(--radius-radius-80);
+  --curves-xl: var(--radius-radius-full);
+}

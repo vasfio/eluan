@@ -8,7 +8,7 @@ import {
   PressableProps,
   useColorScheme,
 } from "react-native"
-import { spacing, radii, fontSizes, fontWeights } from "@vasf/ragnar-tokens"
+import { spacing, radius, fontSizes, fontWeights } from "@vasf/ragnar-tokens"
 
 export interface ButtonProps extends Omit<PressableProps, "style"> {
   children: React.ReactNode
@@ -93,8 +93,8 @@ export function Button({
       default: {
         container: {
           height: 40,
-          paddingHorizontal: spacing[4],
-          paddingVertical: spacing[2],
+          paddingHorizontal: 4,
+          paddingVertical: 2,
         },
         text: {
           fontSize: fontSizes.sm,
@@ -103,7 +103,7 @@ export function Button({
       sm: {
         container: {
           height: 36,
-          paddingHorizontal: spacing[3],
+          paddingHorizontal: 4,
         },
         text: {
           fontSize: fontSizes.sm,
@@ -112,7 +112,7 @@ export function Button({
       lg: {
         container: {
           height: 44,
-          paddingHorizontal: spacing[8],
+          paddingHorizontal: 8,
         },
         text: {
           fontSize: fontSizes.base,
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: radii.md,
+    borderRadius: 6,
   },
   text: {
     fontWeight: fontWeights.medium as TextStyle["fontWeight"],

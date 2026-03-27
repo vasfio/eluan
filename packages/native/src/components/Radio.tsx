@@ -303,7 +303,7 @@ export function Radio({
 
 const styles = StyleSheet.create({
   group: {
-    gap: spacing[3],
+    gap: 4,
   },
   groupHorizontal: {
     flexDirection: "row",
@@ -329,10 +329,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   labelContainerLeft: {
-    marginLeft: spacing[2],
+    marginLeft: 2,
   },
   labelContainerRight: {
-    marginRight: spacing[2],
+    marginRight: 2,
   },
   label: {
     fontSize: fontSizes.sm,

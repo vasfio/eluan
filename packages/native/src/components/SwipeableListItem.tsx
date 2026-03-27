@@ -267,10 +267,10 @@ const styles = StyleSheet.create({
   action: {
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: spacing[2],
+    paddingHorizontal: 2,
   },
   actionIcon: {
-    marginBottom: spacing[1],
+    marginBottom: 2,
   },
   actionLabel: {
     fontSize: fontSizes.xs,

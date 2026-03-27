@@ -10,7 +10,7 @@ import {
   TextStyle,
   useColorScheme,
 } from "react-native"
-import { spacing, radii, fontSizes } from "@vasf/ragnar-tokens"
+import { spacing, radius, fontSizes } from "@vasf/ragnar-tokens"
 
 export interface PickerOption<T = string> {
   /**
@@ -225,9 +225,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     height: 48,
-    paddingHorizontal: spacing[4],
+    paddingHorizontal: 4,
     borderWidth: 1,
-    borderRadius: radii.lg,
+    borderRadius: 8,
   },
   triggerDisabled: {
     opacity: 0.5,
@@ -246,16 +246,16 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     justifyContent: "center",
     alignItems: "center",
-    padding: spacing[4],
+    padding: 4,
   },
   modalContent: {
     width: "100%",
     maxHeight: "70%",
-    borderRadius: radii.xl,
+    borderRadius: 12,
     overflow: "hidden",
   },
   modalHeader: {
-    padding: spacing[4],
+    padding: 4,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   modalTitle: {
@@ -266,15 +266,15 @@ const styles = StyleSheet.create({
   option: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: spacing[3],
-    paddingHorizontal: spacing[4],
+    paddingVertical: 4,
+    paddingHorizontal: 4,
     minHeight: 52,
   },
   optionDisabled: {
     opacity: 0.5,
   },
   optionIcon: {
-    marginRight: spacing[3],
+    marginRight: 4,
   },
   optionLabel: {
     flex: 1,
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     height: StyleSheet.hairlineWidth,
   },
   cancelButton: {
-    paddingVertical: spacing[4],
+    paddingVertical: 4,
     borderTopWidth: StyleSheet.hairlineWidth,
   },
   cancelText: {

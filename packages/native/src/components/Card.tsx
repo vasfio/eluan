@@ -7,7 +7,7 @@ import {
   TextProps,
   useColorScheme,
 } from "react-native"
-import { spacing, radii } from "@vasf/ragnar-tokens"
+import { spacing, radius } from "@vasf/ragnar-tokens"
 
 export interface CardProps extends ViewProps {
   children: React.ReactNode
@@ -116,7 +116,7 @@ export function CardFooter({ children, style, ...props }: CardFooterProps) {
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: radii.lg,
+    borderRadius: 8,
     borderWidth: 1,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "column",
     gap: spacing[1.5],
-    padding: spacing[6],
+    padding: 8,
   },
   title: {
     fontSize: 18,
@@ -140,13 +140,13 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   content: {
-    padding: spacing[6],
+    padding: 8,
     paddingTop: 0,
   },
   footer: {
     flexDirection: "row",
     alignItems: "center",
-    padding: spacing[6],
+    padding: 8,
     paddingTop: 0,
   },
 })

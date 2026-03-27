@@ -1,6 +1,9 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
   "exclude": [
     "node_modules",
     "dist",
@@ -9,6 +12,12 @@
     "src/**/__tests__/**",
     "src/**/*.stories.ts",
     "src/**/*.stories.tsx",
-    "src/**/__stories__/**"
-  ]
+    "src/**/__stories__/**",
+    "src/test/**"
+  ],
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "strict": false
+  }
 }

@@ -115,7 +115,7 @@ export function Divider({
   ...props
 }: DividerProps) {
   const getInsetValue = (value: boolean | number | undefined) => {
-    if (value === true) return spacing[4]
+    if (value === true) return 4
     if (typeof value === "number") return value
     return 0
   }
@@ -147,11 +147,11 @@ export function Spacer({
   style,
 }: SpacerProps) {
   const sizeMap = {
-    xs: spacing[1],
-    sm: spacing[2],
-    md: spacing[4],
-    lg: spacing[6],
-    xl: spacing[8],
+    xs: 2,
+    sm: 2,
+    md: 4,
+    lg: 8,
+    xl: 8,
   }
 
   const numericSize = typeof size === "number" ? size : sizeMap[size]
@@ -192,14 +192,14 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: fontSizes.sm,
-    paddingHorizontal: spacing[3],
+    paddingHorizontal: 4,
   },
   labelLeft: {
     paddingLeft: 0,
-    paddingRight: spacing[3],
+    paddingRight: 4,
   },
   labelRight: {
-    paddingLeft: spacing[3],
+    paddingLeft: 4,
     paddingRight: 0,
   },
 })

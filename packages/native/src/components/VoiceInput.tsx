@@ -8,7 +8,7 @@ import {
   Animated,
   useColorScheme,
 } from "react-native"
-import { spacing, radius as radii, fontSizes } from "@vasf/ragnar-tokens"
+import { spacing, radius as radius, fontSizes } from "@vasf/ragnar-tokens"
 
 export type VoiceInputState = "idle" | "listening" | "processing" | "error"
 
@@ -324,13 +324,13 @@ export function VoiceInputInline({
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    gap: spacing[3],
+    gap: 4,
   },
   transcriptContainer: {
     width: "100%",
-    padding: spacing[3],
+    padding: 4,
     borderWidth: 1,
-    borderRadius: radii.lg,
+    borderRadius: 8,
     minHeight: 60,
   },
   transcript: {
@@ -364,8 +364,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   cancelButton: {
-    paddingVertical: spacing[2],
-    paddingHorizontal: spacing[4],
+    paddingVertical: 2,
+    paddingHorizontal: 4,
   },
   cancelText: {
     fontSize: fontSizes.sm,

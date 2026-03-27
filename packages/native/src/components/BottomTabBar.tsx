@@ -137,21 +137,21 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     borderTopWidth: StyleSheet.hairlineWidth,
-    paddingBottom: spacing[4], // Safe area padding
-    paddingTop: spacing[2],
+    paddingBottom: 4, // Safe area padding
+    paddingTop: 2,
   },
   tab: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: spacing[1],
+    paddingVertical: 2,
   },
   tabPressed: {
     opacity: 0.7,
   },
   iconContainer: {
     position: "relative",
-    marginBottom: spacing[1],
+    marginBottom: 2,
   },
   label: {
     fontSize: fontSizes.xs,

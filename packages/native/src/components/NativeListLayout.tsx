@@ -330,12 +330,12 @@ const styles = StyleSheet.create({
   listItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: spacing[3],
-    paddingHorizontal: spacing[4],
+    paddingVertical: 4,
+    paddingHorizontal: 4,
     minHeight: 56,
   },
   listItemLeft: {
-    marginRight: spacing[3],
+    marginRight: 4,
   },
   listItemContent: {
     flex: 1,
@@ -350,15 +350,15 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   listItemRight: {
-    marginLeft: spacing[3],
+    marginLeft: 4,
   },
   separator: {
     height: StyleSheet.hairlineWidth,
-    marginLeft: spacing[4],
+    marginLeft: 4,
   },
   sectionHeader: {
-    paddingVertical: spacing[2],
-    paddingHorizontal: spacing[4],
+    paddingVertical: 2,
+    paddingHorizontal: 4,
   },
   sectionHeaderText: {
     fontSize: fontSizes.xs,

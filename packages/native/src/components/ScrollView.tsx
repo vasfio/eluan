@@ -183,7 +183,7 @@ export interface HorizontalScrollViewProps extends Omit<ScrollViewProps, "horizo
 }
 
 export function HorizontalScrollView({
-  itemGap = spacing[4],
+  itemGap = 4,
   snapToItems = false,
   itemWidth,
   children,
@@ -295,8 +295,8 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   horizontalContent: {
-    paddingHorizontal: spacing[4],
-    paddingVertical: spacing[2],
+    paddingHorizontal: 4,
+    paddingVertical: 2,
     flexDirection: "row",
   },
   emptyContainer: {
@@ -306,7 +306,7 @@ const styles = StyleSheet.create({
   },
   emptyContent: {
     alignItems: "center",
-    padding: spacing[4],
+    padding: 4,
   },
   emptyTitle: {
     fontSize: fontSizes.lg,
@@ -316,6 +316,6 @@ const styles = StyleSheet.create({
   emptyDescription: {
     fontSize: fontSizes.sm,
     textAlign: "center",
-    marginTop: spacing[2],
+    marginTop: 2,
   },
 })

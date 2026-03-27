@@ -12,7 +12,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native"
-import { spacing, radii } from "@vasf/ragnar-tokens"
+import { spacing, radius } from "@vasf/ragnar-tokens"
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window")
 
@@ -188,8 +188,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#000000",
   },
   sheet: {
-    borderTopLeftRadius: radii.xl,
-    borderTopRightRadius: radii.xl,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -4 },
     shadowOpacity: 0.1,
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
   },
   handleContainer: {
     alignItems: "center",
-    paddingVertical: spacing[3],
+    paddingVertical: 4,
   },
   handle: {
     width: 36,
@@ -207,6 +207,6 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingHorizontal: spacing[4],
+    paddingHorizontal: 4,
   },
 })

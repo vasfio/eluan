@@ -9,7 +9,7 @@ import {
   Pressable,
   Dimensions,
 } from "react-native"
-import { spacing, radii, fontSizes } from "@vasf/ragnar-tokens"
+import { spacing, radius, fontSizes } from "@vasf/ragnar-tokens"
 
 export interface ToastProps {
   /** Toast ID */
@@ -308,8 +308,8 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     alignItems: "center",
-    paddingHorizontal: spacing[4],
-    gap: spacing[2],
+    paddingHorizontal: 4,
+    gap: 2,
     zIndex: 9999,
   },
   containerTop: {
@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
   toast: {
     width: "100%",
     maxWidth: 400,
-    borderRadius: radii.lg,
+    borderRadius: 8,
     borderWidth: 1,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
@@ -332,8 +332,8 @@ const styles = StyleSheet.create({
   toastContent: {
     flexDirection: "row",
     alignItems: "flex-start",
-    padding: spacing[3],
-    gap: spacing[2],
+    padding: 4,
+    gap: 2,
   },
   icon: {
     fontSize: 16,
@@ -351,15 +351,15 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   action: {
-    paddingHorizontal: spacing[2],
-    paddingVertical: spacing[1],
-    borderRadius: radii.sm,
+    paddingHorizontal: 2,
+    paddingVertical: 2,
+    borderRadius: 4,
   },
   actionText: {
     fontSize: fontSizes.xs,
     fontWeight: "600",
   },
   close: {
-    padding: spacing[1],
+    padding: 2,
   },
 })

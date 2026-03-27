@@ -9,7 +9,7 @@ import {
   Image,
   ScrollView,
 } from "react-native"
-import { spacing, radii, fontSizes } from "@vasf/ragnar-tokens"
+import { spacing, radius, fontSizes } from "@vasf/ragnar-tokens"
 
 export interface MediaItem {
   /**
@@ -188,17 +188,17 @@ export function MediaPicker({
 
 const styles = StyleSheet.create({
   container: {
-    gap: spacing[2],
+    gap: 2,
   },
   mediaList: {
-    gap: spacing[2],
-    paddingVertical: spacing[1],
+    gap: 2,
+    paddingVertical: 2,
   },
   mediaItem: {
     position: "relative",
     width: 80,
     height: 80,
-    borderRadius: radii.lg,
+    borderRadius: 8,
     overflow: "hidden",
   },
   mediaImage: {
@@ -207,12 +207,12 @@ const styles = StyleSheet.create({
   },
   durationBadge: {
     position: "absolute",
-    bottom: spacing[1],
-    right: spacing[1],
+    bottom: 2,
+    right: 2,
     backgroundColor: "rgba(0, 0, 0, 0.7)",
-    paddingHorizontal: spacing[1],
+    paddingHorizontal: 2,
     paddingVertical: 2,
-    borderRadius: radii.sm,
+    borderRadius: 4,
   },
   durationText: {
     color: "#ffffff",
@@ -221,8 +221,8 @@ const styles = StyleSheet.create({
   },
   removeButton: {
     position: "absolute",
-    top: spacing[1],
-    right: spacing[1],
+    top: 2,
+    right: 2,
     width: 20,
     height: 20,
     borderRadius: 10,
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
   addButton: {
     width: 80,
     height: 80,
-    borderRadius: radii.lg,
+    borderRadius: 8,
     borderWidth: 2,
     borderStyle: "dashed",
     alignItems: "center",
@@ -251,17 +251,17 @@ const styles = StyleSheet.create({
   },
   emptyState: {
     flexDirection: "row",
-    gap: spacing[2],
+    gap: 2,
   },
   pickerButton: {
     flex: 1,
     height: 100,
-    borderRadius: radii.lg,
+    borderRadius: 8,
     borderWidth: 2,
     borderStyle: "dashed",
     alignItems: "center",
     justifyContent: "center",
-    gap: spacing[2],
+    gap: 2,
   },
   pickerIcon: {
     fontSize: 32,
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
   cameraButton: {
     width: 100,
     height: 100,
-    borderRadius: radii.lg,
+    borderRadius: 8,
     borderWidth: 2,
     borderStyle: "dashed",
     alignItems: "center",

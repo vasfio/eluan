@@ -10,7 +10,7 @@ import {
   Modal,
   Dimensions,
 } from "react-native"
-import { spacing, radii, fontSizes } from "@vasf/ragnar-tokens"
+import { spacing, radius, fontSizes } from "@vasf/ragnar-tokens"
 
 export interface ActionSheetOption {
   /** Unique key for the option */
@@ -289,15 +289,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   sheet: {
-    borderTopLeftRadius: radii.xl,
-    borderTopRightRadius: radii.xl,
-    paddingTop: spacing[2],
-    paddingBottom: spacing[8],
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    paddingTop: 2,
+    paddingBottom: 8,
     maxHeight: screenHeight * 0.8,
   },
   header: {
-    paddingHorizontal: spacing[4],
-    paddingVertical: spacing[3],
+    paddingHorizontal: 4,
+    paddingVertical: 4,
     alignItems: "center",
   },
   title: {
@@ -308,19 +308,19 @@ const styles = StyleSheet.create({
   message: {
     fontSize: fontSizes.sm,
     textAlign: "center",
-    marginTop: spacing[1],
+    marginTop: 2,
   },
   options: {
-    paddingHorizontal: spacing[3],
+    paddingHorizontal: 4,
   },
   option: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: spacing[3],
-    paddingHorizontal: spacing[3],
+    paddingVertical: 4,
+    paddingHorizontal: 4,
   },
   optionIcon: {
-    marginRight: spacing[3],
+    marginRight: 4,
   },
   optionText: {
     flex: 1,
@@ -335,16 +335,16 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: 1,
-    marginHorizontal: spacing[3],
+    marginHorizontal: 4,
   },
   cancelContainer: {
-    paddingHorizontal: spacing[3],
-    paddingTop: spacing[3],
-    marginTop: spacing[2],
+    paddingHorizontal: 4,
+    paddingTop: 4,
+    marginTop: 2,
   },
   cancel: {
-    paddingVertical: spacing[3],
-    borderRadius: radii.lg,
+    paddingVertical: 4,
+    borderRadius: 8,
     alignItems: "center",
   },
   cancelText: {

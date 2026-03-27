@@ -8,7 +8,7 @@ import {
   useColorScheme,
   Pressable,
 } from "react-native"
-import { spacing, radii, fontSizes } from "@vasf/ragnar-tokens"
+import { spacing, radius, fontSizes } from "@vasf/ragnar-tokens"
 
 export interface AlertProps {
   /** Alert title */
@@ -317,16 +317,16 @@ export function AlertBanner({
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: radii.lg,
+    borderRadius: 8,
     borderWidth: 1,
-    padding: spacing[3],
+    padding: 4,
   },
   content: {
     flexDirection: "row",
     alignItems: "flex-start",
   },
   iconContainer: {
-    marginRight: spacing[3],
+    marginRight: 4,
     marginTop: 2,
   },
   defaultIcon: {
@@ -339,13 +339,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: fontSizes.sm,
     fontWeight: "600",
-    marginBottom: spacing[1],
+    marginBottom: 2,
   },
   description: {
     fontSize: fontSizes.sm,
   },
   action: {
-    marginTop: spacing[2],
+    marginTop: 2,
   },
   actionText: {
     fontSize: fontSizes.sm,
@@ -353,8 +353,8 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
   closeButton: {
-    marginLeft: spacing[2],
-    padding: spacing[1],
+    marginLeft: 2,
+    padding: 2,
   },
   closeIcon: {
     fontSize: 20,
@@ -366,7 +366,7 @@ const styles = StyleSheet.create({
   },
   inlineIcon: {
     fontSize: 12,
-    marginRight: spacing[1],
+    marginRight: 2,
   },
   inlineText: {
     fontSize: fontSizes.sm,
@@ -374,11 +374,11 @@ const styles = StyleSheet.create({
   banner: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: spacing[3],
-    paddingHorizontal: spacing[4],
+    paddingVertical: 4,
+    paddingHorizontal: 4,
   },
   bannerIcon: {
-    marginRight: spacing[2],
+    marginRight: 2,
   },
   bannerContent: {
     flex: 1,
@@ -388,7 +388,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   bannerAction: {
-    marginLeft: spacing[3],
+    marginLeft: 4,
   },
   bannerActionText: {
     fontSize: fontSizes.sm,
@@ -396,7 +396,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
   bannerClose: {
-    marginLeft: spacing[2],
-    padding: spacing[1],
+    marginLeft: 2,
+    padding: 2,
   },
 })

@@ -9,7 +9,7 @@ import {
   useColorScheme,
   Platform,
 } from "react-native"
-import { spacing, radii, fontSizes } from "@vasf/ragnar-tokens"
+import { spacing, radius, fontSizes } from "@vasf/ragnar-tokens"
 
 export interface BackButtonProps extends Omit<PressableProps, "style"> {
   /**
@@ -100,9 +100,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: spacing[2],
-    paddingHorizontal: spacing[1],
-    borderRadius: radii.sm,
+    paddingVertical: 2,
+    paddingHorizontal: 2,
+    borderRadius: 4,
   },
   pressed: {
     opacity: 0.7,

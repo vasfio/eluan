@@ -7,7 +7,7 @@ import {
   TextStyle,
   useColorScheme,
 } from "react-native"
-import { spacing, radii, fontSizes } from "@vasf/ragnar-tokens"
+import { spacing, radius, fontSizes } from "@vasf/ragnar-tokens"
 
 export interface BadgeProps {
   /** Badge content */
@@ -93,7 +93,7 @@ export function Badge({
       container: {
         paddingHorizontal: spacing[1.5] || 6,
         paddingVertical: 2,
-        borderRadius: radii.sm,
+        borderRadius: 4,
       },
       text: {
         fontSize: fontSizes.xs,
@@ -102,9 +102,9 @@ export function Badge({
     },
     default: {
       container: {
-        paddingHorizontal: spacing[2],
+        paddingHorizontal: 2,
         paddingVertical: spacing[0.5] || 2,
-        borderRadius: radii.full,
+        borderRadius: 9999,
       },
       text: {
         fontSize: fontSizes.xs,
@@ -113,9 +113,9 @@ export function Badge({
     },
     lg: {
       container: {
-        paddingHorizontal: spacing[3],
-        paddingVertical: spacing[1],
-        borderRadius: radii.full,
+        paddingHorizontal: 4,
+        paddingVertical: 2,
+        borderRadius: 9999,
       },
       text: {
         fontSize: fontSizes.sm,

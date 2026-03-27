@@ -245,10 +245,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   labelLeft: {
-    marginRight: spacing[3],
+    marginRight: 4,
   },
   labelRight: {
-    marginLeft: spacing[3],
+    marginLeft: 4,
   },
   label: {
     fontSize: fontSizes.sm,
@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
   labeledContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: spacing[2],
+    gap: 2,
   },
   stateLabel: {
     fontSize: fontSizes.sm,

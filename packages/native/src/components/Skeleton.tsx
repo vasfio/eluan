@@ -7,7 +7,7 @@ import {
   Animated,
   Easing,
 } from "react-native"
-import { spacing, radii } from "@vasf/ragnar-tokens"
+import { spacing, radius } from "@vasf/ragnar-tokens"
 
 import type { DimensionValue } from "react-native"
 
@@ -56,7 +56,7 @@ export function Skeleton({
   const getRadius = () => {
     if (radius !== undefined) {
       if (typeof radius === "number") return radius
-      const radiusMap = { sm: radii.sm, md: radii.md, lg: radii.lg, full: 9999 }
+      const radiusMap = { sm: 4, md: 6, lg: 8, full: 9999 }
       return radiusMap[radius]
     }
 
@@ -64,12 +64,12 @@ export function Skeleton({
       case "circular":
         return 9999
       case "rounded":
-        return radii.md
+        return 6
       case "rectangular":
         return 0
       case "text":
       default:
-        return radii.sm
+        return 4
     }
   }
 
@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   card: {
-    borderRadius: radii.lg,
+    borderRadius: 8,
     borderWidth: 1,
     overflow: "hidden",
   },
@@ -313,26 +313,26 @@ const styles = StyleSheet.create({
     borderRadius: 0,
   },
   cardContent: {
-    padding: spacing[4],
+    padding: 4,
   },
   cardTextGap: {
-    height: spacing[3],
+    height: 4,
   },
   listItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: spacing[2],
+    paddingVertical: 2,
   },
   listItemAvatar: {
-    marginRight: spacing[3],
+    marginRight: 4,
   },
   listItemContent: {
     flex: 1,
   },
   listItemTextGap: {
-    marginTop: spacing[2],
+    marginTop: 2,
   },
   listItemTrailing: {
-    marginLeft: spacing[2],
+    marginLeft: 2,
   },
 })

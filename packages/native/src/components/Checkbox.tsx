@@ -8,7 +8,7 @@ import {
   TextStyle,
   useColorScheme,
 } from "react-native"
-import { spacing, radii, fontSizes } from "@vasf/ragnar-tokens"
+import { spacing, radius, fontSizes } from "@vasf/ragnar-tokens"
 
 export interface CheckboxProps {
   /** Whether the checkbox is checked */
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
   },
   box: {
     borderWidth: 2,
-    borderRadius: radii.sm,
+    borderRadius: 4,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
   },
   labelContainer: {
     flex: 1,
-    marginLeft: spacing[2],
+    marginLeft: 2,
   },
   label: {
     fontSize: fontSizes.sm,
@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   group: {
-    gap: spacing[3],
+    gap: 4,
   },
   groupHorizontal: {
     flexDirection: "row",

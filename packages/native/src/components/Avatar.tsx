@@ -9,7 +9,7 @@ import {
   ImageSourcePropType,
   useColorScheme,
 } from "react-native"
-import { radii, fontSizes } from "@vasf/ragnar-tokens"
+import { radius, fontSizes } from "@vasf/ragnar-tokens"
 
 export interface AvatarProps {
   /** Image source (uri or require) */
@@ -113,7 +113,7 @@ export function Avatar({
         {
           width: numericSize,
           height: numericSize,
-          borderRadius: shape === "circle" ? numericSize / 2 : radii.md,
+          borderRadius: shape === "circle" ? numericSize / 2 : 6,
         },
         bordered && styles.bordered,
         style,
@@ -140,7 +140,7 @@ export function Avatar({
             {
               width: numericSize,
               height: numericSize,
-              borderRadius: shape === "circle" ? numericSize / 2 : radii.md,
+              borderRadius: shape === "circle" ? numericSize / 2 : 6,
             },
           ]}
           onError={() => setImageError(true)}
