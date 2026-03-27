@@ -56,7 +56,7 @@ const ContactInfo = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("space-y-8", className)} {...props} />
+  <div ref={ref} className={cn("flex flex-col justify-center space-y-8", className)} {...props} />
 ))
 ContactInfo.displayName = "ContactInfo"
 
@@ -75,7 +75,7 @@ const ContactTitle = React.forwardRef<
   <h2
     ref={ref}
     className={cn(
-      "text-3xl font-bold tracking-tight text-foreground sm:text-4xl",
+      "font-heading text-3xl font-semibold tracking-tight text-[var(--foregrounds-primary)] sm:text-4xl",
       className
     )}
     {...props}
@@ -89,7 +89,7 @@ const ContactDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-lg text-muted-foreground", className)}
+    className={cn("text-lg text-[var(--foregrounds-tertiary)]", className)}
     {...props}
   />
 ))
@@ -119,21 +119,21 @@ const ContactDetailItem = React.forwardRef<HTMLDivElement, ContactDetailItemProp
       {...props}
     >
       {icon && (
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--backgrounds-tertiary)] text-[var(--foregrounds-secondary)]">
           {icon}
         </div>
       )}
       <div>
-        <p className="text-sm font-medium text-muted-foreground">{label}</p>
+        <p className="text-sm font-medium text-[var(--foregrounds-tertiary)]">{label}</p>
         {href ? (
           <a
             href={href}
-            className="text-foreground hover:text-primary hover:underline"
+            className="text-[var(--foregrounds-primary)] hover:text-[var(--action-primary-bg)] hover:underline"
           >
             {value}
           </a>
         ) : (
-          <p className="text-foreground">{value}</p>
+          <p className="text-[var(--foregrounds-primary)]">{value}</p>
         )}
       </div>
     </div>
@@ -145,7 +145,7 @@ const ContactSocials = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("flex gap-4", className)} {...props} />
+  <div ref={ref} className={cn("flex gap-3", className)} {...props} />
 ))
 ContactSocials.displayName = "ContactSocials"
 
@@ -160,7 +160,7 @@ const ContactSocialLink = React.forwardRef<HTMLAnchorElement, ContactSocialLinkP
       ref={ref}
       aria-label={label}
       className={cn(
-        "flex h-10 w-10 items-center justify-center rounded-full bg-muted text-muted-foreground transition-colors hover:bg-primary hover:text-primary-foreground",
+        "flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--backgrounds-tertiary)] text-[var(--foregrounds-tertiary)] transition-colors hover:bg-[var(--action-primary-bg)] hover:text-[var(--action-primary-fg)]",
         className
       )}
       {...props}
@@ -176,7 +176,7 @@ const contactFormVariants = cva("space-y-6", {
   variants: {
     variant: {
       default: "",
-      card: "rounded-xl border bg-card p-6 shadow-sm md:p-8",
+      card: "rounded-xl border border-[var(--container-border)] bg-[var(--container-bg)] p-6 md:p-8",
     },
   },
   defaultVariants: {
@@ -225,11 +225,11 @@ const ContactFormLabel = React.forwardRef<
 >(({ className, required, children, ...props }, ref) => (
   <label
     ref={ref}
-    className={cn("text-sm font-medium text-foreground", className)}
+    className={cn("text-sm font-medium text-[var(--foregrounds-primary)]", className)}
     {...props}
   >
     {children}
-    {required && <span className="ml-1 text-red-500">*</span>}
+    {required && <span className="ml-1 text-[var(--negative-fg)]">*</span>}
   </label>
 ))
 ContactFormLabel.displayName = "ContactFormLabel"
@@ -241,7 +241,7 @@ const ContactFormInput = React.forwardRef<
   <input
     ref={ref}
     className={cn(
-      "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+      "flex h-10 w-full rounded-lg border border-[var(--container-border)] bg-[var(--container-bg)] px-3 py-2 text-sm text-[var(--foregrounds-primary)] placeholder:text-[var(--foregrounds-tertiary)] focus:outline-none focus:ring-2 focus:ring-[var(--action-primary-bg)] disabled:cursor-not-allowed disabled:opacity-50",
       className
     )}
     {...props}
@@ -256,7 +256,7 @@ const ContactFormTextarea = React.forwardRef<
   <textarea
     ref={ref}
     className={cn(
-      "flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+      "flex min-h-[120px] w-full rounded-lg border border-[var(--container-border)] bg-[var(--container-bg)] px-3 py-2 text-sm text-[var(--foregrounds-primary)] placeholder:text-[var(--foregrounds-tertiary)] focus:outline-none focus:ring-2 focus:ring-[var(--action-primary-bg)] disabled:cursor-not-allowed disabled:opacity-50",
       className
     )}
     {...props}
@@ -271,7 +271,7 @@ const ContactFormSelect = React.forwardRef<
   <select
     ref={ref}
     className={cn(
-      "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+      "flex h-10 w-full rounded-lg border border-[var(--container-border)] bg-[var(--container-bg)] px-3 py-2 text-sm text-[var(--foregrounds-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--action-primary-bg)] disabled:cursor-not-allowed disabled:opacity-50",
       className
     )}
     {...props}
@@ -285,7 +285,7 @@ const ContactFormError = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-red-500", className)}
+    className={cn("text-sm text-[var(--negative-fg)]", className)}
     {...props}
   />
 ))
@@ -298,7 +298,7 @@ const ContactFormSuccess = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "flex items-center gap-2 rounded-lg bg-green-50 p-4 text-green-700",
+      "flex items-center gap-2 rounded-lg bg-[var(--positive-bg)] p-4 text-[var(--positive-fg)]",
       className
     )}
     {...props}

@@ -4,8 +4,6 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@ragnar/core"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@ragnar/core"
-import { Badge } from "@ragnar/core"
 
 const pricingOptionsVariants = cva(
   "grid gap-6",
@@ -69,65 +67,67 @@ interface PricingCardProps {
 const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(
   ({ option }, ref) => {
     return (
-      <Card
+      <div
         ref={ref}
         className={cn(
-          "relative flex flex-col",
-          option.highlighted && "border-primary shadow-lg scale-105"
+          "relative flex flex-col rounded-xl border border-[var(--container-border)] bg-[var(--container-bg)] p-6",
+          option.highlighted && "border-[var(--action-primary-bg)] shadow-md"
         )}
       >
         {option.highlighted && option.highlightLabel && (
-          <Badge
-            className="absolute -top-3 left-1/2 -translate-x-1/2"
-            variant="default"
-          >
+          <span className="absolute -top-3 right-4 inline-flex items-center rounded-full bg-[var(--action-primary-bg)] px-3 py-1 text-xs font-medium text-[var(--action-primary-fg)]">
             {option.highlightLabel}
-          </Badge>
+          </span>
         )}
-        <CardHeader className="text-center">
-          <CardTitle className="text-xl">{option.name}</CardTitle>
+        <div className="mb-6 text-center">
+          <h3 className="font-heading text-lg font-semibold text-[var(--foregrounds-primary)]">
+            {option.name}
+          </h3>
           {option.description && (
-            <CardDescription>{option.description}</CardDescription>
+            <p className="mt-1 text-sm text-[var(--foregrounds-tertiary)]">
+              {option.description}
+            </p>
           )}
           <div className="mt-4">
             {option.originalPrice && (
-              <span className="mr-2 text-lg text-muted-foreground line-through">
+              <span className="mr-2 text-lg text-[var(--foregrounds-tertiary)] line-through">
                 {typeof option.originalPrice === "number"
                   ? `$${option.originalPrice}`
                   : option.originalPrice}
               </span>
             )}
-            <span className="font-heading text-4xl font-bold">
+            <span className="font-heading text-4xl font-semibold text-[var(--foregrounds-primary)]">
               {typeof option.price === "number"
                 ? `$${option.price}`
                 : option.price}
             </span>
             {option.period && (
-              <span className="text-muted-foreground">/{option.period}</span>
+              <span className="text-sm text-[var(--foregrounds-tertiary)]">/{option.period}</span>
             )}
           </div>
-        </CardHeader>
-        <CardContent className="flex-1">
-          <ul className="space-y-3">
-            {option.features.map((feature, index) => (
-              <li key={index} className="flex items-start gap-3">
-                <Check className="h-5 w-5 shrink-0 text-primary" />
-                <span className="text-sm text-muted-foreground">{feature}</span>
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-        <CardFooter>
-          <Button
-            className="w-full"
-            variant={option.buttonVariant ?? (option.highlighted ? "default" : "outline")}
-            disabled={option.disabled}
-            onClick={option.onSelect}
-          >
-            {option.buttonText ?? "Get Started"}
-          </Button>
-        </CardFooter>
-      </Card>
+        </div>
+        <ul className="mb-6 flex-1 space-y-3">
+          {option.features.map((feature, index) => (
+            <li key={index} className="flex items-start gap-3">
+              <Check className="h-4 w-4 shrink-0 text-[var(--positive-fg)]" />
+              <span className="text-sm text-[var(--foregrounds-secondary)]">{feature}</span>
+            </li>
+          ))}
+        </ul>
+        <Button
+          className="w-full"
+          variant={option.buttonVariant ?? (option.highlighted ? "default" : "outline")}
+          disabled={option.disabled}
+          onClick={option.onSelect}
+          style={
+            option.highlighted
+              ? { backgroundColor: "var(--action-primary-bg)", color: "var(--action-primary-fg)" }
+              : undefined
+          }
+        >
+          {option.buttonText ?? "Get Started"}
+        </Button>
+      </div>
     )
   }
 )

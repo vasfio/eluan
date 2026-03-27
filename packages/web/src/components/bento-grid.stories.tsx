@@ -146,10 +146,10 @@ export const GhostVariant: Story = {
   ),
 }
 
-export const GradientVariant: Story = {
+export const DottedVariant: Story = {
   render: () => (
     <BentoGrid columns={3}>
-      <BentoCard variant="gradient" span={2}>
+      <BentoCard variant="dotted" span={2}>
         <BentoCardIcon>
           <Sparkles className="h-6 w-6" />
         </BentoCardIcon>
@@ -159,7 +159,7 @@ export const GradientVariant: Story = {
         </BentoCardDescription>
         <BentoCardLink>Learn more</BentoCardLink>
       </BentoCard>
-      <BentoCard variant="gradient">
+      <BentoCard variant="dotted">
         <BentoCardIcon>
           <Code className="h-6 w-6" />
         </BentoCardIcon>

@@ -6,10 +6,10 @@ import { cn } from "@/lib/utils"
 const statsSectionVariants = cva("w-full", {
   variants: {
     variant: {
-      default: "bg-background",
-      muted: "bg-muted/50",
-      primary: "bg-primary text-primary-foreground",
-      dark: "bg-zinc-900 text-white",
+      default: "bg-[var(--container-bg)]",
+      muted: "bg-[var(--backgrounds-secondary)]",
+      primary: "bg-[var(--action-primary-bg)] text-[var(--action-primary-fg)]",
+      dark: "bg-[var(--backgrounds-primary)] text-[var(--foregrounds-primary)]",
     },
     size: {
       sm: "py-12",
@@ -61,7 +61,7 @@ const StatsTitle = React.forwardRef<
   <h2
     ref={ref}
     className={cn(
-      "font-heading text-3xl font-bold tracking-tight sm:text-4xl",
+      "font-heading text-3xl font-semibold tracking-tight text-[var(--foregrounds-primary)] sm:text-4xl",
       className
     )}
     {...props}
@@ -75,7 +75,7 @@ const StatsDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mx-auto mt-4 max-w-2xl text-lg opacity-80", className)}
+    className={cn("mx-auto mt-4 max-w-2xl text-lg text-[var(--foregrounds-tertiary)]", className)}
     {...props}
   />
 ))
@@ -113,8 +113,8 @@ const statItemVariants = cva("text-center", {
   variants: {
     variant: {
       default: "",
-      bordered: "border-l first:border-l-0 pl-8 first:pl-0",
-      card: "rounded-lg border bg-card p-6 shadow-sm",
+      bordered: "border-l border-[var(--container-border)] first:border-l-0 pl-8 first:pl-0",
+      card: "rounded-xl border border-[var(--container-border)] bg-[var(--container-bg)] p-6",
     },
   },
   defaultVariants: {
@@ -143,7 +143,7 @@ const StatValue = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("font-heading text-4xl font-bold tracking-tight lg:text-5xl", className)}
+    className={cn("font-heading text-4xl font-semibold tracking-tight text-[var(--foregrounds-primary)] lg:text-5xl", className)}
     {...props}
   />
 ))
@@ -155,7 +155,7 @@ const StatLabel = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("mt-2 text-sm font-medium opacity-80", className)}
+    className={cn("mt-2 text-sm text-[var(--foregrounds-tertiary)]", className)}
     {...props}
   />
 ))
@@ -171,9 +171,9 @@ const StatTrend = React.forwardRef<
     ref={ref}
     className={cn(
       "mt-1 text-sm font-medium",
-      direction === "up" && "text-green-500",
-      direction === "down" && "text-red-500",
-      direction === "neutral" && "opacity-60",
+      direction === "up" && "text-[var(--positive-fg)]",
+      direction === "down" && "text-[var(--negative-fg)]",
+      direction === "neutral" && "text-[var(--foregrounds-tertiary)]",
       className
     )}
     {...props}

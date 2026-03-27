@@ -55,8 +55,12 @@ const HeaderNavigation = React.forwardRef<HTMLElement, HeaderNavigationProps>(
 
     const renderNavItem = (item: NavItem, mobile = false) => {
       const baseClasses = mobile
-        ? "block w-full px-4 py-2 text-base font-medium text-foreground hover:bg-accent hover:text-accent-foreground rounded-md transition-colors"
-        : "text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+        ? "block w-full px-4 py-2 text-base font-medium text-[var(--foregrounds-primary)] hover:bg-[var(--backgrounds-tertiary)] rounded-lg transition-colors"
+        : "relative px-3 py-1.5 text-sm font-medium text-[var(--foregrounds-tertiary)] hover:text-[var(--foregrounds-primary)] transition-colors rounded-full"
+
+      const activeClasses = mobile
+        ? "bg-[var(--backgrounds-tertiary)]"
+        : "bg-[var(--backgrounds-tertiary)] text-[var(--foregrounds-primary)]"
 
       if (item.href) {
         return (
@@ -65,7 +69,7 @@ const HeaderNavigation = React.forwardRef<HTMLElement, HeaderNavigationProps>(
             href={item.href}
             className={cn(
               baseClasses,
-              item.active && (mobile ? "bg-accent" : "text-foreground")
+              item.active && activeClasses
             )}
             onClick={() => mobile && setMobileOpen(false)}
           >
@@ -84,7 +88,7 @@ const HeaderNavigation = React.forwardRef<HTMLElement, HeaderNavigationProps>(
           className={cn(
             baseClasses,
             "cursor-pointer text-left",
-            item.active && (mobile ? "bg-accent" : "text-foreground")
+            item.active && activeClasses
           )}
         >
           {item.label}
@@ -96,7 +100,7 @@ const HeaderNavigation = React.forwardRef<HTMLElement, HeaderNavigationProps>(
       <header
         ref={ref}
         className={cn(
-          "w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
+          "w-full border-b border-[var(--container-border)] bg-[var(--container-bg)]/95 backdrop-blur supports-[backdrop-filter]:bg-[var(--container-bg)]/60",
           sticky && "sticky top-0 z-50",
           transparent && "border-transparent bg-transparent",
           className
@@ -110,7 +114,7 @@ const HeaderNavigation = React.forwardRef<HTMLElement, HeaderNavigationProps>(
           </div>
 
           {/* Desktop Navigation */}
-          <nav className={cn("items-center gap-6", breakpointClasses[mobileBreakpoint].desktop)}>
+          <nav className={cn("items-center gap-1", breakpointClasses[mobileBreakpoint].desktop)}>
             {items.map((item) => renderNavItem(item))}
           </nav>
 
@@ -128,13 +132,13 @@ const HeaderNavigation = React.forwardRef<HTMLElement, HeaderNavigationProps>(
                   <span className="sr-only">Toggle menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <SheetContent side="right" className="w-[300px] border-l border-[var(--container-border)] bg-[var(--container-bg)] sm:w-[400px]">
                 <div className="flex flex-col gap-6 pt-6">
-                  <nav className="flex flex-col gap-2">
+                  <nav className="flex flex-col gap-1">
                     {items.map((item) => renderNavItem(item, true))}
                   </nav>
                   {actions && (
-                    <div className="flex flex-col gap-2 border-t pt-6">
+                    <div className="flex flex-col gap-2 border-t border-[var(--container-border)] pt-6">
                       {actions}
                     </div>
                   )}

@@ -54,7 +54,7 @@ const TeamTitle = React.forwardRef<
   <h2
     ref={ref}
     className={cn(
-      "font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl",
+      "font-heading text-3xl font-semibold tracking-tight text-[var(--foregrounds-primary)] sm:text-4xl",
       className
     )}
     {...props}
@@ -69,7 +69,7 @@ const TeamDescription = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "mx-auto mt-4 max-w-2xl text-lg text-muted-foreground",
+      "mx-auto mt-4 max-w-2xl text-lg text-[var(--foregrounds-tertiary)]",
       className
     )}
     {...props}
@@ -109,7 +109,7 @@ const teamMemberVariants = cva("group text-center", {
   variants: {
     variant: {
       default: "",
-      card: "rounded-lg border bg-card p-6 shadow-sm transition-shadow hover:shadow-md",
+      card: "rounded-xl border border-[var(--container-border)] bg-[var(--container-bg)] p-6",
     },
   },
   defaultVariants: {
@@ -139,19 +139,19 @@ export interface TeamMemberImageProps
 
 const TeamMemberImage = React.forwardRef<HTMLImageElement, TeamMemberImageProps>(
   ({ className, alt, fallback, ...props }, ref) => (
-    <div className="relative mx-auto mb-4 h-32 w-32 overflow-hidden rounded-full bg-muted">
+    <div className="relative mx-auto mb-4 aspect-square w-full max-w-[200px] overflow-hidden rounded-xl bg-[var(--backgrounds-tertiary)]">
       {props.src ? (
         <img
           ref={ref}
           alt={alt}
           className={cn(
-            "h-full w-full object-cover transition-transform group-hover:scale-105",
+            "h-full w-full object-cover",
             className
           )}
           {...props}
         />
       ) : (
-        <div className="flex h-full w-full items-center justify-center text-4xl font-medium text-muted-foreground">
+        <div className="flex h-full w-full items-center justify-center text-4xl font-medium text-[var(--foregrounds-tertiary)]">
           {fallback || alt?.charAt(0).toUpperCase()}
         </div>
       )}
@@ -166,7 +166,7 @@ const TeamMemberName = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn("font-heading text-lg font-semibold text-foreground", className)}
+    className={cn("font-medium text-[var(--foregrounds-primary)]", className)}
     {...props}
   />
 ))
@@ -178,7 +178,7 @@ const TeamMemberRole = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("text-sm text-[var(--foregrounds-tertiary)]", className)}
     {...props}
   />
 ))
@@ -190,7 +190,7 @@ const TeamMemberBio = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-2 text-sm text-muted-foreground", className)}
+    className={cn("mt-2 text-sm text-[var(--foregrounds-tertiary)]", className)}
     {...props}
   />
 ))
@@ -202,7 +202,7 @@ const TeamMemberLinks = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("mt-4 flex justify-center gap-3", className)}
+    className={cn("mt-4 flex justify-center gap-2", className)}
     {...props}
   />
 ))
@@ -219,7 +219,7 @@ const TeamMemberLink = React.forwardRef<HTMLAnchorElement, TeamMemberLinkProps>(
       ref={ref}
       aria-label={label}
       className={cn(
-        "text-muted-foreground transition-colors hover:text-foreground",
+        "flex h-8 w-8 items-center justify-center rounded-lg text-[var(--foregrounds-tertiary)] transition-colors hover:bg-[var(--backgrounds-tertiary)] hover:text-[var(--foregrounds-primary)]",
         className
       )}
       {...props}

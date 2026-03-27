@@ -33,13 +33,22 @@ const BentoGrid = React.forwardRef<HTMLDivElement, BentoGridProps>(
 BentoGrid.displayName = "BentoGrid"
 
 const bentoCardVariants = cva(
-  "group relative overflow-hidden rounded-xl border bg-card p-6 transition-all",
+  "group relative overflow-hidden rounded-xl border border-[var(--container-border)] bg-[var(--container-bg)] p-6",
   {
     variants: {
       variant: {
-        default: "hover:shadow-lg",
-        ghost: "border-transparent bg-muted/50 hover:bg-muted",
-        gradient: "border-transparent bg-gradient-to-br from-primary/10 to-primary/5",
+        default: "",
+        ghost: "border-transparent bg-[var(--backgrounds-secondary)]",
+        dotted: [
+          "border-transparent bg-[var(--backgrounds-secondary)]",
+          "[background-image:radial-gradient(var(--backgrounds-quaternary)_1px,transparent_1px)]",
+          "[background-size:16px_16px]",
+        ].join(" "),
+        grid: [
+          "",
+          "[background-image:linear-gradient(var(--container-border)_1px,transparent_1px),linear-gradient(to_right,var(--container-border)_1px,transparent_1px)]",
+          "[background-size:40px_40px]",
+        ].join(" "),
       },
       size: {
         default: "",
@@ -85,7 +94,7 @@ const BentoCard = React.forwardRef<HTMLDivElement, BentoCardProps>(
 
     if (href) {
       return (
-        <a href={href} className="focus:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+        <a href={href} className="focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--action-primary-bg)]">
           {content}
         </a>
       )
@@ -103,7 +112,7 @@ const BentoCardIcon = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary",
+      "mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--backgrounds-tertiary)] text-[var(--foregrounds-secondary)]",
       className
     )}
     {...props}
@@ -120,7 +129,7 @@ const BentoCardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      "font-heading text-lg font-semibold text-foreground transition-colors group-hover:text-primary",
+      "font-heading text-lg font-semibold text-[var(--foregrounds-primary)]",
       className
     )}
     {...props}
@@ -134,7 +143,7 @@ const BentoCardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-2 text-sm text-muted-foreground", className)}
+    className={cn("mt-2 text-sm text-[var(--foregrounds-tertiary)]", className)}
     {...props}
   />
 ))
@@ -158,7 +167,7 @@ const BentoCardImage = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "absolute inset-0 -z-10 opacity-10 transition-opacity group-hover:opacity-20",
+      "absolute inset-0 -z-10 opacity-10",
       className
     )}
     {...props}
@@ -179,7 +188,7 @@ const BentoCardBadge = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      "absolute right-4 top-4 inline-flex items-center rounded-full bg-primary px-2.5 py-0.5 text-xs font-medium text-primary-foreground",
+      "absolute right-4 top-4 inline-flex items-center rounded-full bg-[var(--action-primary-bg)] px-2.5 py-0.5 text-xs font-medium text-[var(--action-primary-fg)]",
       className
     )}
     {...props}
@@ -194,14 +203,14 @@ const BentoCardLink = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary transition-colors",
+      "mt-4 inline-flex items-center gap-1 text-sm font-medium text-[var(--action-primary-bg)]",
       className
     )}
     {...props}
   >
     {children || "Learn more"}
     <svg
-      className="h-4 w-4 transition-transform group-hover:translate-x-1"
+      className="h-4 w-4"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"

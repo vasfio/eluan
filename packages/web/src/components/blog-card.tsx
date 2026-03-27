@@ -33,14 +33,14 @@ const BlogGrid = React.forwardRef<HTMLDivElement, BlogGridProps>(
 BlogGrid.displayName = "BlogGrid"
 
 const blogCardVariants = cva(
-  "group flex flex-col overflow-hidden rounded-lg transition-shadow",
+  "group flex flex-col overflow-hidden rounded-xl border border-[var(--container-border)] bg-[var(--container-bg)] transition-colors",
   {
     variants: {
       variant: {
-        default: "bg-card",
-        bordered: "border bg-card hover:shadow-md",
-        elevated: "bg-card shadow-sm hover:shadow-lg",
-        minimal: "bg-transparent",
+        default: "",
+        bordered: "hover:border-[var(--action-primary-bg)]",
+        elevated: "shadow-sm hover:border-[var(--action-primary-bg)]",
+        minimal: "border-transparent bg-transparent",
       },
     },
     defaultVariants: {
@@ -83,8 +83,8 @@ const BlogCardImage = React.forwardRef<HTMLDivElement, BlogCardImageProps>(
     <div
       ref={ref}
       className={cn(
-        "relative overflow-hidden bg-muted",
-        aspectRatio === "video" && "aspect-video",
+        "relative overflow-hidden bg-[var(--backgrounds-tertiary)]",
+        aspectRatio === "video" && "aspect-[16/9]",
         aspectRatio === "square" && "aspect-square",
         aspectRatio === "wide" && "aspect-[2/1]",
         className
@@ -93,7 +93,7 @@ const BlogCardImage = React.forwardRef<HTMLDivElement, BlogCardImageProps>(
       {props.src && (
         <img
           alt={alt}
-          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          className="h-full w-full rounded-lg object-cover"
           {...props}
         />
       )}
@@ -121,7 +121,7 @@ const BlogCardMeta = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mb-3 flex flex-wrap items-center gap-2 text-xs text-muted-foreground",
+      "mb-3 flex flex-wrap items-center gap-2 text-xs text-[var(--foregrounds-tertiary)]",
       className
     )}
     {...props}
@@ -136,7 +136,7 @@ const BlogCardCategory = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      "inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary",
+      "text-xs font-medium uppercase tracking-wider text-[var(--action-primary-bg)]",
       className
     )}
     {...props}
@@ -148,7 +148,7 @@ const BlogCardDate = React.forwardRef<
   HTMLTimeElement,
   React.TimeHTMLAttributes<HTMLTimeElement>
 >(({ className, ...props }, ref) => (
-  <time ref={ref} className={cn("text-muted-foreground", className)} {...props} />
+  <time ref={ref} className={cn("text-[var(--foregrounds-tertiary)]", className)} {...props} />
 ))
 BlogCardDate.displayName = "BlogCardDate"
 
@@ -156,7 +156,7 @@ const BlogCardReadTime = React.forwardRef<
   HTMLSpanElement,
   React.HTMLAttributes<HTMLSpanElement>
 >(({ className, ...props }, ref) => (
-  <span ref={ref} className={cn("text-muted-foreground", className)} {...props} />
+  <span ref={ref} className={cn("text-[var(--foregrounds-tertiary)]", className)} {...props} />
 ))
 BlogCardReadTime.displayName = "BlogCardReadTime"
 
@@ -167,7 +167,7 @@ const BlogCardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      "font-heading text-lg font-semibold leading-tight text-foreground transition-colors group-hover:text-primary",
+      "font-heading text-lg font-semibold leading-tight text-[var(--foregrounds-primary)]",
       className
     )}
     {...props}
@@ -182,7 +182,7 @@ const BlogCardExcerpt = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "mt-2 line-clamp-2 text-sm text-muted-foreground",
+      "mt-2 line-clamp-2 text-sm text-[var(--foregrounds-tertiary)]",
       className
     )}
     {...props}
@@ -231,14 +231,14 @@ const BlogCardAuthorAvatar = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "h-8 w-8 overflow-hidden rounded-full bg-muted",
+      "h-8 w-8 overflow-hidden rounded-full bg-[var(--backgrounds-tertiary)]",
       className
     )}
   >
     {props.src ? (
       <img alt={alt} className="h-full w-full object-cover" {...props} />
     ) : (
-      <div className="flex h-full w-full items-center justify-center text-sm font-medium text-muted-foreground">
+      <div className="flex h-full w-full items-center justify-center text-sm font-medium text-[var(--foregrounds-tertiary)]">
         {fallback || alt?.charAt(0).toUpperCase()}
       </div>
     )}
@@ -252,7 +252,7 @@ const BlogCardAuthorName = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <span
     ref={ref}
-    className={cn("text-sm font-medium text-foreground", className)}
+    className={cn("text-sm font-medium text-[var(--foregrounds-primary)]", className)}
     {...props}
   />
 ))
@@ -265,14 +265,14 @@ const BlogCardLink = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      "ml-auto inline-flex items-center gap-1 text-sm font-medium text-primary transition-colors group-hover:underline",
+      "ml-auto inline-flex items-center gap-1 text-sm font-medium text-[var(--action-primary-bg)]",
       className
     )}
     {...props}
   >
     {children || "Read more"}
     <svg
-      className="h-4 w-4 transition-transform group-hover:translate-x-1"
+      className="h-4 w-4"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
@@ -296,7 +296,7 @@ const BlogCardFeatured = React.forwardRef<
       ref={ref as React.Ref<HTMLAnchorElement & HTMLElement>}
       href={href}
       className={cn(
-        "group grid overflow-hidden rounded-lg border bg-card md:grid-cols-2",
+        "group grid overflow-hidden rounded-xl border border-[var(--container-border)] bg-[var(--container-bg)] md:grid-cols-2",
         className
       )}
       {...props}

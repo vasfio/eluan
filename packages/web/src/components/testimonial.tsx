@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { Star, Quote } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Card, CardContent, Avatar, AvatarFallback, AvatarImage } from "@ragnar/core"
+import { Avatar, AvatarFallback, AvatarImage } from "@ragnar/core"
 
 const testimonialVariants = cva(
   "",
@@ -51,28 +51,28 @@ const Testimonial = React.forwardRef<HTMLDivElement, TestimonialProps>(
     const content = (
       <>
         {showQuoteIcon && variant !== "minimal" && (
-          <Quote className="mb-4 h-8 w-8 text-primary/20" />
+          <Quote className="mb-4 h-6 w-6 text-[var(--backgrounds-quaternary)]" />
         )}
-        <div className="mb-6 text-lg text-foreground">{children}</div>
+        <div className="mb-6 text-base font-normal text-[var(--foregrounds-secondary)]">{children}</div>
         {rating !== undefined && (
           <div className="mb-4 flex gap-1">
             {Array.from({ length: 5 }).map((_, i) => (
               <Star
                 key={i}
                 className={cn(
-                  "h-5 w-5",
+                  "h-4 w-4",
                   i < rating
-                    ? "fill-yellow-400 text-yellow-400"
-                    : "text-muted-foreground/30"
+                    ? "fill-[var(--cautionary-main)] text-[var(--cautionary-main)]"
+                    : "text-[var(--backgrounds-quaternary)]"
                 )}
               />
             ))}
           </div>
         )}
-        <div className="flex items-center gap-4">
-          <Avatar>
+        <div className="flex items-center gap-3">
+          <Avatar className="h-9 w-9">
             {author.avatar && <AvatarImage src={author.avatar} alt={author.name} />}
-            <AvatarFallback>
+            <AvatarFallback className="bg-[var(--backgrounds-tertiary)] text-xs text-[var(--foregrounds-tertiary)]">
               {author.name
                 .split(" ")
                 .map((n) => n[0])
@@ -82,9 +82,9 @@ const Testimonial = React.forwardRef<HTMLDivElement, TestimonialProps>(
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
-            <span className="font-semibold text-foreground">{author.name}</span>
+            <span className="font-medium text-[var(--foregrounds-primary)]">{author.name}</span>
             {(author.title || author.company) && (
-              <span className="text-sm text-muted-foreground">
+              <span className="text-sm text-[var(--foregrounds-tertiary)]">
                 {author.title}
                 {author.title && author.company && " at "}
                 {author.company}
@@ -97,9 +97,16 @@ const Testimonial = React.forwardRef<HTMLDivElement, TestimonialProps>(
 
     if (variant === "card") {
       return (
-        <Card ref={ref} className={cn("", className)} {...props}>
-          <CardContent className="pt-6">{content}</CardContent>
-        </Card>
+        <div
+          ref={ref}
+          className={cn(
+            "rounded-xl border border-[var(--container-border)] bg-[var(--container-bg)] p-6",
+            className
+          )}
+          {...props}
+        >
+          {content}
+        </div>
       )
     }
 
@@ -108,7 +115,7 @@ const Testimonial = React.forwardRef<HTMLDivElement, TestimonialProps>(
         <div
           ref={ref}
           className={cn(
-            "relative rounded-2xl bg-gradient-to-br from-primary/5 to-primary/10 p-8 md:p-12",
+            "rounded-xl border border-[var(--container-border)] bg-[var(--container-bg)] p-8 md:p-12",
             className
           )}
           {...props}
@@ -199,10 +206,10 @@ const TestimonialCarousel = React.forwardRef<HTMLDivElement, TestimonialCarousel
               key={index}
               onClick={() => setCurrentIndex(index)}
               className={cn(
-                "h-2 w-2 rounded-full transition-colors",
+                "h-2.5 w-2.5 rounded-full transition-colors",
                 index === currentIndex
-                  ? "bg-primary"
-                  : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                  ? "bg-[var(--action-primary-bg)]"
+                  : "bg-[var(--backgrounds-quaternary)] hover:bg-[var(--foregrounds-tertiary)]"
               )}
               aria-label={`Go to testimonial ${index + 1}`}
             />

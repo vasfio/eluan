@@ -33,19 +33,8 @@ SocialProof.displayName = "SocialProof"
 
 // Avatar stack
 export interface AvatarStackProps extends React.HTMLAttributes<HTMLDivElement> {
-  /**
-   * Maximum number of avatars to show
-   * @default 5
-   */
   max?: number
-  /**
-   * Total count (for "+X more" display)
-   */
   total?: number
-  /**
-   * Size of avatars
-   * @default "default"
-   */
   size?: "sm" | "default" | "lg"
 }
 
@@ -71,7 +60,7 @@ const AvatarStack = React.forwardRef<HTMLDivElement, AvatarStackProps>(
           <div
             key={index}
             className={cn(
-              "relative inline-block overflow-hidden rounded-full border-2 border-background bg-muted",
+              "relative inline-block overflow-hidden rounded-full border-2 border-[var(--container-bg)] bg-[var(--backgrounds-tertiary)]",
               sizes[size]
             )}
             style={{ zIndex: max - index }}
@@ -82,7 +71,7 @@ const AvatarStack = React.forwardRef<HTMLDivElement, AvatarStackProps>(
         {remaining > 0 && (
           <div
             className={cn(
-              "relative inline-flex items-center justify-center rounded-full border-2 border-background bg-muted text-xs font-medium text-muted-foreground",
+              "relative inline-flex items-center justify-center rounded-full border-2 border-[var(--container-bg)] bg-[var(--backgrounds-tertiary)] text-xs font-medium text-[var(--foregrounds-tertiary)]",
               sizes[size]
             )}
           >
@@ -97,23 +86,9 @@ AvatarStack.displayName = "AvatarStack"
 
 // Star rating display
 export interface StarRatingProps extends React.HTMLAttributes<HTMLDivElement> {
-  /**
-   * Rating value (0-5)
-   */
   rating: number
-  /**
-   * Total reviews count
-   */
   reviewCount?: number
-  /**
-   * Size of stars
-   * @default "default"
-   */
   size?: "sm" | "default" | "lg"
-  /**
-   * Whether to show the rating number
-   * @default true
-   */
   showValue?: boolean
 }
 
@@ -146,28 +121,26 @@ const StarRating = React.forwardRef<HTMLDivElement, StarRatingProps>(
         {...props}
       >
         <div className="flex gap-0.5">
-          {/* Full stars */}
           {Array.from({ length: fullStars }).map((_, i) => (
             <svg
               key={`full-${i}`}
-              className={cn(sizes[size], "text-yellow-400")}
+              className={cn(sizes[size], "text-[var(--cautionary-main)]")}
               fill="currentColor"
               viewBox="0 0 24 24"
             >
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
             </svg>
           ))}
-          {/* Half star */}
           {hasHalfStar && (
             <svg
-              className={cn(sizes[size], "text-yellow-400")}
+              className={cn(sizes[size], "text-[var(--cautionary-main)]")}
               fill="currentColor"
               viewBox="0 0 24 24"
             >
               <defs>
                 <linearGradient id="half-star">
                   <stop offset="50%" stopColor="currentColor" />
-                  <stop offset="50%" stopColor="#e5e7eb" />
+                  <stop offset="50%" stopColor="var(--backgrounds-tertiary)" />
                 </linearGradient>
               </defs>
               <path
@@ -176,11 +149,10 @@ const StarRating = React.forwardRef<HTMLDivElement, StarRatingProps>(
               />
             </svg>
           )}
-          {/* Empty stars */}
           {Array.from({ length: emptyStars }).map((_, i) => (
             <svg
               key={`empty-${i}`}
-              className={cn(sizes[size], "text-gray-200")}
+              className={cn(sizes[size], "text-[var(--backgrounds-quaternary)]")}
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -189,10 +161,10 @@ const StarRating = React.forwardRef<HTMLDivElement, StarRatingProps>(
           ))}
         </div>
         {showValue && (
-          <span className="font-medium">{rating.toFixed(1)}</span>
+          <span className="font-medium text-[var(--foregrounds-primary)]">{rating.toFixed(1)}</span>
         )}
         {reviewCount !== undefined && (
-          <span className="text-muted-foreground">
+          <span className="text-[var(--foregrounds-tertiary)]">
             ({reviewCount.toLocaleString()} reviews)
           </span>
         )}
@@ -225,14 +197,14 @@ const TrustBadge = React.forwardRef<HTMLDivElement, TrustBadgeProps>(
     <div
       ref={ref}
       className={cn(
-        "flex items-center gap-2 text-sm text-muted-foreground",
+        "flex items-center gap-2 text-sm text-[var(--foregrounds-tertiary)]",
         className
       )}
       {...props}
     >
       {icon || (
         <svg
-          className="h-4 w-4 text-green-500"
+          className="h-4 w-4 text-[var(--positive-fg)]"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -282,8 +254,8 @@ const CustomerCount = React.forwardRef<HTMLDivElement, CustomerCountProps>(
         className={cn("flex items-center gap-2", sizes[size], className)}
         {...props}
       >
-        <span className="font-bold">{count.toLocaleString()}+</span>
-        <span className="text-muted-foreground">{label}</span>
+        <span className="font-semibold text-[var(--foregrounds-primary)]">{count.toLocaleString()}+</span>
+        <span className="text-[var(--foregrounds-tertiary)]">{label}</span>
       </div>
     )
   }
@@ -298,7 +270,7 @@ const SocialProofBanner = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "flex flex-wrap items-center justify-center gap-6 border-y bg-muted/50 py-4 md:gap-12",
+      "flex flex-wrap items-center justify-center gap-6 border-y border-[var(--container-border)] bg-[var(--backgrounds-secondary)] py-4 md:gap-12",
       className
     )}
     {...props}
@@ -318,10 +290,10 @@ const FeaturedIn = React.forwardRef<HTMLDivElement, FeaturedInProps>(
       className={cn("text-center", className)}
       {...props}
     >
-      <p className="mb-6 text-sm font-medium uppercase tracking-wider text-muted-foreground">
+      <p className="mb-6 text-xs font-medium uppercase tracking-widest text-[var(--foregrounds-tertiary)]">
         {title}
       </p>
-      <div className="flex flex-wrap items-center justify-center gap-8 opacity-60 grayscale">
+      <div className="flex flex-wrap items-center justify-center gap-8 opacity-50 grayscale">
         {children}
       </div>
     </div>
