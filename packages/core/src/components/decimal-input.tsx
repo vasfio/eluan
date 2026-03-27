@@ -78,7 +78,7 @@ const DecimalInput = React.forwardRef<HTMLInputElement, DecimalInputProps>(
       suffix,
       currency,
       unit,
-      unitPosition = "suffix",
+      unitPosition = "prefix",
       thousandsSeparator = ",",
       decimalSeparator = ".",
       allowNegative = false,

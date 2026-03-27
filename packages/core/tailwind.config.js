@@ -15,7 +15,7 @@ export default {
       colors: {
         border: "var(--backgrounds-quaternary)",
         input: "var(--backgrounds-quaternary)",
-        ring: "var(--foregrounds-primary)",
+        ring: "var(--interactive-fg)",
         background: "var(--backgrounds-primary)",
         foreground: "var(--foregrounds-primary)",
         primary: {

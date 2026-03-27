@@ -64,14 +64,14 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
                   disabled={!isClickable}
                   onClick={() => isClickable && onStepClick?.(index)}
                   className={cn(
-                    "relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 text-sm font-semibold transition-all",
+                    "relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 text-sm font-medium transition-all",
                     isCompleted
-                      ? "border-primary bg-primary text-primary-foreground"
+                      ? "border-[var(--interactive-bg-active)] bg-[var(--interactive-bg-active)] text-[var(--interactive-fg-active)]"
                       : isCurrent
-                        ? "border-primary bg-background text-primary"
-                        : "border-muted-foreground/30 bg-background text-muted-foreground",
+                        ? "border-[var(--interactive-bg-active)] bg-[var(--backgrounds-primary)] text-[var(--interactive-bg-active)]"
+                        : "border-[var(--backgrounds-quaternary)] bg-[var(--backgrounds-primary)] text-[var(--foregrounds-quinary)]",
                     isClickable &&
-                      "cursor-pointer hover:border-primary hover:text-primary"
+                      "cursor-pointer hover:border-[var(--interactive-bg-active)] hover:text-[var(--interactive-bg-active)]"
                   )}
                 >
                   {isCompleted ? (
@@ -90,14 +90,14 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
                     className={cn(
                       "text-sm font-medium",
                       isCurrent || isCompleted
-                        ? "text-foreground"
-                        : "text-muted-foreground"
+                        ? "text-[var(--foregrounds-primary)]"
+                        : "text-[var(--foregrounds-tertiary)]"
                     )}
                   >
                     {step.title}
                   </p>
                   {step.description && (
-                    <p className="mt-0.5 text-xs text-muted-foreground">
+                    <p className="mt-0.5 text-xs text-[var(--foregrounds-tertiary)]">
                       {step.description}
                     </p>
                   )}
@@ -111,8 +111,8 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
                       ? "ml-5 h-full min-h-[24px] w-0.5 -translate-x-1/2"
                       : "mx-2 h-0.5 flex-1 min-w-[24px]",
                     index < currentStep
-                      ? "bg-primary"
-                      : "bg-muted-foreground/30"
+                      ? "bg-[var(--interactive-bg-active)]"
+                      : "bg-[var(--backgrounds-quaternary)]"
                   )}
                 />
               )}

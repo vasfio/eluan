@@ -10,12 +10,21 @@ const Toaster = ({ ...props }: ToasterProps) => {
       toastOptions={{
         classNames: {
           toast:
-            "group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg",
-          description: "group-[.toast]:text-muted-foreground",
+            "group toast group-[.toaster]:bg-[var(--backgrounds-secondary)] group-[.toaster]:text-[var(--foregrounds-primary)] group-[.toaster]:border-[var(--container-border-alt)] group-[.toaster]:shadow-lg",
+          description:
+            "group-[.toast]:text-[var(--foregrounds-tertiary)] group-[.toast]:text-sm",
           actionButton:
-            "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
+            "group-[.toast]:bg-[var(--interactive-bg-active)] group-[.toast]:text-[var(--interactive-fg-active)] group-[.toast]:font-medium",
           cancelButton:
-            "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
+            "group-[.toast]:bg-[var(--backgrounds-tertiary)] group-[.toast]:text-[var(--foregrounds-secondary)]",
+          error:
+            "group-[.toaster]:bg-[var(--destructive-bg-alt)] group-[.toaster]:text-[var(--destructive-fg)] group-[.toaster]:border-[var(--destructive-border)]",
+          success:
+            "group-[.toaster]:bg-[var(--positive-bg)] group-[.toaster]:text-[var(--positive-fg)] group-[.toaster]:border-[var(--positive-border)]",
+          warning:
+            "group-[.toaster]:bg-[var(--cautionary-bg)] group-[.toaster]:text-[var(--cautionary-fg)] group-[.toaster]:border-[var(--cautionary-border)]",
+          info:
+            "group-[.toaster]:bg-[var(--informative-bg)] group-[.toaster]:text-[var(--informative-fg)] group-[.toaster]:border-[var(--informative-border)]",
         },
       }}
       {...props}

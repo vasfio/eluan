@@ -81,14 +81,14 @@ const Rating = React.forwardRef<HTMLDivElement, RatingProps>(
           <Star
             className={cn(
               sizeClasses[size],
-              "text-muted-foreground/30"
+              "text-[var(--backgrounds-quaternary)] fill-[var(--backgrounds-quaternary)]"
             )}
           />
           {/* Filled star overlay */}
           <Star
             className={cn(
               sizeClasses[size],
-              "absolute inset-0.5 text-yellow-400 fill-yellow-400 transition-all",
+              "absolute inset-0.5 fill-[var(--cautionary-main)] text-[var(--cautionary-main)] transition-all",
               filled ? "opacity-100" : halfFilled ? "opacity-100" : "opacity-0"
             )}
             style={
@@ -113,7 +113,7 @@ const Rating = React.forwardRef<HTMLDivElement, RatingProps>(
       >
         {Array.from({ length: max }, (_, i) => renderStar(i))}
         {showValue && (
-          <span className="ml-2 text-sm text-muted-foreground">
+          <span className="ml-2 text-sm text-[var(--foregrounds-tertiary)]">
             {displayValue.toFixed(precision === 0.5 ? 1 : 0)} / {max}
           </span>
         )}

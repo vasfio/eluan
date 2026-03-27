@@ -2,7 +2,6 @@
 // Re-export all components
 
 export * from "./components/accordion"
-export * from "./components/alert"
 export * from "./components/alert-dialog"
 export * from "./components/aspect-ratio"
 export * from "./components/avatar"
@@ -43,7 +42,6 @@ export * from "./components/number-input"
 export * from "./components/pagination"
 export * from "./components/password-input"
 export * from "./components/phone-input"
-export * from "./components/pill"
 export * from "./components/popover"
 export * from "./components/progress"
 export * from "./components/radio-group"

@@ -147,15 +147,15 @@ const InputOTP = React.forwardRef<HTMLDivElement, InputOTPProps>(
               onFocus={(e) => e.target.select()}
               disabled={disabled}
               className={cn(
-                "h-10 w-10 rounded-md border border-input bg-background text-center text-sm font-medium shadow-sm transition-all",
-                "focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+                "h-11 w-11 rounded-lg border border-[var(--interactive-border)] bg-[var(--interactive-bg)] text-center text-base font-semibold tracking-widest shadow-sm transition-all",
+                "focus:outline-none focus:ring-2 focus:ring-[var(--interactive-fg)] focus:border-[var(--interactive-fg)] focus:ring-offset-0",
                 "disabled:cursor-not-allowed disabled:opacity-50",
-                value && "border-primary"
+                value && "border-[var(--interactive-bg-active)] bg-[var(--interactive-bg-alt2)]"
               )}
             />
             {index === Math.floor(length / 2) - 1 && length > 3 && (
               <div className="flex items-center justify-center">
-                <Dot className="h-4 w-4 text-muted-foreground" />
+                <Dot className="h-4 w-4 text-[var(--foregrounds-quinary)]" />
               </div>
             )}
           </React.Fragment>
@@ -211,7 +211,7 @@ const InputOTPSeparator = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement>
 >(({ ...props }, ref) => (
   <div ref={ref} role="separator" {...props}>
-    <Dot className="h-4 w-4 text-muted-foreground" />
+    <Dot className="h-4 w-4 text-[var(--foregrounds-quinary)]" />
   </div>
 ))
 InputOTPSeparator.displayName = "InputOTPSeparator"

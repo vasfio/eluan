@@ -197,7 +197,11 @@ const RichText = React.forwardRef<HTMLDivElement, RichTextProps>(
   ) => {
     const editor = useEditor({
       extensions: [
-        StarterKit,
+        StarterKit.configure({
+          heading: {
+            levels: [1, 2, 3],
+          },
+        }),
         Placeholder.configure({
           placeholder,
         }),

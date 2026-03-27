@@ -1,5 +1,7 @@
+"use client"
+
 import * as React from "react"
-import { Check, ChevronDown, X } from "lucide-react"
+import { ChevronDown, X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Badge } from "./badge"
@@ -41,22 +43,22 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
       options,
       value = [],
       onChange,
-      placeholder = "Select items...",
-      searchPlaceholder = "Search...",
+      placeholder = "Select items…",
+      searchPlaceholder = "Search…",
       emptyMessage = "No items found.",
       disabled = false,
       className,
-      maxDisplayedItems = 3,
+      maxDisplayedItems = 4,
     },
     ref
   ) => {
     const [open, setOpen] = React.useState(false)
 
     const handleSelect = (optionValue: string) => {
-      const newValue = value.includes(optionValue)
+      const next = value.includes(optionValue)
         ? value.filter((v) => v !== optionValue)
         : [...value, optionValue]
-      onChange?.(newValue)
+      onChange?.(next)
     }
 
     const handleRemove = (optionValue: string, e: React.MouseEvent) => {
@@ -66,7 +68,13 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
 
     const selectedOptions = options.filter((opt) => value.includes(opt.value))
     const displayedOptions = selectedOptions.slice(0, maxDisplayedItems)
-    const remainingCount = selectedOptions.length - maxDisplayedItems
+    const remaining = selectedOptions.length - maxDisplayedItems
+
+    // Split list: selected first, then unselected
+    const sortedOptions = [
+      ...options.filter((o) => value.includes(o.value)),
+      ...options.filter((o) => !value.includes(o.value)),
+    ]
 
     return (
       <Popover open={open} onOpenChange={setOpen}>
@@ -78,67 +86,77 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
             aria-expanded={open}
             disabled={disabled}
             className={cn(
-              "flex min-h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+              "flex min-h-10 w-full items-center justify-between rounded-md border border-[var(--interactive-border)] bg-[var(--interactive-bg)] px-3 py-2 text-sm",
+              "ring-offset-background focus:outline-none focus:ring-1 focus:ring-[var(--interactive-fg)] focus:border-[var(--interactive-fg)]",
+              "disabled:cursor-not-allowed disabled:opacity-50 transition-colors",
               className
             )}
           >
             <div className="flex flex-1 flex-wrap gap-1">
               {selectedOptions.length === 0 ? (
-                <span className="text-muted-foreground">{placeholder}</span>
+                <span className="text-[var(--foregrounds-quinary)]">{placeholder}</span>
               ) : (
                 <>
                   {displayedOptions.map((option) => (
                     <Badge
                       key={option.value}
                       variant="secondary"
-                      className="gap-1 pr-1"
+                      className="gap-1 pr-1 text-xs"
                     >
                       {option.label}
                       <button
                         type="button"
-                        className="ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                        className="rounded-full opacity-60 hover:opacity-100 transition-opacity outline-none"
                         onMouseDown={(e) => e.preventDefault()}
                         onClick={(e) => handleRemove(option.value, e)}
+                        aria-label={`Remove ${option.label}`}
                       >
-                        <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
+                        <X className="h-3 w-3" />
                       </button>
                     </Badge>
                   ))}
-                  {remainingCount > 0 && (
-                    <Badge variant="secondary">+{remainingCount} more</Badge>
+                  {remaining > 0 && (
+                    <Badge variant="secondary" className="text-xs">+{remaining}</Badge>
                   )}
                 </>
               )}
             </div>
-            <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            <ChevronDown className={cn("ml-2 h-4 w-4 shrink-0 opacity-50 transition-transform", open && "rotate-180")} />
           </button>
         </PopoverTrigger>
-        <PopoverContent className="w-full min-w-[var(--radix-popover-trigger-width)] p-0" align="start">
+        <PopoverContent
+          className="p-0 w-[var(--radix-popover-trigger-width)]"
+          align="start"
+          sideOffset={4}
+        >
           <Command>
-            <CommandInput placeholder={searchPlaceholder} />
+            <CommandInput placeholder={searchPlaceholder} className="h-9" />
             <CommandList>
-              <CommandEmpty>{emptyMessage}</CommandEmpty>
+              <CommandEmpty className="py-3 text-center text-sm text-[var(--foregrounds-tertiary)]">{emptyMessage}</CommandEmpty>
               <CommandGroup>
-                {options.map((option) => (
-                  <CommandItem
-                    key={option.value}
-                    value={option.value}
-                    disabled={option.disabled}
-                    onSelect={() => handleSelect(option.value)}
-                  >
-                    <div
+                {sortedOptions.map((option) => {
+                  const isSelected = value.includes(option.value)
+                  return (
+                    <CommandItem
+                      key={option.value}
+                      value={option.value}
+                      disabled={option.disabled}
+                      onSelect={() => handleSelect(option.value)}
                       className={cn(
-                        "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
-                        value.includes(option.value)
-                          ? "bg-primary text-primary-foreground"
-                          : "opacity-50 [&_svg]:invisible"
+                        "flex items-center justify-between gap-2 cursor-pointer",
+                        isSelected && "text-[var(--foregrounds-primary)] font-medium"
                       )}
                     >
-                      <Check className="h-4 w-4" />
-                    </div>
-                    {option.label}
-                  </CommandItem>
-                ))}
+                      <span>{option.label}</span>
+                      {isSelected && (
+                        <X
+                          className="h-3.5 w-3.5 shrink-0 text-[var(--foregrounds-tertiary)]"
+                          onClick={(e) => { e.stopPropagation(); handleSelect(option.value) }}
+                        />
+                      )}
+                    </CommandItem>
+                  )
+                })}
               </CommandGroup>
             </CommandList>
           </Command>

@@ -243,8 +243,35 @@ const DrawerHandle = React.forwardRef<
 ))
 DrawerHandle.displayName = "DrawerHandle"
 
+
+// DrawerPushLayout: wrap your main content with this to get push behaviour
+// Usage: <DrawerPushLayout side="left"><YourApp /></DrawerPushLayout>
+interface DrawerPushLayoutProps {
+  children: React.ReactNode
+  side?: "left" | "right"
+  width?: string
+  className?: string
+}
+
+const DrawerPushLayout = ({ children, side = "left", width = "280px", className }: DrawerPushLayoutProps) => {
+  const { open } = useDrawer()
+  return (
+    <div
+      className={cn("transition-all duration-300 ease-in-out", className)}
+      style={{
+        marginLeft: side === "left" && open ? width : undefined,
+        marginRight: side === "right" && open ? width : undefined,
+      }}
+    >
+      {children}
+    </div>
+  )
+}
+DrawerPushLayout.displayName = "DrawerPushLayout"
+
 export {
   Drawer,
+  DrawerPushLayout,
   DrawerPortal,
   DrawerOverlay,
   DrawerTrigger,

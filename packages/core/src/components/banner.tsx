@@ -5,25 +5,31 @@ import { X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const bannerVariants = cva(
-  "relative flex items-center gap-4 w-full px-4 py-3 text-sm",
+  "relative flex items-center gap-3 w-full px-4 py-3 text-sm font-medium",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground",
-        secondary: "bg-secondary text-secondary-foreground",
-        destructive: "bg-destructive text-destructive-foreground",
-        warning: "bg-yellow-500 text-white",
-        success: "bg-green-500 text-white",
-        info: "bg-blue-500 text-white",
+        default:
+          "bg-[var(--interactive-bg-active)] text-[var(--interactive-fg-active)]",
+        destructive:
+          "bg-[var(--destructive-bg-alt)] text-[var(--destructive-fg)] border border-[var(--destructive-border)]",
+        warning:
+          "bg-[var(--cautionary-bg)] text-[var(--cautionary-fg)] border border-[var(--cautionary-border)]",
+        success:
+          "bg-[var(--positive-bg)] text-[var(--positive-fg)] border border-[var(--positive-border)]",
+        info:
+          "bg-[var(--informative-bg)] text-[var(--informative-fg)] border border-[var(--informative-border)]",
+        neutral:
+          "bg-[var(--backgrounds-secondary)] text-[var(--foregrounds-primary)] border border-[var(--container-border-alt)]",
       },
       position: {
         top: "fixed top-0 left-0 right-0 z-50",
         bottom: "fixed bottom-0 left-0 right-0 z-50",
-        inline: "relative",
+        inline: "relative rounded-md",
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: "info",
       position: "inline",
     },
   }
@@ -39,43 +45,28 @@ export interface BannerProps
 }
 
 const Banner = React.forwardRef<HTMLDivElement, BannerProps>(
-  (
-    {
-      className,
-      variant,
-      position,
-      icon,
-      action,
-      dismissible = false,
-      onDismiss,
-      children,
-      ...props
-    },
-    ref
-  ) => {
-    return (
-      <div
-        ref={ref}
-        role="banner"
-        className={cn(bannerVariants({ variant, position }), className)}
-        {...props}
-      >
-        {icon && <span className="shrink-0">{icon}</span>}
-        <div className="flex-1">{children}</div>
-        {action && <div className="shrink-0">{action}</div>}
-        {dismissible && (
-          <button
-            type="button"
-            onClick={onDismiss}
-            className="shrink-0 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-            aria-label="Dismiss banner"
-          >
-            <X className="h-4 w-4" />
-          </button>
-        )}
-      </div>
-    )
-  }
+  ({ className, variant, position, icon, action, dismissible = false, onDismiss, children, ...props }, ref) => (
+    <div
+      ref={ref}
+      role="banner"
+      className={cn(bannerVariants({ variant, position }), className)}
+      {...props}
+    >
+      {icon && <span className="shrink-0 opacity-80">{icon}</span>}
+      <div className="flex-1">{children}</div>
+      {action && <div className="shrink-0">{action}</div>}
+      {dismissible && (
+        <button
+          type="button"
+          onClick={onDismiss}
+          className="shrink-0 rounded opacity-60 hover:opacity-100 transition-opacity focus:outline-none focus:ring-1 focus:ring-current"
+          aria-label="Dismiss"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      )}
+    </div>
+  )
 )
 Banner.displayName = "Banner"
 

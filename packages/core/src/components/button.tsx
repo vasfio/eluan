@@ -5,24 +5,27 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-normal ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        default:
+          "bg-[var(--action-primary-bg)] text-[var(--action-primary-fg)] hover:bg-[var(--action-primary-bg-hover)] active:bg-[var(--action-primary-bg-active)] shadow-sm hover:shadow-md",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+          "bg-[var(--destructive-bg)] text-[var(--destructive-fg)] hover:bg-[var(--destructive-bg-hover)] active:bg-[var(--destructive-bg-active)]",
         outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+          "border border-[var(--action-secondary-border)] bg-transparent text-[var(--action-secondary-fg)] hover:bg-[var(--action-secondary-bg-hover)] active:bg-[var(--action-secondary-bg-active)] active:text-[var(--action-secondary-fg-active)]",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+          "bg-[var(--backgrounds-tertiary)] text-[var(--foregrounds-primary)] hover:bg-[var(--backgrounds-quaternary)]",
+        ghost:
+          "bg-transparent text-[var(--foregrounds-secondary)] hover:bg-[var(--backgrounds-tertiary)] hover:text-[var(--foregrounds-primary)]",
+        link:
+          "text-[var(--action-primary-bg)] underline-offset-4 hover:underline p-0 h-auto shadow-none",
       },
       size: {
         default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
+        sm: "h-8 rounded-md px-3 text-xs",
+        lg: "h-11 rounded-md px-8 text-base",
         icon: "h-10 w-10",
       },
     },

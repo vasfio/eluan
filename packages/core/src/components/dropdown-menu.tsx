@@ -97,15 +97,18 @@ const DropdownMenuCheckboxItem = React.forwardRef<
   <DropdownMenuPrimitive.CheckboxItem
     ref={ref}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors",
+      "hover:bg-[var(--backgrounds-tertiary)] focus:bg-[var(--backgrounds-tertiary)]",
+      "data-[state=checked]:text-[var(--foregrounds-primary)]",
+      "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className
     )}
     checked={checked}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className="absolute left-2 flex h-4 w-4 items-center justify-center rounded-sm border border-[var(--interactive-border-alt)] data-[state=checked]:bg-[var(--interactive-bg-active)] data-[state=checked]:border-[var(--interactive-bg-active)]">
       <DropdownMenuPrimitive.ItemIndicator>
-        <Check className="h-4 w-4" />
+        <Check className="h-3 w-3 text-[var(--interactive-fg-active)]" />
       </DropdownMenuPrimitive.ItemIndicator>
     </span>
     {children}
@@ -121,14 +124,16 @@ const DropdownMenuRadioItem = React.forwardRef<
   <DropdownMenuPrimitive.RadioItem
     ref={ref}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors",
+      "hover:bg-[var(--backgrounds-tertiary)] focus:bg-[var(--backgrounds-tertiary)]",
+      "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className
     )}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className="absolute left-2 flex h-4 w-4 items-center justify-center rounded-full border border-[var(--interactive-border-alt)] data-[state=checked]:bg-[var(--interactive-bg-active)] data-[state=checked]:border-[var(--interactive-bg-active)]">
       <DropdownMenuPrimitive.ItemIndicator>
-        <Circle className="h-2 w-2 fill-current" />
+        <div className="h-1.5 w-1.5 rounded-full bg-[var(--interactive-fg-active)]" />
       </DropdownMenuPrimitive.ItemIndicator>
     </span>
     {children}

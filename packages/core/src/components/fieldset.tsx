@@ -1,26 +1,26 @@
 import * as React from "react"
-
 import { cn } from "@/lib/utils"
 
+// Fieldset renders as a div to avoid the native <fieldset> legend-cuts-border-line behaviour
 const Fieldset = React.forwardRef<
-  HTMLFieldSetElement,
-  React.FieldsetHTMLAttributes<HTMLFieldSetElement>
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <fieldset
+  <div
     ref={ref}
-    className={cn("space-y-4 rounded-lg border p-4", className)}
+    className={cn("space-y-4 rounded-lg border border-[var(--container-border-alt)] p-4", className)}
     {...props}
   />
 ))
 Fieldset.displayName = "Fieldset"
 
 const FieldsetLegend = React.forwardRef<
-  HTMLLegendElement,
-  React.HTMLAttributes<HTMLLegendElement>
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <legend
+  <div
     ref={ref}
-    className={cn("px-2 text-sm font-medium leading-none", className)}
+    className={cn("mb-4 text-sm font-medium text-[var(--foregrounds-primary)] leading-none", className)}
     {...props}
   />
 ))
@@ -32,7 +32,7 @@ const FieldsetDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("text-sm text-[var(--foregrounds-tertiary)]", className)}
     {...props}
   />
 ))
