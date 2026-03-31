@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Eye, EyeOff, Search, Mail, Lock, Phone, User, Link } from "lucide-react"
+import { Eye, EyeOff, Search, Mail, Lock, Phone, Link } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 

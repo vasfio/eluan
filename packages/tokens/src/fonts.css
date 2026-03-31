@@ -1,0 +1,38 @@
+/*
+  Ragnar Design System — Google Fonts via @fontsource
+  Self-hosted, no CDN dependency.
+  Only medium weight loaded (max weight across all themes = 500).
+*/
+
+/* Geist — classic-retro heading + body */
+@import "@fontsource/geist/400.css";
+@import "@fontsource/geist/500.css";
+
+/* Geist Mono — all themes mono */
+@import "@fontsource/geist-mono/400.css";
+@import "@fontsource/geist-mono/500.css";
+
+/* Inter — classic-black heading + body */
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+
+/* Manrope — lime heading */
+@import "@fontsource/manrope/400.css";
+@import "@fontsource/manrope/500.css";
+
+/* Bebas Neue — bold/red heading (display, single weight) */
+@import "@fontsource/bebas-neue/400.css";
+
+/* Work Sans — bold/red body */
+@import "@fontsource/work-sans/400.css";
+@import "@fontsource/work-sans/500.css";
+
+/* Instrument Serif — beige heading */
+@import "@fontsource/instrument-serif/400.css";
+
+/* Plus Jakarta Sans — beige + funky body */
+@import "@fontsource/plus-jakarta-sans/400.css";
+@import "@fontsource/plus-jakarta-sans/500.css";
+
+/* Dela Gothic One — funky heading (display, single weight) */
+@import "@fontsource/dela-gothic-one/400.css";

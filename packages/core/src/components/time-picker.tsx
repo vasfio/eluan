@@ -35,11 +35,11 @@ export function TimePicker({ value = "", onChange, format = "24", disabled, clas
   const parsed = parseTime(value, format)
   const [h, setH] = React.useState(parsed.h)
   const [m, setM] = React.useState(parsed.m)
-  const [period, setPeriod] = React.useState<"AM" | "PM">(parsed.period)
+  const [period, setPeriod] = React.useState<"AM" | "PM">(parsed.period as "AM" | "PM")
 
   React.useEffect(() => {
     const p = parseTime(value, format)
-    setH(p.h); setM(p.m); setPeriod(p.period)
+    setH(p.h); setM(p.m); setPeriod(p.period as "AM" | "PM")
   }, [value])
 
   const emit = (nh: number, nm: number, np: "AM" | "PM") => {
@@ -68,7 +68,7 @@ export function TimePicker({ value = "", onChange, format = "24", disabled, clas
   }
 
   const togglePeriod = () => {
-    const np = period === "AM" ? "PM" : "AM"
+    const np: "AM" | "PM" = period === "AM" ? "PM" : "AM"
     setPeriod(np); emit(h, m, np)
   }
 

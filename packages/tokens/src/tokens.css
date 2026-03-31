@@ -15,6 +15,7 @@
  * Import order matters - each layer can reference the previous one.
  */
 
+@import "./fonts.css";
 @import "./primitives.css";
 @import "./modes.css";
 @import "./themes.css";

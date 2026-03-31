@@ -11,8 +11,8 @@
  * Based on Blaze Orange
  * ---------------------------------------- */
  [data-theme="classic-retro"] {
-  --font-heading: "neue-haas-grotesk-display", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "neue-haas-grotesk-text", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   --container-bg: var(--backgrounds-primary);
@@ -164,8 +164,8 @@
 }
 
 [data-theme="classic-black"] {
-  --font-heading: "neue-haas-grotesk-display", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "neue-haas-grotesk-text", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --container-bg: var(--backgrounds-primary);
   --container-bg-alt: var(--backgrounds-secondary);
@@ -316,8 +316,8 @@
 }
 
 [data-theme="lime"] {
-  --font-heading: "articulat-cf", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "proxima-nova", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Manrope", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --container-bg: var(--backgrounds-primary);
   --container-bg-alt: var(--backgrounds-secondary);
@@ -468,8 +468,8 @@
 }
 
 [data-theme="bold"] {
-  --font-heading: "komu-new-f", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "usual", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Bebas Neue", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Work Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --container-bg: var(--backgrounds-primary);
   --container-bg-alt: var(--backgrounds-secondary);
@@ -621,8 +621,8 @@
 
 [data-theme="beige"] {
   --font-heading: "Instrument Serif", ui-serif, Georgia, Cambria, serif;
-  --font-body: "soleil", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "address-sans-pro", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-body: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --container-bg: var(--backgrounds-primary);
   --container-bg-alt: var(--backgrounds-secondary);
   --container-bg-inverse: var(--foregrounds-secondary);
@@ -772,8 +772,8 @@
 }
 
 [data-theme="funky"] {
-  --font-heading: "flood-std", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "mundial", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Dela Gothic One", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --container-bg: var(--backgrounds-primary);
   --container-bg-alt: var(--backgrounds-secondary);

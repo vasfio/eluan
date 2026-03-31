@@ -8,8 +8,18 @@
 @layer base {
   * {
     @apply border-border;
+    /* Cap font weight at medium (500) system-wide */
+    font-weight: min(var(--tw-font-weight, 400), 500);
   }
   body {
     @apply bg-background text-foreground;
+    font-weight: 400;
+  }
+  /* Headings cap at medium */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
+  }
+  strong, b {
+    font-weight: 500;
   }
 }
