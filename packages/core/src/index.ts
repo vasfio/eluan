@@ -1,3 +1,7 @@
+"use client"
+
+import "./styles.css"
+
 // @vasf/ragnar-core - Core UI Components
 // Re-export all components
 

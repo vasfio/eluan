@@ -1,3 +1,7 @@
+"use client"
+
+import "./styles.css"
+
 // @vasf/ragnar-web - Marketing & Web-specific Components
 // These components depend on @vasf/ragnar-core
 

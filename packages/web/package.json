@@ -1,6 +1,6 @@
 {
   "name": "@vasf/ragnar-web",
-  "version": "1.0.2",
+  "version": "1.0.6",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -24,7 +24,7 @@
   },
   "scripts": {
     "dev": "vite build --watch",
-    "build": "rm -rf dist && vite build && tsc -p tsconfig.build.json && cp src/styles.css dist/styles.css",
+    "build": "rm -rf dist && vite build && tsc -p tsconfig.build.json",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "storybook": "storybook dev -p 6007",
     "build-storybook": "storybook build",
@@ -38,9 +38,7 @@
     "three": ">=0.150.0"
   },
   "peerDependenciesMeta": {
-    "three": {
-      "optional": true
-    }
+    "three": { "optional": true }
   },
   "dependencies": {
     "@vasf/ragnar-core": "workspace:*",
