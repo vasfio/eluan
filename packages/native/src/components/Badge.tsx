@@ -11,7 +11,7 @@ import { spacing, radius, fontSizes } from "@vasf/ragnar-tokens"
 
 export interface BadgeProps {
   /** Badge content */
-  children: React.ReactNode
+  children?: React.ReactNode
   /** Badge variant */
   variant?: "default" | "secondary" | "destructive" | "outline" | "success" | "warning"
   /** Badge size */
@@ -91,7 +91,7 @@ export function Badge({
   const sizeStyles = {
     sm: {
       container: {
-        paddingHorizontal: spacing[1.5] || 6,
+        paddingHorizontal: 6,
         paddingVertical: 2,
         borderRadius: 4,
       },
@@ -103,7 +103,7 @@ export function Badge({
     default: {
       container: {
         paddingHorizontal: 2,
-        paddingVertical: spacing[0.5] || 2,
+        paddingVertical: 2,
         borderRadius: 9999,
       },
       text: {

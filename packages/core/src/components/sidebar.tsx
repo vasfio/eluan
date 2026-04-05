@@ -120,7 +120,7 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
     },
     ref
   ) => {
-    const { open, collapsed, isMobile } = useSidebar()
+    const { open, setOpen, collapsed, isMobile } = useSidebar()
 
     // Mobile: slide in/out
     // Desktop: collapse to icons
@@ -137,8 +137,8 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
         {/* Mobile overlay */}
         {isMobile && open && (
           <div
-            className="fixed inset-0 z-40 bg-black/50"
-            onClick={() => useSidebar().setOpen(false)}
+            className="fixed inset-0 z-40 bg-black/50 transition-opacity"
+            onClick={() => setOpen(false)}
           />
         )}
 
@@ -312,7 +312,7 @@ const SidebarMenuButton = React.forwardRef<
       className={cn(
         "flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
         "hover:bg-accent hover:text-accent-foreground",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400",
         isActive && "bg-accent text-accent-foreground",
         collapsed && "justify-center px-2",
         className

@@ -19,21 +19,21 @@ export const Default: Story = {
 }
 
 export const ReadOnly: Story = {
-  render: () => <Rating value={4} readOnly />,
+  render: () => <Rating value={4} readonly />,
 }
 
 export const Sizes: Story = {
   render: () => (
     <div className="space-y-4">
-      <Rating value={3} size="sm" readOnly />
-      <Rating value={3} size="default" readOnly />
-      <Rating value={3} size="lg" readOnly />
+      <Rating value={3} size="sm" readonly />
+      <Rating value={3} size="default" readonly />
+      <Rating value={3} size="lg" readonly />
     </div>
   ),
 }
 
 export const HalfStars: Story = {
-  render: () => <Rating value={3.5} readOnly allowHalf />,
+  render: () => <Rating value={3.5} readonly precision={0.5} />,
 }
 
 export const CustomCount: Story = {

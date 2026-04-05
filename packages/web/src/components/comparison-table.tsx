@@ -95,7 +95,7 @@ const ComparisonTableInner = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <table
     ref={ref}
-    className={cn("w-full border-collapse text-center", className)}
+    className={cn("w-full border-collapse text-center [&_td]:border-0 [&_th]:border-0 [&_tr]:border-0", className)}
     {...props}
   />
 ))
@@ -115,7 +115,7 @@ const ComparisonTableBody = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <tbody
     ref={ref}
-    className={cn("[&>tr:nth-child(even)]:bg-[var(--backgrounds-secondary)]", className)}
+    className={cn("[&>tr:nth-child(odd)]:bg-[var(--backgrounds-secondary)]/50", className)}
     {...props}
   />
 ))
@@ -195,7 +195,7 @@ const ComparisonFeatureCell = React.forwardRef<
   <td
     ref={ref}
     className={cn(
-      "px-4 py-4 text-sm font-medium text-[var(--foregrounds-primary)] text-left",
+      "px-4 py-4 text-sm font-medium text-[var(--foregrounds-primary)] text-center",
       className
     )}
     {...props}

@@ -147,15 +147,15 @@ const InputOTP = React.forwardRef<HTMLDivElement, InputOTPProps>(
               onFocus={(e) => e.target.select()}
               disabled={disabled}
               className={cn(
-                "h-11 w-11 rounded-lg border border-[var(--interactive-border)] bg-[var(--interactive-bg)] text-center text-base font-semibold tracking-widest shadow-sm transition-all",
-                "focus:outline-none focus:ring-2 focus:ring-[var(--interactive-fg)] focus:border-[var(--interactive-fg)] focus:ring-offset-0",
+                "h-12 w-10 rounded-xl border-0 bg-[var(--backgrounds-tertiary)] text-center text-lg font-semibold tracking-widest transition-all",
+                "focus:outline-none focus:ring-2 focus:ring-[var(--interactive-fg)] focus:ring-offset-2 focus:ring-offset-[var(--backgrounds-primary)]",
                 "disabled:cursor-not-allowed disabled:opacity-50",
-                value && "border-[var(--interactive-bg-active)] bg-[var(--interactive-bg-alt2)]"
+                value && "bg-[var(--interactive-bg-alt2)] ring-1 ring-[var(--interactive-fg)]"
               )}
             />
             {index === Math.floor(length / 2) - 1 && length > 3 && (
-              <div className="flex items-center justify-center">
-                <Dot className="h-4 w-4 text-[var(--foregrounds-quinary)]" />
+              <div className="flex w-4 items-center justify-center">
+                <span className="text-[var(--foregrounds-quinary)] text-lg">-</span>
               </div>
             )}
           </React.Fragment>

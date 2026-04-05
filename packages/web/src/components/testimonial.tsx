@@ -53,7 +53,7 @@ const Testimonial = React.forwardRef<HTMLDivElement, TestimonialProps>(
         {showQuoteIcon && variant !== "minimal" && (
           <Quote className="mb-4 h-6 w-6 text-[var(--backgrounds-quaternary)]" />
         )}
-        <div className="mb-6 text-base font-normal text-[var(--foregrounds-secondary)]">{children}</div>
+        <div className="mb-6 text-base font-normal leading-relaxed text-[var(--foregrounds-secondary)]">{children}</div>
         {rating !== undefined && (
           <div className="mb-4 flex gap-1">
             {Array.from({ length: 5 }).map((_, i) => (
@@ -82,7 +82,7 @@ const Testimonial = React.forwardRef<HTMLDivElement, TestimonialProps>(
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
-            <span className="font-medium text-[var(--foregrounds-primary)]">{author.name}</span>
+            <span className="font-normal text-[var(--foregrounds-primary)]">{author.name}</span>
             {(author.title || author.company) && (
               <span className="text-sm text-[var(--foregrounds-tertiary)]">
                 {author.title}
@@ -100,7 +100,7 @@ const Testimonial = React.forwardRef<HTMLDivElement, TestimonialProps>(
         <div
           ref={ref}
           className={cn(
-            "rounded-xl border border-[var(--container-border)] bg-[var(--container-bg)] p-6",
+            "rounded-2xl border border-[var(--container-border)]/60 bg-[var(--container-bg)] p-6 transition-all duration-300 hover:shadow-md hover:shadow-black/[0.03]",
             className
           )}
           {...props}
@@ -115,7 +115,7 @@ const Testimonial = React.forwardRef<HTMLDivElement, TestimonialProps>(
         <div
           ref={ref}
           className={cn(
-            "rounded-xl border border-[var(--container-border)] bg-[var(--container-bg)] p-8 md:p-12",
+            "rounded-2xl border border-[var(--container-border)]/60 bg-[var(--container-bg)] p-8 md:p-12",
             className
           )}
           {...props}
@@ -200,16 +200,16 @@ const TestimonialCarousel = React.forwardRef<HTMLDivElement, TestimonialCarousel
             </div>
           ))}
         </div>
-        <div className="mt-6 flex justify-center gap-2">
+        <div className="mt-8 flex justify-center gap-2.5">
           {testimonials.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
               className={cn(
-                "h-2.5 w-2.5 rounded-full transition-colors",
+                "rounded-full transition-all duration-300",
                 index === currentIndex
-                  ? "bg-[var(--action-primary-bg)]"
-                  : "bg-[var(--backgrounds-quaternary)] hover:bg-[var(--foregrounds-tertiary)]"
+                  ? "h-2.5 w-8 bg-[var(--action-primary-bg)]"
+                  : "h-2.5 w-2.5 bg-[var(--foregrounds-tertiary)]/30 hover:bg-[var(--foregrounds-tertiary)]/60"
               )}
               aria-label={`Go to testimonial ${index + 1}`}
             />

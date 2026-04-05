@@ -2,6 +2,7 @@ import React from "react"
 import {
   View,
   Text,
+  Pressable,
   FlatList,
   SectionList,
   StyleSheet,
@@ -75,7 +76,7 @@ export function ListItem({
   const subtitleColor = isDark ? "#a1a1aa" : "#71717a"
   const separatorColor = isDark ? "#27272a" : "#e4e4e7"
 
-  const Container = onPress ? (require("react-native").Pressable) : View
+  const Container = onPress ? Pressable : View
 
   return (
     <>

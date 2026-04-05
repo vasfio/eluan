@@ -254,7 +254,7 @@ const CustomerCount = React.forwardRef<HTMLDivElement, CustomerCountProps>(
         className={cn("flex items-center gap-2", sizes[size], className)}
         {...props}
       >
-        <span className="font-semibold text-[var(--foregrounds-primary)]">{count.toLocaleString()}+</span>
+        <span className="font-medium text-[var(--foregrounds-primary)]">{count.toLocaleString()}+</span>
         <span className="text-[var(--foregrounds-tertiary)]">{label}</span>
       </div>
     )
@@ -270,7 +270,7 @@ const SocialProofBanner = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "flex flex-wrap items-center justify-center gap-6 border-y border-[var(--container-border)] bg-[var(--backgrounds-secondary)] py-4 md:gap-12",
+      "flex flex-wrap items-center justify-center gap-8 border-y border-[var(--container-border)]/60 bg-[var(--backgrounds-secondary)] py-5 md:gap-14",
       className
     )}
     {...props}
@@ -290,10 +290,10 @@ const FeaturedIn = React.forwardRef<HTMLDivElement, FeaturedInProps>(
       className={cn("text-center", className)}
       {...props}
     >
-      <p className="mb-6 text-xs font-medium uppercase tracking-widest text-[var(--foregrounds-tertiary)]">
+      <p className="mb-8 text-xs font-normal uppercase tracking-widest text-[var(--foregrounds-quinary)]">
         {title}
       </p>
-      <div className="flex flex-wrap items-center justify-center gap-8 opacity-50 grayscale">
+      <div className="flex flex-wrap items-center justify-center gap-10 opacity-40 grayscale transition-opacity duration-300 hover:opacity-60">
         {children}
       </div>
     </div>

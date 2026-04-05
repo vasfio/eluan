@@ -168,7 +168,7 @@ const MarqueeTestimonial = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "w-80 shrink-0 rounded-xl border bg-card p-6 shadow-sm",
+      "w-80 shrink-0 rounded-2xl border border-[var(--container-border)]/60 bg-[var(--container-bg)] p-6 transition-shadow duration-300 hover:shadow-md hover:shadow-black/[0.04]",
       className
     )}
     {...props}
@@ -182,7 +182,7 @@ const MarqueeTestimonialContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("text-sm leading-relaxed text-[var(--foregrounds-tertiary)]", className)}
     {...props}
   />
 ))
@@ -210,13 +210,13 @@ const MarqueeTestimonialAvatar = React.forwardRef<
 >(({ className, src, alt, fallback, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("h-10 w-10 overflow-hidden rounded-full bg-muted", className)}
+    className={cn("h-10 w-10 overflow-hidden rounded-full bg-[var(--backgrounds-tertiary)]", className)}
     {...props}
   >
     {src ? (
       <img src={src} alt={alt || ""} className="h-full w-full object-cover" />
     ) : (
-      <div className="flex h-full w-full items-center justify-center text-sm font-medium text-muted-foreground">
+      <div className="flex h-full w-full items-center justify-center text-sm font-normal text-[var(--foregrounds-tertiary)]">
         {fallback || alt?.charAt(0).toUpperCase()}
       </div>
     )}
@@ -238,7 +238,7 @@ const MarqueeTestimonialName = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("text-sm font-medium text-foreground", className)}
+    className={cn("text-sm font-normal text-[var(--foregrounds-primary)]", className)}
     {...props}
   />
 ))
@@ -250,7 +250,7 @@ const MarqueeTestimonialRole = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("text-xs text-muted-foreground", className)}
+    className={cn("text-xs text-[var(--foregrounds-tertiary)]", className)}
     {...props}
   />
 ))

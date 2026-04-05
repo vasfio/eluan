@@ -1,2 +1,4 @@
+import { vi } from "vitest"
+
 // Silence act() warnings from React Native
-jest.mock("react-native/Libraries/Animated/NativeAnimatedHelper");
+vi.mock("react-native/Libraries/Animated/NativeAnimatedHelper")

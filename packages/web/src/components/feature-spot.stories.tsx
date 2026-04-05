@@ -13,7 +13,7 @@ import {
   FeatureSpotMedia,
 } from "./feature-spot"
 import { Zap, Shield, Palette, Globe, Sparkles, Code } from "lucide-react"
-import { Button } from "@vasf/ragnar-core"
+import { Button } from "@ragnar/core"
 
 const meta: Meta<typeof FeatureSpot> = {
   title: "Web/FeatureSpot",

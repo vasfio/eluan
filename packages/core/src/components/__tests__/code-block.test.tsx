@@ -4,13 +4,13 @@ import { CodeBlock } from "../code-block";
 
 describe("CodeBlock", () => {
   it("renders code content", () => {
-    render(<CodeBlock language="typescript">const x = 1;</CodeBlock>);
+    render(<CodeBlock code="const x = 1;" language="typescript" />);
     expect(screen.getByText(/const x = 1/)).toBeInTheDocument();
   });
 
   it("forwards className", () => {
     const { container } = render(
-      <CodeBlock language="javascript" className="custom">console.log()</CodeBlock>
+      <CodeBlock code="console.log()" language="javascript" className="custom" />
     );
     expect(container.firstChild).toHaveClass("custom");
   });

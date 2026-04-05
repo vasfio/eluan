@@ -1,6 +1,6 @@
 import * as React from "react"
 import { format } from "date-fns"
-import { Calendar as CalendarIcon, Clock } from "lucide-react"
+import { Calendar as CalendarIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "./button"
@@ -10,13 +10,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "./popover"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./select"
 
 export interface DateTimePickerProps {
   value?: Date
@@ -48,12 +41,7 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
       setSelectedDate(value)
     }, [value])
 
-    const hours = use24Hour
-      ? Array.from({ length: 24 }, (_, i) => i)
-      : Array.from({ length: 12 }, (_, i) => i + 1)
-
-    const minutes = Array.from({ length: 60 }, (_, i) => i)
-    const seconds = Array.from({ length: 60 }, (_, i) => i)
+    // No longer need hour/minute/second arrays since we use input fields
 
     const handleDateSelect = (date: Date | undefined) => {
       if (date) {
@@ -149,71 +137,86 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
           />
           <div className="border-t p-3">
             <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4 text-muted-foreground" />
-              <Select
-                value={getDisplayHour()}
-                onValueChange={(val) => handleTimeChange("hour", val)}
-              >
-                <SelectTrigger className="w-[70px]">
-                  <SelectValue placeholder="HH" />
-                </SelectTrigger>
-                <SelectContent>
-                  {hours.map((hour) => (
-                    <SelectItem key={hour} value={hour.toString()}>
-                      {hour.toString().padStart(2, "0")}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <span className="text-muted-foreground">:</span>
-              <Select
-                value={selectedDate?.getMinutes().toString() ?? ""}
-                onValueChange={(val) => handleTimeChange("minute", val)}
-              >
-                <SelectTrigger className="w-[70px]">
-                  <SelectValue placeholder="MM" />
-                </SelectTrigger>
-                <SelectContent>
-                  {minutes.map((minute) => (
-                    <SelectItem key={minute} value={minute.toString()}>
-                      {minute.toString().padStart(2, "0")}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <input
+                type="text"
+                inputMode="numeric"
+                maxLength={2}
+                value={getDisplayHour() ? getDisplayHour().padStart(2, "0") : ""}
+                placeholder="HH"
+                onChange={(e) => {
+                  const raw = e.target.value.replace(/\D/g, "").slice(0, 2)
+                  const max = use24Hour ? 23 : 12
+                  const min = use24Hour ? 0 : 1
+                  const num = parseInt(raw || "0")
+                  if (num >= min && num <= max) {
+                    handleTimeChange("hour", String(num))
+                  }
+                }}
+                className="w-[44px] rounded-md border border-input bg-background px-2 py-1.5 text-sm text-center tabular-nums focus:outline-none focus:ring-1 focus:ring-ring"
+              />
+              <span className="text-muted-foreground font-medium">:</span>
+              <input
+                type="text"
+                inputMode="numeric"
+                maxLength={2}
+                value={selectedDate ? selectedDate.getMinutes().toString().padStart(2, "0") : ""}
+                placeholder="MM"
+                onChange={(e) => {
+                  const raw = e.target.value.replace(/\D/g, "").slice(0, 2)
+                  const num = parseInt(raw || "0")
+                  if (num >= 0 && num <= 59) {
+                    handleTimeChange("minute", String(num))
+                  }
+                }}
+                className="w-[44px] rounded-md border border-input bg-background px-2 py-1.5 text-sm text-center tabular-nums focus:outline-none focus:ring-1 focus:ring-ring"
+              />
               {showSeconds && (
                 <>
-                  <span className="text-muted-foreground">:</span>
-                  <Select
-                    value={selectedDate?.getSeconds().toString() ?? ""}
-                    onValueChange={(val) => handleTimeChange("second", val)}
-                  >
-                    <SelectTrigger className="w-[70px]">
-                      <SelectValue placeholder="SS" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {seconds.map((second) => (
-                        <SelectItem key={second} value={second.toString()}>
-                          {second.toString().padStart(2, "0")}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <span className="text-muted-foreground font-medium">:</span>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={2}
+                    value={selectedDate ? selectedDate.getSeconds().toString().padStart(2, "0") : ""}
+                    placeholder="SS"
+                    onChange={(e) => {
+                      const raw = e.target.value.replace(/\D/g, "").slice(0, 2)
+                      const num = parseInt(raw || "0")
+                      if (num >= 0 && num <= 59) {
+                        handleTimeChange("second", String(num))
+                      }
+                    }}
+                    className="w-[44px] rounded-md border border-input bg-background px-2 py-1.5 text-sm text-center tabular-nums focus:outline-none focus:ring-1 focus:ring-ring"
+                  />
                 </>
               )}
               {!use24Hour && (
-                <Select
-                  value={getAmPm()}
-                  onValueChange={(val) => handleTimeChange("ampm", val)}
-                >
-                  <SelectTrigger className="w-[70px]">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="AM">AM</SelectItem>
-                    <SelectItem value="PM">PM</SelectItem>
-                  </SelectContent>
-                </Select>
+                <div className="flex rounded-md border border-input overflow-hidden">
+                  <button
+                    type="button"
+                    onClick={() => handleTimeChange("ampm", "AM")}
+                    className={cn(
+                      "px-2.5 py-1.5 text-xs font-medium transition-colors",
+                      getAmPm() === "AM"
+                        ? "bg-foreground text-background"
+                        : "bg-background text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    AM
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleTimeChange("ampm", "PM")}
+                    className={cn(
+                      "px-2.5 py-1.5 text-xs font-medium transition-colors",
+                      getAmPm() === "PM"
+                        ? "bg-foreground text-background"
+                        : "bg-background text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    PM
+                  </button>
+                </div>
               )}
             </div>
           </div>

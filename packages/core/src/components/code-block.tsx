@@ -42,45 +42,54 @@ export interface CodeBlockProps extends React.HTMLAttributes<HTMLDivElement> {
   showCopyButton?: boolean
   filename?: string
   highlightLines?: number[]
+  /** Supply multiple language variants of the same snippet. Renders a language switcher in the header. */
+  languages?: { language: Language; code: string; label?: string }[]
 }
 
 const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
   (
     {
       className,
-      code,
-      language = "text",
+      code: codeProp,
+      language: languageProp = "text",
       showLineNumbers = false,
       showCopyButton = true,
       filename,
       highlightLines = [],
+      languages,
       ...props
     },
     ref
   ) => {
     const [copied, setCopied] = React.useState(false)
     const [highlightedCode, setHighlightedCode] = React.useState("")
+    const [activeLangIndex, setActiveLangIndex] = React.useState(0)
+
+    // Resolve the active code and language from either the languages array or the single props
+    const activeCode = languages ? languages[activeLangIndex].code : codeProp
+    const activeLanguage = languages ? languages[activeLangIndex].language : languageProp
 
     React.useEffect(() => {
-      if (language !== "text") {
-        const grammar = Prism.languages[language]
+      if (activeLanguage !== "text") {
+        const grammar = Prism.languages[activeLanguage]
         if (grammar) {
-          setHighlightedCode(Prism.highlight(code, grammar, language))
+          setHighlightedCode(Prism.highlight(activeCode, grammar, activeLanguage))
         } else {
-          setHighlightedCode(code)
+          setHighlightedCode(activeCode)
         }
       } else {
-        setHighlightedCode(code)
+        setHighlightedCode(activeCode)
       }
-    }, [code, language])
+    }, [activeCode, activeLanguage])
 
     const handleCopy = async () => {
-      await navigator.clipboard.writeText(code)
+      await navigator.clipboard.writeText(activeCode)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     }
 
     const lines = highlightedCode.split("\n")
+    const showHeader = filename || showCopyButton || (languages && languages.length > 1)
 
     return (
       <div
@@ -91,16 +100,37 @@ const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
         )}
         {...props}
       >
-        {(filename || showCopyButton) && (
-          <div className="flex items-center justify-between border-b px-4 py-2">
-            {filename && (
-              <span className="text-xs text-muted-foreground">{filename}</span>
-            )}
+        {showHeader && (
+          <div className="flex items-center justify-between border-b px-4 py-2 gap-2">
+            <div className="flex items-center gap-2 overflow-x-auto">
+              {filename && (
+                <span className="text-xs text-muted-foreground shrink-0">{filename}</span>
+              )}
+              {languages && languages.length > 1 && (
+                <div className="flex items-center gap-0.5 rounded-md bg-muted p-0.5">
+                  {languages.map((lang, idx) => (
+                    <button
+                      key={lang.language + idx}
+                      type="button"
+                      onClick={() => setActiveLangIndex(idx)}
+                      className={cn(
+                        "rounded px-2 py-0.5 text-xs font-medium transition-colors",
+                        idx === activeLangIndex
+                          ? "bg-background text-foreground shadow-sm"
+                          : "text-muted-foreground hover:text-foreground"
+                      )}
+                    >
+                      {lang.label ?? lang.language}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
             {showCopyButton && (
               <button
                 type="button"
                 onClick={handleCopy}
-                className="ml-auto flex items-center gap-1 rounded px-2 py-1 text-xs text-muted-foreground hover:bg-muted hover:text-foreground"
+                className="ml-auto flex items-center gap-1 rounded px-2 py-1 text-xs text-muted-foreground hover:bg-muted hover:text-foreground shrink-0"
               >
                 {copied ? (
                   <>
@@ -118,8 +148,8 @@ const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
           </div>
         )}
         <div className="overflow-x-auto p-4">
-          <pre className="font-mono text-sm">
-            <code>
+          <pre className={cn("font-mono text-sm", `language-${activeLanguage}`)}>
+            <code className={`language-${activeLanguage}`}>
               {lines.map((line, index) => (
                 <div
                   key={index}

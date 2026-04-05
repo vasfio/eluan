@@ -67,6 +67,7 @@ export * from "./components/switch"
 export * from "./components/table"
 export * from "./components/tabs"
 export * from "./components/textarea"
+export * from "./components/time-input"
 export * from "./components/time-picker"
 export * from "./components/timeline"
 export * from "./components/toggle"
@@ -76,3 +77,16 @@ export * from "./components/tree-view"
 
 // Re-export utilities
 export { cn } from "./lib/utils"
+
+// ============================================
+// TODO: Future core components to consider
+// ============================================
+// - Color picker
+// - Tag input
+// - Combobox
+// - Data table (with sorting/filtering)
+// - Kanban board
+// - File upload dropzone
+// - Image cropper
+// - Emoji picker
+// - Mention input (@mentions)

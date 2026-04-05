@@ -33,14 +33,14 @@ const BlogGrid = React.forwardRef<HTMLDivElement, BlogGridProps>(
 BlogGrid.displayName = "BlogGrid"
 
 const blogCardVariants = cva(
-  "group flex flex-col overflow-hidden rounded-xl border border-[var(--container-border)] bg-[var(--container-bg)] transition-colors",
+  "group flex flex-col overflow-hidden rounded-2xl border border-[var(--container-border)]/60 bg-[var(--container-bg)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.04]",
   {
     variants: {
       variant: {
         default: "",
-        bordered: "hover:border-[var(--action-primary-bg)]",
-        elevated: "shadow-sm hover:border-[var(--action-primary-bg)]",
-        minimal: "border-transparent bg-transparent",
+        bordered: "hover:border-[var(--container-border)]",
+        elevated: "shadow-sm hover:border-[var(--container-border)]",
+        minimal: "border-transparent bg-transparent hover:shadow-none hover:translate-y-0",
       },
     },
     defaultVariants: {
@@ -93,7 +93,7 @@ const BlogCardImage = React.forwardRef<HTMLDivElement, BlogCardImageProps>(
       {props.src && (
         <img
           alt={alt}
-          className="h-full w-full rounded-lg object-cover"
+          className="h-full w-full rounded-lg object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
           {...props}
         />
       )}
@@ -136,7 +136,7 @@ const BlogCardCategory = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      "text-xs font-medium uppercase tracking-wider text-[var(--action-primary-bg)]",
+      "text-xs font-normal uppercase tracking-wider text-[var(--action-primary-bg)]",
       className
     )}
     {...props}
@@ -167,7 +167,7 @@ const BlogCardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      "font-heading text-lg font-semibold leading-tight text-[var(--foregrounds-primary)]",
+      "font-heading text-lg font-medium leading-tight text-[var(--foregrounds-primary)]",
       className
     )}
     {...props}
@@ -252,7 +252,7 @@ const BlogCardAuthorName = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <span
     ref={ref}
-    className={cn("text-sm font-medium text-[var(--foregrounds-primary)]", className)}
+    className={cn("text-sm font-normal text-[var(--foregrounds-primary)]", className)}
     {...props}
   />
 ))
@@ -265,7 +265,7 @@ const BlogCardLink = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      "ml-auto inline-flex items-center gap-1 text-sm font-medium text-[var(--action-primary-bg)]",
+      "ml-auto inline-flex items-center gap-1 text-sm font-normal text-[var(--action-primary-bg)] transition-all duration-200 group-hover:gap-2",
       className
     )}
     {...props}
@@ -296,7 +296,7 @@ const BlogCardFeatured = React.forwardRef<
       ref={ref as React.Ref<HTMLAnchorElement & HTMLElement>}
       href={href}
       className={cn(
-        "group grid overflow-hidden rounded-xl border border-[var(--container-border)] bg-[var(--container-bg)] md:grid-cols-2",
+        "group grid overflow-hidden rounded-2xl border border-[var(--container-border)]/60 bg-[var(--container-bg)] transition-all duration-300 ease-out hover:shadow-lg hover:shadow-black/[0.04] md:grid-cols-2",
         className
       )}
       {...props}

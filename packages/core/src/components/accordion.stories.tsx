@@ -13,9 +13,10 @@ const meta: Meta<typeof Accordion> = {
 }
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj
 
 export const Default: Story = {
+  args: {},
   render: () => (
     <Accordion type="single" collapsible className="w-full">
       <AccordionItem value="item-1">
@@ -41,6 +42,7 @@ export const Default: Story = {
 }
 
 export const Multiple: Story = {
+  args: {},
   render: () => (
     <Accordion type="multiple" className="w-full">
       <AccordionItem value="item-1">

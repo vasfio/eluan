@@ -385,11 +385,9 @@ export declare const fontFamilies: {
     readonly body: "var(--font-body)";
     readonly mono: "var(--font-mono)";
 };
-export declare const themeTypekitIds: Record<Theme, string>;
 export declare const themeFonts: Record<Theme, {
     heading: string;
     body: string;
-    typekitId: string;
 }>;
 export declare const shadows: {
     readonly sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)";

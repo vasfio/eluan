@@ -9,7 +9,7 @@ const newsletterVariants = cva("w-full", {
       default: "bg-background",
       muted: "bg-muted/50",
       primary: "bg-primary text-primary-foreground",
-      gradient: "bg-[var(--action-primary-bg)] text-[var(--action-primary-fg)]",
+      gradient: "bg-[var(--action-primary-bg)] text-[var(--action-primary-fg)]", // kept for API compat, no gradient
       dark: "bg-zinc-900 text-white",
       card: "bg-background",
     },
@@ -138,7 +138,7 @@ const NewsletterInput = React.forwardRef<HTMLInputElement, NewsletterInputProps>
       ref={ref}
       type="email"
       className={cn(
-        "flex-1 h-10 rounded-lg border border-[var(--interactive-border)] bg-[var(--interactive-bg)] px-4 text-sm text-[var(--foregrounds-primary)] placeholder:text-[var(--foregrounds-quinary)] focus:outline-none focus:ring-1 focus:ring-[var(--interactive-fg)] focus:border-[var(--interactive-fg)]",
+        "flex-1 h-12 rounded-lg border border-[var(--interactive-border)] bg-[var(--interactive-bg)] px-4 text-sm text-[var(--foregrounds-primary)] placeholder:text-[var(--foregrounds-quinary)] focus:outline-none focus:ring-1 focus:ring-[var(--interactive-fg)] focus:border-[var(--interactive-fg)]",
         className
       )}
       {...props}

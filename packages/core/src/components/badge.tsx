@@ -5,7 +5,7 @@ import { X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const badgeVariants = cva(
-  "inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-normal transition-colors focus:outline-none focus:ring-1 focus:ring-neutral-400 focus:ring-offset-1",
   {
     variants: {
       variant: {
@@ -25,6 +25,14 @@ const badgeVariants = cva(
           "border-transparent bg-[var(--informative-bg)] text-[var(--informative-fg)]",
         important:
           "border-transparent bg-[var(--important-bg)] text-[var(--important-fg)]",
+        success:
+          "border-transparent bg-green-100 text-green-800",
+        warning:
+          "border-transparent bg-amber-100 text-amber-800",
+        info:
+          "border-transparent bg-blue-100 text-blue-800",
+        error:
+          "border-transparent bg-red-100 text-red-800",
       },
     },
     defaultVariants: {

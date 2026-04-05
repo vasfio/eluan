@@ -67,7 +67,7 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
             type="button"
             onClick={() => onSelect?.(node)}
             className={cn(
-              "flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              "flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-accent focus:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400",
               isSelected && "bg-accent"
             )}
             style={{ paddingLeft: `${depth * indentSize + 8}px` }}
@@ -93,7 +93,7 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
               type="button"
               onClick={() => onSelect?.(node)}
               className={cn(
-                "flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                "flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-accent focus:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400",
                 isSelected && "bg-accent"
               )}
               style={{ paddingLeft: `${depth * indentSize + 8}px` }}

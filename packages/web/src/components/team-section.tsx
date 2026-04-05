@@ -54,7 +54,7 @@ const TeamTitle = React.forwardRef<
   <h2
     ref={ref}
     className={cn(
-      "font-heading text-3xl font-semibold tracking-tight text-[var(--foregrounds-primary)] sm:text-4xl",
+      "font-heading text-3xl font-medium tracking-tight text-[var(--foregrounds-primary)] sm:text-4xl",
       className
     )}
     {...props}
@@ -69,7 +69,7 @@ const TeamDescription = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "mx-auto mt-4 max-w-2xl text-lg text-[var(--foregrounds-tertiary)]",
+      "mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-[var(--foregrounds-tertiary)]",
       className
     )}
     {...props}
@@ -77,7 +77,7 @@ const TeamDescription = React.forwardRef<
 ))
 TeamDescription.displayName = "TeamDescription"
 
-const teamGridVariants = cva("grid gap-8", {
+const teamGridVariants = cva("grid gap-10", {
   variants: {
     columns: {
       2: "md:grid-cols-2",
@@ -108,8 +108,8 @@ TeamGrid.displayName = "TeamGrid"
 const teamMemberVariants = cva("group text-center", {
   variants: {
     variant: {
-      default: "",
-      card: "rounded-xl border border-[var(--container-border)] bg-[var(--container-bg)] p-6",
+      default: "transition-all duration-300 hover:-translate-y-0.5",
+      card: "rounded-2xl border border-[var(--container-border)]/60 bg-[var(--container-bg)] p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.04]",
     },
   },
   defaultVariants: {
@@ -139,13 +139,13 @@ export interface TeamMemberImageProps
 
 const TeamMemberImage = React.forwardRef<HTMLImageElement, TeamMemberImageProps>(
   ({ className, alt, fallback, ...props }, ref) => (
-    <div className="relative mx-auto mb-4 aspect-square w-full max-w-[200px] overflow-hidden rounded-xl bg-[var(--backgrounds-tertiary)]">
+    <div className="relative mx-auto mb-6 aspect-square w-full max-w-[200px] overflow-hidden rounded-2xl bg-[var(--backgrounds-tertiary)]">
       {props.src ? (
         <img
           ref={ref}
           alt={alt}
           className={cn(
-            "h-full w-full object-cover",
+            "h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]",
             className
           )}
           {...props}

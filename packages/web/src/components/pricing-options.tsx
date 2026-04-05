@@ -70,17 +70,17 @@ const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(
       <div
         ref={ref}
         className={cn(
-          "relative flex flex-col rounded-xl border border-[var(--container-border)] bg-[var(--container-bg)] p-6",
-          option.highlighted && "border-[var(--action-primary-bg)] shadow-md"
+          "relative flex flex-col rounded-2xl border border-[var(--container-border)]/60 bg-[var(--container-bg)] p-8 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/[0.04]",
+          option.highlighted && "border-[var(--action-primary-bg)]/40 shadow-sm ring-1 ring-[var(--action-primary-bg)]/20"
         )}
       >
         {option.highlighted && option.highlightLabel && (
-          <span className="absolute -top-3 right-4 inline-flex items-center rounded-full bg-[var(--action-primary-bg)] px-3 py-1 text-xs font-medium text-[var(--action-primary-fg)]">
+          <span className="absolute -top-3 right-4 inline-flex items-center rounded-full bg-[var(--action-primary-bg)] px-3 py-1 text-xs font-normal text-[var(--action-primary-fg)]">
             {option.highlightLabel}
           </span>
         )}
         <div className="mb-6 text-center">
-          <h3 className="font-heading text-lg font-semibold text-[var(--foregrounds-primary)]">
+          <h3 className="font-heading text-lg font-medium text-[var(--foregrounds-primary)]">
             {option.name}
           </h3>
           {option.description && (
@@ -96,7 +96,7 @@ const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(
                   : option.originalPrice}
               </span>
             )}
-            <span className="font-heading text-4xl font-semibold text-[var(--foregrounds-primary)]">
+            <span className="font-heading text-4xl font-medium text-[var(--foregrounds-primary)]">
               {typeof option.price === "number"
                 ? `$${option.price}`
                 : option.price}
@@ -106,7 +106,7 @@ const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(
             )}
           </div>
         </div>
-        <ul className="mb-6 flex-1 space-y-3">
+        <ul className="mb-8 flex-1 space-y-3.5">
           {option.features.map((feature, index) => (
             <li key={index} className="flex items-start gap-3">
               <Check className="h-4 w-4 shrink-0 text-[var(--positive-fg)]" />

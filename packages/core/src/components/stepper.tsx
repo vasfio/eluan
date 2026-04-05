@@ -66,12 +66,12 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
                   className={cn(
                     "relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 text-sm font-medium transition-all",
                     isCompleted
-                      ? "border-[var(--interactive-bg-active)] bg-[var(--interactive-bg-active)] text-[var(--interactive-fg-active)]"
+                      ? "border-foreground bg-foreground text-white"
                       : isCurrent
-                        ? "border-[var(--interactive-bg-active)] bg-[var(--backgrounds-primary)] text-[var(--interactive-bg-active)]"
+                        ? "border-foreground bg-[var(--backgrounds-primary)] text-foreground"
                         : "border-[var(--backgrounds-quaternary)] bg-[var(--backgrounds-primary)] text-[var(--foregrounds-quinary)]",
                     isClickable &&
-                      "cursor-pointer hover:border-[var(--interactive-bg-active)] hover:text-[var(--interactive-bg-active)]"
+                      "cursor-pointer hover:border-foreground hover:text-foreground"
                   )}
                 >
                   {isCompleted ? (
@@ -111,7 +111,7 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
                       ? "ml-5 h-full min-h-[24px] w-0.5 -translate-x-1/2"
                       : "mx-2 h-0.5 flex-1 min-w-[24px]",
                     index < currentStep
-                      ? "bg-[var(--interactive-bg-active)]"
+                      ? "bg-foreground"
                       : "bg-[var(--backgrounds-quaternary)]"
                   )}
                 />

@@ -9,7 +9,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@vasf/ragnar-core"
+} from "@ragnar/core"
 
 export interface PricingPlan {
   id: string
@@ -62,12 +62,14 @@ const PricingTable = React.forwardRef<HTMLDivElement, PricingTableProps>(
                   )}
                 >
                   <div className="flex flex-col gap-1">
-                    {/* Fixed height for eyebrow so all titles align regardless of badge presence */}
-                    <div className="h-5 flex items-center justify-center">
-                      {plan.highlighted && (
-                        <span className="text-[10px] font-medium text-[var(--action-primary-bg)] uppercase tracking-wider">
+                    {/* Fixed height eyebrow row -- always rendered so titles stay aligned */}
+                    <div className="h-6 flex items-center justify-center">
+                      {plan.highlighted ? (
+                        <span className="text-[10px] font-medium text-[var(--action-primary-bg)] uppercase tracking-wider leading-none">
                           Most Popular
                         </span>
+                      ) : (
+                        <span aria-hidden className="invisible text-[10px] leading-none">&nbsp;</span>
                       )}
                     </div>
                     <span className="font-heading text-base font-semibold text-[var(--foregrounds-primary)]">

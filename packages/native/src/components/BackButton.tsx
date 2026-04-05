@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 28,
     fontWeight: "300",
-    marginRight: spacing[0.5],
+    marginRight: 2,
     marginTop: -2,
   },
   label: {

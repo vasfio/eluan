@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import { DatetimePicker } from "../datetime-picker";
+import { DateTimePicker } from "../datetime-picker";
 
-describe("DatetimePicker", () => {
+describe("DateTimePicker", () => {
   it("renders without crashing", () => {
-    render(<DatetimePicker />);
+    render(<DateTimePicker />);
     expect(screen.getByRole("button")).toBeInTheDocument();
   });
 });

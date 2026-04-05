@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "column",
-    gap: spacing[1.5],
+    gap: 6,
     padding: 8,
   },
   title: {

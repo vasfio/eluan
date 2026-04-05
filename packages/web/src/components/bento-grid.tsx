@@ -33,7 +33,7 @@ const BentoGrid = React.forwardRef<HTMLDivElement, BentoGridProps>(
 BentoGrid.displayName = "BentoGrid"
 
 const bentoCardVariants = cva(
-  "group relative overflow-hidden rounded-xl border border-[var(--container-border)] bg-[var(--container-bg)] p-6",
+  "group relative overflow-hidden rounded-2xl border border-[var(--container-border)]/60 bg-[var(--container-bg)] p-6 transition-colors duration-300",
   {
     variants: {
       variant: {
@@ -41,13 +41,13 @@ const bentoCardVariants = cva(
         ghost: "border-transparent bg-[var(--backgrounds-secondary)]",
         dotted: [
           "border-transparent bg-[var(--backgrounds-secondary)]",
-          "[background-image:radial-gradient(var(--backgrounds-quaternary)_1px,transparent_1px)]",
-          "[background-size:16px_16px]",
+          "hover:[background-image:radial-gradient(var(--backgrounds-quaternary)_1px,transparent_1px)]",
+          "hover:[background-size:16px_16px]",
         ].join(" "),
         grid: [
           "",
-          "[background-image:linear-gradient(var(--container-border)_1px,transparent_1px),linear-gradient(to_right,var(--container-border)_1px,transparent_1px)]",
-          "[background-size:40px_40px]",
+          "hover:[background-image:linear-gradient(var(--container-border)_1px,transparent_1px),linear-gradient(to_right,var(--container-border)_1px,transparent_1px)]",
+          "hover:[background-size:40px_40px]",
         ].join(" "),
       },
       size: {
@@ -129,7 +129,7 @@ const BentoCardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      "font-heading text-lg font-semibold text-[var(--foregrounds-primary)]",
+      "font-heading text-lg font-medium text-[var(--foregrounds-primary)]",
       className
     )}
     {...props}

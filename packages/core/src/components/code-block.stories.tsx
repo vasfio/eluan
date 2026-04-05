@@ -8,7 +8,7 @@ const meta: Meta<typeof CodeBlock> = {
 }
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj
 
 const jsCode = `function greet(name) {
   console.log(\`Hello, \${name}!\`);
@@ -34,25 +34,31 @@ const cssCode = `.button {
 }`
 
 export const JavaScript: Story = {
+  args: {},
   render: () => <CodeBlock language="javascript" code={jsCode} />,
 }
 
 export const TypeScript: Story = {
+  args: {},
   render: () => <CodeBlock language="typescript" code={tsCode} />,
 }
 
 export const CSS: Story = {
+  args: {},
   render: () => <CodeBlock language="css" code={cssCode} />,
 }
 
 export const WithTitle: Story = {
-  render: () => <CodeBlock language="javascript" code={jsCode} title="example.js" />,
+  args: {},
+  render: () => <CodeBlock language="javascript" code={jsCode} filename="example.js" />,
 }
 
 export const WithLineNumbers: Story = {
+  args: {},
   render: () => <CodeBlock language="typescript" code={tsCode} showLineNumbers />,
 }
 
 export const Copyable: Story = {
-  render: () => <CodeBlock language="javascript" code={jsCode} copyable />,
+  args: {},
+  render: () => <CodeBlock language="javascript" code={jsCode} showCopyButton />,
 }

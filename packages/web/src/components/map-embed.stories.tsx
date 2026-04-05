@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react"
 import {
   GoogleMapEmbed,
   OpenStreetMapEmbed,
-  StaticMap,
   MapWithInfo,
 } from "./map-embed"
 
@@ -34,18 +33,6 @@ export const OpenStreetMap: Story = {
         lng={-73.9857}
         zoom={15}
         marker="Empire State Building"
-      />
-    </div>
-  ),
-}
-
-export const StaticImage: Story = {
-  render: () => (
-    <div className="max-w-md mx-auto">
-      <StaticMap
-        lat={40.7484}
-        lng={-73.9857}
-        zoom={15}
       />
     </div>
   ),

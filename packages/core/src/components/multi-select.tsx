@@ -139,7 +139,8 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
                   return (
                     <CommandItem
                       key={option.value}
-                      value={option.value}
+                      value={option.label}
+                      keywords={[option.value]}
                       disabled={option.disabled}
                       onSelect={() => handleSelect(option.value)}
                       className={cn(

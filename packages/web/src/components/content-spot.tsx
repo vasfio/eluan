@@ -60,7 +60,7 @@ const ContentSpotEyebrow = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      "text-xs font-medium uppercase tracking-widest text-[var(--action-primary-bg)]",
+      "text-xs font-normal uppercase tracking-widest text-[var(--action-primary-bg)]",
       className
     )}
     {...props}
@@ -75,7 +75,7 @@ const ContentSpotTitle = React.forwardRef<
   <Comp
     ref={ref}
     className={cn(
-      "font-heading text-3xl font-semibold tracking-tight text-[var(--foregrounds-primary)] sm:text-4xl lg:text-5xl",
+      "font-heading text-3xl font-normal tracking-tight text-[var(--foregrounds-primary)] sm:text-4xl lg:text-5xl",
       className
     )}
     {...props}

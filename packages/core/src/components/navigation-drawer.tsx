@@ -65,12 +65,13 @@ const NavigationDrawer = React.forwardRef<
     return (
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="ghost" size="icon" className="md:hidden">
+          <Button variant="ghost" size="icon" className="fixed top-3 left-3 z-40 md:hidden">
             <Menu className="h-5 w-5" />
+            <span className="sr-only">Open navigation</span>
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="w-64 p-0">
-          <div className="flex h-full flex-col">{children}</div>
+          <nav className="flex h-full flex-col">{children}</nav>
         </SheetContent>
       </Sheet>
     )
@@ -231,6 +232,47 @@ const NavigationDrawerGroup = React.forwardRef<
 })
 NavigationDrawerGroup.displayName = "NavigationDrawerGroup"
 
+/**
+ * Layout helper that renders the navigation drawer alongside main content.
+ * Wraps everything in the provider so open/close/collapse all work automatically.
+ *
+ * Usage:
+ * ```tsx
+ * <NavigationDrawerLayout
+ *   sidebar={<>
+ *     <NavigationDrawerHeader>Logo</NavigationDrawerHeader>
+ *     <NavigationDrawerContent>
+ *       <NavigationDrawerItem href="/" icon={<Home />} active>Home</NavigationDrawerItem>
+ *     </NavigationDrawerContent>
+ *     <NavigationDrawerFooter><NavigationDrawerToggle /></NavigationDrawerFooter>
+ *   </>}
+ * >
+ *   <main>Page content</main>
+ * </NavigationDrawerLayout>
+ * ```
+ */
+interface NavigationDrawerLayoutProps {
+  children: React.ReactNode
+  sidebar: React.ReactNode
+  defaultCollapsed?: boolean
+  className?: string
+}
+
+const NavigationDrawerLayout = ({
+  children,
+  sidebar,
+  defaultCollapsed = false,
+  className,
+}: NavigationDrawerLayoutProps) => (
+  <NavigationDrawerProvider defaultCollapsed={defaultCollapsed}>
+    <div className={cn("flex h-screen", className)}>
+      <NavigationDrawer>{sidebar}</NavigationDrawer>
+      <div className="flex-1 overflow-auto">{children}</div>
+    </div>
+  </NavigationDrawerProvider>
+)
+NavigationDrawerLayout.displayName = "NavigationDrawerLayout"
+
 export {
   NavigationDrawerProvider,
   NavigationDrawer,
@@ -240,5 +282,6 @@ export {
   NavigationDrawerToggle,
   NavigationDrawerItem,
   NavigationDrawerGroup,
+  NavigationDrawerLayout,
   useNavigationDrawer,
 }

@@ -51,13 +51,13 @@ const LogoCloud = React.forwardRef<HTMLDivElement, LogoCloudProps>(
       >
         <div className="container mx-auto px-4 overflow-hidden">
           {title && (
-            <p className="mb-8 text-center text-xs font-medium uppercase tracking-widest text-[var(--foregrounds-quinary)]">
+            <p className="mb-8 text-center text-xs font-normal uppercase tracking-widest text-[var(--foregrounds-quinary)]">
               {title}
             </p>
           )}
 
           {layout === "marquee" ? (
-            <div className="relative flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+            <div className="hover:pause-marquee relative flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
               <div className="flex animate-[marquee_30s_linear_infinite] items-center gap-12">
                 {childArray}
               </div>
@@ -69,6 +69,9 @@ const LogoCloud = React.forwardRef<HTMLDivElement, LogoCloudProps>(
                 @keyframes marquee {
                   from { transform: translateX(0); }
                   to { transform: translateX(-50%); }
+                }
+                .hover\\:pause-marquee:hover .animate-\\[marquee_30s_linear_infinite\\] {
+                  animation-play-state: paused;
                 }
               `}</style>
             </div>
@@ -89,12 +92,12 @@ const LogoCloud = React.forwardRef<HTMLDivElement, LogoCloudProps>(
 LogoCloud.displayName = "LogoCloud"
 
 const logoItemVariants = cva(
-  "flex items-center justify-center transition-opacity",
+  "flex items-center justify-center transition-all duration-300",
   {
     variants: {
       grayscale: {
-        true: "opacity-60 grayscale hover:opacity-100 hover:grayscale-0",
-        false: "opacity-100",
+        true: "opacity-50 grayscale hover:opacity-100 hover:grayscale-0 hover:scale-105",
+        false: "opacity-100 hover:scale-105",
       },
     },
     defaultVariants: {

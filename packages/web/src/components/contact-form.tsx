@@ -44,7 +44,7 @@ const ContactContent = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "grid gap-12 lg:grid-cols-2",
+      "grid gap-16 lg:grid-cols-2",
       className
     )}
     {...props}
@@ -75,7 +75,7 @@ const ContactTitle = React.forwardRef<
   <h2
     ref={ref}
     className={cn(
-      "font-heading text-3xl font-semibold tracking-tight text-[var(--foregrounds-primary)] sm:text-4xl",
+      "font-heading text-3xl font-medium tracking-tight text-[var(--foregrounds-primary)] sm:text-4xl",
       className
     )}
     {...props}
@@ -172,11 +172,11 @@ const ContactSocialLink = React.forwardRef<HTMLAnchorElement, ContactSocialLinkP
 ContactSocialLink.displayName = "ContactSocialLink"
 
 // Contact form
-const contactFormVariants = cva("space-y-6", {
+const contactFormVariants = cva("space-y-8", {
   variants: {
     variant: {
       default: "",
-      card: "rounded-xl border border-[var(--container-border)] bg-[var(--container-bg)] p-6 md:p-8",
+      card: "rounded-2xl border border-[var(--container-border)]/50 bg-[var(--container-bg)] p-8 md:p-10",
     },
   },
   defaultVariants: {
@@ -241,7 +241,7 @@ const ContactFormInput = React.forwardRef<
   <input
     ref={ref}
     className={cn(
-      "flex h-10 w-full rounded-lg border border-[var(--container-border)] bg-[var(--container-bg)] px-3 py-2 text-sm text-[var(--foregrounds-primary)] placeholder:text-[var(--foregrounds-tertiary)] focus:outline-none focus:ring-2 focus:ring-[var(--action-primary-bg)] disabled:cursor-not-allowed disabled:opacity-50",
+      "flex h-11 w-full rounded-lg border border-[var(--container-border)]/60 bg-[var(--container-bg)] px-4 py-2 text-sm text-[var(--foregrounds-primary)] placeholder:text-[var(--foregrounds-tertiary)]/60 focus:outline-none focus:ring-1 focus:ring-[var(--action-primary-bg)] focus:border-[var(--action-primary-bg)] disabled:cursor-not-allowed disabled:opacity-50 transition-colors",
       className
     )}
     {...props}
@@ -256,7 +256,7 @@ const ContactFormTextarea = React.forwardRef<
   <textarea
     ref={ref}
     className={cn(
-      "flex min-h-[120px] w-full rounded-lg border border-[var(--container-border)] bg-[var(--container-bg)] px-3 py-2 text-sm text-[var(--foregrounds-primary)] placeholder:text-[var(--foregrounds-tertiary)] focus:outline-none focus:ring-2 focus:ring-[var(--action-primary-bg)] disabled:cursor-not-allowed disabled:opacity-50",
+      "flex min-h-[120px] w-full rounded-lg border border-[var(--container-border)]/60 bg-[var(--container-bg)] px-4 py-3 text-sm text-[var(--foregrounds-primary)] placeholder:text-[var(--foregrounds-tertiary)]/60 focus:outline-none focus:ring-1 focus:ring-[var(--action-primary-bg)] focus:border-[var(--action-primary-bg)] disabled:cursor-not-allowed disabled:opacity-50 transition-colors",
       className
     )}
     {...props}
@@ -271,7 +271,7 @@ const ContactFormSelect = React.forwardRef<
   <select
     ref={ref}
     className={cn(
-      "flex h-10 w-full rounded-lg border border-[var(--container-border)] bg-[var(--container-bg)] px-3 py-2 text-sm text-[var(--foregrounds-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--action-primary-bg)] disabled:cursor-not-allowed disabled:opacity-50",
+      "flex h-11 w-full rounded-lg border border-[var(--container-border)]/60 bg-[var(--container-bg)] px-4 py-2 text-sm text-[var(--foregrounds-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--action-primary-bg)] focus:border-[var(--action-primary-bg)] disabled:cursor-not-allowed disabled:opacity-50 transition-colors",
       className
     )}
     {...props}

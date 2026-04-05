@@ -8,9 +8,10 @@ const meta: Meta<typeof ToggleGroup> = {
 }
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj
 
 export const Default: Story = {
+  args: {},
   render: () => (
     <ToggleGroup type="single">
       <ToggleGroupItem value="left" aria-label="Align left">L</ToggleGroupItem>
@@ -21,6 +22,7 @@ export const Default: Story = {
 }
 
 export const Multiple: Story = {
+  args: {},
   render: () => (
     <ToggleGroup type="multiple">
       <ToggleGroupItem value="bold" aria-label="Toggle bold">B</ToggleGroupItem>
@@ -31,6 +33,7 @@ export const Multiple: Story = {
 }
 
 export const Outline: Story = {
+  args: {},
   render: () => (
     <ToggleGroup type="single" variant="outline">
       <ToggleGroupItem value="a">A</ToggleGroupItem>
@@ -41,6 +44,7 @@ export const Outline: Story = {
 }
 
 export const Sizes: Story = {
+  args: {},
   render: () => (
     <div className="flex flex-col gap-4">
       <ToggleGroup type="single" size="sm">
@@ -63,6 +67,7 @@ export const Sizes: Story = {
 }
 
 export const Disabled: Story = {
+  args: {},
   render: () => (
     <ToggleGroup type="single" disabled>
       <ToggleGroupItem value="a">A</ToggleGroupItem>

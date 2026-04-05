@@ -106,11 +106,14 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     checked={checked}
     {...props}
   >
-    <span className="absolute left-2 flex h-4 w-4 items-center justify-center rounded-sm border border-[var(--interactive-border-alt)] data-[state=checked]:bg-[var(--interactive-bg-active)] data-[state=checked]:border-[var(--interactive-bg-active)]">
-      <DropdownMenuPrimitive.ItemIndicator>
-        <Check className="h-3 w-3 text-[var(--interactive-fg-active)]" />
-      </DropdownMenuPrimitive.ItemIndicator>
-    </span>
+    <DropdownMenuPrimitive.ItemIndicator forceMount className="absolute left-2 flex h-4 w-4 items-center justify-center">
+      <span className={cn(
+        "flex h-4 w-4 items-center justify-center rounded-sm border border-[var(--interactive-border-alt)] transition-colors",
+        checked ? "bg-[var(--interactive-bg-active)] border-[var(--interactive-bg-active)]" : ""
+      )}>
+        {checked && <Check className="h-3 w-3 text-[var(--interactive-fg-active)]" />}
+      </span>
+    </DropdownMenuPrimitive.ItemIndicator>
     {children}
   </DropdownMenuPrimitive.CheckboxItem>
 ))
@@ -131,9 +134,11 @@ const DropdownMenuRadioItem = React.forwardRef<
     )}
     {...props}
   >
-    <span className="absolute left-2 flex h-4 w-4 items-center justify-center rounded-full border border-[var(--interactive-border-alt)] data-[state=checked]:bg-[var(--interactive-bg-active)] data-[state=checked]:border-[var(--interactive-bg-active)]">
+    <span className="absolute left-2 flex h-4 w-4 items-center justify-center rounded-full border border-[var(--interactive-border-alt)]">
       <DropdownMenuPrimitive.ItemIndicator>
-        <div className="h-1.5 w-1.5 rounded-full bg-[var(--interactive-fg-active)]" />
+        <span className="absolute inset-0 rounded-full bg-[var(--interactive-bg-active)] border border-[var(--interactive-bg-active)] flex items-center justify-center">
+          <span className="h-1.5 w-1.5 rounded-full bg-[var(--interactive-fg-active)]" />
+        </span>
       </DropdownMenuPrimitive.ItemIndicator>
     </span>
     {children}

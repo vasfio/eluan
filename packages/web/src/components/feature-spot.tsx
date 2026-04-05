@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const featureSpotVariants = cva(
-  "py-12 md:py-16 lg:py-20",
+  "py-16 md:py-24 lg:py-32",
   {
     variants: {
       layout: {
@@ -66,7 +66,7 @@ const FeatureSpotHeader = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mx-auto mb-12 max-w-2xl text-center",
+      "mx-auto mb-16 max-w-2xl text-center",
       className
     )}
     {...props}
@@ -81,7 +81,7 @@ const FeatureSpotTitle = React.forwardRef<
   <Comp
     ref={ref}
     className={cn(
-      "font-heading text-3xl font-semibold tracking-tight text-[var(--foregrounds-primary)] sm:text-4xl",
+      "font-heading text-3xl font-medium tracking-tight text-[var(--foregrounds-primary)] sm:text-4xl lg:text-5xl",
       className
     )}
     {...props}
@@ -96,7 +96,7 @@ const FeatureSpotDescription = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "mt-4 text-lg text-[var(--foregrounds-tertiary)]",
+      "mt-6 text-lg leading-relaxed text-[var(--foregrounds-tertiary)]",
       className
     )}
     {...props}
@@ -136,7 +136,7 @@ const FeatureSpotItem = React.forwardRef<HTMLDivElement, FeatureSpotItemProps>(
     <div
       ref={ref}
       className={cn(
-        "flex flex-col gap-4 rounded-xl border border-[var(--container-border)] bg-[var(--container-bg)] p-6",
+        "flex flex-col gap-4 rounded-2xl border border-[var(--container-border)]/60 bg-[var(--container-bg)] p-8 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-md hover:shadow-black/[0.03]",
         className
       )}
       {...props}
@@ -158,7 +158,7 @@ const FeatureSpotItemTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn("font-heading text-lg font-semibold text-[var(--foregrounds-primary)]", className)}
+    className={cn("font-heading text-lg font-medium text-[var(--foregrounds-primary)]", className)}
     {...props}
   />
 ))
@@ -170,7 +170,7 @@ const FeatureSpotItemDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-[var(--foregrounds-tertiary)]", className)}
+    className={cn("text-[var(--foregrounds-tertiary)] leading-relaxed", className)}
     {...props}
   />
 ))

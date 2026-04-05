@@ -61,7 +61,7 @@ const StatsTitle = React.forwardRef<
   <h2
     ref={ref}
     className={cn(
-      "font-heading text-3xl font-semibold tracking-tight text-[var(--foregrounds-primary)] sm:text-4xl",
+      "font-heading text-3xl font-medium tracking-tight text-[var(--foregrounds-primary)] sm:text-4xl",
       className
     )}
     {...props}
@@ -75,7 +75,7 @@ const StatsDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mx-auto mt-4 max-w-2xl text-lg text-[var(--foregrounds-tertiary)]", className)}
+    className={cn("mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-[var(--foregrounds-tertiary)]", className)}
     {...props}
   />
 ))
@@ -113,8 +113,8 @@ const statItemVariants = cva("text-center", {
   variants: {
     variant: {
       default: "",
-      bordered: "border-l border-[var(--container-border)] first:border-l-0 pl-8 first:pl-0",
-      card: "rounded-xl border border-[var(--container-border)] bg-[var(--container-bg)] p-6",
+      bordered: "border-l border-[var(--container-border)]/60 first:border-l-0 pl-8 first:pl-0",
+      card: "rounded-2xl border border-[var(--container-border)]/60 bg-[var(--container-bg)] p-8 transition-all duration-300 hover:shadow-md hover:shadow-black/[0.03]",
     },
   },
   defaultVariants: {
@@ -143,7 +143,7 @@ const StatValue = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("font-heading text-4xl font-semibold tracking-tight text-[var(--foregrounds-primary)] lg:text-5xl", className)}
+    className={cn("font-heading text-4xl font-medium tracking-tight text-[var(--foregrounds-primary)] lg:text-5xl", className)}
     {...props}
   />
 ))
@@ -155,7 +155,7 @@ const StatLabel = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("mt-2 text-sm text-[var(--foregrounds-tertiary)]", className)}
+    className={cn("mt-3 text-sm font-normal text-[var(--foregrounds-tertiary)]", className)}
     {...props}
   />
 ))

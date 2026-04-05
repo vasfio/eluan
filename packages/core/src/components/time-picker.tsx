@@ -40,7 +40,7 @@ export function TimePicker({ value = "", onChange, format = "24", disabled, clas
   React.useEffect(() => {
     const p = parseTime(value, format)
     setH(p.h); setM(p.m); setPeriod(p.period as "AM" | "PM")
-  }, [value])
+  }, [value, format])
 
   const emit = (nh: number, nm: number, np: "AM" | "PM") => {
     if (format === "24") {
@@ -67,14 +67,12 @@ export function TimePicker({ value = "", onChange, format = "24", disabled, clas
     setM(nm); emit(h, nm, period)
   }
 
-  const togglePeriod = () => {
-    const np: "AM" | "PM" = period === "AM" ? "PM" : "AM"
-    setPeriod(np); emit(h, m, np)
-  }
+  const [editingH, setEditingH] = React.useState<string | null>(null)
+  const [editingM, setEditingM] = React.useState<string | null>(null)
 
   const spinnerCls = "flex flex-col items-center"
-  const btnCls = "flex h-6 w-6 items-center justify-center rounded opacity-50 hover:opacity-100 hover:bg-[var(--backgrounds-tertiary)] transition-opacity disabled:pointer-events-none"
-  const valCls = "w-9 text-center text-lg font-mono font-medium leading-none py-1 tabular-nums"
+  const btnCls = "flex h-7 w-8 items-center justify-center rounded opacity-60 hover:opacity-100 hover:bg-[var(--backgrounds-tertiary)] transition-opacity disabled:pointer-events-none cursor-pointer select-none"
+  const valCls = "w-10 text-center text-lg font-mono font-medium leading-none py-1 tabular-nums"
 
   return (
     <div
@@ -88,67 +86,119 @@ export function TimePicker({ value = "", onChange, format = "24", disabled, clas
 
       {/* Hours */}
       <div className={spinnerCls}>
-        <button type="button" className={btnCls} onClick={() => spinH(1)} disabled={disabled}>
-          <span className="text-xs">▲</span>
+        <button type="button" className={btnCls} onClick={() => spinH(1)} disabled={disabled} tabIndex={-1}>
+          <span className="text-xs">&#9650;</span>
         </button>
         <input
-          className={cn(valCls, "bg-transparent outline-none focus:bg-[var(--backgrounds-tertiary)] rounded")}
-          value={pad(h)}
+          className={cn(valCls, "bg-transparent outline-none focus:bg-[var(--backgrounds-tertiary)] rounded cursor-text")}
+          value={editingH !== null ? editingH : pad(h)}
+          onFocus={(e) => {
+            setEditingH(pad(h))
+            requestAnimationFrame(() => e.target.select())
+          }}
           onChange={(e) => {
-            const n = parseInt(e.target.value)
+            const raw = e.target.value.replace(/\D/g, "").slice(0, 2)
+            setEditingH(raw)
+            const n = parseInt(raw)
             if (!isNaN(n) && n >= minH && n <= maxH) { setH(n); emit(n, m, period) }
           }}
-          onBlur={(e) => { const n = parseInt(e.target.value); if (isNaN(n) || n < minH || n > maxH) setH(minH) }}
+          onBlur={() => {
+            const n = parseInt(editingH || "")
+            if (!isNaN(n) && n >= minH && n <= maxH) { setH(n); emit(n, m, period) }
+            else { setH(minH); emit(minH, m, period) }
+            setEditingH(null)
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowUp") { e.preventDefault(); spinH(1) }
+            if (e.key === "ArrowDown") { e.preventDefault(); spinH(-1) }
+          }}
           disabled={disabled}
+          inputMode="numeric"
           maxLength={2}
         />
-        <button type="button" className={btnCls} onClick={() => spinH(-1)} disabled={disabled}>
-          <span className="text-xs">▼</span>
+        <button type="button" className={btnCls} onClick={() => spinH(-1)} disabled={disabled} tabIndex={-1}>
+          <span className="text-xs">&#9660;</span>
         </button>
       </div>
 
-      <span className="text-[var(--foregrounds-quinary)] text-lg font-mono font-bold leading-none pb-px">:</span>
+      <span className="text-[var(--foregrounds-quinary)] text-lg font-mono font-bold leading-none pb-px select-none">:</span>
 
       {/* Minutes */}
       <div className={spinnerCls}>
-        <button type="button" className={btnCls} onClick={() => spinM(1)} disabled={disabled}>
-          <span className="text-xs">▲</span>
+        <button type="button" className={btnCls} onClick={() => spinM(1)} disabled={disabled} tabIndex={-1}>
+          <span className="text-xs">&#9650;</span>
         </button>
         <input
-          className={cn(valCls, "bg-transparent outline-none focus:bg-[var(--backgrounds-tertiary)] rounded")}
-          value={pad(m)}
+          className={cn(valCls, "bg-transparent outline-none focus:bg-[var(--backgrounds-tertiary)] rounded cursor-text")}
+          value={editingM !== null ? editingM : pad(m)}
+          onFocus={(e) => {
+            setEditingM(pad(m))
+            requestAnimationFrame(() => e.target.select())
+          }}
           onChange={(e) => {
-            const n = parseInt(e.target.value)
+            const raw = e.target.value.replace(/\D/g, "").slice(0, 2)
+            setEditingM(raw)
+            const n = parseInt(raw)
             if (!isNaN(n) && n >= 0 && n <= 59) { setM(n); emit(h, n, period) }
           }}
-          onBlur={(e) => { const n = parseInt(e.target.value); if (isNaN(n) || n < 0 || n > 59) setM(0) }}
+          onBlur={() => {
+            const n = parseInt(editingM || "")
+            if (!isNaN(n) && n >= 0 && n <= 59) { setM(n); emit(h, n, period) }
+            else { setM(0); emit(h, 0, period) }
+            setEditingM(null)
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowUp") { e.preventDefault(); spinM(1) }
+            if (e.key === "ArrowDown") { e.preventDefault(); spinM(-1) }
+          }}
           disabled={disabled}
+          inputMode="numeric"
           maxLength={2}
         />
-        <button type="button" className={btnCls} onClick={() => spinM(-1)} disabled={disabled}>
-          <span className="text-xs">▼</span>
+        <button type="button" className={btnCls} onClick={() => spinM(-1)} disabled={disabled} tabIndex={-1}>
+          <span className="text-xs">&#9660;</span>
         </button>
       </div>
 
       {/* AM/PM toggle */}
       {format === "12" && (
-        <button
-          type="button"
-          onClick={togglePeriod}
-          disabled={disabled}
-          className="ml-1 rounded-md px-2 py-1 text-xs font-semibold transition-colors bg-[var(--backgrounds-tertiary)] hover:bg-[var(--backgrounds-quaternary)] text-[var(--foregrounds-primary)]"
-        >
-          {period}
-        </button>
+        <div className="ml-1 flex flex-col gap-0.5">
+          <button
+            type="button"
+            onClick={() => { setPeriod("AM"); emit(h, m, "AM") }}
+            disabled={disabled}
+            className={cn(
+              "rounded px-2 py-0.5 text-xs font-semibold transition-colors cursor-pointer",
+              period === "AM"
+                ? "bg-[var(--interactive-bg-active,#e2e2e2)] text-[var(--foregrounds-primary)]"
+                : "text-[var(--foregrounds-quaternary)] hover:bg-[var(--backgrounds-tertiary)]"
+            )}
+          >
+            AM
+          </button>
+          <button
+            type="button"
+            onClick={() => { setPeriod("PM"); emit(h, m, "PM") }}
+            disabled={disabled}
+            className={cn(
+              "rounded px-2 py-0.5 text-xs font-semibold transition-colors cursor-pointer",
+              period === "PM"
+                ? "bg-[var(--interactive-bg-active,#e2e2e2)] text-[var(--foregrounds-primary)]"
+                : "text-[var(--foregrounds-quaternary)] hover:bg-[var(--backgrounds-tertiary)]"
+            )}
+          >
+            PM
+          </button>
+        </div>
       )}
     </div>
   )
 }
 
 // Minimal inline time input (type=time native but styled)
-export interface TimeInputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+export interface NativeTimeInputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
-export const TimeInput = React.forwardRef<HTMLInputElement, TimeInputProps>(
+export const NativeTimeInput = React.forwardRef<HTMLInputElement, NativeTimeInputProps>(
   ({ className, ...props }, ref) => (
     <div className={cn("relative flex w-full items-center", className)}>
       <Clock className="pointer-events-none absolute left-3 h-4 w-4 text-[var(--foregrounds-quinary)]" />
@@ -167,4 +217,4 @@ export const TimeInput = React.forwardRef<HTMLInputElement, TimeInputProps>(
     </div>
   )
 )
-TimeInput.displayName = "TimeInput"
+NativeTimeInput.displayName = "NativeTimeInput"

@@ -45,29 +45,46 @@ const AvatarFallback = React.forwardRef<
 ))
 AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName
 
-// --- Badge overlay ---
+// --- Notification badge overlay ---
 type AvatarBadgeProps = React.HTMLAttributes<HTMLSpanElement> & {
   position?: "top-right" | "bottom-right" | "top-left" | "bottom-left"
+  /** Display a numeric count inside the badge. When provided, the badge enlarges to fit the number. */
+  count?: number
+  /** Maximum count to display; values above show "max+" (e.g. "99+"). Default 99. */
+  max?: number
 }
 
 const AvatarBadge = React.forwardRef<HTMLSpanElement, AvatarBadgeProps>(
-  ({ className, position = "bottom-right", ...props }, ref) => {
+  ({ className, position = "top-right", count, max = 99, ...props }, ref) => {
     const positionClasses = {
-      "top-right": "top-0 right-0",
-      "bottom-right": "bottom-0 right-0",
-      "top-left": "top-0 left-0",
-      "bottom-left": "bottom-0 left-0",
+      "top-right": "-top-1 -right-1",
+      "bottom-right": "-bottom-1 -right-1",
+      "top-left": "-top-1 -left-1",
+      "bottom-left": "-bottom-1 -left-1",
     }
+
+    const hasCount = count !== undefined && count > 0
+    const displayCount = hasCount
+      ? count > max
+        ? `${max}+`
+        : `${count}`
+      : undefined
+
     return (
       <span
         ref={ref}
         className={cn(
-          "absolute flex h-3 w-3 items-center justify-center rounded-full ring-2 ring-[var(--backgrounds-primary)]",
+          "absolute flex items-center justify-center rounded-full ring-2 ring-[var(--backgrounds-primary)] bg-[var(--destructive-bg)] text-[var(--destructive-fg)]",
+          hasCount
+            ? "min-w-[18px] h-[18px] px-1 text-[10px] font-bold leading-none"
+            : "h-3 w-3",
           positionClasses[position],
           className
         )}
         {...props}
-      />
+      >
+        {displayCount}
+      </span>
     )
   }
 )

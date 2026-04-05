@@ -128,12 +128,24 @@ const DiscoverLogo = () => (
   </svg>
 )
 
+const GenericCardBadge = ({ label, color }: { label: string; color: string }) => (
+  <span
+    className="inline-flex items-center rounded px-1.5 py-0.5 text-[10px] font-bold leading-none tracking-tight"
+    style={{ color, border: `1.5px solid ${color}` }}
+  >
+    {label}
+  </span>
+)
+
 const CardIcon = ({ type }: { type: CardType }) => {
   switch (type) {
-    case "visa":      return <VisaLogo />
+    case "visa":       return <VisaLogo />
     case "mastercard": return <MastercardLogo />
-    case "amex":      return <AmexLogo />
-    case "discover":  return <DiscoverLogo />
+    case "amex":       return <AmexLogo />
+    case "discover":   return <DiscoverLogo />
+    case "jcb":        return <GenericCardBadge label="JCB" color="#0E4C96" />
+    case "diners":     return <GenericCardBadge label="DC" color="#004A97" />
+    case "unionpay":   return <GenericCardBadge label="UP" color="#E21836" />
     default:
       return <CreditCard className="h-5 w-5 text-[var(--foregrounds-quinary)]" />
   }
@@ -194,7 +206,7 @@ const CreditCardNumberInput = React.forwardRef<HTMLInputElement, CreditCardNumbe
           inputMode="numeric"
           autoComplete="cc-number"
           className={cn(
-            "flex h-10 w-full rounded-md border border-input bg-background pl-10 pr-12 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 font-mono",
+            "flex h-10 w-full rounded-md border border-input bg-background pl-10 pr-12 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 font-mono",
             className
           )}
           ref={ref}
@@ -233,7 +245,7 @@ const CreditCardExpiryInput = React.forwardRef<HTMLInputElement, CreditCardExpir
           inputMode="numeric"
           autoComplete="cc-exp"
           className={cn(
-            "flex h-10 w-full rounded-md border border-input bg-background pl-10 pr-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 font-mono",
+            "flex h-10 w-full rounded-md border border-input bg-background pl-10 pr-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 font-mono",
             className
           )}
           ref={ref}
@@ -269,7 +281,7 @@ const CreditCardCVVInput = React.forwardRef<HTMLInputElement, CreditCardCVVInput
           inputMode="numeric"
           autoComplete="cc-csc"
           className={cn(
-            "flex h-10 w-full rounded-md border border-input bg-background pl-10 pr-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 font-mono",
+            "flex h-10 w-full rounded-md border border-input bg-background pl-10 pr-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 font-mono",
             className
           )}
           ref={ref}

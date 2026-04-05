@@ -70,6 +70,10 @@ export default {
           from: { opacity: "0" },
           to: { opacity: "1" },
         },
+        footerFadeIn: {
+          from: { opacity: "0", transform: "translateY(8px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
         marquee: "marquee linear infinite",

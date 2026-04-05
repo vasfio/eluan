@@ -61,7 +61,7 @@ const TimelineItem = React.forwardRef<HTMLDivElement, TimelineItemProps>(
 TimelineItem.displayName = "TimelineItem"
 
 const timelineLineVariants = cva(
-  "absolute left-[11px] top-[26px] h-[calc(100%-26px)] w-px",
+  "absolute left-[11px] top-6 h-[calc(100%-24px)] w-px",
   {
     variants: {
       variant: {
@@ -92,7 +92,7 @@ const TimelineLine = React.forwardRef<HTMLDivElement, TimelineLineProps>(
 TimelineLine.displayName = "TimelineLine"
 
 const timelineDotVariants = cva(
-  "absolute left-0 flex h-6 w-6 items-center justify-center rounded-full border-2 border-background",
+  "absolute left-0 top-0 flex h-6 w-6 items-center justify-center rounded-full border-2 border-background",
   {
     variants: {
       variant: {

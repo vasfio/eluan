@@ -497,52 +497,36 @@ export const fontFamilies = {
 } as const
 
 // ============================================
-// Theme → Typekit Project Mapping
-// Each theme loads a separate Typekit project for optimal payload size
+// Theme → Font Mapping (Google Fonts via @fontsource)
 // ============================================
-
-export const themeTypekitIds: Record<Theme, string> = {
-  "classic-retro": "asv6xjk",
-  "classic-black": "asv6xjk",
-  "lime": "thm2fhy",
-  "bold": "ahw1otv",
-  "beige": "cml0bal",
-  "funky": "ffk3wmq",
-}
 
 export const themeFonts: Record<
   Theme,
-  { heading: string; body: string; typekitId: string }
+  { heading: string; body: string }
 > = {
   "classic-retro": {
-    heading: "neue-haas-grotesk-display",
-    body: "neue-haas-grotesk-text",
-    typekitId: "asv6xjk",
+    heading: "Geist",
+    body: "Geist",
   },
   "classic-black": {
-    heading: "neue-haas-grotesk-display",
-    body: "neue-haas-grotesk-text",
-    typekitId: "asv6xjk",
+    heading: "Inter",
+    body: "Inter",
   },
   "lime": {
-    heading: "articulat-cf",
-    body: "proxima-nova",
-    typekitId: "thm2fhy",
+    heading: "Manrope",
+    body: "Manrope",
   },
   "bold": {
-    heading: "komu-new-f",
-    body: "usual",
-    typekitId: "ahw1otv",
+    heading: "Bebas Neue",
+    body: "Work Sans",
   },
   "beige": {
     heading: "Instrument Serif",
-    body: "soleil",
-    typekitId: "cml0bal",
+    body: "Plus Jakarta Sans",
   },
   "funky": {
-    heading: "flood-std",
-    body: "mundial",
-    typekitId: "ffk3wmq",
+    heading: "Dela Gothic One",
+    body: "Plus Jakarta Sans",
   },
 }
 

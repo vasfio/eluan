@@ -308,19 +308,23 @@ const ResizableHandle = React.forwardRef<HTMLDivElement, ResizableHandleProps & 
         }}
         data-resizable-handle
         className={cn(
-          "relative flex items-center justify-center bg-border",
+          "relative flex items-center justify-center",
           direction === "horizontal"
-            ? "w-px cursor-col-resize"
-            : "h-px cursor-row-resize",
-          "after:absolute after:inset-y-0 after:left-1/2 after:w-1 after:-translate-x-1/2",
+            ? "w-2 cursor-col-resize"
+            : "h-2 cursor-row-resize",
+          "bg-border hover:bg-primary/20 transition-colors",
+          "after:absolute",
+          direction === "horizontal"
+            ? "after:inset-y-0 after:left-1/2 after:w-4 after:-translate-x-1/2"
+            : "after:inset-x-0 after:top-1/2 after:h-4 after:-translate-y-1/2",
           "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1",
-          isResizing && "bg-[var(--interactive-bg-active)]",
+          isResizing && "bg-primary/30",
           className
         )}
         onMouseDown={handleMouseDown}
         {...props}
       >
-        {withHandle && (
+        {withHandle ? (
           <div
             className={cn(
               "z-10 flex h-4 w-3 items-center justify-center rounded-sm border bg-border",
@@ -329,6 +333,15 @@ const ResizableHandle = React.forwardRef<HTMLDivElement, ResizableHandleProps & 
           >
             <GripVertical className="h-2.5 w-2.5" />
           </div>
+        ) : (
+          <div
+            className={cn(
+              "z-10 flex items-center justify-center",
+              direction === "horizontal"
+                ? "h-8 w-1 rounded-full bg-border"
+                : "h-1 w-8 rounded-full bg-border"
+            )}
+          />
         )}
       </div>
     )

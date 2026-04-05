@@ -69,7 +69,7 @@ const Rating = React.forwardRef<HTMLDivElement, RatingProps>(
           type="button"
           disabled={readonly}
           className={cn(
-            "relative p-0.5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 disabled:cursor-default",
+            "relative p-0.5 transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 focus-visible:ring-offset-1 disabled:cursor-default",
             !readonly && "cursor-pointer hover:scale-110"
           )}
           onMouseMove={(e) => handleMouseMove(e, index)}
@@ -81,14 +81,14 @@ const Rating = React.forwardRef<HTMLDivElement, RatingProps>(
           <Star
             className={cn(
               sizeClasses[size],
-              "text-[var(--backgrounds-quaternary)] fill-[var(--backgrounds-quaternary)]"
+              "fill-[var(--backgrounds-tertiary)] stroke-none"
             )}
           />
           {/* Filled star overlay */}
           <Star
             className={cn(
               sizeClasses[size],
-              "absolute inset-0.5 fill-[var(--cautionary-main)] text-[var(--cautionary-main)] transition-all",
+              "absolute inset-0.5 fill-[var(--cautionary-main)] stroke-none transition-all",
               filled ? "opacity-100" : halfFilled ? "opacity-100" : "opacity-0"
             )}
             style={

@@ -41,7 +41,7 @@
     "three": { "optional": true }
   },
   "dependencies": {
-    "@vasf/ragnar-core": "workspace:*",
+    "@ragnar/core": "workspace:*",
     "@vasf/ragnar-tokens": "workspace:*",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

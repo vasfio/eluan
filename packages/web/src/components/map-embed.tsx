@@ -357,3 +357,5 @@ export {
   OpenStreetMapEmbed,
   MapWithInfo,
 }
+
+// Static map variant intentionally removed -- only interactive/embedded maps are supported.

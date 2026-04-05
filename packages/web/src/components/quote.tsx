@@ -28,9 +28,9 @@ const quoteVariants = cva(
 )
 
 const textSizes = {
-  sm: "text-base sm:text-lg",
-  default: "text-base sm:text-lg",
-  lg: "text-lg sm:text-xl",
+  sm: "text-sm sm:text-base",
+  default: "text-sm sm:text-base",
+  lg: "text-base sm:text-lg",
 }
 
 export interface QuoteProps
@@ -64,7 +64,7 @@ const QuoteText = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "font-normal text-[var(--foregrounds-secondary)] leading-relaxed",
+      "font-light italic text-[var(--foregrounds-secondary)] leading-relaxed",
       textSizes[size],
       className
     )}

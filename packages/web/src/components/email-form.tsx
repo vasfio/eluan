@@ -2,8 +2,8 @@ import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
-import { Button } from "@vasf/ragnar-core"
-import { Input } from "@vasf/ragnar-core"
+import { Button } from "@ragnar/core"
+import { Input } from "@ragnar/core"
 
 const emailFormVariants = cva(
   "flex w-full gap-2",
@@ -93,12 +93,12 @@ const EmailForm = React.forwardRef<HTMLFormElement, EmailFormProps>(
             placeholder={placeholder}
             disabled={isDisabled}
             required
-            className={cn(layout === "inline" && "flex-1")}
+            className={cn("h-12", layout === "inline" && "flex-1")}
           />
           <Button
             type="submit"
             disabled={isDisabled}
-            className={cn(layout === "stacked" && "w-full")}
+            className={cn("h-12", layout === "stacked" && "w-full")}
           >
             {isLoading ? (
               <span className="flex items-center gap-2">

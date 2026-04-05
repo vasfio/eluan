@@ -1,12 +1,12 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect } from "vitest";
-import { NavigationDrawer, NavigationDrawerTrigger, NavigationDrawerContent } from "../navigation-drawer";
+import { NavigationDrawer, NavigationDrawerToggle, NavigationDrawerContent } from "../navigation-drawer";
 
 describe("NavigationDrawer", () => {
   const TestDrawer = () => (
     <NavigationDrawer>
-      <NavigationDrawerTrigger>Menu</NavigationDrawerTrigger>
+      <NavigationDrawerToggle>Menu</NavigationDrawerToggle>
       <NavigationDrawerContent>
         <nav>
           <a href="/home">Home</a>

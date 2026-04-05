@@ -139,10 +139,13 @@ DrawerOverlay.displayName = "DrawerOverlay"
 
 interface DrawerContentProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof drawerVariants> {}
+    VariantProps<typeof drawerVariants> {
+  /** When true the drawer pushes content instead of overlaying (no backdrop). Use with DrawerPushLayout. */
+  push?: boolean
+}
 
 const DrawerContent = React.forwardRef<HTMLDivElement, DrawerContentProps>(
-  ({ className, side, children, ...props }, ref) => {
+  ({ className, side, push = false, children, ...props }, ref) => {
     const { open, onOpenChange } = useDrawer()
 
     // Handle escape key
@@ -155,14 +158,37 @@ const DrawerContent = React.forwardRef<HTMLDivElement, DrawerContentProps>(
 
       if (open) {
         document.addEventListener("keydown", handleEscape)
-        document.body.style.overflow = "hidden"
+        if (!push) {
+          document.body.style.overflow = "hidden"
+        }
       }
 
       return () => {
         document.removeEventListener("keydown", handleEscape)
         document.body.style.overflow = ""
       }
-    }, [open, onOpenChange])
+    }, [open, onOpenChange, push])
+
+    if (push) {
+      // Push mode: render inline (not in a portal), no overlay, no fixed positioning.
+      // The drawer sits beside the content and DrawerPushLayout handles the margin shift.
+      return (
+        <div
+          ref={ref}
+          data-state={open ? "open" : "closed"}
+          className={cn(
+            "h-full bg-background border-r shadow-sm transition-all duration-300 ease-in-out overflow-hidden",
+            open ? (side === "right" ? "w-[280px] border-l" : "w-[280px] border-r") : "w-0",
+            className
+          )}
+          {...props}
+        >
+          <div className={cn("h-full w-[280px]", !open && "invisible")}>
+            {children}
+          </div>
+        </div>
+      )
+    }
 
     return (
       <DrawerPortal>

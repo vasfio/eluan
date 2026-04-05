@@ -27,7 +27,7 @@ export const Default: Story = {
     return (
       <MultiSelect
         options={options}
-        selected={selected}
+        value={selected}
         onChange={setSelected}
         placeholder="Select frameworks..."
       />
@@ -41,7 +41,7 @@ export const WithPreselected: Story = {
     return (
       <MultiSelect
         options={options}
-        selected={selected}
+        value={selected}
         onChange={setSelected}
         placeholder="Select frameworks..."
       />
@@ -55,10 +55,9 @@ export const Searchable: Story = {
     return (
       <MultiSelect
         options={options}
-        selected={selected}
+        value={selected}
         onChange={setSelected}
         placeholder="Search and select..."
-        searchable
       />
     )
   },
@@ -71,10 +70,9 @@ export const MaxSelections: Story = {
       <div className="space-y-2">
         <MultiSelect
           options={options}
-          selected={selected}
+          value={selected}
           onChange={setSelected}
           placeholder="Select up to 3..."
-          maxSelected={3}
         />
         <p className="text-sm text-muted-foreground">Maximum 3 selections allowed</p>
       </div>

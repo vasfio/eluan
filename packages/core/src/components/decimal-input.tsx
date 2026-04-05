@@ -158,10 +158,33 @@ const DecimalInput = React.forwardRef<HTMLInputElement, DecimalInputProps>(
       }
     }
 
+    const prefixRef = React.useRef<HTMLSpanElement>(null)
+    const suffixRef = React.useRef<HTMLSpanElement>(null)
+    const [prefixWidth, setPrefixWidth] = React.useState(0)
+    const [suffixWidth, setSuffixWidth] = React.useState(0)
+
+    const hasPrefix = !!(effectivePrefix || effectivePrefixUnit)
+    const hasSuffix = !!effectiveSuffix
+
+    React.useEffect(() => {
+      if (prefixRef.current) {
+        setPrefixWidth(prefixRef.current.offsetWidth)
+      }
+    }, [effectivePrefix, effectivePrefixUnit])
+
+    React.useEffect(() => {
+      if (suffixRef.current) {
+        setSuffixWidth(suffixRef.current.offsetWidth)
+      }
+    }, [effectiveSuffix])
+
     return (
       <div className="relative flex items-center">
-        {(effectivePrefix || effectivePrefixUnit) && (
-          <span className="absolute left-3 text-muted-foreground text-sm">
+        {hasPrefix && (
+          <span
+            ref={prefixRef}
+            className="pointer-events-none absolute left-3 text-muted-foreground text-sm whitespace-nowrap"
+          >
             {effectivePrefix}
             {effectivePrefixUnit}
           </span>
@@ -170,13 +193,15 @@ const DecimalInput = React.forwardRef<HTMLInputElement, DecimalInputProps>(
           type="text"
           inputMode="decimal"
           className={cn(
-            "flex h-10 w-full rounded-md border border-input bg-background py-2 text-sm text-right ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 font-mono",
-            (effectivePrefix || effectivePrefixUnit) && "pl-10",
-            effectiveSuffix && "pr-12",
-            !effectivePrefix && !effectivePrefixUnit && "px-3",
-            !effectiveSuffix && "pr-3",
+            "flex h-10 w-full rounded-md border border-input bg-background py-2 text-sm text-right ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 font-mono",
+            !hasPrefix && "pl-3",
+            !hasSuffix && "pr-3",
             className
           )}
+          style={{
+            paddingLeft: hasPrefix ? `${prefixWidth + 20}px` : undefined,
+            paddingRight: hasSuffix ? `${suffixWidth + 20}px` : undefined,
+          }}
           ref={ref}
           value={inputValue}
           onChange={handleChange}
@@ -185,8 +210,11 @@ const DecimalInput = React.forwardRef<HTMLInputElement, DecimalInputProps>(
           disabled={disabled}
           {...props}
         />
-        {effectiveSuffix && (
-          <span className="absolute right-3 text-muted-foreground text-sm">
+        {hasSuffix && (
+          <span
+            ref={suffixRef}
+            className="pointer-events-none absolute right-3 text-muted-foreground text-sm whitespace-nowrap"
+          >
             {effectiveSuffix}
           </span>
         )}

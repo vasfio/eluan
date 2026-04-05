@@ -42,7 +42,7 @@ export const WithDescription: Story = {
 export const Disabled: Story = {
   render: () => (
     <div className="space-y-2">
-      <FormLabel htmlFor="disabled-input" disabled>Disabled Field</FormLabel>
+      <FormLabel htmlFor="disabled-input" className="opacity-50 cursor-not-allowed">Disabled Field</FormLabel>
       <Input id="disabled-input" disabled placeholder="Disabled" />
     </div>
   ),

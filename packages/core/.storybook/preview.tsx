@@ -1,6 +1,5 @@
 import React, { useEffect } from "react"
 import type { Preview } from "@storybook/react"
-import { themeTypekitIds } from "../../tokens/src/index"
 import type { Theme } from "../../tokens/src/index"
 import "../src/styles/globals.css"
 
@@ -98,19 +97,6 @@ const preview: Preview = {
           document.documentElement.removeAttribute("data-curves")
         }
       }, [mode, theme, spacing, curves])
-
-      // Swap Typekit stylesheet href when theme changes
-      // The <link id="ragnar-typekit"> is pre-loaded in preview-head.html
-      useEffect(() => {
-        const typekitId = themeTypekitIds[theme as Theme]
-        if (!typekitId) return
-
-        const href = `https://use.typekit.net/${typekitId}.css`
-        const link = document.getElementById("ragnar-typekit") as HTMLLinkElement | null
-        if (link && link.href !== href) {
-          link.href = href
-        }
-      }, [theme])
 
       // Determine Storybook canvas background color based on mode
       const bgColor =

@@ -9,32 +9,36 @@ const meta: Meta<typeof DatePicker> = {
 }
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj
 
 export const Default: Story = {
+  args: {},
   render: () => {
-    const [date, setDate] = React.useState<Date>()
-    return <DatePicker date={date} onDateChange={setDate} />
+    const [date, setDate] = React.useState<Date | undefined>()
+    return <DatePicker value={date} onChange={setDate} />
   },
 }
 
 export const WithPreselected: Story = {
+  args: {},
   render: () => {
-    const [date, setDate] = React.useState<Date>(new Date())
-    return <DatePicker date={date} onDateChange={setDate} />
+    const [date, setDate] = React.useState<Date | undefined>(new Date())
+    return <DatePicker value={date} onChange={setDate} />
   },
 }
 
 export const WithPlaceholder: Story = {
+  args: {},
   render: () => {
-    const [date, setDate] = React.useState<Date>()
-    return <DatePicker date={date} onDateChange={setDate} placeholder="Select a date..." />
+    const [date, setDate] = React.useState<Date | undefined>()
+    return <DatePicker value={date} onChange={setDate} placeholder="Select a date..." />
   },
 }
 
 export const Disabled: Story = {
+  args: {},
   render: () => {
-    const [date, setDate] = React.useState<Date>()
-    return <DatePicker date={date} onDateChange={setDate} disabled />
+    const [date, setDate] = React.useState<Date | undefined>()
+    return <DatePicker value={date} onChange={setDate} disabled />
   },
 }

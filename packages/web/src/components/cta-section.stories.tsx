@@ -7,7 +7,7 @@ import {
   CTAActions,
   CTACard,
 } from "./cta-section"
-import { Button } from "@vasf/ragnar-core"
+import { Button } from "@ragnar/core"
 
 const meta: Meta<typeof CTASection> = {
   title: "Web/CTASection",

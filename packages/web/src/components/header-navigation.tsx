@@ -2,8 +2,8 @@ import * as React from "react"
 import { Menu } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Button } from "@vasf/ragnar-core"
-import { Sheet, SheetContent, SheetTrigger } from "@vasf/ragnar-core"
+import { Button } from "@ragnar/core"
+import { Sheet, SheetContent, SheetTrigger } from "@ragnar/core"
 
 export interface NavItem {
   label: string
@@ -56,7 +56,7 @@ const HeaderNavigation = React.forwardRef<HTMLElement, HeaderNavigationProps>(
     const renderNavItem = (item: NavItem, mobile = false) => {
       const baseClasses = mobile
         ? "block w-full px-4 py-2 text-base font-medium text-[var(--foregrounds-primary)] hover:bg-[var(--backgrounds-tertiary)] rounded-lg transition-colors"
-        : "relative px-3 py-1.5 text-sm font-medium text-[var(--foregrounds-tertiary)] hover:text-[var(--foregrounds-primary)] transition-colors rounded-full"
+        : "relative px-4 py-1.5 text-sm font-normal text-[var(--foregrounds-tertiary)] hover:text-[var(--foregrounds-primary)] transition-colors rounded-full"
 
       const activeClasses = mobile
         ? "bg-[var(--backgrounds-tertiary)]"
@@ -100,21 +100,21 @@ const HeaderNavigation = React.forwardRef<HTMLElement, HeaderNavigationProps>(
       <header
         ref={ref}
         className={cn(
-          "w-full border-b border-[var(--container-border)] bg-[var(--container-bg)]/95 backdrop-blur supports-[backdrop-filter]:bg-[var(--container-bg)]/60",
+          "w-full border-b border-[var(--container-border)]/50 bg-[var(--container-bg)]/95 backdrop-blur supports-[backdrop-filter]:bg-[var(--container-bg)]/60",
           sticky && "sticky top-0 z-50",
           transparent && "border-transparent bg-transparent",
           className
         )}
         {...props}
       >
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
+        <div className="container mx-auto flex h-16 items-center justify-between px-6">
           {/* Logo */}
           <div className="flex items-center">
             {logo}
           </div>
 
           {/* Desktop Navigation */}
-          <nav className={cn("items-center gap-1", breakpointClasses[mobileBreakpoint].desktop)}>
+          <nav className={cn("items-center gap-2", breakpointClasses[mobileBreakpoint].desktop)}>
             {items.map((item) => renderNavItem(item))}
           </nav>
 

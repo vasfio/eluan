@@ -54,7 +54,7 @@ export const WithCheckboxes: Story = {
 
 export const Disabled: Story = {
   render: () => (
-    <Fieldset disabled>
+    <Fieldset className="opacity-50 pointer-events-none">
       <FieldsetLegend>Disabled Fieldset</FieldsetLegend>
       <div className="space-y-4">
         <Input placeholder="This input is disabled" />

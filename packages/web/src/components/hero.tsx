@@ -69,7 +69,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
         )}
         <div className={cn(
           "container relative z-10 mx-auto px-4",
-          align === "center" && "flex flex-col items-center"
+          align === "center" && "flex flex-col items-center text-center"
         )}>
           {children}
         </div>
@@ -101,7 +101,7 @@ const HeroTitle = React.forwardRef<
   <h1
     ref={ref}
     className={cn(
-      "max-w-4xl w-full font-heading text-4xl font-semibold tracking-tight text-[var(--foregrounds-primary)] sm:text-5xl md:text-6xl lg:text-7xl",
+      "max-w-4xl w-full font-heading text-4xl font-medium tracking-tight text-[var(--foregrounds-primary)] sm:text-5xl md:text-6xl lg:text-7xl",
       className
     )}
     {...props}

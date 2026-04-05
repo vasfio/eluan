@@ -18,14 +18,13 @@ const meta: Meta<typeof Drawer> = {
 }
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj
 
 export const Default: Story = {
+  args: {},
   render: () => (
     <Drawer>
-      <DrawerTrigger asChild>
-        <Button variant="outline">Open Drawer</Button>
-      </DrawerTrigger>
+      <DrawerTrigger>Open Drawer</DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>Edit profile</DrawerTitle>
@@ -38,9 +37,7 @@ export const Default: Story = {
         </div>
         <DrawerFooter>
           <Button>Save</Button>
-          <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DrawerClose>
+          <DrawerClose>Cancel</DrawerClose>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
@@ -48,12 +45,11 @@ export const Default: Story = {
 }
 
 export const FromLeft: Story = {
+  args: {},
   render: () => (
-    <Drawer direction="left">
-      <DrawerTrigger asChild>
-        <Button variant="outline">Open Left</Button>
-      </DrawerTrigger>
-      <DrawerContent>
+    <Drawer>
+      <DrawerTrigger>Open Left</DrawerTrigger>
+      <DrawerContent side="left">
         <DrawerHeader>
           <DrawerTitle>Left Drawer</DrawerTitle>
           <DrawerDescription>Opens from the left side.</DrawerDescription>
@@ -64,12 +60,11 @@ export const FromLeft: Story = {
 }
 
 export const FromRight: Story = {
+  args: {},
   render: () => (
-    <Drawer direction="right">
-      <DrawerTrigger asChild>
-        <Button variant="outline">Open Right</Button>
-      </DrawerTrigger>
-      <DrawerContent>
+    <Drawer>
+      <DrawerTrigger>Open Right</DrawerTrigger>
+      <DrawerContent side="right">
         <DrawerHeader>
           <DrawerTitle>Right Drawer</DrawerTitle>
           <DrawerDescription>Opens from the right side.</DrawerDescription>
@@ -80,12 +75,11 @@ export const FromRight: Story = {
 }
 
 export const FromTop: Story = {
+  args: {},
   render: () => (
-    <Drawer direction="top">
-      <DrawerTrigger asChild>
-        <Button variant="outline">Open Top</Button>
-      </DrawerTrigger>
-      <DrawerContent>
+    <Drawer>
+      <DrawerTrigger>Open Top</DrawerTrigger>
+      <DrawerContent side="top">
         <DrawerHeader>
           <DrawerTitle>Top Drawer</DrawerTitle>
           <DrawerDescription>Opens from the top.</DrawerDescription>

@@ -12,13 +12,13 @@ const bannerVariants = cva(
         default:
           "bg-[var(--interactive-bg-active)] text-[var(--interactive-fg-active)]",
         destructive:
-          "bg-[var(--destructive-bg-alt)] text-[var(--destructive-fg)] border border-[var(--destructive-border)]",
+          "bg-[var(--destructive-bg-alt)] text-[var(--destructive-fg)] border border-[var(--destructive-border)] [&_svg]:text-[var(--destructive-fg)]",
         warning:
-          "bg-[var(--cautionary-bg)] text-[var(--cautionary-fg)] border border-[var(--cautionary-border)]",
+          "bg-[var(--cautionary-bg-alt,var(--cautionary-bg))] text-[var(--cautionary-fg)] border border-[var(--cautionary-border)] [&_svg]:text-[var(--cautionary-fg)]",
         success:
-          "bg-[var(--positive-bg)] text-[var(--positive-fg)] border border-[var(--positive-border)]",
+          "bg-[var(--positive-bg-alt,var(--positive-bg))] text-[var(--positive-fg)] border border-[var(--positive-border)] [&_svg]:text-[var(--positive-fg)]",
         info:
-          "bg-[var(--informative-bg)] text-[var(--informative-fg)] border border-[var(--informative-border)]",
+          "bg-[var(--informative-bg-alt,var(--informative-bg))] text-[var(--informative-fg)] border border-[var(--informative-border)] [&_svg]:text-[var(--informative-fg)]",
         neutral:
           "bg-[var(--backgrounds-secondary)] text-[var(--foregrounds-primary)] border border-[var(--container-border-alt)]",
       },
@@ -52,7 +52,7 @@ const Banner = React.forwardRef<HTMLDivElement, BannerProps>(
       className={cn(bannerVariants({ variant, position }), className)}
       {...props}
     >
-      {icon && <span className="shrink-0 opacity-80">{icon}</span>}
+      {icon && <span className="shrink-0">{icon}</span>}
       <div className="flex-1">{children}</div>
       {action && <div className="shrink-0">{action}</div>}
       {dismissible && (

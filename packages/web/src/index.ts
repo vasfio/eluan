@@ -3,7 +3,7 @@
 import "./styles.css"
 
 // @vasf/ragnar-web - Marketing & Web-specific Components
-// These components depend on @vasf/ragnar-core
+// These components depend on @ragnar/core
 
 // ============================================
 // Marketing Sections
@@ -94,3 +94,16 @@ export * from "./components/shaders"
 // ============================================
 
 export { cn } from "./lib/utils"
+
+// ============================================
+// TODO: Future web components to consider
+// ============================================
+// - Feature comparison cards
+// - Animated number counters (beyond current animated-counter)
+// - Tabbed content sections
+// - Image gallery / lightbox
+// - Sticky scroll reveal sections
+// - Before/After image slider
+// - Floating action button
+// - Side-by-side content blocks
+// - Command palette / search modal
