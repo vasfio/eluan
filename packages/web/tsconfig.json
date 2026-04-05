@@ -21,7 +21,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@ragnar/core": ["../core/src/index.ts"]
+      "@vasf/ragnar-core": ["../core/src/index.ts"]
     }
   },
   "include": ["src"],
