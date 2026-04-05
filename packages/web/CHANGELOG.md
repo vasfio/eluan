@@ -1,5 +1,17 @@
 # @vasf/ragnar-web
 
+## 2.0.0
+
+### Major Changes
+
+- updated fonts and styling
+
+### Patch Changes
+
+- Updated dependencies
+  - @ragnar/core@2.0.0
+  - @vasf/ragnar-tokens@2.0.0
+
 ## 1.0.2
 
 ### Patch Changes

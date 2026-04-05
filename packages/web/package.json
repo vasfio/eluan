@@ -1,6 +1,6 @@
 {
   "name": "@vasf/ragnar-web",
-  "version": "1.0.6",
+  "version": "2.0.0",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -38,7 +38,9 @@
     "three": ">=0.150.0"
   },
   "peerDependenciesMeta": {
-    "three": { "optional": true }
+    "three": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@ragnar/core": "workspace:*",

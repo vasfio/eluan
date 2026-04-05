@@ -1,5 +1,11 @@
 # @vasf/ragnar-tokens
 
+## 2.0.0
+
+### Major Changes
+
+- updated fonts and styling
+
 ## 1.0.2
 
 ### Patch Changes
