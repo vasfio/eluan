@@ -37,7 +37,7 @@ const AvatarFallback = React.forwardRef<
   <AvatarPrimitive.Fallback
     ref={ref}
     className={cn(
-      "flex h-full w-full items-center justify-center rounded-full bg-[var(--backgrounds-tertiary)] text-xs font-medium text-[var(--foregrounds-secondary)]",
+      "flex h-full w-full items-center justify-center rounded-full bg-[var(--container-bg-alt)] text-xs font-medium text-[var(--container-fg-alt)]",
       className
     )}
     {...props}
@@ -74,9 +74,9 @@ const AvatarBadge = React.forwardRef<HTMLSpanElement, AvatarBadgeProps>(
       <span
         ref={ref}
         className={cn(
-          "absolute flex items-center justify-center rounded-full ring-2 ring-[var(--backgrounds-primary)] bg-[var(--destructive-bg)] text-[var(--destructive-fg)]",
+          "absolute flex items-center justify-center rounded-full ring-2 ring-[var(--container-border)] bg-[var(--destructive-bg)] text-[var(--destructive-fg)]",
           hasCount
-            ? "min-w-[18px] h-[18px] px-1 text-[10px] font-bold leading-none"
+            ? "min-w-[18px] h-[18px] px-[var(--spacing-xs)] text-[10px] font-bold leading-none"
             : "h-3 w-3",
           positionClasses[position],
           className
@@ -114,7 +114,7 @@ const AvatarStatus = ({ status, position = "bottom-right", className }: AvatarSt
   return (
     <span
       className={cn(
-        "absolute h-2.5 w-2.5 rounded-full ring-2 ring-[var(--backgrounds-primary)]",
+        "absolute h-2.5 w-2.5 rounded-full ring-2 ring-[var(--container-bg)]",
         statusColors[status],
         positionClasses[position],
         className

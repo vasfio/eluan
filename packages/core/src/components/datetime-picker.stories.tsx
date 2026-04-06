@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { DateTimePicker } from "./datetime-picker"
 
 const meta: Meta<typeof DateTimePicker> = {
-  title: "Components/DateTimePicker",
+  title: "Components/Datetime Picker",
   component: DateTimePicker,
   tags: ["autodocs"],
 }

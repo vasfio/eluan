@@ -8,6 +8,7 @@ import {
 } from "./popover"
 
 import { cn } from "@/lib/utils"
+import { Button } from "./button"
 
 const Breadcrumb = React.forwardRef<
   HTMLElement,
@@ -24,7 +25,7 @@ const BreadcrumbList = React.forwardRef<
   <ol
     ref={ref}
     className={cn(
-      "flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5",
+      "flex flex-wrap items-center gap-[var(--spacing-xxs)] break-words text-sm text-[var(--interactive-fg-alt)] sm:gap-[var(--spacing-sm)]",
       className
     )}
     {...props}
@@ -38,7 +39,7 @@ const BreadcrumbItem = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <li
     ref={ref}
-    className={cn("inline-flex items-center gap-1.5", className)}
+    className={cn("inline-flex items-center gap-[var(--spacing-xxs)]", className)}
     {...props}
   />
 ))
@@ -55,7 +56,7 @@ const BreadcrumbLink = React.forwardRef<
   return (
     <Comp
       ref={ref}
-      className={cn("transition-colors hover:text-foreground", className)}
+      className={cn("transition-colors hover:text-[var(--interactive-fg)]", className)}
       {...props}
     />
   )
@@ -93,69 +94,57 @@ const BreadcrumbSeparator = ({
 )
 BreadcrumbSeparator.displayName = "BreadcrumbSeparator"
 
-interface BreadcrumbEllipsisProps extends React.ComponentProps<"span"> {
+interface BreadcrumbEllipsisProps {
+  className?: string
   /** Pass collapsed breadcrumb items to show in the popover */
   items?: { label: string; href?: string }[]
 }
 
 const BreadcrumbEllipsis = ({
   className,
-  items,
-  ...props
-}: BreadcrumbEllipsisProps) => {
-  if (items && items.length > 0) {
-    return (
-      <Popover>
-        <PopoverTrigger asChild>
-          <button
-            className={cn(
-              "flex h-7 w-7 items-center justify-center rounded-md transition-colors",
-              "hover:bg-[var(--backgrounds-tertiary)] text-[var(--foregrounds-tertiary)] hover:text-[var(--foregrounds-primary)]",
-              className
-            )}
-            aria-label="Show more breadcrumbs"
-          >
-            <MoreHorizontal className="h-4 w-4" />
-          </button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto min-w-[120px] p-1" align="start" sideOffset={6}>
-          <div className="flex flex-col gap-0.5">
-            {items.map((item, i) =>
-              item.href ? (
-                <a
-                  key={i}
-                  href={item.href}
-                  className="flex items-center rounded-sm px-3 py-1.5 text-sm text-[var(--foregrounds-secondary)] hover:bg-[var(--backgrounds-tertiary)] hover:text-[var(--foregrounds-primary)] transition-colors"
-                >
-                  {item.label}
-                </a>
-              ) : (
-                <span
-                  key={i}
-                  className="flex items-center rounded-sm px-3 py-1.5 text-sm text-[var(--foregrounds-tertiary)]"
-                >
-                  {item.label}
-                </span>
-              )
-            )}
-          </div>
-        </PopoverContent>
-      </Popover>
-    )
-  }
-
-  return (
-    <span
-      role="presentation"
-      aria-hidden="true"
-      className={cn("flex h-7 w-7 items-center justify-center text-[var(--foregrounds-tertiary)]", className)}
-      {...props}
-    >
-      <MoreHorizontal className="h-4 w-4" />
-      <span className="sr-only">More</span>
-    </span>
-  )
-}
+  items = [],
+}: BreadcrumbEllipsisProps) => (
+  <Popover>
+    <PopoverTrigger asChild>
+      <Button
+        variant="ghost"
+        size="icon"
+        className={cn("h-7 w-7", className)}
+        aria-label="Show more breadcrumbs"
+      >
+        <MoreHorizontal className="h-4 w-4" />
+      </Button>
+    </PopoverTrigger>
+    <PopoverContent className="w-auto min-w-[140px] p-[var(--spacing-xxs)]" align="start" sideOffset={6}>
+      <div className="flex flex-col gap-[var(--spacing-xxs)]">
+        {items.length > 0 ? (
+          items.map((item, i) =>
+            item.href ? (
+              <a
+                key={i}
+                href={item.href}
+                className="flex items-center rounded-[var(--curves-sm)] px-[var(--spacing-sm)] py-[var(--spacing-xxs)] text-sm text-[var(--interactive-fg-alt)] hover:bg-[var(--interactive-bg-hover)] hover:text-[var(--interactive-fg)] transition-colors"
+              >
+                {item.label}
+              </a>
+            ) : (
+              <span
+                key={i}
+                className="flex items-center rounded-[var(--curves-sm)] px-[var(--spacing-sm)] py-[var(--spacing-xxs)] text-sm text-[var(--interactive-fg-disabled)]"
+              >
+                {item.label}
+              </span>
+            )
+          )
+        ) : (
+          <span className="flex items-center px-[var(--spacing-sm)] py-[var(--spacing-xxs)] text-sm text-[var(--interactive-fg-disabled)]">
+            No pages
+          </span>
+        )}
+      </div>
+    </PopoverContent>
+  </Popover>
+)
 BreadcrumbEllipsis.displayName = "BreadcrumbEllipsis"
 
 export {

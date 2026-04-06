@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { EmailInput } from "./email-input"
 
 const meta: Meta<typeof EmailInput> = {
-  title: "Core/EmailInput",
+  title: "Components/Email Input",
   component: EmailInput,
   tags: ["autodocs"],
 }

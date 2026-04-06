@@ -7,7 +7,7 @@ import {
 } from "./input-otp"
 
 const meta: Meta<typeof InputOTP> = {
-  title: "Components/InputOTP",
+  title: "Components/Input OTP",
   component: InputOTP,
   tags: ["autodocs"],
 }

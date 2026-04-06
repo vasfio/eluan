@@ -3,7 +3,7 @@ import { FormLabel } from "./form-label"
 import { Input } from "./input"
 
 const meta: Meta<typeof FormLabel> = {
-  title: "Components/FormLabel",
+  title: "Components/Form Label",
   component: FormLabel,
   tags: ["autodocs"],
 }

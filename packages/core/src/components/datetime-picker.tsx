@@ -112,11 +112,11 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
         <PopoverTrigger asChild>
           <Button
             ref={ref}
-            variant="outline"
+            variant="ghost"
             disabled={disabled}
             className={cn(
-              "w-full justify-start text-left font-normal",
-              !selectedDate && "text-muted-foreground",
+              "w-full justify-start text-left font-normal border border-solid border-[var(--interactive-border-alt)]",
+              !selectedDate && "text-[var(--interactive-fg-alt)]",
               className
             )}
           >

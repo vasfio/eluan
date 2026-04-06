@@ -7,7 +7,7 @@ import {
 } from "./credit-card-input"
 
 const meta: Meta<typeof CreditCardInput> = {
-  title: "Core/CreditCardInput",
+  title: "Components/Credit Card Input",
   component: CreditCardInput,
   tags: ["autodocs"],
 }

@@ -39,11 +39,11 @@ const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
         <PopoverTrigger asChild>
           <Button
             ref={ref}
-            variant="outline"
+            variant="ghost"
             disabled={disabled}
             className={cn(
-              "w-full justify-start text-left font-normal",
-              !value && "text-muted-foreground",
+              "w-full justify-start text-left font-normal border border-solid border-[var(--interactive-border-alt)]",
+              !value && "text-[var(--interactive-fg-alt)]",
               className
             )}
           >
@@ -51,7 +51,7 @@ const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
             {value ? format(value, dateFormat) : <span>{placeholder}</span>}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
+        <PopoverContent className="w-auto min-w-[280px] p-0" align="start">
           <Calendar
             mode="single"
             selected={value}
@@ -100,7 +100,7 @@ const DateRangePicker = React.forwardRef<HTMLButtonElement, DateRangePickerProps
             disabled={disabled}
             className={cn(
               "w-full justify-start text-left font-normal",
-              !value?.from && "text-muted-foreground",
+              !value?.from && "text-[var(--interactive-fg-alt)]",
               className
             )}
           >

@@ -12,7 +12,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: () => (
-    <Banner>
+    <Banner variant='default'>
       This is a default banner message.
     </Banner>
   ),
@@ -53,7 +53,7 @@ export const Destructive: Story = {
 export const AllVariants: Story = {
   render: () => (
     <div className="space-y-2">
-      <Banner>Default banner</Banner>
+      <Banner variant='default'>Default banner</Banner>
       <Banner variant="info">Info banner</Banner>
       <Banner variant="success">Success banner</Banner>
       <Banner variant="warning">Warning banner</Banner>

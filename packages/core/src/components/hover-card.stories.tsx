@@ -3,7 +3,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "./hover-card"
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar"
 
 const meta: Meta<typeof HoverCard> = {
-  title: "Components/HoverCard",
+  title: "Components/Hover Card",
   component: HoverCard,
   tags: ["autodocs"],
 }

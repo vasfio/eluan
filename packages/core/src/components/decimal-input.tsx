@@ -183,7 +183,7 @@ const DecimalInput = React.forwardRef<HTMLInputElement, DecimalInputProps>(
         {hasPrefix && (
           <span
             ref={prefixRef}
-            className="pointer-events-none absolute left-3 text-muted-foreground text-sm whitespace-nowrap"
+            className="pointer-events-none absolute left-3 text-[var(--interactive-fg-alt)] text-sm whitespace-nowrap"
           >
             {effectivePrefix}
             {effectivePrefixUnit}
@@ -193,7 +193,7 @@ const DecimalInput = React.forwardRef<HTMLInputElement, DecimalInputProps>(
           type="text"
           inputMode="decimal"
           className={cn(
-            "flex h-10 w-full rounded-md border border-input bg-background py-2 text-sm text-right ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 font-mono",
+            "flex h-10 w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--container-bg)] py-[var(--spacing-sm)] text-sm text-right ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)] font-mono",
             !hasPrefix && "pl-3",
             !hasSuffix && "pr-3",
             className
@@ -213,7 +213,7 @@ const DecimalInput = React.forwardRef<HTMLInputElement, DecimalInputProps>(
         {hasSuffix && (
           <span
             ref={suffixRef}
-            className="pointer-events-none absolute right-3 text-muted-foreground text-sm whitespace-nowrap"
+            className="pointer-events-none absolute right-3 text-[var(--interactive-fg-alt)] text-sm whitespace-nowrap"
           >
             {effectiveSuffix}
           </span>

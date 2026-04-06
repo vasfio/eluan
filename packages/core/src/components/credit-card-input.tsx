@@ -200,13 +200,13 @@ const CreditCardNumberInput = React.forwardRef<HTMLInputElement, CreditCardNumbe
 
     return (
       <div className="relative">
-        <CreditCard className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <CreditCard className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--interactive-fg-alt)]" />
         <input
           type="text"
           inputMode="numeric"
           autoComplete="cc-number"
           className={cn(
-            "flex h-10 w-full rounded-md border border-input bg-background pl-10 pr-12 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 font-mono",
+            "flex h-10 w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] pl-10 pr-12 py-[var(--spacing-sm)] text-sm ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:fg-[var(--interactive-fg-disabled)] font-mono",
             className
           )}
           ref={ref}
@@ -239,13 +239,13 @@ const CreditCardExpiryInput = React.forwardRef<HTMLInputElement, CreditCardExpir
 
     return (
       <div className="relative">
-        <Calendar className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <Calendar className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--interactive-fg-alt)]" />
         <input
           type="text"
           inputMode="numeric"
           autoComplete="cc-exp"
           className={cn(
-            "flex h-10 w-full rounded-md border border-input bg-background pl-10 pr-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 font-mono",
+            "flex h-10 w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] pl-10 pr-3 py-[var(--spacing-sm)] text-sm ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:fg-[var(--interactive-fg-disabled)] font-mono",
             className
           )}
           ref={ref}
@@ -275,13 +275,13 @@ const CreditCardCVVInput = React.forwardRef<HTMLInputElement, CreditCardCVVInput
 
     return (
       <div className="relative">
-        <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--interactive-fg-alt)]" />
         <input
           type="text"
           inputMode="numeric"
           autoComplete="cc-csc"
           className={cn(
-            "flex h-10 w-full rounded-md border border-input bg-background pl-10 pr-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 font-mono",
+            "flex h-10 w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] pl-10 pr-3 py-[var(--spacing-sm)] text-sm ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:fg-[var(--interactive-fg-disabled)] font-mono",
             className
           )}
           ref={ref}

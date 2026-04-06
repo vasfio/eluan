@@ -14,10 +14,10 @@ const Checkbox = React.forwardRef<
       // Fixed size with min-w to prevent layout shift on check
       "peer h-4 w-4 min-w-4 shrink-0 rounded-sm border border-[var(--interactive-border-alt)]",
       "ring-offset-background transition-colors",
-      "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 focus-visible:ring-offset-1",
-      "disabled:cursor-not-allowed disabled:opacity-50",
-      "data-[state=checked]:bg-foreground data-[state=checked]:border-foreground data-[state=checked]:text-background",
-      "hover:border-[var(--interactive-fg-alt)]",
+      "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1",
+      "disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:border-[var(--interactive-border-disabled)]",
+      "data-[state=checked]:bg-[var(--interactive-bg-selected)] data-[state=checked]:border-[var(--interactive-bg-selected)] data-[state=checked]:text-[var(--interactive-fg-selected)]",
+      "hover:border-[var(--interactive-border-alt)] hover:text-[var(--interactive-fg-alt)] hover:bg-[var(--interactive-bg-hover)]",
       className
     )}
     {...props}

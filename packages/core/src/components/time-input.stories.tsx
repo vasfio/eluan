@@ -3,7 +3,7 @@ import { useState } from "react"
 import { TimeInput } from "./time-input"
 
 const meta: Meta<typeof TimeInput> = {
-  title: "Components/TimeInput",
+  title: "Components/Time Input",
   component: TimeInput,
   tags: ["autodocs"],
   argTypes: {

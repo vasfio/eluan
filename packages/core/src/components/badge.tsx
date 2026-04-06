@@ -5,18 +5,18 @@ import { X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const badgeVariants = cva(
-  "inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-normal transition-colors focus:outline-none focus:ring-1 focus:ring-neutral-400 focus:ring-offset-1",
+  "inline-flex items-center gap-1 rounded-[var(--curves-md)] border px-[var(--spacing-xs)] py-[var(--spacing-xxs)] text-xs font-normal transition-colors focus:outline-none focus:ring-1 focus:ring-[var(--container-border)]/50 focus:ring-offset-1",
   {
     variants: {
       variant: {
         default:
           "border-transparent bg-[var(--action-primary-bg)] text-[var(--action-primary-fg)]",
         secondary:
-          "border-transparent bg-[var(--backgrounds-tertiary)] text-[var(--foregrounds-secondary)]",
+          "border-transparent bg-[var(--container-bg-alt)] text-[var(--container-fg-alt)]",
         destructive:
           "border-transparent bg-[var(--destructive-bg-alt)] text-[var(--destructive-fg)]",
         outline:
-          "border-[var(--container-border)] text-[var(--foregrounds-primary)] bg-transparent",
+          "border-[var(--container-border)] text-[var(--container-fg-alt)] bg-transparent",
         positive:
           "border-transparent bg-[var(--positive-bg)] text-[var(--positive-fg)]",
         cautionary:
@@ -25,14 +25,6 @@ const badgeVariants = cva(
           "border-transparent bg-[var(--informative-bg)] text-[var(--informative-fg)]",
         important:
           "border-transparent bg-[var(--important-bg)] text-[var(--important-fg)]",
-        success:
-          "border-transparent bg-green-100 text-green-800",
-        warning:
-          "border-transparent bg-amber-100 text-amber-800",
-        info:
-          "border-transparent bg-blue-100 text-blue-800",
-        error:
-          "border-transparent bg-red-100 text-red-800",
       },
     },
     defaultVariants: {
@@ -60,7 +52,7 @@ function Badge({ className, variant, onRemove, removable, children, ...props }: 
             e.stopPropagation()
             onRemove?.()
           }}
-          className="ml-0.5 -mr-0.5 rounded-full opacity-60 hover:opacity-100 transition-opacity focus:outline-none"
+          className="ml-[var(--spacing-xxs)] -mr-[var(--spacing-xxs)] rounded-[var(--curves-xl)] opacity-60 hover:opacity-100 transition-opacity focus:outline-none"
           aria-label="Remove"
         >
           <X className="h-3 w-3" />

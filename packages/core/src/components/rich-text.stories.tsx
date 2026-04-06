@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { RichText } from "./rich-text"
 
 const meta: Meta<typeof RichText> = {
-  title: "Components/RichText",
+  title: "Components/Rich Text",
   component: RichText,
   tags: ["autodocs"],
 }

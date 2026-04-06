@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { DecimalInput, CurrencyInput, PercentageInput, UnitInput } from "./decimal-input"
 
 const meta: Meta<typeof DecimalInput> = {
-  title: "Core/DecimalInput",
+  title: "Components/Decimal Input",
   component: DecimalInput,
   tags: ["autodocs"],
 }

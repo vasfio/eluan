@@ -13,7 +13,7 @@ import {
 import { Home, Settings, Users, FileText, HelpCircle, LogOut } from "lucide-react"
 
 const meta: Meta<typeof NavigationDrawer> = {
-  title: "Components/NavigationDrawer",
+  title: "Components/Navigation Drawer",
   component: NavigationDrawer,
   tags: ["autodocs"],
   decorators: [

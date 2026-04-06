@@ -5,12 +5,12 @@ import { X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const bannerVariants = cva(
-  "relative flex items-center gap-3 w-full px-4 py-3 text-sm font-medium",
+  "relative flex items-center gap-[var(--spacing-sm)] w-full px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-sm font-medium",
   {
     variants: {
       variant: {
         default:
-          "bg-[var(--interactive-bg-active)] text-[var(--interactive-fg-active)]",
+          "bg-[var(--interactive-bg-inverse)] text-[var(--interactive-fg-inverse)]",
         destructive:
           "bg-[var(--destructive-bg-alt)] text-[var(--destructive-fg)] border border-[var(--destructive-border)] [&_svg]:text-[var(--destructive-fg)]",
         warning:
@@ -20,12 +20,12 @@ const bannerVariants = cva(
         info:
           "bg-[var(--informative-bg-alt,var(--informative-bg))] text-[var(--informative-fg)] border border-[var(--informative-border)] [&_svg]:text-[var(--informative-fg)]",
         neutral:
-          "bg-[var(--backgrounds-secondary)] text-[var(--foregrounds-primary)] border border-[var(--container-border-alt)]",
+          "bg-[var(--container-bg-alt)] text-[var(--container-fg-alt)] border border-[var(--container-border-alt)]",
       },
       position: {
         top: "fixed top-0 left-0 right-0 z-50",
         bottom: "fixed bottom-0 left-0 right-0 z-50",
-        inline: "relative rounded-md",
+        inline: "relative rounded-[var(--curves-sm)]",
       },
     },
     defaultVariants: {
@@ -59,7 +59,7 @@ const Banner = React.forwardRef<HTMLDivElement, BannerProps>(
         <button
           type="button"
           onClick={onDismiss}
-          className="shrink-0 rounded opacity-60 hover:opacity-100 transition-opacity focus:outline-none focus:ring-1 focus:ring-current"
+          className="shrink-0 rounded opacity-60 hover:opacity-100 transition-opacity focus:outline-none focus:ring-[var(--interactive-border-alt)]"
           aria-label="Dismiss"
         >
           <X className="h-4 w-4" />

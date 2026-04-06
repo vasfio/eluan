@@ -4,7 +4,7 @@ import { SearchInput, CommandSearch, ExpandableSearch, AutocompleteSearch } from
 import { Code, FileText, Image, Music, Video } from "lucide-react"
 
 const meta: Meta<typeof SearchInput> = {
-  title: "Core/SearchInput",
+  title: "Components/Search Input",
   component: SearchInput,
   tags: ["autodocs"],
 }

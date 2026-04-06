@@ -10,9 +10,9 @@ interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const elevationClasses = {
   none: "",
-  sm: "shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_-1px_rgba(0,0,0,0.06)]",
-  md: "shadow-[0_4px_12px_0_rgba(0,0,0,0.10),0_2px_4px_-2px_rgba(0,0,0,0.06)]",
-  lg: "shadow-[0_12px_32px_0_rgba(0,0,0,0.14),0_4px_8px_-4px_rgba(0,0,0,0.08)]",
+  sm: "shadow-sm",
+  md: "shadow-md",
+  lg: "shadow-lg",
 }
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
@@ -20,12 +20,12 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
     <div
       ref={ref}
       className={cn(
-        "rounded-lg border border-[var(--container-border)] bg-[var(--container-bg)] text-[var(--container-fg)]",
+        "rounded-[var(--curves-lg)] border border-[color:var(--container-border-alt)] bg-[var(--container-bg)] text-[var(--container-fg)]",
         elevationClasses[elevation],
         clickable && [
           "cursor-pointer transition-all duration-200",
-          "hover:border-[var(--container-border-alt)] hover:shadow-[0_8px_24px_0_rgba(0,0,0,0.12),0_4px_8px_-4px_rgba(0,0,0,0.08)] hover:-translate-y-px",
-          "active:translate-y-0 active:shadow-[0_2px_6px_0_rgba(0,0,0,0.08)]",
+          "hover:shadow-xl hover:-translate-y-px",
+          "active:translate-y-0 active:shadow-md",
         ],
         className
       )}

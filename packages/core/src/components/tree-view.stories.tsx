@@ -4,7 +4,7 @@ import { TreeView, type TreeNode } from "./tree-view"
 import { FileText, Image, Music, Video, Code } from "lucide-react"
 
 const meta: Meta<typeof TreeView> = {
-  title: "Components/TreeView",
+  title: "Components/Tree View",
   component: TreeView,
   tags: ["autodocs"],
 }
