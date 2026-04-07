@@ -1,0 +1,7 @@
+/*
+  Ragnar Design System — Base fonts (shared across all themes)
+  Geist Mono is used by every theme for monospace.
+*/
+
+@import "@fontsource/geist-mono/400.css";
+@import "@fontsource/geist-mono/500.css";

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import type { Preview } from "@storybook/react"
-import type { Theme } from "../../tokens/src/index"
+import { loadThemeFonts, type Theme } from "../../tokens/src/index"
 import "../src/styles/globals.css"
 
 const preview: Preview = {
@@ -88,6 +88,11 @@ const preview: Preview = {
       const theme = context.globals.theme || "classic-retro"
       const spacing = context.globals.spacing || "standard"
       const curves = context.globals.curves || "slight"
+
+      // Load fonts for the active theme (lazy, cached)
+      useEffect(() => {
+        loadThemeFonts(theme as Theme)
+      }, [theme])
 
       // Set attributes on the document root for CSS variable resolution
       useEffect(() => {

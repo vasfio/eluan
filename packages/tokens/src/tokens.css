@@ -15,7 +15,8 @@
  * Import order matters - each layer can reference the previous one.
  */
 
-@import "./fonts.css";
+/* Only load shared base font (Geist Mono) — theme fonts loaded on demand */
+@import "./fonts-base.css";
 @import "./primitives.css";
 @import "./modes.css";
 @import "./themes.css";

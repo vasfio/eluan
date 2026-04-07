@@ -11,6 +11,14 @@
       "types": "./dist/index.d.ts"
     },
     "./css": "./dist/tokens.css",
+    "./fonts/all": "./dist/fonts.css",
+    "./fonts/base": "./dist/fonts-base.css",
+    "./fonts/classic-retro": "./dist/fonts-classic-retro.css",
+    "./fonts/classic-black": "./dist/fonts-classic-black.css",
+    "./fonts/lime": "./dist/fonts-lime.css",
+    "./fonts/bold": "./dist/fonts-bold.css",
+    "./fonts/beige": "./dist/fonts-beige.css",
+    "./fonts/funky": "./dist/fonts-funky.css",
     "./tailwind": {
       "import": "./dist/tailwind.js",
       "require": "./dist/tailwind.js",
@@ -24,7 +32,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rm -rf dist && tsc -p tsconfig.build.json && cp src/tokens.css src/primitives.css src/modes.css src/themes.css src/spacing.css src/curves.css src/fonts.css dist/",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && cp src/tokens.css src/primitives.css src/modes.css src/themes.css src/spacing.css src/curves.css src/fonts.css src/fonts-base.css src/fonts-classic-retro.css src/fonts-classic-black.css src/fonts-lime.css src/fonts-bold.css src/fonts-beige.css src/fonts-funky.css dist/",
     "dev": "tsc --watch"
   },
   "devDependencies": {

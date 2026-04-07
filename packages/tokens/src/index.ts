@@ -531,6 +531,65 @@ export const themeFonts: Record<
 }
 
 // ============================================
+// Dynamic Font Loader
+// ============================================
+// Loads theme-specific font CSS on demand via <link> injection.
+// The consumer's bundler must resolve @vasf/ragnar-tokens/fonts/* CSS.
+//
+// Usage (React example):
+//   useEffect(() => { loadThemeFonts(theme) }, [theme])
+//
+// Usage (vanilla):
+//   loadThemeFonts('bold')
+
+const _loadedFonts = new Set<Theme>()
+
+/**
+ * Dynamically load the font CSS for a given theme.
+ * Fonts are loaded once and cached — switching back to a previously
+ * loaded theme is instant.
+ *
+ * Importing is handled via dynamic import() so the consumer's bundler
+ * (Vite, webpack, etc.) can code-split each theme's fonts into a
+ * separate chunk.
+ */
+export async function loadThemeFonts(theme: Theme): Promise<void> {
+  if (_loadedFonts.has(theme)) return
+
+  switch (theme) {
+    case "classic-retro":
+      await import("@fontsource/geist/400.css")
+      await import("@fontsource/geist/500.css")
+      break
+    case "classic-black":
+      await import("@fontsource/inter/400.css")
+      await import("@fontsource/inter/500.css")
+      break
+    case "lime":
+      await import("@fontsource/manrope/400.css")
+      await import("@fontsource/manrope/500.css")
+      break
+    case "bold":
+      await import("@fontsource/bebas-neue/400.css")
+      await import("@fontsource/work-sans/400.css")
+      await import("@fontsource/work-sans/500.css")
+      break
+    case "beige":
+      await import("@fontsource/instrument-serif/400.css")
+      await import("@fontsource/plus-jakarta-sans/400.css")
+      await import("@fontsource/plus-jakarta-sans/500.css")
+      break
+    case "funky":
+      await import("@fontsource/dela-gothic-one/400.css")
+      await import("@fontsource/plus-jakarta-sans/400.css")
+      await import("@fontsource/plus-jakarta-sans/500.css")
+      break
+  }
+
+  _loadedFonts.add(theme)
+}
+
+// ============================================
 // Shadow Tokens
 // ============================================
 
