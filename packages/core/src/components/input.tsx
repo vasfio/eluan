@@ -36,23 +36,23 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className={cn("relative flex w-full items-center", className)}>
         {hasLeading && (
-          <span className="pointer-events-none absolute left-3 flex items-center text-[var(--foregrounds-quinary)]">
+          <span className="pointer-events-none absolute left-3 flex items-center text-[var(--interactive-fg-alt)]">
             {leadingIcon}
           </span>
         )}
         <input
           type={resolvedType}
           className={cn(
-            "flex h-10 w-full rounded-md border border-[var(--interactive-border)] bg-[var(--interactive-bg)] text-sm text-[var(--interactive-fg)]",
+            "flex h-10 w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] text-sm text-[var(--interactive-fg)]",
             "ring-offset-background",
-            "placeholder:text-[var(--foregrounds-quinary)]",
-            "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-fg)] focus-visible:border-[var(--interactive-fg)]",
-            "disabled:cursor-not-allowed disabled:opacity-50",
+            "placeholder:text-[var(--interactive-fg-alt)]",
+            "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:border-[var(--interactive-border)]",
+            "disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)]",
             "transition-colors",
-            "file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-[var(--foregrounds-primary)]",
+            "file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-[var(--interactive-fg)]",
             hasLeading ? "pl-9" : "px-3",
             hasTrailing ? "pr-9" : "pr-3",
-            "py-2"
+            "py-[var(--spacing-sm)]"
           )}
           ref={ref}
           {...props}
@@ -62,7 +62,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             type="button"
             tabIndex={-1}
             onClick={() => setShowPassword((v) => !v)}
-            className="absolute right-3 flex items-center text-[var(--foregrounds-quinary)] hover:text-[var(--foregrounds-secondary)] transition-colors"
+            className="absolute right-3 flex items-center text-[var(--interactive-fg-alt)] hover:text-[var(--interactive-fg-hover)] transition-colors"
             aria-label={showPassword ? "Hide password" : "Show password"}
           >
             {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}

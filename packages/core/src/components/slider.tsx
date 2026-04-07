@@ -15,14 +15,14 @@ const Slider = React.forwardRef<
     )}
     {...props}
   >
-    <SliderPrimitive.Track className="relative h-1.5 w-full grow overflow-hidden rounded-full bg-[var(--backgrounds-tertiary)]">
-      <SliderPrimitive.Range className="absolute h-full bg-foreground" />
+    <SliderPrimitive.Track className="relative h-1.5 w-full grow overflow-hidden rounded-full bg-[var(--interactive-bg-alt)]">
+      <SliderPrimitive.Range className="absolute h-full bg-[var(--interactive-bg-selected)]" />
     </SliderPrimitive.Track>
     {/* Render a thumb for each value to support range (two dials) */}
     {(Array.isArray(props.value) ? props.value : props.defaultValue ?? [0]).map((_, i) => (
       <SliderPrimitive.Thumb
         key={i}
-        className="block h-4 w-4 rounded-full border border-foreground bg-[var(--backgrounds-primary)] shadow-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 focus-visible:ring-offset-1 disabled:pointer-events-none disabled:opacity-50"
+        className="block h-4 w-4 rounded-full border border-[var(--interactive-bg-selected)] bg-[var(--interactive-bg)] shadow-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:pointer-events-none disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)]"
       />
     ))}
   </SliderPrimitive.Root>

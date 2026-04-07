@@ -55,8 +55,8 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
                 className={cn(
                   "flex",
                   isVertical
-                    ? "flex-row items-start gap-3"
-                    : "flex-col items-center gap-2"
+                    ? "flex-row items-start gap-[var(--spacing-sm)]"
+                    : "flex-col items-center gap-[var(--spacing-sm)]"
                 )}
               >
                 <button
@@ -66,12 +66,12 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
                   className={cn(
                     "relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 text-sm font-medium transition-all",
                     isCompleted
-                      ? "border-foreground bg-foreground text-white"
+                      ? "border-[var(--interactive-bg-active)] bg-[var(--interactive-bg-active)] text-[var(--interactive-fg-active)]"
                       : isCurrent
-                        ? "border-foreground bg-[var(--backgrounds-primary)] text-foreground"
-                        : "border-[var(--backgrounds-quaternary)] bg-[var(--backgrounds-primary)] text-[var(--foregrounds-quinary)]",
+                        ? "border-[var(--interactive-bg-active)] bg-[var(--interactive-bg)] text-[var(--interactive-fg)]"
+                        : "border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] text-[var(--interactive-fg-alt)]",
                     isClickable &&
-                      "cursor-pointer hover:border-foreground hover:text-foreground"
+                      "cursor-pointer hover:border-[var(--interactive-bg-active)] hover:text-[var(--interactive-fg)]"
                   )}
                 >
                   {isCompleted ? (
@@ -82,7 +82,7 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
                 </button>
                 <div
                   className={cn(
-                    isVertical ? "pb-8" : "text-center",
+                    isVertical ? "pb-[var(--spacing-xl)]" : "text-center",
                     isVertical && index === steps.length - 1 && "pb-0"
                   )}
                 >
@@ -97,7 +97,7 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
                     {step.title}
                   </p>
                   {step.description && (
-                    <p className="mt-0.5 text-xs text-[var(--foregrounds-tertiary)]">
+                    <p className="mt-[var(--spacing-xxs)] text-xs text-[var(--foregrounds-tertiary)]">
                       {step.description}
                     </p>
                   )}
@@ -109,10 +109,10 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
                     "transition-colors",
                     isVertical
                       ? "ml-5 h-full min-h-[24px] w-0.5 -translate-x-1/2"
-                      : "mx-2 h-0.5 flex-1 min-w-[24px]",
+                      : "mx-[var(--spacing-sm)] h-0.5 flex-1 min-w-[24px]",
                     index < currentStep
-                      ? "bg-foreground"
-                      : "bg-[var(--backgrounds-quaternary)]"
+                      ? "bg-[var(--interactive-bg-active)]"
+                      : "bg-[var(--interactive-border-alt)]"
                   )}
                 />
               )}
@@ -136,7 +136,7 @@ const StepperContent = React.forwardRef<HTMLDivElement, StepperContentProps>(
     if (step !== currentStep) return null
 
     return (
-      <div ref={ref} className={cn("mt-4", className)} {...props}>
+      <div ref={ref} className={cn("mt-[var(--spacing-md)]", className)} {...props}>
         {children}
       </div>
     )

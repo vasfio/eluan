@@ -4,11 +4,11 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const formLabelVariants = cva(
-  "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+  "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:text-[var(--interactive-fg-disabled)]",
   {
     variants: {
       required: {
-        true: "after:ml-0.5 after:text-destructive after:content-['*']",
+        true: "after:ml-[var(--spacing-xxs)] after:text-[var(--destructive-fg)] after:content-['*']",
         false: "",
       },
     },
@@ -27,7 +27,7 @@ export interface FormLabelProps
 
 const FormLabel = React.forwardRef<HTMLLabelElement, FormLabelProps>(
   ({ className, required, optional, hint, children, ...props }, ref) => (
-    <div className="flex items-baseline gap-2">
+    <div className="flex items-baseline gap-[var(--spacing-sm)]">
       <label
         ref={ref}
         className={cn(formLabelVariants({ required }), className)}
@@ -36,9 +36,9 @@ const FormLabel = React.forwardRef<HTMLLabelElement, FormLabelProps>(
         {children}
       </label>
       {optional && (
-        <span className="text-xs text-muted-foreground">(optional)</span>
+        <span className="text-xs text-[var(--interactive-fg-alt)]">(optional)</span>
       )}
-      {hint && <span className="text-xs text-muted-foreground">{hint}</span>}
+      {hint && <span className="text-xs text-[var(--interactive-fg-alt)]">{hint}</span>}
     </div>
   )
 )
@@ -50,7 +50,7 @@ const FormDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("text-sm text-[var(--interactive-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -64,7 +64,7 @@ const FormMessage = React.forwardRef<
     ref={ref}
     className={cn(
       "text-sm",
-      error ? "text-destructive" : "text-muted-foreground",
+      error ? "text-destructive" : "text-[var(--interactive-fg-alt)]",
       className
     )}
     {...props}

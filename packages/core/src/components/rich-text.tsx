@@ -57,7 +57,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
   if (!editor) return null
 
   return (
-    <div className="flex flex-wrap items-center gap-1 border-b p-1">
+    <div className="flex flex-wrap items-center gap-[var(--spacing-xs)] border-b p-1">
       <ToolbarButton
         pressed={editor.isActive("bold")}
         onPressedChange={() => editor.chain().focus().toggleBold().run()}
@@ -91,7 +91,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         <Code className="h-4 w-4" />
       </ToolbarButton>
 
-      <Separator orientation="vertical" className="mx-1 h-6" />
+      <Separator orientation="vertical" className="mx-[var(--spacing-xxs)] h-6" />
 
       <ToolbarButton
         pressed={editor.isActive("heading", { level: 1 })}
@@ -121,7 +121,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         <Heading3 className="h-4 w-4" />
       </ToolbarButton>
 
-      <Separator orientation="vertical" className="mx-1 h-6" />
+      <Separator orientation="vertical" className="mx-[var(--spacing-xxs)] h-6" />
 
       <ToolbarButton
         pressed={editor.isActive("bulletList")}
@@ -152,7 +152,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         <Minus className="h-4 w-4" />
       </ToolbarButton>
 
-      <Separator orientation="vertical" className="mx-1 h-6" />
+      <Separator orientation="vertical" className="mx-[var(--spacing-xxs)] h-6" />
 
       <ToolbarButton
         pressed={false}
@@ -229,8 +229,8 @@ const RichText = React.forwardRef<HTMLDivElement, RichTextProps>(
       <div
         ref={ref}
         className={cn(
-          "rounded-md border bg-background",
-          disabled && "opacity-50",
+          "rounded-[var(--curves-md)] border bg-[var(--interactive-bg)]",
+          disabled && "bg-[var(--interactive-bg-disabled) text-[var(--interactive-fg-disabled)]",
           className
         )}
       >
@@ -238,12 +238,12 @@ const RichText = React.forwardRef<HTMLDivElement, RichTextProps>(
         <EditorContent
           editor={editor}
           className={cn(
-            "prose prose-sm dark:prose-invert max-w-none p-3 focus-within:outline-none",
+            "prose prose-sm dark:prose-invert max-w-none p-[var(--spacing-sm)] focus-within:outline-none",
             "[&_.ProseMirror]:min-h-[var(--min-height)] [&_.ProseMirror]:outline-none",
-            "[&_.ProseMirror_h1]:text-3xl [&_.ProseMirror_h1]:font-bold [&_.ProseMirror_h1]:leading-tight [&_.ProseMirror_h1]:mt-6 [&_.ProseMirror_h1]:mb-3",
-            "[&_.ProseMirror_h2]:text-2xl [&_.ProseMirror_h2]:font-semibold [&_.ProseMirror_h2]:leading-snug [&_.ProseMirror_h2]:mt-5 [&_.ProseMirror_h2]:mb-2",
-            "[&_.ProseMirror_h3]:text-xl [&_.ProseMirror_h3]:font-semibold [&_.ProseMirror_h3]:leading-snug [&_.ProseMirror_h3]:mt-4 [&_.ProseMirror_h3]:mb-2",
-            "[&_.ProseMirror_p.is-editor-empty:first-child::before]:text-muted-foreground [&_.ProseMirror_p.is-editor-empty:first-child::before]:content-[attr(data-placeholder)] [&_.ProseMirror_p.is-editor-empty:first-child::before]:float-left [&_.ProseMirror_p.is-editor-empty:first-child::before]:h-0 [&_.ProseMirror_p.is-editor-empty:first-child::before]:pointer-events-none"
+            "[&_.ProseMirror_h1]:text-3xl [&_.ProseMirror_h1]:font-bold [&_.ProseMirror_h1]:leading-tight [&_.ProseMirror_h1]:mt-[var(--spacing-lg)] [&_.ProseMirror_h1]:mb-[var(--spacing-md)]",
+            "[&_.ProseMirror_h2]:text-2xl [&_.ProseMirror_h2]:font-semibold [&_.ProseMirror_h2]:leading-snug [&_.ProseMirror_h2]:mt-[var(--spacing-md)] [&_.ProseMirror_h2]:mb-[var(--spacing-sm)]",
+            "[&_.ProseMirror_h3]:text-xl [&_.ProseMirror_h3]:font-semibold [&_.ProseMirror_h3]:leading-snug [&_.ProseMirror_h3]:mt-[var(--spacing-md)] [&_.ProseMirror_h3]:mb-[var(--spacing-sm)]",
+            "[&_.ProseMirror_p.is-editor-empty:first-child::before]:text-[var(--interactive-fg-alt)] [&_.ProseMirror_p.is-editor-empty:first-child::before]:content-[attr(data-placeholder)] [&_.ProseMirror_p.is-editor-empty:first-child::before]:float-left [&_.ProseMirror_p.is-editor-empty:first-child::before]:h-0 [&_.ProseMirror_p.is-editor-empty:first-child::before]:pointer-events-none"
           )}
           style={{ "--min-height": minHeight } as React.CSSProperties}
         />

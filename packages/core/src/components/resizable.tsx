@@ -312,13 +312,13 @@ const ResizableHandle = React.forwardRef<HTMLDivElement, ResizableHandleProps & 
           direction === "horizontal"
             ? "w-2 cursor-col-resize"
             : "h-2 cursor-row-resize",
-          "bg-border hover:bg-primary/20 transition-colors",
+          "bg-[var(--container-bg-alt)] hover:bg-[var(--interactive-bg-hover)] transition-colors",
           "after:absolute",
           direction === "horizontal"
             ? "after:inset-y-0 after:left-1/2 after:w-4 after:-translate-x-1/2"
             : "after:inset-x-0 after:top-1/2 after:h-4 after:-translate-y-1/2",
           "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1",
-          isResizing && "bg-primary/30",
+          isResizing && "bg-[var(--interactive-bg-hover)]",
           className
         )}
         onMouseDown={handleMouseDown}
@@ -327,7 +327,7 @@ const ResizableHandle = React.forwardRef<HTMLDivElement, ResizableHandleProps & 
         {withHandle ? (
           <div
             className={cn(
-              "z-10 flex h-4 w-3 items-center justify-center rounded-sm border bg-border",
+              "z-10 flex h-4 w-3 items-center justify-center rounded-[var(--curves-sm)] border bg-[var(--interactive-bg-alt)]",
               direction === "vertical" && "h-3 w-4 rotate-90"
             )}
           >
@@ -338,8 +338,8 @@ const ResizableHandle = React.forwardRef<HTMLDivElement, ResizableHandleProps & 
             className={cn(
               "z-10 flex items-center justify-center",
               direction === "horizontal"
-                ? "h-8 w-1 rounded-full bg-border"
-                : "h-1 w-8 rounded-full bg-border"
+                ? "h-8 w-1 rounded-full bg-[var(--interactive-border-alt)]"
+                : "h-1 w-8 rounded-full bg-[var(--interactive-border-alt)]"
             )}
           />
         )}

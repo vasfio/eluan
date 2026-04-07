@@ -6,7 +6,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const drawerVariants = cva(
-  "fixed z-50 bg-background shadow-lg transition-transform duration-300 ease-in-out",
+  "fixed z-50 bg-[var(--container-bg)] shadow-lg transition-transform duration-300 ease-in-out",
   {
     variants: {
       side: {
@@ -121,8 +121,8 @@ const DrawerOverlay = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "fixed inset-0 z-50 bg-black/80 transition-opacity duration-300",
-        open ? "opacity-100" : "pointer-events-none opacity-0",
+        "fixed inset-0 z-50 bg-[var(--container-bg-inverse)] transition-opacity duration-300",
+        open ? "opacity-80" : "pointer-events-none opacity-0",
         className
       )}
       onClick={(e) => {
@@ -177,7 +177,7 @@ const DrawerContent = React.forwardRef<HTMLDivElement, DrawerContentProps>(
           ref={ref}
           data-state={open ? "open" : "closed"}
           className={cn(
-            "h-full bg-background border-r shadow-sm transition-all duration-300 ease-in-out overflow-hidden",
+            "h-full bg-[var(--container-bg)] border-r shadow-sm transition-all duration-300 ease-in-out overflow-hidden",
             open ? (side === "right" ? "w-[280px] border-l" : "w-[280px] border-r") : "w-0",
             className
           )}
@@ -261,7 +261,7 @@ const DrawerHandle = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mx-auto mt-4 h-1.5 w-12 rounded-full bg-muted",
+      "mx-auto mt-[var(--spacing-md)] h-1.5 w-12 rounded-[var(--curves-md)] bg-[var(--container-bg-alt)]",
       className
     )}
     {...props}

@@ -67,13 +67,13 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
             type="button"
             onClick={() => onSelect?.(node)}
             className={cn(
-              "flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-accent focus:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400",
-              isSelected && "bg-accent"
+              "flex w-full items-center gap-[var(--spacing-sm)] rounded-md px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-sm hover:bg-[var(--interactive-bg-hover)] focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)]",
+              isSelected && "bg-[var(--interactive-bg-selected)] text-[var(--interactive-fg-selected)] hover:text-[var(--interactive-fg)]"
             )}
             style={{ paddingLeft: `${depth * indentSize + 8}px` }}
           >
             {showIcons && (
-              <span className="shrink-0 text-muted-foreground">
+              <span className={cn("shrink-0 text-[var(--interactive-fg-alt)]", isSelected && "text-[var(--interactive-fg-selected)]")}>
                 {node.icon ?? <File className="h-4 w-4" />}
               </span>
             )}
@@ -93,19 +93,20 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
               type="button"
               onClick={() => onSelect?.(node)}
               className={cn(
-                "flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-accent focus:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400",
-                isSelected && "bg-accent"
+                "flex w-full items-center gap-[var(--spacing-sm)] rounded-[var(--curves-md)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-sm hover:bg-[var(--interactive-bg-hover)] focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)]",
+              isSelected && "bg-[var(--interactive-bg-selected)] text-[var(--interactive-fg-selected)] hover:text-[var(--interactive-fg)]"
               )}
               style={{ paddingLeft: `${depth * indentSize + 8}px` }}
             >
               <ChevronRight
                 className={cn(
-                  "h-4 w-4 shrink-0 text-muted-foreground transition-transform",
-                  isExpanded && "rotate-90"
+                  "h-4 w-4 shrink-0 text-[var(--interactive-fg-alt)] transition-transform",
+                  isExpanded && "rotate-90",
+                  isSelected && "text-[var(--interactive-fg-selected)]"
                 )}
               />
               {showIcons && (
-                <span className="shrink-0 text-muted-foreground">
+                <span className={cn("shrink-0 text-[var(--interactive-fg-alt)]", isSelected && "text-[var(--interactive-fg-selected)]")}>
                   {node.icon ??
                     (isExpanded ? (
                       <FolderOpen className="h-4 w-4" />

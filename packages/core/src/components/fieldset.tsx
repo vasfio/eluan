@@ -8,7 +8,7 @@ const Fieldset = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("space-y-4 rounded-lg border border-[var(--container-border-alt)] p-4", className)}
+    className={cn("space-y-4 rounded-[var(--curves-lg)] border border-[var(--container-border-alt)] p-[var(--spacing-lg)]", className)}
     {...props}
   />
 ))
@@ -20,7 +20,7 @@ const FieldsetLegend = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("mb-4 text-sm font-medium text-[var(--foregrounds-primary)] leading-none", className)}
+    className={cn("mb-[var(--spacing-lg)] text-sm font-medium text-[var(--container-fg)] leading-none", className)}
     {...props}
   />
 ))
@@ -32,7 +32,7 @@ const FieldsetDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-[var(--foregrounds-tertiary)]", className)}
+    className={cn("text-sm text-[var(--container-fg-alt)]", className)}
     {...props}
   />
 ))

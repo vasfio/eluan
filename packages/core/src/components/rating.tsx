@@ -69,7 +69,7 @@ const Rating = React.forwardRef<HTMLDivElement, RatingProps>(
           type="button"
           disabled={readonly}
           className={cn(
-            "relative p-0.5 transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 focus-visible:ring-offset-1 disabled:cursor-default",
+            "relative p-[var(--spacing-xxs)] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-default",
             !readonly && "cursor-pointer hover:scale-110"
           )}
           onMouseMove={(e) => handleMouseMove(e, index)}
@@ -81,14 +81,14 @@ const Rating = React.forwardRef<HTMLDivElement, RatingProps>(
           <Star
             className={cn(
               sizeClasses[size],
-              "fill-[var(--backgrounds-tertiary)] stroke-none"
+              "fill-[var(--interactive-bg-alt2)] stroke-none"
             )}
           />
           {/* Filled star overlay */}
           <Star
             className={cn(
               sizeClasses[size],
-              "absolute inset-0.5 fill-[var(--cautionary-main)] stroke-none transition-all",
+              "absolute inset-0.5 fill-[var(--interactive-bg-selected)] stroke-none transition-all",
               filled ? "opacity-100" : halfFilled ? "opacity-100" : "opacity-0"
             )}
             style={
@@ -106,14 +106,14 @@ const Rating = React.forwardRef<HTMLDivElement, RatingProps>(
     return (
       <div
         ref={ref}
-        className={cn("flex items-center gap-0.5", className)}
+        className={cn("flex items-center gap-[var(--spacing-xxs)]", className)}
         role="radiogroup"
         aria-label="Rating"
         {...props}
       >
         {Array.from({ length: max }, (_, i) => renderStar(i))}
         {showValue && (
-          <span className="ml-2 text-sm text-[var(--foregrounds-tertiary)]">
+          <span className="ml-[var(--spacing-sm)] text-sm text-[var(--interactive-fg)]">
             {displayValue.toFixed(precision === 0.5 ? 1 : 0)} / {max}
           </span>
         )}

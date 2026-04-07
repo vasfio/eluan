@@ -5,19 +5,20 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { Clock } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { Toggle } from "./toggle"
 
 function pad(n: number) {
   return String(n).padStart(2, "0")
 }
 
 const timeInputVariants = cva(
-  "inline-flex items-center gap-0.5 rounded-md border bg-background text-sm ring-offset-background transition-colors focus-within:ring-1 focus-within:ring-neutral-400 focus-within:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50",
+  "inline-flex items-center gap-[var(--spacing-xxs)] rounded-[var(--curves-md)] border bg-[var(--container-bg)] text-sm ring-offset-background transition-colors focus-within:ring-1 focus-within:ring-[var(--interactive-border)] focus-within:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)]",
   {
     variants: {
       size: {
-        sm: "h-8 px-2 text-xs",
-        default: "h-10 px-3 text-sm",
-        lg: "h-12 px-4 text-base",
+        sm: "h-8 px-[var(--spacing-sm)] text-xs",
+        default: "h-10 px-[var(--spacing-md)] text-sm",
+        lg: "h-12 px-[var(--spacing-lg)] text-base",
       },
     },
     defaultVariants: {
@@ -178,21 +179,21 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
     }
 
     const segmentCls =
-      "w-7 bg-transparent text-center font-mono tabular-nums outline-none selection:bg-primary/20 rounded px-0.5 focus:bg-accent"
+      "w-7 bg-transparent text-center font-mono tabular-nums outline-none selection:bg-[var(--container-bg-alt)] rounded px-[var(--spacing-xxs)] focus:bg-[var(--interactive-bg-hover)]"
 
     return (
       <div
         ref={ref}
         className={cn(
           timeInputVariants({ size }),
-          "border-input",
-          disabled && "opacity-50 pointer-events-none",
+          "border-[var(--interactive-border-alt)]",
+          disabled && "bg-[var(--interactive-bg-disabled)] text-[var(--interactive-fg-disabled)] pointer-events-none",
           className
         )}
         {...props}
       >
         {showIcon && (
-          <Clock className="h-4 w-4 text-muted-foreground shrink-0 mr-1" />
+          <Clock className="h-4 w-4 text-[var(--interactive-fg-alt)] shrink-0 mr-[var(--spacing-xs)]" />
         )}
 
         {/* Hidden input for form submission */}
@@ -235,7 +236,7 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
           aria-label="Hours"
         />
 
-        <span className="text-muted-foreground font-mono select-none">:</span>
+        <span className="text-[var(--interactive-fg-alt)] font-mono select-none">:</span>
 
         {/* Minutes segment */}
         <input
@@ -267,35 +268,27 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
 
         {/* AM/PM toggle */}
         {format === "12" && (
-          <div className="ml-1 flex border-l pl-1.5 gap-0.5">
-            <button
-              type="button"
-              onClick={() => togglePeriod("AM")}
+          <div className="ml-[var(--spacing-xxs)] flex border-l border-[color:var(--interactive-border)] pl-[var(--spacing-xs)] gap-[var(--spacing-xxs)]">
+            <Toggle
+              size="sm"
+              pressed={period === "AM"}
+              onPressedChange={() => togglePeriod("AM")}
               disabled={disabled}
-              className={cn(
-                "rounded px-1.5 py-0.5 text-xs font-medium transition-colors cursor-pointer",
-                period === "AM"
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:bg-accent"
-              )}
+              className="h-6 px-[var(--spacing-xs)] text-xs min-w-0"
               tabIndex={-1}
             >
               AM
-            </button>
-            <button
-              type="button"
-              onClick={() => togglePeriod("PM")}
+            </Toggle>
+            <Toggle
+              size="sm"
+              pressed={period === "PM"}
+              onPressedChange={() => togglePeriod("PM")}
               disabled={disabled}
-              className={cn(
-                "rounded px-1.5 py-0.5 text-xs font-medium transition-colors cursor-pointer",
-                period === "PM"
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:bg-accent"
-              )}
+              className="h-6 px-[var(--spacing-xs)] text-xs min-w-0"
               tabIndex={-1}
             >
               PM
-            </button>
+            </Toggle>
           </div>
         )}
       </div>

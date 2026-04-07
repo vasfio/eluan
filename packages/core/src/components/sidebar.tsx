@@ -84,13 +84,13 @@ export function SidebarProvider({
 
 // Sidebar variants
 const sidebarVariants = cva(
-  "flex h-full flex-col border-r bg-background transition-all duration-300",
+  "flex h-full flex-col border-r bg-[var(--container-bg)] transition-all duration-300",
   {
     variants: {
       variant: {
         default: "",
-        inset: "rounded-lg border shadow-sm",
-        floating: "m-2 rounded-lg border shadow-lg",
+        inset: "rounded-[var(--curves-lg)] border shadow-sm",
+        floating: "m-[var(--spacing-sm)] rounded-[var(--curves-lg)] border shadow-lg",
       },
     },
     defaultVariants: {
@@ -137,7 +137,7 @@ const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
         {/* Mobile overlay */}
         {isMobile && open && (
           <div
-            className="fixed inset-0 z-40 bg-black/50 transition-opacity"
+            className="fixed inset-0 z-40 bg-[var(--container-bg-inverse)] opacity-80 transition-opacity"
             onClick={() => setOpen(false)}
           />
         )}
@@ -211,7 +211,7 @@ const SidebarHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex h-14 items-center border-b px-4", className)}
+    className={cn("flex h-14 items-center border-b px-[var(--spacing-md)]", className)}
     {...props}
   />
 ))
@@ -223,7 +223,7 @@ const SidebarContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex-1 overflow-auto py-2", className)}
+    className={cn("flex-1 overflow-auto py-[var(--spacing-sm)]", className)}
     {...props}
   />
 ))
@@ -235,7 +235,7 @@ const SidebarFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("mt-auto border-t p-4", className)}
+    className={cn("mt-auto border-t p-[var(--spacing-md)]", className)}
     {...props}
   />
 ))
@@ -245,7 +245,7 @@ const SidebarGroup = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("px-2 py-2", className)} {...props} />
+  <div ref={ref} className={cn("px-[var(--spacing-sm)] py-[var(--spacing-sm)]", className)} {...props} />
 ))
 SidebarGroup.displayName = "SidebarGroup"
 
@@ -261,7 +261,7 @@ const SidebarGroupLabel = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "px-2 py-1.5 text-xs font-medium text-muted-foreground",
+        "px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-xs font-medium text-[var(--interactive-fg-alt)]",
         className
       )}
       {...props}
@@ -310,11 +310,11 @@ const SidebarMenuButton = React.forwardRef<
     <button
       ref={ref}
       className={cn(
-        "flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
-        "hover:bg-accent hover:text-accent-foreground",
-        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400",
-        isActive && "bg-accent text-accent-foreground",
-        collapsed && "justify-center px-2",
+        "flex w-full items-center gap-[var(--spacing-sm)] rounded-[var(--curves-md)] px-[var(--spacing-sm)] py-[var(--spacing-sm)] text-sm font-medium transition-colors",
+        "hover:bg-[var(--interactive-bg-hover)] hover:text-[var(--interactive-fg)]",
+        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)]",
+        isActive && "bg-[var(--interactive-bg-active)] text-[var(--interactive-fg-active)]",
+        collapsed && "justify-center px-[var(--spacing-sm)]",
         className
       )}
       {...props}
@@ -327,7 +327,7 @@ const SidebarMenuButton = React.forwardRef<
     return (
       <div className="relative group">
         {button}
-        <div className="absolute left-full top-1/2 z-50 ml-2 -translate-y-1/2 rounded-md bg-popover px-2 py-1 text-xs text-popover-foreground opacity-0 shadow-md transition-opacity group-hover:opacity-100">
+        <div className="absolute left-full top-1/2 z-50 ml-2 -translate-y-1/2 rounded-[var(--curves-md)] bg-[var(--container-bg)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-xs text-[var(--container-fg)] opacity-0 shadow-md transition-opacity group-hover:opacity-100">
           {tooltip}
         </div>
       </div>
@@ -349,7 +349,7 @@ const SidebarMenuSub = React.forwardRef<
   return (
     <ul
       ref={ref}
-      className={cn("ml-4 space-y-1 border-l pl-4", className)}
+      className={cn("ml-[var(--spacing-md)] space-y-1 border-l pl-[var(--spacing-md)]", className)}
       {...props}
     />
   )
@@ -371,9 +371,9 @@ const SidebarMenuSubButton = React.forwardRef<
   <button
     ref={ref}
     className={cn(
-      "flex w-full items-center rounded-md px-3 py-1.5 text-sm transition-colors",
-      "hover:bg-accent hover:text-accent-foreground",
-      isActive && "bg-accent text-accent-foreground",
+      "flex w-full items-center rounded-[var(--curves-md)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-sm transition-colors",
+      "hover:bg-[var(--interactive-bg-hover)] hover:text-[var(--interactive-fg)]",
+      isActive && "bg-[var(--interactive-bg-active)] text-[var(--interactive-fg-active)]",
       className
     )}
     {...props}
@@ -387,7 +387,7 @@ const SidebarSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("mx-2 my-2 h-px bg-border", className)}
+    className={cn("mx-[var(--spacing-sm)] my-[var(--spacing-sm)] h-px bg-[var(--interactive-border-alt)]", className)}
     {...props}
   />
 ))

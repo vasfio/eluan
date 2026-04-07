@@ -34,10 +34,10 @@ const timelineItemVariants = cva("relative pb-8 pl-8 last:pb-0", {
   variants: {
     variant: {
       default: "",
-      success: "[--timeline-dot-color:theme(colors.green.500)]",
-      warning: "[--timeline-dot-color:theme(colors.yellow.500)]",
-      error: "[--timeline-dot-color:theme(colors.red.500)]",
-      info: "[--timeline-dot-color:theme(colors.blue.500)]",
+      success: "[--timeline-dot-color:var(--positive-bg)] [--timeline-dot-bg:var(--positive-bg)] [--timeline-dot-border:var(--positive-fg)]",
+      warning: "[--timeline-dot-color:var(--cautionary-fg)] [--timeline-dot-bg:var(--cautionary-bg)]",
+      error: "[--timeline-dot-color:var(--destructive-fg)] [--timeline-dot-bg:var(--destructive-bg)]",
+      info: "[--timeline-dot-color:var(--informative-fg)] [--timeline-dot-bg:var(--informative-bg)]",
     },
   },
   defaultVariants: {
@@ -92,14 +92,14 @@ const TimelineLine = React.forwardRef<HTMLDivElement, TimelineLineProps>(
 TimelineLine.displayName = "TimelineLine"
 
 const timelineDotVariants = cva(
-  "absolute left-0 top-0 flex h-6 w-6 items-center justify-center rounded-full border-2 border-background",
+  "absolute left-0 top-0 flex h-6 w-6 items-center justify-center rounded-full border-2 border-[var(--container-bg)]",
   {
     variants: {
       variant: {
-        default: "bg-muted",
-        filled: "bg-primary text-primary-foreground",
-        outline: "border-2 border-primary bg-background",
-        icon: "bg-primary text-primary-foreground",
+        default: "bg-[var(--container-bg-alt)]",
+        filled: "bg-[var(--container-bg)] text-[var(--container-fg)]",
+        outline: "border-2 border-[var(--container-border-alt)] bg-[var(--container-bg)]",
+        icon: "bg-[var(--container-bg)] text-[var(--container-fg)]",
       },
       size: {
         sm: "h-4 w-4",
@@ -126,7 +126,7 @@ const TimelineDot = React.forwardRef<HTMLDivElement, TimelineDotProps>(
       ref={ref}
       className={cn(
         timelineDotVariants({ variant, size }),
-        "bg-[var(--timeline-dot-color,theme(colors.muted.DEFAULT))]",
+        "bg-[var(--timeline-dot-bg,var(--container-bg-alt))] text-[var(--timeline-dot-color,var(--container-fg))]",
         className
       )}
       {...props}
@@ -175,7 +175,7 @@ const TimelineTime = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <time
     ref={ref}
-    className={cn("text-sm text-[var(--foregrounds-tertiary)]", className)}
+    className={cn("text-sm text-[var(--interactive-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -187,7 +187,7 @@ const TimelineDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-2 text-sm text-[var(--foregrounds-tertiary)]", className)}
+    className={cn("mt-[var(--spacing-sm)] text-sm text-[var(--interactive-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -200,7 +200,7 @@ const TimelineHorizontal = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("relative flex items-start gap-4", className)}
+    className={cn("relative flex items-start gap-[var(--spacing-md)]", className)}
     {...props}
   />
 ))

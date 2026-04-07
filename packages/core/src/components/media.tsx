@@ -15,10 +15,10 @@ const mediaVariants = cva("relative overflow-hidden", {
     },
     rounded: {
       none: "",
-      sm: "rounded-sm",
-      md: "rounded-md",
-      lg: "rounded-lg",
-      xl: "rounded-xl",
+      sm: "rounded-[var(--curves-sm)]",
+      md: "rounded-[var(--curves-md)]",
+      lg: "rounded-[var(--curves-lg)]",
+      xl: "rounded-[var(--curves-xl)]",
       full: "rounded-full",
     },
   },
@@ -44,7 +44,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
         <div
           className={cn(
             mediaVariants({ ratio, rounded }),
-            "flex items-center justify-center bg-muted",
+            "flex items-center justify-center bg-[var(--container-bg-alt)]",
             className
           )}
         >
@@ -56,8 +56,8 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
     return (
       <div className={cn(mediaVariants({ ratio, rounded }), className)}>
         {loading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-muted">
-            <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+          <div className="absolute inset-0 flex items-center justify-center bg-[var(--container-bg-alt)]">
+            <Loader2 className="h-6 w-6 animate-spin text-[var(--container-fg-alt)]" />
           </div>
         )}
         <img
@@ -136,18 +136,18 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
           {...props}
         />
         {showControls && (
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-4 opacity-0 transition-opacity group-hover:opacity-100">
-            <div className="mb-2 h-1 w-full overflow-hidden rounded-full bg-white/30">
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-[var(--spacing-md)] opacity-0 transition-opacity group-hover:opacity-100">
+            <div className="mb-[var(--spacing-sm)] h-[var(--spacing-xs)] w-full overflow-hidden rounded-full bg-white/30">
               <div
                 className="h-full bg-white transition-all"
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-[var(--spacing-sm)]">
               <button
                 type="button"
                 onClick={togglePlay}
-                className="rounded-full p-1 text-white hover:bg-white/20"
+                className="rounded-full p-1 text-[var(--interactive-fg-inverse)] hover:bg-white/20"
               >
                 {isPlaying ? (
                   <Pause className="h-5 w-5" />
@@ -158,7 +158,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
               <button
                 type="button"
                 onClick={toggleMute}
-                className="rounded-full p-1 text-white hover:bg-white/20"
+                className="rounded-full p-1 text-[var(--interactive-fg-inverse)] hover:bg-white/20"
               >
                 {isMuted ? (
                   <VolumeX className="h-5 w-5" />
@@ -170,7 +170,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
               <button
                 type="button"
                 onClick={handleFullscreen}
-                className="rounded-full p-1 text-white hover:bg-white/20"
+                className="rounded-full p-[var(--spacing-xxs)] text-[var(--interactive-fg-inverse)] hover:bg-white/20"
               >
                 <Maximize className="h-5 w-5" />
               </button>

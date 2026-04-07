@@ -4,19 +4,19 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const kbdVariants = cva(
-  "inline-flex items-center justify-center rounded border font-mono text-sm font-medium",
+  "inline-flex items-center justify-center rounded-[var(--curves-sm)] border font-mono text-sm font-medium",
   {
     variants: {
       variant: {
         default:
-          "border-border bg-muted text-muted-foreground shadow-[0_2px_0_0] shadow-border",
-        outline: "border-border bg-background text-foreground",
-        ghost: "border-transparent bg-transparent text-muted-foreground",
+          "border-[var(--container-border-alt)] bg-[var(--container-bg-alt)] text-[var(--container-fg-alt)] shadow-[0_2px_0_0] shadow-[var(--container-border-alt)]",
+        outline: "border-[var(--container-border-alt)] bg-[var(--container-bg)] text-[var(--container-fg)]",
+        ghost: "border-transparent bg-transparent text-[var(--container-fg-alt)]",
       },
       size: {
-        sm: "h-5 min-w-5 px-1 text-xs",
-        default: "h-6 min-w-6 px-1.5",
-        lg: "h-7 min-w-7 px-2 text-base",
+        sm: "h-5 min-w-5 px-[var(--spacing-xs)] text-xs",
+        default: "h-6 min-w-6 px-[var(--spacing-xs)]",
+        lg: "h-7 min-w-7 px-[var(--spacing-sm)] text-base",
       },
     },
     defaultVariants: {
@@ -96,7 +96,7 @@ const Kbd = React.forwardRef<HTMLElement, KbdProps>(
       content = keyArray.map((key, index) => (
         <React.Fragment key={index}>
           {index > 0 && (
-            <span className="mx-0.5 text-muted-foreground/50">+</span>
+            <span className="mx-[var(--spacing-xxs)] text-[var(--interactive-fg-disabled)]">+</span>
           )}
           <span>{formatKey(key)}</span>
         </React.Fragment>
@@ -123,7 +123,7 @@ const KbdGroup = React.forwardRef<HTMLDivElement, KbdGroupProps>(
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn("inline-flex items-center gap-1", className)}
+      className={cn("inline-flex items-center gap-[var(--spacing-xxs)]", className)}
       {...props}
     />
   )

@@ -40,13 +40,13 @@ const EmailInput = React.forwardRef<HTMLInputElement, EmailInputProps>(
 
     return (
       <div className="relative">
-        <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--interactive-fg-alt)]" />
         <input
           type="email"
           className={cn(
-            "flex h-10 w-full rounded-md border border-input bg-background pl-10 pr-10 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50",
-            showStatus && isValid && "border-green-500 focus-visible:ring-green-500",
-            showStatus && !isValid && "border-destructive focus-visible:ring-destructive",
+            "flex h-10 w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] pl-10 pr-[var(--spacing-xl)] py-[var(--spacing-sm)] text-sm ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)]",
+            showStatus && isValid && "border-[var(--positive-fg)] focus-visible:ring-[var(--positive-bg-alt)]",
+            showStatus && !isValid && "border-[var(--destructive-fg)] focus-visible:ring-[var(--destructive-bg-alt)]",
             className
           )}
           ref={ref}
@@ -57,9 +57,9 @@ const EmailInput = React.forwardRef<HTMLInputElement, EmailInputProps>(
         {showStatus && (
           <div className="absolute right-3 top-1/2 -translate-y-1/2">
             {isValid ? (
-              <CheckCircle2 className="h-4 w-4 text-green-500" />
+              <CheckCircle2 className="h-4 w-4 text-[var(--positive-fg)]" />
             ) : (
-              <AlertCircle className="h-4 w-4 text-destructive" />
+              <AlertCircle className="h-4 w-4 text-[var(--destructive-fg)]" />
             )}
           </div>
         )}

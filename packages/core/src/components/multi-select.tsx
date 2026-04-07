@@ -86,22 +86,22 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
             aria-expanded={open}
             disabled={disabled}
             className={cn(
-              "flex min-h-10 w-full items-center justify-between rounded-md border border-[var(--interactive-border)] bg-[var(--interactive-bg)] px-3 py-2 text-sm",
-              "ring-offset-background focus:outline-none focus:ring-1 focus:ring-[var(--interactive-fg)] focus:border-[var(--interactive-fg)]",
-              "disabled:cursor-not-allowed disabled:opacity-50 transition-colors",
+              "flex min-h-10 w-full items-center justify-between rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-sm",
+              "ring-offset-background focus:outline-none focus:ring-1 focus:ring-[var(--interactive-border)] focus:border-[var(--interactive-border)]",
+              "disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)] transition-colors",
               className
             )}
           >
             <div className="flex flex-1 flex-wrap gap-1">
               {selectedOptions.length === 0 ? (
-                <span className="text-[var(--foregrounds-quinary)]">{placeholder}</span>
+                <span className="text-[var(--interactive-fg-alt)]">{placeholder}</span>
               ) : (
                 <>
                   {displayedOptions.map((option) => (
                     <Badge
                       key={option.value}
                       variant="secondary"
-                      className="gap-1 pr-1 text-xs"
+                      className="gap-[var(--spacing-xxs)] pr-[var(--spacing-xxs)] text-xs"
                     >
                       {option.label}
                       <button
@@ -132,7 +132,7 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
           <Command>
             <CommandInput placeholder={searchPlaceholder} className="h-9" />
             <CommandList>
-              <CommandEmpty className="py-3 text-center text-sm text-[var(--foregrounds-tertiary)]">{emptyMessage}</CommandEmpty>
+              <CommandEmpty className="py-[var(--spacing-md)] text-center text-sm text-[var(--interactive-fg-alt)]">{emptyMessage}</CommandEmpty>
               <CommandGroup>
                 {sortedOptions.map((option) => {
                   const isSelected = value.includes(option.value)
@@ -144,14 +144,14 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
                       disabled={option.disabled}
                       onSelect={() => handleSelect(option.value)}
                       className={cn(
-                        "flex items-center justify-between gap-2 cursor-pointer",
-                        isSelected && "text-[var(--foregrounds-primary)] font-medium"
+                        "flex items-center justify-between gap-[var(--spacing-sm)] cursor-pointer",
+                        isSelected && "text-[var(--interactive-fg)] font-medium"
                       )}
                     >
                       <span>{option.label}</span>
                       {isSelected && (
                         <X
-                          className="h-3.5 w-3.5 shrink-0 text-[var(--foregrounds-tertiary)]"
+                          className="h-3.5 w-3.5 shrink-0 text-[var(--interactive-fg-alt)]"
                           onClick={(e) => { e.stopPropagation(); handleSelect(option.value) }}
                         />
                       )}
