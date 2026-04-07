@@ -17,7 +17,9 @@ const config: StorybookConfig = {
     autodocs: "tag",
   },
   viteFinal: async (config) => {
+    const tailwindcss = (await import("@tailwindcss/vite")).default
     return mergeConfig(config, {
+      plugins: [tailwindcss()],
       resolve: {
         alias: {
           "@": join(dirname(__dirname), "src"),

@@ -71,7 +71,7 @@ function Calendar({
           "hover:bg-[var(--interactive-bg-hover)] hover:text-[var(--interactive-fg)] hover:rounded-[var(--curves-lg)] focus:ring-[var(--interactive-border)]"
         ),
         today: "[&>button]:underline [&>button]:underline-offset-4 [&>button]:decoration-2 [&>button]:decoration-[var(--interactive-fg)] font-semibold",
-        outside: "day-outside text-[var(--interactive-fg-disabled)] aria-selected:bg-[var(--interactive-bg-alt2)] aria-selected:text-[var(-interactive-fg-selected)]",
+        outside: "day-outside text-[var(--interactive-fg-disabled)] aria-selected:bg-[var(--interactive-bg-alt2)] aria-selected:text-[var(--interactive-fg-selected)]",
         disabled: "text-[var(--interactive-fg-disabled)] cursor-not-allowed",
         range_middle: "aria-selected:bg-[var(--interactive-bg-alt2)] aria-selected:text-[var(--interactive-fg-alt)] !rounded-none",
         hidden: "invisible",

@@ -36,7 +36,7 @@ export * from "./components/hover-card"
 export * from "./components/input"
 export * from "./components/input-otp"
 export * from "./components/kbd"
-export * from "./components/link"
+// export * from "./components/link" // TODO: create link component
 export * from "./components/media"
 export * from "./components/menubar"
 export * from "./components/multi-select"
