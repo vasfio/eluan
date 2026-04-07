@@ -157,7 +157,7 @@ importers:
         specifier: ^3.19.0
         version: 3.19.0
       '@vasf/ragnar-tokens':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../tokens
       class-variance-authority:
         specifier: ^0.7.0
@@ -376,10 +376,10 @@ importers:
   packages/web:
     dependencies:
       '@vasf/ragnar-core':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../core
       '@vasf/ragnar-tokens':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../tokens
       class-variance-authority:
         specifier: ^0.7.0
