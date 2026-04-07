@@ -2,8 +2,8 @@ import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
-import { Button } from "@ragnar/core"
-import { Input } from "@ragnar/core"
+import { Button } from "@vasf/ragnar-core"
+import { Input } from "@vasf/ragnar-core"
 
 const emailFormVariants = cva(
   "flex w-full gap-2",
