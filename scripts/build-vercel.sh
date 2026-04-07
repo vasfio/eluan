@@ -14,10 +14,10 @@ echo "=== Building tokens ==="
 pnpm --filter @vasf/ragnar-tokens build
 
 echo "=== Building core ==="
-pnpm --filter @ragnar/core build
+pnpm --filter @vasf/ragnar-core build
 
 echo "=== Building core storybook ==="
-pnpm --filter @ragnar/core build-storybook
+pnpm --filter @vasf/ragnar-core build-storybook
 
 echo "=== Building web storybook ==="
 pnpm --filter @vasf/ragnar-web build-storybook
