@@ -9,7 +9,8 @@ import {
   Pressable,
   Dimensions,
 } from "react-native"
-import { spacing, radius, fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@vasf/ragnar-tokens"
+import { sp, curves, getSemanticColors } from "../utils/styles"
 
 export interface ToastProps {
   /** Toast ID */
@@ -45,6 +46,7 @@ export function Toast({
 }: ToastProps) {
   const colorScheme = useColorScheme() ?? "light"
   const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
   const translateY = useRef(new Animated.Value(-100)).current
   const opacity = useRef(new Animated.Value(0)).current
 
@@ -94,42 +96,42 @@ export function Toast({
     default: {
       container: {
         backgroundColor: isDark ? "#27272a" : "#ffffff",
-        borderColor: isDark ? "#3f3f46" : "#e4e4e7",
+        borderColor: colors.container.border,
       },
       icon: "ℹ️",
-      iconColor: isDark ? "#fafafa" : "#18181b",
+      iconColor: colors.container.fg,
     },
     success: {
       container: {
-        backgroundColor: isDark ? "#14532d" : "#dcfce7",
+        backgroundColor: colors.positive.bgSubtle,
         borderColor: isDark ? "#166534" : "#bbf7d0",
       },
       icon: "✓",
-      iconColor: "#22c55e",
+      iconColor: colors.positive.bg,
     },
     warning: {
       container: {
-        backgroundColor: isDark ? "#78350f" : "#fef3c7",
+        backgroundColor: colors.cautionary.bgSubtle,
         borderColor: isDark ? "#92400e" : "#fde68a",
       },
       icon: "⚠",
-      iconColor: "#f59e0b",
+      iconColor: colors.cautionary.bg,
     },
     destructive: {
       container: {
-        backgroundColor: isDark ? "#7f1d1d" : "#fee2e2",
+        backgroundColor: colors.destructive.bgSubtle,
         borderColor: isDark ? "#991b1b" : "#fecaca",
       },
       icon: "✕",
-      iconColor: "#ef4444",
+      iconColor: colors.destructive.bg,
     },
     info: {
       container: {
-        backgroundColor: isDark ? "#1e3a5f" : "#dbeafe",
+        backgroundColor: colors.informative.bgSubtle,
         borderColor: isDark ? "#1e40af" : "#bfdbfe",
       },
       icon: "ℹ",
-      iconColor: "#3b82f6",
+      iconColor: colors.informative.bg,
     },
   }
 
@@ -152,7 +154,7 @@ export function Toast({
           <Text
             style={[
               styles.title,
-              { color: isDark ? "#fafafa" : "#18181b" },
+              { color: colors.container.fg },
             ]}
           >
             {title}
@@ -161,7 +163,7 @@ export function Toast({
             <Text
               style={[
                 styles.description,
-                { color: isDark ? "#a1a1aa" : "#71717a" },
+                { color: colors.container.fgAlt },
               ]}
             >
               {description}
@@ -173,7 +175,7 @@ export function Toast({
             <Text
               style={[
                 styles.actionText,
-                { color: isDark ? "#fafafa" : "#18181b" },
+                { color: colors.container.fg },
               ]}
             >
               {action.label}
@@ -181,7 +183,7 @@ export function Toast({
           </Pressable>
         )}
         <Pressable onPress={dismiss} style={styles.close}>
-          <Text style={{ color: isDark ? "#71717a" : "#a1a1aa", fontSize: 18 }}>
+          <Text style={{ color: colors.interactive.fgAlt, fontSize: 18 }}>
             ×
           </Text>
         </Pressable>
@@ -308,8 +310,8 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     alignItems: "center",
-    paddingHorizontal: 4,
-    gap: 2,
+    paddingHorizontal: sp.xs,
+    gap: sp.xxs,
     zIndex: 9999,
   },
   containerTop: {
@@ -321,7 +323,7 @@ const styles = StyleSheet.create({
   toast: {
     width: "100%",
     maxWidth: 400,
-    borderRadius: 8,
+    borderRadius: curves.xs,
     borderWidth: 1,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
@@ -332,12 +334,12 @@ const styles = StyleSheet.create({
   toastContent: {
     flexDirection: "row",
     alignItems: "flex-start",
-    padding: 4,
-    gap: 2,
+    padding: sp.xs,
+    gap: sp.xxs,
   },
   icon: {
     fontSize: 16,
-    marginTop: 2,
+    marginTop: sp.xxs,
   },
   textContainer: {
     flex: 1,
@@ -348,18 +350,18 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: fontSizes.xs,
-    marginTop: 2,
+    marginTop: sp.xxs,
   },
   action: {
-    paddingHorizontal: 2,
-    paddingVertical: 2,
-    borderRadius: 4,
+    paddingHorizontal: sp.xxs,
+    paddingVertical: sp.xxs,
+    borderRadius: curves.xxs,
   },
   actionText: {
     fontSize: fontSizes.xs,
     fontWeight: "600",
   },
   close: {
-    padding: 2,
+    padding: sp.xxs,
   },
 })

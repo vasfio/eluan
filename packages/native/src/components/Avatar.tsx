@@ -9,7 +9,8 @@ import {
   ImageSourcePropType,
   useColorScheme,
 } from "react-native"
-import { radius, fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@vasf/ragnar-tokens"
+import { sp, curves, getSemanticColors } from "../utils/styles"
 
 export interface AvatarProps {
   /** Image source (uri or require) */
@@ -47,7 +48,7 @@ export function Avatar({
   bordered = false,
 }: AvatarProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
   const [imageError, setImageError] = useState(false)
 
   const sizeMap = {
@@ -77,19 +78,19 @@ export function Avatar({
   const statusSize = typeof size === "number" ? Math.max(8, numericSize * 0.25) : statusSizeMap[size]
 
   const statusColors = {
-    online: "#22c55e",
-    offline: "#71717a",
-    busy: "#ef4444",
-    away: "#f59e0b",
+    online: colors.positive.bg,
+    offline: colors.container.fgAlt,
+    busy: colors.destructive.bg,
+    away: colors.cautionary.bg,
   }
 
   const themedStyles = {
     container: {
-      backgroundColor: isDark ? "#27272a" : "#e4e4e7",
-      borderColor: isDark ? "#3f3f46" : "#d4d4d8",
+      backgroundColor: colors.container.borderAlt,
+      borderColor: colors.container.border,
     },
     text: {
-      color: isDark ? "#a1a1aa" : "#71717a",
+      color: colors.container.fgAlt,
     },
   }
 
@@ -158,6 +159,7 @@ export function Avatar({
               backgroundColor: statusColors[status],
               right: shape === "circle" ? 0 : -2,
               bottom: shape === "circle" ? 0 : -2,
+              borderColor: colors.container.bg,
             },
           ]}
         />
@@ -188,7 +190,7 @@ export function AvatarGroup({
   style,
 }: AvatarGroupProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
   const childArray = React.Children.toArray(children)
   const visibleChildren = childArray.slice(0, max)
@@ -236,14 +238,15 @@ export function AvatarGroup({
                 width: numericSize,
                 height: numericSize,
                 borderRadius: numericSize / 2,
-                backgroundColor: isDark ? "#27272a" : "#e4e4e7",
+                backgroundColor: colors.container.borderAlt,
+                borderColor: colors.container.bg,
               },
             ]}
           >
             <Text
               style={[
                 styles.remainingText,
-                { color: isDark ? "#a1a1aa" : "#71717a" },
+                { color: colors.container.fgAlt },
               ]}
             >
               +{remainingCount}
@@ -273,7 +276,6 @@ const styles = StyleSheet.create({
   status: {
     position: "absolute",
     borderWidth: 2,
-    borderColor: "#ffffff",
   },
   group: {
     flexDirection: "row",
@@ -286,7 +288,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 2,
-    borderColor: "#ffffff",
   },
   remainingText: {
     fontSize: fontSizes.xs,

@@ -6,7 +6,7 @@ import { Button } from "@vasf/ragnar-core"
 import { Input } from "@vasf/ragnar-core"
 
 const emailFormVariants = cva(
-  "flex w-full gap-2",
+  "flex w-full gap-[var(--spacing-sm)]",
   {
     variants: {
       layout: {
@@ -101,7 +101,7 @@ const EmailForm = React.forwardRef<HTMLFormElement, EmailFormProps>(
             className={cn("h-12", layout === "stacked" && "w-full")}
           >
             {isLoading ? (
-              <span className="flex items-center gap-2">
+              <span className="flex items-center gap-[var(--spacing-sm)]">
                 <svg
                   className="h-4 w-4 animate-spin"
                   xmlns="http://www.w3.org/2000/svg"
@@ -130,15 +130,15 @@ const EmailForm = React.forwardRef<HTMLFormElement, EmailFormProps>(
           </Button>
         </form>
         {helperText && status === "idle" && (
-          <p className="mt-2 text-sm text-[var(--foregrounds-tertiary)]">{helperText}</p>
+          <p className="mt-[var(--spacing-sm)] text-sm text-[var(--container-fg-alt)]">{helperText}</p>
         )}
         {status === "success" && successMessage && (
-          <p className="mt-2 text-sm text-[var(--positive-fg)]">
+          <p className="mt-[var(--spacing-sm)] text-sm text-[var(--positive-fg)]">
             {successMessage}
           </p>
         )}
         {status === "error" && errorMessage && (
-          <p className="mt-2 text-sm text-destructive">{errorMessage}</p>
+          <p className="mt-[var(--spacing-sm)] text-sm text-[var(--destructive-fg)]">{errorMessage}</p>
         )}
       </div>
     )

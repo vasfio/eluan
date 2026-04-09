@@ -216,7 +216,7 @@ const CounterWithLabel = React.forwardRef<HTMLDivElement, CounterWithLabelProps>
   ({ label, labelClassName, className, ...counterProps }, ref) => (
     <div ref={ref} className={cn("text-center", className)}>
       <AnimatedCounter {...counterProps} />
-      <p className={cn("mt-2 text-sm text-muted-foreground", labelClassName)}>
+      <p className={cn("mt-[var(--spacing-sm)] text-sm text-[var(--container-fg-alt)]", labelClassName)}>
         {label}
       </p>
     </div>
@@ -240,7 +240,7 @@ const CounterGrid = React.forwardRef<HTMLDivElement, CounterGridProps>(
     return (
       <div
         ref={ref}
-        className={cn("grid gap-8", gridCols[columns], className)}
+        className={cn("grid gap-[var(--spacing-lg)]", gridCols[columns], className)}
         {...props}
       />
     )
@@ -333,7 +333,7 @@ const CountdownTimer = React.forwardRef<HTMLDivElement, CountdownTimerProps>(
     return (
       <div
         ref={ref}
-        className={cn("flex gap-4 md:gap-8", className)}
+        className={cn("flex gap-[var(--spacing-md)] md:gap-[var(--spacing-lg)]", className)}
         {...props}
       >
         {Object.entries(timeLeft).map(([key, value]) => (
@@ -341,7 +341,7 @@ const CountdownTimer = React.forwardRef<HTMLDivElement, CountdownTimerProps>(
             <div className={cn("tabular-nums", sizes[size].value)}>
               {String(value).padStart(2, "0")}
             </div>
-            <div className={cn("text-muted-foreground", sizes[size].label)}>
+            <div className={cn("text-[var(--container-fg-alt)]", sizes[size].label)}>
               {labels[key as keyof typeof labels]}
             </div>
           </div>

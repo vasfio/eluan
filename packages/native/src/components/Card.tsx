@@ -7,7 +7,7 @@ import {
   TextProps,
   useColorScheme,
 } from "react-native"
-import { spacing, radius } from "@vasf/ragnar-tokens"
+import { sp, curves, getSemanticColors } from "../utils/styles"
 
 export interface CardProps extends ViewProps {
   children: React.ReactNode
@@ -15,15 +15,15 @@ export interface CardProps extends ViewProps {
 
 export function Card({ children, style, ...props }: CardProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
   return (
     <View
       style={[
         styles.card,
         {
-          backgroundColor: isDark ? "#09090b" : "#ffffff",
-          borderColor: isDark ? "#27272a" : "#e4e4e7",
+          backgroundColor: colors.container.bg,
+          borderColor: colors.container.borderAlt,
         },
         style,
       ]}
@@ -52,13 +52,13 @@ export interface CardTitleProps extends TextProps {
 
 export function CardTitle({ children, style, ...props }: CardTitleProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
   return (
     <Text
       style={[
         styles.title,
-        { color: isDark ? "#fafafa" : "#09090b" },
+        { color: colors.container.fg },
         style,
       ]}
       {...props}
@@ -74,13 +74,13 @@ export interface CardDescriptionProps extends TextProps {
 
 export function CardDescription({ children, style, ...props }: CardDescriptionProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
   return (
     <Text
       style={[
         styles.description,
-        { color: isDark ? "#a1a1aa" : "#71717a" },
+        { color: colors.container.fgAlt },
         style,
       ]}
       {...props}
@@ -116,7 +116,7 @@ export function CardFooter({ children, style, ...props }: CardFooterProps) {
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 8,
+    borderRadius: curves.xs,
     borderWidth: 1,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "column",
     gap: 6,
-    padding: 8,
+    padding: sp.sm,
   },
   title: {
     fontSize: 18,
@@ -140,13 +140,13 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   content: {
-    padding: 8,
+    padding: sp.sm,
     paddingTop: 0,
   },
   footer: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 8,
+    padding: sp.sm,
     paddingTop: 0,
   },
 })

@@ -8,7 +8,8 @@ import {
   Animated,
   useColorScheme,
 } from "react-native"
-import { spacing, radius as radius, fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@vasf/ragnar-tokens"
+import { sp, curves, getSemanticColors } from "../utils/styles"
 
 export type VoiceInputState = "idle" | "listening" | "processing" | "error"
 
@@ -74,17 +75,18 @@ export function VoiceInput({
   micIcon,
 }: VoiceInputProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
 
   const pulseAnim = useRef(new Animated.Value(1)).current
   const waveAnim = useRef(new Animated.Value(0)).current
 
-  const primaryColor = isDark ? "#60a5fa" : "#3b82f6"
-  const backgroundColor = isDark ? "#18181b" : "#ffffff"
-  const borderColor = isDark ? "#27272a" : "#e4e4e7"
-  const textColor = isDark ? "#fafafa" : "#18181b"
-  const mutedColor = isDark ? "#a1a1aa" : "#71717a"
-  const errorColor = isDark ? "#ef4444" : "#dc2626"
+  const colors = getSemanticColors(colorScheme)
+
+  const primaryColor = colors.informative.bg
+  const backgroundColor = colors.container.bg
+  const borderColor = colors.container.borderAlt
+  const textColor = colors.container.fg
+  const mutedColor = colors.container.fgAlt
+  const errorColor = colors.destructive.bg
 
   const sizes = {
     sm: { button: 48, icon: 20 },
@@ -166,7 +168,7 @@ export function VoiceInput({
   const getButtonColor = () => {
     switch (state) {
       case "listening":
-        return "#ef4444" // Red for recording
+        return colors.destructive.bg // Red for recording
       case "processing":
         return mutedColor
       case "error":
@@ -207,7 +209,7 @@ export function VoiceInput({
                 width: buttonSize,
                 height: buttonSize,
                 borderRadius: buttonSize / 2,
-                backgroundColor: "#ef4444",
+                backgroundColor: colors.destructive.bg,
                 transform: [{ scale: waveScale }],
                 opacity: waveOpacity,
               },
@@ -292,9 +294,9 @@ export function VoiceInputInline({
   style,
 }: VoiceInputInlineProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
-  const mutedColor = isDark ? "#a1a1aa" : "#71717a"
+  const mutedColor = colors.container.fgAlt
 
   const isActive = state === "listening" || state === "processing"
 
@@ -302,7 +304,7 @@ export function VoiceInputInline({
     <Pressable
       style={[
         styles.inlineButton,
-        { backgroundColor: isActive ? "#ef4444" : "transparent" },
+        { backgroundColor: isActive ? colors.destructive.bg : "transparent" },
         disabled && styles.buttonDisabled,
         style,
       ]}
@@ -312,7 +314,7 @@ export function VoiceInputInline({
       <Text
         style={[
           styles.inlineIcon,
-          { color: isActive ? "#ffffff" : mutedColor },
+          { color: isActive ? colors.destructive.fg : mutedColor },
         ]}
       >
         {state === "listening" ? "◼" : "🎤"}
@@ -324,13 +326,13 @@ export function VoiceInputInline({
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    gap: 4,
+    gap: sp.xs,
   },
   transcriptContainer: {
     width: "100%",
-    padding: 4,
+    padding: sp.xs,
     borderWidth: 1,
-    borderRadius: 8,
+    borderRadius: curves.xs,
     minHeight: 60,
   },
   transcript: {
@@ -364,8 +366,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   cancelButton: {
-    paddingVertical: 2,
-    paddingHorizontal: 4,
+    paddingVertical: sp.xxs,
+    paddingHorizontal: sp.xs,
   },
   cancelText: {
     fontSize: fontSizes.sm,

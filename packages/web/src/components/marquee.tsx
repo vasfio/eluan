@@ -168,7 +168,7 @@ const MarqueeTestimonial = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "w-80 shrink-0 rounded-2xl border border-[var(--container-border)]/60 bg-[var(--container-bg)] p-6 transition-shadow duration-300 hover:shadow-md hover:shadow-black/[0.04]",
+      "w-80 shrink-0 rounded-[var(--curves-xl)] border border-[color:var(--container-border-alt)] bg-[var(--container-bg)] p-[var(--spacing-md)] transition-shadow duration-300 hover:shadow-md hover:shadow-black/[0.04]",
       className
     )}
     {...props}
@@ -182,7 +182,7 @@ const MarqueeTestimonialContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm leading-relaxed text-[var(--foregrounds-tertiary)]", className)}
+    className={cn("text-sm leading-relaxed text-[var(--container-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -194,7 +194,7 @@ const MarqueeTestimonialAuthor = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("mt-4 flex items-center gap-3", className)}
+    className={cn("mt-[var(--spacing-md)] flex items-center gap-[var(--spacing-sm)]", className)}
     {...props}
   />
 ))
@@ -210,13 +210,13 @@ const MarqueeTestimonialAvatar = React.forwardRef<
 >(({ className, src, alt, fallback, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("h-10 w-10 overflow-hidden rounded-full bg-[var(--backgrounds-tertiary)]", className)}
+    className={cn("h-10 w-10 overflow-hidden rounded-full bg-[var(--container-bg-alt)]", className)}
     {...props}
   >
     {src ? (
       <img src={src} alt={alt || ""} className="h-full w-full object-cover" />
     ) : (
-      <div className="flex h-full w-full items-center justify-center text-sm font-normal text-[var(--foregrounds-tertiary)]">
+      <div className="flex h-full w-full items-center justify-center text-sm font-normal text-[var(--container-fg-alt)]">
         {fallback || alt?.charAt(0).toUpperCase()}
       </div>
     )}
@@ -238,7 +238,7 @@ const MarqueeTestimonialName = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("text-sm font-normal text-[var(--foregrounds-primary)]", className)}
+    className={cn("text-sm font-normal text-[var(--container-fg)]", className)}
     {...props}
   />
 ))
@@ -250,7 +250,7 @@ const MarqueeTestimonialRole = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("text-xs text-[var(--foregrounds-tertiary)]", className)}
+    className={cn("text-xs text-[var(--container-fg-alt)]", className)}
     {...props}
   />
 ))

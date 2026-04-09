@@ -6,17 +6,17 @@ import { cn } from "@/lib/utils"
 const newsletterVariants = cva("w-full", {
   variants: {
     variant: {
-      default: "bg-background",
-      muted: "bg-muted/50",
-      primary: "bg-primary text-primary-foreground",
-      gradient: "bg-[var(--action-primary-bg)] text-[var(--action-primary-fg)]", // kept for API compat, no gradient
-      dark: "bg-zinc-900 text-white",
-      card: "bg-background",
+      default: "bg-[var(--container-bg)]",
+      muted: "bg-[var(--container-bg-alt)]",
+      primary: "bg-[var(--action-primary-bg)] text-[var(--action-primary-fg)]",
+      gradient: "bg-[var(--action-primary-bg)] text-[var(--action-primary-fg)]",
+      dark: "bg-[var(--container-bg-inverse)] text-[var(--container-fg-inverse)]",
+      card: "bg-[var(--container-bg)]",
     },
     size: {
-      sm: "py-12",
-      default: "py-16",
-      lg: "py-24",
+      sm: "py-[var(--spacing-2xl)]",
+      default: "py-[var(--spacing-3xl)]",
+      lg: "py-[var(--spacing-4xl)]",
     },
   },
   defaultVariants: {
@@ -39,9 +39,9 @@ const Newsletter = React.forwardRef<HTMLDivElement, NewsletterProps>(
         className={cn(newsletterVariants({ variant, size }), className)}
         {...props}
       >
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-[var(--spacing-md)]">
           {isCard ? (
-            <div className="mx-auto max-w-2xl rounded-2xl border bg-card p-8 shadow-sm md:p-12">
+            <div className="mx-auto max-w-2xl rounded-[var(--curves-xl)] border border-[color:var(--container-border-alt)] bg-[var(--container-bg)] p-[var(--spacing-lg)] shadow-sm md:p-[var(--spacing-2xl)]">
               {children}
             </div>
           ) : (
@@ -61,7 +61,7 @@ const NewsletterIcon = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary",
+      "mb-[var(--spacing-md)] inline-flex h-12 w-12 items-center justify-center rounded-full bg-[var(--action-primary-bg)] text-[var(--action-primary-bg)]",
       className
     )}
     {...props}
@@ -106,7 +106,7 @@ const NewsletterDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-4 text-lg opacity-90", className)}
+    className={cn("mt-[var(--spacing-md)] text-lg opacity-90", className)}
     {...props}
   />
 ))
@@ -120,7 +120,7 @@ const NewsletterForm = React.forwardRef<HTMLFormElement, NewsletterFormProps>(
     <form
       ref={ref}
       className={cn(
-        "mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4",
+        "mt-[var(--spacing-lg)] flex flex-col gap-[var(--spacing-sm)] sm:flex-row sm:gap-[var(--spacing-md)]",
         className
       )}
       {...props}
@@ -138,7 +138,7 @@ const NewsletterInput = React.forwardRef<HTMLInputElement, NewsletterInputProps>
       ref={ref}
       type="email"
       className={cn(
-        "flex-1 h-12 rounded-lg border border-[var(--interactive-border)] bg-[var(--interactive-bg)] px-4 text-sm text-[var(--foregrounds-primary)] placeholder:text-[var(--foregrounds-quinary)] focus:outline-none focus:ring-1 focus:ring-[var(--interactive-fg)] focus:border-[var(--interactive-fg)]",
+        "flex-1 h-12 rounded-[var(--curves-lg)] border border-[color:var(--interactive-border-alt)] bg-[var(--interactive-bg)] px-[var(--spacing-md)] text-sm text-[var(--interactive-fg)] placeholder:text-[var(--interactive-fg-alt)] focus:outline-none focus:ring-1 focus:ring-[var(--interactive-fg)] focus:border-[var(--interactive-fg)]",
         className
       )}
       {...props}
@@ -153,7 +153,7 @@ const NewsletterDisclaimer = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-4 text-xs opacity-70", className)}
+    className={cn("mt-[var(--spacing-md)] text-xs opacity-70", className)}
     {...props}
   />
 ))
@@ -166,7 +166,7 @@ const NewsletterSuccess = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mt-8 flex items-center justify-center gap-2 text-[var(--positive-fg)]",
+      "mt-[var(--spacing-lg)] flex items-center justify-center gap-[var(--spacing-sm)] text-[var(--positive-fg)]",
       className
     )}
     {...props}

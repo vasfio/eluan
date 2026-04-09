@@ -270,10 +270,10 @@ const ShaderHero = React.forwardRef<HTMLDivElement, ShaderHeroProps>(
     ref
   ) => {
     const sizeClasses = {
-      sm: "min-h-[40vh] py-16",
-      default: "min-h-[60vh] py-20",
-      lg: "min-h-[80vh] py-24",
-      full: "min-h-screen py-24",
+      sm: "min-h-[40vh] py-[var(--spacing-3xl)]",
+      default: "min-h-[60vh] py-[var(--spacing-4xl)]",
+      lg: "min-h-[80vh] py-[var(--spacing-4xl)]",
+      full: "min-h-screen py-[var(--spacing-4xl)]",
     }
 
     const alignClasses = {
@@ -297,7 +297,7 @@ const ShaderHero = React.forwardRef<HTMLDivElement, ShaderHeroProps>(
       >
         <div
           className={cn(
-            "container mx-auto px-4",
+            "container mx-auto px-[var(--spacing-md)]",
             align === "center" && "flex flex-col items-center"
           )}
         >
@@ -307,7 +307,7 @@ const ShaderHero = React.forwardRef<HTMLDivElement, ShaderHeroProps>(
             </h1>
           )}
           {subtitle && (
-            <p className="mt-6 max-w-2xl text-lg text-white/80 sm:text-xl md:text-2xl">
+            <p className="mt-[var(--spacing-md)] max-w-2xl text-lg text-white/80 sm:text-xl md:text-2xl">
               {subtitle}
             </p>
           )}
@@ -349,17 +349,17 @@ const ShaderCard = React.forwardRef<HTMLDivElement, ShaderCardProps>(
     ref
   ) => {
     const paddingClasses = {
-      sm: "p-4",
-      default: "p-6",
-      lg: "p-8",
+      sm: "p-[var(--spacing-md)]",
+      default: "p-[var(--spacing-md)]",
+      lg: "p-[var(--spacing-lg)]",
     }
 
     const roundedClasses = {
-      sm: "rounded-sm",
+      sm: "rounded-[var(--curves-sm)]",
       default: "rounded",
-      lg: "rounded-lg",
-      xl: "rounded-xl",
-      "2xl": "rounded-2xl",
+      lg: "rounded-[var(--curves-lg)]",
+      xl: "rounded-[var(--curves-xl)]",
+      "2xl": "rounded-[var(--curves-xl)]",
       full: "rounded-full",
     }
 

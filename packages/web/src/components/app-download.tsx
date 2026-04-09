@@ -6,15 +6,15 @@ import { cn } from "@/lib/utils"
 const appDownloadSectionVariants = cva("w-full", {
   variants: {
     variant: {
-      default: "bg-background",
-      muted: "bg-muted/50",
-      dark: "bg-zinc-900 text-white",
-      gradient: "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground",
+      default: "bg-[var(--container-bg)]",
+      muted: "bg-[var(--container-bg-alt)]",
+      dark: "bg-[var(--container-bg-inverse)] text-[var(--container-fg-inverse)]",
+      gradient: "bg-[var(--action-primary-bg)] text-[var(--action-primary-fg)]",
     },
     size: {
-      sm: "py-12",
-      default: "py-16",
-      lg: "py-24",
+      sm: "py-[var(--spacing-2xl)]",
+      default: "py-[var(--spacing-3xl)]",
+      lg: "py-[var(--spacing-4xl)]",
     },
   },
   defaultVariants: {
@@ -35,7 +35,7 @@ const AppDownloadSection = React.forwardRef<HTMLDivElement, AppDownloadSectionPr
         className={cn(appDownloadSectionVariants({ variant, size }), className)}
         {...props}
       >
-        <div className="container mx-auto px-4">{children}</div>
+        <div className="container mx-auto px-[var(--spacing-md)]">{children}</div>
       </section>
     )
   }
@@ -49,7 +49,7 @@ const AppDownloadContent = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "grid items-center gap-8 md:grid-cols-2 md:gap-12",
+      "grid items-center gap-[var(--spacing-lg)] md:grid-cols-2 md:gap-[var(--spacing-2xl)]",
       className
     )}
     {...props}
@@ -61,7 +61,7 @@ const AppDownloadInfo = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("space-y-6", className)} {...props} />
+  <div ref={ref} className={cn("space-y-[var(--spacing-md)]", className)} {...props} />
 ))
 AppDownloadInfo.displayName = "AppDownloadInfo"
 
@@ -98,14 +98,14 @@ const AppDownloadButtons = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-wrap gap-4", className)}
+    className={cn("flex flex-wrap gap-[var(--spacing-md)]", className)}
     {...props}
   />
 ))
 AppDownloadButtons.displayName = "AppDownloadButtons"
 
 const storeBadgeVariants = cva(
-  "inline-flex items-center gap-3 rounded-lg px-4 py-3 transition-transform hover:scale-105",
+  "inline-flex items-center gap-[var(--spacing-sm)] rounded-[var(--curves-lg)] px-[var(--spacing-md)] py-[var(--spacing-sm)] transition-transform hover:scale-105",
   {
     variants: {
       variant: {
@@ -246,10 +246,10 @@ const AppQRCode = React.forwardRef<HTMLDivElement, AppQRCodeProps>(
       className={cn("text-center", className)}
       {...props}
     >
-      <div className="mx-auto mb-2 h-32 w-32 rounded-lg border bg-white p-2">
+      <div className="mx-auto mb-[var(--spacing-sm)] h-32 w-32 rounded-[var(--curves-lg)] border bg-white p-[var(--spacing-sm)]">
         {children}
       </div>
-      <p className="text-sm text-muted-foreground">{label}</p>
+      <p className="text-sm text-[var(--container-fg-alt)]">{label}</p>
     </div>
   )
 )

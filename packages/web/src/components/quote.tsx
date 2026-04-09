@@ -9,9 +9,9 @@ const quoteVariants = cva(
   {
     variants: {
       variant: {
-        default: "border-l-4 border-primary pl-6",
+        default: "border-l-4 border-[color:var(--action-primary-bg)] pl-[var(--spacing-md)]",
         centered: "text-center",
-        card: "rounded-lg border bg-card p-6 shadow-sm",
+        card: "rounded-[var(--curves-lg)] border border-[color:var(--container-border-alt)] bg-[var(--container-bg)] p-[var(--spacing-md)] shadow-sm",
         minimal: "",
       },
       size: {
@@ -48,7 +48,7 @@ const QuoteComponent = React.forwardRef<HTMLQuoteElement, QuoteProps>(
         {...props}
       >
         {showIcon && variant === "centered" && (
-          <QuoteIcon className="mx-auto mb-4 h-8 w-8 text-[var(--foregrounds-tertiary)]/30" />
+          <QuoteIcon className="mx-auto mb-[var(--spacing-md)] h-8 w-8 text-[var(--container-fg-alt)]" />
         )}
         {children}
       </blockquote>
@@ -64,7 +64,7 @@ const QuoteText = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "font-light italic text-[var(--foregrounds-secondary)] leading-relaxed",
+      "font-light italic text-[var(--container-fg)] leading-relaxed",
       textSizes[size],
       className
     )}
@@ -79,7 +79,7 @@ const QuoteAuthor = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <footer
     ref={ref}
-    className={cn("mt-4 flex items-center gap-4", className)}
+    className={cn("mt-[var(--spacing-md)] flex items-center gap-[var(--spacing-md)]", className)}
     {...props}
   />
 ))
@@ -92,7 +92,7 @@ const QuoteAuthorAvatar = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "h-12 w-12 shrink-0 overflow-hidden rounded-full bg-muted",
+      "h-12 w-12 shrink-0 overflow-hidden rounded-full bg-[var(--container-bg-alt)]",
       className
     )}
     {...props}
@@ -126,7 +126,7 @@ const QuoteAuthorName = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <span
     ref={ref}
-    className={cn("font-medium text-[var(--foregrounds-primary)]", className)}
+    className={cn("font-medium text-[var(--container-fg)]", className)}
     {...props}
   />
 ))
@@ -138,7 +138,7 @@ const QuoteAuthorTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <span
     ref={ref}
-    className={cn("text-sm text-[var(--foregrounds-tertiary)]", className)}
+    className={cn("text-sm text-[var(--container-fg-alt)]", className)}
     {...props}
   />
 ))

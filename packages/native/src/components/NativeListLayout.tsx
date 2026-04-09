@@ -12,7 +12,8 @@ import {
   SectionListData,
   useColorScheme,
 } from "react-native"
-import { spacing, fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@vasf/ragnar-tokens"
+import { sp, getSemanticColors } from "../utils/styles"
 
 // ============================================
 // List Item Component
@@ -70,11 +71,11 @@ export function ListItem({
   subtitleStyle,
 }: ListItemProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
-  const textColor = isDark ? "#fafafa" : "#18181b"
-  const subtitleColor = isDark ? "#a1a1aa" : "#71717a"
-  const separatorColor = isDark ? "#27272a" : "#e4e4e7"
+  const textColor = colors.container.fg
+  const subtitleColor = colors.container.fgAlt
+  const separatorColor = colors.container.borderAlt
 
   const Container = onPress ? Pressable : View
 
@@ -83,7 +84,7 @@ export function ListItem({
       <Container
         style={[styles.listItem, style]}
         onPress={onPress}
-        android_ripple={onPress ? { color: isDark ? "#27272a" : "#f4f4f5" } : undefined}
+        android_ripple={onPress ? { color: colors.actionSecondary.bg } : undefined}
       >
         {left && <View style={styles.listItemLeft}>{left}</View>}
         <View style={styles.listItemContent}>
@@ -138,10 +139,10 @@ export interface SectionHeaderProps {
 
 export function SectionHeader({ title, style, titleStyle }: SectionHeaderProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
-  const backgroundColor = isDark ? "#18181b" : "#f4f4f5"
-  const textColor = isDark ? "#a1a1aa" : "#71717a"
+  const backgroundColor = colors.actionSecondary.bg
+  const textColor = colors.container.fgAlt
 
   return (
     <View style={[styles.sectionHeader, { backgroundColor }, style]}>
@@ -218,9 +219,9 @@ export function NativeList<T>({
   onEndReachedThreshold = 0.5,
 }: NativeListProps<T>) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
-  const separatorColor = isDark ? "#27272a" : "#e4e4e7"
+  const separatorColor = colors.container.borderAlt
 
   return (
     <FlatList
@@ -293,9 +294,9 @@ export function NativeSectionList<T>({
   contentContainerStyle,
 }: NativeSectionListProps<T>) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
-  const separatorColor = isDark ? "#27272a" : "#e4e4e7"
+  const separatorColor = colors.container.borderAlt
 
   return (
     <SectionList
@@ -331,12 +332,12 @@ const styles = StyleSheet.create({
   listItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 4,
-    paddingHorizontal: 4,
+    paddingVertical: sp.xs,
+    paddingHorizontal: sp.xs,
     minHeight: 56,
   },
   listItemLeft: {
-    marginRight: 4,
+    marginRight: sp.xs,
   },
   listItemContent: {
     flex: 1,
@@ -348,18 +349,18 @@ const styles = StyleSheet.create({
   },
   listItemSubtitle: {
     fontSize: fontSizes.sm,
-    marginTop: 2,
+    marginTop: sp.xxs,
   },
   listItemRight: {
-    marginLeft: 4,
+    marginLeft: sp.xs,
   },
   separator: {
     height: StyleSheet.hairlineWidth,
-    marginLeft: 4,
+    marginLeft: sp.xs,
   },
   sectionHeader: {
-    paddingVertical: 2,
-    paddingHorizontal: 4,
+    paddingVertical: sp.xxs,
+    paddingHorizontal: sp.xs,
   },
   sectionHeaderText: {
     fontSize: fontSizes.xs,

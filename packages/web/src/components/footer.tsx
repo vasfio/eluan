@@ -6,13 +6,13 @@ import { cn } from "@/lib/utils"
 const footerVariants = cva("w-full", {
   variants: {
     variant: {
-      default: "border-t bg-background",
-      modern: "bg-zinc-950 text-zinc-100",
+      default: "border-t border-[color:var(--container-border-alt)] bg-[var(--container-bg)]",
+      modern: "bg-[var(--container-bg-inverse)] text-[var(--container-fg-inverse)]",
     },
     size: {
-      sm: "py-8",
-      default: "py-12",
-      lg: "py-16",
+      sm: "py-[var(--spacing-lg)]",
+      default: "py-[var(--spacing-2xl)]",
+      lg: "py-[var(--spacing-3xl)]",
     },
   },
   defaultVariants: {
@@ -33,7 +33,7 @@ const Footer = React.forwardRef<HTMLElement, FooterProps>(
         className={cn(footerVariants({ variant, size }), className)}
         {...props}
       >
-        <div className="container mx-auto px-4">{children}</div>
+        <div className="container mx-auto px-[var(--spacing-md)]">{children}</div>
       </footer>
     )
   }
@@ -47,7 +47,7 @@ const FooterContent = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "grid gap-8 md:grid-cols-2 lg:grid-cols-4",
+      "grid gap-[var(--spacing-lg)] md:grid-cols-2 lg:grid-cols-4",
       className
     )}
     {...props}
@@ -59,7 +59,7 @@ const FooterSection = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("space-y-4", className)} {...props} />
+  <div ref={ref} className={cn("space-y-[var(--spacing-md)]", className)} {...props} />
 ))
 FooterSection.displayName = "FooterSection"
 
@@ -69,7 +69,7 @@ const FooterTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn("font-heading text-sm font-semibold uppercase tracking-wider text-foreground", className)}
+    className={cn("font-heading text-sm font-semibold uppercase tracking-wider text-[var(--container-fg)]", className)}
     {...props}
   />
 ))
@@ -79,7 +79,7 @@ const FooterLinks = React.forwardRef<
   HTMLUListElement,
   React.HTMLAttributes<HTMLUListElement>
 >(({ className, ...props }, ref) => (
-  <ul ref={ref} className={cn("space-y-2", className)} {...props} />
+  <ul ref={ref} className={cn("space-y-[var(--spacing-sm)]", className)} {...props} />
 ))
 FooterLinks.displayName = "FooterLinks"
 
@@ -92,7 +92,7 @@ const FooterLink = React.forwardRef<HTMLAnchorElement, FooterLinkProps>(
       <a
         ref={ref}
         className={cn(
-          "text-sm text-muted-foreground transition-colors hover:text-foreground",
+          "text-sm text-[var(--interactive-fg-alt)] transition-colors hover:text-[var(--interactive-fg)]",
           className
         )}
         {...props}
@@ -109,7 +109,7 @@ const FooterBottom = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mt-8 flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row",
+      "mt-[var(--spacing-lg)] flex flex-col items-center justify-between gap-[var(--spacing-md)] border-t border-[color:var(--container-border-alt)] pt-[var(--spacing-lg)] md:flex-row",
       className
     )}
     {...props}
@@ -123,7 +123,7 @@ const FooterCopyright = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("text-sm text-[var(--container-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -135,7 +135,7 @@ const FooterSocial = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex items-center gap-4", className)}
+    className={cn("flex items-center gap-[var(--spacing-md)]", className)}
     {...props}
   />
 ))
@@ -154,7 +154,7 @@ const FooterSocialLink = React.forwardRef<
     ref={ref}
     aria-label={label}
     className={cn(
-      "text-muted-foreground transition-colors hover:text-foreground",
+      "text-[var(--interactive-fg-alt)] transition-colors hover:text-[var(--interactive-fg)]",
       className
     )}
     {...props}
@@ -178,13 +178,13 @@ const FooterBrand = React.forwardRef<HTMLDivElement, FooterBrandProps>(
     <div
       ref={ref}
       className={cn(
-        "select-none overflow-hidden border-b border-zinc-800 pb-10",
+        "select-none overflow-hidden border-b border-[color:var(--container-border-alt)] pb-[var(--spacing-xl)]",
         className
       )}
       {...props}
     >
       {children ?? (
-        <span className="block font-heading text-[clamp(3rem,10vw,8rem)] font-extrabold uppercase leading-none tracking-tighter text-zinc-800">
+        <span className="block font-heading text-[clamp(3rem,10vw,8rem)] font-extrabold uppercase leading-none tracking-tighter text-[var(--container-border-alt)]">
           {text}
         </span>
       )}
@@ -200,13 +200,13 @@ const FooterModernLink = React.forwardRef<HTMLAnchorElement, FooterLinkProps>(
       <a
         ref={ref}
         className={cn(
-          "group relative inline-block text-sm text-zinc-400 transition-colors duration-200 hover:text-zinc-100",
+          "group relative inline-block text-sm text-[var(--interactive-fg-alt)] transition-colors duration-200 hover:text-[var(--interactive-fg-inverse)]",
           className
         )}
         {...props}
       >
         {children}
-        <span className="absolute bottom-0 left-0 h-px w-0 bg-zinc-100 transition-all duration-300 group-hover:w-full" />
+        <span className="absolute bottom-0 left-0 h-px w-0 bg-[var(--container-fg-inverse)] transition-all duration-300 group-hover:w-full" />
       </a>
     </li>
   )
@@ -222,7 +222,7 @@ const FooterModernSocialLink = React.forwardRef<
     ref={ref}
     aria-label={label}
     className={cn(
-      "inline-flex h-10 w-10 items-center justify-center rounded-full border border-zinc-800 text-zinc-400 transition-all duration-200 hover:scale-110 hover:border-zinc-600 hover:text-zinc-100 hover:shadow-[0_0_12px_rgba(255,255,255,0.08)]",
+      "inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--container-border-alt)] text-[var(--interactive-fg-alt)] transition-all duration-200 hover:scale-110 hover:border-[color:var(--interactive-border-alt)] hover:text-[var(--interactive-fg-inverse)]",
       className
     )}
     {...props}

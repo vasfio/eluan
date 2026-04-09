@@ -6,9 +6,9 @@ import { cn } from "@/lib/utils"
 const teamSectionVariants = cva("w-full", {
   variants: {
     size: {
-      sm: "py-12",
-      default: "py-16",
-      lg: "py-24",
+      sm: "py-[var(--spacing-2xl)]",
+      default: "py-[var(--spacing-3xl)]",
+      lg: "py-[var(--spacing-4xl)]",
     },
   },
   defaultVariants: {
@@ -28,7 +28,7 @@ const TeamSection = React.forwardRef<HTMLDivElement, TeamSectionProps>(
         className={cn(teamSectionVariants({ size }), className)}
         {...props}
       >
-        <div className="container mx-auto px-4">{children}</div>
+        <div className="container mx-auto px-[var(--spacing-md)]">{children}</div>
       </section>
     )
   }
@@ -41,7 +41,7 @@ const TeamHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("mb-12 text-center", className)}
+    className={cn("mb-[var(--spacing-2xl)] text-center", className)}
     {...props}
   />
 ))
@@ -54,7 +54,7 @@ const TeamTitle = React.forwardRef<
   <h2
     ref={ref}
     className={cn(
-      "font-heading text-3xl font-medium tracking-tight text-[var(--foregrounds-primary)] sm:text-4xl",
+      "font-heading text-3xl font-medium tracking-tight text-[var(--container-fg)] sm:text-4xl",
       className
     )}
     {...props}
@@ -69,7 +69,7 @@ const TeamDescription = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-[var(--foregrounds-tertiary)]",
+      "mx-auto mt-[var(--spacing-md)] max-w-2xl text-lg leading-relaxed text-[var(--container-fg-alt)]",
       className
     )}
     {...props}
@@ -77,7 +77,7 @@ const TeamDescription = React.forwardRef<
 ))
 TeamDescription.displayName = "TeamDescription"
 
-const teamGridVariants = cva("grid gap-10", {
+const teamGridVariants = cva("grid gap-[var(--spacing-xl)]", {
   variants: {
     columns: {
       2: "md:grid-cols-2",
@@ -109,7 +109,7 @@ const teamMemberVariants = cva("group text-center", {
   variants: {
     variant: {
       default: "transition-all duration-300 hover:-translate-y-0.5",
-      card: "rounded-2xl border border-[var(--container-border)]/60 bg-[var(--container-bg)] p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.04]",
+      card: "rounded-[var(--curves-xl)] border border-[color:var(--container-border-alt)] bg-[var(--container-bg)] p-[var(--spacing-lg)] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.04]",
     },
   },
   defaultVariants: {
@@ -139,7 +139,7 @@ export interface TeamMemberImageProps
 
 const TeamMemberImage = React.forwardRef<HTMLImageElement, TeamMemberImageProps>(
   ({ className, alt, fallback, ...props }, ref) => (
-    <div className="relative mx-auto mb-6 aspect-square w-full max-w-[200px] overflow-hidden rounded-2xl bg-[var(--backgrounds-tertiary)]">
+    <div className="relative mx-auto mb-[var(--spacing-md)] aspect-square w-full max-w-[200px] overflow-hidden rounded-[var(--curves-xl)] bg-[var(--container-bg-alt)]">
       {props.src ? (
         <img
           ref={ref}
@@ -151,7 +151,7 @@ const TeamMemberImage = React.forwardRef<HTMLImageElement, TeamMemberImageProps>
           {...props}
         />
       ) : (
-        <div className="flex h-full w-full items-center justify-center text-4xl font-medium text-[var(--foregrounds-tertiary)]">
+        <div className="flex h-full w-full items-center justify-center text-4xl font-medium text-[var(--container-fg-alt)]">
           {fallback || alt?.charAt(0).toUpperCase()}
         </div>
       )}
@@ -166,7 +166,7 @@ const TeamMemberName = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn("font-medium text-[var(--foregrounds-primary)]", className)}
+    className={cn("font-medium text-[var(--container-fg)]", className)}
     {...props}
   />
 ))
@@ -178,7 +178,7 @@ const TeamMemberRole = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-[var(--foregrounds-tertiary)]", className)}
+    className={cn("text-sm text-[var(--container-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -190,7 +190,7 @@ const TeamMemberBio = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-2 text-sm text-[var(--foregrounds-tertiary)]", className)}
+    className={cn("mt-[var(--spacing-sm)] text-sm text-[var(--container-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -202,7 +202,7 @@ const TeamMemberLinks = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("mt-4 flex justify-center gap-2", className)}
+    className={cn("mt-[var(--spacing-md)] flex justify-center gap-[var(--spacing-sm)]", className)}
     {...props}
   />
 ))
@@ -219,7 +219,7 @@ const TeamMemberLink = React.forwardRef<HTMLAnchorElement, TeamMemberLinkProps>(
       ref={ref}
       aria-label={label}
       className={cn(
-        "flex h-8 w-8 items-center justify-center rounded-lg text-[var(--foregrounds-tertiary)] transition-colors hover:bg-[var(--backgrounds-tertiary)] hover:text-[var(--foregrounds-primary)]",
+        "flex h-8 w-8 items-center justify-center rounded-[var(--curves-lg)] text-[var(--container-fg-alt)] transition-colors hover:bg-[var(--container-bg-alt)] hover:text-[var(--container-fg)]",
         className
       )}
       {...props}

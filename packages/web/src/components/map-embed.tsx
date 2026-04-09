@@ -3,15 +3,15 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-const mapContainerVariants = cva("relative overflow-hidden bg-muted", {
+const mapContainerVariants = cva("relative overflow-hidden bg-[var(--container-bg-alt)]", {
   variants: {
     rounded: {
       none: "",
-      sm: "rounded-sm",
-      md: "rounded-md",
-      lg: "rounded-lg",
-      xl: "rounded-xl",
-      "2xl": "rounded-2xl",
+      sm: "rounded-[var(--curves-sm)]",
+      md: "rounded-[var(--curves-md)]",
+      lg: "rounded-[var(--curves-lg)]",
+      xl: "rounded-[var(--curves-xl)]",
+      "2xl": "rounded-[var(--curves-xl)]",
     },
     aspectRatio: {
       auto: "",
@@ -231,11 +231,11 @@ const MapWithInfo = React.forwardRef<HTMLDivElement, MapWithInfoProps>(
       {...props}
     >
       {children}
-      <div className="absolute bottom-4 left-4 right-4 rounded-lg border bg-card p-4 shadow-lg sm:left-auto sm:right-4 sm:max-w-xs">
-        <div className="space-y-3">
-          <div className="flex items-start gap-3">
+      <div className="absolute bottom-4 left-4 right-4 rounded-[var(--curves-lg)] border border-[color:var(--container-border-alt)] bg-[var(--container-bg)] p-[var(--spacing-md)] shadow-lg sm:left-auto sm:right-4 sm:max-w-xs">
+        <div className="space-y-[var(--spacing-sm)]">
+          <div className="flex items-start gap-[var(--spacing-sm)]">
             <svg
-              className="mt-0.5 h-5 w-5 shrink-0 text-muted-foreground"
+              className="mt-[var(--spacing-xxs)] h-5 w-5 shrink-0 text-[var(--container-fg-alt)]"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -252,13 +252,13 @@ const MapWithInfo = React.forwardRef<HTMLDivElement, MapWithInfoProps>(
                 d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
               />
             </svg>
-            <p className="text-sm text-foreground">{address}</p>
+            <p className="text-sm text-[var(--container-fg)]">{address}</p>
           </div>
 
           {phone && (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-[var(--spacing-sm)]">
               <svg
-                className="h-5 w-5 shrink-0 text-muted-foreground"
+                className="h-5 w-5 shrink-0 text-[var(--container-fg-alt)]"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -272,7 +272,7 @@ const MapWithInfo = React.forwardRef<HTMLDivElement, MapWithInfoProps>(
               </svg>
               <a
                 href={`tel:${phone}`}
-                className="text-sm text-foreground hover:underline"
+                className="text-sm text-[var(--container-fg)] hover:underline"
               >
                 {phone}
               </a>
@@ -280,9 +280,9 @@ const MapWithInfo = React.forwardRef<HTMLDivElement, MapWithInfoProps>(
           )}
 
           {email && (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-[var(--spacing-sm)]">
               <svg
-                className="h-5 w-5 shrink-0 text-muted-foreground"
+                className="h-5 w-5 shrink-0 text-[var(--container-fg-alt)]"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -296,7 +296,7 @@ const MapWithInfo = React.forwardRef<HTMLDivElement, MapWithInfoProps>(
               </svg>
               <a
                 href={`mailto:${email}`}
-                className="text-sm text-foreground hover:underline"
+                className="text-sm text-[var(--container-fg)] hover:underline"
               >
                 {email}
               </a>
@@ -304,9 +304,9 @@ const MapWithInfo = React.forwardRef<HTMLDivElement, MapWithInfoProps>(
           )}
 
           {hours && (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-[var(--spacing-sm)]">
               <svg
-                className="h-5 w-5 shrink-0 text-muted-foreground"
+                className="h-5 w-5 shrink-0 text-[var(--container-fg-alt)]"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -318,7 +318,7 @@ const MapWithInfo = React.forwardRef<HTMLDivElement, MapWithInfoProps>(
                   d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <p className="text-sm text-muted-foreground">{hours}</p>
+              <p className="text-sm text-[var(--container-fg-alt)]">{hours}</p>
             </div>
           )}
 
@@ -327,7 +327,7 @@ const MapWithInfo = React.forwardRef<HTMLDivElement, MapWithInfoProps>(
               href={directionsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+              className="mt-[var(--spacing-sm)] inline-flex w-full items-center justify-center gap-[var(--spacing-sm)] rounded-[var(--curves-md)] bg-[var(--action-primary-bg)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-sm font-medium text-[var(--action-primary-fg)] transition-colors hover:bg-[var(--action-primary-bg)]"
             >
               Get Directions
               <svg

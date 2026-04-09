@@ -10,6 +10,136 @@ type NamedStyles<T> = { [P in keyof T]: ViewStyle | TextStyle | ImageStyle }
 
 export type ColorScheme = "light" | "dark"
 
+// ============================================
+// Semantic Spacing Tokens
+// Maps to --spacing-* CSS variables (standard mode)
+// ============================================
+
+export const sp = {
+  xxs: 2,
+  xs: 4,
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 20,
+  "2xl": 24,
+  "3xl": 40,
+  "4xl": 80,
+} as const
+
+export type SemanticSpacing = typeof sp
+
+// ============================================
+// Semantic Curves Tokens
+// Maps to --curves-* CSS variables (sweeping mode)
+// ============================================
+
+export const curves = {
+  xxs: 4,
+  xs: 8,
+  sm: 12,
+  md: 16,
+  lg: 20,
+  xl: 40,
+} as const
+
+export type SemanticCurves = typeof curves
+
+// ============================================
+// Semantic Color Tokens
+// Maps to theme CSS variables (container-*, interactive-*, etc.)
+// Uses primitiveColors.mono palette for consistent token usage
+// ============================================
+
+export function getSemanticColors(scheme: ColorScheme) {
+  const isDark = scheme === "dark"
+
+  return {
+    container: {
+      bg: isDark ? primitiveColors.mono[950] : primitiveColors.mono[0],
+      bgAlt: isDark ? primitiveColors.mono[800] : primitiveColors.mono[100],
+      fg: isDark ? primitiveColors.mono[50] : primitiveColors.mono[900],
+      fgAlt: isDark ? primitiveColors.mono[400] : primitiveColors.mono[500],
+      border: isDark ? primitiveColors.mono[700] : primitiveColors.mono[200],
+      borderAlt: isDark ? primitiveColors.mono[800] : primitiveColors.mono[200],
+    },
+    interactive: {
+      bg: isDark ? primitiveColors.mono[950] : primitiveColors.mono[0],
+      bgHover: isDark ? primitiveColors.mono[800] : primitiveColors.mono[100],
+      fg: isDark ? primitiveColors.mono[50] : primitiveColors.mono[900],
+      fgAlt: isDark ? primitiveColors.mono[400] : primitiveColors.mono[400],
+      border: isDark ? primitiveColors.mono[50] : primitiveColors.mono[900],
+      borderAlt: isDark ? primitiveColors.mono[800] : primitiveColors.mono[200],
+    },
+    actionPrimary: {
+      bg: isDark ? primitiveColors.mono[50] : primitiveColors.mono[900],
+      fg: isDark ? primitiveColors.mono[900] : primitiveColors.mono[50],
+    },
+    actionSecondary: {
+      bg: isDark ? primitiveColors.mono[800] : primitiveColors.mono[100],
+      fg: isDark ? primitiveColors.mono[50] : primitiveColors.mono[900],
+      border: isDark ? primitiveColors.mono[800] : primitiveColors.mono[200],
+    },
+    destructive: {
+      bg: "#ef4444",
+      bgSubtle: isDark ? "#7f1d1d" : "#fee2e2",
+      fg: "#fafafa",
+      fgStrong: isDark ? "#fca5a5" : "#991b1b",
+      border: isDark ? "#991b1b" : "#fca5a5",
+    },
+    positive: {
+      bg: "#22c55e",
+      bgSubtle: isDark ? "#14532d" : "#dcfce7",
+      fg: "#fafafa",
+      fgStrong: isDark ? "#86efac" : "#166534",
+      border: isDark ? "#166534" : "#86efac",
+    },
+    cautionary: {
+      bg: "#f59e0b",
+      bgSubtle: isDark ? "#78350f" : "#fef3c7",
+      fg: isDark ? "#fafafa" : "#18181b",
+      fgStrong: isDark ? "#fcd34d" : "#92400e",
+      border: isDark ? "#92400e" : "#fcd34d",
+    },
+    informative: {
+      bg: "#3b82f6",
+      bgSubtle: isDark ? "#1e3a5f" : "#dbeafe",
+      fg: "#ffffff",
+      fgStrong: isDark ? "#93c5fd" : "#1e40af",
+      border: isDark ? "#1e40af" : "#93c5fd",
+    },
+  }
+}
+
+export type SemanticColors = ReturnType<typeof getSemanticColors>
+
+// ============================================
+// useSemanticTokens hook helper
+// Convenience for component usage
+// ============================================
+
+/**
+ * Get all semantic tokens for a given color scheme.
+ * Use in components with `useColorScheme()`.
+ *
+ * @example
+ * const colorScheme = useColorScheme() ?? "light"
+ * const { colors, sp, curves } = getSemanticTokens(colorScheme)
+ *
+ * <View style={{ backgroundColor: colors.container.bg, padding: sp.md, borderRadius: curves.lg }}>
+ */
+export function getSemanticTokens(scheme: ColorScheme) {
+  return {
+    colors: getSemanticColors(scheme),
+    sp,
+    curves,
+  }
+}
+
+// ============================================
+// createThemedStyles (legacy helper)
+// ============================================
+
 /**
  * Creates themed styles using Ragnar design tokens
  *

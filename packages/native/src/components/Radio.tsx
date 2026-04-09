@@ -8,7 +8,8 @@ import {
   TextStyle,
   useColorScheme,
 } from "react-native"
-import { spacing, fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@vasf/ragnar-tokens"
+import { sp, getSemanticColors } from "../utils/styles"
 
 export interface RadioOption {
   /** Unique value for this option */
@@ -51,7 +52,7 @@ export function RadioGroup({
   radioPosition = "left",
 }: RadioGroupProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
   const sizeStyles = {
     sm: { outer: 16, inner: 8 },
@@ -63,19 +64,19 @@ export function RadioGroup({
 
   const themedStyles = {
     outer: {
-      borderColor: isDark ? "#71717a" : "#a1a1aa",
+      borderColor: colors.container.fgAlt,
     },
     outerSelected: {
-      borderColor: isDark ? "#fafafa" : "#18181b",
+      borderColor: colors.actionPrimary.bg,
     },
     inner: {
-      backgroundColor: isDark ? "#fafafa" : "#18181b",
+      backgroundColor: colors.actionPrimary.bg,
     },
     label: {
-      color: isDark ? "#fafafa" : "#18181b",
+      color: colors.container.fg,
     },
     description: {
-      color: isDark ? "#a1a1aa" : "#71717a",
+      color: colors.container.fgAlt,
     },
   }
 
@@ -213,7 +214,7 @@ export function Radio({
   labelStyle,
 }: RadioProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
   const sizeStyles = {
     sm: { outer: 16, inner: 8 },
@@ -226,21 +227,17 @@ export function Radio({
   const themedStyles = {
     outer: {
       borderColor: selected
-        ? isDark
-          ? "#fafafa"
-          : "#18181b"
-        : isDark
-        ? "#71717a"
-        : "#a1a1aa",
+        ? colors.actionPrimary.bg
+        : colors.container.fgAlt,
     },
     inner: {
-      backgroundColor: isDark ? "#fafafa" : "#18181b",
+      backgroundColor: colors.actionPrimary.bg,
     },
     label: {
-      color: isDark ? "#fafafa" : "#18181b",
+      color: colors.container.fg,
     },
     description: {
-      color: isDark ? "#a1a1aa" : "#71717a",
+      color: colors.container.fgAlt,
     },
   }
 
@@ -303,7 +300,7 @@ export function Radio({
 
 const styles = StyleSheet.create({
   group: {
-    gap: 4,
+    gap: sp.xs,
   },
   groupHorizontal: {
     flexDirection: "row",
@@ -329,10 +326,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   labelContainerLeft: {
-    marginLeft: 2,
+    marginLeft: sp.xxs,
   },
   labelContainerRight: {
-    marginRight: 2,
+    marginRight: sp.xxs,
   },
   label: {
     fontSize: fontSizes.sm,
@@ -340,7 +337,7 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: fontSizes.xs,
-    marginTop: 2,
+    marginTop: sp.xxs,
   },
   disabled: {
     opacity: 0.5,

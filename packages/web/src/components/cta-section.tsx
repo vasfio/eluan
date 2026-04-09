@@ -6,17 +6,17 @@ import { cn } from "@/lib/utils"
 const ctaSectionVariants = cva("w-full", {
   variants: {
     variant: {
-      default: "bg-background",
-      muted: "bg-muted/50",
-      primary: "bg-primary text-primary-foreground",
-      gradient: "bg-[var(--action-primary-bg)] text-[var(--action-primary-fg)]", // kept for API compat, no gradient
-      dark: "bg-zinc-900 text-white",
-      bordered: "border-y bg-background",
+      default: "bg-[var(--container-bg)]",
+      muted: "bg-[var(--container-bg-alt)]",
+      primary: "bg-[var(--action-primary-bg)] text-[var(--action-primary-fg)]",
+      gradient: "bg-[var(--action-primary-bg)] text-[var(--action-primary-fg)]",
+      dark: "bg-[var(--container-bg-inverse)] text-[var(--container-fg-inverse)]",
+      bordered: "border-y border-[color:var(--container-border-alt)] bg-[var(--container-bg)]",
     },
     size: {
-      sm: "py-12",
-      default: "py-16",
-      lg: "py-24",
+      sm: "py-[var(--spacing-2xl)]",
+      default: "py-[var(--spacing-3xl)]",
+      lg: "py-[var(--spacing-4xl)]",
     },
   },
   defaultVariants: {
@@ -37,7 +37,7 @@ const CTASection = React.forwardRef<HTMLDivElement, CTASectionProps>(
         className={cn(ctaSectionVariants({ variant, size }), className)}
         {...props}
       >
-        <div className="container mx-auto px-4">{children}</div>
+        <div className="container mx-auto px-[var(--spacing-md)]">{children}</div>
       </section>
     )
   }
@@ -49,7 +49,7 @@ const ctaContentVariants = cva("mx-auto", {
     align: {
       left: "text-left",
       center: "text-center",
-      split: "flex flex-col items-center justify-between gap-8 text-center md:flex-row md:text-left",
+      split: "flex flex-col items-center justify-between gap-[var(--spacing-lg)] text-center md:flex-row md:text-left",
     },
     maxWidth: {
       sm: "max-w-xl",
@@ -100,7 +100,7 @@ const CTADescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-4 text-lg opacity-90", className)}
+    className={cn("mt-[var(--spacing-md)] text-lg opacity-90", className)}
     {...props}
   />
 ))
@@ -113,7 +113,7 @@ const CTAActions = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mt-8 flex flex-wrap items-center gap-4",
+      "mt-[var(--spacing-lg)] flex flex-wrap items-center gap-[var(--spacing-md)]",
       className
     )}
     {...props}
@@ -128,7 +128,7 @@ const CTACard = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-2xl bg-[var(--container-bg)] p-8 md:p-12 border border-[var(--container-border-alt)] shadow-none",
+      "rounded-[var(--curves-xl)] bg-[var(--container-bg)] p-[var(--spacing-lg)] md:p-[var(--spacing-2xl)] border border-[var(--container-border-alt)] shadow-none",
       className
     )}
     {...props}

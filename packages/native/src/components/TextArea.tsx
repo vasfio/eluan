@@ -9,7 +9,8 @@ import {
   TextInputProps,
   useColorScheme,
 } from "react-native"
-import { spacing, radius, fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@vasf/ragnar-tokens"
+import { sp, curves, getSemanticColors } from "../utils/styles"
 
 export interface TextAreaProps extends Omit<TextInputProps, "style" | "multiline"> {
   /** Label text displayed above the textarea */
@@ -62,7 +63,7 @@ export const TextArea = forwardRef<TextInput, TextAreaProps>(
     ref
   ) => {
     const colorScheme = useColorScheme() ?? "light"
-    const isDark = colorScheme === "dark"
+    const colors = getSemanticColors(colorScheme)
     const [isFocused, setIsFocused] = useState(false)
     const [height, setHeight] = useState<number | undefined>(undefined)
 
@@ -90,30 +91,26 @@ export const TextArea = forwardRef<TextInput, TextAreaProps>(
 
     const themedStyles = {
       label: {
-        color: isDark ? "#fafafa" : "#18181b",
+        color: colors.container.fg,
       },
       input: {
-        backgroundColor: isDark ? "#09090b" : "#ffffff",
+        backgroundColor: colors.interactive.bg,
         borderColor: error
-          ? "#ef4444"
+          ? colors.destructive.bg
           : isFocused
-          ? isDark
-            ? "#fafafa"
-            : "#18181b"
-          : isDark
-          ? "#27272a"
-          : "#e4e4e7",
-        color: isDark ? "#fafafa" : "#18181b",
+          ? colors.interactive.border
+          : colors.interactive.borderAlt,
+        color: colors.interactive.fg,
       },
-      placeholder: isDark ? "#71717a" : "#a1a1aa",
+      placeholder: colors.interactive.fgAlt,
       helperText: {
-        color: isDark ? "#a1a1aa" : "#71717a",
+        color: colors.container.fgAlt,
       },
       error: {
-        color: "#ef4444",
+        color: colors.destructive.bg,
       },
       count: {
-        color: isDark ? "#71717a" : "#a1a1aa",
+        color: colors.interactive.fgAlt,
       },
     }
 
@@ -178,13 +175,13 @@ const styles = StyleSheet.create({
   label: {
     fontSize: fontSizes.sm,
     fontWeight: "500",
-    marginBottom: 2,
+    marginBottom: sp.xxs,
   },
   input: {
     borderWidth: 1,
-    borderRadius: 6,
-    paddingHorizontal: 4,
-    paddingVertical: 2,
+    borderRadius: curves.xxs,
+    paddingHorizontal: sp.xs,
+    paddingVertical: sp.xxs,
     fontSize: fontSizes.base,
   },
   helperText: {
@@ -198,7 +195,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 2,
+    marginTop: sp.xxs,
   },
   count: {
     fontSize: fontSizes.xs,

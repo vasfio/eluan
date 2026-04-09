@@ -51,11 +51,11 @@ const Testimonial = React.forwardRef<HTMLDivElement, TestimonialProps>(
     const content = (
       <>
         {showQuoteIcon && variant !== "minimal" && (
-          <Quote className="mb-4 h-6 w-6 text-[var(--backgrounds-quaternary)]" />
+          <Quote className="mb-[var(--spacing-md)] h-6 w-6 text-[var(--container-border-alt)]" />
         )}
-        <div className="mb-6 text-base font-normal leading-relaxed text-[var(--foregrounds-secondary)]">{children}</div>
+        <div className="mb-[var(--spacing-md)] text-base font-normal leading-relaxed text-[var(--container-fg)]">{children}</div>
         {rating !== undefined && (
-          <div className="mb-4 flex gap-1">
+          <div className="mb-[var(--spacing-md)] flex gap-[var(--spacing-xs)]">
             {Array.from({ length: 5 }).map((_, i) => (
               <Star
                 key={i}
@@ -63,16 +63,16 @@ const Testimonial = React.forwardRef<HTMLDivElement, TestimonialProps>(
                   "h-4 w-4",
                   i < rating
                     ? "fill-[var(--cautionary-main)] text-[var(--cautionary-main)]"
-                    : "text-[var(--backgrounds-quaternary)]"
+                    : "text-[var(--container-border-alt)]"
                 )}
               />
             ))}
           </div>
         )}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-[var(--spacing-sm)]">
           <Avatar className="h-9 w-9">
             {author.avatar && <AvatarImage src={author.avatar} alt={author.name} />}
-            <AvatarFallback className="bg-[var(--backgrounds-tertiary)] text-xs text-[var(--foregrounds-tertiary)]">
+            <AvatarFallback className="bg-[var(--container-bg-alt)] text-xs text-[var(--container-fg-alt)]">
               {author.name
                 .split(" ")
                 .map((n) => n[0])
@@ -82,9 +82,9 @@ const Testimonial = React.forwardRef<HTMLDivElement, TestimonialProps>(
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
-            <span className="font-normal text-[var(--foregrounds-primary)]">{author.name}</span>
+            <span className="font-normal text-[var(--container-fg)]">{author.name}</span>
             {(author.title || author.company) && (
-              <span className="text-sm text-[var(--foregrounds-tertiary)]">
+              <span className="text-sm text-[var(--container-fg-alt)]">
                 {author.title}
                 {author.title && author.company && " at "}
                 {author.company}
@@ -100,7 +100,7 @@ const Testimonial = React.forwardRef<HTMLDivElement, TestimonialProps>(
         <div
           ref={ref}
           className={cn(
-            "rounded-2xl border border-[var(--container-border)]/60 bg-[var(--container-bg)] p-6 transition-all duration-300 hover:shadow-md hover:shadow-black/[0.03]",
+            "rounded-[var(--curves-xl)] border border-[color:var(--container-border-alt)] bg-[var(--container-bg)] p-[var(--spacing-md)] transition-all duration-300 hover:shadow-md hover:shadow-black/[0.03]",
             className
           )}
           {...props}
@@ -115,7 +115,7 @@ const Testimonial = React.forwardRef<HTMLDivElement, TestimonialProps>(
         <div
           ref={ref}
           className={cn(
-            "rounded-2xl border border-[var(--container-border)]/60 bg-[var(--container-bg)] p-8 md:p-12",
+            "rounded-[var(--curves-xl)] border border-[color:var(--container-border-alt)] bg-[var(--container-bg)] p-[var(--spacing-lg)] md:p-[var(--spacing-2xl)]",
             className
           )}
           {...props}
@@ -149,7 +149,7 @@ const TestimonialGrid = React.forwardRef<HTMLDivElement, TestimonialGridProps>(
     return (
       <div
         ref={ref}
-        className={cn("grid gap-6", gridCols[columns], className)}
+        className={cn("grid gap-[var(--spacing-md)]", gridCols[columns], className)}
         {...props}
       />
     )
@@ -188,7 +188,7 @@ const TestimonialCarousel = React.forwardRef<HTMLDivElement, TestimonialCarousel
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {testimonials.map((testimonial, index) => (
-            <div key={index} className="w-full shrink-0 px-4">
+            <div key={index} className="w-full shrink-0 px-[var(--spacing-md)]">
               <Testimonial
                 author={testimonial.author}
                 rating={testimonial.rating}
@@ -200,7 +200,7 @@ const TestimonialCarousel = React.forwardRef<HTMLDivElement, TestimonialCarousel
             </div>
           ))}
         </div>
-        <div className="mt-8 flex justify-center gap-2.5">
+        <div className="mt-[var(--spacing-lg)] flex justify-center gap-[var(--spacing-sm)]">
           {testimonials.map((_, index) => (
             <button
               key={index}

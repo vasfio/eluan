@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const contentSpotVariants = cva(
-  "flex flex-col gap-6 py-12 md:py-16 lg:py-20",
+  "flex flex-col gap-[var(--spacing-md)] py-[var(--spacing-2xl)] md:py-[var(--spacing-3xl)] lg:py-[var(--spacing-4xl)]",
   {
     variants: {
       layout: {
@@ -39,7 +39,7 @@ const ContentSpot = React.forwardRef<HTMLDivElement, ContentSpotProps>(
       <section
         ref={ref}
         className={cn(
-          container && "container mx-auto px-4",
+          container && "container mx-auto px-[var(--spacing-md)]",
           className
         )}
         {...props}
@@ -75,7 +75,7 @@ const ContentSpotTitle = React.forwardRef<
   <Comp
     ref={ref}
     className={cn(
-      "font-heading text-3xl font-normal tracking-tight text-[var(--foregrounds-primary)] sm:text-4xl lg:text-5xl",
+      "font-heading text-3xl font-normal tracking-tight text-[var(--container-fg)] sm:text-4xl lg:text-5xl",
       className
     )}
     {...props}
@@ -90,7 +90,7 @@ const ContentSpotDescription = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "text-lg text-[var(--foregrounds-tertiary)] sm:text-xl",
+      "text-lg text-[var(--container-fg-alt)] sm:text-xl",
       className
     )}
     {...props}
@@ -105,7 +105,7 @@ const ContentSpotActions = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "flex flex-wrap items-center gap-4",
+      "flex flex-wrap items-center gap-[var(--spacing-md)]",
       className
     )}
     {...props}

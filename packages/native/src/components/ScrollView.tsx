@@ -9,7 +9,8 @@ import {
   Text,
   Animated,
 } from "react-native"
-import { spacing, fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@vasf/ragnar-tokens"
+import { sp, getSemanticColors } from "../utils/styles"
 
 export interface ScrollViewProps extends RNScrollViewProps {
   /**
@@ -47,9 +48,9 @@ export function ScrollView({
   ...props
 }: ScrollViewProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
-  const defaultBackgroundColor = backgroundColor ?? (isDark ? "#09090b" : "#ffffff")
+  const defaultBackgroundColor = backgroundColor ?? colors.container.bg
 
   const contentPadding: ViewStyle = {}
   if (padding !== undefined) {
@@ -247,9 +248,9 @@ export function EmptyScrollView({
   ...props
 }: EmptyScrollViewProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
-  const textColor = isDark ? "#a1a1aa" : "#71717a"
+  const textColor = colors.container.fgAlt
 
   if (isEmpty) {
     return (
@@ -295,8 +296,8 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   horizontalContent: {
-    paddingHorizontal: 4,
-    paddingVertical: 2,
+    paddingHorizontal: sp.xs,
+    paddingVertical: sp.xxs,
     flexDirection: "row",
   },
   emptyContainer: {
@@ -306,7 +307,7 @@ const styles = StyleSheet.create({
   },
   emptyContent: {
     alignItems: "center",
-    padding: 4,
+    padding: sp.xs,
   },
   emptyTitle: {
     fontSize: fontSizes.lg,
@@ -316,6 +317,6 @@ const styles = StyleSheet.create({
   emptyDescription: {
     fontSize: fontSizes.sm,
     textAlign: "center",
-    marginTop: 2,
+    marginTop: sp.xxs,
   },
 })

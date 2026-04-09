@@ -8,7 +8,8 @@ import {
   TextStyle,
   useColorScheme,
 } from "react-native"
-import { spacing, radius, fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@vasf/ragnar-tokens"
+import { sp, curves, getSemanticColors } from "../utils/styles"
 
 export interface CheckboxProps {
   /** Whether the checkbox is checked */
@@ -46,7 +47,7 @@ export function Checkbox({
   position = "left",
 }: CheckboxProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
   const handlePress = () => {
     if (!disabled) {
@@ -65,30 +66,22 @@ export function Checkbox({
   const themedStyles = {
     box: {
       backgroundColor: checked || indeterminate
-        ? isDark
-          ? "#fafafa"
-          : "#18181b"
+        ? colors.actionPrimary.bg
         : "transparent",
       borderColor: checked || indeterminate
-        ? isDark
-          ? "#fafafa"
-          : "#18181b"
-        : isDark
-        ? "#71717a"
-        : "#a1a1aa",
+        ? colors.actionPrimary.bg
+        : colors.container.fgAlt,
     },
     icon: {
       color: checked || indeterminate
-        ? isDark
-          ? "#18181b"
-          : "#fafafa"
+        ? colors.actionPrimary.fg
         : "transparent",
     },
     label: {
-      color: isDark ? "#fafafa" : "#18181b",
+      color: colors.container.fg,
     },
     description: {
-      color: isDark ? "#a1a1aa" : "#71717a",
+      color: colors.container.fgAlt,
     },
   }
 
@@ -241,7 +234,7 @@ const styles = StyleSheet.create({
   },
   box: {
     borderWidth: 2,
-    borderRadius: 4,
+    borderRadius: curves.xxs,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -250,7 +243,7 @@ const styles = StyleSheet.create({
   },
   labelContainer: {
     flex: 1,
-    marginLeft: 2,
+    marginLeft: sp.xxs,
   },
   label: {
     fontSize: fontSizes.sm,
@@ -258,7 +251,7 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: fontSizes.xs,
-    marginTop: 2,
+    marginTop: sp.xxs,
   },
   disabled: {
     opacity: 0.5,
@@ -267,7 +260,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   group: {
-    gap: 4,
+    gap: sp.xs,
   },
   groupHorizontal: {
     flexDirection: "row",

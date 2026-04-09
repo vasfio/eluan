@@ -9,7 +9,8 @@ import {
   useColorScheme,
   Platform,
 } from "react-native"
-import { spacing, radius, fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@vasf/ragnar-tokens"
+import { sp, curves, getSemanticColors } from "../utils/styles"
 
 export interface BackButtonProps extends Omit<PressableProps, "style"> {
   /**
@@ -46,10 +47,10 @@ export function BackButton({
   ...props
 }: BackButtonProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
-  const primaryColor = isDark ? "#60a5fa" : "#3b82f6"
-  const disabledColor = isDark ? "#52525b" : "#a1a1aa"
+  const primaryColor = colors.informative.bg
+  const disabledColor = colors.container.fgAlt
 
   const renderIcon = () => {
     if (icon) return icon
@@ -100,9 +101,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 2,
-    paddingHorizontal: 2,
-    borderRadius: 4,
+    paddingVertical: sp.xxs,
+    paddingHorizontal: sp.xxs,
+    borderRadius: curves.xxs,
   },
   pressed: {
     opacity: 0.7,
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 28,
     fontWeight: "300",
-    marginRight: 2,
+    marginRight: sp.xxs,
     marginTop: -2,
   },
   label: {

@@ -6,23 +6,23 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const announcementBarVariants = cva(
-  "relative w-full px-4 py-2 text-center text-sm font-medium",
+  "relative w-full px-[var(--spacing-md)] py-[var(--spacing-sm)] text-center text-sm font-medium",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground",
-        secondary: "bg-secondary text-secondary-foreground",
-        muted: "bg-muted text-muted-foreground",
-        success: "bg-green-500 text-white",
-        warning: "bg-yellow-500 text-black",
-        error: "bg-red-500 text-white",
-        gradient: "bg-gradient-to-r from-primary via-purple-500 to-pink-500 text-white",
-        dark: "bg-zinc-900 text-white",
+        default: "bg-[var(--action-primary-bg)] text-[var(--action-primary-fg)]",
+        secondary: "bg-[var(--container-bg-alt)] text-[var(--container-fg)]",
+        muted: "bg-[var(--container-bg-alt)] text-[var(--container-fg-alt)]",
+        success: "bg-[var(--positive-bg)] text-[var(--positive-fg)]",
+        warning: "bg-[var(--cautionary-bg)] text-[var(--cautionary-fg)]",
+        error: "bg-[var(--destructive-bg)] text-[var(--destructive-fg)]",
+        gradient: "bg-gradient-to-r from-[var(--action-primary-bg)] via-[var(--important-bg)] to-[var(--destructive-bg)] text-[var(--action-primary-fg)]",
+        dark: "bg-[var(--container-bg-inverse)] text-[var(--container-fg-inverse)]",
       },
       size: {
-        sm: "py-1.5 text-xs",
-        default: "py-2 text-sm",
-        lg: "py-3 text-base",
+        sm: "py-[var(--spacing-xs)] text-xs",
+        default: "py-[var(--spacing-sm)] text-sm",
+        lg: "py-[var(--spacing-sm)] text-base",
       },
     },
     defaultVariants: {
@@ -90,7 +90,7 @@ const AnnouncementBar = React.forwardRef<HTMLDivElement, AnnouncementBarProps>(
 
     const content = (
       <>
-        {icon && <span className="mr-2 inline-flex">{icon}</span>}
+        {icon && <span className="mr-[var(--spacing-sm)] inline-flex">{icon}</span>}
         {children}
       </>
     )
@@ -110,7 +110,7 @@ const AnnouncementBar = React.forwardRef<HTMLDivElement, AnnouncementBarProps>(
             >
               {content}
               <svg
-                className="ml-2 h-4 w-4"
+                className="ml-[var(--spacing-sm)] h-4 w-4"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -130,7 +130,7 @@ const AnnouncementBar = React.forwardRef<HTMLDivElement, AnnouncementBarProps>(
           {dismissible && (
             <button
               onClick={handleDismiss}
-              className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full p-1 opacity-70 transition-opacity hover:opacity-100"
+              className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full p-[var(--spacing-xs)] opacity-70 transition-opacity hover:opacity-100"
               aria-label="Dismiss announcement"
             >
               <svg
@@ -305,7 +305,7 @@ const CountdownAnnouncementBar = React.forwardRef<
         {...props}
       >
         {prefix}{" "}
-        <span className="mx-2 font-mono font-bold">{timeLeft}</span>
+        <span className="mx-[var(--spacing-sm)] font-mono font-bold">{timeLeft}</span>
         {suffix}
       </AnnouncementBar>
     )

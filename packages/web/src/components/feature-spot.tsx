@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const featureSpotVariants = cva(
-  "py-16 md:py-24 lg:py-32",
+  "py-[var(--spacing-3xl)] md:py-[var(--spacing-4xl)] lg:py-32",
   {
     variants: {
       layout: {
@@ -32,7 +32,7 @@ const FeatureSpot = React.forwardRef<HTMLDivElement, FeatureSpotProps>(
         ref={ref}
         className={cn(
           featureSpotVariants({ layout }),
-          container && "container mx-auto px-4",
+          container && "container mx-auto px-[var(--spacing-md)]",
           className
         )}
         {...props}
@@ -51,7 +51,7 @@ const FeatureSpotEyebrow = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      "mb-3 inline-block text-xs font-medium uppercase tracking-widest text-[var(--action-primary-bg)]",
+      "mb-[var(--spacing-sm)] inline-block text-xs font-medium uppercase tracking-widest text-[var(--action-primary-bg)]",
       className
     )}
     {...props}
@@ -66,7 +66,7 @@ const FeatureSpotHeader = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mx-auto mb-16 max-w-2xl text-center",
+      "mx-auto mb-[var(--spacing-3xl)] max-w-2xl text-center",
       className
     )}
     {...props}
@@ -81,7 +81,7 @@ const FeatureSpotTitle = React.forwardRef<
   <Comp
     ref={ref}
     className={cn(
-      "font-heading text-3xl font-medium tracking-tight text-[var(--foregrounds-primary)] sm:text-4xl lg:text-5xl",
+      "font-heading text-3xl font-medium tracking-tight text-[var(--container-fg)] sm:text-4xl lg:text-5xl",
       className
     )}
     {...props}
@@ -96,7 +96,7 @@ const FeatureSpotDescription = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "mt-6 text-lg leading-relaxed text-[var(--foregrounds-tertiary)]",
+      "mt-[var(--spacing-md)] text-lg leading-relaxed text-[var(--container-fg-alt)]",
       className
     )}
     {...props}
@@ -119,7 +119,7 @@ const FeatureSpotGrid = React.forwardRef<HTMLDivElement, FeatureSpotGridProps>(
     return (
       <div
         ref={ref}
-        className={cn("grid gap-8", gridCols[columns], className)}
+        className={cn("grid gap-[var(--spacing-lg)]", gridCols[columns], className)}
         {...props}
       />
     )
@@ -136,13 +136,13 @@ const FeatureSpotItem = React.forwardRef<HTMLDivElement, FeatureSpotItemProps>(
     <div
       ref={ref}
       className={cn(
-        "flex flex-col gap-4 rounded-2xl border border-[var(--container-border)]/60 bg-[var(--container-bg)] p-8 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-md hover:shadow-black/[0.03]",
+        "flex flex-col gap-[var(--spacing-md)] rounded-[var(--curves-xl)] border border-[color:var(--container-border-alt)] bg-[var(--container-bg)] p-[var(--spacing-lg)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-md hover:shadow-black/[0.03]",
         className
       )}
       {...props}
     >
       {icon && (
-        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--backgrounds-tertiary)] text-[var(--foregrounds-secondary)]">
+        <div className="flex h-10 w-10 items-center justify-center rounded-[var(--curves-lg)] bg-[var(--container-bg-alt)] text-[var(--container-fg)]">
           {icon}
         </div>
       )}
@@ -158,7 +158,7 @@ const FeatureSpotItemTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn("font-heading text-lg font-medium text-[var(--foregrounds-primary)]", className)}
+    className={cn("font-heading text-lg font-medium text-[var(--container-fg)]", className)}
     {...props}
   />
 ))
@@ -170,7 +170,7 @@ const FeatureSpotItemDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-[var(--foregrounds-tertiary)] leading-relaxed", className)}
+    className={cn("text-[var(--container-fg-alt)] leading-relaxed", className)}
     {...props}
   />
 ))
@@ -185,7 +185,7 @@ const FeatureSpotSplit = React.forwardRef<HTMLDivElement, FeatureSpotSplitProps>
     <div
       ref={ref}
       className={cn(
-        "grid items-center gap-10 md:grid-cols-2 md:gap-16 lg:gap-20",
+        "grid items-center gap-[var(--spacing-xl)] md:grid-cols-2 md:gap-[var(--spacing-3xl)] lg:gap-[var(--spacing-4xl)]",
         reverse && "md:[&>*:first-child]:order-2",
         className
       )}
@@ -201,7 +201,7 @@ const FeatureSpotContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-col gap-6", className)}
+    className={cn("flex flex-col gap-[var(--spacing-md)]", className)}
     {...props}
   />
 ))
@@ -213,7 +213,7 @@ const FeatureSpotMedia = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("relative overflow-hidden rounded-xl", className)}
+    className={cn("relative overflow-hidden rounded-[var(--curves-xl)]", className)}
     {...props}
   />
 ))

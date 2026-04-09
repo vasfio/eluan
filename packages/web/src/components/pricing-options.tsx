@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@vasf/ragnar-core"
 
 const pricingOptionsVariants = cva(
-  "grid gap-6",
+  "grid gap-[var(--spacing-md)]",
   {
     variants: {
       columns: {
@@ -70,47 +70,47 @@ const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(
       <div
         ref={ref}
         className={cn(
-          "relative flex flex-col rounded-2xl border border-[var(--container-border)]/60 bg-[var(--container-bg)] p-8 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/[0.04]",
-          option.highlighted && "border-[var(--action-primary-bg)]/40 shadow-sm ring-1 ring-[var(--action-primary-bg)]/20"
+          "relative flex flex-col rounded-[var(--curves-xl)] border border-[color:var(--container-border-alt)] bg-[var(--container-bg)] p-[var(--spacing-lg)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/[0.04]",
+          option.highlighted && "border-[color:var(--action-primary-bg)] shadow-sm ring-1 ring-[var(--action-primary-bg)]"
         )}
       >
         {option.highlighted && option.highlightLabel && (
-          <span className="absolute -top-3 right-4 inline-flex items-center rounded-full bg-[var(--action-primary-bg)] px-3 py-1 text-xs font-normal text-[var(--action-primary-fg)]">
+          <span className="absolute -top-3 right-4 inline-flex items-center rounded-full bg-[var(--action-primary-bg)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-xs font-normal text-[var(--action-primary-fg)]">
             {option.highlightLabel}
           </span>
         )}
-        <div className="mb-6 text-center">
-          <h3 className="font-heading text-lg font-medium text-[var(--foregrounds-primary)]">
+        <div className="mb-[var(--spacing-md)] text-center">
+          <h3 className="font-heading text-lg font-medium text-[var(--container-fg)]">
             {option.name}
           </h3>
           {option.description && (
-            <p className="mt-1 text-sm text-[var(--foregrounds-tertiary)]">
+            <p className="mt-[var(--spacing-xs)] text-sm text-[var(--container-fg-alt)]">
               {option.description}
             </p>
           )}
-          <div className="mt-4">
+          <div className="mt-[var(--spacing-md)]">
             {option.originalPrice && (
-              <span className="mr-2 text-lg text-[var(--foregrounds-tertiary)] line-through">
+              <span className="mr-[var(--spacing-sm)] text-lg text-[var(--container-fg-alt)] line-through">
                 {typeof option.originalPrice === "number"
                   ? `$${option.originalPrice}`
                   : option.originalPrice}
               </span>
             )}
-            <span className="font-heading text-4xl font-medium text-[var(--foregrounds-primary)]">
+            <span className="font-heading text-4xl font-medium text-[var(--container-fg)]">
               {typeof option.price === "number"
                 ? `$${option.price}`
                 : option.price}
             </span>
             {option.period && (
-              <span className="text-sm text-[var(--foregrounds-tertiary)]">/{option.period}</span>
+              <span className="text-sm text-[var(--container-fg-alt)]">/{option.period}</span>
             )}
           </div>
         </div>
-        <ul className="mb-8 flex-1 space-y-3.5">
+        <ul className="mb-[var(--spacing-lg)] flex-1 space-y-[var(--spacing-md)]">
           {option.features.map((feature, index) => (
-            <li key={index} className="flex items-start gap-3">
+            <li key={index} className="flex items-start gap-[var(--spacing-sm)]">
               <Check className="h-4 w-4 shrink-0 text-[var(--positive-fg)]" />
-              <span className="text-sm text-[var(--foregrounds-secondary)]">{feature}</span>
+              <span className="text-sm text-[var(--container-fg)]">{feature}</span>
             </li>
           ))}
         </ul>

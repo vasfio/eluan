@@ -12,7 +12,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native"
-import { spacing, radius } from "@vasf/ragnar-tokens"
+import { sp, curves, getSemanticColors } from "../utils/styles"
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window")
 
@@ -66,7 +66,7 @@ export function BottomSheet({
   style,
 }: BottomSheetProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
   const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current
   const sheetHeight = SCREEN_HEIGHT * snapPoint
@@ -154,7 +154,7 @@ export function BottomSheet({
             styles.sheet,
             {
               height: sheetHeight,
-              backgroundColor: isDark ? "#18181b" : "#ffffff",
+              backgroundColor: colors.container.bg,
               transform: [{ translateY }],
             },
             style,
@@ -166,7 +166,7 @@ export function BottomSheet({
               <View
                 style={[
                   styles.handle,
-                  { backgroundColor: isDark ? "#3f3f46" : "#d4d4d8" },
+                  { backgroundColor: colors.container.border },
                 ]}
               />
             </View>
@@ -188,8 +188,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#000000",
   },
   sheet: {
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
+    borderTopLeftRadius: curves.sm,
+    borderTopRightRadius: curves.sm,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -4 },
     shadowOpacity: 0.1,
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
   },
   handleContainer: {
     alignItems: "center",
-    paddingVertical: 4,
+    paddingVertical: sp.xs,
   },
   handle: {
     width: 36,
@@ -207,6 +207,6 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingHorizontal: 4,
+    paddingHorizontal: sp.xs,
   },
 })

@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-const socialProofVariants = cva("flex items-center gap-3", {
+const socialProofVariants = cva("flex items-center gap-[var(--spacing-sm)]", {
   variants: {
     size: {
       sm: "text-sm",
@@ -41,9 +41,9 @@ export interface AvatarStackProps extends React.HTMLAttributes<HTMLDivElement> {
 const AvatarStack = React.forwardRef<HTMLDivElement, AvatarStackProps>(
   ({ className, max = 5, total, size = "default", children, ...props }, ref) => {
     const sizes = {
-      sm: "h-6 w-6 -ml-2 first:ml-0",
-      default: "h-8 w-8 -ml-3 first:ml-0",
-      lg: "h-10 w-10 -ml-4 first:ml-0",
+      sm: "h-6 w-6 -ml-[var(--spacing-sm)] first:ml-0",
+      default: "h-8 w-8 -ml-[var(--spacing-sm)] first:ml-0",
+      lg: "h-10 w-10 -ml-[var(--spacing-md)] first:ml-0",
     }
 
     const childArray = React.Children.toArray(children)
@@ -60,7 +60,7 @@ const AvatarStack = React.forwardRef<HTMLDivElement, AvatarStackProps>(
           <div
             key={index}
             className={cn(
-              "relative inline-block overflow-hidden rounded-full border-2 border-[var(--container-bg)] bg-[var(--backgrounds-tertiary)]",
+              "relative inline-block overflow-hidden rounded-full border-2 border-[var(--container-bg)] bg-[var(--container-bg-alt)]",
               sizes[size]
             )}
             style={{ zIndex: max - index }}
@@ -71,7 +71,7 @@ const AvatarStack = React.forwardRef<HTMLDivElement, AvatarStackProps>(
         {remaining > 0 && (
           <div
             className={cn(
-              "relative inline-flex items-center justify-center rounded-full border-2 border-[var(--container-bg)] bg-[var(--backgrounds-tertiary)] text-xs font-medium text-[var(--foregrounds-tertiary)]",
+              "relative inline-flex items-center justify-center rounded-full border-2 border-[var(--container-bg)] bg-[var(--container-bg-alt)] text-xs font-medium text-[var(--container-fg-alt)]",
               sizes[size]
             )}
           >
@@ -117,10 +117,10 @@ const StarRating = React.forwardRef<HTMLDivElement, StarRatingProps>(
     return (
       <div
         ref={ref}
-        className={cn("flex items-center gap-1", className)}
+        className={cn("flex items-center gap-[var(--spacing-xs)]", className)}
         {...props}
       >
-        <div className="flex gap-0.5">
+        <div className="flex gap-[var(--spacing-xxs)]">
           {Array.from({ length: fullStars }).map((_, i) => (
             <svg
               key={`full-${i}`}
@@ -140,7 +140,7 @@ const StarRating = React.forwardRef<HTMLDivElement, StarRatingProps>(
               <defs>
                 <linearGradient id="half-star">
                   <stop offset="50%" stopColor="currentColor" />
-                  <stop offset="50%" stopColor="var(--backgrounds-tertiary)" />
+                  <stop offset="50%" stopColor="var(--container-bg-alt)" />
                 </linearGradient>
               </defs>
               <path
@@ -152,7 +152,7 @@ const StarRating = React.forwardRef<HTMLDivElement, StarRatingProps>(
           {Array.from({ length: emptyStars }).map((_, i) => (
             <svg
               key={`empty-${i}`}
-              className={cn(sizes[size], "text-[var(--backgrounds-quaternary)]")}
+              className={cn(sizes[size], "text-[var(--container-border-alt)]")}
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -161,10 +161,10 @@ const StarRating = React.forwardRef<HTMLDivElement, StarRatingProps>(
           ))}
         </div>
         {showValue && (
-          <span className="font-medium text-[var(--foregrounds-primary)]">{rating.toFixed(1)}</span>
+          <span className="font-medium text-[var(--container-fg)]">{rating.toFixed(1)}</span>
         )}
         {reviewCount !== undefined && (
-          <span className="text-[var(--foregrounds-tertiary)]">
+          <span className="text-[var(--container-fg-alt)]">
             ({reviewCount.toLocaleString()} reviews)
           </span>
         )}
@@ -181,7 +181,7 @@ const TrustBadges = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-wrap items-center gap-4", className)}
+    className={cn("flex flex-wrap items-center gap-[var(--spacing-md)]", className)}
     {...props}
   />
 ))
@@ -197,7 +197,7 @@ const TrustBadge = React.forwardRef<HTMLDivElement, TrustBadgeProps>(
     <div
       ref={ref}
       className={cn(
-        "flex items-center gap-2 text-sm text-[var(--foregrounds-tertiary)]",
+        "flex items-center gap-[var(--spacing-sm)] text-sm text-[var(--container-fg-alt)]",
         className
       )}
       {...props}
@@ -251,11 +251,11 @@ const CustomerCount = React.forwardRef<HTMLDivElement, CustomerCountProps>(
     return (
       <div
         ref={ref}
-        className={cn("flex items-center gap-2", sizes[size], className)}
+        className={cn("flex items-center gap-[var(--spacing-sm)]", sizes[size], className)}
         {...props}
       >
-        <span className="font-medium text-[var(--foregrounds-primary)]">{count.toLocaleString()}+</span>
-        <span className="text-[var(--foregrounds-tertiary)]">{label}</span>
+        <span className="font-medium text-[var(--container-fg)]">{count.toLocaleString()}+</span>
+        <span className="text-[var(--container-fg-alt)]">{label}</span>
       </div>
     )
   }
@@ -270,7 +270,7 @@ const SocialProofBanner = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "flex flex-wrap items-center justify-center gap-8 border-y border-[var(--container-border)]/60 bg-[var(--backgrounds-secondary)] py-5 md:gap-14",
+      "flex flex-wrap items-center justify-center gap-[var(--spacing-lg)] border-y border-[color:var(--container-border-alt)] bg-[var(--container-bg-alt)] py-[var(--spacing-md)] md:gap-14",
       className
     )}
     {...props}
@@ -290,10 +290,10 @@ const FeaturedIn = React.forwardRef<HTMLDivElement, FeaturedInProps>(
       className={cn("text-center", className)}
       {...props}
     >
-      <p className="mb-8 text-xs font-normal uppercase tracking-widest text-[var(--foregrounds-quinary)]">
+      <p className="mb-[var(--spacing-lg)] text-xs font-normal uppercase tracking-widest text-[var(--container-fg-alt)]">
         {title}
       </p>
-      <div className="flex flex-wrap items-center justify-center gap-10 opacity-40 grayscale transition-opacity duration-300 hover:opacity-60">
+      <div className="flex flex-wrap items-center justify-center gap-[var(--spacing-xl)] opacity-40 grayscale transition-opacity duration-300 hover:opacity-60">
         {children}
       </div>
     </div>

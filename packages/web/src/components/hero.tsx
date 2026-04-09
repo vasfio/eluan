@@ -8,10 +8,10 @@ const heroVariants = cva(
   {
     variants: {
       size: {
-        sm: "min-h-[40vh] py-16",
-        default: "min-h-[60vh] py-20",
-        lg: "min-h-[80vh] py-24",
-        full: "min-h-screen py-24",
+        sm: "min-h-[40vh] py-[var(--spacing-3xl)]",
+        default: "min-h-[60vh] py-[var(--spacing-4xl)]",
+        lg: "min-h-[80vh] py-[var(--spacing-4xl)]",
+        full: "min-h-screen py-[var(--spacing-4xl)]",
       },
       align: {
         left: "items-start text-left",
@@ -63,12 +63,12 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
       >
         {backgroundImage && backgroundOverlay && (
           <div
-            className="absolute inset-0 bg-background"
+            className="absolute inset-0 bg-[var(--container-bg)]"
             style={{ opacity: overlayOpacity }}
           />
         )}
         <div className={cn(
-          "container relative z-10 mx-auto px-4",
+          "container relative z-10 mx-auto px-[var(--spacing-md)]",
           align === "center" && "flex flex-col items-center text-center"
         )}>
           {children}
@@ -86,7 +86,7 @@ const HeroBadge = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      "mb-4 inline-flex items-center rounded-full border bg-muted px-4 py-1.5 text-sm font-medium text-[var(--foregrounds-tertiary)]",
+      "mb-[var(--spacing-md)] inline-flex items-center rounded-full border border-[color:var(--container-border-alt)] bg-[var(--container-bg-alt)] px-[var(--spacing-md)] py-[var(--spacing-xs)] text-sm font-medium text-[var(--container-fg-alt)]",
       className
     )}
     {...props}
@@ -101,7 +101,7 @@ const HeroTitle = React.forwardRef<
   <h1
     ref={ref}
     className={cn(
-      "max-w-4xl w-full font-heading text-4xl font-medium tracking-tight text-[var(--foregrounds-primary)] sm:text-5xl md:text-6xl lg:text-7xl",
+      "max-w-4xl w-full font-heading text-4xl font-medium tracking-tight text-[var(--container-fg)] sm:text-5xl md:text-6xl lg:text-7xl",
       className
     )}
     {...props}
@@ -116,7 +116,7 @@ const HeroSubtitle = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "mt-6 max-w-2xl w-full text-lg text-[var(--foregrounds-tertiary)] sm:text-xl",
+      "mt-[var(--spacing-md)] max-w-2xl w-full text-lg text-[var(--container-fg-alt)] sm:text-xl",
       className
     )}
     {...props}
@@ -131,7 +131,7 @@ const HeroActions = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mt-8 flex flex-wrap items-center justify-center gap-4",
+      "mt-[var(--spacing-lg)] flex flex-wrap items-center justify-center gap-[var(--spacing-md)]",
       className
     )}
     {...props}
@@ -146,7 +146,7 @@ const HeroImage = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mt-12 w-full max-w-5xl",
+      "mt-[var(--spacing-2xl)] w-full max-w-5xl",
       className
     )}
     {...props}

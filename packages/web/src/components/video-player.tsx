@@ -11,11 +11,11 @@ const videoContainerVariants = cva(
     variants: {
       rounded: {
         none: "",
-        sm: "rounded-sm",
-        md: "rounded-md",
-        lg: "rounded-lg",
-        xl: "rounded-xl",
-        "2xl": "rounded-2xl",
+        sm: "rounded-[var(--curves-sm)]",
+        md: "rounded-[var(--curves-md)]",
+        lg: "rounded-[var(--curves-lg)]",
+        xl: "rounded-[var(--curves-xl)]",
+        "2xl": "rounded-[var(--curves-xl)]",
       },
       aspectRatio: {
         video: "aspect-video",
@@ -148,7 +148,7 @@ const VideoPlayer = React.forwardRef<HTMLVideoElement, VideoPlayerProps>(
           >
             <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 text-black shadow-lg transition-transform hover:scale-110 md:h-20 md:w-20">
               <svg
-                className="ml-1 h-8 w-8 md:h-10 md:w-10"
+                className="ml-[var(--spacing-xs)] h-8 w-8 md:h-10 md:w-10"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -218,7 +218,7 @@ const YouTubeEmbed = React.forwardRef<HTMLIFrameElement, YouTubeEmbedProps>(
           >
             <div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-600 text-white shadow-lg transition-transform hover:scale-110 md:h-20 md:w-20">
               <svg
-                className="ml-1 h-8 w-8 md:h-10 md:w-10"
+                className="ml-[var(--spacing-xs)] h-8 w-8 md:h-10 md:w-10"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -344,7 +344,7 @@ const VideoModal = React.forwardRef<HTMLDivElement, VideoModalProps>(
     return (
       <div
         ref={ref}
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-[var(--spacing-md)]"
         onClick={onClose}
       >
         <div

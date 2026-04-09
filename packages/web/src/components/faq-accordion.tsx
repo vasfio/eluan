@@ -6,9 +6,9 @@ import { cn } from "@/lib/utils"
 const faqSectionVariants = cva("w-full", {
   variants: {
     size: {
-      sm: "py-12",
-      default: "py-16",
-      lg: "py-24",
+      sm: "py-[var(--spacing-2xl)]",
+      default: "py-[var(--spacing-3xl)]",
+      lg: "py-[var(--spacing-4xl)]",
     },
   },
   defaultVariants: {
@@ -28,7 +28,7 @@ const FAQSection = React.forwardRef<HTMLDivElement, FAQSectionProps>(
         className={cn(faqSectionVariants({ size }), className)}
         {...props}
       >
-        <div className="container mx-auto px-4">{children}</div>
+        <div className="container mx-auto px-[var(--spacing-md)]">{children}</div>
       </section>
     )
   }
@@ -41,7 +41,7 @@ const FAQHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("mb-12 text-center", className)}
+    className={cn("mb-[var(--spacing-2xl)] text-center", className)}
     {...props}
   />
 ))
@@ -69,7 +69,7 @@ const FAQDescription = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "mx-auto mt-4 max-w-2xl text-lg text-muted-foreground",
+      "mx-auto mt-[var(--spacing-md)] max-w-2xl text-lg text-muted-foreground",
       className
     )}
     {...props}
@@ -81,8 +81,8 @@ const faqListVariants = cva("mx-auto", {
   variants: {
     variant: {
       default: "divide-y divide-border",
-      separated: "space-y-4",
-      cards: "space-y-4",
+      separated: "space-y-[var(--spacing-md)]",
+      cards: "space-y-[var(--spacing-md)]",
     },
     maxWidth: {
       sm: "max-w-xl",
@@ -123,7 +123,7 @@ const FAQItem = React.forwardRef<HTMLDivElement, FAQItemProps>(
     return (
       <div
         ref={ref}
-        className={cn("py-4", className)}
+        className={cn("py-[var(--spacing-md)]", className)}
         {...props}
       >
         {React.Children.map(children, (child) => {
@@ -158,7 +158,7 @@ const FAQItemCard = React.forwardRef<HTMLDivElement, FAQItemCardProps>(
       <div
         ref={ref}
         className={cn(
-          "rounded-lg border bg-card p-4 transition-shadow hover:shadow-sm",
+          "rounded-[var(--curves-lg)] border bg-card p-[var(--spacing-md)] transition-shadow hover:shadow-sm",
           className
         )}
         {...props}
@@ -203,7 +203,7 @@ const FAQQuestion = React.forwardRef<HTMLButtonElement, FAQQuestionProps>(
       aria-expanded={isOpen}
       {...props}
     >
-      <span className="pr-4">{children}</span>
+      <span className="pr-[var(--spacing-md)]">{children}</span>
       <svg
         className={cn(
           "h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-200",
@@ -236,7 +236,7 @@ const FAQAnswer = React.forwardRef<HTMLDivElement, FAQAnswerProps>(
       {...props}
     >
       <div className="overflow-hidden">
-        <div className={cn("pt-4 text-muted-foreground", className)}>
+        <div className={cn("pt-[var(--spacing-md)] text-muted-foreground", className)}>
           {children}
         </div>
       </div>
@@ -252,7 +252,7 @@ const FAQContact = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mt-12 text-center",
+      "mt-[var(--spacing-2xl)] text-center",
       className
     )}
     {...props}

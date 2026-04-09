@@ -8,7 +8,8 @@ import {
   PressableProps,
   useColorScheme,
 } from "react-native"
-import { spacing, radius, fontSizes, fontWeights } from "@vasf/ragnar-tokens"
+import { fontSizes, fontWeights } from "@vasf/ragnar-tokens"
+import { sp, curves, getSemanticColors } from "../utils/styles"
 
 export interface ButtonProps extends Omit<PressableProps, "style"> {
   children: React.ReactNode
@@ -28,42 +29,42 @@ export function Button({
   ...props
 }: ButtonProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
   const getVariantStyles = (): { container: ViewStyle; text: TextStyle } => {
     const variants = {
       default: {
         container: {
-          backgroundColor: isDark ? "#fafafa" : "#18181b",
+          backgroundColor: colors.actionPrimary.bg,
         },
         text: {
-          color: isDark ? "#18181b" : "#fafafa",
+          color: colors.actionPrimary.fg,
         },
       },
       destructive: {
         container: {
-          backgroundColor: isDark ? "#7f1d1d" : "#ef4444",
+          backgroundColor: colorScheme === "dark" ? colors.destructive.bgSubtle : colors.destructive.bg,
         },
         text: {
-          color: "#fafafa",
+          color: colors.destructive.fg,
         },
       },
       outline: {
         container: {
           backgroundColor: "transparent",
           borderWidth: 1,
-          borderColor: isDark ? "#27272a" : "#e4e4e7",
+          borderColor: colors.container.borderAlt,
         },
         text: {
-          color: isDark ? "#fafafa" : "#18181b",
+          color: colors.container.fg,
         },
       },
       secondary: {
         container: {
-          backgroundColor: isDark ? "#27272a" : "#f4f4f5",
+          backgroundColor: colors.actionSecondary.bg,
         },
         text: {
-          color: isDark ? "#fafafa" : "#18181b",
+          color: colors.actionSecondary.fg,
         },
       },
       ghost: {
@@ -71,7 +72,7 @@ export function Button({
           backgroundColor: "transparent",
         },
         text: {
-          color: isDark ? "#fafafa" : "#18181b",
+          color: colors.container.fg,
         },
       },
       link: {
@@ -79,7 +80,7 @@ export function Button({
           backgroundColor: "transparent",
         },
         text: {
-          color: isDark ? "#fafafa" : "#18181b",
+          color: colors.container.fg,
           textDecorationLine: "underline" as const,
         },
       },
@@ -93,8 +94,8 @@ export function Button({
       default: {
         container: {
           height: 40,
-          paddingHorizontal: 4,
-          paddingVertical: 2,
+          paddingHorizontal: sp.xs,
+          paddingVertical: sp.xxs,
         },
         text: {
           fontSize: fontSizes.sm,
@@ -103,7 +104,7 @@ export function Button({
       sm: {
         container: {
           height: 36,
-          paddingHorizontal: 4,
+          paddingHorizontal: sp.xs,
         },
         text: {
           fontSize: fontSizes.sm,
@@ -112,7 +113,7 @@ export function Button({
       lg: {
         container: {
           height: 44,
-          paddingHorizontal: 8,
+          paddingHorizontal: sp.sm,
         },
         text: {
           fontSize: fontSizes.base,
@@ -173,7 +174,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 6,
+    borderRadius: curves.xxs,
   },
   text: {
     fontWeight: fontWeights.medium as TextStyle["fontWeight"],

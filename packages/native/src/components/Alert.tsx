@@ -8,7 +8,8 @@ import {
   useColorScheme,
   Pressable,
 } from "react-native"
-import { spacing, radius, fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@vasf/ragnar-tokens"
+import { sp, curves, getSemanticColors } from "../utils/styles"
 
 export interface AlertProps {
   /** Alert title */
@@ -46,72 +47,72 @@ export function Alert({
   titleStyle,
 }: AlertProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
   const variantStyles = {
     default: {
       container: {
-        backgroundColor: isDark ? "#27272a" : "#f4f4f5",
-        borderColor: isDark ? "#3f3f46" : "#e4e4e7",
+        backgroundColor: colors.actionSecondary.bg,
+        borderColor: colors.container.border,
       },
-      icon: isDark ? "#fafafa" : "#18181b",
+      icon: colors.container.fg,
       title: {
-        color: isDark ? "#fafafa" : "#18181b",
+        color: colors.container.fg,
       },
       description: {
-        color: isDark ? "#a1a1aa" : "#71717a",
+        color: colors.container.fgAlt,
       },
     },
     info: {
       container: {
-        backgroundColor: isDark ? "#1e3a5f" : "#dbeafe",
-        borderColor: isDark ? "#1e40af" : "#93c5fd",
+        backgroundColor: colors.informative.bgSubtle,
+        borderColor: colors.informative.border,
       },
-      icon: "#3b82f6",
+      icon: colors.informative.bg,
       title: {
-        color: isDark ? "#93c5fd" : "#1e40af",
+        color: colors.informative.fgStrong,
       },
       description: {
-        color: isDark ? "#bfdbfe" : "#1e3a8a",
+        color: colorScheme === "dark" ? "#bfdbfe" : "#1e3a8a",
       },
     },
     success: {
       container: {
-        backgroundColor: isDark ? "#14532d" : "#dcfce7",
-        borderColor: isDark ? "#166534" : "#86efac",
+        backgroundColor: colors.positive.bgSubtle,
+        borderColor: colors.positive.border,
       },
-      icon: "#22c55e",
+      icon: colors.positive.bg,
       title: {
-        color: isDark ? "#86efac" : "#166534",
+        color: colors.positive.fgStrong,
       },
       description: {
-        color: isDark ? "#bbf7d0" : "#14532d",
+        color: colorScheme === "dark" ? "#bbf7d0" : "#14532d",
       },
     },
     warning: {
       container: {
-        backgroundColor: isDark ? "#78350f" : "#fef3c7",
-        borderColor: isDark ? "#92400e" : "#fcd34d",
+        backgroundColor: colors.cautionary.bgSubtle,
+        borderColor: colors.cautionary.border,
       },
-      icon: "#f59e0b",
+      icon: colors.cautionary.bg,
       title: {
-        color: isDark ? "#fcd34d" : "#92400e",
+        color: colors.cautionary.fgStrong,
       },
       description: {
-        color: isDark ? "#fde68a" : "#78350f",
+        color: colorScheme === "dark" ? "#fde68a" : "#78350f",
       },
     },
     destructive: {
       container: {
-        backgroundColor: isDark ? "#7f1d1d" : "#fee2e2",
-        borderColor: isDark ? "#991b1b" : "#fca5a5",
+        backgroundColor: colors.destructive.bgSubtle,
+        borderColor: colors.destructive.border,
       },
-      icon: "#ef4444",
+      icon: colors.destructive.bg,
       title: {
-        color: isDark ? "#fca5a5" : "#991b1b",
+        color: colors.destructive.fgStrong,
       },
       description: {
-        color: isDark ? "#fecaca" : "#7f1d1d",
+        color: colorScheme === "dark" ? "#fecaca" : "#7f1d1d",
       },
     },
   }
@@ -193,11 +194,14 @@ export function InlineAlert({
   variant = "info",
   style,
 }: InlineAlertProps) {
+  const colorScheme = useColorScheme() ?? "light"
+  const colors = getSemanticColors(colorScheme)
+
   const variantColors = {
-    info: "#3b82f6",
-    success: "#22c55e",
-    warning: "#f59e0b",
-    error: "#ef4444",
+    info: colors.informative.bg,
+    success: colors.positive.bg,
+    warning: colors.cautionary.bg,
+    error: colors.destructive.bg,
   }
 
   const variantIcons = {
@@ -253,22 +257,25 @@ export function AlertBanner({
   action,
   style,
 }: AlertBannerProps) {
+  const colorScheme = useColorScheme() ?? "light"
+  const colors = getSemanticColors(colorScheme)
+
   const variantStyles = {
     info: {
-      backgroundColor: "#3b82f6",
-      color: "#ffffff",
+      backgroundColor: colors.informative.bg,
+      color: colors.informative.fg,
     },
     success: {
-      backgroundColor: "#22c55e",
-      color: "#ffffff",
+      backgroundColor: colors.positive.bg,
+      color: colors.positive.fg,
     },
     warning: {
-      backgroundColor: "#f59e0b",
-      color: "#18181b",
+      backgroundColor: colors.cautionary.bg,
+      color: colors.cautionary.fg,
     },
     destructive: {
-      backgroundColor: "#ef4444",
-      color: "#ffffff",
+      backgroundColor: colors.destructive.bg,
+      color: colors.destructive.fg,
     },
   }
 
@@ -317,17 +324,17 @@ export function AlertBanner({
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 8,
+    borderRadius: curves.xs,
     borderWidth: 1,
-    padding: 4,
+    padding: sp.xs,
   },
   content: {
     flexDirection: "row",
     alignItems: "flex-start",
   },
   iconContainer: {
-    marginRight: 4,
-    marginTop: 2,
+    marginRight: sp.xs,
+    marginTop: sp.xxs,
   },
   defaultIcon: {
     fontSize: 16,
@@ -339,13 +346,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: fontSizes.sm,
     fontWeight: "600",
-    marginBottom: 2,
+    marginBottom: sp.xxs,
   },
   description: {
     fontSize: fontSizes.sm,
   },
   action: {
-    marginTop: 2,
+    marginTop: sp.xxs,
   },
   actionText: {
     fontSize: fontSizes.sm,
@@ -353,8 +360,8 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
   closeButton: {
-    marginLeft: 2,
-    padding: 2,
+    marginLeft: sp.xxs,
+    padding: sp.xxs,
   },
   closeIcon: {
     fontSize: 20,
@@ -366,7 +373,7 @@ const styles = StyleSheet.create({
   },
   inlineIcon: {
     fontSize: 12,
-    marginRight: 2,
+    marginRight: sp.xxs,
   },
   inlineText: {
     fontSize: fontSizes.sm,
@@ -374,11 +381,11 @@ const styles = StyleSheet.create({
   banner: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 4,
-    paddingHorizontal: 4,
+    paddingVertical: sp.xs,
+    paddingHorizontal: sp.xs,
   },
   bannerIcon: {
-    marginRight: 2,
+    marginRight: sp.xxs,
   },
   bannerContent: {
     flex: 1,
@@ -388,7 +395,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   bannerAction: {
-    marginLeft: 4,
+    marginLeft: sp.xs,
   },
   bannerActionText: {
     fontSize: fontSizes.sm,
@@ -396,7 +403,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
   bannerClose: {
-    marginLeft: 2,
-    padding: 2,
+    marginLeft: sp.xxs,
+    padding: sp.xxs,
   },
 })

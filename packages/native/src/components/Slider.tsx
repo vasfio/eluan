@@ -10,7 +10,8 @@ import {
   PanResponder,
   LayoutChangeEvent,
 } from "react-native"
-import { spacing, fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@vasf/ragnar-tokens"
+import { sp, getSemanticColors } from "../utils/styles"
 
 export interface SliderProps {
   /** Current value */
@@ -66,7 +67,7 @@ export function Slider({
   labelStyle,
 }: SliderProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
   const isControlled = controlledValue !== undefined
   const [internalValue, setInternalValue] = useState(defaultValue)
@@ -85,20 +86,20 @@ export function Slider({
 
   const themedStyles = {
     track: {
-      backgroundColor: isDark ? "#27272a" : "#e4e4e7",
+      backgroundColor: colors.container.borderAlt,
     },
     activeTrack: {
-      backgroundColor: isDark ? "#fafafa" : "#18181b",
+      backgroundColor: colors.actionPrimary.bg,
     },
     thumb: {
-      backgroundColor: isDark ? "#fafafa" : "#ffffff",
-      borderColor: isDark ? "#fafafa" : "#18181b",
+      backgroundColor: colorScheme === "dark" ? colors.actionPrimary.bg : colors.container.bg,
+      borderColor: colors.interactive.border,
     },
     label: {
-      color: isDark ? "#fafafa" : "#18181b",
+      color: colors.container.fg,
     },
     value: {
-      color: isDark ? "#a1a1aa" : "#71717a",
+      color: colors.container.fgAlt,
     },
   }
 
@@ -296,7 +297,7 @@ export function RangeSlider({
   style,
 }: RangeSliderProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
   const isControlled = controlledValue !== undefined
   const [internalValue, _setInternalValue] = useState(defaultValue)
@@ -314,20 +315,20 @@ export function RangeSlider({
 
   const themedStyles = {
     track: {
-      backgroundColor: isDark ? "#27272a" : "#e4e4e7",
+      backgroundColor: colors.container.borderAlt,
     },
     activeTrack: {
-      backgroundColor: isDark ? "#fafafa" : "#18181b",
+      backgroundColor: colors.actionPrimary.bg,
     },
     thumb: {
-      backgroundColor: isDark ? "#fafafa" : "#ffffff",
-      borderColor: isDark ? "#fafafa" : "#18181b",
+      backgroundColor: colorScheme === "dark" ? colors.actionPrimary.bg : colors.container.bg,
+      borderColor: colors.interactive.border,
     },
     label: {
-      color: isDark ? "#fafafa" : "#18181b",
+      color: colors.container.fg,
     },
     value: {
-      color: isDark ? "#a1a1aa" : "#71717a",
+      color: colors.container.fgAlt,
     },
   }
 
@@ -427,7 +428,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 2,
+    marginBottom: sp.xxs,
   },
   label: {
     fontSize: fontSizes.sm,

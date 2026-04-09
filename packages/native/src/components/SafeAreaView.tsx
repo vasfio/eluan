@@ -8,6 +8,7 @@ import {
   StatusBar,
   useColorScheme,
 } from "react-native"
+import { getSemanticColors } from "../utils/styles"
 // Note: For production, consider using react-native-safe-area-context
 // This is a simplified implementation that works for basic cases
 
@@ -61,9 +62,9 @@ export function SafeAreaView({
   ...props
 }: SafeAreaViewProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
-  const defaultBackgroundColor = backgroundColor ?? (isDark ? "#09090b" : "#ffffff")
+  const defaultBackgroundColor = backgroundColor ?? colors.container.bg
   const insets = getApproximateInsets()
 
   const safeAreaStyle: ViewStyle = {}

@@ -7,7 +7,8 @@ import {
   TextStyle,
   useColorScheme,
 } from "react-native"
-import { spacing, fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@vasf/ragnar-tokens"
+import { sp, getSemanticColors } from "../utils/styles"
 
 export interface SeparatorProps {
   /** Orientation of the separator */
@@ -24,11 +25,11 @@ export function Separator({
   style,
 }: SeparatorProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
   const themedStyles = {
     separator: {
-      backgroundColor: isDark ? "#27272a" : "#e4e4e7",
+      backgroundColor: colors.container.borderAlt,
     },
   }
 
@@ -65,15 +66,15 @@ export function LabeledSeparator({
   style,
 }: LabeledSeparatorProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
   const themedStyles = {
     line: {
-      backgroundColor: isDark ? "#27272a" : "#e4e4e7",
+      backgroundColor: colors.container.borderAlt,
     },
     label: {
-      color: isDark ? "#71717a" : "#a1a1aa",
-      backgroundColor: isDark ? "#09090b" : "#ffffff",
+      color: colors.interactive.fgAlt,
+      backgroundColor: colors.container.bg,
     },
   }
 
@@ -115,7 +116,7 @@ export function Divider({
   ...props
 }: DividerProps) {
   const getInsetValue = (value: boolean | number | undefined) => {
-    if (value === true) return 4
+    if (value === true) return sp.xs
     if (typeof value === "number") return value
     return 0
   }
@@ -147,11 +148,11 @@ export function Spacer({
   style,
 }: SpacerProps) {
   const sizeMap = {
-    xs: 2,
-    sm: 2,
-    md: 4,
-    lg: 8,
-    xl: 8,
+    xs: sp.xxs,
+    sm: sp.xxs,
+    md: sp.xs,
+    lg: sp.sm,
+    xl: sp.sm,
   }
 
   const numericSize = typeof size === "number" ? size : sizeMap[size]
@@ -192,14 +193,14 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: fontSizes.sm,
-    paddingHorizontal: 4,
+    paddingHorizontal: sp.xs,
   },
   labelLeft: {
     paddingLeft: 0,
-    paddingRight: 4,
+    paddingRight: sp.xs,
   },
   labelRight: {
-    paddingLeft: 4,
+    paddingLeft: sp.xs,
     paddingRight: 0,
   },
 })

@@ -10,7 +10,8 @@ import {
   useColorScheme,
   LayoutChangeEvent,
 } from "react-native"
-import { spacing, fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@vasf/ragnar-tokens"
+import { sp, getSemanticColors } from "../utils/styles"
 
 export interface SwipeAction {
   /**
@@ -95,7 +96,7 @@ export function SwipeableListItem({
   autoClose = true,
 }: SwipeableListItemProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
   const translateX = useRef(new Animated.Value(0)).current
   const itemWidth = useRef(0)
@@ -223,7 +224,7 @@ export function SwipeableListItem({
         style={[
           styles.content,
           {
-            backgroundColor: isDark ? "#18181b" : "#ffffff",
+            backgroundColor: colors.container.bg,
             transform: [{ translateX }],
           },
         ]}
@@ -267,10 +268,10 @@ const styles = StyleSheet.create({
   action: {
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 2,
+    paddingHorizontal: sp.xxs,
   },
   actionIcon: {
-    marginBottom: 2,
+    marginBottom: sp.xxs,
   },
   actionLabel: {
     fontSize: fontSizes.xs,

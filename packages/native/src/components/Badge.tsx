@@ -7,7 +7,8 @@ import {
   TextStyle,
   useColorScheme,
 } from "react-native"
-import { spacing, radius, fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@vasf/ragnar-tokens"
+import { sp, curves, getSemanticColors } from "../utils/styles"
 
 export interface BadgeProps {
   /** Badge content */
@@ -33,57 +34,57 @@ export function Badge({
   dot = false,
 }: BadgeProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
   const variantStyles = {
     default: {
       container: {
-        backgroundColor: isDark ? "#fafafa" : "#18181b",
+        backgroundColor: colors.actionPrimary.bg,
       },
       text: {
-        color: isDark ? "#18181b" : "#fafafa",
+        color: colors.actionPrimary.fg,
       },
     },
     secondary: {
       container: {
-        backgroundColor: isDark ? "#27272a" : "#f4f4f5",
+        backgroundColor: colors.actionSecondary.bg,
       },
       text: {
-        color: isDark ? "#fafafa" : "#18181b",
+        color: colors.actionSecondary.fg,
       },
     },
     destructive: {
       container: {
-        backgroundColor: isDark ? "#7f1d1d" : "#ef4444",
+        backgroundColor: colorScheme === "dark" ? colors.destructive.bgSubtle : colors.destructive.bg,
       },
       text: {
-        color: "#fafafa",
+        color: colors.destructive.fg,
       },
     },
     outline: {
       container: {
         backgroundColor: "transparent",
         borderWidth: 1,
-        borderColor: isDark ? "#27272a" : "#e4e4e7",
+        borderColor: colors.container.borderAlt,
       },
       text: {
-        color: isDark ? "#fafafa" : "#18181b",
+        color: colors.container.fg,
       },
     },
     success: {
       container: {
-        backgroundColor: isDark ? "#14532d" : "#22c55e",
+        backgroundColor: colorScheme === "dark" ? colors.positive.bgSubtle : colors.positive.bg,
       },
       text: {
-        color: "#fafafa",
+        color: colors.positive.fg,
       },
     },
     warning: {
       container: {
-        backgroundColor: isDark ? "#78350f" : "#f59e0b",
+        backgroundColor: colorScheme === "dark" ? colors.cautionary.bgSubtle : colors.cautionary.bg,
       },
       text: {
-        color: isDark ? "#fafafa" : "#18181b",
+        color: colors.cautionary.fg,
       },
     },
   }
@@ -92,8 +93,8 @@ export function Badge({
     sm: {
       container: {
         paddingHorizontal: 6,
-        paddingVertical: 2,
-        borderRadius: 4,
+        paddingVertical: sp.xxs,
+        borderRadius: curves.xxs,
       },
       text: {
         fontSize: fontSizes.xs,
@@ -102,8 +103,8 @@ export function Badge({
     },
     default: {
       container: {
-        paddingHorizontal: 2,
-        paddingVertical: 2,
+        paddingHorizontal: sp.xxs,
+        paddingVertical: sp.xxs,
         borderRadius: 9999,
       },
       text: {
@@ -113,8 +114,8 @@ export function Badge({
     },
     lg: {
       container: {
-        paddingHorizontal: 4,
-        paddingVertical: 2,
+        paddingHorizontal: sp.xs,
+        paddingVertical: sp.xxs,
         borderRadius: 9999,
       },
       text: {
@@ -199,12 +200,12 @@ export function NotificationBadge({
   style,
 }: NotificationBadgeProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
   const colorStyles = {
-    default: isDark ? "#fafafa" : "#18181b",
-    destructive: "#ef4444",
-    success: "#22c55e",
+    default: colors.actionPrimary.bg,
+    destructive: colors.destructive.bg,
+    success: colors.positive.bg,
   }
 
   const shouldShow = dot || (hideZero ? count > 0 : true)
@@ -254,7 +255,7 @@ const styles = StyleSheet.create({
     borderRadius: 9,
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 4,
+    paddingHorizontal: sp.xs,
     borderWidth: 2,
     borderColor: "#ffffff",
   },

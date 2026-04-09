@@ -55,12 +55,12 @@ const HeaderNavigation = React.forwardRef<HTMLElement, HeaderNavigationProps>(
 
     const renderNavItem = (item: NavItem, mobile = false) => {
       const baseClasses = mobile
-        ? "block w-full px-4 py-2 text-base font-medium text-[var(--foregrounds-primary)] hover:bg-[var(--backgrounds-tertiary)] rounded-lg transition-colors"
-        : "relative px-4 py-1.5 text-sm font-normal text-[var(--foregrounds-tertiary)] hover:text-[var(--foregrounds-primary)] transition-colors rounded-full"
+        ? "block w-full px-[var(--spacing-md)] py-[var(--spacing-sm)] text-base font-medium text-[var(--interactive-fg)] hover:bg-[var(--interactive-bg-hover)] rounded-[var(--curves-lg)] transition-colors"
+        : "relative px-[var(--spacing-md)] py-[var(--spacing-xs)] text-sm font-normal text-[var(--interactive-fg-alt)] hover:text-[var(--interactive-fg)] transition-colors rounded-full"
 
       const activeClasses = mobile
-        ? "bg-[var(--backgrounds-tertiary)]"
-        : "bg-[var(--backgrounds-tertiary)] text-[var(--foregrounds-primary)]"
+        ? "bg-[var(--interactive-bg-alt)]"
+        : "bg-[var(--interactive-bg-alt)] text-[var(--interactive-fg)]"
 
       if (item.href) {
         return (
@@ -100,26 +100,26 @@ const HeaderNavigation = React.forwardRef<HTMLElement, HeaderNavigationProps>(
       <header
         ref={ref}
         className={cn(
-          "w-full border-b border-[var(--container-border)]/50 bg-[var(--container-bg)]/95 backdrop-blur supports-[backdrop-filter]:bg-[var(--container-bg)]/60",
+          "w-full border-b border-[color:var(--container-border-alt)] bg-[var(--container-bg)] backdrop-blur supports-[backdrop-filter]:bg-[var(--container-bg)]",
           sticky && "sticky top-0 z-50",
           transparent && "border-transparent bg-transparent",
           className
         )}
         {...props}
       >
-        <div className="container mx-auto flex h-16 items-center justify-between px-6">
+        <div className="container mx-auto flex h-16 items-center justify-between px-[var(--spacing-md)]">
           {/* Logo */}
           <div className="flex items-center">
             {logo}
           </div>
 
           {/* Desktop Navigation */}
-          <nav className={cn("items-center gap-2", breakpointClasses[mobileBreakpoint].desktop)}>
+          <nav className={cn("items-center gap-[var(--spacing-sm)]", breakpointClasses[mobileBreakpoint].desktop)}>
             {items.map((item) => renderNavItem(item))}
           </nav>
 
           {/* Desktop Actions */}
-          <div className={cn("items-center gap-4", breakpointClasses[mobileBreakpoint].desktop)}>
+          <div className={cn("items-center gap-[var(--spacing-md)]", breakpointClasses[mobileBreakpoint].desktop)}>
             {actions}
           </div>
 
@@ -132,13 +132,13 @@ const HeaderNavigation = React.forwardRef<HTMLElement, HeaderNavigationProps>(
                   <span className="sr-only">Toggle menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] border-l border-[var(--container-border)] bg-[var(--container-bg)] sm:w-[400px]">
-                <div className="flex flex-col gap-6 pt-6">
-                  <nav className="flex flex-col gap-1">
+              <SheetContent side="right" className="w-[300px] border-l border-[color:var(--container-border-alt)] bg-[var(--container-bg)] sm:w-[400px]">
+                <div className="flex flex-col gap-[var(--spacing-md)] pt-[var(--spacing-md)]">
+                  <nav className="flex flex-col gap-[var(--spacing-xs)]">
                     {items.map((item) => renderNavItem(item, true))}
                   </nav>
                   {actions && (
-                    <div className="flex flex-col gap-2 border-t border-[var(--container-border)] pt-6">
+                    <div className="flex flex-col gap-[var(--spacing-sm)] border-t border-[color:var(--container-border-alt)] pt-[var(--spacing-md)]">
                       {actions}
                     </div>
                   )}

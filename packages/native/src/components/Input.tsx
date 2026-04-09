@@ -10,7 +10,8 @@ import {
   useColorScheme,
   Pressable,
 } from "react-native"
-import { spacing, radius, fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@vasf/ragnar-tokens"
+import { sp, curves, getSemanticColors } from "../utils/styles"
 
 export interface InputProps extends Omit<TextInputProps, "style"> {
   /** Label text displayed above the input */
@@ -52,7 +53,7 @@ export const Input = forwardRef<TextInput, InputProps>(
     ref
   ) => {
     const colorScheme = useColorScheme() ?? "light"
-    const isDark = colorScheme === "dark"
+    const colors = getSemanticColors(colorScheme)
     const [isFocused, setIsFocused] = useState(false)
 
     const handleFocus = (e: any) => {
@@ -67,27 +68,23 @@ export const Input = forwardRef<TextInput, InputProps>(
 
     const themedStyles = {
       label: {
-        color: isDark ? "#fafafa" : "#18181b",
+        color: colors.container.fg,
       },
       input: {
-        backgroundColor: isDark ? "#09090b" : "#ffffff",
+        backgroundColor: colors.interactive.bg,
         borderColor: error
-          ? "#ef4444"
+          ? colors.destructive.bg
           : isFocused
-          ? isDark
-            ? "#fafafa"
-            : "#18181b"
-          : isDark
-          ? "#27272a"
-          : "#e4e4e7",
-        color: isDark ? "#fafafa" : "#18181b",
+          ? colors.interactive.border
+          : colors.interactive.borderAlt,
+        color: colors.interactive.fg,
       },
-      placeholder: isDark ? "#71717a" : "#a1a1aa",
+      placeholder: colors.interactive.fgAlt,
       helperText: {
-        color: isDark ? "#a1a1aa" : "#71717a",
+        color: colors.container.fgAlt,
       },
       error: {
-        color: "#ef4444",
+        color: colors.destructive.bg,
       },
     }
 
@@ -152,11 +149,11 @@ export const PasswordInput = forwardRef<TextInput, PasswordInputProps>(
   ({ showToggle = true, rightElement, ...props }, ref) => {
     const [visible, setVisible] = useState(false)
     const colorScheme = useColorScheme() ?? "light"
-    const isDark = colorScheme === "dark"
+    const colors = getSemanticColors(colorScheme)
 
     const toggleElement = showToggle ? (
       <Pressable onPress={() => setVisible(!visible)} style={styles.toggleButton}>
-        <Text style={{ color: isDark ? "#a1a1aa" : "#71717a", fontSize: 12 }}>
+        <Text style={{ color: colors.container.fgAlt, fontSize: 12 }}>
           {visible ? "Hide" : "Show"}
         </Text>
       </Pressable>
@@ -192,7 +189,7 @@ export interface SearchInputProps extends InputProps {
 export const SearchInput = forwardRef<TextInput, SearchInputProps>(
   ({ onSearch, showClear = true, value, onClear, onSubmitEditing, ...props }, ref) => {
     const colorScheme = useColorScheme() ?? "light"
-    const isDark = colorScheme === "dark"
+    const colors = getSemanticColors(colorScheme)
 
     const handleSubmit = (e: any) => {
       onSearch?.(e.nativeEvent.text)
@@ -202,7 +199,7 @@ export const SearchInput = forwardRef<TextInput, SearchInputProps>(
     const clearButton =
       showClear && value ? (
         <Pressable onPress={onClear} style={styles.clearButton}>
-          <Text style={{ color: isDark ? "#71717a" : "#a1a1aa", fontSize: 16 }}>
+          <Text style={{ color: colors.interactive.fgAlt, fontSize: 16 }}>
             ×
           </Text>
         </Pressable>
@@ -231,19 +228,19 @@ const styles = StyleSheet.create({
   label: {
     fontSize: fontSizes.sm,
     fontWeight: "500",
-    marginBottom: 2,
+    marginBottom: sp.xxs,
   },
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
-    borderRadius: 6,
+    borderRadius: curves.xxs,
     minHeight: 44,
   },
   input: {
     flex: 1,
-    paddingHorizontal: 4,
-    paddingVertical: 2,
+    paddingHorizontal: sp.xs,
+    paddingVertical: sp.xxs,
     fontSize: fontSizes.base,
   },
   inputWithLeft: {
@@ -253,24 +250,24 @@ const styles = StyleSheet.create({
     paddingRight: 0,
   },
   leftElement: {
-    paddingLeft: 4,
+    paddingLeft: sp.xs,
   },
   rightElement: {
-    paddingRight: 4,
+    paddingRight: sp.xs,
   },
   helperText: {
     fontSize: fontSizes.xs,
-    marginTop: 2,
+    marginTop: sp.xxs,
   },
   disabled: {
     opacity: 0.5,
   },
   toggleButton: {
-    paddingHorizontal: 2,
-    paddingVertical: 2,
+    paddingHorizontal: sp.xxs,
+    paddingVertical: sp.xxs,
   },
   clearButton: {
-    paddingHorizontal: 2,
-    paddingVertical: 2,
+    paddingHorizontal: sp.xxs,
+    paddingVertical: sp.xxs,
   },
 })

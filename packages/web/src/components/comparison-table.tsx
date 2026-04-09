@@ -6,9 +6,9 @@ import { cn } from "@/lib/utils"
 const comparisonSectionVariants = cva("w-full", {
   variants: {
     size: {
-      sm: "py-12",
-      default: "py-16",
-      lg: "py-24",
+      sm: "py-[var(--spacing-2xl)]",
+      default: "py-[var(--spacing-3xl)]",
+      lg: "py-[var(--spacing-4xl)]",
     },
   },
   defaultVariants: {
@@ -28,7 +28,7 @@ const ComparisonSection = React.forwardRef<HTMLDivElement, ComparisonSectionProp
         className={cn(comparisonSectionVariants({ size }), className)}
         {...props}
       >
-        <div className="container mx-auto px-4">{children}</div>
+        <div className="container mx-auto px-[var(--spacing-md)]">{children}</div>
       </section>
     )
   }
@@ -41,7 +41,7 @@ const ComparisonHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("mb-12 text-center", className)}
+    className={cn("mb-[var(--spacing-2xl)] text-center", className)}
     {...props}
   />
 ))
@@ -54,7 +54,7 @@ const ComparisonTitle = React.forwardRef<
   <h2
     ref={ref}
     className={cn(
-      "font-heading text-3xl font-bold tracking-tight text-[var(--foregrounds-primary)] sm:text-4xl",
+      "font-heading text-3xl font-bold tracking-tight text-[var(--container-fg)] sm:text-4xl",
       className
     )}
     {...props}
@@ -69,7 +69,7 @@ const ComparisonDescription = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "mx-auto mt-4 max-w-2xl text-lg text-[var(--foregrounds-tertiary)]",
+      "mx-auto mt-[var(--spacing-md)] max-w-2xl text-lg text-[var(--container-fg-alt)]",
       className
     )}
     {...props}
@@ -115,7 +115,7 @@ const ComparisonTableBody = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <tbody
     ref={ref}
-    className={cn("[&>tr:nth-child(odd)]:bg-[var(--backgrounds-secondary)]/50", className)}
+    className={cn("[&>tr:nth-child(odd)]:bg-[var(--container-bg-alt)]", className)}
     {...props}
   />
 ))
@@ -130,11 +130,11 @@ const ComparisonTableRow = React.forwardRef<
 ComparisonTableRow.displayName = "ComparisonTableRow"
 
 const comparisonHeaderCellVariants = cva(
-  "px-4 py-4 text-sm font-medium text-center",
+  "px-[var(--spacing-md)] py-[var(--spacing-md)] text-sm font-medium text-center",
   {
     variants: {
       highlight: {
-        true: "bg-[var(--interactive-bg-alt2)]/30",
+        true: "bg-[var(--interactive-bg-alt2)]",
         false: "",
       },
     },
@@ -160,10 +160,10 @@ const ComparisonHeaderCell = React.forwardRef<
 ))
 ComparisonHeaderCell.displayName = "ComparisonHeaderCell"
 
-const comparisonCellVariants = cva("px-4 py-4 text-sm text-center", {
+const comparisonCellVariants = cva("px-[var(--spacing-md)] py-[var(--spacing-md)] text-sm text-center", {
   variants: {
     highlight: {
-      true: "bg-[var(--interactive-bg-alt2)]/30",
+      true: "bg-[var(--interactive-bg-alt2)]",
       false: "",
     },
   },
@@ -195,7 +195,7 @@ const ComparisonFeatureCell = React.forwardRef<
   <td
     ref={ref}
     className={cn(
-      "px-4 py-4 text-sm font-medium text-[var(--foregrounds-primary)] text-center",
+      "px-[var(--spacing-md)] py-[var(--spacing-md)] text-sm font-medium text-[var(--container-fg)] text-center",
       className
     )}
     {...props}
@@ -209,7 +209,7 @@ const ComparisonCheck = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <svg
     ref={ref}
-    className={cn("mx-auto h-5 w-5 text-green-500", className)}
+    className={cn("mx-auto h-5 w-5 text-[var(--positive-fg)]", className)}
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"
@@ -227,7 +227,7 @@ const ComparisonX = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <svg
     ref={ref}
-    className={cn("mx-auto h-5 w-5 text-[var(--foregrounds-tertiary)]/40", className)}
+    className={cn("mx-auto h-5 w-5 text-[var(--container-fg-alt)]", className)}
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"
@@ -245,7 +245,7 @@ const ComparisonMinus = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <svg
     ref={ref}
-    className={cn("mx-auto h-5 w-5 text-[var(--foregrounds-tertiary)]/40", className)}
+    className={cn("mx-auto h-5 w-5 text-[var(--container-fg-alt)]", className)}
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"
@@ -275,7 +275,7 @@ const ComparisonPlanName = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("font-heading font-semibold text-[var(--foregrounds-primary)]", className)}
+    className={cn("font-heading font-semibold text-[var(--container-fg)]", className)}
     {...props}
   />
 ))
@@ -287,7 +287,7 @@ const ComparisonPlanPrice = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("mt-1 font-heading text-2xl font-bold text-[var(--foregrounds-primary)]", className)}
+    className={cn("mt-[var(--spacing-xs)] font-heading text-2xl font-bold text-[var(--container-fg)]", className)}
     {...props}
   />
 ))
@@ -297,8 +297,8 @@ const ComparisonCategory = React.forwardRef<
   HTMLTableRowElement,
   React.HTMLAttributes<HTMLTableRowElement>
 >(({ className, children, ...props }, ref) => (
-  <tr ref={ref} className={cn("bg-muted/50", className)} {...props}>
-    <td colSpan={100} className="px-4 py-3 text-sm font-semibold text-[var(--foregrounds-primary)]">
+  <tr ref={ref} className={cn("bg-[var(--container-bg-alt)]", className)} {...props}>
+    <td colSpan={100} className="px-[var(--spacing-md)] py-[var(--spacing-sm)] text-sm font-semibold text-[var(--container-fg)]">
       {children}
     </td>
   </tr>

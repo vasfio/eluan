@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-const bentoGridVariants = cva("grid gap-4", {
+const bentoGridVariants = cva("grid gap-[var(--spacing-md)]", {
   variants: {
     columns: {
       2: "grid-cols-2",
@@ -33,26 +33,26 @@ const BentoGrid = React.forwardRef<HTMLDivElement, BentoGridProps>(
 BentoGrid.displayName = "BentoGrid"
 
 const bentoCardVariants = cva(
-  "group relative overflow-hidden rounded-2xl border border-[var(--container-border)]/60 bg-[var(--container-bg)] p-6 transition-colors duration-300",
+  "group relative overflow-hidden rounded-[var(--curves-xl)] border border-[color:var(--container-border-alt)] bg-[var(--container-bg)] p-[var(--spacing-md)] transition-colors duration-300",
   {
     variants: {
       variant: {
         default: "",
-        ghost: "border-transparent bg-[var(--backgrounds-secondary)]",
+        ghost: "border-transparent bg-[var(--container-bg-alt)]",
         dotted: [
-          "border-transparent bg-[var(--backgrounds-secondary)]",
-          "hover:[background-image:radial-gradient(var(--backgrounds-quaternary)_1px,transparent_1px)]",
+          "border-transparent bg-[var(--container-bg-alt)]",
+          "hover:[background-image:radial-gradient(var(--container-border-alt)_1px,transparent_1px)]",
           "hover:[background-size:16px_16px]",
         ].join(" "),
         grid: [
           "",
-          "hover:[background-image:linear-gradient(var(--container-border)_1px,transparent_1px),linear-gradient(to_right,var(--container-border)_1px,transparent_1px)]",
+          "hover:[background-image:linear-gradient(var(--container-border-alt)_1px,transparent_1px),linear-gradient(to_right,var(--container-border-alt)_1px,transparent_1px)]",
           "hover:[background-size:40px_40px]",
         ].join(" "),
       },
       size: {
         default: "",
-        lg: "p-8",
+        lg: "p-[var(--spacing-lg)]",
       },
       span: {
         1: "col-span-1",
@@ -112,7 +112,7 @@ const BentoCardIcon = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--backgrounds-tertiary)] text-[var(--foregrounds-secondary)]",
+      "mb-[var(--spacing-md)] inline-flex h-10 w-10 items-center justify-center rounded-[var(--curves-lg)] bg-[var(--container-bg-alt)] text-[var(--container-fg)]",
       className
     )}
     {...props}
@@ -129,7 +129,7 @@ const BentoCardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      "font-heading text-lg font-medium text-[var(--foregrounds-primary)]",
+      "font-heading text-lg font-medium text-[var(--container-fg)]",
       className
     )}
     {...props}
@@ -143,7 +143,7 @@ const BentoCardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-2 text-sm text-[var(--foregrounds-tertiary)]", className)}
+    className={cn("mt-[var(--spacing-sm)] text-sm text-[var(--container-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -153,7 +153,7 @@ const BentoCardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("mt-4", className)} {...props} />
+  <div ref={ref} className={cn("mt-[var(--spacing-md)]", className)} {...props} />
 ))
 BentoCardContent.displayName = "BentoCardContent"
 
@@ -188,7 +188,7 @@ const BentoCardBadge = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      "absolute right-4 top-4 inline-flex items-center rounded-full bg-[var(--action-primary-bg)] px-2.5 py-0.5 text-xs font-medium text-[var(--action-primary-fg)]",
+      "absolute right-4 top-4 inline-flex items-center rounded-full bg-[var(--action-primary-bg)] px-[var(--spacing-sm)] py-[var(--spacing-xxs)] text-xs font-medium text-[var(--action-primary-fg)]",
       className
     )}
     {...props}
@@ -203,7 +203,7 @@ const BentoCardLink = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mt-4 inline-flex items-center gap-1 text-sm font-medium text-[var(--action-primary-bg)]",
+      "mt-[var(--spacing-md)] inline-flex items-center gap-[var(--spacing-xs)] text-sm font-medium text-[var(--action-primary-bg)]",
       className
     )}
     {...props}
@@ -238,7 +238,7 @@ const BentoGridPreset = React.forwardRef<
   return (
     <div
       ref={ref}
-      className={cn("grid gap-4", layoutClasses[layout], className)}
+      className={cn("grid gap-[var(--spacing-md)]", layoutClasses[layout], className)}
       {...props}
     />
   )

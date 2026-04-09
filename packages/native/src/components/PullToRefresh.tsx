@@ -11,6 +11,7 @@ import {
   FlatListProps,
   SectionListProps,
 } from "react-native"
+import { getSemanticColors } from "../utils/styles"
 
 export interface PullToRefreshProps {
   /**
@@ -46,10 +47,10 @@ export function usePullToRefresh({
   title,
 }: PullToRefreshProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
-  const defaultColor = color ?? (isDark ? "#60a5fa" : "#3b82f6")
-  const defaultBackgroundColor = backgroundColor ?? (isDark ? "#18181b" : "#ffffff")
+  const defaultColor = color ?? colors.informative.bg
+  const defaultBackgroundColor = backgroundColor ?? colors.container.bg
 
   return (
     <RefreshControl
@@ -59,7 +60,7 @@ export function usePullToRefresh({
       tintColor={defaultColor} // iOS
       progressBackgroundColor={defaultBackgroundColor} // Android
       title={title} // iOS
-      titleColor={isDark ? "#a1a1aa" : "#71717a"} // iOS
+      titleColor={colors.container.fgAlt} // iOS
     />
   )
 }

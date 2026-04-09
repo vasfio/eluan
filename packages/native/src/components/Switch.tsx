@@ -9,7 +9,8 @@ import {
   useColorScheme,
   Animated,
 } from "react-native"
-import { spacing, fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@vasf/ragnar-tokens"
+import { sp, getSemanticColors } from "../utils/styles"
 
 export interface SwitchProps {
   /** Whether the switch is on */
@@ -44,7 +45,7 @@ export function Switch({
   labelPosition = "left",
 }: SwitchProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
   const translateX = useRef(new Animated.Value(checked ? 1 : 0)).current
 
   useEffect(() => {
@@ -73,27 +74,19 @@ export function Switch({
   const themedStyles = {
     track: {
       backgroundColor: checked
-        ? isDark
-          ? "#fafafa"
-          : "#18181b"
-        : isDark
-        ? "#27272a"
-        : "#e4e4e7",
+        ? colors.actionPrimary.bg
+        : colors.container.borderAlt,
     },
     thumb: {
       backgroundColor: checked
-        ? isDark
-          ? "#18181b"
-          : "#fafafa"
-        : isDark
-        ? "#71717a"
-        : "#ffffff",
+        ? colors.actionPrimary.fg
+        : colors.container.bg,
     },
     label: {
-      color: isDark ? "#fafafa" : "#18181b",
+      color: colors.container.fg,
     },
     description: {
-      color: isDark ? "#a1a1aa" : "#71717a",
+      color: colors.container.fgAlt,
     },
   }
 
@@ -196,14 +189,14 @@ export function LabeledSwitch({
   ...props
 }: LabeledSwitchProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
   return (
     <View style={styles.labeledContainer}>
       <Text
         style={[
           styles.stateLabel,
-          { color: isDark ? "#a1a1aa" : "#71717a" },
+          { color: colors.container.fgAlt },
           !checked && styles.stateLabelActive,
         ]}
       >
@@ -213,7 +206,7 @@ export function LabeledSwitch({
       <Text
         style={[
           styles.stateLabel,
-          { color: isDark ? "#a1a1aa" : "#71717a" },
+          { color: colors.container.fgAlt },
           checked && styles.stateLabelActive,
         ]}
       >
@@ -245,10 +238,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   labelLeft: {
-    marginRight: 4,
+    marginRight: sp.xs,
   },
   labelRight: {
-    marginLeft: 4,
+    marginLeft: sp.xs,
   },
   label: {
     fontSize: fontSizes.sm,
@@ -256,7 +249,7 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: fontSizes.xs,
-    marginTop: 2,
+    marginTop: sp.xxs,
   },
   disabled: {
     opacity: 0.5,
@@ -267,7 +260,7 @@ const styles = StyleSheet.create({
   labeledContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 2,
+    gap: sp.xxs,
   },
   stateLabel: {
     fontSize: fontSizes.sm,

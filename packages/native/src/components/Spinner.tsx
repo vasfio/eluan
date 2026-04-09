@@ -8,6 +8,7 @@ import {
   Easing,
   ActivityIndicator,
 } from "react-native"
+import { sp, getSemanticColors } from "../utils/styles"
 
 export interface SpinnerProps {
   /** Size of the spinner */
@@ -30,7 +31,7 @@ export function Spinner({
   native = false,
 }: SpinnerProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
   const rotation = useRef(new Animated.Value(0)).current
 
   const sizeMap = {
@@ -42,10 +43,10 @@ export function Spinner({
   const numericSize = typeof size === "number" ? size : sizeMap[size]
 
   const variantColors = {
-    default: isDark ? "#fafafa" : "#18181b",
-    primary: isDark ? "#3b82f6" : "#2563eb",
-    secondary: isDark ? "#71717a" : "#a1a1aa",
-    destructive: "#ef4444",
+    default: colors.actionPrimary.bg,
+    primary: colors.informative.bg,
+    secondary: colors.container.fgAlt,
+    destructive: colors.destructive.bg,
   }
 
   const spinnerColor = color || variantColors[variant]
@@ -102,7 +103,7 @@ export function Spinner({
             height: numericSize,
             borderRadius: numericSize / 2,
             borderWidth: strokeWidth,
-            borderColor: isDark ? "#27272a" : "#e4e4e7",
+            borderColor: colors.container.borderAlt,
             borderTopColor: spinnerColor,
           },
         ]}
@@ -130,7 +131,7 @@ export function DotsLoader({
   style,
 }: DotsLoaderProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
   const dot1 = useRef(new Animated.Value(0)).current
   const dot2 = useRef(new Animated.Value(0)).current
   const dot3 = useRef(new Animated.Value(0)).current
@@ -144,9 +145,9 @@ export function DotsLoader({
   const dotSize = sizeMap[size]
 
   const variantColors = {
-    default: isDark ? "#fafafa" : "#18181b",
-    primary: isDark ? "#3b82f6" : "#2563eb",
-    secondary: isDark ? "#71717a" : "#a1a1aa",
+    default: colors.actionPrimary.bg,
+    primary: colors.informative.bg,
+    secondary: colors.container.fgAlt,
   }
 
   const dotColor = color || variantColors[variant]
@@ -257,11 +258,11 @@ export function PulseLoader({
   style,
 }: PulseLoaderProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
   const scale = useRef(new Animated.Value(0)).current
   const opacity = useRef(new Animated.Value(1)).current
 
-  const pulseColor = color || (isDark ? "#fafafa" : "#18181b")
+  const pulseColor = color || colors.actionPrimary.bg
 
   useEffect(() => {
     const animation = Animated.loop(
@@ -332,7 +333,7 @@ const styles = StyleSheet.create({
   dotsContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 4,
+    gap: sp.xs,
   },
   dot: {
     // Individual dot

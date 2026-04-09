@@ -8,7 +8,8 @@ import {
   useColorScheme,
   Animated,
 } from "react-native"
-import { spacing, fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@vasf/ragnar-tokens"
+import { sp, getSemanticColors } from "../utils/styles"
 
 export interface ProgressProps {
   /** Progress value (0-100) */
@@ -46,7 +47,7 @@ export function Progress({
   labelStyle,
 }: ProgressProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
   const animatedWidth = useRef(new Animated.Value(0)).current
 
   const percentage = Math.min(Math.max((value / max) * 100, 0), 100)
@@ -71,26 +72,26 @@ export function Progress({
   }
 
   const variantColors = {
-    default: isDark ? "#fafafa" : "#18181b",
-    success: "#22c55e",
-    warning: "#f59e0b",
-    destructive: "#ef4444",
+    default: colors.actionPrimary.bg,
+    success: colors.positive.bg,
+    warning: colors.cautionary.bg,
+    destructive: colors.destructive.bg,
   }
 
   const currentSize = sizeStyles[size]
 
   const themedStyles = {
     track: {
-      backgroundColor: isDark ? "#27272a" : "#e4e4e7",
+      backgroundColor: colors.container.borderAlt,
     },
     fill: {
       backgroundColor: variantColors[variant],
     },
     label: {
-      color: isDark ? "#fafafa" : "#18181b",
+      color: colors.container.fg,
     },
     value: {
-      color: isDark ? "#a1a1aa" : "#71717a",
+      color: colors.container.fgAlt,
     },
   }
 
@@ -172,22 +173,22 @@ export function CircularProgress({
   children,
 }: CircularProgressProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
   const percentage = Math.min(Math.max(value, 0), 100)
 
   const variantColors = {
-    default: isDark ? "#fafafa" : "#18181b",
-    success: "#22c55e",
-    warning: "#f59e0b",
-    destructive: "#ef4444",
+    default: colors.actionPrimary.bg,
+    success: colors.positive.bg,
+    warning: colors.cautionary.bg,
+    destructive: colors.destructive.bg,
   }
 
   const themedStyles = {
-    track: isDark ? "#27272a" : "#e4e4e7",
+    track: colors.container.borderAlt,
     fill: variantColors[variant],
     text: {
-      color: isDark ? "#fafafa" : "#18181b",
+      color: colors.container.fg,
     },
   }
 
@@ -256,7 +257,7 @@ export function IndeterminateProgress({
   style,
 }: IndeterminateProgressProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
   const animation = useRef(new Animated.Value(0)).current
 
   useEffect(() => {
@@ -278,10 +279,10 @@ export function IndeterminateProgress({
   }
 
   const variantColors = {
-    default: isDark ? "#fafafa" : "#18181b",
-    success: "#22c55e",
-    warning: "#f59e0b",
-    destructive: "#ef4444",
+    default: colors.actionPrimary.bg,
+    success: colors.positive.bg,
+    warning: colors.cautionary.bg,
+    destructive: colors.destructive.bg,
   }
 
   const currentSize = sizeStyles[size]
@@ -296,7 +297,7 @@ export function IndeterminateProgress({
       style={[
         styles.track,
         {
-          backgroundColor: isDark ? "#27272a" : "#e4e4e7",
+          backgroundColor: colors.container.borderAlt,
           height: currentSize.height,
           borderRadius: currentSize.borderRadius,
           overflow: "hidden",
@@ -328,7 +329,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 2,
+    marginBottom: sp.xxs,
   },
   label: {
     fontSize: fontSizes.sm,

@@ -7,14 +7,14 @@ const statsSectionVariants = cva("w-full", {
   variants: {
     variant: {
       default: "bg-[var(--container-bg)]",
-      muted: "bg-[var(--backgrounds-secondary)]",
+      muted: "bg-[var(--container-bg-alt)]",
       primary: "bg-[var(--action-primary-bg)] text-[var(--action-primary-fg)]",
-      dark: "bg-[var(--backgrounds-primary)] text-[var(--foregrounds-primary)]",
+      dark: "bg-[var(--container-bg-inverse)] text-[var(--container-fg-inverse)]",
     },
     size: {
-      sm: "py-12",
-      default: "py-16",
-      lg: "py-24",
+      sm: "py-[var(--spacing-2xl)]",
+      default: "py-[var(--spacing-3xl)]",
+      lg: "py-[var(--spacing-4xl)]",
     },
   },
   defaultVariants: {
@@ -35,7 +35,7 @@ const StatsSection = React.forwardRef<HTMLDivElement, StatsSectionProps>(
         className={cn(statsSectionVariants({ variant, size }), className)}
         {...props}
       >
-        <div className="container mx-auto px-4">{children}</div>
+        <div className="container mx-auto px-[var(--spacing-md)]">{children}</div>
       </section>
     )
   }
@@ -48,7 +48,7 @@ const StatsHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("mb-12 text-center", className)}
+    className={cn("mb-[var(--spacing-2xl)] text-center", className)}
     {...props}
   />
 ))
@@ -61,7 +61,7 @@ const StatsTitle = React.forwardRef<
   <h2
     ref={ref}
     className={cn(
-      "font-heading text-3xl font-medium tracking-tight text-[var(--foregrounds-primary)] sm:text-4xl",
+      "font-heading text-3xl font-medium tracking-tight text-[var(--container-fg)] sm:text-4xl",
       className
     )}
     {...props}
@@ -75,13 +75,13 @@ const StatsDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-[var(--foregrounds-tertiary)]", className)}
+    className={cn("mx-auto mt-[var(--spacing-md)] max-w-2xl text-lg leading-relaxed text-[var(--container-fg-alt)]", className)}
     {...props}
   />
 ))
 StatsDescription.displayName = "StatsDescription"
 
-const statsGridVariants = cva("grid gap-8", {
+const statsGridVariants = cva("grid gap-[var(--spacing-lg)]", {
   variants: {
     columns: {
       2: "md:grid-cols-2",
@@ -113,8 +113,8 @@ const statItemVariants = cva("text-center", {
   variants: {
     variant: {
       default: "",
-      bordered: "border-l border-[var(--container-border)]/60 first:border-l-0 pl-8 first:pl-0",
-      card: "rounded-2xl border border-[var(--container-border)]/60 bg-[var(--container-bg)] p-8 transition-all duration-300 hover:shadow-md hover:shadow-black/[0.03]",
+      bordered: "border-l border-[color:var(--container-border-alt)] first:border-l-0 pl-[var(--spacing-lg)] first:pl-0",
+      card: "rounded-[var(--curves-xl)] border border-[color:var(--container-border-alt)] bg-[var(--container-bg)] p-[var(--spacing-lg)] transition-all duration-300 hover:shadow-md hover:shadow-black/[0.03]",
     },
   },
   defaultVariants: {
@@ -143,7 +143,7 @@ const StatValue = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("font-heading text-4xl font-medium tracking-tight text-[var(--foregrounds-primary)] lg:text-5xl", className)}
+    className={cn("font-heading text-4xl font-medium tracking-tight text-[var(--container-fg)] lg:text-5xl", className)}
     {...props}
   />
 ))
@@ -155,7 +155,7 @@ const StatLabel = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("mt-3 text-sm font-normal text-[var(--foregrounds-tertiary)]", className)}
+    className={cn("mt-[var(--spacing-sm)] text-sm font-normal text-[var(--container-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -170,10 +170,10 @@ const StatTrend = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mt-1 text-sm font-medium",
+      "mt-[var(--spacing-xs)] text-sm font-medium",
       direction === "up" && "text-[var(--positive-fg)]",
       direction === "down" && "text-[var(--negative-fg)]",
-      direction === "neutral" && "text-[var(--foregrounds-tertiary)]",
+      direction === "neutral" && "text-[var(--container-fg-alt)]",
       className
     )}
     {...props}

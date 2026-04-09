@@ -10,7 +10,8 @@ import {
   TextStyle,
   useColorScheme,
 } from "react-native"
-import { spacing, radius, fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@vasf/ragnar-tokens"
+import { sp, curves, getSemanticColors } from "../utils/styles"
 
 export interface PickerOption<T = string> {
   /**
@@ -87,13 +88,13 @@ export function NativePicker<T = string>({
 }: NativePickerProps<T>) {
   const [visible, setVisible] = useState(false)
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
-  const backgroundColor = isDark ? "#18181b" : "#ffffff"
-  const borderColor = isDark ? "#27272a" : "#e4e4e7"
-  const textColor = isDark ? "#fafafa" : "#18181b"
-  const mutedColor = isDark ? "#a1a1aa" : "#71717a"
-  const primaryColor = isDark ? "#60a5fa" : "#3b82f6"
+  const backgroundColor = colors.container.bg
+  const borderColor = colors.container.borderAlt
+  const textColor = colors.container.fg
+  const mutedColor = colors.container.fgAlt
+  const primaryColor = colors.informative.bg
 
   const selectedOption = options.find((opt) => opt.value === value)
 
@@ -146,7 +147,7 @@ export function NativePicker<T = string>({
                   <Pressable
                     style={[
                       styles.option,
-                      isSelected && { backgroundColor: isDark ? "#27272a" : "#f4f4f5" },
+                      isSelected && { backgroundColor: colors.actionSecondary.bg },
                       item.disabled && styles.optionDisabled,
                     ]}
                     onPress={() => handleSelect(item)}
@@ -225,9 +226,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     height: 48,
-    paddingHorizontal: 4,
+    paddingHorizontal: sp.xs,
     borderWidth: 1,
-    borderRadius: 8,
+    borderRadius: curves.xs,
   },
   triggerDisabled: {
     opacity: 0.5,
@@ -246,16 +247,16 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     justifyContent: "center",
     alignItems: "center",
-    padding: 4,
+    padding: sp.xs,
   },
   modalContent: {
     width: "100%",
     maxHeight: "70%",
-    borderRadius: 12,
+    borderRadius: curves.sm,
     overflow: "hidden",
   },
   modalHeader: {
-    padding: 4,
+    padding: sp.xs,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   modalTitle: {
@@ -266,15 +267,15 @@ const styles = StyleSheet.create({
   option: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 4,
-    paddingHorizontal: 4,
+    paddingVertical: sp.xs,
+    paddingHorizontal: sp.xs,
     minHeight: 52,
   },
   optionDisabled: {
     opacity: 0.5,
   },
   optionIcon: {
-    marginRight: 4,
+    marginRight: sp.xs,
   },
   optionLabel: {
     flex: 1,
@@ -288,7 +289,7 @@ const styles = StyleSheet.create({
     height: StyleSheet.hairlineWidth,
   },
   cancelButton: {
-    paddingVertical: 4,
+    paddingVertical: sp.xs,
     borderTopWidth: StyleSheet.hairlineWidth,
   },
   cancelText: {

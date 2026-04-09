@@ -10,7 +10,8 @@ import {
   Modal,
   Dimensions,
 } from "react-native"
-import { spacing, radius, fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@vasf/ragnar-tokens"
+import { sp, curves, getSemanticColors } from "../utils/styles"
 
 export interface ActionSheetOption {
   /** Unique key for the option */
@@ -57,6 +58,7 @@ export function ActionSheet({
 }: ActionSheetProps) {
   const colorScheme = useColorScheme() ?? "light"
   const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
   const translateY = useRef(new Animated.Value(400)).current
   const backdropOpacity = useRef(new Animated.Value(0)).current
 
@@ -103,37 +105,37 @@ export function ActionSheet({
       backgroundColor: isDark ? "rgba(0,0,0,0.7)" : "rgba(0,0,0,0.5)",
     },
     container: {
-      backgroundColor: isDark ? "#18181b" : "#ffffff",
+      backgroundColor: colors.container.bg,
     },
     title: {
-      color: isDark ? "#fafafa" : "#18181b",
+      color: colors.container.fg,
     },
     message: {
-      color: isDark ? "#a1a1aa" : "#71717a",
+      color: colors.container.fgAlt,
     },
     option: {
-      backgroundColor: isDark ? "#27272a" : "#f4f4f5",
+      backgroundColor: colors.actionSecondary.bg,
     },
     optionLabel: {
-      color: isDark ? "#fafafa" : "#18181b",
+      color: colors.container.fg,
     },
     optionDescription: {
-      color: isDark ? "#a1a1aa" : "#71717a",
+      color: colors.container.fgAlt,
     },
     destructive: {
-      color: "#ef4444",
+      color: colors.destructive.bg,
     },
     disabled: {
       opacity: 0.5,
     },
     cancel: {
-      backgroundColor: isDark ? "#27272a" : "#f4f4f5",
+      backgroundColor: colors.actionSecondary.bg,
     },
     cancelText: {
-      color: isDark ? "#fafafa" : "#18181b",
+      color: colors.container.fg,
     },
     separator: {
-      backgroundColor: isDark ? "#3f3f46" : "#e4e4e7",
+      backgroundColor: colors.container.border,
     },
   }
 
@@ -289,15 +291,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   sheet: {
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
-    paddingTop: 2,
-    paddingBottom: 8,
+    borderTopLeftRadius: curves.sm,
+    borderTopRightRadius: curves.sm,
+    paddingTop: sp.xxs,
+    paddingBottom: sp.sm,
     maxHeight: screenHeight * 0.8,
   },
   header: {
-    paddingHorizontal: 4,
-    paddingVertical: 4,
+    paddingHorizontal: sp.xs,
+    paddingVertical: sp.xs,
     alignItems: "center",
   },
   title: {
@@ -308,19 +310,19 @@ const styles = StyleSheet.create({
   message: {
     fontSize: fontSizes.sm,
     textAlign: "center",
-    marginTop: 2,
+    marginTop: sp.xxs,
   },
   options: {
-    paddingHorizontal: 4,
+    paddingHorizontal: sp.xs,
   },
   option: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 4,
-    paddingHorizontal: 4,
+    paddingVertical: sp.xs,
+    paddingHorizontal: sp.xs,
   },
   optionIcon: {
-    marginRight: 4,
+    marginRight: sp.xs,
   },
   optionText: {
     flex: 1,
@@ -331,20 +333,20 @@ const styles = StyleSheet.create({
   },
   optionDescription: {
     fontSize: fontSizes.sm,
-    marginTop: 2,
+    marginTop: sp.xxs,
   },
   separator: {
     height: 1,
-    marginHorizontal: 4,
+    marginHorizontal: sp.xs,
   },
   cancelContainer: {
-    paddingHorizontal: 4,
-    paddingTop: 4,
-    marginTop: 2,
+    paddingHorizontal: sp.xs,
+    paddingTop: sp.xs,
+    marginTop: sp.xxs,
   },
   cancel: {
-    paddingVertical: 4,
-    borderRadius: 8,
+    paddingVertical: sp.xs,
+    borderRadius: curves.xs,
     alignItems: "center",
   },
   cancelText: {

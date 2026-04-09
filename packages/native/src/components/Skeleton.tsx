@@ -7,7 +7,7 @@ import {
   Animated,
   Easing,
 } from "react-native"
-import { spacing, radius } from "@vasf/ragnar-tokens"
+import { sp, curves, getSemanticColors } from "../utils/styles"
 
 import type { DimensionValue } from "react-native"
 
@@ -35,6 +35,7 @@ export function Skeleton({
   style,
 }: SkeletonProps) {
   const colorScheme = useColorScheme() ?? "light"
+  const colors = getSemanticColors(colorScheme)
   const isDark = colorScheme === "dark"
   const shimmer = useRef(new Animated.Value(0)).current
 
@@ -56,7 +57,7 @@ export function Skeleton({
   const getRadius = () => {
     if (radius !== undefined) {
       if (typeof radius === "number") return radius
-      const radiusMap = { sm: 4, md: 6, lg: 8, full: 9999 }
+      const radiusMap = { sm: curves.xxs, md: 6, lg: curves.xs, full: 9999 }
       return radiusMap[radius]
     }
 
@@ -69,7 +70,7 @@ export function Skeleton({
         return 0
       case "text":
       default:
-        return 4
+        return curves.xxs
     }
   }
 
@@ -80,8 +81,8 @@ export function Skeleton({
   }
 
   const themedStyles = {
-    base: isDark ? "#27272a" : "#e4e4e7",
-    shimmer: isDark ? "#3f3f46" : "#f4f4f5",
+    base: colors.container.borderAlt,
+    shimmer: isDark ? colors.container.border : colors.actionSecondary.bg,
   }
 
   const shimmerTranslate = shimmer.interpolate({
@@ -135,7 +136,7 @@ export interface SkeletonTextProps {
 export function SkeletonText({
   lines = 3,
   lineHeight = 16,
-  gap = 8,
+  gap = sp.sm,
   lastLineWidth = "60%",
   style,
 }: SkeletonTextProps) {
@@ -189,15 +190,15 @@ export function SkeletonCard({
   style,
 }: SkeletonCardProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
   return (
     <View
       style={[
         styles.card,
         {
-          backgroundColor: isDark ? "#18181b" : "#ffffff",
-          borderColor: isDark ? "#27272a" : "#e4e4e7",
+          backgroundColor: colors.container.bg,
+          borderColor: colors.container.borderAlt,
         },
         style,
       ]}
@@ -277,7 +278,7 @@ export interface SkeletonGroupProps {
 
 export function SkeletonGroup({
   count = 3,
-  gap = 16,
+  gap = sp.lg,
   children,
   style,
 }: SkeletonGroupProps) {
@@ -305,7 +306,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   card: {
-    borderRadius: 8,
+    borderRadius: curves.xs,
     borderWidth: 1,
     overflow: "hidden",
   },
@@ -313,7 +314,7 @@ const styles = StyleSheet.create({
     borderRadius: 0,
   },
   cardContent: {
-    padding: 4,
+    padding: sp.xs,
   },
   cardTextGap: {
     height: 4,
@@ -321,18 +322,18 @@ const styles = StyleSheet.create({
   listItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 2,
+    paddingVertical: sp.xxs,
   },
   listItemAvatar: {
-    marginRight: 4,
+    marginRight: sp.xs,
   },
   listItemContent: {
     flex: 1,
   },
   listItemTextGap: {
-    marginTop: 2,
+    marginTop: sp.xxs,
   },
   listItemTrailing: {
-    marginLeft: 2,
+    marginLeft: sp.xxs,
   },
 })

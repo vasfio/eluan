@@ -6,19 +6,19 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const cookieBannerVariants = cva(
-  "fixed z-50 w-full p-4 shadow-lg transition-transform duration-300",
+  "fixed z-50 w-full p-[var(--spacing-md)] shadow-lg transition-transform duration-300",
   {
     variants: {
       position: {
         bottom: "bottom-0 left-0",
         top: "top-0 left-0",
-        "bottom-left": "bottom-4 left-4 max-w-md rounded-lg",
-        "bottom-right": "bottom-4 right-4 max-w-md rounded-lg",
+        "bottom-left": "bottom-4 left-4 max-w-md rounded-[var(--curves-lg)]",
+        "bottom-right": "bottom-4 right-4 max-w-md rounded-[var(--curves-lg)]",
       },
       variant: {
-        default: "border-t bg-background",
-        dark: "bg-zinc-900 text-white",
-        card: "border bg-card",
+        default: "border-t border-[color:var(--container-border-alt)] bg-[var(--container-bg)]",
+        dark: "bg-[var(--container-bg-inverse)] text-[var(--container-fg-inverse)]",
+        card: "border border-[color:var(--container-border-alt)] bg-[var(--container-bg)]",
       },
     },
     defaultVariants: {
@@ -85,7 +85,7 @@ const CookieBannerContent = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "flex flex-col gap-4 md:flex-row md:items-center md:justify-between",
+      "flex flex-col gap-[var(--spacing-md)] md:flex-row md:items-center md:justify-between",
       className
     )}
     {...props}
@@ -119,7 +119,7 @@ const CookieBannerDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-1 text-sm text-muted-foreground", className)}
+    className={cn("mt-[var(--spacing-xs)] text-sm text-[var(--container-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -131,7 +131,7 @@ const CookieBannerActions = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-wrap items-center gap-2", className)}
+    className={cn("flex flex-wrap items-center gap-[var(--spacing-sm)]", className)}
     {...props}
   />
 ))
@@ -144,7 +144,7 @@ const CookieBannerLink = React.forwardRef<
   <a
     ref={ref}
     className={cn(
-      "text-sm text-primary underline-offset-4 hover:underline",
+      "text-sm text-[var(--action-primary-bg)] underline-offset-4 hover:underline",
       className
     )}
     {...props}
@@ -190,13 +190,13 @@ const CookiePreferences = React.forwardRef<HTMLDivElement, CookiePreferencesProp
 
     return (
       <div
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-[var(--spacing-md)]"
         onClick={onClose}
       >
         <div
           ref={ref}
           className={cn(
-            "w-full max-w-lg rounded-lg bg-background p-6 shadow-xl",
+            "w-full max-w-lg rounded-[var(--curves-lg)] bg-[var(--container-bg)] p-[var(--spacing-md)] shadow-xl",
             className
           )}
           onClick={(e) => e.stopPropagation()}
@@ -218,7 +218,7 @@ const CookiePreferencesHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("mb-6", className)}
+    className={cn("mb-[var(--spacing-md)]", className)}
     {...props}
   />
 ))
@@ -242,7 +242,7 @@ const CookiePreferencesDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-2 text-sm text-muted-foreground", className)}
+    className={cn("mt-[var(--spacing-sm)] text-sm text-[var(--container-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -254,7 +254,7 @@ const CookiePreferencesList = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("space-y-4", className)}
+    className={cn("space-y-[var(--spacing-md)]", className)}
     {...props}
   />
 ))
@@ -291,7 +291,7 @@ const CookiePreferenceItem = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "flex items-start justify-between gap-4 rounded-lg border p-4",
+          "flex items-start justify-between gap-[var(--spacing-md)] rounded-[var(--curves-lg)] border p-[var(--spacing-md)]",
           className
         )}
         {...props}
@@ -300,12 +300,12 @@ const CookiePreferenceItem = React.forwardRef<
           <label htmlFor={id} className="font-medium">
             {name}
             {required && (
-              <span className="ml-2 text-xs text-muted-foreground">
+              <span className="ml-[var(--spacing-sm)] text-xs text-[var(--container-fg-alt)]">
                 (Required)
               </span>
             )}
           </label>
-          <p className="mt-1 text-sm text-muted-foreground">{description}</p>
+          <p className="mt-[var(--spacing-xs)] text-sm text-[var(--container-fg-alt)]">{description}</p>
         </div>
         <div className="shrink-0">
           <button
@@ -317,7 +317,7 @@ const CookiePreferenceItem = React.forwardRef<
             onClick={() => onChange?.(!checked)}
             className={cn(
               "relative inline-flex h-6 w-11 items-center rounded-full transition-colors",
-              required || checked ? "bg-primary" : "bg-muted",
+              required || checked ? "bg-[var(--action-primary-bg)]" : "bg-[var(--container-bg-alt)]",
               required && "cursor-not-allowed opacity-50"
             )}
           >
@@ -341,7 +341,7 @@ const CookiePreferencesFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("mt-6 flex justify-end gap-2", className)}
+    className={cn("mt-[var(--spacing-md)] flex justify-end gap-[var(--spacing-sm)]", className)}
     {...props}
   />
 ))

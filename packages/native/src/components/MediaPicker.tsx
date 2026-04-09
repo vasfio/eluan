@@ -9,7 +9,8 @@ import {
   Image,
   ScrollView,
 } from "react-native"
-import { spacing, radius, fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@vasf/ragnar-tokens"
+import { sp, curves, getSemanticColors } from "../utils/styles"
 
 export interface MediaItem {
   /**
@@ -86,12 +87,12 @@ export function MediaPicker({
   disabled = false,
 }: MediaPickerProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
-  const backgroundColor = isDark ? "#27272a" : "#f4f4f5"
-  const borderColor = isDark ? "#3f3f46" : "#e4e4e7"
-  const textColor = isDark ? "#fafafa" : "#18181b"
-  const mutedColor = isDark ? "#a1a1aa" : "#71717a"
+  const backgroundColor = colors.actionSecondary.bg
+  const borderColor = colors.container.border
+  const textColor = colors.container.fg
+  const mutedColor = colors.container.fgAlt
 
   const handleRemove = (id: string) => {
     onSelectionChange(selectedMedia.filter((item) => item.id !== id))
@@ -188,17 +189,17 @@ export function MediaPicker({
 
 const styles = StyleSheet.create({
   container: {
-    gap: 2,
+    gap: sp.xxs,
   },
   mediaList: {
-    gap: 2,
-    paddingVertical: 2,
+    gap: sp.xxs,
+    paddingVertical: sp.xxs,
   },
   mediaItem: {
     position: "relative",
     width: 80,
     height: 80,
-    borderRadius: 8,
+    borderRadius: curves.xs,
     overflow: "hidden",
   },
   mediaImage: {
@@ -210,9 +211,9 @@ const styles = StyleSheet.create({
     bottom: 2,
     right: 2,
     backgroundColor: "rgba(0, 0, 0, 0.7)",
-    paddingHorizontal: 2,
-    paddingVertical: 2,
-    borderRadius: 4,
+    paddingHorizontal: sp.xxs,
+    paddingVertical: sp.xxs,
+    borderRadius: curves.xxs,
   },
   durationText: {
     color: "#ffffff",
@@ -239,7 +240,7 @@ const styles = StyleSheet.create({
   addButton: {
     width: 80,
     height: 80,
-    borderRadius: 8,
+    borderRadius: curves.xs,
     borderWidth: 2,
     borderStyle: "dashed",
     alignItems: "center",
@@ -251,17 +252,17 @@ const styles = StyleSheet.create({
   },
   emptyState: {
     flexDirection: "row",
-    gap: 2,
+    gap: sp.xxs,
   },
   pickerButton: {
     flex: 1,
     height: 100,
-    borderRadius: 8,
+    borderRadius: curves.xs,
     borderWidth: 2,
     borderStyle: "dashed",
     alignItems: "center",
     justifyContent: "center",
-    gap: 2,
+    gap: sp.xxs,
   },
   pickerIcon: {
     fontSize: 32,
@@ -273,7 +274,7 @@ const styles = StyleSheet.create({
   cameraButton: {
     width: 100,
     height: 100,
-    borderRadius: 8,
+    borderRadius: curves.xs,
     borderWidth: 2,
     borderStyle: "dashed",
     alignItems: "center",

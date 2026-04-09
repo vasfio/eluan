@@ -8,7 +8,8 @@ import {
   TextStyle,
   useColorScheme,
 } from "react-native"
-import { spacing, fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@vasf/ragnar-tokens"
+import { sp, getSemanticColors } from "../utils/styles"
 
 export interface TabItem {
   /**
@@ -71,12 +72,12 @@ export function BottomTabBar({
   labelStyle,
 }: BottomTabBarProps) {
   const colorScheme = useColorScheme() ?? "light"
-  const isDark = colorScheme === "dark"
+  const colors = getSemanticColors(colorScheme)
 
-  const activeColor = isDark ? "#60a5fa" : "#3b82f6"
-  const inactiveColor = isDark ? "#71717a" : "#a1a1aa"
-  const backgroundColor = isDark ? "#18181b" : "#ffffff"
-  const borderColor = isDark ? "#27272a" : "#e4e4e7"
+  const activeColor = colors.informative.bg
+  const inactiveColor = colors.container.fgAlt
+  const backgroundColor = colors.container.bg
+  const borderColor = colors.container.borderAlt
 
   return (
     <View
@@ -107,7 +108,7 @@ export function BottomTabBar({
               {tab.icon?.({ focused: isActive, color, size: 24 })}
               {tab.badge !== undefined && tab.badge > 0 && (
                 <View style={styles.badge}>
-                  <Text style={styles.badgeText}>
+                  <Text style={[styles.badgeText, { color: colors.destructive.fg }]}>
                     {tab.badge > 99 ? "99+" : tab.badge}
                   </Text>
                 </View>
@@ -137,21 +138,21 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     borderTopWidth: StyleSheet.hairlineWidth,
-    paddingBottom: 4, // Safe area padding
-    paddingTop: 2,
+    paddingBottom: sp.xs, // Safe area padding
+    paddingTop: sp.xxs,
   },
   tab: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 2,
+    paddingVertical: sp.xxs,
   },
   tabPressed: {
     opacity: 0.7,
   },
   iconContainer: {
     position: "relative",
-    marginBottom: 2,
+    marginBottom: sp.xxs,
   },
   label: {
     fontSize: fontSizes.xs,
@@ -170,10 +171,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#ef4444",
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 4,
+    paddingHorizontal: sp.xs,
   },
   badgeText: {
-    color: "#ffffff",
     fontSize: 10,
     fontWeight: "700",
   },

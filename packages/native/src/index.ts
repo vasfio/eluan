@@ -196,5 +196,5 @@ export type { ActionSheetProps, ActionSheetOption } from "./components/ActionShe
 // Utilities
 // ============================================
 
-export { createThemedStyles, hslToRgb } from "./utils/styles"
-export type { ColorScheme } from "./utils/styles"
+export { createThemedStyles, hslToRgb, sp, curves, getSemanticColors, getSemanticTokens } from "./utils/styles"
+export type { ColorScheme, SemanticSpacing, SemanticCurves, SemanticColors } from "./utils/styles"
