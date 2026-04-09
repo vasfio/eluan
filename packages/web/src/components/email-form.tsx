@@ -93,17 +93,17 @@ const EmailForm = React.forwardRef<HTMLFormElement, EmailFormProps>(
             placeholder={placeholder}
             disabled={isDisabled}
             required
-            className={cn("h-12", layout === "inline" && "flex-1")}
+            className={cn("h-[var(--size-xl)]", layout === "inline" && "flex-1")}
           />
           <Button
             type="submit"
             disabled={isDisabled}
-            className={cn("h-12", layout === "stacked" && "w-full")}
+            className={cn("h-[var(--size-xl)]", layout === "stacked" && "w-full")}
           >
             {isLoading ? (
               <span className="flex items-center gap-[var(--spacing-sm)]">
                 <svg
-                  className="h-4 w-4 animate-spin"
+                  className="h-[var(--size-xxs)] w-[var(--size-xxs)] animate-spin"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -130,15 +130,15 @@ const EmailForm = React.forwardRef<HTMLFormElement, EmailFormProps>(
           </Button>
         </form>
         {helperText && status === "idle" && (
-          <p className="mt-[var(--spacing-sm)] text-sm text-[var(--container-fg-alt)]">{helperText}</p>
+          <p className="mt-[var(--spacing-sm)] text-[var(--font-size-sm)] text-[var(--container-fg-alt)]">{helperText}</p>
         )}
         {status === "success" && successMessage && (
-          <p className="mt-[var(--spacing-sm)] text-sm text-[var(--positive-fg)]">
+          <p className="mt-[var(--spacing-sm)] text-[var(--font-size-sm)] text-[var(--positive-fg)]">
             {successMessage}
           </p>
         )}
         {status === "error" && errorMessage && (
-          <p className="mt-[var(--spacing-sm)] text-sm text-[var(--destructive-fg)]">{errorMessage}</p>
+          <p className="mt-[var(--spacing-sm)] text-[var(--font-size-sm)] text-[var(--destructive-fg)]">{errorMessage}</p>
         )}
       </div>
     )

@@ -6,9 +6,9 @@ import { cn } from "@/lib/utils"
 const socialProofVariants = cva("flex items-center gap-[var(--spacing-sm)]", {
   variants: {
     size: {
-      sm: "text-sm",
-      default: "text-base",
-      lg: "text-lg",
+      sm: "text-[var(--font-size-sm)]",
+      default: "text-[var(--font-size-base)]",
+      lg: "text-[var(--font-size-lg)]",
     },
   },
   defaultVariants: {
@@ -41,9 +41,9 @@ export interface AvatarStackProps extends React.HTMLAttributes<HTMLDivElement> {
 const AvatarStack = React.forwardRef<HTMLDivElement, AvatarStackProps>(
   ({ className, max = 5, total, size = "default", children, ...props }, ref) => {
     const sizes = {
-      sm: "h-6 w-6 -ml-[var(--spacing-sm)] first:ml-0",
-      default: "h-8 w-8 -ml-[var(--spacing-sm)] first:ml-0",
-      lg: "h-10 w-10 -ml-[var(--spacing-md)] first:ml-0",
+      sm: "h-[var(--size-sm)] w-[var(--size-sm)] -ml-[var(--spacing-sm)] first:ml-0",
+      default: "h-[var(--size-md)] w-[var(--size-md)] -ml-[var(--spacing-sm)] first:ml-0",
+      lg: "h-[var(--size-lg)] w-[var(--size-lg)] -ml-[var(--spacing-md)] first:ml-0",
     }
 
     const childArray = React.Children.toArray(children)
@@ -71,7 +71,7 @@ const AvatarStack = React.forwardRef<HTMLDivElement, AvatarStackProps>(
         {remaining > 0 && (
           <div
             className={cn(
-              "relative inline-flex items-center justify-center rounded-full border-2 border-[var(--container-bg)] bg-[var(--container-bg-alt)] text-xs font-medium text-[var(--container-fg-alt)]",
+              "relative inline-flex items-center justify-center rounded-full border-2 border-[var(--container-bg)] bg-[var(--container-bg-alt)] text-[var(--font-size-xs)] font-medium text-[var(--container-fg-alt)]",
               sizes[size]
             )}
           >
@@ -106,8 +106,8 @@ const StarRating = React.forwardRef<HTMLDivElement, StarRatingProps>(
   ) => {
     const sizes = {
       sm: "h-3 w-3",
-      default: "h-4 w-4",
-      lg: "h-5 w-5",
+      default: "h-[var(--size-xxs)] w-[var(--size-xxs)]",
+      lg: "h-[var(--size-xs)] w-[var(--size-xs)]",
     }
 
     const fullStars = Math.floor(rating)
@@ -197,14 +197,14 @@ const TrustBadge = React.forwardRef<HTMLDivElement, TrustBadgeProps>(
     <div
       ref={ref}
       className={cn(
-        "flex items-center gap-[var(--spacing-sm)] text-sm text-[var(--container-fg-alt)]",
+        "flex items-center gap-[var(--spacing-sm)] text-[var(--font-size-sm)] text-[var(--container-fg-alt)]",
         className
       )}
       {...props}
     >
       {icon || (
         <svg
-          className="h-4 w-4 text-[var(--positive-fg)]"
+          className="h-[var(--size-xxs)] w-[var(--size-xxs)] text-[var(--positive-fg)]"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -243,9 +243,9 @@ const CustomerCount = React.forwardRef<HTMLDivElement, CustomerCountProps>(
     ref
   ) => {
     const sizes = {
-      sm: "text-sm",
-      default: "text-base",
-      lg: "text-lg",
+      sm: "text-[var(--font-size-sm)]",
+      default: "text-[var(--font-size-base)]",
+      lg: "text-[var(--font-size-lg)]",
     }
 
     return (
@@ -290,7 +290,7 @@ const FeaturedIn = React.forwardRef<HTMLDivElement, FeaturedInProps>(
       className={cn("text-center", className)}
       {...props}
     >
-      <p className="mb-[var(--spacing-lg)] text-xs font-normal uppercase tracking-widest text-[var(--container-fg-alt)]">
+      <p className="mb-[var(--spacing-lg)] text-[var(--font-size-xs)] font-normal uppercase tracking-widest text-[var(--container-fg-alt)]">
         {title}
       </p>
       <div className="flex flex-wrap items-center justify-center gap-[var(--spacing-xl)] opacity-40 grayscale transition-opacity duration-300 hover:opacity-60">

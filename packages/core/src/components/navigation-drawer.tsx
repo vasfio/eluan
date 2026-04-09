@@ -66,7 +66,7 @@ const NavigationDrawer = React.forwardRef<
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="ghost" size="icon" className="fixed top-3 left-3 z-40 md:hidden">
-            <Menu className="h-5 w-5" />
+            <Menu className="h-[var(--size-xs)] w-[var(--size-xs)]" />
             <span className="sr-only">Open navigation</span>
           </Button>
         </SheetTrigger>
@@ -83,7 +83,7 @@ const NavigationDrawer = React.forwardRef<
       data-collapsed={collapsed}
       className={cn(
         "flex h-full flex-col border-r border-[var(--container-border-alt)] bg-[var(--container-bg)] transition-all duration-300",
-        collapsed ? "w-16" : "w-64",
+        collapsed ? "w-[var(--size-2xl)]" : "w-64",
         className
       )}
       {...props}
@@ -153,14 +153,14 @@ const NavigationDrawerToggle = React.forwardRef<
       ref={ref}
       variant="ghost"
       size="icon"
-      className={cn("h-8 w-8", className)}
+      className={cn("h-[var(--size-md)] w-[var(--size-md)]", className)}
       onClick={() => setCollapsed(!collapsed)}
       {...props}
     >
       {collapsed ? (
-        <ChevronRight className="h-4 w-4" />
+        <ChevronRight className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       ) : (
-        <ChevronLeft className="h-4 w-4" />
+        <ChevronLeft className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       )}
     </Button>
   )
@@ -168,7 +168,7 @@ const NavigationDrawerToggle = React.forwardRef<
 NavigationDrawerToggle.displayName = "NavigationDrawerToggle"
 
 const navigationDrawerItemVariants = cva(
-  "flex items-center gap-[var(--spacing-md)] rounded-[var(--curves-md)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-sm font-medium transition-colors hover:bg-[var(--interactive-bg-hover)] hover:text-[var(--interactive-fg)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border-alt)]",
+  "flex items-center gap-[var(--spacing-md)] rounded-[var(--curves-md)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[var(--font-size-sm)] font-medium transition-colors hover:bg-[var(--interactive-bg-hover)] hover:text-[var(--interactive-fg)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border-alt)]",
   {
     variants: {
       active: {
@@ -222,7 +222,7 @@ const NavigationDrawerGroup = React.forwardRef<
   return (
     <div ref={ref} className={cn("py-[var(--spacing-sm)]", className)} {...props}>
       {label && !collapsed && (
-        <h4 className="mb-[var(--spacing-xxs)] px-[var(--spacing-md)] text-xs font-semibold uppercase tracking-wider text-[var(--interactive-fg-alt)]">
+        <h4 className="mb-[var(--spacing-xxs)] px-[var(--spacing-md)] text-[var(--font-size-xs)] font-semibold uppercase tracking-wider text-[var(--interactive-fg-alt)]">
           {label}
         </h4>
       )}

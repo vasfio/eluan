@@ -12,7 +12,7 @@ const Checkbox = React.forwardRef<
     ref={ref}
     className={cn(
       // Fixed size with min-w to prevent layout shift on check
-      "peer h-4 w-4 min-w-4 shrink-0 rounded-sm border border-[var(--interactive-border-alt)]",
+      "peer h-[var(--size-xxs)] w-[var(--size-xxs)] min-w-[var(--size-xxs)] shrink-0 rounded-sm border border-[var(--interactive-border-alt)]",
       "ring-offset-background transition-colors",
       "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1",
       "disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:border-[var(--interactive-border-disabled)]",

@@ -64,7 +64,7 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
                   disabled={!isClickable}
                   onClick={() => isClickable && onStepClick?.(index)}
                   className={cn(
-                    "relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 text-sm font-medium transition-all",
+                    "relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 text-[var(--font-size-sm)] font-medium transition-all",
                     isCompleted
                       ? "border-[var(--interactive-bg-active)] bg-[var(--interactive-bg-active)] text-[var(--interactive-fg-active)]"
                       : isCurrent
@@ -88,7 +88,7 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
                 >
                   <p
                     className={cn(
-                      "text-sm font-medium",
+                      "text-[var(--font-size-sm)] font-medium",
                       isCurrent || isCompleted
                         ? "text-[var(--foregrounds-primary)]"
                         : "text-[var(--foregrounds-tertiary)]"
@@ -97,7 +97,7 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
                     {step.title}
                   </p>
                   {step.description && (
-                    <p className="mt-[var(--spacing-xxs)] text-xs text-[var(--foregrounds-tertiary)]">
+                    <p className="mt-[var(--spacing-xxs)] text-[var(--font-size-xs)] text-[var(--foregrounds-tertiary)]">
                       {step.description}
                     </p>
                   )}

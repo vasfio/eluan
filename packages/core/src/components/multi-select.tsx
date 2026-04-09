@@ -86,7 +86,7 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
             aria-expanded={open}
             disabled={disabled}
             className={cn(
-              "flex min-h-10 w-full items-center justify-between rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-sm",
+              "flex min-h-[var(--size-lg)] w-full items-center justify-between rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[var(--font-size-sm)]",
               "ring-offset-background focus:outline-none focus:ring-1 focus:ring-[var(--interactive-border)] focus:border-[var(--interactive-border)]",
               "disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)] transition-colors",
               className
@@ -101,7 +101,7 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
                     <Badge
                       key={option.value}
                       variant="secondary"
-                      className="gap-[var(--spacing-xxs)] pr-[var(--spacing-xxs)] text-xs"
+                      className="gap-[var(--spacing-xxs)] pr-[var(--spacing-xxs)] text-[var(--font-size-xs)]"
                     >
                       {option.label}
                       <button
@@ -116,12 +116,12 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
                     </Badge>
                   ))}
                   {remaining > 0 && (
-                    <Badge variant="secondary" className="text-xs">+{remaining}</Badge>
+                    <Badge variant="secondary" className="text-[var(--font-size-xs)]">+{remaining}</Badge>
                   )}
                 </>
               )}
             </div>
-            <ChevronDown className={cn("ml-2 h-4 w-4 shrink-0 opacity-50 transition-transform", open && "rotate-180")} />
+            <ChevronDown className={cn("ml-2 h-[var(--size-xxs)] w-[var(--size-xxs)] shrink-0 opacity-50 transition-transform", open && "rotate-180")} />
           </button>
         </PopoverTrigger>
         <PopoverContent
@@ -130,9 +130,9 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
           sideOffset={4}
         >
           <Command>
-            <CommandInput placeholder={searchPlaceholder} className="h-9" />
+            <CommandInput placeholder={searchPlaceholder} className="h-[var(--size-lg)]" />
             <CommandList>
-              <CommandEmpty className="py-[var(--spacing-md)] text-center text-sm text-[var(--interactive-fg-alt)]">{emptyMessage}</CommandEmpty>
+              <CommandEmpty className="py-[var(--spacing-md)] text-center text-[var(--font-size-sm)] text-[var(--interactive-fg-alt)]">{emptyMessage}</CommandEmpty>
               <CommandGroup>
                 {sortedOptions.map((option) => {
                   const isSelected = value.includes(option.value)

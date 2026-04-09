@@ -25,7 +25,7 @@ const CommandDialog = ({ children, ...props }: DialogProps) => {
   return (
     <Dialog {...props}>
       <DialogContent className="overflow-hidden p-0 shadow-lg">
-        <Command className="[&_[cmdk-group-heading]]:px-[var(--spacing-sm)] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-[var(--interactive-fg-alt)] [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-[var(--spacing-sm)] [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-[var(--spacing-sm)] [&_[cmdk-item]]:py-[var(--spacing-sm)] [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
+        <Command className="[&_[cmdk-group-heading]]:px-[var(--spacing-sm)] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-[var(--interactive-fg-alt)] [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-[var(--spacing-sm)] [&_[cmdk-input-wrapper]_svg]:h-[var(--size-xs)] [&_[cmdk-input-wrapper]_svg]:w-[var(--size-xs)] [&_[cmdk-input]]:h-[var(--size-xl)] [&_[cmdk-item]]:px-[var(--spacing-sm)] [&_[cmdk-item]]:py-[var(--spacing-sm)] [&_[cmdk-item]_svg]:h-[var(--size-xs)] [&_[cmdk-item]_svg]:w-[var(--size-xs)]">
           {children}
         </Command>
       </DialogContent>
@@ -38,11 +38,11 @@ const CommandInput = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
 >(({ className, ...props }, ref) => (
   <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
-    <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+    <Search className="mr-2 h-[var(--size-xxs)] w-[var(--size-xxs)] shrink-0 opacity-50" />
     <CommandPrimitive.Input
       ref={ref}
       className={cn(
-        "flex h-11 w-full rounded-[var(--curves-md)] bg-transparent py-[var(--spacing-md)] text-sm outline-none placeholder:text-[var(--interactive-fg-alt)] disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)]",
+        "flex h-[var(--size-xl)] w-full rounded-[var(--curves-md)] bg-transparent py-[var(--spacing-md)] text-[var(--font-size-sm)] outline-none placeholder:text-[var(--interactive-fg-alt)] disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)]",
         className
       )}
       {...props}
@@ -69,7 +69,7 @@ const CommandEmpty = React.forwardRef<
 >((props, ref) => (
   <CommandPrimitive.Empty
     ref={ref}
-    className="py-[var(--spacing-lg)] text-center text-sm"
+    className="py-[var(--spacing-lg)] text-center text-[var(--font-size-sm)]"
     {...props}
   />
 ))
@@ -82,7 +82,7 @@ const CommandGroup = React.forwardRef<
   <CommandPrimitive.Group
     ref={ref}
     className={cn(
-      "overflow-hidden p-[var(--spacing-xs)] text-[var(--interactive-fg)] [&_[cmdk-group-heading]]:px-[var(--spacing-sm)] [&_[cmdk-group-heading]]:py-[var(--spacing-sm)] [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-[var(--interactive-fg-alt)]",
+      "overflow-hidden p-[var(--spacing-xs)] text-[var(--interactive-fg)] [&_[cmdk-group-heading]]:px-[var(--spacing-sm)] [&_[cmdk-group-heading]]:py-[var(--spacing-sm)] [&_[cmdk-group-heading]]:text-[var(--font-size-xs)] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-[var(--interactive-fg-alt)]",
       className
     )}
     {...props}
@@ -109,7 +109,7 @@ const CommandItem = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex cursor-default gap-[var(--spacing-xs)] select-none items-center rounded-[var(--curves-sm)] px-[var(--spacing-xs)] py-[var(--spacing-xs)] text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-[var(--interactive-bg-selected)] data-[selected=true]:text-[var(--interactive-fg-selected)] data-[disabled=true]:bg-[var(--interactive-bg-disabled)] data-[disabled=true]:text-[var(--interactive-fg-disabled)] [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+      "relative flex cursor-default gap-[var(--spacing-xs)] select-none items-center rounded-[var(--curves-sm)] px-[var(--spacing-xs)] py-[var(--spacing-xs)] text-[var(--font-size-sm)] outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-[var(--interactive-bg-selected)] data-[selected=true]:text-[var(--interactive-fg-selected)] data-[disabled=true]:bg-[var(--interactive-bg-disabled)] data-[disabled=true]:text-[var(--interactive-fg-disabled)] [&_svg]:pointer-events-none [&_svg]:size-[var(--size-xxs)] [&_svg]:shrink-0",
       className
     )}
     {...props}
@@ -124,7 +124,7 @@ const CommandShortcut = ({
   return (
     <span
       className={cn(
-        "ml-auto text-xs tracking-widest text-[var(--interactive-fg-alt)]",
+        "ml-auto text-[var(--font-size-xs)] tracking-widest text-[var(--interactive-fg-alt)]",
         className
       )}
       {...props}

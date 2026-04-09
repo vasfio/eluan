@@ -75,7 +75,7 @@ const ContactTitle = React.forwardRef<
   <h2
     ref={ref}
     className={cn(
-      "font-heading text-3xl font-medium tracking-tight text-[var(--container-fg)] sm:text-4xl",
+      "font-heading text-[var(--font-size-3xl)] font-medium tracking-tight text-[var(--container-fg)] sm:text-[var(--font-size-4xl)]",
       className
     )}
     {...props}
@@ -89,7 +89,7 @@ const ContactDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-lg text-[var(--container-fg-alt)]", className)}
+    className={cn("text-[var(--font-size-lg)] text-[var(--container-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -119,12 +119,12 @@ const ContactDetailItem = React.forwardRef<HTMLDivElement, ContactDetailItemProp
       {...props}
     >
       {icon && (
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--curves-lg)] bg-[var(--container-bg-alt)] text-[var(--container-fg)]">
+        <div className="flex h-[var(--size-lg)] w-[var(--size-lg)] shrink-0 items-center justify-center rounded-[var(--curves-lg)] bg-[var(--container-bg-alt)] text-[var(--container-fg)]">
           {icon}
         </div>
       )}
       <div>
-        <p className="text-sm font-medium text-[var(--container-fg-alt)]">{label}</p>
+        <p className="text-[var(--font-size-sm)] font-medium text-[var(--container-fg-alt)]">{label}</p>
         {href ? (
           <a
             href={href}
@@ -160,7 +160,7 @@ const ContactSocialLink = React.forwardRef<HTMLAnchorElement, ContactSocialLinkP
       ref={ref}
       aria-label={label}
       className={cn(
-        "flex h-10 w-10 items-center justify-center rounded-[var(--curves-lg)] bg-[var(--container-bg-alt)] text-[var(--container-fg-alt)] transition-colors hover:bg-[var(--action-primary-bg)] hover:text-[var(--action-primary-fg)]",
+        "flex h-[var(--size-lg)] w-[var(--size-lg)] items-center justify-center rounded-[var(--curves-lg)] bg-[var(--container-bg-alt)] text-[var(--container-fg-alt)] transition-colors hover:bg-[var(--action-primary-bg)] hover:text-[var(--action-primary-fg)]",
         className
       )}
       {...props}
@@ -225,7 +225,7 @@ const ContactFormLabel = React.forwardRef<
 >(({ className, required, children, ...props }, ref) => (
   <label
     ref={ref}
-    className={cn("text-sm font-medium text-[var(--container-fg)]", className)}
+    className={cn("text-[var(--font-size-sm)] font-medium text-[var(--container-fg)]", className)}
     {...props}
   >
     {children}
@@ -241,7 +241,7 @@ const ContactFormInput = React.forwardRef<
   <input
     ref={ref}
     className={cn(
-      "flex h-11 w-full rounded-[var(--curves-lg)] border border-[color:var(--container-border-alt)] bg-[var(--container-bg)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-sm text-[var(--container-fg)] placeholder:text-[var(--container-fg-alt)] focus:outline-none focus:ring-1 focus:ring-[var(--action-primary-bg)] focus:border-[var(--action-primary-bg)] disabled:cursor-not-allowed disabled:opacity-50 transition-colors",
+      "flex h-[var(--size-xl)] w-full rounded-[var(--curves-lg)] border border-[color:var(--container-border-alt)] bg-[var(--container-bg)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[var(--font-size-sm)] text-[var(--container-fg)] placeholder:text-[var(--container-fg-alt)] focus:outline-none focus:ring-1 focus:ring-[var(--action-primary-bg)] focus:border-[var(--action-primary-bg)] disabled:cursor-not-allowed disabled:opacity-50 transition-colors",
       className
     )}
     {...props}
@@ -256,7 +256,7 @@ const ContactFormTextarea = React.forwardRef<
   <textarea
     ref={ref}
     className={cn(
-      "flex min-h-[120px] w-full rounded-[var(--curves-lg)] border border-[color:var(--container-border-alt)] bg-[var(--container-bg)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-sm text-[var(--container-fg)] placeholder:text-[var(--container-fg-alt)] focus:outline-none focus:ring-1 focus:ring-[var(--action-primary-bg)] focus:border-[var(--action-primary-bg)] disabled:cursor-not-allowed disabled:opacity-50 transition-colors",
+      "flex min-h-[120px] w-full rounded-[var(--curves-lg)] border border-[color:var(--container-border-alt)] bg-[var(--container-bg)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[var(--font-size-sm)] text-[var(--container-fg)] placeholder:text-[var(--container-fg-alt)] focus:outline-none focus:ring-1 focus:ring-[var(--action-primary-bg)] focus:border-[var(--action-primary-bg)] disabled:cursor-not-allowed disabled:opacity-50 transition-colors",
       className
     )}
     {...props}
@@ -271,7 +271,7 @@ const ContactFormSelect = React.forwardRef<
   <select
     ref={ref}
     className={cn(
-      "flex h-11 w-full rounded-[var(--curves-lg)] border border-[color:var(--container-border-alt)] bg-[var(--container-bg)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-sm text-[var(--container-fg)] focus:outline-none focus:ring-1 focus:ring-[var(--action-primary-bg)] focus:border-[var(--action-primary-bg)] disabled:cursor-not-allowed disabled:opacity-50 transition-colors",
+      "flex h-[var(--size-xl)] w-full rounded-[var(--curves-lg)] border border-[color:var(--container-border-alt)] bg-[var(--container-bg)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[var(--font-size-sm)] text-[var(--container-fg)] focus:outline-none focus:ring-1 focus:ring-[var(--action-primary-bg)] focus:border-[var(--action-primary-bg)] disabled:cursor-not-allowed disabled:opacity-50 transition-colors",
       className
     )}
     {...props}
@@ -285,7 +285,7 @@ const ContactFormError = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-[var(--negative-fg)]", className)}
+    className={cn("text-[var(--font-size-sm)] text-[var(--negative-fg)]", className)}
     {...props}
   />
 ))

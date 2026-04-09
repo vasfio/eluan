@@ -72,7 +72,7 @@ export function TimePicker({ value = "", onChange, format = "24", disabled, clas
 
   const spinnerCls = "flex flex-col items-center"
   const btnCls = "flex h-7 w-8 items-center justify-center rounded opacity-60 hover:opacity-100 hover:bg-[var(--backgrounds-tertiary)] transition-opacity disabled:pointer-events-none cursor-pointer select-none"
-  const valCls = "w-10 text-center text-lg font-mono font-medium leading-none py-1 tabular-nums"
+  const valCls = "w-10 text-center text-[var(--font-size-lg)] font-mono font-medium leading-none py-1 tabular-nums"
 
   return (
     <div
@@ -82,12 +82,12 @@ export function TimePicker({ value = "", onChange, format = "24", disabled, clas
         className
       )}
     >
-      <Clock className="h-4 w-4 text-[var(--foregrounds-quinary)] mr-1 shrink-0" />
+      <Clock className="h-[var(--size-xxs)] w-[var(--size-xxs)] text-[var(--foregrounds-quinary)] mr-1 shrink-0" />
 
       {/* Hours */}
       <div className={spinnerCls}>
         <button type="button" className={btnCls} onClick={() => spinH(1)} disabled={disabled} tabIndex={-1}>
-          <span className="text-xs">&#9650;</span>
+          <span className="text-[var(--font-size-xs)]">&#9650;</span>
         </button>
         <input
           className={cn(valCls, "bg-transparent outline-none focus:bg-[var(--backgrounds-tertiary)] rounded cursor-text")}
@@ -117,16 +117,16 @@ export function TimePicker({ value = "", onChange, format = "24", disabled, clas
           maxLength={2}
         />
         <button type="button" className={btnCls} onClick={() => spinH(-1)} disabled={disabled} tabIndex={-1}>
-          <span className="text-xs">&#9660;</span>
+          <span className="text-[var(--font-size-xs)]">&#9660;</span>
         </button>
       </div>
 
-      <span className="text-[var(--foregrounds-quinary)] text-lg font-mono font-bold leading-none pb-px select-none">:</span>
+      <span className="text-[var(--foregrounds-quinary)] text-[var(--font-size-lg)] font-mono font-bold leading-none pb-px select-none">:</span>
 
       {/* Minutes */}
       <div className={spinnerCls}>
         <button type="button" className={btnCls} onClick={() => spinM(1)} disabled={disabled} tabIndex={-1}>
-          <span className="text-xs">&#9650;</span>
+          <span className="text-[var(--font-size-xs)]">&#9650;</span>
         </button>
         <input
           className={cn(valCls, "bg-transparent outline-none focus:bg-[var(--backgrounds-tertiary)] rounded cursor-text")}
@@ -156,7 +156,7 @@ export function TimePicker({ value = "", onChange, format = "24", disabled, clas
           maxLength={2}
         />
         <button type="button" className={btnCls} onClick={() => spinM(-1)} disabled={disabled} tabIndex={-1}>
-          <span className="text-xs">&#9660;</span>
+          <span className="text-[var(--font-size-xs)]">&#9660;</span>
         </button>
       </div>
 
@@ -168,7 +168,7 @@ export function TimePicker({ value = "", onChange, format = "24", disabled, clas
             onClick={() => { setPeriod("AM"); emit(h, m, "AM") }}
             disabled={disabled}
             className={cn(
-              "rounded px-2 py-0.5 text-xs font-semibold transition-colors cursor-pointer",
+              "rounded px-2 py-0.5 text-[var(--font-size-xs)] font-semibold transition-colors cursor-pointer",
               period === "AM"
                 ? "bg-[var(--interactive-bg-active,#e2e2e2)] text-[var(--foregrounds-primary)]"
                 : "text-[var(--foregrounds-quaternary)] hover:bg-[var(--backgrounds-tertiary)]"
@@ -181,7 +181,7 @@ export function TimePicker({ value = "", onChange, format = "24", disabled, clas
             onClick={() => { setPeriod("PM"); emit(h, m, "PM") }}
             disabled={disabled}
             className={cn(
-              "rounded px-2 py-0.5 text-xs font-semibold transition-colors cursor-pointer",
+              "rounded px-2 py-0.5 text-[var(--font-size-xs)] font-semibold transition-colors cursor-pointer",
               period === "PM"
                 ? "bg-[var(--interactive-bg-active,#e2e2e2)] text-[var(--foregrounds-primary)]"
                 : "text-[var(--foregrounds-quaternary)] hover:bg-[var(--backgrounds-tertiary)]"
@@ -201,13 +201,13 @@ export interface NativeTimeInputProps extends React.InputHTMLAttributes<HTMLInpu
 export const NativeTimeInput = React.forwardRef<HTMLInputElement, NativeTimeInputProps>(
   ({ className, ...props }, ref) => (
     <div className={cn("relative flex w-full items-center", className)}>
-      <Clock className="pointer-events-none absolute left-3 h-4 w-4 text-[var(--foregrounds-quinary)]" />
+      <Clock className="pointer-events-none absolute left-3 h-[var(--size-xxs)] w-[var(--size-xxs)] text-[var(--foregrounds-quinary)]" />
       <input
         type="time"
         ref={ref}
         className={cn(
-          "flex h-10 w-full rounded-md border border-[var(--interactive-border)] bg-[var(--interactive-bg)]",
-          "pl-9 pr-3 py-2 text-sm text-[var(--foregrounds-primary)]",
+          "flex h-[var(--size-lg)] w-full rounded-md border border-[var(--interactive-border)] bg-[var(--interactive-bg)]",
+          "pl-9 pr-3 py-2 text-[var(--font-size-sm)] text-[var(--foregrounds-primary)]",
           "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-fg)] focus-visible:border-[var(--interactive-fg)]",
           "disabled:cursor-not-allowed disabled:opacity-50",
           "[&::-webkit-calendar-picker-indicator]:opacity-0"

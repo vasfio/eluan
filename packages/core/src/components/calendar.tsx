@@ -49,10 +49,10 @@ function Calendar({
         ),
         month_grid: "w-full border-collapse",
         weekdays: "flex",
-        weekday: "text-[var(--interactive-fg-alt)] rounded-[var(--curves-lg)] w-9 font-normal text-[0.75rem] text-center",
+        weekday: "text-[var(--interactive-fg-alt)] rounded-[var(--curves-lg)] w-[var(--size-lg)] font-normal text-[0.75rem] text-center",
         week: "flex w-full mt-1",
         day: cn(
-          "h-9 w-9 text-center text-sm p-0 relative",
+          "h-[var(--size-lg)] w-[var(--size-lg)] text-center text-[var(--font-size-sm)] p-0 relative",
           "[&:has([aria-selected].day-range-end)]:rounded-r-[var(--curves-lg)]",
           "[&:has([aria-selected].day-outside)]:bg-[var(--interactive-bg-alt2)]",
           "first:[&:has([aria-selected])]:rounded-l-[var(--curves-lg)]",
@@ -60,8 +60,8 @@ function Calendar({
           "focus-within:relative focus-within:z-20"
         ),
         day_button: cn(
-          "inline-flex items-center justify-center whitespace-nowrap rounded-[inherit] text-sm font-normal transition-all",
-          "h-9 w-9 p-0 text-inherit hover:bg-[var(--interactive-bg-alt)] hover:rounded-[var(--curves-lg)]",
+          "inline-flex items-center justify-center whitespace-nowrap rounded-[inherit] text-[var(--font-size-sm)] font-normal transition-all",
+          "h-[var(--size-lg)] w-[var(--size-lg)] p-0 text-inherit hover:bg-[var(--interactive-bg-alt)] hover:rounded-[var(--curves-lg)]",
           "[html[data-theme='classic-retro']_&]:font-mono [html[data-theme='classic-black']_&]:font-mono"
         ),
         range_start: "day-range-start bg-[var(--interactive-bg-selected)] text-[var(--interactive-fg-selected)] rounded-l-[var(--curves-lg)] rounded-r-none",
@@ -80,9 +80,9 @@ function Calendar({
       components={{
         Chevron: ({ orientation }) =>
           orientation === "left" ? (
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
           ) : (
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
           ),
         MonthCaption: ({ calendarMonth }) => (
           <div className="flex items-center gap-[var(--spacing-xxs)] px-[var(--spacing-xl)]">
@@ -94,12 +94,12 @@ function Calendar({
                 setMonth(d)
               }}
             >
-              <SelectTrigger className="h-7 w-[110px] text-xs border-none shadow-none px-[var(--spacing-xs)] focus:ring-0">
+              <SelectTrigger className="h-7 w-[110px] text-[var(--font-size-xs)] border-none shadow-none px-[var(--spacing-xs)] focus:ring-0">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
                 {months.map((m, i) => (
-                  <SelectItem key={i} value={String(i)} className="text-xs">{m}</SelectItem>
+                  <SelectItem key={i} value={String(i)} className="text-[var(--font-size-xs)]">{m}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -111,12 +111,12 @@ function Calendar({
                 setMonth(d)
               }}
             >
-              <SelectTrigger className="h-7 w-[70px] text-xs border-none shadow-none px-[var(--spacing-xs)] focus:ring-0">
+              <SelectTrigger className="h-7 w-[70px] text-[var(--font-size-xs)] border-none shadow-none px-[var(--spacing-xs)] focus:ring-0">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
                 {years.map((y) => (
-                  <SelectItem key={y} value={String(y)} className="text-xs">{y}</SelectItem>
+                  <SelectItem key={y} value={String(y)} className="text-[var(--font-size-xs)]">{y}</SelectItem>
                 ))}
               </SelectContent>
             </Select>

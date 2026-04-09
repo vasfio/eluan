@@ -55,8 +55,8 @@ const HeaderNavigation = React.forwardRef<HTMLElement, HeaderNavigationProps>(
 
     const renderNavItem = (item: NavItem, mobile = false) => {
       const baseClasses = mobile
-        ? "block w-full px-[var(--spacing-md)] py-[var(--spacing-sm)] text-base font-medium text-[var(--interactive-fg)] hover:bg-[var(--interactive-bg-hover)] rounded-[var(--curves-lg)] transition-colors"
-        : "relative px-[var(--spacing-md)] py-[var(--spacing-xs)] text-sm font-normal text-[var(--interactive-fg-alt)] hover:text-[var(--interactive-fg)] transition-colors rounded-full"
+        ? "block w-full px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[var(--font-size-base)] font-medium text-[var(--interactive-fg)] hover:bg-[var(--interactive-bg-hover)] rounded-[var(--curves-lg)] transition-colors"
+        : "relative px-[var(--spacing-md)] py-[var(--spacing-xs)] text-[var(--font-size-sm)] font-normal text-[var(--interactive-fg-alt)] hover:text-[var(--interactive-fg)] transition-colors rounded-full"
 
       const activeClasses = mobile
         ? "bg-[var(--interactive-bg-alt)]"
@@ -107,7 +107,7 @@ const HeaderNavigation = React.forwardRef<HTMLElement, HeaderNavigationProps>(
         )}
         {...props}
       >
-        <div className="container mx-auto flex h-16 items-center justify-between px-[var(--spacing-md)]">
+        <div className="container mx-auto flex h-[var(--size-2xl)] items-center justify-between px-[var(--spacing-md)]">
           {/* Logo */}
           <div className="flex items-center">
             {logo}
@@ -128,7 +128,7 @@ const HeaderNavigation = React.forwardRef<HTMLElement, HeaderNavigationProps>(
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
-                  <Menu className="h-5 w-5" />
+                  <Menu className="h-[var(--size-xs)] w-[var(--size-xs)]" />
                   <span className="sr-only">Toggle menu</span>
                 </Button>
               </SheetTrigger>

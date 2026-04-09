@@ -86,7 +86,7 @@ const CTATitle = React.forwardRef<
   <h2
     ref={ref}
     className={cn(
-      "font-heading text-3xl font-bold tracking-tight sm:text-4xl",
+      "font-heading text-[var(--font-size-3xl)] font-bold tracking-tight sm:text-[var(--font-size-4xl)]",
       className
     )}
     {...props}
@@ -100,7 +100,7 @@ const CTADescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-[var(--spacing-md)] text-lg opacity-90", className)}
+    className={cn("mt-[var(--spacing-md)] text-[var(--font-size-lg)] opacity-90", className)}
     {...props}
   />
 ))

@@ -147,7 +147,7 @@ const CardIcon = ({ type }: { type: CardType }) => {
     case "diners":     return <GenericCardBadge label="DC" color="#004A97" />
     case "unionpay":   return <GenericCardBadge label="UP" color="#E21836" />
     default:
-      return <CreditCard className="h-5 w-5 text-[var(--foregrounds-quinary)]" />
+      return <CreditCard className="h-[var(--size-xs)] w-[var(--size-xs)] text-[var(--foregrounds-quinary)]" />
   }
 }
 
@@ -200,13 +200,13 @@ const CreditCardNumberInput = React.forwardRef<HTMLInputElement, CreditCardNumbe
 
     return (
       <div className="relative">
-        <CreditCard className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--interactive-fg-alt)]" />
+        <CreditCard className="absolute left-3 top-1/2 h-[var(--size-xxs)] w-[var(--size-xxs)] -translate-y-1/2 text-[var(--interactive-fg-alt)]" />
         <input
           type="text"
           inputMode="numeric"
           autoComplete="cc-number"
           className={cn(
-            "flex h-10 w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] pl-10 pr-12 py-[var(--spacing-sm)] text-sm ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:fg-[var(--interactive-fg-disabled)] font-mono",
+            "flex h-[var(--size-lg)] w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] pl-10 pr-12 py-[var(--spacing-sm)] text-[var(--font-size-sm)] ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:fg-[var(--interactive-fg-disabled)] font-mono",
             className
           )}
           ref={ref}
@@ -239,13 +239,13 @@ const CreditCardExpiryInput = React.forwardRef<HTMLInputElement, CreditCardExpir
 
     return (
       <div className="relative">
-        <Calendar className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--interactive-fg-alt)]" />
+        <Calendar className="absolute left-3 top-1/2 h-[var(--size-xxs)] w-[var(--size-xxs)] -translate-y-1/2 text-[var(--interactive-fg-alt)]" />
         <input
           type="text"
           inputMode="numeric"
           autoComplete="cc-exp"
           className={cn(
-            "flex h-10 w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] pl-10 pr-3 py-[var(--spacing-sm)] text-sm ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:fg-[var(--interactive-fg-disabled)] font-mono",
+            "flex h-[var(--size-lg)] w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] pl-10 pr-3 py-[var(--spacing-sm)] text-[var(--font-size-sm)] ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:fg-[var(--interactive-fg-disabled)] font-mono",
             className
           )}
           ref={ref}
@@ -275,13 +275,13 @@ const CreditCardCVVInput = React.forwardRef<HTMLInputElement, CreditCardCVVInput
 
     return (
       <div className="relative">
-        <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--interactive-fg-alt)]" />
+        <Lock className="absolute left-3 top-1/2 h-[var(--size-xxs)] w-[var(--size-xxs)] -translate-y-1/2 text-[var(--interactive-fg-alt)]" />
         <input
           type="text"
           inputMode="numeric"
           autoComplete="cc-csc"
           className={cn(
-            "flex h-10 w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] pl-10 pr-3 py-[var(--spacing-sm)] text-sm ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:fg-[var(--interactive-fg-disabled)] font-mono",
+            "flex h-[var(--size-lg)] w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] pl-10 pr-3 py-[var(--spacing-sm)] text-[var(--font-size-sm)] ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:fg-[var(--interactive-fg-disabled)] font-mono",
             className
           )}
           ref={ref}

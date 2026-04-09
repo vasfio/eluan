@@ -31,9 +31,9 @@ const Rating = React.forwardRef<HTMLDivElement, RatingProps>(
     const [hoverValue, setHoverValue] = React.useState<number | null>(null)
 
     const sizeClasses = {
-      sm: "h-4 w-4",
-      default: "h-5 w-5",
-      lg: "h-6 w-6",
+      sm: "h-[var(--size-xxs)] w-[var(--size-xxs)]",
+      default: "h-[var(--size-xs)] w-[var(--size-xs)]",
+      lg: "h-[var(--size-sm)] w-[var(--size-sm)]",
     }
 
     const handleMouseMove = (
@@ -113,7 +113,7 @@ const Rating = React.forwardRef<HTMLDivElement, RatingProps>(
       >
         {Array.from({ length: max }, (_, i) => renderStar(i))}
         {showValue && (
-          <span className="ml-[var(--spacing-sm)] text-sm text-[var(--interactive-fg)]">
+          <span className="ml-[var(--spacing-sm)] text-[var(--font-size-sm)] text-[var(--interactive-fg)]">
             {displayValue.toFixed(precision === 0.5 ? 1 : 0)} / {max}
           </span>
         )}

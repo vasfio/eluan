@@ -30,6 +30,45 @@ export const sp = {
 export type SemanticSpacing = typeof sp
 
 // ============================================
+// Semantic Size Tokens
+// Maps to --size-* CSS variables (standard mode)
+// Used for component heights/widths (buttons, inputs, avatars, etc.)
+// ============================================
+
+export const sz = {
+  xxs: 16,
+  xs: 20,
+  sm: 24,
+  md: 32,
+  lg: 40,
+  xl: 48,
+  "2xl": 64,
+  "3xl": 96,
+  "4xl": 160,
+} as const
+
+export type SemanticSizes = typeof sz
+
+// ============================================
+// Semantic Font Size Tokens
+// Maps to --font-size-* CSS variables (standard mode)
+// ============================================
+
+export const fs = {
+  xs: 12,
+  sm: 14,
+  base: 16,
+  lg: 18,
+  xl: 20,
+  "2xl": 24,
+  "3xl": 30,
+  "4xl": 36,
+  "5xl": 48,
+} as const
+
+export type SemanticFontSizes = typeof fs
+
+// ============================================
 // Semantic Curves Tokens
 // Maps to --curves-* CSS variables (sweeping mode)
 // ============================================
@@ -132,6 +171,8 @@ export function getSemanticTokens(scheme: ColorScheme) {
   return {
     colors: getSemanticColors(scheme),
     sp,
+    sz,
+    fs,
     curves,
   }
 }

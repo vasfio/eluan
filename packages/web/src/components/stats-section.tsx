@@ -61,7 +61,7 @@ const StatsTitle = React.forwardRef<
   <h2
     ref={ref}
     className={cn(
-      "font-heading text-3xl font-medium tracking-tight text-[var(--container-fg)] sm:text-4xl",
+      "font-heading text-[var(--font-size-3xl)] font-medium tracking-tight text-[var(--container-fg)] sm:text-[var(--font-size-4xl)]",
       className
     )}
     {...props}
@@ -75,7 +75,7 @@ const StatsDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mx-auto mt-[var(--spacing-md)] max-w-2xl text-lg leading-relaxed text-[var(--container-fg-alt)]", className)}
+    className={cn("mx-auto mt-[var(--spacing-md)] max-w-2xl text-[var(--font-size-lg)] leading-relaxed text-[var(--container-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -143,7 +143,7 @@ const StatValue = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("font-heading text-4xl font-medium tracking-tight text-[var(--container-fg)] lg:text-5xl", className)}
+    className={cn("font-heading text-[var(--font-size-4xl)] font-medium tracking-tight text-[var(--container-fg)] lg:text-[var(--font-size-5xl)]", className)}
     {...props}
   />
 ))
@@ -155,7 +155,7 @@ const StatLabel = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("mt-[var(--spacing-sm)] text-sm font-normal text-[var(--container-fg-alt)]", className)}
+    className={cn("mt-[var(--spacing-sm)] text-[var(--font-size-sm)] font-normal text-[var(--container-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -170,7 +170,7 @@ const StatTrend = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mt-[var(--spacing-xs)] text-sm font-medium",
+      "mt-[var(--spacing-xs)] text-[var(--font-size-sm)] font-medium",
       direction === "up" && "text-[var(--positive-fg)]",
       direction === "down" && "text-[var(--negative-fg)]",
       direction === "neutral" && "text-[var(--container-fg-alt)]",

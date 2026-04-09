@@ -29,7 +29,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const resolvedType = isPassword ? (showPassword ? "text" : "password") : type
 
     const AutoIcon = type ? typeIcons[type] : undefined
-    const leadingIcon = icon ?? (AutoIcon ? <AutoIcon className="h-4 w-4" /> : null)
+    const leadingIcon = icon ?? (AutoIcon ? <AutoIcon className="h-[var(--size-xxs)] w-[var(--size-xxs)]" /> : null)
     const hasLeading = !!leadingIcon
     const hasTrailing = !!trailing || isPassword
 
@@ -43,13 +43,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <input
           type={resolvedType}
           className={cn(
-            "flex h-10 w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] text-sm text-[var(--interactive-fg)]",
+            "flex h-[var(--size-lg)] w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] text-[var(--font-size-sm)] text-[var(--interactive-fg)]",
             "ring-offset-background",
             "placeholder:text-[var(--interactive-fg-alt)]",
             "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:border-[var(--interactive-border)]",
             "disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)]",
             "transition-colors",
-            "file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-[var(--interactive-fg)]",
+            "file:border-0 file:bg-transparent file:text-[var(--font-size-sm)] file:font-medium file:text-[var(--interactive-fg)]",
             hasLeading ? "pl-9" : "px-3",
             hasTrailing ? "pr-9" : "pr-3",
             "py-[var(--spacing-sm)]"
@@ -65,7 +65,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             className="absolute right-3 flex items-center text-[var(--interactive-fg-alt)] hover:text-[var(--interactive-fg-hover)] transition-colors"
             aria-label={showPassword ? "Hide password" : "Show password"}
           >
-            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            {showPassword ? <EyeOff className="h-[var(--size-xxs)] w-[var(--size-xxs)]" /> : <Eye className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />}
           </button>
         )}
         {!isPassword && trailing && (

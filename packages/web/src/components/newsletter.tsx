@@ -61,14 +61,14 @@ const NewsletterIcon = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mb-[var(--spacing-md)] inline-flex h-12 w-12 items-center justify-center rounded-full bg-[var(--action-primary-bg)] text-[var(--action-primary-bg)]",
+      "mb-[var(--spacing-md)] inline-flex h-[var(--size-xl)] w-[var(--size-xl)] items-center justify-center rounded-full bg-[var(--action-primary-bg)] text-[var(--action-primary-bg)]",
       className
     )}
     {...props}
   >
     {children || (
       <svg
-        className="h-6 w-6"
+        className="h-[var(--size-sm)] w-[var(--size-sm)]"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -92,7 +92,7 @@ const NewsletterTitle = React.forwardRef<
   <h2
     ref={ref}
     className={cn(
-      "font-heading text-2xl font-bold tracking-tight sm:text-3xl",
+      "font-heading text-[var(--font-size-2xl)] font-bold tracking-tight sm:text-[var(--font-size-3xl)]",
       className
     )}
     {...props}
@@ -106,7 +106,7 @@ const NewsletterDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-[var(--spacing-md)] text-lg opacity-90", className)}
+    className={cn("mt-[var(--spacing-md)] text-[var(--font-size-lg)] opacity-90", className)}
     {...props}
   />
 ))
@@ -138,7 +138,7 @@ const NewsletterInput = React.forwardRef<HTMLInputElement, NewsletterInputProps>
       ref={ref}
       type="email"
       className={cn(
-        "flex-1 h-12 rounded-[var(--curves-lg)] border border-[color:var(--interactive-border-alt)] bg-[var(--interactive-bg)] px-[var(--spacing-md)] text-sm text-[var(--interactive-fg)] placeholder:text-[var(--interactive-fg-alt)] focus:outline-none focus:ring-1 focus:ring-[var(--interactive-fg)] focus:border-[var(--interactive-fg)]",
+        "flex-1 h-[var(--size-xl)] rounded-[var(--curves-lg)] border border-[color:var(--interactive-border-alt)] bg-[var(--interactive-bg)] px-[var(--spacing-md)] text-[var(--font-size-sm)] text-[var(--interactive-fg)] placeholder:text-[var(--interactive-fg-alt)] focus:outline-none focus:ring-1 focus:ring-[var(--interactive-fg)] focus:border-[var(--interactive-fg)]",
         className
       )}
       {...props}
@@ -153,7 +153,7 @@ const NewsletterDisclaimer = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-[var(--spacing-md)] text-xs opacity-70", className)}
+    className={cn("mt-[var(--spacing-md)] text-[var(--font-size-xs)] opacity-70", className)}
     {...props}
   />
 ))

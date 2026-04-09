@@ -107,7 +107,7 @@ const CookieBannerTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn("font-heading text-lg font-semibold", className)}
+    className={cn("font-heading text-[var(--font-size-lg)] font-semibold", className)}
     {...props}
   />
 ))
@@ -119,7 +119,7 @@ const CookieBannerDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-[var(--spacing-xs)] text-sm text-[var(--container-fg-alt)]", className)}
+    className={cn("mt-[var(--spacing-xs)] text-[var(--font-size-sm)] text-[var(--container-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -144,7 +144,7 @@ const CookieBannerLink = React.forwardRef<
   <a
     ref={ref}
     className={cn(
-      "text-sm text-[var(--action-primary-bg)] underline-offset-4 hover:underline",
+      "text-[var(--font-size-sm)] text-[var(--action-primary-bg)] underline-offset-4 hover:underline",
       className
     )}
     {...props}
@@ -230,7 +230,7 @@ const CookiePreferencesTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h2
     ref={ref}
-    className={cn("font-heading text-xl font-semibold", className)}
+    className={cn("font-heading text-[var(--font-size-xl)] font-semibold", className)}
     {...props}
   />
 ))
@@ -242,7 +242,7 @@ const CookiePreferencesDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-[var(--spacing-sm)] text-sm text-[var(--container-fg-alt)]", className)}
+    className={cn("mt-[var(--spacing-sm)] text-[var(--font-size-sm)] text-[var(--container-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -300,12 +300,12 @@ const CookiePreferenceItem = React.forwardRef<
           <label htmlFor={id} className="font-medium">
             {name}
             {required && (
-              <span className="ml-[var(--spacing-sm)] text-xs text-[var(--container-fg-alt)]">
+              <span className="ml-[var(--spacing-sm)] text-[var(--font-size-xs)] text-[var(--container-fg-alt)]">
                 (Required)
               </span>
             )}
           </label>
-          <p className="mt-[var(--spacing-xs)] text-sm text-[var(--container-fg-alt)]">{description}</p>
+          <p className="mt-[var(--spacing-xs)] text-[var(--font-size-sm)] text-[var(--container-fg-alt)]">{description}</p>
         </div>
         <div className="shrink-0">
           <button
@@ -316,14 +316,14 @@ const CookiePreferenceItem = React.forwardRef<
             disabled={required}
             onClick={() => onChange?.(!checked)}
             className={cn(
-              "relative inline-flex h-6 w-11 items-center rounded-full transition-colors",
+              "relative inline-flex h-[var(--size-sm)] w-[var(--size-xl)] items-center rounded-full transition-colors",
               required || checked ? "bg-[var(--action-primary-bg)]" : "bg-[var(--container-bg-alt)]",
               required && "cursor-not-allowed opacity-50"
             )}
           >
             <span
               className={cn(
-                "inline-block h-4 w-4 transform rounded-full bg-white transition-transform",
+                "inline-block h-[var(--size-xxs)] w-[var(--size-xxs)] transform rounded-full bg-white transition-transform",
                 required || checked ? "translate-x-6" : "translate-x-1"
               )}
             />

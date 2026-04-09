@@ -270,7 +270,7 @@ const ShaderCanvasR3F = React.forwardRef<HTMLDivElement, ShaderCanvasR3FProps>(
           )}
           {...props}
         >
-          <p className="text-sm">{loadError}</p>
+          <p className="text-[var(--font-size-sm)]">{loadError}</p>
         </div>
       )
     }
@@ -295,7 +295,7 @@ const ShaderCanvasR3F = React.forwardRef<HTMLDivElement, ShaderCanvasR3FProps>(
         />
         {!threeLoaded && !loadError && (
           <div className="absolute inset-0 flex items-center justify-center bg-muted">
-            <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+            <div className="h-[var(--size-sm)] w-[var(--size-sm)] animate-spin rounded-full border-2 border-primary border-t-transparent" />
           </div>
         )}
       </div>

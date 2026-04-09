@@ -8,7 +8,7 @@ import {
   Easing,
   ActivityIndicator,
 } from "react-native"
-import { sp, getSemanticColors } from "../utils/styles"
+import { sp, sz, getSemanticColors } from "../utils/styles"
 
 export interface SpinnerProps {
   /** Size of the spinner */
@@ -35,9 +35,9 @@ export function Spinner({
   const rotation = useRef(new Animated.Value(0)).current
 
   const sizeMap = {
-    sm: 16,
-    default: 24,
-    lg: 32,
+    sm: sz.xxs,
+    default: sz.sm,
+    lg: sz.md,
   }
 
   const numericSize = typeof size === "number" ? size : sizeMap[size]

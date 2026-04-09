@@ -14,6 +14,26 @@
   --spacing-2xl: var(--spacing-space-20);
   --spacing-3xl: var(--spacing-space-24);
   --spacing-4xl: var(--spacing-space-32);
+
+  --size-xxs: var(--spacing-space-12);
+  --size-xs: var(--spacing-space-16);
+  --size-sm: var(--spacing-space-20);
+  --size-md: var(--spacing-space-24);
+  --size-lg: var(--spacing-space-32);
+  --size-xl: var(--spacing-space-40);
+  --size-2xl: var(--spacing-space-48);
+  --size-3xl: var(--spacing-space-64);
+  --size-4xl: var(--spacing-space-96);
+
+  --font-size-xs: var(--font-size-12);
+  --font-size-sm: var(--font-size-12);
+  --font-size-base: var(--font-size-14);
+  --font-size-lg: var(--font-size-16);
+  --font-size-xl: var(--font-size-18);
+  --font-size-2xl: var(--font-size-20);
+  --font-size-3xl: var(--font-size-24);
+  --font-size-4xl: var(--font-size-30);
+  --font-size-5xl: var(--font-size-36);
 }
 
 [data-spacing="standard"] {
@@ -26,6 +46,26 @@
   --spacing-2xl: var(--spacing-space-24);
   --spacing-3xl: var(--spacing-space-40);
   --spacing-4xl: var(--spacing-space-80);
+
+  --size-xxs: var(--spacing-space-16);
+  --size-xs: var(--spacing-space-20);
+  --size-sm: var(--spacing-space-24);
+  --size-md: var(--spacing-space-32);
+  --size-lg: var(--spacing-space-40);
+  --size-xl: var(--spacing-space-48);
+  --size-2xl: var(--spacing-space-64);
+  --size-3xl: var(--spacing-space-96);
+  --size-4xl: var(--spacing-space-160);
+
+  --font-size-xs: var(--font-size-12);
+  --font-size-sm: var(--font-size-14);
+  --font-size-base: var(--font-size-16);
+  --font-size-lg: var(--font-size-18);
+  --font-size-xl: var(--font-size-20);
+  --font-size-2xl: var(--font-size-24);
+  --font-size-3xl: var(--font-size-30);
+  --font-size-4xl: var(--font-size-36);
+  --font-size-5xl: var(--font-size-48);
 }
 
 [data-spacing="wide"] {
@@ -38,4 +78,24 @@
   --spacing-2xl: var(--spacing-space-32);
   --spacing-3xl: var(--spacing-space-80);
   --spacing-4xl: var(--spacing-space-160);
+
+  --size-xxs: var(--spacing-space-20);
+  --size-xs: var(--spacing-space-24);
+  --size-sm: var(--spacing-space-32);
+  --size-md: var(--spacing-space-40);
+  --size-lg: var(--spacing-space-48);
+  --size-xl: var(--spacing-space-56);
+  --size-2xl: var(--spacing-space-80);
+  --size-3xl: var(--spacing-space-120);
+  --size-4xl: var(--spacing-space-240);
+
+  --font-size-xs: var(--font-size-14);
+  --font-size-sm: var(--font-size-16);
+  --font-size-base: var(--font-size-18);
+  --font-size-lg: var(--font-size-20);
+  --font-size-xl: var(--font-size-24);
+  --font-size-2xl: var(--font-size-30);
+  --font-size-3xl: var(--font-size-36);
+  --font-size-4xl: var(--font-size-48);
+  --font-size-5xl: var(--font-size-60);
 }

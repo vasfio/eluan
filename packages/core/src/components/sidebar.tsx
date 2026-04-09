@@ -192,11 +192,11 @@ const SidebarTrigger = React.forwardRef<HTMLButtonElement, SidebarTriggerProps>(
         ref={ref}
         variant="ghost"
         size="icon"
-        className={cn("h-9 w-9", className)}
+        className={cn("h-[var(--size-lg)] w-[var(--size-lg)]", className)}
         onClick={handleClick}
         {...props}
       >
-        <PanelLeft className="h-4 w-4" />
+        <PanelLeft className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
         <span className="sr-only">Toggle sidebar</span>
       </Button>
     )
@@ -261,7 +261,7 @@ const SidebarGroupLabel = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-xs font-medium text-[var(--interactive-fg-alt)]",
+        "px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[var(--font-size-xs)] font-medium text-[var(--interactive-fg-alt)]",
         className
       )}
       {...props}
@@ -310,7 +310,7 @@ const SidebarMenuButton = React.forwardRef<
     <button
       ref={ref}
       className={cn(
-        "flex w-full items-center gap-[var(--spacing-sm)] rounded-[var(--curves-md)] px-[var(--spacing-sm)] py-[var(--spacing-sm)] text-sm font-medium transition-colors",
+        "flex w-full items-center gap-[var(--spacing-sm)] rounded-[var(--curves-md)] px-[var(--spacing-sm)] py-[var(--spacing-sm)] text-[var(--font-size-sm)] font-medium transition-colors",
         "hover:bg-[var(--interactive-bg-hover)] hover:text-[var(--interactive-fg)]",
         "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)]",
         isActive && "bg-[var(--interactive-bg-active)] text-[var(--interactive-fg-active)]",
@@ -327,7 +327,7 @@ const SidebarMenuButton = React.forwardRef<
     return (
       <div className="relative group">
         {button}
-        <div className="absolute left-full top-1/2 z-50 ml-2 -translate-y-1/2 rounded-[var(--curves-md)] bg-[var(--container-bg)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-xs text-[var(--container-fg)] opacity-0 shadow-md transition-opacity group-hover:opacity-100">
+        <div className="absolute left-full top-1/2 z-50 ml-2 -translate-y-1/2 rounded-[var(--curves-md)] bg-[var(--container-bg)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[var(--font-size-xs)] text-[var(--container-fg)] opacity-0 shadow-md transition-opacity group-hover:opacity-100">
           {tooltip}
         </div>
       </div>
@@ -371,7 +371,7 @@ const SidebarMenuSubButton = React.forwardRef<
   <button
     ref={ref}
     className={cn(
-      "flex w-full items-center rounded-[var(--curves-md)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-sm transition-colors",
+      "flex w-full items-center rounded-[var(--curves-md)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[var(--font-size-sm)] transition-colors",
       "hover:bg-[var(--interactive-bg-hover)] hover:text-[var(--interactive-fg)]",
       isActive && "bg-[var(--interactive-bg-active)] text-[var(--interactive-fg-active)]",
       className

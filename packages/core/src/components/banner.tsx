@@ -5,7 +5,7 @@ import { X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const bannerVariants = cva(
-  "relative flex items-center gap-[var(--spacing-sm)] w-full px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-sm font-medium",
+  "relative flex items-center gap-[var(--spacing-sm)] w-full px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[var(--font-size-sm)] font-medium",
   {
     variants: {
       variant: {
@@ -62,7 +62,7 @@ const Banner = React.forwardRef<HTMLDivElement, BannerProps>(
           className="shrink-0 rounded opacity-60 hover:opacity-100 transition-opacity focus:outline-none focus:ring-[var(--interactive-border-alt)]"
           aria-label="Dismiss"
         >
-          <X className="h-4 w-4" />
+          <X className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
         </button>
       )}
     </div>

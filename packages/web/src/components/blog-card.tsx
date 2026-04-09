@@ -121,7 +121,7 @@ const BlogCardMeta = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mb-[var(--spacing-sm)] flex flex-wrap items-center gap-[var(--spacing-sm)] text-xs text-[var(--container-fg-alt)]",
+      "mb-[var(--spacing-sm)] flex flex-wrap items-center gap-[var(--spacing-sm)] text-[var(--font-size-xs)] text-[var(--container-fg-alt)]",
       className
     )}
     {...props}
@@ -136,7 +136,7 @@ const BlogCardCategory = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      "text-xs font-normal uppercase tracking-wider text-[var(--action-primary-bg)]",
+      "text-[var(--font-size-xs)] font-normal uppercase tracking-wider text-[var(--action-primary-bg)]",
       className
     )}
     {...props}
@@ -167,7 +167,7 @@ const BlogCardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      "font-heading text-lg font-medium leading-tight text-[var(--container-fg)]",
+      "font-heading text-[var(--font-size-lg)] font-medium leading-tight text-[var(--container-fg)]",
       className
     )}
     {...props}
@@ -182,7 +182,7 @@ const BlogCardExcerpt = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "mt-[var(--spacing-sm)] line-clamp-2 text-sm text-[var(--container-fg-alt)]",
+      "mt-[var(--spacing-sm)] line-clamp-2 text-[var(--font-size-sm)] text-[var(--container-fg-alt)]",
       className
     )}
     {...props}
@@ -231,14 +231,14 @@ const BlogCardAuthorAvatar = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "h-8 w-8 overflow-hidden rounded-full bg-[var(--container-bg-alt)]",
+      "h-[var(--size-md)] w-[var(--size-md)] overflow-hidden rounded-full bg-[var(--container-bg-alt)]",
       className
     )}
   >
     {props.src ? (
       <img alt={alt} className="h-full w-full object-cover" {...props} />
     ) : (
-      <div className="flex h-full w-full items-center justify-center text-sm font-medium text-[var(--container-fg-alt)]">
+      <div className="flex h-full w-full items-center justify-center text-[var(--font-size-sm)] font-medium text-[var(--container-fg-alt)]">
         {fallback || alt?.charAt(0).toUpperCase()}
       </div>
     )}
@@ -252,7 +252,7 @@ const BlogCardAuthorName = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <span
     ref={ref}
-    className={cn("text-sm font-normal text-[var(--container-fg)]", className)}
+    className={cn("text-[var(--font-size-sm)] font-normal text-[var(--container-fg)]", className)}
     {...props}
   />
 ))
@@ -265,14 +265,14 @@ const BlogCardLink = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      "ml-auto inline-flex items-center gap-[var(--spacing-xs)] text-sm font-normal text-[var(--action-primary-bg)] transition-all duration-200 group-hover:gap-[var(--spacing-sm)]",
+      "ml-auto inline-flex items-center gap-[var(--spacing-xs)] text-[var(--font-size-sm)] font-normal text-[var(--action-primary-bg)] transition-all duration-200 group-hover:gap-[var(--spacing-sm)]",
       className
     )}
     {...props}
   >
     {children || "Read more"}
     <svg
-      className="h-4 w-4"
+      className="h-[var(--size-xxs)] w-[var(--size-xxs)]"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"

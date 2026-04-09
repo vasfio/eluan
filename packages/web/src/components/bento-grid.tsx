@@ -112,7 +112,7 @@ const BentoCardIcon = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mb-[var(--spacing-md)] inline-flex h-10 w-10 items-center justify-center rounded-[var(--curves-lg)] bg-[var(--container-bg-alt)] text-[var(--container-fg)]",
+      "mb-[var(--spacing-md)] inline-flex h-[var(--size-lg)] w-[var(--size-lg)] items-center justify-center rounded-[var(--curves-lg)] bg-[var(--container-bg-alt)] text-[var(--container-fg)]",
       className
     )}
     {...props}
@@ -129,7 +129,7 @@ const BentoCardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      "font-heading text-lg font-medium text-[var(--container-fg)]",
+      "font-heading text-[var(--font-size-lg)] font-medium text-[var(--container-fg)]",
       className
     )}
     {...props}
@@ -143,7 +143,7 @@ const BentoCardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-[var(--spacing-sm)] text-sm text-[var(--container-fg-alt)]", className)}
+    className={cn("mt-[var(--spacing-sm)] text-[var(--font-size-sm)] text-[var(--container-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -188,7 +188,7 @@ const BentoCardBadge = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      "absolute right-4 top-4 inline-flex items-center rounded-full bg-[var(--action-primary-bg)] px-[var(--spacing-sm)] py-[var(--spacing-xxs)] text-xs font-medium text-[var(--action-primary-fg)]",
+      "absolute right-4 top-4 inline-flex items-center rounded-full bg-[var(--action-primary-bg)] px-[var(--spacing-sm)] py-[var(--spacing-xxs)] text-[var(--font-size-xs)] font-medium text-[var(--action-primary-fg)]",
       className
     )}
     {...props}
@@ -203,14 +203,14 @@ const BentoCardLink = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mt-[var(--spacing-md)] inline-flex items-center gap-[var(--spacing-xs)] text-sm font-medium text-[var(--action-primary-bg)]",
+      "mt-[var(--spacing-md)] inline-flex items-center gap-[var(--spacing-xs)] text-[var(--font-size-sm)] font-medium text-[var(--action-primary-bg)]",
       className
     )}
     {...props}
   >
     {children || "Learn more"}
     <svg
-      className="h-4 w-4"
+      className="h-[var(--size-xxs)] w-[var(--size-xxs)]"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"

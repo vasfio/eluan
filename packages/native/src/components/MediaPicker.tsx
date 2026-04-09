@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from "react-native"
 import { fontSizes } from "@vasf/ragnar-tokens"
-import { sp, curves, getSemanticColors } from "../utils/styles"
+import { sp, sz, curves, getSemanticColors } from "../utils/styles"
 
 export interface MediaItem {
   /**
@@ -224,8 +224,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 2,
     right: 2,
-    width: 20,
-    height: 20,
+    width: sz.xs,
+    height: sz.xs,
     borderRadius: 10,
     backgroundColor: "rgba(0, 0, 0, 0.6)",
     alignItems: "center",

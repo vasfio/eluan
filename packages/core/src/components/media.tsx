@@ -57,7 +57,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
       <div className={cn(mediaVariants({ ratio, rounded }), className)}>
         {loading && (
           <div className="absolute inset-0 flex items-center justify-center bg-[var(--container-bg-alt)]">
-            <Loader2 className="h-6 w-6 animate-spin text-[var(--container-fg-alt)]" />
+            <Loader2 className="h-[var(--size-sm)] w-[var(--size-sm)] animate-spin text-[var(--container-fg-alt)]" />
           </div>
         )}
         <img
@@ -150,9 +150,9 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 className="rounded-full p-1 text-[var(--interactive-fg-inverse)] hover:bg-white/20"
               >
                 {isPlaying ? (
-                  <Pause className="h-5 w-5" />
+                  <Pause className="h-[var(--size-xs)] w-[var(--size-xs)]" />
                 ) : (
-                  <Play className="h-5 w-5" />
+                  <Play className="h-[var(--size-xs)] w-[var(--size-xs)]" />
                 )}
               </button>
               <button
@@ -161,9 +161,9 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 className="rounded-full p-1 text-[var(--interactive-fg-inverse)] hover:bg-white/20"
               >
                 {isMuted ? (
-                  <VolumeX className="h-5 w-5" />
+                  <VolumeX className="h-[var(--size-xs)] w-[var(--size-xs)]" />
                 ) : (
-                  <Volume2 className="h-5 w-5" />
+                  <Volume2 className="h-[var(--size-xs)] w-[var(--size-xs)]" />
                 )}
               </button>
               <div className="flex-1" />
@@ -172,7 +172,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 onClick={handleFullscreen}
                 className="rounded-full p-[var(--spacing-xxs)] text-[var(--interactive-fg-inverse)] hover:bg-white/20"
               >
-                <Maximize className="h-5 w-5" />
+                <Maximize className="h-[var(--size-xs)] w-[var(--size-xs)]" />
               </button>
             </div>
           </div>

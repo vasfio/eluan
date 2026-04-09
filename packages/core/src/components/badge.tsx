@@ -5,7 +5,7 @@ import { X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const badgeVariants = cva(
-  "inline-flex items-center gap-1 rounded-[var(--curves-md)] border px-[var(--spacing-xs)] py-[var(--spacing-xxs)] text-xs font-normal transition-colors focus:outline-none focus:ring-1 focus:ring-[var(--container-border)]/50 focus:ring-offset-1",
+  "inline-flex items-center gap-1 rounded-[var(--curves-md)] border px-[var(--spacing-xs)] py-[var(--spacing-xxs)] text-[var(--font-size-xs)] font-normal transition-colors focus:outline-none focus:ring-1 focus:ring-[var(--container-border)]/50 focus:ring-offset-1",
   {
     variants: {
       variant: {

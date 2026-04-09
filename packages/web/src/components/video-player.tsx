@@ -146,9 +146,9 @@ const VideoPlayer = React.forwardRef<HTMLVideoElement, VideoPlayerProps>(
             className="absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity hover:bg-black/40"
             aria-label="Play video"
           >
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 text-black shadow-lg transition-transform hover:scale-110 md:h-20 md:w-20">
+            <div className="flex h-[var(--size-2xl)] w-[var(--size-2xl)] items-center justify-center rounded-full bg-white/90 text-black shadow-lg transition-transform hover:scale-110 md:h-20 md:w-20">
               <svg
-                className="ml-[var(--spacing-xs)] h-8 w-8 md:h-10 md:w-10"
+                className="ml-[var(--spacing-xs)] h-[var(--size-md)] w-[var(--size-md)] md:h-[var(--size-lg)] md:w-[var(--size-lg)]"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -216,9 +216,9 @@ const YouTubeEmbed = React.forwardRef<HTMLIFrameElement, YouTubeEmbedProps>(
             }}
             aria-label="Play YouTube video"
           >
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-600 text-white shadow-lg transition-transform hover:scale-110 md:h-20 md:w-20">
+            <div className="flex h-[var(--size-2xl)] w-[var(--size-2xl)] items-center justify-center rounded-full bg-red-600 text-white shadow-lg transition-transform hover:scale-110 md:h-20 md:w-20">
               <svg
-                className="ml-[var(--spacing-xs)] h-8 w-8 md:h-10 md:w-10"
+                className="ml-[var(--spacing-xs)] h-[var(--size-md)] w-[var(--size-md)] md:h-[var(--size-lg)] md:w-[var(--size-lg)]"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -357,7 +357,7 @@ const VideoModal = React.forwardRef<HTMLDivElement, VideoModalProps>(
             aria-label="Close video"
           >
             <svg
-              className="h-8 w-8"
+              className="h-[var(--size-md)] w-[var(--size-md)]"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

@@ -6,7 +6,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const announcementBarVariants = cva(
-  "relative w-full px-[var(--spacing-md)] py-[var(--spacing-sm)] text-center text-sm font-medium",
+  "relative w-full px-[var(--spacing-md)] py-[var(--spacing-sm)] text-center text-[var(--font-size-sm)] font-medium",
   {
     variants: {
       variant: {
@@ -20,9 +20,9 @@ const announcementBarVariants = cva(
         dark: "bg-[var(--container-bg-inverse)] text-[var(--container-fg-inverse)]",
       },
       size: {
-        sm: "py-[var(--spacing-xs)] text-xs",
-        default: "py-[var(--spacing-sm)] text-sm",
-        lg: "py-[var(--spacing-sm)] text-base",
+        sm: "py-[var(--spacing-xs)] text-[var(--font-size-xs)]",
+        default: "py-[var(--spacing-sm)] text-[var(--font-size-sm)]",
+        lg: "py-[var(--spacing-sm)] text-[var(--font-size-base)]",
       },
     },
     defaultVariants: {
@@ -110,7 +110,7 @@ const AnnouncementBar = React.forwardRef<HTMLDivElement, AnnouncementBarProps>(
             >
               {content}
               <svg
-                className="ml-[var(--spacing-sm)] h-4 w-4"
+                className="ml-[var(--spacing-sm)] h-[var(--size-xxs)] w-[var(--size-xxs)]"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -134,7 +134,7 @@ const AnnouncementBar = React.forwardRef<HTMLDivElement, AnnouncementBarProps>(
               aria-label="Dismiss announcement"
             >
               <svg
-                className="h-4 w-4"
+                className="h-[var(--size-xxs)] w-[var(--size-xxs)]"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"

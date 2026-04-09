@@ -11,7 +11,7 @@ import {
   useColorScheme,
 } from "react-native"
 import { fontSizes } from "@vasf/ragnar-tokens"
-import { sp, curves, getSemanticColors } from "../utils/styles"
+import { sp, sz, curves, getSemanticColors } from "../utils/styles"
 
 export interface PickerOption<T = string> {
   /**
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    height: 48,
+    height: sz.xl,
     paddingHorizontal: sp.xs,
     borderWidth: 1,
     borderRadius: curves.xs,

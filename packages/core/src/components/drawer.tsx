@@ -235,7 +235,7 @@ const DrawerTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h2
     ref={ref}
-    className={cn("font-heading text-lg font-semibold text-foreground", className)}
+    className={cn("font-heading text-[var(--font-size-lg)] font-semibold text-foreground", className)}
     {...props}
   />
 ))
@@ -247,7 +247,7 @@ const DrawerDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("text-[var(--font-size-sm)] text-muted-foreground", className)}
     {...props}
   />
 ))

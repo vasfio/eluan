@@ -10,7 +10,7 @@ import {
   useColorScheme,
 } from "react-native"
 import { fontSizes } from "@vasf/ragnar-tokens"
-import { sp, curves, getSemanticColors } from "../utils/styles"
+import { sp, sz, curves, getSemanticColors } from "../utils/styles"
 
 export interface AvatarProps {
   /** Image source (uri or require) */
@@ -52,11 +52,11 @@ export function Avatar({
   const [imageError, setImageError] = useState(false)
 
   const sizeMap = {
-    xs: 24,
-    sm: 32,
-    default: 40,
-    lg: 48,
-    xl: 64,
+    xs: sz.sm,
+    sm: sz.md,
+    default: sz.lg,
+    lg: sz.xl,
+    xl: sz["2xl"],
   }
 
   const numericSize = typeof size === "number" ? size : sizeMap[size]
@@ -197,11 +197,11 @@ export function AvatarGroup({
   const remainingCount = childArray.length - max
 
   const sizeMap = {
-    xs: 24,
-    sm: 32,
-    default: 40,
-    lg: 48,
-    xl: 64,
+    xs: sz.sm,
+    sm: sz.md,
+    default: sz.lg,
+    lg: sz.xl,
+    xl: sz["2xl"],
   }
 
   const numericSize = typeof size === "number" ? size : sizeMap[size]

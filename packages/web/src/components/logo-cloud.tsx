@@ -51,7 +51,7 @@ const LogoCloud = React.forwardRef<HTMLDivElement, LogoCloudProps>(
       >
         <div className="container mx-auto px-4 overflow-hidden">
           {title && (
-            <p className="mb-8 text-center text-xs font-normal uppercase tracking-widest text-[var(--foregrounds-quinary)]">
+            <p className="mb-8 text-center text-[var(--font-size-xs)] font-normal uppercase tracking-widest text-[var(--foregrounds-quinary)]">
               {title}
             </p>
           )}

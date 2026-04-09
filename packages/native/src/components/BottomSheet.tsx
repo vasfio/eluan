@@ -12,7 +12,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native"
-import { sp, curves, getSemanticColors } from "../utils/styles"
+import { sp, sz, curves, getSemanticColors } from "../utils/styles"
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window")
 
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     paddingVertical: sp.xs,
   },
   handle: {
-    width: 36,
+    width: sz.lg,
     height: 4,
     borderRadius: 2,
   },

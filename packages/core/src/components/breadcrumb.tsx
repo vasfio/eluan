@@ -25,7 +25,7 @@ const BreadcrumbList = React.forwardRef<
   <ol
     ref={ref}
     className={cn(
-      "flex flex-wrap items-center gap-[var(--spacing-xxs)] break-words text-sm text-[var(--interactive-fg-alt)] sm:gap-[var(--spacing-sm)]",
+      "flex flex-wrap items-center gap-[var(--spacing-xxs)] break-words text-[var(--font-size-sm)] text-[var(--interactive-fg-alt)] sm:gap-[var(--spacing-sm)]",
       className
     )}
     {...props}
@@ -112,7 +112,7 @@ const BreadcrumbEllipsis = ({
         className={cn("h-7 w-7", className)}
         aria-label="Show more breadcrumbs"
       >
-        <MoreHorizontal className="h-4 w-4" />
+        <MoreHorizontal className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </Button>
     </PopoverTrigger>
     <PopoverContent className="w-auto min-w-[140px] p-[var(--spacing-xxs)]" align="start" sideOffset={6}>
@@ -123,21 +123,21 @@ const BreadcrumbEllipsis = ({
               <a
                 key={i}
                 href={item.href}
-                className="flex items-center rounded-[var(--curves-sm)] px-[var(--spacing-sm)] py-[var(--spacing-xxs)] text-sm text-[var(--interactive-fg-alt)] hover:bg-[var(--interactive-bg-hover)] hover:text-[var(--interactive-fg)] transition-colors"
+                className="flex items-center rounded-[var(--curves-sm)] px-[var(--spacing-sm)] py-[var(--spacing-xxs)] text-[var(--font-size-sm)] text-[var(--interactive-fg-alt)] hover:bg-[var(--interactive-bg-hover)] hover:text-[var(--interactive-fg)] transition-colors"
               >
                 {item.label}
               </a>
             ) : (
               <span
                 key={i}
-                className="flex items-center rounded-[var(--curves-sm)] px-[var(--spacing-sm)] py-[var(--spacing-xxs)] text-sm text-[var(--interactive-fg-disabled)]"
+                className="flex items-center rounded-[var(--curves-sm)] px-[var(--spacing-sm)] py-[var(--spacing-xxs)] text-[var(--font-size-sm)] text-[var(--interactive-fg-disabled)]"
               >
                 {item.label}
               </span>
             )
           )
         ) : (
-          <span className="flex items-center px-[var(--spacing-sm)] py-[var(--spacing-xxs)] text-sm text-[var(--interactive-fg-disabled)]">
+          <span className="flex items-center px-[var(--spacing-sm)] py-[var(--spacing-xxs)] text-[var(--font-size-sm)] text-[var(--interactive-fg-disabled)]">
             No pages
           </span>
         )}

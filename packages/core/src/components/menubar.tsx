@@ -23,7 +23,7 @@ const Menubar = React.forwardRef<
   <MenubarPrimitive.Root
     ref={ref}
     className={cn(
-      "flex h-10 items-center space-x-1 rounded-[var(--curves-md)] border bg-[var(--container-bg)] p-[var(--spacing-xxs)]",
+      "flex h-[var(--size-lg)] items-center space-x-1 rounded-[var(--curves-md)] border bg-[var(--container-bg)] p-[var(--spacing-xxs)]",
       className
     )}
     {...props}
@@ -38,7 +38,7 @@ const MenubarTrigger = React.forwardRef<
   <MenubarPrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex cursor-default select-none items-center rounded-[var(--curves-sm)] px-[var(--spacing-md)] py-[var(--spacing-xs)] text-sm font-medium outline-none focus:bg-[var(--interactive-bg-hover)] focus:text-[var(--interactive-fg)] data-[state=open]:bg-[var(--interactive-bg-hover)] data-[state=open]:text-[var(--interactive-fg)]",
+      "flex cursor-default select-none items-center rounded-[var(--curves-sm)] px-[var(--spacing-md)] py-[var(--spacing-xs)] text-[var(--font-size-sm)] font-medium outline-none focus:bg-[var(--interactive-bg-hover)] focus:text-[var(--interactive-fg)] data-[state=open]:bg-[var(--interactive-bg-hover)] data-[state=open]:text-[var(--interactive-fg)]",
       className
     )}
     {...props}
@@ -55,14 +55,14 @@ const MenubarSubTrigger = React.forwardRef<
   <MenubarPrimitive.SubTrigger
     ref={ref}
     className={cn(
-      "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+      "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-[var(--font-size-sm)] outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
       inset && "pl-8",
       className
     )}
     {...props}
   >
     {children}
-    <ChevronRight className="ml-auto h-4 w-4" />
+    <ChevronRight className="ml-auto h-[var(--size-xxs)] w-[var(--size-xxs)]" />
   </MenubarPrimitive.SubTrigger>
 ))
 MenubarSubTrigger.displayName = MenubarPrimitive.SubTrigger.displayName
@@ -116,7 +116,7 @@ const MenubarItem = React.forwardRef<
   <MenubarPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-[var(--curves-sm)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-sm outline-none focus:bg-[var(--interactive-bg-hover)] focus:text-[var(--interactive-fg)] data-[disabled]:pointer-events-none data-[disabled]:bg-[var(--interactive-bg-disabled)] data-[disabled]:text-[var(--interactive-fg-disabled)]",
+      "relative flex cursor-default select-none items-center rounded-[var(--curves-sm)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[var(--font-size-sm)] outline-none focus:bg-[var(--interactive-bg-hover)] focus:text-[var(--interactive-fg)] data-[disabled]:pointer-events-none data-[disabled]:bg-[var(--interactive-bg-disabled)] data-[disabled]:text-[var(--interactive-fg-disabled)]",
       inset && "pl-8",
       className
     )}
@@ -132,7 +132,7 @@ const MenubarCheckboxItem = React.forwardRef<
   <MenubarPrimitive.CheckboxItem
     ref={ref}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-[var(--curves-sm)] py-[var(--spacing-xs)] pl-8 pr-[var(--spacing-sm)] text-sm outline-none focus:bg-[var(--interactive-bg-hover)] focus:text-[var(--interactive-fg)] data-[disabled]:pointer-events-none data-[disabled]:bg-[var(--interactive-bg-disabled)] data-[disabled]:text-[var(--interactive-fg-disabled)]",
+      "relative flex cursor-default select-none items-center rounded-[var(--curves-sm)] py-[var(--spacing-xs)] pl-8 pr-[var(--spacing-sm)] text-[var(--font-size-sm)] outline-none focus:bg-[var(--interactive-bg-hover)] focus:text-[var(--interactive-fg)] data-[disabled]:pointer-events-none data-[disabled]:bg-[var(--interactive-bg-disabled)] data-[disabled]:text-[var(--interactive-fg-disabled)]",
       className
     )}
     checked={checked}
@@ -140,7 +140,7 @@ const MenubarCheckboxItem = React.forwardRef<
   >
     <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
       <MenubarPrimitive.ItemIndicator>
-        <Check className="h-4 w-4" />
+        <Check className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </MenubarPrimitive.ItemIndicator>
     </span>
     {children}
@@ -155,7 +155,7 @@ const MenubarRadioItem = React.forwardRef<
   <MenubarPrimitive.RadioItem
     ref={ref}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-[var(--curves-sm)] py-[var(--spacing-xs)] pl-8 pr-[var(--spacing-sm)] text-sm outline-none focus:bg-[var(--interactive-bg-hover)] focus:text-[var(--interactive-fg)] data-[disabled]:pointer-events-none data-[disabled]:bg-[var(--interactive-bg-disabled)] data-[disabled]:text-[var(--interactive-fg-disabled)]",
+      "relative flex cursor-default select-none items-center rounded-[var(--curves-sm)] py-[var(--spacing-xs)] pl-8 pr-[var(--spacing-sm)] text-[var(--font-size-sm)] outline-none focus:bg-[var(--interactive-bg-hover)] focus:text-[var(--interactive-fg)] data-[disabled]:pointer-events-none data-[disabled]:bg-[var(--interactive-bg-disabled)] data-[disabled]:text-[var(--interactive-fg-disabled)]",
       className
     )}
     {...props}
@@ -179,7 +179,7 @@ const MenubarLabel = React.forwardRef<
   <MenubarPrimitive.Label
     ref={ref}
     className={cn(
-      "px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-sm font-semibold",
+      "px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[var(--font-size-sm)] font-semibold",
       inset && "pl-8",
       className
     )}
@@ -207,7 +207,7 @@ const MenubarShortcut = ({
   return (
     <span
       className={cn(
-        "ml-auto text-xs tracking-widest text-[var(--container-fg-alt)]",
+        "ml-auto text-[var(--font-size-xs)] tracking-widest text-[var(--container-fg-alt)]",
         className
       )}
       {...props}

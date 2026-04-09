@@ -12,7 +12,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
           toast:
             "group toast group-[.toaster]:bg-[var(--container-bg-alt)] group-[.toaster]:text-[var(--container-fg)] group-[.toaster]:border-[var(--container-border-alt)] group-[.toaster]:shadow-lg",
           description:
-            "group-[.toast]:text-[var(--container-fg-alt)] group-[.toast]:text-sm",
+            "group-[.toast]:text-[var(--container-fg-alt)] group-[.toast]:text-[var(--font-size-sm)]",
           actionButton:
             "group-[.toast]:bg-[var(--action-primary-bg)] group-[.toast]:text-[var(--action-primary-fg)] group-[.toast]:font-medium",
           cancelButton:

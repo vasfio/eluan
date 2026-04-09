@@ -121,7 +121,7 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
           type="text"
           inputMode="decimal"
           className={cn(
-            "flex h-10 w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-sm ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-hover)] disabled:text-[var(--interactive-fg-disabled)] font-mono",
+            "flex h-[var(--size-lg)] w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[var(--font-size-sm)] ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-hover)] disabled:text-[var(--interactive-fg-disabled)] font-mono",
             className
           )}
           ref={ref}
@@ -140,20 +140,20 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
         <button
           type="button"
           className={cn(
-            "flex h-10 w-10 items-center justify-center rounded-l-[var(--curves-md)] border border-r-0 border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] hover:bg-[var(--interactive-bg-hover)]",
+            "flex h-[var(--size-lg)] w-[var(--size-lg)] items-center justify-center rounded-l-[var(--curves-md)] border border-r-0 border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] hover:bg-[var(--interactive-bg-hover)]",
             (!canDecrement() || disabled) && "opacity-50 cursor-not-allowed hover:bg-[var(--interactive-bg)]"
           )}
           onClick={decrement}
           disabled={!canDecrement() || disabled}
           tabIndex={-1}
         >
-          <Minus className="h-4 w-4" />
+          <Minus className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
         </button>
         <input
           type="text"
           inputMode="decimal"
           className={cn(
-            "flex h-10 w-full border border[var(--interactive-border-alt)] bg-[var(--interactive-bg)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-sm text-center ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)] font-mono",
+            "flex h-[var(--size-lg)] w-full border border[var(--interactive-border-alt)] bg-[var(--interactive-bg)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[var(--font-size-sm)] text-center ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)] font-mono",
             className
           )}
           ref={ref}
@@ -167,14 +167,14 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
         <button
           type="button"
           className={cn(
-            "flex h-10 w-10 items-center justify-center rounded-r-[var(--curves-md)] border border-l-0 border[var(--interactive-border-alt)] bg-[var(--interactive-bg)] hover:bg-[var(--interactive-bg-hover)]",
+            "flex h-[var(--size-lg)] w-[var(--size-lg)] items-center justify-center rounded-r-[var(--curves-md)] border border-l-0 border[var(--interactive-border-alt)] bg-[var(--interactive-bg)] hover:bg-[var(--interactive-bg-hover)]",
             (!canIncrement() || disabled) && "opacity-50 cursor-not-allowed hover:bg-[var(--interactive-bg)]"
           )}
           onClick={increment}
           disabled={!canIncrement() || disabled}
           tabIndex={-1}
         >
-          <Plus className="h-4 w-4" />
+          <Plus className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
         </button>
       </div>
     )

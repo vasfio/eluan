@@ -147,15 +147,15 @@ const InputOTP = React.forwardRef<HTMLDivElement, InputOTPProps>(
               onFocus={(e) => e.target.select()}
               disabled={disabled}
               className={cn(
-                "h-12 w-10 rounded-[var(--spacing-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] text-center text-lg font-semibold tracking-widest transition-all",
+                "h-[var(--size-xl)] w-[var(--size-lg)] rounded-[var(--spacing-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] text-center text-[var(--font-size-lg)] font-semibold tracking-widest transition-all",
                 "focus:outline-none focus:ring-1 focus:ring-[var(--interactive-border)] focus:ring-offset-1 focus:ring-offset-[var(--interactive-border)]",
                 "disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)]",
                 value && "bg-[var(--interactive-bg-alt)]"
               )}
             />
             {index === Math.floor(length / 2) - 1 && length > 3 && (
-              <div className="flex w-4 items-center justify-center">
-                <span className="text-[var(--interactive-fg)] text-lg">-</span>
+              <div className="flex w-[var(--size-xxs)] items-center justify-center">
+                <span className="text-[var(--interactive-fg)] text-[var(--font-size-lg)]">-</span>
               </div>
             )}
           </React.Fragment>
@@ -178,7 +178,7 @@ const InputOTPSlot = React.forwardRef<
 >(({ className, index, char, hasFakeCaret, isActive, ...props }, ref) => (
   <div
     className={cn(
-      "relative flex h-10 w-10 items-center justify-center border-y border-r border-[var(--interactive-border-alt)] text-sm transition-all first:rounded-l-[var(--curves-md)] first:border-l last:rounded-r-[var(--curves-md)]",
+      "relative flex h-[var(--size-lg)] w-[var(--size-lg)] items-center justify-center border-y border-r border-[var(--interactive-border-alt)] text-[var(--font-size-sm)] transition-all first:rounded-l-[var(--curves-md)] first:border-l last:rounded-r-[var(--curves-md)]",
       isActive && "z-10 ring-1 ring-[var(--interactive-border-alt)] ring-offset-background",
       className
     )}
@@ -211,7 +211,7 @@ const InputOTPSeparator = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement>
 >(({ ...props }, ref) => (
   <div ref={ref} role="separator" {...props}>
-    <Dot className="h-4 w-4 text-[var(--container-fg)]" />
+    <Dot className="h-[var(--size-xxs)] w-[var(--size-xxs)] text-[var(--container-fg)]" />
   </div>
 ))
 InputOTPSeparator.displayName = "InputOTPSeparator"

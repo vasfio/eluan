@@ -9,7 +9,7 @@ import {
   useColorScheme,
 } from "react-native"
 import { fontSizes } from "@vasf/ragnar-tokens"
-import { sp, curves, getSemanticColors } from "../utils/styles"
+import { sp, sz, curves, getSemanticColors } from "../utils/styles"
 
 export type VoiceInputState = "idle" | "listening" | "processing" | "error"
 
@@ -374,8 +374,8 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   inlineButton: {
-    width: 36,
-    height: 36,
+    width: sz.lg,
+    height: sz.lg,
     borderRadius: 18,
     alignItems: "center",
     justifyContent: "center",

@@ -67,14 +67,14 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
             type="button"
             onClick={() => onSelect?.(node)}
             className={cn(
-              "flex w-full items-center gap-[var(--spacing-sm)] rounded-md px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-sm hover:bg-[var(--interactive-bg-hover)] focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)]",
+              "flex w-full items-center gap-[var(--spacing-sm)] rounded-md px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[var(--font-size-sm)] hover:bg-[var(--interactive-bg-hover)] focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)]",
               isSelected && "bg-[var(--interactive-bg-selected)] text-[var(--interactive-fg-selected)] hover:text-[var(--interactive-fg)]"
             )}
             style={{ paddingLeft: `${depth * indentSize + 8}px` }}
           >
             {showIcons && (
               <span className={cn("shrink-0 text-[var(--interactive-fg-alt)]", isSelected && "text-[var(--interactive-fg-selected)]")}>
-                {node.icon ?? <File className="h-4 w-4" />}
+                {node.icon ?? <File className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />}
               </span>
             )}
             <span className="truncate">{node.name}</span>
@@ -93,14 +93,14 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
               type="button"
               onClick={() => onSelect?.(node)}
               className={cn(
-                "flex w-full items-center gap-[var(--spacing-sm)] rounded-[var(--curves-md)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-sm hover:bg-[var(--interactive-bg-hover)] focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)]",
+                "flex w-full items-center gap-[var(--spacing-sm)] rounded-[var(--curves-md)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[var(--font-size-sm)] hover:bg-[var(--interactive-bg-hover)] focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)]",
               isSelected && "bg-[var(--interactive-bg-selected)] text-[var(--interactive-fg-selected)] hover:text-[var(--interactive-fg)]"
               )}
               style={{ paddingLeft: `${depth * indentSize + 8}px` }}
             >
               <ChevronRight
                 className={cn(
-                  "h-4 w-4 shrink-0 text-[var(--interactive-fg-alt)] transition-transform",
+                  "h-[var(--size-xxs)] w-[var(--size-xxs)] shrink-0 text-[var(--interactive-fg-alt)] transition-transform",
                   isExpanded && "rotate-90",
                   isSelected && "text-[var(--interactive-fg-selected)]"
                 )}
@@ -109,9 +109,9 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
                 <span className={cn("shrink-0 text-[var(--interactive-fg-alt)]", isSelected && "text-[var(--interactive-fg-selected)]")}>
                   {node.icon ??
                     (isExpanded ? (
-                      <FolderOpen className="h-4 w-4" />
+                      <FolderOpen className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
                     ) : (
-                      <Folder className="h-4 w-4" />
+                      <Folder className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
                     ))}
                 </span>
               )}

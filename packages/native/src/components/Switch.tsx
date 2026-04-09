@@ -10,7 +10,7 @@ import {
   Animated,
 } from "react-native"
 import { fontSizes } from "@vasf/ragnar-tokens"
-import { sp, getSemanticColors } from "../utils/styles"
+import { sp, sz, getSemanticColors } from "../utils/styles"
 
 export interface SwitchProps {
   /** Whether the switch is on */
@@ -64,9 +64,9 @@ export function Switch({
   }
 
   const sizeStyles = {
-    sm: { track: { width: 36, height: 20 }, thumb: 16, travel: 16 },
-    default: { track: { width: 44, height: 24 }, thumb: 20, travel: 20 },
-    lg: { track: { width: 52, height: 28 }, thumb: 24, travel: 24 },
+    sm: { track: { width: sz.lg, height: sz.xs }, thumb: sz.xxs, travel: sz.xxs },
+    default: { track: { width: sz.xl, height: sz.sm }, thumb: sz.xs, travel: sz.xs },
+    lg: { track: { width: 52, height: 28 }, thumb: sz.sm, travel: sz.sm },
   }
 
   const currentSize = sizeStyles[size]

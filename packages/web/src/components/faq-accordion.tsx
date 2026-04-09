@@ -54,7 +54,7 @@ const FAQTitle = React.forwardRef<
   <h2
     ref={ref}
     className={cn(
-      "font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl",
+      "font-heading text-[var(--font-size-3xl)] font-bold tracking-tight text-foreground sm:text-[var(--font-size-4xl)]",
       className
     )}
     {...props}
@@ -69,7 +69,7 @@ const FAQDescription = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "mx-auto mt-[var(--spacing-md)] max-w-2xl text-lg text-muted-foreground",
+      "mx-auto mt-[var(--spacing-md)] max-w-2xl text-[var(--font-size-lg)] text-muted-foreground",
       className
     )}
     {...props}
@@ -206,7 +206,7 @@ const FAQQuestion = React.forwardRef<HTMLButtonElement, FAQQuestionProps>(
       <span className="pr-[var(--spacing-md)]">{children}</span>
       <svg
         className={cn(
-          "h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-200",
+          "h-[var(--size-xs)] w-[var(--size-xs)] shrink-0 text-muted-foreground transition-transform duration-200",
           isOpen && "rotate-180"
         )}
         fill="none"

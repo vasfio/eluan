@@ -315,8 +315,8 @@ const ResizableHandle = React.forwardRef<HTMLDivElement, ResizableHandleProps & 
           "bg-[var(--container-bg-alt)] hover:bg-[var(--interactive-bg-hover)] transition-colors",
           "after:absolute",
           direction === "horizontal"
-            ? "after:inset-y-0 after:left-1/2 after:w-4 after:-translate-x-1/2"
-            : "after:inset-x-0 after:top-1/2 after:h-4 after:-translate-y-1/2",
+            ? "after:inset-y-0 after:left-1/2 after:w-[var(--size-xxs)] after:-translate-x-1/2"
+            : "after:inset-x-0 after:top-1/2 after:h-[var(--size-xxs)] after:-translate-y-1/2",
           "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1",
           isResizing && "bg-[var(--interactive-bg-hover)]",
           className
@@ -327,8 +327,8 @@ const ResizableHandle = React.forwardRef<HTMLDivElement, ResizableHandleProps & 
         {withHandle ? (
           <div
             className={cn(
-              "z-10 flex h-4 w-3 items-center justify-center rounded-[var(--curves-sm)] border bg-[var(--interactive-bg-alt)]",
-              direction === "vertical" && "h-3 w-4 rotate-90"
+              "z-10 flex h-[var(--size-xxs)] w-3 items-center justify-center rounded-[var(--curves-sm)] border bg-[var(--interactive-bg-alt)]",
+              direction === "vertical" && "h-3 w-[var(--size-xxs)] rotate-90"
             )}
           >
             <GripVertical className="h-2.5 w-2.5" />
@@ -338,8 +338,8 @@ const ResizableHandle = React.forwardRef<HTMLDivElement, ResizableHandleProps & 
             className={cn(
               "z-10 flex items-center justify-center",
               direction === "horizontal"
-                ? "h-8 w-1 rounded-full bg-[var(--interactive-border-alt)]"
-                : "h-1 w-8 rounded-full bg-[var(--interactive-border-alt)]"
+                ? "h-[var(--size-md)] w-1 rounded-full bg-[var(--interactive-border-alt)]"
+                : "h-1 w-[var(--size-md)] rounded-full bg-[var(--interactive-border-alt)]"
             )}
           />
         )}

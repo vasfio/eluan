@@ -9,7 +9,7 @@ import {
   useColorScheme,
 } from "react-native"
 import { fontSizes, fontWeights } from "@vasf/ragnar-tokens"
-import { sp, curves, getSemanticColors } from "../utils/styles"
+import { sp, sz, curves, getSemanticColors } from "../utils/styles"
 
 export interface ButtonProps extends Omit<PressableProps, "style"> {
   children: React.ReactNode
@@ -93,7 +93,7 @@ export function Button({
     const sizes = {
       default: {
         container: {
-          height: 40,
+          height: sz.lg,
           paddingHorizontal: sp.xs,
           paddingVertical: sp.xxs,
         },
@@ -103,7 +103,7 @@ export function Button({
       },
       sm: {
         container: {
-          height: 36,
+          height: sz.lg,
           paddingHorizontal: sp.xs,
         },
         text: {
@@ -112,7 +112,7 @@ export function Button({
       },
       lg: {
         container: {
-          height: 44,
+          height: sz.xl,
           paddingHorizontal: sp.sm,
         },
         text: {
@@ -121,8 +121,8 @@ export function Button({
       },
       icon: {
         container: {
-          height: 40,
-          width: 40,
+          height: sz.lg,
+          width: sz.lg,
           paddingHorizontal: 0,
         },
         text: {

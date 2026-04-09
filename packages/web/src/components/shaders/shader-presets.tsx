@@ -302,12 +302,12 @@ const ShaderHero = React.forwardRef<HTMLDivElement, ShaderHeroProps>(
           )}
         >
           {title && (
-            <h1 className="max-w-4xl text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
+            <h1 className="max-w-4xl text-[var(--font-size-4xl)] font-bold tracking-tight text-white sm:text-[var(--font-size-5xl)] md:text-6xl lg:text-7xl">
               {title}
             </h1>
           )}
           {subtitle && (
-            <p className="mt-[var(--spacing-md)] max-w-2xl text-lg text-white/80 sm:text-xl md:text-2xl">
+            <p className="mt-[var(--spacing-md)] max-w-2xl text-[var(--font-size-lg)] text-white/80 sm:text-[var(--font-size-xl)] md:text-[var(--font-size-2xl)]">
               {subtitle}
             </p>
           )}

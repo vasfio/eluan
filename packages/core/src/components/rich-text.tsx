@@ -43,7 +43,7 @@ const ToolbarButton = ({
     onPressedChange={onPressedChange}
     disabled={disabled}
     aria-label={tooltip}
-    className="h-8 w-8 p-0"
+    className="h-[var(--size-md)] w-[var(--size-md)] p-0"
   >
     {children}
   </Toggle>
@@ -64,7 +64,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         disabled={!editor.can().chain().focus().toggleBold().run()}
         tooltip="Bold"
       >
-        <Bold className="h-4 w-4" />
+        <Bold className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </ToolbarButton>
       <ToolbarButton
         pressed={editor.isActive("italic")}
@@ -72,7 +72,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         disabled={!editor.can().chain().focus().toggleItalic().run()}
         tooltip="Italic"
       >
-        <Italic className="h-4 w-4" />
+        <Italic className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </ToolbarButton>
       <ToolbarButton
         pressed={editor.isActive("strike")}
@@ -80,7 +80,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         disabled={!editor.can().chain().focus().toggleStrike().run()}
         tooltip="Strikethrough"
       >
-        <Strikethrough className="h-4 w-4" />
+        <Strikethrough className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </ToolbarButton>
       <ToolbarButton
         pressed={editor.isActive("code")}
@@ -88,10 +88,10 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         disabled={!editor.can().chain().focus().toggleCode().run()}
         tooltip="Code"
       >
-        <Code className="h-4 w-4" />
+        <Code className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </ToolbarButton>
 
-      <Separator orientation="vertical" className="mx-[var(--spacing-xxs)] h-6" />
+      <Separator orientation="vertical" className="mx-[var(--spacing-xxs)] h-[var(--size-sm)]" />
 
       <ToolbarButton
         pressed={editor.isActive("heading", { level: 1 })}
@@ -100,7 +100,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         }
         tooltip="Heading 1"
       >
-        <Heading1 className="h-4 w-4" />
+        <Heading1 className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </ToolbarButton>
       <ToolbarButton
         pressed={editor.isActive("heading", { level: 2 })}
@@ -109,7 +109,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         }
         tooltip="Heading 2"
       >
-        <Heading2 className="h-4 w-4" />
+        <Heading2 className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </ToolbarButton>
       <ToolbarButton
         pressed={editor.isActive("heading", { level: 3 })}
@@ -118,41 +118,41 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         }
         tooltip="Heading 3"
       >
-        <Heading3 className="h-4 w-4" />
+        <Heading3 className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </ToolbarButton>
 
-      <Separator orientation="vertical" className="mx-[var(--spacing-xxs)] h-6" />
+      <Separator orientation="vertical" className="mx-[var(--spacing-xxs)] h-[var(--size-sm)]" />
 
       <ToolbarButton
         pressed={editor.isActive("bulletList")}
         onPressedChange={() => editor.chain().focus().toggleBulletList().run()}
         tooltip="Bullet List"
       >
-        <List className="h-4 w-4" />
+        <List className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </ToolbarButton>
       <ToolbarButton
         pressed={editor.isActive("orderedList")}
         onPressedChange={() => editor.chain().focus().toggleOrderedList().run()}
         tooltip="Ordered List"
       >
-        <ListOrdered className="h-4 w-4" />
+        <ListOrdered className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </ToolbarButton>
       <ToolbarButton
         pressed={editor.isActive("blockquote")}
         onPressedChange={() => editor.chain().focus().toggleBlockquote().run()}
         tooltip="Quote"
       >
-        <Quote className="h-4 w-4" />
+        <Quote className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </ToolbarButton>
       <ToolbarButton
         pressed={false}
         onPressedChange={() => editor.chain().focus().setHorizontalRule().run()}
         tooltip="Horizontal Rule"
       >
-        <Minus className="h-4 w-4" />
+        <Minus className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </ToolbarButton>
 
-      <Separator orientation="vertical" className="mx-[var(--spacing-xxs)] h-6" />
+      <Separator orientation="vertical" className="mx-[var(--spacing-xxs)] h-[var(--size-sm)]" />
 
       <ToolbarButton
         pressed={false}
@@ -160,7 +160,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         disabled={!editor.can().chain().focus().undo().run()}
         tooltip="Undo"
       >
-        <Undo className="h-4 w-4" />
+        <Undo className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </ToolbarButton>
       <ToolbarButton
         pressed={false}
@@ -168,7 +168,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         disabled={!editor.can().chain().focus().redo().run()}
         tooltip="Redo"
       >
-        <Redo className="h-4 w-4" />
+        <Redo className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </ToolbarButton>
     </div>
   )
@@ -240,9 +240,9 @@ const RichText = React.forwardRef<HTMLDivElement, RichTextProps>(
           className={cn(
             "prose prose-sm dark:prose-invert max-w-none p-[var(--spacing-sm)] focus-within:outline-none",
             "[&_.ProseMirror]:min-h-[var(--min-height)] [&_.ProseMirror]:outline-none",
-            "[&_.ProseMirror_h1]:text-3xl [&_.ProseMirror_h1]:font-bold [&_.ProseMirror_h1]:leading-tight [&_.ProseMirror_h1]:mt-[var(--spacing-lg)] [&_.ProseMirror_h1]:mb-[var(--spacing-md)]",
-            "[&_.ProseMirror_h2]:text-2xl [&_.ProseMirror_h2]:font-semibold [&_.ProseMirror_h2]:leading-snug [&_.ProseMirror_h2]:mt-[var(--spacing-md)] [&_.ProseMirror_h2]:mb-[var(--spacing-sm)]",
-            "[&_.ProseMirror_h3]:text-xl [&_.ProseMirror_h3]:font-semibold [&_.ProseMirror_h3]:leading-snug [&_.ProseMirror_h3]:mt-[var(--spacing-md)] [&_.ProseMirror_h3]:mb-[var(--spacing-sm)]",
+            "[&_.ProseMirror_h1]:text-[var(--font-size-3xl)] [&_.ProseMirror_h1]:font-bold [&_.ProseMirror_h1]:leading-tight [&_.ProseMirror_h1]:mt-[var(--spacing-lg)] [&_.ProseMirror_h1]:mb-[var(--spacing-md)]",
+            "[&_.ProseMirror_h2]:text-[var(--font-size-2xl)] [&_.ProseMirror_h2]:font-semibold [&_.ProseMirror_h2]:leading-snug [&_.ProseMirror_h2]:mt-[var(--spacing-md)] [&_.ProseMirror_h2]:mb-[var(--spacing-sm)]",
+            "[&_.ProseMirror_h3]:text-[var(--font-size-xl)] [&_.ProseMirror_h3]:font-semibold [&_.ProseMirror_h3]:leading-snug [&_.ProseMirror_h3]:mt-[var(--spacing-md)] [&_.ProseMirror_h3]:mb-[var(--spacing-sm)]",
             "[&_.ProseMirror_p.is-editor-empty:first-child::before]:text-[var(--interactive-fg-alt)] [&_.ProseMirror_p.is-editor-empty:first-child::before]:content-[attr(data-placeholder)] [&_.ProseMirror_p.is-editor-empty:first-child::before]:float-left [&_.ProseMirror_p.is-editor-empty:first-child::before]:h-0 [&_.ProseMirror_p.is-editor-empty:first-child::before]:pointer-events-none"
           )}
           style={{ "--min-height": minHeight } as React.CSSProperties}

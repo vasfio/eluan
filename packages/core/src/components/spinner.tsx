@@ -8,10 +8,10 @@ const spinnerVariants = cva(
   {
     variants: {
       size: {
-        default: "h-5 w-5",
-        sm: "h-4 w-4",
-        lg: "h-6 w-6",
-        xl: "h-8 w-8",
+        default: "h-[var(--size-xs)] w-[var(--size-xs)]",
+        sm: "h-[var(--size-xxs)] w-[var(--size-xxs)]",
+        lg: "h-[var(--size-sm)] w-[var(--size-sm)]",
+        xl: "h-[var(--size-md)] w-[var(--size-md)]",
       },
     },
     defaultVariants: {

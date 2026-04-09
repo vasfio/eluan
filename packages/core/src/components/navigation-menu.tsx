@@ -43,7 +43,7 @@ NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName
 const NavigationMenuItem = NavigationMenuPrimitive.Item
 
 const navigationMenuTriggerStyle = cva(
-  "group inline-flex h-10 w-max items-center justify-center rounded-[var(--curves-md)] bg-[var(--container-bg)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-sm font-medium transition-colors hover:bg-[var(--interactive-bg-hover)] hover:text-[var(--interactive-fg)] focus:bg-[var(--interactive-bg-hover)] focus:text-[var(--interactive-fg)] focus:outline-none disabled:pointer-events-none disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)] data-[active]:bg-[var(--interactive-bg-active)] data-[state=open]:bg-[var(--interactive-bg-hover)]"
+  "group inline-flex h-[var(--size-lg)] w-max items-center justify-center rounded-[var(--curves-md)] bg-[var(--container-bg)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[var(--font-size-sm)] font-medium transition-colors hover:bg-[var(--interactive-bg-hover)] hover:text-[var(--interactive-fg)] focus:bg-[var(--interactive-bg-hover)] focus:text-[var(--interactive-fg)] focus:outline-none disabled:pointer-events-none disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)] data-[active]:bg-[var(--interactive-bg-active)] data-[state=open]:bg-[var(--interactive-bg-hover)]"
 )
 
 const NavigationMenuTrigger = React.forwardRef<

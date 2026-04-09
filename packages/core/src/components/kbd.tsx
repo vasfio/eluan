@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const kbdVariants = cva(
-  "inline-flex items-center justify-center rounded-[var(--curves-sm)] border font-mono text-sm font-medium",
+  "inline-flex items-center justify-center rounded-[var(--curves-sm)] border font-mono text-[var(--font-size-sm)] font-medium",
   {
     variants: {
       variant: {
@@ -14,9 +14,9 @@ const kbdVariants = cva(
         ghost: "border-transparent bg-transparent text-[var(--container-fg-alt)]",
       },
       size: {
-        sm: "h-5 min-w-5 px-[var(--spacing-xs)] text-xs",
-        default: "h-6 min-w-6 px-[var(--spacing-xs)]",
-        lg: "h-7 min-w-7 px-[var(--spacing-sm)] text-base",
+        sm: "h-[var(--size-xs)] min-w-[var(--size-xs)] px-[var(--spacing-xs)] text-[var(--font-size-xs)]",
+        default: "h-[var(--size-sm)] min-w-[var(--size-sm)] px-[var(--spacing-xs)]",
+        lg: "h-7 min-w-7 px-[var(--spacing-sm)] text-[var(--font-size-base)]",
       },
     },
     defaultVariants: {

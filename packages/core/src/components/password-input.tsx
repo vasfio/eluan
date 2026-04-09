@@ -114,11 +114,11 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
     return (
       <div className="space-y-2">
         <div className="relative">
-          <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--interactive-fg-alt)]" />
+          <Lock className="absolute left-3 top-1/2 h-[var(--size-xxs)] w-[var(--size-xxs)] -translate-y-1/2 text-[var(--interactive-fg-alt)]" />
           <input
             type={showPassword ? "text" : "password"}
             className={cn(
-              "flex h-10 w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] pl-10 pr-10 py-[var(--spacing-sm)] text-sm ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)]",
+              "flex h-[var(--size-lg)] w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] pl-10 pr-10 py-[var(--spacing-sm)] text-[var(--font-size-sm)] ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)]",
               className
             )}
             ref={ref}
@@ -132,9 +132,9 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
             tabIndex={-1}
           >
             {showPassword ? (
-              <EyeOff className="h-4 w-4" />
+              <EyeOff className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
             ) : (
-              <Eye className="h-4 w-4" />
+              <Eye className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
             )}
           </button>
         </div>
@@ -148,12 +148,12 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
                   style={{ width: `${strength.score * 100}%` }}
                 />
               </div>
-              <span className="text-xs text-[var(--interactive-fg-alt)] min-w-[50px]">
+              <span className="text-[var(--font-size-xs)] text-[var(--interactive-fg-alt)] min-w-[50px]">
                 {getStrengthLabel()}
               </span>
             </div>
 
-            <ul className="grid grid-cols-2 gap-1 text-xs">
+            <ul className="grid grid-cols-2 gap-1 text-[var(--font-size-xs)]">
               <li className="flex items-center gap-1">
                 {strength.checks.length ? (
                   <Check className="h-3 w-3 text-[var(--positive-fg)]" />

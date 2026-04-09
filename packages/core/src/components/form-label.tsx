@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const formLabelVariants = cva(
-  "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:text-[var(--interactive-fg-disabled)]",
+  "text-[var(--font-size-sm)] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:text-[var(--interactive-fg-disabled)]",
   {
     variants: {
       required: {
@@ -36,9 +36,9 @@ const FormLabel = React.forwardRef<HTMLLabelElement, FormLabelProps>(
         {children}
       </label>
       {optional && (
-        <span className="text-xs text-[var(--interactive-fg-alt)]">(optional)</span>
+        <span className="text-[var(--font-size-xs)] text-[var(--interactive-fg-alt)]">(optional)</span>
       )}
-      {hint && <span className="text-xs text-[var(--interactive-fg-alt)]">{hint}</span>}
+      {hint && <span className="text-[var(--font-size-xs)] text-[var(--interactive-fg-alt)]">{hint}</span>}
     </div>
   )
 )
@@ -50,7 +50,7 @@ const FormDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-[var(--interactive-fg-alt)]", className)}
+    className={cn("text-[var(--font-size-sm)] text-[var(--interactive-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -63,7 +63,7 @@ const FormMessage = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "text-sm",
+      "text-[var(--font-size-sm)]",
       error ? "text-destructive" : "text-[var(--interactive-fg-alt)]",
       className
     )}

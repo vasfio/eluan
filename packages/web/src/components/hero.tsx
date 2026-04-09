@@ -86,7 +86,7 @@ const HeroBadge = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      "mb-[var(--spacing-md)] inline-flex items-center rounded-full border border-[color:var(--container-border-alt)] bg-[var(--container-bg-alt)] px-[var(--spacing-md)] py-[var(--spacing-xs)] text-sm font-medium text-[var(--container-fg-alt)]",
+      "mb-[var(--spacing-md)] inline-flex items-center rounded-full border border-[color:var(--container-border-alt)] bg-[var(--container-bg-alt)] px-[var(--spacing-md)] py-[var(--spacing-xs)] text-[var(--font-size-sm)] font-medium text-[var(--container-fg-alt)]",
       className
     )}
     {...props}
@@ -101,7 +101,7 @@ const HeroTitle = React.forwardRef<
   <h1
     ref={ref}
     className={cn(
-      "max-w-4xl w-full font-heading text-4xl font-medium tracking-tight text-[var(--container-fg)] sm:text-5xl md:text-6xl lg:text-7xl",
+      "max-w-4xl w-full font-heading text-[var(--font-size-4xl)] font-medium tracking-tight text-[var(--container-fg)] sm:text-[var(--font-size-5xl)] md:text-6xl lg:text-7xl",
       className
     )}
     {...props}
@@ -116,7 +116,7 @@ const HeroSubtitle = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "mt-[var(--spacing-md)] max-w-2xl w-full text-lg text-[var(--container-fg-alt)] sm:text-xl",
+      "mt-[var(--spacing-md)] max-w-2xl w-full text-[var(--font-size-lg)] text-[var(--container-fg-alt)] sm:text-[var(--font-size-xl)]",
       className
     )}
     {...props}

@@ -47,7 +47,7 @@ const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
               className
             )}
           >
-            <CalendarIcon className="mr-2 h-4 w-4" />
+            <CalendarIcon className="mr-2 h-[var(--size-xxs)] w-[var(--size-xxs)]" />
             {value ? format(value, dateFormat) : <span>{placeholder}</span>}
           </Button>
         </PopoverTrigger>
@@ -104,7 +104,7 @@ const DateRangePicker = React.forwardRef<HTMLButtonElement, DateRangePickerProps
               className
             )}
           >
-            <CalendarIcon className="mr-2 h-4 w-4" />
+            <CalendarIcon className="mr-2 h-[var(--size-xxs)] w-[var(--size-xxs)]" />
             {value?.from ? (
               value.to ? (
                 <>

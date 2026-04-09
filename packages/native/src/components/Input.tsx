@@ -11,7 +11,7 @@ import {
   Pressable,
 } from "react-native"
 import { fontSizes } from "@vasf/ragnar-tokens"
-import { sp, curves, getSemanticColors } from "../utils/styles"
+import { sp, sz, curves, getSemanticColors } from "../utils/styles"
 
 export interface InputProps extends Omit<TextInputProps, "style"> {
   /** Label text displayed above the input */
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 1,
     borderRadius: curves.xxs,
-    minHeight: 44,
+    minHeight: sz.xl,
   },
   input: {
     flex: 1,

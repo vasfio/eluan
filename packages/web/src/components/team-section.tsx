@@ -54,7 +54,7 @@ const TeamTitle = React.forwardRef<
   <h2
     ref={ref}
     className={cn(
-      "font-heading text-3xl font-medium tracking-tight text-[var(--container-fg)] sm:text-4xl",
+      "font-heading text-[var(--font-size-3xl)] font-medium tracking-tight text-[var(--container-fg)] sm:text-[var(--font-size-4xl)]",
       className
     )}
     {...props}
@@ -69,7 +69,7 @@ const TeamDescription = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "mx-auto mt-[var(--spacing-md)] max-w-2xl text-lg leading-relaxed text-[var(--container-fg-alt)]",
+      "mx-auto mt-[var(--spacing-md)] max-w-2xl text-[var(--font-size-lg)] leading-relaxed text-[var(--container-fg-alt)]",
       className
     )}
     {...props}
@@ -151,7 +151,7 @@ const TeamMemberImage = React.forwardRef<HTMLImageElement, TeamMemberImageProps>
           {...props}
         />
       ) : (
-        <div className="flex h-full w-full items-center justify-center text-4xl font-medium text-[var(--container-fg-alt)]">
+        <div className="flex h-full w-full items-center justify-center text-[var(--font-size-4xl)] font-medium text-[var(--container-fg-alt)]">
           {fallback || alt?.charAt(0).toUpperCase()}
         </div>
       )}
@@ -178,7 +178,7 @@ const TeamMemberRole = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-[var(--container-fg-alt)]", className)}
+    className={cn("text-[var(--font-size-sm)] text-[var(--container-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -190,7 +190,7 @@ const TeamMemberBio = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-[var(--spacing-sm)] text-sm text-[var(--container-fg-alt)]", className)}
+    className={cn("mt-[var(--spacing-sm)] text-[var(--font-size-sm)] text-[var(--container-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -219,7 +219,7 @@ const TeamMemberLink = React.forwardRef<HTMLAnchorElement, TeamMemberLinkProps>(
       ref={ref}
       aria-label={label}
       className={cn(
-        "flex h-8 w-8 items-center justify-center rounded-[var(--curves-lg)] text-[var(--container-fg-alt)] transition-colors hover:bg-[var(--container-bg-alt)] hover:text-[var(--container-fg)]",
+        "flex h-[var(--size-md)] w-[var(--size-md)] items-center justify-center rounded-[var(--curves-lg)] text-[var(--container-fg-alt)] transition-colors hover:bg-[var(--container-bg-alt)] hover:text-[var(--container-fg)]",
         className
       )}
       {...props}

@@ -28,9 +28,9 @@ const quoteVariants = cva(
 )
 
 const textSizes = {
-  sm: "text-sm sm:text-base",
-  default: "text-sm sm:text-base",
-  lg: "text-base sm:text-lg",
+  sm: "text-[var(--font-size-sm)] sm:text-[var(--font-size-base)]",
+  default: "text-[var(--font-size-sm)] sm:text-[var(--font-size-base)]",
+  lg: "text-[var(--font-size-base)] sm:text-[var(--font-size-lg)]",
 }
 
 export interface QuoteProps
@@ -48,7 +48,7 @@ const QuoteComponent = React.forwardRef<HTMLQuoteElement, QuoteProps>(
         {...props}
       >
         {showIcon && variant === "centered" && (
-          <QuoteIcon className="mx-auto mb-[var(--spacing-md)] h-8 w-8 text-[var(--container-fg-alt)]" />
+          <QuoteIcon className="mx-auto mb-[var(--spacing-md)] h-[var(--size-md)] w-[var(--size-md)] text-[var(--container-fg-alt)]" />
         )}
         {children}
       </blockquote>
@@ -92,7 +92,7 @@ const QuoteAuthorAvatar = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "h-12 w-12 shrink-0 overflow-hidden rounded-full bg-[var(--container-bg-alt)]",
+      "h-[var(--size-xl)] w-[var(--size-xl)] shrink-0 overflow-hidden rounded-full bg-[var(--container-bg-alt)]",
       className
     )}
     {...props}
@@ -138,7 +138,7 @@ const QuoteAuthorTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <span
     ref={ref}
-    className={cn("text-sm text-[var(--container-fg-alt)]", className)}
+    className={cn("text-[var(--font-size-sm)] text-[var(--container-fg-alt)]", className)}
     {...props}
   />
 ))

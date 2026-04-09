@@ -146,17 +146,17 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
           <button
             type="button"
             className={cn(
-              "flex items-center gap-[var(--spacing-xxs)] h-10 px-[var(--spacing-md)] rounded-l-[var(--curves-md)] border border-r-0 border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] text-sm hover:bg-[var(--interactive-bg-hover)]",
+              "flex items-center gap-[var(--spacing-xxs)] h-[var(--size-lg)] px-[var(--spacing-md)] rounded-l-[var(--curves-md)] border border-r-0 border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] text-[var(--font-size-sm)] hover:bg-[var(--interactive-bg-hover)]",
               isOpen && "ring-2 ring-[var(--interactive-border)] ring-offset-2"
             )}
             onClick={() => setIsOpen(!isOpen)}
           >
-            <span className="text-base">{selectedCountry.flag}</span>
+            <span className="text-[var(--font-size-base)]">{selectedCountry.flag}</span>
             <span className="text-[var(--interactive-fg-alt)]">{selectedCountry.dialCode}</span>
             <ChevronDown className="h-3 w-3 text-[var(--interactive-fg-alt)]" />
           </button>
           <div className="relative flex-1">
-            <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--interactive-fg-alt)]" />
+            <Phone className="absolute left-3 top-1/2 h-[var(--size-xxs)] w-[var(--size-xxs)] -translate-y-1/2 text-[var(--interactive-fg-alt)]" />
             <input
               type="tel"
               ref={(node) => {
@@ -164,7 +164,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
                 assignRef(ref, node)
               }}
               className={cn(
-                "flex h-10 w-full rounded-r-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] pl-10 pr-[var(--spacing-md)] py-[var(--spacing-sm)] text-sm ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)]",
+                "flex h-[var(--size-lg)] w-full rounded-r-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] pl-10 pr-[var(--spacing-md)] py-[var(--spacing-sm)] text-[var(--font-size-sm)] ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)]",
                 className
               )}
               value={phoneNumber}
@@ -178,7 +178,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
           <div className="absolute z-50 mt-[var(--spacing-xxs)] w-full min-w-[280px] rounded-[var(--curves-md)] border bg-[var(--interactive-bg)] p-[var(--spacing-xxs)] shadow-md">
             <input
               type="text"
-              className="w-full px-[var(--spacing-md)] py-[var(--spacing-sm)] text-sm border-b bg-transparent outline-none placeholder:text-[var(--interactive-fg-alt)]"
+              className="w-full px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[var(--font-size-sm)] border-b bg-transparent outline-none placeholder:text-[var(--interactive-fg-alt)]"
               placeholder="Search countries..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -186,7 +186,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
             />
             <div className="max-h-[200px] overflow-y-auto mt-1">
               {filteredCountries.length === 0 ? (
-                <div className="px-[var(--spacing-md)] py-[var(--spacing-sm)] text-sm text-[var(--interactive-fg-alt)]">
+                <div className="px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[var(--font-size-sm)] text-[var(--interactive-fg-alt)]">
                   No countries found
                 </div>
               ) : (
@@ -195,16 +195,16 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
                     key={country.code}
                     type="button"
                     className={cn(
-                      "flex w-full items-center gap-[var(--spacing-sm)] rounded-[var(--curves-sm)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-sm hover:bg-[var(--interactive-bg-hover)]",
+                      "flex w-full items-center gap-[var(--spacing-sm)] rounded-[var(--curves-sm)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[var(--font-size-sm)] hover:bg-[var(--interactive-bg-hover)]",
                       selectedCountry.code === country.code && "bg-accent"
                     )}
                     onClick={() => handleCountrySelect(country)}
                   >
-                    <span className="text-base">{country.flag}</span>
+                    <span className="text-[var(--font-size-base)]">{country.flag}</span>
                     <span className="flex-1 text-left">{country.name}</span>
                     <span className="text-[var(--interactive-fg-alt)]">{country.dialCode}</span>
                     {selectedCountry.code === country.code && (
-                      <Check className="h-4 w-4" />
+                      <Check className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
                     )}
                   </button>
                 ))

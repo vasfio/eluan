@@ -92,7 +92,7 @@ const TimelineLine = React.forwardRef<HTMLDivElement, TimelineLineProps>(
 TimelineLine.displayName = "TimelineLine"
 
 const timelineDotVariants = cva(
-  "absolute left-0 top-0 flex h-6 w-6 items-center justify-center rounded-full border-2 border-[var(--container-bg)]",
+  "absolute left-0 top-0 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-full border-2 border-[var(--container-bg)]",
   {
     variants: {
       variant: {
@@ -102,9 +102,9 @@ const timelineDotVariants = cva(
         icon: "bg-[var(--container-bg)] text-[var(--container-fg)]",
       },
       size: {
-        sm: "h-4 w-4",
-        default: "h-6 w-6",
-        lg: "h-8 w-8",
+        sm: "h-[var(--size-xxs)] w-[var(--size-xxs)]",
+        default: "h-[var(--size-sm)] w-[var(--size-sm)]",
+        lg: "h-[var(--size-md)] w-[var(--size-md)]",
       },
     },
     defaultVariants: {
@@ -175,7 +175,7 @@ const TimelineTime = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <time
     ref={ref}
-    className={cn("text-sm text-[var(--interactive-fg-alt)]", className)}
+    className={cn("text-[var(--font-size-sm)] text-[var(--interactive-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -187,7 +187,7 @@ const TimelineDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-[var(--spacing-sm)] text-sm text-[var(--interactive-fg-alt)]", className)}
+    className={cn("mt-[var(--spacing-sm)] text-[var(--font-size-sm)] text-[var(--interactive-fg-alt)]", className)}
     {...props}
   />
 ))
