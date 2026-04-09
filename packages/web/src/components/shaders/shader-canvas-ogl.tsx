@@ -56,20 +56,26 @@ const ShaderCanvasOGL = React.forwardRef<HTMLDivElement, ShaderCanvasOGLProps>(
     const mouseRef = React.useRef({ x: 0.5, y: 0.5 })
     const timeRef = React.useRef(0)
 
-    // Resolve colors
+    // Resolve colors (memoized to prevent infinite re-render loops)
     const resolvedColors = colors || PRESET_COLORS[preset]
-    const color1 = hexToVec3(resolvedColors[0] || "#ffffff")
-    const color2 = hexToVec3(resolvedColors[1] || resolvedColors[0] || "#ffffff")
-    const color3 = hexToVec3(resolvedColors[2] || resolvedColors[0] || "#ffffff")
-    const color4Vec = hexToVec3(color4 || resolvedColors[3] || resolvedColors[0] || "#ffffff")
+    const color1 = React.useMemo(() => hexToVec3(resolvedColors[0] || "#ffffff"), [resolvedColors[0]])
+    const color2 = React.useMemo(() => hexToVec3(resolvedColors[1] || resolvedColors[0] || "#ffffff"), [resolvedColors[1], resolvedColors[0]])
+    const color3 = React.useMemo(() => hexToVec3(resolvedColors[2] || resolvedColors[0] || "#ffffff"), [resolvedColors[2], resolvedColors[0]])
+    const color4Vec = React.useMemo(() => hexToVec3(color4 || resolvedColors[3] || resolvedColors[0] || "#ffffff"), [color4, resolvedColors[3], resolvedColors[0]])
 
-    // Resolve shader
-    const frag = fragmentShader || SHADER_PRESETS[preset]
-    const vert = vertexShader || VERTEX_SHADER_DEFAULT
+    // Resolve shader (memoized to prevent effect re-runs)
+    const frag = React.useMemo(() => fragmentShader || SHADER_PRESETS[preset], [fragmentShader, preset])
+    const vert = React.useMemo(() => vertexShader || VERTEX_SHADER_DEFAULT, [vertexShader])
 
     // Quality settings
     const qualityRatio = quality === "low" ? 0.5 : quality === "high" ? 1 : 0.75
     const dpr = (pixelRatio || (typeof window !== "undefined" ? window.devicePixelRatio : 1)) * qualityRatio
+
+    // Stable callback refs
+    const onReadyRef = React.useRef(onReady)
+    onReadyRef.current = onReady
+    const onFrameRef = React.useRef(onFrame)
+    onFrameRef.current = onFrame
 
     React.useEffect(() => {
       const container = containerRef.current
@@ -158,7 +164,7 @@ const ShaderCanvasOGL = React.forwardRef<HTMLDivElement, ShaderCanvasOGLProps>(
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
 
         rendererRef.current = { gl, program }
-        onReady?.()
+        onReadyRef.current?.()
       }
 
       const resize = () => {
@@ -178,7 +184,7 @@ const ShaderCanvasOGL = React.forwardRef<HTMLDivElement, ShaderCanvasOGLProps>(
         }
 
         timeRef.current = time * 0.001 * speed
-        onFrame?.(timeRef.current)
+        onFrameRef.current?.(timeRef.current)
 
         gl.useProgram(program)
 
@@ -237,9 +243,13 @@ const ShaderCanvasOGL = React.forwardRef<HTMLDivElement, ShaderCanvasOGLProps>(
           if (positionBuffer) gl.deleteBuffer(positionBuffer)
           if (uvBuffer) gl.deleteBuffer(uvBuffer)
           if (program) gl.deleteProgram(program)
+          // Explicitly release WebGL context to avoid hitting browser limits
+          const ext = gl.getExtension("WEBGL_lose_context")
+          if (ext) ext.loseContext()
         }
+        rendererRef.current = null
       }
-    }, [frag, vert, speed, interactive, intensity, paused, dpr, color1, color2, color3, color4Vec, onReady, onFrame])
+    }, [frag, vert, speed, interactive, intensity, paused, dpr, color1, color2, color3, color4Vec])
 
     return (
       <div
