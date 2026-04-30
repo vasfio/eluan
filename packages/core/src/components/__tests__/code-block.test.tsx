@@ -1,17 +1,19 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { CodeBlock } from "../code-block";
 
 describe("CodeBlock", () => {
   it("renders code content", () => {
-    render(<CodeBlock code="const x = 1;" language="typescript" />);
-    expect(screen.getByText(/const x = 1/)).toBeInTheDocument();
+    // Prism splits highlighted code into multiple <span>s, so a string match
+    // won't work — check the rendered <code> element's textContent instead.
+    const { container } = render(<CodeBlock code="const x = 1;" language="typescript" />);
+    expect(container.querySelector("code")?.textContent).toContain("const x = 1");
   });
 
   it("forwards className", () => {
     const { container } = render(
       <CodeBlock code="console.log()" language="javascript" className="custom" />
     );
-    expect(container.firstChild).toHaveClass("custom");
+    expect(container.querySelector(".custom")).not.toBeNull();
   });
 });

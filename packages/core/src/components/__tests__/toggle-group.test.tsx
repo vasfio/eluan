@@ -4,6 +4,9 @@ import { describe, it, expect, vi } from "vitest";
 import { ToggleGroup, ToggleGroupItem } from "../toggle-group";
 
 describe("ToggleGroup", () => {
+  // Radix renders items as <button aria-checked> — for type="single" they
+  // have role="radio", for type="multiple" they're plain buttons. Query
+  // by visible text instead of role to avoid the variation.
   it("renders all items", () => {
     render(
       <ToggleGroup type="single">
@@ -11,8 +14,8 @@ describe("ToggleGroup", () => {
         <ToggleGroupItem value="b">B</ToggleGroupItem>
       </ToggleGroup>
     );
-    expect(screen.getByRole("button", { name: "A" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "B" })).toBeInTheDocument();
+    expect(screen.getByText("A")).toBeInTheDocument();
+    expect(screen.getByText("B")).toBeInTheDocument();
   });
 
   it("selects item on click (single)", async () => {
@@ -23,7 +26,7 @@ describe("ToggleGroup", () => {
         <ToggleGroupItem value="right">Right</ToggleGroupItem>
       </ToggleGroup>
     );
-    await userEvent.click(screen.getByRole("button", { name: "Left" }));
+    await userEvent.click(screen.getByText("Left"));
     expect(handler).toHaveBeenCalledWith("left");
   });
 
@@ -35,8 +38,8 @@ describe("ToggleGroup", () => {
         <ToggleGroupItem value="italic">I</ToggleGroupItem>
       </ToggleGroup>
     );
-    await userEvent.click(screen.getByRole("button", { name: "B" }));
-    await userEvent.click(screen.getByRole("button", { name: "I" }));
+    await userEvent.click(screen.getByText("B"));
+    await userEvent.click(screen.getByText("I"));
     expect(handler).toHaveBeenCalledTimes(2);
   });
 });

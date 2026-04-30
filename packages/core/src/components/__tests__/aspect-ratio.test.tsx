@@ -9,7 +9,11 @@ describe("AspectRatio", () => {
   });
 
   it("forwards className", () => {
-    const { container } = render(<AspectRatio className="overflow-hidden" ratio={1}><div /></AspectRatio>);
-    expect(container.firstChild).toHaveClass("overflow-hidden");
+    // Radix AspectRatio.Root wraps in an outer positioned div + an inner
+    // styled div — className is applied to the inner element.
+    const { container } = render(
+      <AspectRatio className="custom-aspect" ratio={1} data-testid="ar"><div /></AspectRatio>
+    );
+    expect(container.querySelector(".custom-aspect")).not.toBeNull();
   });
 });

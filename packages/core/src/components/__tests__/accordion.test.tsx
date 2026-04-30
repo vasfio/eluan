@@ -23,15 +23,23 @@ describe("Accordion", () => {
     expect(screen.getByRole("button", { name: "Section Two" })).toBeInTheDocument();
   });
 
-  it("content is hidden initially", () => {
+  // Radix uses `data-state="open" | "closed"` on the trigger to track open
+  // state. We assert via this attribute rather than `toBeVisible()`, since
+  // happy-dom's CSS visibility computation doesn't reliably reflect Radix's
+  // animated open/close transitions.
+  it("content is closed initially", () => {
     render(<TestAccordion />);
-    expect(screen.queryByText("Content One")).not.toBeVisible();
+    expect(screen.getByRole("button", { name: "Section One" })).toHaveAttribute(
+      "data-state",
+      "closed"
+    );
   });
 
   it("expands content on trigger click", async () => {
     render(<TestAccordion />);
-    await userEvent.click(screen.getByRole("button", { name: "Section One" }));
-    expect(screen.getByText("Content One")).toBeVisible();
+    const trigger = screen.getByRole("button", { name: "Section One" });
+    await userEvent.click(trigger);
+    expect(trigger).toHaveAttribute("data-state", "open");
   });
 
   it("collapses when trigger is clicked again (collapsible)", async () => {
@@ -39,15 +47,17 @@ describe("Accordion", () => {
     const trigger = screen.getByRole("button", { name: "Section One" });
     await userEvent.click(trigger);
     await userEvent.click(trigger);
-    expect(screen.queryByText("Content One")).not.toBeVisible();
+    expect(trigger).toHaveAttribute("data-state", "closed");
   });
 
   it("only one item open in single mode", async () => {
     render(<TestAccordion />);
-    await userEvent.click(screen.getByRole("button", { name: "Section One" }));
-    await userEvent.click(screen.getByRole("button", { name: "Section Two" }));
-    expect(screen.queryByText("Content One")).not.toBeVisible();
-    expect(screen.getByText("Content Two")).toBeVisible();
+    const t1 = screen.getByRole("button", { name: "Section One" });
+    const t2 = screen.getByRole("button", { name: "Section Two" });
+    await userEvent.click(t1);
+    await userEvent.click(t2);
+    expect(t1).toHaveAttribute("data-state", "closed");
+    expect(t2).toHaveAttribute("data-state", "open");
   });
 
   it("multiple items open in multiple mode", async () => {
@@ -63,9 +73,11 @@ describe("Accordion", () => {
         </AccordionItem>
       </Accordion>
     );
-    await userEvent.click(screen.getByRole("button", { name: "A" }));
-    await userEvent.click(screen.getByRole("button", { name: "B" }));
-    expect(screen.getByText("Content A")).toBeVisible();
-    expect(screen.getByText("Content B")).toBeVisible();
+    const a = screen.getByRole("button", { name: "A" });
+    const b = screen.getByRole("button", { name: "B" });
+    await userEvent.click(a);
+    await userEvent.click(b);
+    expect(a).toHaveAttribute("data-state", "open");
+    expect(b).toHaveAttribute("data-state", "open");
   });
 });

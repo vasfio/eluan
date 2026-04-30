@@ -121,6 +121,10 @@ const InputOTP = React.forwardRef<HTMLDivElement, InputOTPProps>(
       if (autoFocus) {
         focusInput(0)
       }
+      // `focusInput` is a closure over a stable ref, so excluding it from
+      // the deps array is intentional — including it would re-run the effect
+      // on every render.
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [autoFocus])
 
     return (

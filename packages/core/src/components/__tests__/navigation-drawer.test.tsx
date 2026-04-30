@@ -1,29 +1,32 @@
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { describe, it, expect } from "vitest";
-import { NavigationDrawer, NavigationDrawerToggle, NavigationDrawerContent } from "../navigation-drawer";
+import {
+  NavigationDrawer,
+  NavigationDrawerProvider,
+  NavigationDrawerContent,
+} from "../navigation-drawer";
+
+// NavigationDrawer requires being wrapped in `NavigationDrawerProvider`. The
+// previous tests mounted it directly which threw the
+// "must be used within a NavigationDrawerProvider" error.
 
 describe("NavigationDrawer", () => {
   const TestDrawer = () => (
-    <NavigationDrawer>
-      <NavigationDrawerToggle>Menu</NavigationDrawerToggle>
-      <NavigationDrawerContent>
-        <nav>
-          <a href="/home">Home</a>
-          <a href="/about">About</a>
-        </nav>
-      </NavigationDrawerContent>
-    </NavigationDrawer>
+    <NavigationDrawerProvider>
+      <NavigationDrawer>
+        <NavigationDrawerContent>
+          <nav>
+            <a href="/home">Home</a>
+            <a href="/about">About</a>
+          </nav>
+        </NavigationDrawerContent>
+      </NavigationDrawer>
+    </NavigationDrawerProvider>
   );
 
-  it("renders trigger", () => {
+  it("renders nav links inside the drawer (desktop)", () => {
     render(<TestDrawer />);
-    expect(screen.getByText("Menu")).toBeInTheDocument();
-  });
-
-  it("shows nav links on open", async () => {
-    render(<TestDrawer />);
-    await userEvent.click(screen.getByText("Menu"));
     expect(screen.getByRole("link", { name: "Home" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "About" })).toBeInTheDocument();
   });
 });

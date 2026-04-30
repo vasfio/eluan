@@ -265,7 +265,6 @@ export function RagnarProvider({
   const setTheme = React.useCallback(
     (t: ThemeName) => {
       if (!isValidThemeName(t)) {
-        // eslint-disable-next-line no-console
         console.warn(
           `RagnarProvider: setTheme("${t}") — unknown theme name. Did you forget to pass it via customThemes?`
         )

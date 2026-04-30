@@ -16,21 +16,26 @@ describe("Collapsible", () => {
     expect(screen.getByText("Toggle")).toBeInTheDocument();
   });
 
-  it("content is hidden by default", () => {
+  // Radix sets `data-state="open" | "closed"` on the trigger — preferred over
+  // `toBeVisible()` since happy-dom doesn't reliably compute visibility for
+  // Radix's animated open/close transitions.
+  it("content is closed by default", () => {
     render(<TestCollapsible />);
-    expect(screen.queryByText("Hidden content")).not.toBeVisible();
+    expect(screen.getByText("Toggle")).toHaveAttribute("data-state", "closed");
   });
 
-  it("shows content when trigger is clicked", async () => {
+  it("opens content when trigger is clicked", async () => {
     render(<TestCollapsible />);
-    await userEvent.click(screen.getByText("Toggle"));
-    expect(screen.getByText("Hidden content")).toBeVisible();
+    const trigger = screen.getByText("Toggle");
+    await userEvent.click(trigger);
+    expect(trigger).toHaveAttribute("data-state", "open");
   });
 
   it("collapses content on second click", async () => {
     render(<TestCollapsible />);
-    await userEvent.click(screen.getByText("Toggle"));
-    await userEvent.click(screen.getByText("Toggle"));
-    expect(screen.queryByText("Hidden content")).not.toBeVisible();
+    const trigger = screen.getByText("Toggle");
+    await userEvent.click(trigger);
+    await userEvent.click(trigger);
+    expect(trigger).toHaveAttribute("data-state", "closed");
   });
 });

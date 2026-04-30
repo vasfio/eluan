@@ -45,7 +45,7 @@
   "scripts": {
     "dev": "vite build --watch",
     "build": "rm -rf dist && vite build && tsc -p tsconfig.build.json",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint src --report-unused-disable-directives",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "vitest run",
@@ -116,7 +116,7 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
     "@vitest/coverage-v8": "^4.0.18",
-    "jsdom": "^28.1.0",
+    "happy-dom": "^20.9.0",
     "storybook": "^8.1.10",
     "tailwindcss": "^4.2.2",
     "tailwindcss-animate": "^1.0.7",

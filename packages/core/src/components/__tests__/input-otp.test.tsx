@@ -1,33 +1,16 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "../input-otp";
+import { InputOTP } from "../input-otp";
 
 describe("InputOTP", () => {
-  it("renders OTP slots", () => {
-    render(
-      <InputOTP maxLength={6}>
-        <InputOTPGroup>
-          <InputOTPSlot index={0} />
-          <InputOTPSlot index={1} />
-          <InputOTPSlot index={2} />
-        </InputOTPGroup>
-      </InputOTP>
-    );
-    expect(document.body).toBeInTheDocument();
+  it("renders the default 6 slots", () => {
+    const { container } = render(<InputOTP />);
+    // Each slot is an <input>; OTP renders `length` of them (default 6).
+    expect(container.querySelectorAll("input").length).toBe(6);
   });
 
-  it("renders the correct number of slots", () => {
-    render(
-      <InputOTP maxLength={4}>
-        <InputOTPGroup>
-          <InputOTPSlot index={0} />
-          <InputOTPSlot index={1} />
-          <InputOTPSlot index={2} />
-          <InputOTPSlot index={3} />
-        </InputOTPGroup>
-      </InputOTP>
-    );
-    const slots = document.querySelectorAll("[data-slot]");
-    expect(slots.length).toBe(4);
+  it("renders the correct number of slots when length is specified", () => {
+    const { container } = render(<InputOTP length={4} />);
+    expect(container.querySelectorAll("input").length).toBe(4);
   });
 });

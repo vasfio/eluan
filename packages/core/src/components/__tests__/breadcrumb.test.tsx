@@ -53,6 +53,10 @@ describe("Breadcrumb", () => {
       </Breadcrumb>
     );
     expect(screen.getByText("Settings")).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: "Settings" })).not.toBeInTheDocument();
+    // BreadcrumbPage is a <span> styled as the current page — it has
+    // `aria-current="page"` and `aria-disabled="true"` (no `href`).
+    const page = screen.getByText("Settings");
+    expect(page).toHaveAttribute("aria-current", "page");
+    expect(page).not.toHaveAttribute("href");
   });
 });

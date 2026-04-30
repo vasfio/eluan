@@ -13,9 +13,11 @@ describe("Slider", () => {
     expect(screen.getByRole("slider")).toHaveAttribute("aria-valuenow", "30");
   });
 
-  it("is disabled when disabled prop set", () => {
+  it("is marked as disabled when disabled prop is set", () => {
     render(<Slider disabled defaultValue={[50]} />);
-    expect(screen.getByRole("slider")).toBeDisabled();
+    // Radix exposes disabled via `data-disabled` on the slider thumb (it's
+    // a span, not a native input — `toBeDisabled()` doesn't apply).
+    expect(screen.getByRole("slider")).toHaveAttribute("data-disabled");
   });
 
   it("forwards className", () => {
