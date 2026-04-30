@@ -16,6 +16,46 @@ const meta: Meta<typeof NavigationDrawer> = {
   title: "Components/Navigation Drawer",
   component: NavigationDrawer,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A collapsible sidebar navigation drawer with support for grouped items, active states, icons, and a mobile-responsive sheet variant.
+
+**Import**
+\`\`\`tsx
+import {
+  NavigationDrawerProvider,
+  NavigationDrawer,
+  NavigationDrawerHeader,
+  NavigationDrawerContent,
+  NavigationDrawerFooter,
+  NavigationDrawerToggle,
+  NavigationDrawerItem,
+  NavigationDrawerGroup,
+} from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<NavigationDrawerProvider>
+  <NavigationDrawer>
+    <NavigationDrawerHeader>
+      <span>My App</span>
+      <NavigationDrawerToggle className="ml-auto" />
+    </NavigationDrawerHeader>
+    <NavigationDrawerContent>
+      <NavigationDrawerGroup>
+        <NavigationDrawerItem icon={<Home />} active>Dashboard</NavigationDrawerItem>
+      </NavigationDrawerGroup>
+    </NavigationDrawerContent>
+  </NavigationDrawer>
+</NavigationDrawerProvider>
+\`\`\`
+        `,
+      },
+    },
+  },
   decorators: [
     (Story) => (
       <NavigationDrawerProvider>
@@ -29,6 +69,13 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A full navigation drawer with header, collapsible toggle, navigation items, and footer actions.",
+      },
+    },
+  },
   render: () => (
     <NavigationDrawerProvider>
       <NavigationDrawer>
@@ -66,6 +113,13 @@ export const Default: Story = {
 }
 
 export const WithGroups: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Navigation items organized into labeled groups (Main, Management).",
+      },
+    },
+  },
   render: () => (
     <NavigationDrawerProvider>
       <NavigationDrawer>
@@ -97,6 +151,13 @@ export const WithGroups: Story = {
 }
 
 export const Collapsed: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Navigation drawer in its collapsed state showing only icons.",
+      },
+    },
+  },
   render: () => (
     <NavigationDrawerProvider defaultCollapsed>
       <NavigationDrawer>

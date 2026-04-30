@@ -23,19 +23,10 @@
 }
 
 [data-curves="sweeping"] {
-  --curves-xxs: var(--radius-radius-4);
-  --curves-xs: var(--radius-radius-8);
-  --curves-sm: var(--radius-radius-12);
-  --curves-md: var(--radius-radius-16);
-  --curves-lg: var(--radius-radius-20);
-  --curves-xl: var(--radius-radius-40);
-}
-
-[data-curves="rounded"] {
-  --curves-xxs: var(--radius-radius-16);
-  --curves-xs: var(--radius-radius-20);
-  --curves-sm: var(--radius-radius-32);
-  --curves-md: var(--radius-radius-40);
-  --curves-lg: var(--radius-radius-80);
-  --curves-xl: var(--radius-radius-full);
+  --curves-xxs: var(--radius-radius-2);
+  --curves-xs: var(--radius-radius-4);
+  --curves-sm: var(--radius-radius-8);
+  --curves-md: var(--radius-radius-12);
+  --curves-lg: var(--radius-radius-16);
+  --curves-xl: var(--radius-radius-24);
 }

@@ -270,7 +270,7 @@ const ShaderCanvasR3F = React.forwardRef<HTMLDivElement, ShaderCanvasR3FProps>(
           )}
           {...props}
         >
-          <p className="text-[var(--font-size-sm)]">{loadError}</p>
+          <p className="text-[length:var(--font-size-sm)]">{loadError}</p>
         </div>
       )
     }

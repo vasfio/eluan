@@ -1,6 +1,24 @@
 {
   "name": "@vasf/ragnar-web",
+  "description": "Marketing and web-specific components for React — hero, pricing, footer, and more",
   "version": "0.1.1",
+  "license": "MIT",
+  "homepage": "https://github.com/frolda/ragnar#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frolda/ragnar.git",
+    "directory": "packages/web"
+  },
+  "bugs": {
+    "url": "https://github.com/frolda/ragnar/issues"
+  },
+  "keywords": [
+    "react",
+    "ui",
+    "marketing",
+    "landing-page",
+    "ragnar"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -43,6 +61,7 @@
     }
   },
   "dependencies": {
+    "@radix-ui/react-navigation-menu": "^1.2.3",
     "@vasf/ragnar-core": "workspace:^",
     "@vasf/ragnar-tokens": "workspace:^",
     "class-variance-authority": "^0.7.0",

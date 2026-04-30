@@ -15,12 +15,47 @@ const meta: Meta<typeof StatsSection> = {
   title: "Web/StatsSection",
   component: StatsSection,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A section for showcasing key metrics and statistics with composable sub-components for header, grid, values, labels, and trends.
+
+**Import**
+\`\`\`tsx
+import { StatsSection, StatsHeader, StatsTitle, StatsDescription, StatsGrid, StatItem, StatValue, StatLabel, StatTrend } from "@vasf/ragnar-web"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<StatsSection variant="default">
+  <StatsGrid columns={4}>
+    <StatItem>
+      <StatValue>10M+</StatValue>
+      <StatLabel>Downloads</StatLabel>
+    </StatItem>
+  </StatsGrid>
+</StatsSection>
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    variant: {
+      description: "Background style: default, muted, primary, or dark.",
+    },
+    size: {
+      description: "Vertical padding: sm, default, or lg.",
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: { docs: { description: { story: "Default stats section with a header, description, and a 4-column stat grid." } } },
   render: () => (
     <StatsSection>
       <StatsHeader>
@@ -52,6 +87,7 @@ export const Default: Story = {
 }
 
 export const Primary: Story = {
+  parameters: { docs: { description: { story: "Primary-colored background variant for emphasis." } } },
   render: () => (
     <StatsSection variant="primary">
       <StatsGrid>
@@ -77,6 +113,7 @@ export const Primary: Story = {
 }
 
 export const WithCards: Story = {
+  parameters: { docs: { description: { story: "Stats displayed as bordered cards with trend indicators showing direction." } } },
   render: () => (
     <StatsSection>
       <StatsGrid columns={3}>
@@ -101,6 +138,7 @@ export const WithCards: Story = {
 }
 
 export const Bordered: Story = {
+  parameters: { docs: { description: { story: "Dark background with bordered stat items separated by vertical dividers." } } },
   render: () => (
     <StatsSection variant="dark">
       <StatsGrid columns={4}>

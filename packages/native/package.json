@@ -1,6 +1,25 @@
 {
   "name": "@vasf/ragnar-native",
+  "description": "React Native UI components sharing the Ragnar token system",
   "version": "0.1.1",
+  "license": "MIT",
+  "homepage": "https://github.com/frolda/ragnar#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frolda/ragnar.git",
+    "directory": "packages/native"
+  },
+  "bugs": {
+    "url": "https://github.com/frolda/ragnar/issues"
+  },
+  "keywords": [
+    "react-native",
+    "ui",
+    "components",
+    "design-system",
+    "ragnar"
+  ],
+  "sideEffects": false,
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -16,6 +35,9 @@
     "dist",
     "src"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "dev": "tsc --watch",
@@ -31,7 +53,7 @@
     "react-native": ">=0.70.0 <0.80.0"
   },
   "dependencies": {
-    "@vasf/ragnar-tokens": "^2.0.0"
+    "@vasf/ragnar-tokens": "workspace:^"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^8.1.0",

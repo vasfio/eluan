@@ -19,12 +19,59 @@ const meta: Meta<typeof DropdownMenu> = {
   title: "Components/Dropdown Menu",
   component: DropdownMenu,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A versatile dropdown menu with support for standard items, checkbox items, radio items, sub-menus, separators, labels, and keyboard shortcuts.
+
+**Import**
+\`\`\`tsx
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuCheckboxItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+} from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<DropdownMenu>
+  <DropdownMenuTrigger asChild>
+    <Button variant="outline">Open</Button>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuItem>Profile</DropdownMenuItem>
+    <DropdownMenuItem>Settings</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A basic dropdown menu with labeled sections and standard menu items.",
+      },
+    },
+  },
   render: () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -45,6 +92,13 @@ export const Default: Story = {
 }
 
 export const WithCheckboxes: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Dropdown menu with checkbox items for toggling visibility of UI panels.",
+      },
+    },
+  },
   render: () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -62,6 +116,13 @@ export const WithCheckboxes: Story = {
 }
 
 export const WithRadioItems: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Dropdown menu with radio items for single-selection (theme picker).",
+      },
+    },
+  },
   render: () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -81,6 +142,13 @@ export const WithRadioItems: Story = {
 }
 
 export const WithSubmenu: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Dropdown menu with a nested sub-menu for additional actions.",
+      },
+    },
+  },
   render: () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

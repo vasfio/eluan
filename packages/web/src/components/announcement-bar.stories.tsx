@@ -10,12 +10,54 @@ const meta: Meta<typeof AnnouncementBar> = {
   title: "Web/AnnouncementBar",
   component: AnnouncementBar,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A top-of-page announcement bar with multiple color variants, optional dismiss button, icon, link, rotating messages, and countdown timer.
+
+**Import**
+\`\`\`tsx
+import { AnnouncementBar, RotatingAnnouncementBar, CountdownAnnouncementBar } from "@vasf/ragnar-web"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<AnnouncementBar variant="default" href="/sale" dismissible>
+  20% off this week!
+</AnnouncementBar>
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    variant: {
+      description: "Color variant: default, secondary, muted, success, warning, error, gradient, or dark.",
+    },
+    size: {
+      description: "Bar height: sm, default, or lg.",
+    },
+    dismissible: {
+      description: "Whether the bar can be dismissed with a close button.",
+    },
+    href: {
+      description: "Makes the entire bar a clickable link.",
+    },
+    icon: {
+      description: "Optional icon displayed before the text.",
+    },
+    isVisible: {
+      description: "Controls visibility of the bar.",
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: { docs: { description: { story: "Default dismissible announcement bar." } } },
   render: () => (
     <AnnouncementBar>
       🎉 New feature release! Check out our latest updates.
@@ -24,6 +66,7 @@ export const Default: Story = {
 }
 
 export const WithLink: Story = {
+  parameters: { docs: { description: { story: "Clickable bar with an arrow icon indicating navigation." } } },
   render: () => (
     <AnnouncementBar href="#">
       Get 20% off your first order with code WELCOME20
@@ -32,6 +75,7 @@ export const WithLink: Story = {
 }
 
 export const WithIcon: Story = {
+  parameters: { docs: { description: { story: "Announcement with a custom Sparkles icon." } } },
   render: () => (
     <AnnouncementBar icon={<Sparkles className="h-4 w-4" />}>
       Introducing our newest product line!
@@ -40,6 +84,7 @@ export const WithIcon: Story = {
 }
 
 export const Variants: Story = {
+  parameters: { docs: { description: { story: "All color variants displayed together." } } },
   render: () => (
     <div className="space-y-2">
       <AnnouncementBar variant="default" dismissible={false}>
@@ -68,6 +113,7 @@ export const Variants: Story = {
 }
 
 export const Sizes: Story = {
+  parameters: { docs: { description: { story: "Small, default, and large size options." } } },
   render: () => (
     <div className="space-y-2">
       <AnnouncementBar size="sm" dismissible={false}>
@@ -84,6 +130,7 @@ export const Sizes: Story = {
 }
 
 export const Rotating: Story = {
+  parameters: { docs: { description: { story: "RotatingAnnouncementBar cycles through multiple messages on a timer." } } },
   render: () => (
     <RotatingAnnouncementBar
       messages={[
@@ -98,6 +145,7 @@ export const Rotating: Story = {
 }
 
 export const Countdown: Story = {
+  parameters: { docs: { description: { story: "CountdownAnnouncementBar with a live countdown timer to a target date." } } },
   render: () => (
     <CountdownAnnouncementBar
       targetDate={new Date(Date.now() + 24 * 60 * 60 * 1000)}
@@ -109,6 +157,7 @@ export const Countdown: Story = {
 }
 
 export const NonDismissible: Story = {
+  parameters: { docs: { description: { story: "A non-dismissible warning bar for critical notices." } } },
   render: () => (
     <AnnouncementBar dismissible={false} variant="warning">
       ⚠️ Scheduled maintenance on Sunday, 2 AM - 6 AM UTC

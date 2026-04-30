@@ -183,7 +183,7 @@ const DecimalInput = React.forwardRef<HTMLInputElement, DecimalInputProps>(
         {hasPrefix && (
           <span
             ref={prefixRef}
-            className="pointer-events-none absolute left-3 text-[var(--interactive-fg-alt)] text-[var(--font-size-sm)] whitespace-nowrap"
+            className="pointer-events-none absolute left-3 text-[color:var(--interactive-fg-alt)] text-[length:var(--font-size-sm)] whitespace-nowrap"
           >
             {effectivePrefix}
             {effectivePrefixUnit}
@@ -193,7 +193,7 @@ const DecimalInput = React.forwardRef<HTMLInputElement, DecimalInputProps>(
           type="text"
           inputMode="decimal"
           className={cn(
-            "flex h-[var(--size-lg)] w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--container-bg)] py-[var(--spacing-sm)] text-[var(--font-size-sm)] text-right ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)] font-mono",
+            "flex h-[var(--size-lg)] w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--container-bg)] py-[var(--spacing-sm)] text-[length:var(--font-size-sm)] text-right ring-offset-background placeholder:text-[color:var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:border-[var(--interactive-border)] disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[color:var(--interactive-fg-disabled)] transition-colors font-mono",
             !hasPrefix && "pl-3",
             !hasSuffix && "pr-3",
             className
@@ -213,7 +213,7 @@ const DecimalInput = React.forwardRef<HTMLInputElement, DecimalInputProps>(
         {hasSuffix && (
           <span
             ref={suffixRef}
-            className="pointer-events-none absolute right-3 text-[var(--interactive-fg-alt)] text-[var(--font-size-sm)] whitespace-nowrap"
+            className="pointer-events-none absolute right-3 text-[color:var(--interactive-fg-alt)] text-[length:var(--font-size-sm)] whitespace-nowrap"
           >
             {effectiveSuffix}
           </span>

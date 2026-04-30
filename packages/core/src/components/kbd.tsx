@@ -4,19 +4,19 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const kbdVariants = cva(
-  "inline-flex items-center justify-center rounded-[var(--curves-sm)] border font-mono text-[var(--font-size-sm)] font-medium",
+  "inline-flex items-center justify-center rounded-[var(--curves-sm)] border font-mono text-[length:var(--font-size-sm)] font-medium",
   {
     variants: {
       variant: {
         default:
-          "border-[var(--container-border-alt)] bg-[var(--container-bg-alt)] text-[var(--container-fg-alt)] shadow-[0_2px_0_0] shadow-[var(--container-border-alt)]",
-        outline: "border-[var(--container-border-alt)] bg-[var(--container-bg)] text-[var(--container-fg)]",
-        ghost: "border-transparent bg-transparent text-[var(--container-fg-alt)]",
+          "border-[var(--container-border-alt)] bg-[var(--container-bg-alt)] text-[color:var(--container-fg-alt)] shadow-[0_2px_0_0] shadow-[var(--container-border-alt)]",
+        outline: "border-[var(--container-border-alt)] bg-[var(--container-bg)] text-[color:var(--container-fg)]",
+        ghost: "border-transparent bg-transparent text-[color:var(--container-fg-alt)]",
       },
       size: {
-        sm: "h-[var(--size-xs)] min-w-[var(--size-xs)] px-[var(--spacing-xs)] text-[var(--font-size-xs)]",
+        sm: "h-[var(--size-xs)] min-w-[var(--size-xs)] px-[var(--spacing-xs)] text-[length:var(--font-size-xs)]",
         default: "h-[var(--size-sm)] min-w-[var(--size-sm)] px-[var(--spacing-xs)]",
-        lg: "h-7 min-w-7 px-[var(--spacing-sm)] text-[var(--font-size-base)]",
+        lg: "h-7 min-w-7 px-[var(--spacing-sm)] text-[length:var(--font-size-base)]",
       },
     },
     defaultVariants: {
@@ -96,7 +96,7 @@ const Kbd = React.forwardRef<HTMLElement, KbdProps>(
       content = keyArray.map((key, index) => (
         <React.Fragment key={index}>
           {index > 0 && (
-            <span className="mx-[var(--spacing-xxs)] text-[var(--interactive-fg-disabled)]">+</span>
+            <span className="mx-[var(--spacing-xxs)] text-[color:var(--interactive-fg-disabled)]">+</span>
           )}
           <span>{formatKey(key)}</span>
         </React.Fragment>

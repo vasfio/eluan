@@ -66,6 +66,11 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
       onChange?.(value.filter((v) => v !== optionValue))
     }
 
+    const handleClearAll = (e: React.MouseEvent) => {
+      e.stopPropagation()
+      onChange?.([])
+    }
+
     const selectedOptions = options.filter((opt) => value.includes(opt.value))
     const displayedOptions = selectedOptions.slice(0, maxDisplayedItems)
     const remaining = selectedOptions.length - maxDisplayedItems
@@ -86,22 +91,22 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
             aria-expanded={open}
             disabled={disabled}
             className={cn(
-              "flex min-h-[var(--size-lg)] w-full items-center justify-between rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[var(--font-size-sm)]",
+              "flex min-h-[var(--size-lg)] w-full items-center justify-between rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[length:var(--font-size-sm)]",
               "ring-offset-background focus:outline-none focus:ring-1 focus:ring-[var(--interactive-border)] focus:border-[var(--interactive-border)]",
-              "disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)] transition-colors",
+              "disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[color:var(--interactive-fg-disabled)] transition-colors",
               className
             )}
           >
-            <div className="flex flex-1 flex-wrap gap-1">
+            <div className="flex flex-1 flex-wrap items-center gap-0.5 min-h-[1.5rem]">
               {selectedOptions.length === 0 ? (
-                <span className="text-[var(--interactive-fg-alt)]">{placeholder}</span>
+                <span className="text-[color:var(--interactive-fg-alt)]">{placeholder}</span>
               ) : (
                 <>
                   {displayedOptions.map((option) => (
                     <Badge
                       key={option.value}
                       variant="secondary"
-                      className="gap-[var(--spacing-xxs)] pr-[var(--spacing-xxs)] text-[var(--font-size-xs)]"
+                      className="gap-0.5 px-1.5 py-0 h-5 text-[0.6875rem] leading-tight font-normal"
                     >
                       {option.label}
                       <button
@@ -111,17 +116,30 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
                         onClick={(e) => handleRemove(option.value, e)}
                         aria-label={`Remove ${option.label}`}
                       >
-                        <X className="h-3 w-3" />
+                        <X className="h-2.5 w-2.5" />
                       </button>
                     </Badge>
                   ))}
                   {remaining > 0 && (
-                    <Badge variant="secondary" className="text-[var(--font-size-xs)]">+{remaining}</Badge>
+                    <Badge variant="secondary" className="px-1.5 py-0 h-5 text-[0.6875rem] leading-tight font-normal">+{remaining}</Badge>
                   )}
                 </>
               )}
             </div>
-            <ChevronDown className={cn("ml-2 h-[var(--size-xxs)] w-[var(--size-xxs)] shrink-0 opacity-50 transition-transform", open && "rotate-180")} />
+            <div className="flex items-center gap-1 ml-2 shrink-0">
+              {selectedOptions.length > 0 && (
+                <button
+                  type="button"
+                  className="rounded-full p-0.5 opacity-40 hover:opacity-100 transition-opacity outline-none"
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={handleClearAll}
+                  aria-label="Clear all selections"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              )}
+              <ChevronDown className={cn("h-[var(--size-xxs)] w-[var(--size-xxs)] opacity-50 transition-transform", open && "rotate-180")} />
+            </div>
           </button>
         </PopoverTrigger>
         <PopoverContent
@@ -132,7 +150,7 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
           <Command>
             <CommandInput placeholder={searchPlaceholder} className="h-[var(--size-lg)]" />
             <CommandList>
-              <CommandEmpty className="py-[var(--spacing-md)] text-center text-[var(--font-size-sm)] text-[var(--interactive-fg-alt)]">{emptyMessage}</CommandEmpty>
+              <CommandEmpty className="py-[var(--spacing-md)] text-center text-[length:var(--font-size-sm)] text-[color:var(--interactive-fg-alt)]">{emptyMessage}</CommandEmpty>
               <CommandGroup>
                 {sortedOptions.map((option) => {
                   const isSelected = value.includes(option.value)
@@ -145,13 +163,13 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
                       onSelect={() => handleSelect(option.value)}
                       className={cn(
                         "flex items-center justify-between gap-[var(--spacing-sm)] cursor-pointer",
-                        isSelected && "text-[var(--interactive-fg)] font-medium"
+                        isSelected && "text-[color:var(--interactive-fg)] font-medium"
                       )}
                     >
                       <span>{option.label}</span>
                       {isSelected && (
                         <X
-                          className="h-3.5 w-3.5 shrink-0 text-[var(--interactive-fg-alt)]"
+                          className="h-3.5 w-3.5 shrink-0 text-[color:var(--interactive-fg-alt)]"
                           onClick={(e) => { e.stopPropagation(); handleSelect(option.value) }}
                         />
                       )}

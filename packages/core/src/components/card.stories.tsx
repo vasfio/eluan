@@ -6,12 +6,58 @@ const meta: Meta<typeof Card> = {
   title: "Components/Card",
   component: Card,
   tags: ["autodocs"],
+  argTypes: {
+    clickable: {
+      control: "boolean",
+      description: "Makes the card interactive with hover elevation and cursor pointer.",
+    },
+    elevation: {
+      control: "select",
+      options: ["none", "sm", "md", "lg"],
+      description: "Controls the shadow depth of the card. Defaults to `sm`.",
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A versatile container component used to group and display content in a visually distinct section with optional elevation and interactivity.
+
+**Sub-components:** \`CardHeader\`, \`CardTitle\`, \`CardDescription\`, \`CardContent\`, \`CardFooter\`
+
+**Import**
+\`\`\`tsx
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Card elevation="sm">
+  <CardHeader>
+    <CardTitle>Title</CardTitle>
+    <CardDescription>Description</CardDescription>
+  </CardHeader>
+  <CardContent>Content goes here.</CardContent>
+  <CardFooter>Footer actions</CardFooter>
+</Card>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A basic card with header, title, description, content, and footer sub-components.",
+      },
+    },
+  },
   render: () => (
     <Card className="w-[350px]">
       <CardHeader>
@@ -29,6 +75,13 @@ export const Default: Story = {
 }
 
 export const WithActions: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A card containing a form with input fields and action buttons in the footer.",
+      },
+    },
+  },
   render: () => (
     <Card className="w-[350px]">
       <CardHeader>
@@ -54,6 +107,13 @@ export const WithActions: Story = {
 }
 
 export const Simple: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A minimal card with only a header and content section, no footer.",
+      },
+    },
+  },
   render: () => (
     <Card className="w-[350px]">
       <CardHeader>

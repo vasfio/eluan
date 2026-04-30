@@ -37,7 +37,7 @@ const AvatarFallback = React.forwardRef<
   <AvatarPrimitive.Fallback
     ref={ref}
     className={cn(
-      "flex h-full w-full items-center justify-center rounded-full bg-[var(--container-bg-alt)] text-[var(--font-size-xs)] font-medium text-[var(--container-fg-alt)]",
+      "flex h-full w-full items-center justify-center rounded-full bg-[var(--container-bg-alt)] text-[length:var(--font-size-xs)] font-medium text-[color:var(--container-fg-alt)]",
       className
     )}
     {...props}
@@ -74,7 +74,7 @@ const AvatarBadge = React.forwardRef<HTMLSpanElement, AvatarBadgeProps>(
       <span
         ref={ref}
         className={cn(
-          "absolute flex items-center justify-center rounded-full ring-2 ring-[var(--container-border)] bg-[var(--destructive-bg)] text-[var(--destructive-fg)]",
+          "absolute flex items-center justify-center rounded-full ring-2 ring-[var(--container-border)] bg-[var(--destructive-fg)] text-[color:var(--destructive-bg)]",
           hasCount
             ? "min-w-[18px] h-[18px] px-[var(--spacing-xs)] text-[10px] font-bold leading-none"
             : "h-3 w-3",
@@ -98,10 +98,10 @@ type AvatarStatusProps = {
 }
 
 const statusColors: Record<AvatarStatusProps["status"], string> = {
-  online: "bg-[var(--positive-bg)]",
-  offline: "bg-[var(--backgrounds-quaternary)]",
-  busy: "bg-[var(--destructive-bg)]",
-  away: "bg-[var(--cautionary-bg)]",
+  online: "bg-[var(--positive-fg)]",
+  offline: "bg-[var(--container-bg-alt)]",
+  busy: "bg-[var(--destructive-fg)]",
+  away: "bg-[var(--cautionary-bg-alt)]",
 }
 
 const AvatarStatus = ({ status, position = "bottom-right", className }: AvatarStatusProps) => {

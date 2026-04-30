@@ -20,7 +20,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
     <div
       ref={ref}
       className={cn(
-        "rounded-[var(--curves-lg)] border border-[color:var(--container-border-alt)] bg-[var(--container-bg)] text-[var(--container-fg)]",
+        "rounded-[var(--curves-lg)] border border-[color:var(--container-border-alt)] bg-[var(--container-bg)] text-[color:var(--container-fg)]",
         elevationClasses[elevation],
         clickable && [
           "cursor-pointer transition-all duration-200",
@@ -49,7 +49,7 @@ const CardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("font-heading text-[var(--font-size-xl)] font-semibold leading-snug tracking-tight", className)}
+    className={cn("font-heading text-[length:var(--font-size-xl)] font-semibold leading-snug tracking-tight", className)}
     {...props}
   />
 ))
@@ -59,7 +59,7 @@ const CardDescription = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("text-[var(--font-size-sm)] text-[var(--foregrounds-tertiary)] leading-relaxed", className)} {...props} />
+  <div ref={ref} className={cn("text-[length:var(--font-size-sm)] text-[color:var(--foregrounds-tertiary)] leading-relaxed", className)} {...props} />
 ))
 CardDescription.displayName = "CardDescription"
 

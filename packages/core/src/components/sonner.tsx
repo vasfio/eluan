@@ -1,30 +1,33 @@
-import { Toaster as Sonner } from "sonner"
+import { Toaster as SonnerPrimitive } from "sonner"
 
-type ToasterProps = React.ComponentProps<typeof Sonner>
+type SonnerProps = React.ComponentProps<typeof SonnerPrimitive>
 
-const Toaster = ({ ...props }: ToasterProps) => {
+// Sonner ships with its own opinionated CSS that hardcodes font-family,
+// padding, and font-sizes on its toast elements. To make toasts inherit the
+// design system's tokens, we override each part with `!important` (Tailwind
+// `!` prefix) — matching Sonner's higher specificity. Border-radius is also
+// exposed by Sonner as a CSS variable, which we set inline.
+const Sonner = ({ ...props }: SonnerProps) => {
   return (
-    <Sonner
-      theme="system"
+    <SonnerPrimitive
       className="toaster group"
+      style={
+        {
+          "--border-radius": "var(--curves-md)",
+        } as React.CSSProperties
+      }
       toastOptions={{
         classNames: {
           toast:
-            "group toast group-[.toaster]:bg-[var(--container-bg-alt)] group-[.toaster]:text-[var(--container-fg)] group-[.toaster]:border-[var(--container-border-alt)] group-[.toaster]:shadow-lg",
+            "group toast group-[.toaster]:![font-family:var(--font-body)] group-[.toaster]:!rounded-[var(--curves-md)] group-[.toaster]:!p-[var(--spacing-md)] group-[.toaster]:!gap-[var(--spacing-sm)] group-[.toaster]:!text-[length:var(--font-size-sm)]",
+          title:
+            "group-[.toast]:![font-family:var(--font-body)] group-[.toast]:!text-[length:var(--font-size-sm)] group-[.toast]:!font-medium",
           description:
-            "group-[.toast]:text-[var(--container-fg-alt)] group-[.toast]:text-[var(--font-size-sm)]",
+            "group-[.toast]:![font-family:var(--font-body)] group-[.toast]:!text-[length:var(--font-size-sm)] group-[.toast]:!opacity-80",
           actionButton:
-            "group-[.toast]:bg-[var(--action-primary-bg)] group-[.toast]:text-[var(--action-primary-fg)] group-[.toast]:font-medium",
+            "group-[.toast]:!bg-[var(--action-primary-bg)] group-[.toast]:!text-[color:var(--action-primary-fg)] group-[.toast]:!font-medium group-[.toast]:!rounded-[var(--curves-sm)] group-[.toast]:![font-family:var(--font-body)]",
           cancelButton:
-            "group-[.toast]:bg-[var(--action-tertiary-bg)] group-[.toast]:text-[var(--action-tertiary-fg)]",
-          error:
-            "group-[.toaster]:bg-[var(--destructive-bg)] group-[.toaster]:text-[var(--destructive-fg)] group-[.toaster]:border-[var(--destructive-border)]",
-          success:
-            "group-[.toaster]:bg-[var(--positive-bg)] group-[.toaster]:text-[var(--positive-fg)] group-[.toaster]:border-[var(--positive-border)]",
-          warning:
-            "group-[.toaster]:bg-[var(--cautionary-bg)] group-[.toaster]:text-[var(--cautionary-fg)] group-[.toaster]:border-[var(--cautionary-border)]",
-          info:
-            "group-[.toaster]:bg-[var(--informative-bg)] group-[.toaster]:text-[var(--informative-fg)] group-[.toaster]:border-[var(--informative-border)]",
+            "group-[.toast]:!bg-[var(--action-tertiary-bg)] group-[.toast]:!text-[color:var(--action-tertiary-fg)] group-[.toast]:!rounded-[var(--curves-sm)] group-[.toast]:![font-family:var(--font-body)]",
         },
       }}
       {...props}
@@ -32,4 +35,4 @@ const Toaster = ({ ...props }: ToasterProps) => {
   )
 }
 
-export { Toaster }
+export { Sonner, Sonner as Toaster }

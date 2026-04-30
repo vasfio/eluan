@@ -5,17 +5,22 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
+/** Tailwind `lg` breakpoint in pixels. */
+const LG_BREAKPOINT = 1024
+
+/**
+ * Variants used for the **mobile overlay** mode only.
+ * On large screens (>=1024px) the drawer is rendered inline (push mode) and these classes are not applied.
+ * Only left and right sides are supported.
+ */
 const drawerVariants = cva(
-  "fixed z-50 bg-[var(--container-bg)] shadow-lg transition-transform duration-300 ease-in-out",
+  "fixed z-50 bg-[var(--container-bg)] transition-transform duration-300 ease-in-out",
   {
     variants: {
       side: {
         left: "inset-y-0 left-0 h-full w-3/4 max-w-sm border-r data-[state=closed]:-translate-x-full data-[state=open]:translate-x-0",
         right:
           "inset-y-0 right-0 h-full w-3/4 max-w-sm border-l data-[state=closed]:translate-x-full data-[state=open]:translate-x-0",
-        top: "inset-x-0 top-0 h-auto max-h-[80vh] border-b data-[state=closed]:-translate-y-full data-[state=open]:translate-y-0",
-        bottom:
-          "inset-x-0 bottom-0 h-auto max-h-[80vh] border-t data-[state=closed]:translate-y-full data-[state=open]:translate-y-0",
       },
     },
     defaultVariants: {
@@ -24,9 +29,41 @@ const drawerVariants = cva(
   }
 )
 
+// ---------------------------------------------------------------------------
+// Media-query hook
+// ---------------------------------------------------------------------------
+
+function useIsLargeScreen() {
+  const [isLarge, setIsLarge] = React.useState(() => {
+    if (typeof window === "undefined") return false
+    return window.innerWidth >= LG_BREAKPOINT
+  })
+
+  React.useEffect(() => {
+    const mql = window.matchMedia(`(min-width: ${LG_BREAKPOINT}px)`)
+    const handler = (e: MediaQueryListEvent | MediaQueryList) =>
+      setIsLarge(e.matches)
+    // Set initial value on the client (handles SSR mismatch).
+    handler(mql)
+    mql.addEventListener("change", handler as (e: MediaQueryListEvent) => void)
+    return () =>
+      mql.removeEventListener(
+        "change",
+        handler as (e: MediaQueryListEvent) => void
+      )
+  }, [])
+
+  return isLarge
+}
+
+// ---------------------------------------------------------------------------
+// Context
+// ---------------------------------------------------------------------------
+
 interface DrawerContextValue {
   open: boolean
   onOpenChange: (open: boolean) => void
+  isLargeScreen: boolean
 }
 
 const DrawerContext = React.createContext<DrawerContextValue | undefined>(
@@ -40,6 +77,10 @@ function useDrawer() {
   }
   return context
 }
+
+// ---------------------------------------------------------------------------
+// Drawer (root)
+// ---------------------------------------------------------------------------
 
 interface DrawerProps {
   children: React.ReactNode
@@ -57,25 +98,30 @@ function Drawer({
   const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen)
   const open = controlledOpen ?? uncontrolledOpen
   const setOpen = onOpenChange ?? setUncontrolledOpen
+  const isLargeScreen = useIsLargeScreen()
 
   return (
-    <DrawerContext.Provider value={{ open, onOpenChange: setOpen }}>
+    <DrawerContext.Provider value={{ open, onOpenChange: setOpen, isLargeScreen }}>
       {children}
     </DrawerContext.Provider>
   )
 }
 
+// ---------------------------------------------------------------------------
+// Trigger / Close
+// ---------------------------------------------------------------------------
+
 const DrawerTrigger = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>
 >(({ onClick, ...props }, ref) => {
-  const { onOpenChange } = useDrawer()
+  const { open, onOpenChange } = useDrawer()
 
   return (
     <button
       ref={ref}
       onClick={(e) => {
-        onOpenChange(true)
+        onOpenChange(!open)
         onClick?.(e)
       }}
       {...props}
@@ -102,6 +148,10 @@ const DrawerClose = React.forwardRef<
   )
 })
 DrawerClose.displayName = "DrawerClose"
+
+// ---------------------------------------------------------------------------
+// Portal / Overlay (mobile only)
+// ---------------------------------------------------------------------------
 
 const DrawerPortal = ({ children }: { children: React.ReactNode }) => {
   const { open } = useDrawer()
@@ -137,18 +187,21 @@ const DrawerOverlay = React.forwardRef<
 })
 DrawerOverlay.displayName = "DrawerOverlay"
 
+// ---------------------------------------------------------------------------
+// DrawerContent
+// ---------------------------------------------------------------------------
+
 interface DrawerContentProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof drawerVariants> {
-  /** When true the drawer pushes content instead of overlaying (no backdrop). Use with DrawerPushLayout. */
-  push?: boolean
-}
+    VariantProps<typeof drawerVariants> {}
 
 const DrawerContent = React.forwardRef<HTMLDivElement, DrawerContentProps>(
-  ({ className, side, push = false, children, ...props }, ref) => {
-    const { open, onOpenChange } = useDrawer()
+  ({ className, side = "right", children, ...props }, ref) => {
+    const { open, onOpenChange, isLargeScreen } = useDrawer()
 
-    // Handle escape key
+    const resolvedSide = side ?? "right"
+
+    // ----- side-effects -----
     React.useEffect(() => {
       const handleEscape = (e: KeyboardEvent) => {
         if (e.key === "Escape") {
@@ -158,7 +211,8 @@ const DrawerContent = React.forwardRef<HTMLDivElement, DrawerContentProps>(
 
       if (open) {
         document.addEventListener("keydown", handleEscape)
-        if (!push) {
+        // Only lock scroll on mobile overlay mode
+        if (!isLargeScreen) {
           document.body.style.overflow = "hidden"
         }
       }
@@ -167,18 +221,18 @@ const DrawerContent = React.forwardRef<HTMLDivElement, DrawerContentProps>(
         document.removeEventListener("keydown", handleEscape)
         document.body.style.overflow = ""
       }
-    }, [open, onOpenChange, push])
+    }, [open, onOpenChange, isLargeScreen])
 
-    if (push) {
-      // Push mode: render inline (not in a portal), no overlay, no fixed positioning.
-      // The drawer sits beside the content and DrawerPushLayout handles the margin shift.
+    // ----- Large screen: inline push mode -----
+    if (isLargeScreen) {
       return (
         <div
           ref={ref}
           data-state={open ? "open" : "closed"}
           className={cn(
-            "h-full bg-[var(--container-bg)] border-r shadow-sm transition-all duration-300 ease-in-out overflow-hidden",
-            open ? (side === "right" ? "w-[280px] border-l" : "w-[280px] border-r") : "w-0",
+            "sticky top-0 h-screen shrink-0 bg-[var(--container-bg)] transition-[width] duration-300 ease-in-out overflow-hidden",
+            resolvedSide === "right" ? "border-l order-last" : "border-r order-first",
+            open ? "w-[280px]" : "w-0",
             className
           )}
           {...props}
@@ -190,13 +244,14 @@ const DrawerContent = React.forwardRef<HTMLDivElement, DrawerContentProps>(
       )
     }
 
+    // ----- Small screen: overlay mode -----
     return (
       <DrawerPortal>
         <DrawerOverlay />
         <div
           ref={ref}
           data-state={open ? "open" : "closed"}
-          className={cn(drawerVariants({ side }), className)}
+          className={cn(drawerVariants({ side: resolvedSide }), className)}
           {...props}
         >
           {children}
@@ -206,6 +261,10 @@ const DrawerContent = React.forwardRef<HTMLDivElement, DrawerContentProps>(
   }
 )
 DrawerContent.displayName = "DrawerContent"
+
+// ---------------------------------------------------------------------------
+// Header / Footer / Title / Description
+// ---------------------------------------------------------------------------
 
 const DrawerHeader = ({
   className,
@@ -235,7 +294,7 @@ const DrawerTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h2
     ref={ref}
-    className={cn("font-heading text-[var(--font-size-lg)] font-semibold text-foreground", className)}
+    className={cn("font-heading text-[length:var(--font-size-lg)] font-semibold text-foreground", className)}
     {...props}
   />
 ))
@@ -247,57 +306,14 @@ const DrawerDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-[var(--font-size-sm)] text-muted-foreground", className)}
+    className={cn("text-[length:var(--font-size-sm)] text-muted-foreground", className)}
     {...props}
   />
 ))
 DrawerDescription.displayName = "DrawerDescription"
 
-// Handle for bottom/top drawers
-const DrawerHandle = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "mx-auto mt-[var(--spacing-md)] h-1.5 w-12 rounded-[var(--curves-md)] bg-[var(--container-bg-alt)]",
-      className
-    )}
-    {...props}
-  />
-))
-DrawerHandle.displayName = "DrawerHandle"
-
-
-// DrawerPushLayout: wrap your main content with this to get push behaviour
-// Usage: <DrawerPushLayout side="left"><YourApp /></DrawerPushLayout>
-interface DrawerPushLayoutProps {
-  children: React.ReactNode
-  side?: "left" | "right"
-  width?: string
-  className?: string
-}
-
-const DrawerPushLayout = ({ children, side = "left", width = "280px", className }: DrawerPushLayoutProps) => {
-  const { open } = useDrawer()
-  return (
-    <div
-      className={cn("transition-all duration-300 ease-in-out", className)}
-      style={{
-        marginLeft: side === "left" && open ? width : undefined,
-        marginRight: side === "right" && open ? width : undefined,
-      }}
-    >
-      {children}
-    </div>
-  )
-}
-DrawerPushLayout.displayName = "DrawerPushLayout"
-
 export {
   Drawer,
-  DrawerPushLayout,
   DrawerPortal,
   DrawerOverlay,
   DrawerTrigger,
@@ -307,5 +323,4 @@ export {
   DrawerFooter,
   DrawerTitle,
   DrawerDescription,
-  DrawerHandle,
 }

@@ -12,12 +12,50 @@ const meta: Meta<typeof ContentSpot> = {
   title: "Web/ContentSpot",
   component: ContentSpot,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A content spotlight section with eyebrow text, title, description, and action buttons, supporting centered, left, and right layouts.
+
+**Import**
+\`\`\`tsx
+import { ContentSpot, ContentSpotEyebrow, ContentSpotTitle, ContentSpotDescription, ContentSpotActions } from "@vasf/ragnar-web"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<ContentSpot layout="left" size="lg">
+  <ContentSpotEyebrow>New</ContentSpotEyebrow>
+  <ContentSpotTitle>Title</ContentSpotTitle>
+  <ContentSpotDescription>Description text.</ContentSpotDescription>
+  <ContentSpotActions>
+    <Button>Action</Button>
+  </ContentSpotActions>
+</ContentSpot>
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    layout: {
+      description: "Text alignment: default (center), left, or right.",
+    },
+    size: {
+      description: "Vertical padding and text size: sm, default, lg, xl, or full.",
+    },
+    container: {
+      description: "Whether to wrap content in a centered container.",
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: { docs: { description: { story: "Center-aligned content spot with eyebrow, title, description, and two action buttons." } } },
   render: () => (
     <ContentSpot>
       <ContentSpotEyebrow>Introducing</ContentSpotEyebrow>
@@ -35,6 +73,7 @@ export const Default: Story = {
 }
 
 export const LeftAligned: Story = {
+  parameters: { docs: { description: { story: "Left-aligned layout variant for asymmetric page designs." } } },
   render: () => (
     <ContentSpot layout="left">
       <ContentSpotEyebrow>Our Mission</ContentSpotEyebrow>
@@ -51,6 +90,7 @@ export const LeftAligned: Story = {
 }
 
 export const LargeSize: Story = {
+  parameters: { docs: { description: { story: "Extra-large size with increased vertical padding and text scale." } } },
   render: () => (
     <ContentSpot size="xl">
       <ContentSpotEyebrow>Enterprise Ready</ContentSpotEyebrow>

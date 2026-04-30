@@ -30,7 +30,12 @@ const Timeline = React.forwardRef<HTMLDivElement, TimelineProps>(
 )
 Timeline.displayName = "Timeline"
 
-const timelineItemVariants = cva("relative pb-8 pl-8 last:pb-0", {
+const timelineItemVariants = cva(
+  // Padding scales with the spacing density. Left padding clears the dot
+  // (`--size-sm`) plus a token-driven gap so content aligns to the right of
+  // the dot consistently across compact / standard / wide spacing.
+  "relative pb-[var(--spacing-xl)] pl-[calc(var(--size-sm)+var(--spacing-md))] last:pb-0",
+  {
   variants: {
     variant: {
       default: "",
@@ -61,7 +66,11 @@ const TimelineItem = React.forwardRef<HTMLDivElement, TimelineItemProps>(
 TimelineItem.displayName = "TimelineItem"
 
 const timelineLineVariants = cva(
-  "absolute left-[11px] top-6 h-[calc(100%-24px)] w-px",
+  // Position centred on the dot (`left = (size-sm / 2) - 0.5px` for the 1px
+  // line). `top` starts the line right below the dot, `h` extends it to the
+  // bottom of the item — both expressed in tokens so the line scales with
+  // the dot/spacing.
+  "absolute left-[calc(var(--size-sm)/2-0.5px)] top-[var(--size-sm)] h-[calc(100%-var(--size-sm))] w-px",
   {
     variants: {
       variant: {
@@ -97,9 +106,9 @@ const timelineDotVariants = cva(
     variants: {
       variant: {
         default: "bg-[var(--container-bg-alt)]",
-        filled: "bg-[var(--container-bg)] text-[var(--container-fg)]",
+        filled: "bg-[var(--container-bg)] text-[color:var(--container-fg)]",
         outline: "border-2 border-[var(--container-border-alt)] bg-[var(--container-bg)]",
-        icon: "bg-[var(--container-bg)] text-[var(--container-fg)]",
+        icon: "bg-[var(--container-bg)] text-[color:var(--container-fg)]",
       },
       size: {
         sm: "h-[var(--size-xxs)] w-[var(--size-xxs)]",
@@ -126,7 +135,7 @@ const TimelineDot = React.forwardRef<HTMLDivElement, TimelineDotProps>(
       ref={ref}
       className={cn(
         timelineDotVariants({ variant, size }),
-        "bg-[var(--timeline-dot-bg,var(--container-bg-alt))] text-[var(--timeline-dot-color,var(--container-fg))]",
+        "bg-[var(--timeline-dot-bg,var(--container-bg-alt))] text-[color:var(--timeline-dot-color,var(--container-fg))]",
         className
       )}
       {...props}
@@ -151,7 +160,13 @@ const TimelineHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex items-center gap-2", className)}
+    // `min-h-[var(--size-sm)]` matches the dot's height so `items-center`
+    // vertically centres the title with the (absolutely positioned) dot
+    // regardless of the active spacing density.
+    className={cn(
+      "flex items-center gap-[var(--spacing-sm)] min-h-[var(--size-sm)]",
+      className
+    )}
     {...props}
   />
 ))
@@ -175,7 +190,7 @@ const TimelineTime = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <time
     ref={ref}
-    className={cn("text-[var(--font-size-sm)] text-[var(--interactive-fg-alt)]", className)}
+    className={cn("text-[length:var(--font-size-sm)] text-[color:var(--interactive-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -187,7 +202,7 @@ const TimelineDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-[var(--spacing-sm)] text-[var(--font-size-sm)] text-[var(--interactive-fg-alt)]", className)}
+    className={cn("mt-[var(--spacing-sm)] text-[length:var(--font-size-sm)] text-[color:var(--interactive-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -225,7 +240,9 @@ const TimelineHorizontalLine = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "absolute left-[calc(50%+12px)] top-3 h-px w-[calc(100%-24px)] bg-[var(--container-border-alt)]",
+      // Token-based positioning so the connecting line scales with `--size-sm`
+      // across spacing densities (was hardcoded 12px / top-3 = 12px).
+      "absolute left-[calc(50%+var(--size-sm)/2)] top-[calc(var(--size-sm)/2-0.5px)] h-px w-[calc(100%-var(--size-sm))] bg-[var(--container-border-alt)]",
       className
     )}
     {...props}

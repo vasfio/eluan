@@ -6,9 +6,9 @@ import { cn } from "@/lib/utils"
 const socialProofVariants = cva("flex items-center gap-[var(--spacing-sm)]", {
   variants: {
     size: {
-      sm: "text-[var(--font-size-sm)]",
-      default: "text-[var(--font-size-base)]",
-      lg: "text-[var(--font-size-lg)]",
+      sm: "text-[length:var(--font-size-sm)]",
+      default: "text-[length:var(--font-size-base)]",
+      lg: "text-[length:var(--font-size-lg)]",
     },
   },
   defaultVariants: {
@@ -71,7 +71,7 @@ const AvatarStack = React.forwardRef<HTMLDivElement, AvatarStackProps>(
         {remaining > 0 && (
           <div
             className={cn(
-              "relative inline-flex items-center justify-center rounded-full border-2 border-[var(--container-bg)] bg-[var(--container-bg-alt)] text-[var(--font-size-xs)] font-medium text-[var(--container-fg-alt)]",
+              "relative inline-flex items-center justify-center rounded-full border-2 border-[var(--container-bg)] bg-[var(--container-bg-alt)] text-[length:var(--font-size-xs)] font-medium text-[color:var(--container-fg-alt)]",
               sizes[size]
             )}
           >
@@ -124,7 +124,7 @@ const StarRating = React.forwardRef<HTMLDivElement, StarRatingProps>(
           {Array.from({ length: fullStars }).map((_, i) => (
             <svg
               key={`full-${i}`}
-              className={cn(sizes[size], "text-[var(--cautionary-main)]")}
+              className={cn(sizes[size], "text-[color:var(--cautionary-main)]")}
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -133,7 +133,7 @@ const StarRating = React.forwardRef<HTMLDivElement, StarRatingProps>(
           ))}
           {hasHalfStar && (
             <svg
-              className={cn(sizes[size], "text-[var(--cautionary-main)]")}
+              className={cn(sizes[size], "text-[color:var(--cautionary-main)]")}
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -152,7 +152,7 @@ const StarRating = React.forwardRef<HTMLDivElement, StarRatingProps>(
           {Array.from({ length: emptyStars }).map((_, i) => (
             <svg
               key={`empty-${i}`}
-              className={cn(sizes[size], "text-[var(--container-border-alt)]")}
+              className={cn(sizes[size], "text-[color:var(--container-border-alt)]")}
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -161,10 +161,10 @@ const StarRating = React.forwardRef<HTMLDivElement, StarRatingProps>(
           ))}
         </div>
         {showValue && (
-          <span className="font-medium text-[var(--container-fg)]">{rating.toFixed(1)}</span>
+          <span className="font-medium text-[color:var(--container-fg)]">{rating.toFixed(1)}</span>
         )}
         {reviewCount !== undefined && (
-          <span className="text-[var(--container-fg-alt)]">
+          <span className="text-[color:var(--container-fg-alt)]">
             ({reviewCount.toLocaleString()} reviews)
           </span>
         )}
@@ -197,14 +197,14 @@ const TrustBadge = React.forwardRef<HTMLDivElement, TrustBadgeProps>(
     <div
       ref={ref}
       className={cn(
-        "flex items-center gap-[var(--spacing-sm)] text-[var(--font-size-sm)] text-[var(--container-fg-alt)]",
+        "flex items-center gap-[var(--spacing-sm)] text-[length:var(--font-size-sm)] text-[color:var(--container-fg-alt)]",
         className
       )}
       {...props}
     >
       {icon || (
         <svg
-          className="h-[var(--size-xxs)] w-[var(--size-xxs)] text-[var(--positive-fg)]"
+          className="h-[var(--size-xxs)] w-[var(--size-xxs)] text-[color:var(--positive-fg)]"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -243,9 +243,9 @@ const CustomerCount = React.forwardRef<HTMLDivElement, CustomerCountProps>(
     ref
   ) => {
     const sizes = {
-      sm: "text-[var(--font-size-sm)]",
-      default: "text-[var(--font-size-base)]",
-      lg: "text-[var(--font-size-lg)]",
+      sm: "text-[length:var(--font-size-sm)]",
+      default: "text-[length:var(--font-size-base)]",
+      lg: "text-[length:var(--font-size-lg)]",
     }
 
     return (
@@ -254,8 +254,8 @@ const CustomerCount = React.forwardRef<HTMLDivElement, CustomerCountProps>(
         className={cn("flex items-center gap-[var(--spacing-sm)]", sizes[size], className)}
         {...props}
       >
-        <span className="font-medium text-[var(--container-fg)]">{count.toLocaleString()}+</span>
-        <span className="text-[var(--container-fg-alt)]">{label}</span>
+        <span className="font-medium text-[color:var(--container-fg)]">{count.toLocaleString()}+</span>
+        <span className="text-[color:var(--container-fg-alt)]">{label}</span>
       </div>
     )
   }
@@ -290,7 +290,7 @@ const FeaturedIn = React.forwardRef<HTMLDivElement, FeaturedInProps>(
       className={cn("text-center", className)}
       {...props}
     >
-      <p className="mb-[var(--spacing-lg)] text-[var(--font-size-xs)] font-normal uppercase tracking-widest text-[var(--container-fg-alt)]">
+      <p className="mb-[var(--spacing-lg)] text-[length:var(--font-size-xs)] font-normal uppercase tracking-widest text-[color:var(--container-fg-alt)]">
         {title}
       </p>
       <div className="flex flex-wrap items-center justify-center gap-[var(--spacing-xl)] opacity-40 grayscale transition-opacity duration-300 hover:opacity-60">

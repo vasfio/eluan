@@ -12,6 +12,55 @@ const meta: Meta<typeof Carousel> = {
   title: "Components/Carousel",
   component: Carousel,
   tags: ["autodocs"],
+  argTypes: {
+    orientation: {
+      description:
+        'The scroll direction of the carousel. Options: `"horizontal"` (default) or `"vertical"`.',
+    },
+    opts: {
+      description: "Embla Carousel options forwarded to the underlying carousel engine.",
+    },
+    plugins: {
+      description: "Embla Carousel plugins for autoplay, drag-free scrolling, etc.",
+    },
+    setApi: {
+      description: "Callback that receives the Embla Carousel API instance for external control.",
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A scrollable content carousel powered by Embla Carousel with previous/next navigation controls.
+
+**Sub-components:** \`CarouselContent\`, \`CarouselItem\`, \`CarouselPrevious\`, \`CarouselNext\`
+
+**Import**
+\`\`\`tsx
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Carousel>
+  <CarouselContent>
+    <CarouselItem>Slide 1</CarouselItem>
+    <CarouselItem>Slide 2</CarouselItem>
+  </CarouselContent>
+  <CarouselPrevious />
+  <CarouselNext />
+</Carousel>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
@@ -37,6 +86,13 @@ export const Default: Story = {
       <CarouselNext />
     </Carousel>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: "A horizontal carousel showing one card per slide with previous/next controls.",
+      },
+    },
+  },
 }
 
 export const MultipleItems: Story = {
@@ -59,6 +115,13 @@ export const MultipleItems: Story = {
       <CarouselNext />
     </Carousel>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: "A carousel displaying multiple items per viewport using responsive basis classes.",
+      },
+    },
+  },
 }
 
 export const Vertical: Story = {
@@ -81,4 +144,11 @@ export const Vertical: Story = {
       <CarouselNext />
     </Carousel>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: "A vertically-oriented carousel that scrolls slides along the y-axis.",
+      },
+    },
+  },
 }

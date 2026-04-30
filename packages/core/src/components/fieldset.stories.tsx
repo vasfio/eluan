@@ -7,12 +7,42 @@ const meta: Meta<typeof Fieldset> = {
   title: "Components/Fieldset",
   component: Fieldset,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A styled container for grouping related form controls with an optional legend and description, rendered as a div to avoid native fieldset border quirks.
+
+**Import**
+\`\`\`tsx
+import { Fieldset, FieldsetLegend, FieldsetDescription } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Fieldset>
+  <FieldsetLegend>Personal Information</FieldsetLegend>
+  <FieldsetDescription>Fill in the details below.</FieldsetDescription>
+  <Input placeholder="Name" />
+</Fieldset>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Fieldset grouping text inputs for personal information with a legend label.",
+      },
+    },
+  },
   render: () => (
     <Fieldset>
       <FieldsetLegend>Personal Information</FieldsetLegend>
@@ -31,6 +61,13 @@ export const Default: Story = {
 }
 
 export const WithCheckboxes: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Fieldset containing a group of checkbox controls for notification preferences.",
+      },
+    },
+  },
   render: () => (
     <Fieldset>
       <FieldsetLegend>Notification Preferences</FieldsetLegend>
@@ -53,6 +90,13 @@ export const WithCheckboxes: Story = {
 }
 
 export const Disabled: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Fieldset with reduced opacity and disabled pointer events to represent a non-interactive state.",
+      },
+    },
+  },
   render: () => (
     <Fieldset className="opacity-50 pointer-events-none">
       <FieldsetLegend>Disabled Fieldset</FieldsetLegend>

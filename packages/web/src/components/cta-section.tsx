@@ -8,9 +8,9 @@ const ctaSectionVariants = cva("w-full", {
     variant: {
       default: "bg-[var(--container-bg)]",
       muted: "bg-[var(--container-bg-alt)]",
-      primary: "bg-[var(--action-primary-bg)] text-[var(--action-primary-fg)]",
-      gradient: "bg-[var(--action-primary-bg)] text-[var(--action-primary-fg)]",
-      dark: "bg-[var(--container-bg-inverse)] text-[var(--container-fg-inverse)]",
+      primary: "bg-[var(--action-primary-bg)] text-[color:var(--action-primary-fg)]",
+      gradient: "bg-[var(--action-primary-bg)] text-[color:var(--action-primary-fg)]",
+      dark: "bg-[var(--container-bg-inverse)] text-[color:var(--container-fg-inverse)]",
       bordered: "border-y border-[color:var(--container-border-alt)] bg-[var(--container-bg)]",
     },
     size: {
@@ -86,7 +86,7 @@ const CTATitle = React.forwardRef<
   <h2
     ref={ref}
     className={cn(
-      "font-heading text-[var(--font-size-3xl)] font-bold tracking-tight sm:text-[var(--font-size-4xl)]",
+      "font-heading text-[length:var(--font-size-3xl)] font-bold tracking-tight sm:text-[length:var(--font-size-4xl)]",
       className
     )}
     {...props}
@@ -100,7 +100,7 @@ const CTADescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-[var(--spacing-md)] text-[var(--font-size-lg)] opacity-90", className)}
+    className={cn("mt-[var(--spacing-md)] text-[length:var(--font-size-lg)] opacity-90", className)}
     {...props}
   />
 ))

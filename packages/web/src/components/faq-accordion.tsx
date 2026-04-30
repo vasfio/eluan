@@ -54,7 +54,7 @@ const FAQTitle = React.forwardRef<
   <h2
     ref={ref}
     className={cn(
-      "font-heading text-[var(--font-size-3xl)] font-bold tracking-tight text-foreground sm:text-[var(--font-size-4xl)]",
+      "font-heading text-[length:var(--font-size-3xl)] font-bold tracking-tight text-foreground sm:text-[length:var(--font-size-4xl)]",
       className
     )}
     {...props}
@@ -69,7 +69,7 @@ const FAQDescription = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "mx-auto mt-[var(--spacing-md)] max-w-2xl text-[var(--font-size-lg)] text-muted-foreground",
+      "mx-auto mt-[var(--spacing-md)] max-w-2xl text-[length:var(--font-size-lg)] text-muted-foreground",
       className
     )}
     {...props}

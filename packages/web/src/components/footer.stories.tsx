@@ -21,12 +21,52 @@ const meta: Meta<typeof Footer> = {
   title: "Web/Footer",
   component: Footer,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A composable footer with link sections, social icons, copyright, and a modern dark variant with brand wordmark and animated links.
+
+**Import**
+\`\`\`tsx
+import { Footer, FooterContent, FooterSection, FooterTitle, FooterLinks, FooterLink, FooterBottom, FooterCopyright, FooterSocial, FooterSocialLink, FooterBrand, FooterModernLink, FooterModernSocialLink, FooterStagger } from "@vasf/ragnar-web"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Footer variant="default">
+  <FooterContent>
+    <FooterSection>
+      <FooterTitle>Product</FooterTitle>
+      <FooterLinks>
+        <FooterLink href="#">Features</FooterLink>
+      </FooterLinks>
+    </FooterSection>
+  </FooterContent>
+  <FooterBottom>
+    <FooterCopyright>© 2024 Acme</FooterCopyright>
+  </FooterBottom>
+</Footer>
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    variant: {
+      description: "Visual style: default (bordered top) or modern (dark inverse).",
+    },
+    size: {
+      description: "Vertical padding: sm, default, or lg.",
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: { docs: { description: { story: "Standard 4-column footer with link sections, copyright, and social icons." } } },
   render: () => (
     <Footer>
       <FooterContent>
@@ -88,6 +128,7 @@ export const Default: Story = {
 }
 
 export const Modern: Story = {
+  parameters: { docs: { description: { story: "Dark modern variant with a large brand wordmark, animated hover links, and staggered fade-in." } } },
   render: () => (
     <Footer variant="modern" size="lg">
       <FooterBrand />
@@ -152,6 +193,7 @@ export const Modern: Story = {
 }
 
 export const Small: Story = {
+  parameters: { docs: { description: { story: "Compact footer with only copyright and inline links." } } },
   render: () => (
     <Footer size="sm">
       <FooterBottom className="mt-0 border-0 pt-0">

@@ -12,10 +12,10 @@
 [data-mode="Light"],
 [data-mode="light"] {
   --backgrounds-primary: var(--color-mono-0);
-  --backgrounds-secondary: var(--color-mono-50);
-  --backgrounds-tertiary: var(--color-mono-100);
-  --backgrounds-quaternary: var(--color-mono-200);
-  --backgrounds-quinary: var(--color-mono-300);
+  --backgrounds-secondary: var(--color-mono-100);
+  --backgrounds-tertiary: var(--color-mono-200);
+  --backgrounds-quaternary: var(--color-mono-300);
+  --backgrounds-quinary: var(--color-mono-400);
   --foregrounds-primary: var(--color-mono-950);
   --foregrounds-secondary: var(--color-mono-800);
   --foregrounds-tertiary: var(--color-mono-600);
@@ -239,7 +239,7 @@
   --maitai-background: var(--color-maitai-950);
   --maitai-tint: var(--color-maitai-900);
   --maitai-foreground: var(--color-maitai-50);
-  --maitai-shade: var(--color-maitai-100);
+  --maitai-shade: var(--color-maitai-300);
   --rockspray-main: var(--color-rockspray-500);
   --rockspray-background: var(--color-rockspray-950);
   --rockspray-tint: var(--color-rockspray-900);
@@ -265,7 +265,7 @@
   --violeteggplant-tint: var(--color-violeteggplant-900);
   --violeteggplant-foreground: var(--color-violeteggplant-50);
   --violeteggplant-shade: var(--color-violeteggplant-100);
-  --electricviolet-main: var(--color-electricviolet-500);
+  --electricviolet-main: var(--color-electricviolet-400);
   --electricviolet-background: var(--color-electricviolet-950);
   --electricviolet-tint: var(--color-electricviolet-900);
   --electricviolet-foreground: var(--color-electricviolet-50);
@@ -319,11 +319,11 @@
   --mono-tint: var(--color-mono-700);
   --mono-foreground: var(--color-mono-950);
   --mono-shade: var(--color-mono-100);
-  --torchred-main: var(--color-torchred-500);
+  --torchred-main: var(--color-torchred-400);
   --torchred-background: var(--color-torchred-950);
   --torchred-tint: var(--color-torchred-900);
   --torchred-foreground: var(--color-torchred-50);
-  --torchred-shade: var(--color-torchred-100);
+  --torchred-shade: var(--color-torchred-200);
   --blazeorange-main: var(--color-blazeorange-500);
   --blazeorange-background: var(--color-blazeorange-950);
   --blazeorange-tint: var(--color-blazeorange-900);

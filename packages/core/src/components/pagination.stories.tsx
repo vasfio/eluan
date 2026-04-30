@@ -13,6 +13,47 @@ const meta: Meta<typeof Pagination> = {
   title: "Components/Pagination",
   component: Pagination,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A composable pagination navigation built from sub-components for navigating between pages of content.
+
+**Sub-components:** \`PaginationContent\`, \`PaginationItem\`, \`PaginationLink\`, \`PaginationPrevious\`, \`PaginationNext\`, \`PaginationEllipsis\`
+
+**Import**
+\`\`\`tsx
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  PaginationEllipsis,
+} from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Pagination>
+  <PaginationContent>
+    <PaginationItem>
+      <PaginationPrevious href="#" />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#" isActive>1</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationNext href="#" />
+    </PaginationItem>
+  </PaginationContent>
+</Pagination>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
@@ -35,14 +76,18 @@ export const Default: Story = {
           <PaginationLink href="#">3</PaginationLink>
         </PaginationItem>
         <PaginationItem>
-          <PaginationEllipsis />
-        </PaginationItem>
-        <PaginationItem>
           <PaginationNext href="#" />
         </PaginationItem>
       </PaginationContent>
     </Pagination>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: "Standard pagination with previous/next buttons, page links, and an active page indicator.",
+      },
+    },
+  },
 }
 
 export const Simple: Story = {
@@ -58,6 +103,13 @@ export const Simple: Story = {
       </PaginationContent>
     </Pagination>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: "A minimal pagination with only previous and next navigation buttons.",
+      },
+    },
+  },
 }
 
 export const ManyPages: Story = {
@@ -71,7 +123,10 @@ export const ManyPages: Story = {
           <PaginationLink href="#">1</PaginationLink>
         </PaginationItem>
         <PaginationItem>
-          <PaginationEllipsis />
+          <PaginationEllipsis
+            pages={[2, 3]}
+            onPageClick={(page) => console.log("Go to page", page)}
+          />
         </PaginationItem>
         <PaginationItem>
           <PaginationLink href="#">4</PaginationLink>
@@ -83,7 +138,10 @@ export const ManyPages: Story = {
           <PaginationLink href="#">6</PaginationLink>
         </PaginationItem>
         <PaginationItem>
-          <PaginationEllipsis />
+          <PaginationEllipsis
+            pages={[7, 8, 9]}
+            onPageClick={(page) => console.log("Go to page", page)}
+          />
         </PaginationItem>
         <PaginationItem>
           <PaginationLink href="#">10</PaginationLink>
@@ -94,4 +152,55 @@ export const ManyPages: Story = {
       </PaginationContent>
     </Pagination>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: "Pagination for a large number of pages using static ellipsis to truncate the page range on both sides.",
+      },
+    },
+  },
+}
+
+export const WithPageDropdown: Story = {
+  render: () => (
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious href="#" />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#">1</PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationEllipsis
+            pages={[2, 3, 4]}
+            onPageClick={(page) => console.log(`Navigate to page ${page}`)}
+          />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#" isActive>5</PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationEllipsis
+            pages={[6, 7, 8, 9]}
+            onPageClick={(page) => console.log(`Navigate to page ${page}`)}
+          />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#">10</PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationNext href="#" />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Pagination with clickable ellipsis that opens a dropdown showing hidden page numbers. Click an ellipsis to navigate to any hidden page.",
+      },
+    },
+  },
 }

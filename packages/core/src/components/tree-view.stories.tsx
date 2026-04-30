@@ -7,6 +7,54 @@ const meta: Meta<typeof TreeView> = {
   title: "Components/Tree View",
   component: TreeView,
   tags: ["autodocs"],
+  argTypes: {
+    data: {
+      description: "An array of TreeNode objects representing the hierarchical data to display.",
+    },
+    selectedId: {
+      description: "The id of the currently selected node.",
+    },
+    onSelect: {
+      description: "Callback fired when a node is clicked, receiving the TreeNode.",
+    },
+    expandedIds: {
+      description: "Controlled array of expanded node ids.",
+    },
+    onExpandChange: {
+      description: "Callback fired when the set of expanded nodes changes.",
+    },
+    showIcons: {
+      description: "Whether to show file/folder icons next to node names (default true).",
+    },
+    indentSize: {
+      description: "The pixel indentation per nesting level (default 20).",
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A hierarchical tree view for displaying nested data such as file systems, with support for selection, custom icons, and controlled expansion.
+
+**Import**
+\`\`\`tsx
+import { TreeView, type TreeNode } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+const data: TreeNode[] = [
+  { id: "1", name: "src", children: [
+    { id: "1-1", name: "App.tsx" },
+  ]},
+]
+
+<TreeView data={data} selectedId={selectedId} onSelect={(node) => setSelectedId(node.id)} />
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
@@ -51,6 +99,13 @@ const fileSystemData: TreeNode[] = [
 ]
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A tree view displaying a file system structure with default folder/file icons and selection.",
+      },
+    },
+  },
   render: () => {
     const [selectedId, setSelectedId] = React.useState<string>()
     return (
@@ -105,6 +160,13 @@ const mediaData: TreeNode[] = [
 ]
 
 export const WithCustomIcons: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A tree view with custom Lucide icons for different media file types.",
+      },
+    },
+  },
   render: () => {
     const [selectedId, setSelectedId] = React.useState<string>()
     return (
@@ -120,6 +182,13 @@ export const WithCustomIcons: Story = {
 }
 
 export const WithoutIcons: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A tree view with icons hidden via the showIcons={false} prop.",
+      },
+    },
+  },
   render: () => {
     const [selectedId, setSelectedId] = React.useState<string>()
     return (
@@ -136,6 +205,13 @@ export const WithoutIcons: Story = {
 }
 
 export const ControlledExpansion: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A tree view with externally controlled expansion state and Collapse All / Expand All buttons.",
+      },
+    },
+  },
   render: () => {
     const [selectedId, setSelectedId] = React.useState<string>()
     const [expandedIds, setExpandedIds] = React.useState<string[]>(["1"])
@@ -170,6 +246,13 @@ export const ControlledExpansion: Story = {
 }
 
 export const LargerIndent: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A tree view with a larger indentation size (32px) for deeper visual nesting.",
+      },
+    },
+  },
   render: () => {
     const [selectedId, setSelectedId] = React.useState<string>()
     return (

@@ -16,13 +16,13 @@ const Slider = React.forwardRef<
     {...props}
   >
     <SliderPrimitive.Track className="relative h-1.5 w-full grow overflow-hidden rounded-full bg-[var(--interactive-bg-alt)]">
-      <SliderPrimitive.Range className="absolute h-full bg-[var(--interactive-bg-selected)]" />
+      <SliderPrimitive.Range className="absolute h-full bg-[var(--interactive-bg-selected)] data-[disabled]:bg-[var(--interactive-fg-disabled)]" />
     </SliderPrimitive.Track>
     {/* Render a thumb for each value to support range (two dials) */}
     {(Array.isArray(props.value) ? props.value : props.defaultValue ?? [0]).map((_, i) => (
       <SliderPrimitive.Thumb
         key={i}
-        className="block h-[var(--size-xxs)] w-[var(--size-xxs)] rounded-full border border-[var(--interactive-bg-selected)] bg-[var(--interactive-bg)] shadow-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:pointer-events-none disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)]"
+        className="block h-[var(--size-xxs)] w-[var(--size-xxs)] rounded-full border border-[var(--interactive-bg-selected)] bg-[var(--interactive-bg)] shadow-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 data-[disabled]:pointer-events-none data-[disabled]:border-[var(--interactive-fg-disabled)] data-[disabled]:bg-[var(--interactive-bg-disabled)]"
       />
     ))}
   </SliderPrimitive.Root>

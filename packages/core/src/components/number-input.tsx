@@ -1,6 +1,7 @@
 import * as React from "react"
 import { Minus, Plus } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Input } from "./input"
 
 export interface NumberInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "value" | "onChange"> {
@@ -117,13 +118,10 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
 
     if (!showControls) {
       return (
-        <input
+        <Input
           type="text"
           inputMode="decimal"
-          className={cn(
-            "flex h-[var(--size-lg)] w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[var(--font-size-sm)] ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-hover)] disabled:text-[var(--interactive-fg-disabled)] font-mono",
-            className
-          )}
+          className={cn("[&_input]:font-mono", className)}
           ref={ref}
           value={internalValue}
           onChange={handleChange}
@@ -149,11 +147,11 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
         >
           <Minus className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
         </button>
-        <input
+        <Input
           type="text"
           inputMode="decimal"
           className={cn(
-            "flex h-[var(--size-lg)] w-full border border[var(--interactive-border-alt)] bg-[var(--interactive-bg)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[var(--font-size-sm)] text-center ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)] font-mono",
+            "flex-1 [&_input]:rounded-none [&_input]:border-l-0 [&_input]:border-r-0 [&_input]:text-center [&_input]:font-mono",
             className
           )}
           ref={ref}
@@ -167,7 +165,7 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
         <button
           type="button"
           className={cn(
-            "flex h-[var(--size-lg)] w-[var(--size-lg)] items-center justify-center rounded-r-[var(--curves-md)] border border-l-0 border[var(--interactive-border-alt)] bg-[var(--interactive-bg)] hover:bg-[var(--interactive-bg-hover)]",
+            "flex h-[var(--size-lg)] w-[var(--size-lg)] items-center justify-center rounded-r-[var(--curves-md)] border border-l-0 border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] hover:bg-[var(--interactive-bg-hover)]",
             (!canIncrement() || disabled) && "opacity-50 cursor-not-allowed hover:bg-[var(--interactive-bg)]"
           )}
           onClick={increment}

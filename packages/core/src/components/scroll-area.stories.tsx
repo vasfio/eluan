@@ -6,6 +6,28 @@ const meta: Meta<typeof ScrollArea> = {
   title: "Components/Scroll Area",
   component: ScrollArea,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A custom scrollable container that provides consistent cross-browser scrollbar styling.
+
+**Import**
+\`\`\`tsx
+import { ScrollArea, ScrollBar } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<ScrollArea className="h-72 w-48 rounded-md border">
+  <div className="p-4">Scrollable content here</div>
+  <ScrollBar orientation="horizontal" />
+</ScrollArea>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
@@ -14,6 +36,13 @@ type Story = StoryObj<typeof meta>
 const tags = Array.from({ length: 50 }).map((_, i) => `Tag ${i + 1}`)
 
 export const Vertical: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Displays a vertically scrollable list of tags with a fixed height container.",
+      },
+    },
+  },
   render: () => (
     <ScrollArea className="h-72 w-48 rounded-md border">
       <div className="p-4">
@@ -30,6 +59,13 @@ export const Vertical: Story = {
 }
 
 export const Horizontal: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Demonstrates horizontal scrolling with a ScrollBar set to horizontal orientation.",
+      },
+    },
+  },
   render: () => (
     <ScrollArea className="w-96 whitespace-nowrap rounded-md border">
       <div className="flex w-max space-x-4 p-4">
@@ -49,6 +85,13 @@ export const Horizontal: Story = {
 }
 
 export const Both: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Shows a scroll area with both vertical and horizontal scrolling enabled simultaneously.",
+      },
+    },
+  },
   render: () => (
     <ScrollArea className="h-72 w-72 rounded-md border">
       <div className="p-4" style={{ width: "500px" }}>

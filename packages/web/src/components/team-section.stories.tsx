@@ -19,6 +19,38 @@ const meta: Meta<typeof TeamSection> = {
   title: "Web/TeamSection",
   component: TeamSection,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A composable team section for displaying team members with photos, names, roles, bios, and social links.
+
+**Import**
+\`\`\`tsx
+import { TeamSection, TeamHeader, TeamTitle, TeamDescription, TeamGrid, TeamMember, TeamMemberImage, TeamMemberName, TeamMemberRole, TeamMemberBio, TeamMemberLinks, TeamMemberLink } from "@vasf/ragnar-web"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<TeamSection>
+  <TeamGrid columns={4}>
+    <TeamMember>
+      <TeamMemberImage alt="Jane Doe" />
+      <TeamMemberName>Jane Doe</TeamMemberName>
+      <TeamMemberRole>CEO</TeamMemberRole>
+    </TeamMember>
+  </TeamGrid>
+</TeamSection>
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    size: {
+      description: "Vertical padding: sm, default, or lg.",
+    },
+  },
 }
 
 export default meta
@@ -48,6 +80,7 @@ const teamMembers = [
 ]
 
 export const Default: Story = {
+  parameters: { docs: { description: { story: "Default 4-column team grid with names and roles." } } },
   render: () => (
     <TeamSection>
       <TeamHeader>
@@ -70,6 +103,7 @@ export const Default: Story = {
 }
 
 export const WithBios: Story = {
+  parameters: { docs: { description: { story: "Card variant with bios and social links for each member." } } },
   render: () => (
     <TeamSection>
       <TeamHeader>
@@ -101,6 +135,7 @@ export const WithBios: Story = {
 }
 
 export const TwoColumns: Story = {
+  parameters: { docs: { description: { story: "Two-column grid layout with card-styled members." } } },
   render: () => (
     <TeamSection>
       <TeamHeader>

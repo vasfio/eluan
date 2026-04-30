@@ -39,12 +39,12 @@ const PricingTable = React.forwardRef<HTMLDivElement, PricingTableProps>(
     const renderCellValue = (value: boolean | string) => {
       if (typeof value === "boolean") {
         return value ? (
-          <Check className="mx-auto h-[var(--size-xs)] w-[var(--size-xs)] text-[var(--positive-fg)]" />
+          <Check className="mx-auto h-[var(--size-xs)] w-[var(--size-xs)] text-[color:var(--positive-fg)]" />
         ) : (
-          <X className="mx-auto h-[var(--size-xs)] w-[var(--size-xs)] text-[var(--container-fg-alt)]" />
+          <X className="mx-auto h-[var(--size-xs)] w-[var(--size-xs)] text-[color:var(--container-fg-alt)]" />
         )
       }
-      return <span className="text-[var(--font-size-sm)]">{value}</span>
+      return <span className="text-[length:var(--font-size-sm)]">{value}</span>
     }
 
     return (
@@ -65,26 +65,26 @@ const PricingTable = React.forwardRef<HTMLDivElement, PricingTableProps>(
                     {/* Fixed height eyebrow row -- always rendered so titles stay aligned */}
                     <div className="h-[var(--size-sm)] flex items-center justify-center">
                       {plan.highlighted ? (
-                        <span className="text-[10px] font-medium text-[var(--action-primary-bg)] uppercase tracking-wider leading-none">
+                        <span className="text-[10px] font-medium text-[color:var(--action-primary-bg)] uppercase tracking-wider leading-none">
                           Most Popular
                         </span>
                       ) : (
                         <span aria-hidden className="invisible text-[10px] leading-none">&nbsp;</span>
                       )}
                     </div>
-                    <span className="font-heading text-[var(--font-size-base)] font-semibold text-[var(--container-fg)]">
+                    <span className="font-heading text-[length:var(--font-size-base)] font-semibold text-[color:var(--container-fg)]">
                       {plan.name}
                     </span>
-                    <div className="font-heading text-[var(--font-size-2xl)] font-semibold text-[var(--container-fg)]">
+                    <div className="font-heading text-[length:var(--font-size-2xl)] font-semibold text-[color:var(--container-fg)]">
                       {typeof plan.price === "number" ? `$${plan.price}` : plan.price}
                       {plan.period && (
-                        <span className="text-[var(--font-size-sm)] font-normal text-[var(--container-fg-alt)]">
+                        <span className="text-[length:var(--font-size-sm)] font-normal text-[color:var(--container-fg-alt)]">
                           /{plan.period}
                         </span>
                       )}
                     </div>
                     {plan.description && (
-                      <span className="text-[var(--font-size-xs)] text-[var(--container-fg-alt)]">
+                      <span className="text-[length:var(--font-size-xs)] text-[color:var(--container-fg-alt)]">
                         {plan.description}
                       </span>
                     )}

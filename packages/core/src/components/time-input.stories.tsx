@@ -6,20 +6,38 @@ const meta: Meta<typeof TimeInput> = {
   title: "Components/Time Input",
   component: TimeInput,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A segmented time input supporting 12-hour and 24-hour formats with keyboard navigation (arrow keys, colon to advance), AM/PM toggle, and size variants.
+
+**Import**
+\`\`\`tsx
+import { TimeInput } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<TimeInput value="14:30" onChange={setValue} format="24" />
+\`\`\`
+        `,
+      },
+    },
+  },
   argTypes: {
     format: {
       control: "select",
       options: ["12", "24"],
-    },
-    size: {
-      control: "select",
-      options: ["sm", "default", "lg"],
+      description: "Whether to use 12-hour or 24-hour time format.",
     },
     disabled: {
       control: "boolean",
+      description: "Whether the time input is disabled.",
     },
     showIcon: {
       control: "boolean",
+      description: "Whether to show the clock icon.",
     },
   },
 }
@@ -41,20 +59,6 @@ export const TwelveHour: Story = {
   },
 }
 
-export const Small: Story = {
-  args: {
-    value: "09:15",
-    size: "sm",
-  },
-}
-
-export const Large: Story = {
-  args: {
-    value: "09:15",
-    size: "lg",
-  },
-}
-
 export const NoIcon: Story = {
   args: {
     value: "10:00",
@@ -70,6 +74,13 @@ export const Disabled: Story = {
 }
 
 export const Controlled: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A controlled time input in 12-hour format that displays the current value below.",
+      },
+    },
+  },
   render: () => {
     const [value, setValue] = useState("09:30 AM")
     return (

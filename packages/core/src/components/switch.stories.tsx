@@ -5,6 +5,43 @@ const meta: Meta<typeof Switch> = {
   title: "Components/Switch",
   component: Switch,
   tags: ["autodocs"],
+  argTypes: {
+    checked: {
+      control: "boolean",
+      description: "The controlled checked state of the switch.",
+    },
+    defaultChecked: {
+      control: "boolean",
+      description: "The default checked state when uncontrolled.",
+    },
+    disabled: {
+      control: "boolean",
+      description: "Disables the switch, preventing user interaction.",
+    },
+    onCheckedChange: {
+      description: "Callback fired when the checked state changes.",
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A toggle switch for turning an option on or off, built on Radix UI Switch primitive.
+
+**Import**
+\`\`\`tsx
+import { Switch } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Switch id="airplane-mode" />
+<label htmlFor="airplane-mode">Airplane Mode</label>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
@@ -15,6 +52,13 @@ export const Default: Story = {
 }
 
 export const WithLabel: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A switch paired with a label for accessibility.",
+      },
+    },
+  },
   render: () => (
     <div className="flex items-center space-x-2">
       <Switch id="airplane-mode" />
@@ -24,6 +68,13 @@ export const WithLabel: Story = {
 }
 
 export const Disabled: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A disabled switch that cannot be toggled.",
+      },
+    },
+  },
   render: () => (
     <div className="flex items-center space-x-2">
       <Switch id="disabled" disabled />
@@ -33,6 +84,13 @@ export const Disabled: Story = {
 }
 
 export const CheckedByDefault: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A switch that starts in the on state using `defaultChecked`.",
+      },
+    },
+  },
   render: () => (
     <div className="flex items-center space-x-2">
       <Switch id="checked" defaultChecked />
@@ -42,6 +100,13 @@ export const CheckedByDefault: Story = {
 }
 
 export const SettingsExample: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Switches used in a settings-style layout with labels and descriptions.",
+      },
+    },
+  },
   render: () => (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">

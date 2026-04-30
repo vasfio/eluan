@@ -5,6 +5,33 @@ const meta: Meta<typeof PricingTable> = {
   title: "Web/PricingTable",
   component: PricingTable,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A feature-comparison table that displays multiple pricing plans side-by-side with boolean or text feature values.
+
+**Import**
+\`\`\`tsx
+import { PricingTable } from "@vasf/ragnar-web"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<PricingTable
+  plans={[{ id: "free", name: "Free", price: 0, period: "month" }]}
+  features={[{ name: "Projects", values: { free: "3" } }]}
+/>
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    featureGroupTitle: {
+      description: 'Header label for the features column (default: "Features").',
+    },
+  },
 }
 
 export default meta
@@ -52,10 +79,12 @@ const features = [
 ]
 
 export const Default: Story = {
+  parameters: { docs: { description: { story: "A comparison table with boolean check/x icons and text values across three plans." } } },
   render: () => <PricingTable plans={plans} features={features} />,
 }
 
 export const CustomTitle: Story = {
+  parameters: { docs: { description: { story: "Demonstrates overriding the featureGroupTitle prop." } } },
   render: () => (
     <PricingTable
       plans={plans}

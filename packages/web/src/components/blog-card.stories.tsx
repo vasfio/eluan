@@ -22,12 +22,46 @@ const meta: Meta<typeof BlogCard> = {
   title: "Web/BlogCard",
   component: BlogCard,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A composable blog card with image, metadata, title, excerpt, author, and a read-more link, available in bordered, elevated, minimal, and featured variants.
+
+**Import**
+\`\`\`tsx
+import { BlogGrid, BlogCard, BlogCardImage, BlogCardContent, BlogCardMeta, BlogCardCategory, BlogCardDate, BlogCardReadTime, BlogCardTitle, BlogCardExcerpt, BlogCardFooter, BlogCardAuthor, BlogCardAuthorAvatar, BlogCardAuthorName, BlogCardLink, BlogCardFeatured } from "@vasf/ragnar-web"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<BlogCard href="/post" variant="bordered">
+  <BlogCardImage aspectRatio="video" />
+  <BlogCardContent>
+    <BlogCardTitle>My Post</BlogCardTitle>
+    <BlogCardExcerpt>A brief summary.</BlogCardExcerpt>
+  </BlogCardContent>
+</BlogCard>
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    variant: {
+      description: "Visual style: default, bordered, elevated, or minimal.",
+    },
+    href: {
+      description: "When provided, the card renders as an anchor element.",
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: { docs: { description: { story: "A single blog card with image, category, date, author, and read-more link." } } },
   render: () => (
     <div className="max-w-sm">
       <BlogCard href="#">
@@ -56,6 +90,7 @@ export const Default: Story = {
 }
 
 export const Grid: Story = {
+  parameters: { docs: { description: { story: "Three blog cards in a responsive 3-column grid with read time." } } },
   render: () => (
     <BlogGrid columns={3}>
       {[1, 2, 3].map((i) => (
@@ -79,6 +114,7 @@ export const Grid: Story = {
 }
 
 export const Minimal: Story = {
+  parameters: { docs: { description: { story: "Minimal variant without image or card border." } } },
   render: () => (
     <div className="max-w-sm">
       <BlogCard variant="minimal" href="#">
@@ -99,6 +135,7 @@ export const Minimal: Story = {
 }
 
 export const Featured: Story = {
+  parameters: { docs: { description: { story: "Featured blog card with a two-column layout (image + content side-by-side)." } } },
   render: () => (
     <BlogCardFeatured href="#">
       <BlogCardImage aspectRatio="square" className="md:aspect-auto" />
@@ -129,6 +166,7 @@ export const Featured: Story = {
 }
 
 export const Elevated: Story = {
+  parameters: { docs: { description: { story: "Elevated variant with a subtle shadow." } } },
   render: () => (
     <div className="max-w-sm">
       <BlogCard variant="elevated" href="#">

@@ -6,23 +6,23 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const announcementBarVariants = cva(
-  "relative w-full px-[var(--spacing-md)] py-[var(--spacing-sm)] text-center text-[var(--font-size-sm)] font-medium",
+  "relative w-full px-[var(--spacing-md)] py-[var(--spacing-sm)] text-center text-[length:var(--font-size-sm)] font-medium",
   {
     variants: {
       variant: {
-        default: "bg-[var(--action-primary-bg)] text-[var(--action-primary-fg)]",
-        secondary: "bg-[var(--container-bg-alt)] text-[var(--container-fg)]",
-        muted: "bg-[var(--container-bg-alt)] text-[var(--container-fg-alt)]",
-        success: "bg-[var(--positive-bg)] text-[var(--positive-fg)]",
-        warning: "bg-[var(--cautionary-bg)] text-[var(--cautionary-fg)]",
-        error: "bg-[var(--destructive-bg)] text-[var(--destructive-fg)]",
-        gradient: "bg-gradient-to-r from-[var(--action-primary-bg)] via-[var(--important-bg)] to-[var(--destructive-bg)] text-[var(--action-primary-fg)]",
-        dark: "bg-[var(--container-bg-inverse)] text-[var(--container-fg-inverse)]",
+        default: "bg-[var(--action-primary-bg)] text-[color:var(--action-primary-fg)]",
+        secondary: "bg-[var(--container-bg-alt)] text-[color:var(--container-fg)]",
+        muted: "bg-[var(--container-bg-alt)] text-[color:var(--container-fg-alt)]",
+        success: "bg-[var(--positive-bg)] text-[color:var(--positive-fg)]",
+        warning: "bg-[var(--cautionary-bg)] text-[color:var(--cautionary-fg)]",
+        error: "bg-[var(--destructive-bg)] text-[color:var(--destructive-fg)]",
+        gradient: "bg-gradient-to-r from-[var(--action-primary-bg)] via-[var(--important-bg)] to-[var(--destructive-bg)] text-[color:var(--action-primary-fg)]",
+        dark: "bg-[var(--container-bg-inverse)] text-[color:var(--container-fg-inverse)]",
       },
       size: {
-        sm: "py-[var(--spacing-xs)] text-[var(--font-size-xs)]",
-        default: "py-[var(--spacing-sm)] text-[var(--font-size-sm)]",
-        lg: "py-[var(--spacing-sm)] text-[var(--font-size-base)]",
+        sm: "py-[var(--spacing-xs)] text-[length:var(--font-size-xs)]",
+        default: "py-[var(--spacing-sm)] text-[length:var(--font-size-sm)]",
+        lg: "py-[var(--spacing-sm)] text-[length:var(--font-size-base)]",
       },
     },
     defaultVariants: {

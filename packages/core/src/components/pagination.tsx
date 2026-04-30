@@ -2,7 +2,13 @@ import * as React from "react"
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { ButtonProps, buttonVariants } from "./button"
+import { Button, ButtonProps, buttonVariants } from "./button"
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "./dropdown-menu"
 
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav
@@ -91,19 +97,62 @@ const PaginationNext = ({
 )
 PaginationNext.displayName = "PaginationNext"
 
+interface PaginationEllipsisProps {
+  className?: string
+  /** Array of hidden page numbers to show in the dropdown */
+  pages?: number[]
+  /** Callback when a page number is clicked in the dropdown */
+  onPageClick?: (page: number) => void
+}
+
 const PaginationEllipsis = ({
   className,
-  ...props
-}: React.ComponentProps<"span">) => (
-  <span
-    aria-hidden
-    className={cn("flex h-[var(--size-lg)] w-[var(--size-lg)] items-center justify-center", className)}
-    {...props}
-  >
-    <MoreHorizontal className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
-    <span className="sr-only">More pages</span>
-  </span>
-)
+  pages,
+  onPageClick,
+}: PaginationEllipsisProps) => {
+  if (!pages || pages.length === 0) {
+    return (
+      <span
+        aria-hidden
+        className={cn(
+          "flex h-[var(--size-lg)] w-[var(--size-lg)] items-center justify-center",
+          className
+        )}
+      >
+        <MoreHorizontal className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+        <span className="sr-only">More pages</span>
+      </span>
+    )
+  }
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          size="icon"
+          className={cn(
+            "h-[var(--size-lg)] w-[var(--size-lg)]",
+            className
+          )}
+          aria-label="Show more pages"
+        >
+          <MoreHorizontal className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="center">
+        {pages.map((page) => (
+          <DropdownMenuItem
+            key={page}
+            onClick={() => onPageClick?.(page)}
+          >
+            Page {page}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
 PaginationEllipsis.displayName = "PaginationEllipsis"
 
 export {

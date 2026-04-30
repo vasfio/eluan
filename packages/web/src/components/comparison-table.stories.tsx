@@ -24,12 +24,48 @@ const meta: Meta<typeof ComparisonSection> = {
   title: "Web/ComparisonTable",
   component: ComparisonSection,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A fully composable comparison table for comparing plans or products side-by-side, with check/x icons, categories, and highlight columns.
+
+**Import**
+\`\`\`tsx
+import { ComparisonSection, ComparisonHeader, ComparisonTitle, ComparisonDescription, ComparisonTable, ComparisonTableInner, ComparisonTableHead, ComparisonTableBody, ComparisonTableRow, ComparisonHeaderCell, ComparisonCell, ComparisonFeatureCell, ComparisonCheck, ComparisonX, ComparisonPlanHeader, ComparisonPlanName, ComparisonPlanPrice, ComparisonCategory } from "@vasf/ragnar-web"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<ComparisonSection>
+  <ComparisonTable>
+    <ComparisonTableInner>
+      <ComparisonTableHead>
+        <ComparisonTableRow>
+          <ComparisonHeaderCell>Features</ComparisonHeaderCell>
+          <ComparisonHeaderCell highlight>Pro</ComparisonHeaderCell>
+        </ComparisonTableRow>
+      </ComparisonTableHead>
+    </ComparisonTableInner>
+  </ComparisonTable>
+</ComparisonSection>
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    size: {
+      description: "Vertical padding: sm, default, or lg.",
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: { docs: { description: { story: "Full comparison table with three plans, feature categories, and a highlighted Pro column." } } },
   render: () => (
     <ComparisonSection>
       <ComparisonHeader>

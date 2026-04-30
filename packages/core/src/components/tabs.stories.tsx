@@ -5,12 +5,47 @@ const meta: Meta<typeof Tabs> = {
   title: "Components/Tabs",
   component: Tabs,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A set of layered content sections (tab panels) that are displayed one at a time, controlled by a row of tab triggers, built on Radix UI Tabs primitive.
+
+**Sub-components:** \`TabsList\`, \`TabsTrigger\`, \`TabsContent\`
+
+**Import**
+\`\`\`tsx
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Tabs defaultValue="tab1">
+  <TabsList>
+    <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+    <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+  </TabsList>
+  <TabsContent value="tab1">Content for tab 1</TabsContent>
+  <TabsContent value="tab2">Content for tab 2</TabsContent>
+</Tabs>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A basic two-tab layout with Account and Password panels.",
+      },
+    },
+  },
   render: () => (
     <Tabs defaultValue="account" className="w-[400px]">
       <TabsList>
@@ -32,6 +67,13 @@ export const Default: Story = {
 }
 
 export const MultipleTabs: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A tab group with four tabs demonstrating a wider navigation layout.",
+      },
+    },
+  },
   render: () => (
     <Tabs defaultValue="overview" className="w-[600px]">
       <TabsList>
@@ -69,6 +111,13 @@ export const MultipleTabs: Story = {
 }
 
 export const DisabledTab: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Demonstrates a tab trigger in the disabled state that cannot be selected.",
+      },
+    },
+  },
   render: () => (
     <Tabs defaultValue="active" className="w-[400px]">
       <TabsList>

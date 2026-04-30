@@ -6,12 +6,45 @@ const meta: Meta<typeof HoverCard> = {
   title: "Components/Hover Card",
   component: HoverCard,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A popup card that appears on hover, designed to preview content behind a link or element without requiring a click.
+
+**Import**
+\`\`\`tsx
+import { HoverCard, HoverCardTrigger, HoverCardContent } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<HoverCard>
+  <HoverCardTrigger asChild>
+    <a href="#">@username</a>
+  </HoverCardTrigger>
+  <HoverCardContent>
+    <p>Preview content here</p>
+  </HoverCardContent>
+</HoverCard>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A hover card showing a user profile with avatar, name, and join date.",
+      },
+    },
+  },
   render: () => (
     <HoverCard>
       <HoverCardTrigger asChild>
@@ -37,6 +70,13 @@ export const Default: Story = {
 }
 
 export const Simple: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A minimal hover card with plain text content.",
+      },
+    },
+  },
   render: () => (
     <HoverCard>
       <HoverCardTrigger asChild>

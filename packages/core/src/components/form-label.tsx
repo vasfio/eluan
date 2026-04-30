@@ -3,12 +3,12 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-const formLabelVariants = cva(
-  "text-[var(--font-size-sm)] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:text-[var(--interactive-fg-disabled)]",
+const labelVariants = cva(
+  "text-[length:var(--font-size-sm)] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:text-[color:var(--interactive-fg-disabled)]",
   {
     variants: {
       required: {
-        true: "after:ml-[var(--spacing-xxs)] after:text-[var(--destructive-fg)] after:content-['*']",
+        true: "after:ml-[var(--spacing-xxs)] after:text-[color:var(--destructive-fg)] after:content-['*']",
         false: "",
       },
     },
@@ -18,31 +18,34 @@ const formLabelVariants = cva(
   }
 )
 
-export interface FormLabelProps
+export interface LabelProps
   extends React.LabelHTMLAttributes<HTMLLabelElement>,
-    VariantProps<typeof formLabelVariants> {
+    VariantProps<typeof labelVariants> {
   optional?: boolean
   hint?: string
 }
 
-const FormLabel = React.forwardRef<HTMLLabelElement, FormLabelProps>(
+const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
   ({ className, required, optional, hint, children, ...props }, ref) => (
     <div className="flex items-baseline gap-[var(--spacing-sm)]">
       <label
         ref={ref}
-        className={cn(formLabelVariants({ required }), className)}
+        className={cn(labelVariants({ required }), className)}
         {...props}
       >
         {children}
       </label>
       {optional && (
-        <span className="text-[var(--font-size-xs)] text-[var(--interactive-fg-alt)]">(optional)</span>
+        <span className="text-[length:var(--font-size-xs)] text-[color:var(--interactive-fg-alt)]">(optional)</span>
       )}
-      {hint && <span className="text-[var(--font-size-xs)] text-[var(--interactive-fg-alt)]">{hint}</span>}
+      {hint && <span className="text-[length:var(--font-size-xs)] text-[color:var(--interactive-fg-alt)]">{hint}</span>}
     </div>
   )
 )
-FormLabel.displayName = "FormLabel"
+Label.displayName = "Label"
+
+/** @deprecated Use `Label` instead */
+const FormLabel = Label
 
 const FormDescription = React.forwardRef<
   HTMLParagraphElement,
@@ -50,7 +53,7 @@ const FormDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-[var(--font-size-sm)] text-[var(--interactive-fg-alt)]", className)}
+    className={cn("text-[length:var(--font-size-sm)] text-[color:var(--interactive-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -63,8 +66,8 @@ const FormMessage = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "text-[var(--font-size-sm)]",
-      error ? "text-destructive" : "text-[var(--interactive-fg-alt)]",
+      "text-[length:var(--font-size-sm)]",
+      error ? "text-destructive" : "text-[color:var(--interactive-fg-alt)]",
       className
     )}
     {...props}
@@ -72,4 +75,4 @@ const FormMessage = React.forwardRef<
 ))
 FormMessage.displayName = "FormMessage"
 
-export { FormLabel, FormDescription, FormMessage, formLabelVariants }
+export { Label, FormLabel, FormDescription, FormMessage, labelVariants }

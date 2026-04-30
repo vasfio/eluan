@@ -13,12 +13,50 @@ const meta: Meta<typeof Select> = {
   title: "Components/Select",
   component: Select,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A dropdown control that allows users to pick a single option from a list of choices.
+
+**Import**
+\`\`\`tsx
+import {
+  Select, SelectTrigger, SelectValue, SelectContent,
+  SelectItem, SelectGroup, SelectLabel, SelectSeparator,
+  SelectScrollUpButton, SelectScrollDownButton,
+} from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Select>
+  <SelectTrigger>
+    <SelectValue placeholder="Pick an option" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="one">Option One</SelectItem>
+    <SelectItem value="two">Option Two</SelectItem>
+  </SelectContent>
+</Select>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Basic select with a flat list of items and a placeholder.",
+      },
+    },
+  },
   render: () => (
     <Select>
       <SelectTrigger className="w-[180px]">
@@ -35,6 +73,13 @@ export const Default: Story = {
 }
 
 export const WithGroups: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Select with items organized into labeled groups using SelectGroup and SelectLabel.",
+      },
+    },
+  },
   render: () => (
     <Select>
       <SelectTrigger className="w-[280px]">
@@ -58,6 +103,13 @@ export const WithGroups: Story = {
 }
 
 export const Disabled: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Disabled select that prevents user interaction.",
+      },
+    },
+  },
   render: () => (
     <Select disabled>
       <SelectTrigger className="w-[180px]">

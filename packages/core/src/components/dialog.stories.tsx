@@ -15,12 +15,53 @@ const meta: Meta<typeof Dialog> = {
   title: "Components/Dialog",
   component: Dialog,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A modal overlay that focuses the user's attention on a single task or piece of information, built on Radix UI Dialog primitive.
+
+**Sub-components:** \`DialogTrigger\`, \`DialogContent\`, \`DialogHeader\`, \`DialogFooter\`, \`DialogTitle\`, \`DialogDescription\`, \`DialogClose\`, \`DialogPortal\`, \`DialogOverlay\`
+
+**Import**
+\`\`\`tsx
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Dialog>
+  <DialogTrigger asChild>
+    <Button>Open Dialog</Button>
+  </DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Title</DialogTitle>
+      <DialogDescription>Description text.</DialogDescription>
+    </DialogHeader>
+    <DialogFooter>
+      <Button>Confirm</Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A dialog with a form containing input fields and a save action in the footer.",
+      },
+    },
+  },
   render: () => (
     <Dialog>
       <DialogTrigger asChild>
@@ -56,6 +97,13 @@ export const Default: Story = {
 }
 
 export const SimpleDialog: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A confirmation dialog with cancel and destructive delete actions.",
+      },
+    },
+  },
   render: () => (
     <Dialog>
       <DialogTrigger asChild>

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useEditor, EditorContent, type Editor } from "@tiptap/react"
+import { useEditor, useEditorState, EditorContent, type Editor } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import Placeholder from "@tiptap/extension-placeholder"
 import {
@@ -38,7 +38,6 @@ const ToolbarButton = ({
   tooltip,
 }: ToolbarButtonProps) => (
   <Toggle
-    size="sm"
     pressed={pressed}
     onPressedChange={onPressedChange}
     disabled={disabled}
@@ -54,38 +53,67 @@ interface RichTextToolbarProps {
 }
 
 const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
-  if (!editor) return null
+  // Subscribe to editor state so the toolbar re-renders on every transaction.
+  // In TipTap v3, `useEditor` no longer auto-re-renders on transactions for
+  // performance — we have to opt-in via `useEditorState`.
+  const state = useEditorState({
+    editor,
+    selector: (ctx) => {
+      const ed = ctx.editor
+      if (!ed) return null
+      return {
+        isBold: ed.isActive("bold"),
+        canBold: ed.can().chain().focus().toggleBold().run(),
+        isItalic: ed.isActive("italic"),
+        canItalic: ed.can().chain().focus().toggleItalic().run(),
+        isStrike: ed.isActive("strike"),
+        canStrike: ed.can().chain().focus().toggleStrike().run(),
+        isCode: ed.isActive("code"),
+        canCode: ed.can().chain().focus().toggleCode().run(),
+        isH1: ed.isActive("heading", { level: 1 }),
+        isH2: ed.isActive("heading", { level: 2 }),
+        isH3: ed.isActive("heading", { level: 3 }),
+        isBulletList: ed.isActive("bulletList"),
+        isOrderedList: ed.isActive("orderedList"),
+        isBlockquote: ed.isActive("blockquote"),
+        canUndo: ed.can().chain().focus().undo().run(),
+        canRedo: ed.can().chain().focus().redo().run(),
+      }
+    },
+  })
+
+  if (!editor || !state) return null
 
   return (
-    <div className="flex flex-wrap items-center gap-[var(--spacing-xs)] border-b p-1">
+    <div className="flex flex-wrap items-center gap-[var(--spacing-xs)] border-b bg-[var(--container-bg-alt)] p-1">
       <ToolbarButton
-        pressed={editor.isActive("bold")}
+        pressed={state.isBold}
         onPressedChange={() => editor.chain().focus().toggleBold().run()}
-        disabled={!editor.can().chain().focus().toggleBold().run()}
+        disabled={!state.canBold}
         tooltip="Bold"
       >
         <Bold className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </ToolbarButton>
       <ToolbarButton
-        pressed={editor.isActive("italic")}
+        pressed={state.isItalic}
         onPressedChange={() => editor.chain().focus().toggleItalic().run()}
-        disabled={!editor.can().chain().focus().toggleItalic().run()}
+        disabled={!state.canItalic}
         tooltip="Italic"
       >
         <Italic className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </ToolbarButton>
       <ToolbarButton
-        pressed={editor.isActive("strike")}
+        pressed={state.isStrike}
         onPressedChange={() => editor.chain().focus().toggleStrike().run()}
-        disabled={!editor.can().chain().focus().toggleStrike().run()}
+        disabled={!state.canStrike}
         tooltip="Strikethrough"
       >
         <Strikethrough className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </ToolbarButton>
       <ToolbarButton
-        pressed={editor.isActive("code")}
+        pressed={state.isCode}
         onPressedChange={() => editor.chain().focus().toggleCode().run()}
-        disabled={!editor.can().chain().focus().toggleCode().run()}
+        disabled={!state.canCode}
         tooltip="Code"
       >
         <Code className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
@@ -94,7 +122,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
       <Separator orientation="vertical" className="mx-[var(--spacing-xxs)] h-[var(--size-sm)]" />
 
       <ToolbarButton
-        pressed={editor.isActive("heading", { level: 1 })}
+        pressed={state.isH1}
         onPressedChange={() =>
           editor.chain().focus().toggleHeading({ level: 1 }).run()
         }
@@ -103,7 +131,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         <Heading1 className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </ToolbarButton>
       <ToolbarButton
-        pressed={editor.isActive("heading", { level: 2 })}
+        pressed={state.isH2}
         onPressedChange={() =>
           editor.chain().focus().toggleHeading({ level: 2 }).run()
         }
@@ -112,7 +140,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         <Heading2 className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </ToolbarButton>
       <ToolbarButton
-        pressed={editor.isActive("heading", { level: 3 })}
+        pressed={state.isH3}
         onPressedChange={() =>
           editor.chain().focus().toggleHeading({ level: 3 }).run()
         }
@@ -124,21 +152,21 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
       <Separator orientation="vertical" className="mx-[var(--spacing-xxs)] h-[var(--size-sm)]" />
 
       <ToolbarButton
-        pressed={editor.isActive("bulletList")}
+        pressed={state.isBulletList}
         onPressedChange={() => editor.chain().focus().toggleBulletList().run()}
         tooltip="Bullet List"
       >
         <List className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </ToolbarButton>
       <ToolbarButton
-        pressed={editor.isActive("orderedList")}
+        pressed={state.isOrderedList}
         onPressedChange={() => editor.chain().focus().toggleOrderedList().run()}
         tooltip="Ordered List"
       >
         <ListOrdered className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
       </ToolbarButton>
       <ToolbarButton
-        pressed={editor.isActive("blockquote")}
+        pressed={state.isBlockquote}
         onPressedChange={() => editor.chain().focus().toggleBlockquote().run()}
         tooltip="Quote"
       >
@@ -157,7 +185,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
       <ToolbarButton
         pressed={false}
         onPressedChange={() => editor.chain().focus().undo().run()}
-        disabled={!editor.can().chain().focus().undo().run()}
+        disabled={!state.canUndo}
         tooltip="Undo"
       >
         <Undo className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
@@ -165,7 +193,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
       <ToolbarButton
         pressed={false}
         onPressedChange={() => editor.chain().focus().redo().run()}
-        disabled={!editor.can().chain().focus().redo().run()}
+        disabled={!state.canRedo}
         tooltip="Redo"
       >
         <Redo className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
@@ -230,7 +258,7 @@ const RichText = React.forwardRef<HTMLDivElement, RichTextProps>(
         ref={ref}
         className={cn(
           "rounded-[var(--curves-md)] border bg-[var(--interactive-bg)]",
-          disabled && "bg-[var(--interactive-bg-disabled) text-[var(--interactive-fg-disabled)]",
+          disabled && "bg-[var(--interactive-bg-disabled)] text-[color:var(--interactive-fg-disabled)]",
           className
         )}
       >
@@ -240,10 +268,19 @@ const RichText = React.forwardRef<HTMLDivElement, RichTextProps>(
           className={cn(
             "prose prose-sm dark:prose-invert max-w-none p-[var(--spacing-sm)] focus-within:outline-none",
             "[&_.ProseMirror]:min-h-[var(--min-height)] [&_.ProseMirror]:outline-none",
-            "[&_.ProseMirror_h1]:text-[var(--font-size-3xl)] [&_.ProseMirror_h1]:font-bold [&_.ProseMirror_h1]:leading-tight [&_.ProseMirror_h1]:mt-[var(--spacing-lg)] [&_.ProseMirror_h1]:mb-[var(--spacing-md)]",
-            "[&_.ProseMirror_h2]:text-[var(--font-size-2xl)] [&_.ProseMirror_h2]:font-semibold [&_.ProseMirror_h2]:leading-snug [&_.ProseMirror_h2]:mt-[var(--spacing-md)] [&_.ProseMirror_h2]:mb-[var(--spacing-sm)]",
-            "[&_.ProseMirror_h3]:text-[var(--font-size-xl)] [&_.ProseMirror_h3]:font-semibold [&_.ProseMirror_h3]:leading-snug [&_.ProseMirror_h3]:mt-[var(--spacing-md)] [&_.ProseMirror_h3]:mb-[var(--spacing-sm)]",
-            "[&_.ProseMirror_p.is-editor-empty:first-child::before]:text-[var(--interactive-fg-alt)] [&_.ProseMirror_p.is-editor-empty:first-child::before]:content-[attr(data-placeholder)] [&_.ProseMirror_p.is-editor-empty:first-child::before]:float-left [&_.ProseMirror_p.is-editor-empty:first-child::before]:h-0 [&_.ProseMirror_p.is-editor-empty:first-child::before]:pointer-events-none"
+            "[&_.ProseMirror_h1]:text-[length:var(--font-size-3xl)] [&_.ProseMirror_h1]:font-bold [&_.ProseMirror_h1]:leading-tight [&_.ProseMirror_h1]:mt-[var(--spacing-lg)] [&_.ProseMirror_h1]:mb-[var(--spacing-md)]",
+            "[&_.ProseMirror_h2]:text-[length:var(--font-size-2xl)] [&_.ProseMirror_h2]:font-semibold [&_.ProseMirror_h2]:leading-snug [&_.ProseMirror_h2]:mt-[var(--spacing-md)] [&_.ProseMirror_h2]:mb-[var(--spacing-sm)]",
+            "[&_.ProseMirror_h3]:text-[length:var(--font-size-xl)] [&_.ProseMirror_h3]:font-semibold [&_.ProseMirror_h3]:leading-snug [&_.ProseMirror_h3]:mt-[var(--spacing-md)] [&_.ProseMirror_h3]:mb-[var(--spacing-sm)]",
+            // Tailwind's preflight strips ul/ol/blockquote styles — restore them explicitly
+            // so bullet/ordered lists and blockquotes render visibly in the editor content.
+            "[&_.ProseMirror_ul]:list-disc [&_.ProseMirror_ul]:pl-[var(--spacing-lg)] [&_.ProseMirror_ul]:my-[var(--spacing-sm)]",
+            "[&_.ProseMirror_ol]:list-decimal [&_.ProseMirror_ol]:pl-[var(--spacing-lg)] [&_.ProseMirror_ol]:my-[var(--spacing-sm)]",
+            "[&_.ProseMirror_li]:my-[var(--spacing-xxs)]",
+            "[&_.ProseMirror_li_p]:my-0",
+            "[&_.ProseMirror_blockquote]:border-l-4 [&_.ProseMirror_blockquote]:border-[color:var(--container-border-alt)] [&_.ProseMirror_blockquote]:pl-[var(--spacing-md)] [&_.ProseMirror_blockquote]:italic [&_.ProseMirror_blockquote]:text-[color:var(--interactive-fg-alt)] [&_.ProseMirror_blockquote]:my-[var(--spacing-sm)]",
+            "[&_.ProseMirror_code]:bg-[var(--interactive-bg-alt)] [&_.ProseMirror_code]:px-[var(--spacing-xxs)] [&_.ProseMirror_code]:py-0.5 [&_.ProseMirror_code]:rounded [&_.ProseMirror_code]:font-mono [&_.ProseMirror_code]:text-[length:var(--font-size-xs)]",
+            "[&_.ProseMirror_hr]:border-t [&_.ProseMirror_hr]:border-[color:var(--container-border-alt)] [&_.ProseMirror_hr]:my-[var(--spacing-md)]",
+            "[&_.ProseMirror_p.is-editor-empty:first-child::before]:text-[color:var(--interactive-fg-alt)] [&_.ProseMirror_p.is-editor-empty:first-child::before]:content-[attr(data-placeholder)] [&_.ProseMirror_p.is-editor-empty:first-child::before]:float-left [&_.ProseMirror_p.is-editor-empty:first-child::before]:h-0 [&_.ProseMirror_p.is-editor-empty:first-child::before]:pointer-events-none"
           )}
           style={{ "--min-height": minHeight } as React.CSSProperties}
         />

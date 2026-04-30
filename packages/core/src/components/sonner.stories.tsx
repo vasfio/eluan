@@ -1,20 +1,48 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { toast } from "sonner"
-import { Toaster } from "./sonner"
+import { Sonner } from "./sonner"
 import { Button } from "./button"
 
-const meta: Meta<typeof Toaster> = {
+const meta: Meta<typeof Sonner> = {
   title: "Components/Sonner",
-  component: Toaster,
+  component: Sonner,
   tags: ["autodocs"],
   decorators: [
     (Story) => (
       <>
         <Story />
-        <Toaster />
+        <Sonner />
       </>
     ),
   ],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A toast notification system built on the \`sonner\` library, providing styled success, error, warning, info, and default toasts with theme-aware styling.
+
+**Import**
+\`\`\`tsx
+import { Sonner } from "@vasf/ragnar-core"
+import { toast } from "sonner"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+// Mount the Sonner once at the app root
+<Sonner />
+
+// Trigger toasts from anywhere
+toast("Default notification")
+toast.success("Saved!")
+toast.error("Something went wrong")
+toast.warning("Warning")
+toast.info("FYI")
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
@@ -28,9 +56,23 @@ export const Default: Story = {
       </Button>
     </div>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: "A basic toast notification triggered by a button click.",
+      },
+    },
+  },
 }
 
 export const AllVariants: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Demonstrates all toast variants: default, success, error, warning, and info.",
+      },
+    },
+  },
   render: () => (
     <div className="flex gap-2 flex-wrap">
       <Button
@@ -84,6 +126,13 @@ export const AllVariants: Story = {
 }
 
 export const WithAction: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A toast with a description and an action button (Undo) for user interaction.",
+      },
+    },
+  },
   render: () => (
     <Button
       onClick={() =>
@@ -102,6 +151,13 @@ export const WithAction: Story = {
 }
 
 export const WithPromise: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A promise-based toast that shows loading, success, and error states automatically.",
+      },
+    },
+  },
   render: () => (
     <Button
       onClick={() => {
@@ -119,6 +175,13 @@ export const WithPromise: Story = {
 }
 
 export const CustomDuration: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Toasts with varying display durations: 1 second, 4 seconds, and infinite (manual dismiss).",
+      },
+    },
+  },
   render: () => (
     <div className="flex gap-2">
       <Button

@@ -32,13 +32,19 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
     ref
   ) => {
     const isVertical = orientation === "vertical"
+    // When `onStepClick` is provided every step is clickable. The legacy
+    // `allowClickOnCompleted` flag is preserved so existing call sites keep
+    // working — set to `false` to revert to the old completed-only behavior.
+    const stepsClickable = !!onStepClick
 
     return (
       <div
         ref={ref}
         className={cn(
           "flex",
-          isVertical ? "flex-col" : "flex-row items-center",
+          isVertical
+            ? "flex-col gap-[var(--spacing-md)]"
+            : "flex-row items-center",
           className
         )}
         {...props}
@@ -47,7 +53,8 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
           const isCompleted = index < currentStep
           const isCurrent = index === currentStep
           const isClickable =
-            onStepClick && (allowClickOnCompleted ? isCompleted : false)
+            stepsClickable &&
+            (allowClickOnCompleted ? true : isCompleted)
 
           return (
             <React.Fragment key={step.id}>
@@ -64,14 +71,22 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
                   disabled={!isClickable}
                   onClick={() => isClickable && onStepClick?.(index)}
                   className={cn(
-                    "relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 text-[var(--font-size-sm)] font-medium transition-all",
-                    isCompleted
-                      ? "border-[var(--interactive-bg-active)] bg-[var(--interactive-bg-active)] text-[var(--interactive-fg-active)]"
-                      : isCurrent
-                        ? "border-[var(--interactive-bg-active)] bg-[var(--interactive-bg)] text-[var(--interactive-fg)]"
-                        : "border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] text-[var(--interactive-fg-alt)]",
-                    isClickable &&
-                      "cursor-pointer hover:border-[var(--interactive-bg-active)] hover:text-[var(--interactive-fg)]"
+                    "relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 text-[length:var(--font-size-sm)] font-medium transition-colors",
+                    "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1",
+                    isCompleted &&
+                      "border-[var(--interactive-bg-active)] bg-[var(--interactive-bg-active)] text-[color:var(--interactive-fg-active)]",
+                    isCurrent &&
+                      "border-[var(--interactive-bg-active)] bg-[var(--interactive-bg)] text-[color:var(--interactive-fg)]",
+                    !isCompleted && !isCurrent &&
+                      "border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] text-[color:var(--interactive-fg-alt)]",
+                    isClickable && "cursor-pointer",
+                    // Hover states tuned per state so each variant reads as actionable.
+                    isClickable && isCompleted &&
+                      "hover:border-[var(--action-primary-bg-hover)] hover:bg-[var(--action-primary-bg-hover)]",
+                    isClickable && isCurrent &&
+                      "hover:bg-[var(--interactive-bg-hover)]",
+                    isClickable && !isCompleted && !isCurrent &&
+                      "hover:border-[var(--interactive-bg-active)] hover:text-[color:var(--interactive-fg)]"
                   )}
                 >
                   {isCompleted ? (
@@ -80,24 +95,19 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
                     step.icon ?? index + 1
                   )}
                 </button>
-                <div
-                  className={cn(
-                    isVertical ? "pb-[var(--spacing-xl)]" : "text-center",
-                    isVertical && index === steps.length - 1 && "pb-0"
-                  )}
-                >
+                <div className={cn(!isVertical && "text-center")}>
                   <p
                     className={cn(
-                      "text-[var(--font-size-sm)] font-medium",
+                      "text-[length:var(--font-size-sm)] font-medium",
                       isCurrent || isCompleted
-                        ? "text-[var(--foregrounds-primary)]"
-                        : "text-[var(--foregrounds-tertiary)]"
+                        ? "text-[color:var(--foregrounds-primary)]"
+                        : "text-[color:var(--foregrounds-tertiary)]"
                     )}
                   >
                     {step.title}
                   </p>
                   {step.description && (
-                    <p className="mt-[var(--spacing-xxs)] text-[var(--font-size-xs)] text-[var(--foregrounds-tertiary)]">
+                    <p className="mt-[var(--spacing-xxs)] text-[length:var(--font-size-xs)] text-[color:var(--foregrounds-tertiary)]">
                       {step.description}
                     </p>
                   )}
@@ -108,7 +118,10 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
                   className={cn(
                     "transition-colors",
                     isVertical
-                      ? "ml-5 h-full min-h-[24px] w-0.5 -translate-x-1/2"
+                      // Centered on the button column (button is h-10 w-10, so center is 20px).
+                      // `min-h-[var(--spacing-xl)]` gives the line a fixed visible height; the
+                      // parent `gap-md` provides equal breathing room above and below.
+                      ? "ml-5 min-h-[var(--spacing-xl)] w-0.5 -translate-x-1/2"
                       : "mx-[var(--spacing-sm)] h-0.5 flex-1 min-w-[24px]",
                     index < currentStep
                       ? "bg-[var(--interactive-bg-active)]"

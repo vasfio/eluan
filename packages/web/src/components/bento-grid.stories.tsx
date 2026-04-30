@@ -15,12 +15,42 @@ const meta: Meta<typeof BentoGrid> = {
   title: "Web/BentoGrid",
   component: BentoGrid,
   // Disable autodocs - many cards rendering can cause performance issues
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A bento-style grid layout with cards that can span multiple columns and rows, featuring icon, title, description, badge, and link sub-components.
+
+**Import**
+\`\`\`tsx
+import { BentoGrid, BentoCard, BentoCardIcon, BentoCardTitle, BentoCardDescription, BentoCardContent, BentoCardBadge, BentoCardLink, BentoGridPreset } from "@vasf/ragnar-web"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<BentoGrid columns="auto">
+  <BentoCard span={2}>
+    <BentoCardTitle>Feature</BentoCardTitle>
+    <BentoCardDescription>Details here.</BentoCardDescription>
+  </BentoCard>
+</BentoGrid>
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    columns: {
+      description: "Grid columns: 2, 3, 4, or auto (responsive).",
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: { docs: { description: { story: "Auto-column grid with cards spanning different widths and link CTAs." } } },
   render: () => (
     <BentoGrid>
       <BentoCard span={2}>
@@ -66,6 +96,7 @@ export const Default: Story = {
 }
 
 export const WithBadges: Story = {
+  parameters: { docs: { description: { story: "Cards with badge labels like 'New' and 'Beta', and multi-row spanning." } } },
   render: () => (
     <BentoGrid columns={3}>
       <BentoCard span={2} rowSpan={2} size="lg">
@@ -104,6 +135,7 @@ export const WithBadges: Story = {
 }
 
 export const GhostVariant: Story = {
+  parameters: { docs: { description: { story: "Ghost variant with transparent borders and muted background." } } },
   render: () => (
     <BentoGrid columns={2}>
       <BentoCard variant="ghost">
@@ -147,6 +179,7 @@ export const GhostVariant: Story = {
 }
 
 export const DottedVariant: Story = {
+  parameters: { docs: { description: { story: "Dotted pattern that appears on hover." } } },
   render: () => (
     <BentoGrid columns={3}>
       <BentoCard variant="dotted" span={2}>
@@ -173,6 +206,7 @@ export const DottedVariant: Story = {
 }
 
 export const PresetLayouts: Story = {
+  parameters: { docs: { description: { story: "BentoGridPreset with a 'featured' layout using auto-rows." } } },
   render: () => (
     <BentoGridPreset layout="featured">
       <BentoCard span={2} rowSpan={2} size="lg">

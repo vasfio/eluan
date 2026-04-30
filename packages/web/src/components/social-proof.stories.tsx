@@ -14,6 +14,35 @@ const meta: Meta<typeof SocialProof> = {
   title: "Web/SocialProof",
   component: SocialProof,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A collection of social proof primitives including avatar stacks, star ratings, trust badges, customer counts, banners, and "featured in" sections.
+
+**Import**
+\`\`\`tsx
+import { SocialProof, AvatarStack, StarRating, TrustBadges, TrustBadge, CustomerCount, SocialProofBanner, FeaturedIn } from "@vasf/ragnar-web"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<SocialProof>
+  <AvatarStack max={4} total={127}>
+    <img src="/avatar1.jpg" />
+  </AvatarStack>
+  <StarRating rating={4.8} reviewCount={2341} />
+</SocialProof>
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    size: {
+      description: "Text size: sm, default, or lg.",
+    },
+  },
 }
 
 export default meta
@@ -26,6 +55,7 @@ const AvatarPlaceholder = ({ name }: { name: string }) => (
 )
 
 export const WithAvatarStack: Story = {
+  parameters: { docs: { description: { story: "An overlapping avatar stack with a remaining count and descriptive text." } } },
   render: () => (
     <SocialProof>
       <AvatarStack max={4} total={127}>
@@ -43,6 +73,7 @@ export const WithAvatarStack: Story = {
 }
 
 export const WithStarRating: Story = {
+  parameters: { docs: { description: { story: "Star ratings in different sizes with review counts and optional value display." } } },
   render: () => (
     <div className="space-y-4">
       <StarRating rating={4.8} reviewCount={2341} />
@@ -53,6 +84,7 @@ export const WithStarRating: Story = {
 }
 
 export const WithTrustBadges: Story = {
+  parameters: { docs: { description: { story: "Trust badges with shield icons for shipping, returns, and security." } } },
   render: () => (
     <TrustBadges>
       <TrustBadge label="Free shipping" />
@@ -64,6 +96,7 @@ export const WithTrustBadges: Story = {
 }
 
 export const CustomerCountDisplay: Story = {
+  parameters: { docs: { description: { story: "Customer count displays in different sizes with custom labels." } } },
   render: () => (
     <div className="space-y-4">
       <CustomerCount count={10000} />
@@ -74,6 +107,7 @@ export const CustomerCountDisplay: Story = {
 }
 
 export const Banner: Story = {
+  parameters: { docs: { description: { story: "A horizontal banner combining avatar stack, star rating, and trust badge." } } },
   render: () => (
     <SocialProofBanner>
       <AvatarStack size="sm" max={3}>
@@ -88,6 +122,7 @@ export const Banner: Story = {
 }
 
 export const FeaturedInSection: Story = {
+  parameters: { docs: { description: { story: "A 'Featured in' section with grayscale publication logos." } } },
   render: () => (
     <FeaturedIn title="As seen in">
       <div className="flex h-8 w-24 items-center justify-center rounded bg-muted text-xs font-medium">
@@ -107,6 +142,7 @@ export const FeaturedInSection: Story = {
 }
 
 export const CombinedProof: Story = {
+  parameters: { docs: { description: { story: "All social proof elements combined: avatar stack, rating, and compliance badges." } } },
   render: () => (
     <div className="space-y-8">
       <SocialProof>

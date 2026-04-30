@@ -51,9 +51,9 @@ const Testimonial = React.forwardRef<HTMLDivElement, TestimonialProps>(
     const content = (
       <>
         {showQuoteIcon && variant !== "minimal" && (
-          <Quote className="mb-[var(--spacing-md)] h-[var(--size-sm)] w-[var(--size-sm)] text-[var(--container-border-alt)]" />
+          <Quote className="mb-[var(--spacing-md)] h-[var(--size-sm)] w-[var(--size-sm)] text-[color:var(--container-border-alt)]" />
         )}
-        <div className="mb-[var(--spacing-md)] text-[var(--font-size-base)] font-normal leading-relaxed text-[var(--container-fg)]">{children}</div>
+        <div className="mb-[var(--spacing-md)] text-[length:var(--font-size-base)] font-normal leading-relaxed text-[color:var(--container-fg)]">{children}</div>
         {rating !== undefined && (
           <div className="mb-[var(--spacing-md)] flex gap-[var(--spacing-xs)]">
             {Array.from({ length: 5 }).map((_, i) => (
@@ -62,8 +62,8 @@ const Testimonial = React.forwardRef<HTMLDivElement, TestimonialProps>(
                 className={cn(
                   "h-[var(--size-xxs)] w-[var(--size-xxs)]",
                   i < rating
-                    ? "fill-[var(--cautionary-main)] text-[var(--cautionary-main)]"
-                    : "text-[var(--container-border-alt)]"
+                    ? "fill-[var(--cautionary-main)] text-[color:var(--cautionary-main)]"
+                    : "text-[color:var(--container-border-alt)]"
                 )}
               />
             ))}
@@ -72,7 +72,7 @@ const Testimonial = React.forwardRef<HTMLDivElement, TestimonialProps>(
         <div className="flex items-center gap-[var(--spacing-sm)]">
           <Avatar className="h-[var(--size-lg)] w-[var(--size-lg)]">
             {author.avatar && <AvatarImage src={author.avatar} alt={author.name} />}
-            <AvatarFallback className="bg-[var(--container-bg-alt)] text-[var(--font-size-xs)] text-[var(--container-fg-alt)]">
+            <AvatarFallback className="bg-[var(--container-bg-alt)] text-[length:var(--font-size-xs)] text-[color:var(--container-fg-alt)]">
               {author.name
                 .split(" ")
                 .map((n) => n[0])
@@ -82,9 +82,9 @@ const Testimonial = React.forwardRef<HTMLDivElement, TestimonialProps>(
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
-            <span className="font-normal text-[var(--container-fg)]">{author.name}</span>
+            <span className="font-normal text-[color:var(--container-fg)]">{author.name}</span>
             {(author.title || author.company) && (
-              <span className="text-[var(--font-size-sm)] text-[var(--container-fg-alt)]">
+              <span className="text-[length:var(--font-size-sm)] text-[color:var(--container-fg-alt)]">
                 {author.title}
                 {author.title && author.company && " at "}
                 {author.company}

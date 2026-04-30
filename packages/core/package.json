@@ -1,6 +1,26 @@
 {
   "name": "@vasf/ragnar-core",
+  "description": "60+ accessible UI components for React — built on Radix UI, Tailwind CSS v4, and CVA",
   "version": "0.1.5",
+  "license": "MIT",
+  "homepage": "https://github.com/frolda/ragnar#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frolda/ragnar.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/frolda/ragnar/issues"
+  },
+  "keywords": [
+    "react",
+    "ui",
+    "components",
+    "design-system",
+    "radix-ui",
+    "tailwindcss",
+    "ragnar"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -69,6 +89,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
+    "countries-list": "^3.3.0",
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
     "lucide-react": "^0.395.0",

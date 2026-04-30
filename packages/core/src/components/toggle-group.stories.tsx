@@ -5,6 +5,43 @@ const meta: Meta<typeof ToggleGroup> = {
   title: "Components/Toggle Group",
   component: ToggleGroup,
   tags: ["autodocs"],
+  argTypes: {
+    type: {
+      description: "Selection mode: \"single\" allows one active item, \"multiple\" allows many.",
+    },
+    variant: {
+      description: "Visual style variant: \"default\" or \"outline\".",
+    },
+    size: {
+      description: "Size of the toggle items.",
+    },
+    disabled: {
+      description: "Whether the entire toggle group is disabled.",
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A group of toggle buttons that supports single or multiple selection, with variant and size options.
+
+**Import**
+\`\`\`tsx
+import { ToggleGroup, ToggleGroupItem } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<ToggleGroup type="single">
+  <ToggleGroupItem value="left">L</ToggleGroupItem>
+  <ToggleGroupItem value="center">C</ToggleGroupItem>
+  <ToggleGroupItem value="right">R</ToggleGroupItem>
+</ToggleGroup>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
@@ -12,6 +49,13 @@ type Story = StoryObj
 
 export const Default: Story = {
   args: {},
+  parameters: {
+    docs: {
+      description: {
+        story: "A single-selection toggle group for text alignment options.",
+      },
+    },
+  },
   render: () => (
     <ToggleGroup type="single">
       <ToggleGroupItem value="left" aria-label="Align left">L</ToggleGroupItem>
@@ -23,6 +67,13 @@ export const Default: Story = {
 
 export const Multiple: Story = {
   args: {},
+  parameters: {
+    docs: {
+      description: {
+        story: "A multi-selection toggle group for text formatting (bold, italic, underline).",
+      },
+    },
+  },
   render: () => (
     <ToggleGroup type="multiple">
       <ToggleGroupItem value="bold" aria-label="Toggle bold">B</ToggleGroupItem>
@@ -34,6 +85,13 @@ export const Multiple: Story = {
 
 export const Outline: Story = {
   args: {},
+  parameters: {
+    docs: {
+      description: {
+        story: "A toggle group using the \"outline\" variant style.",
+      },
+    },
+  },
   render: () => (
     <ToggleGroup type="single" variant="outline">
       <ToggleGroupItem value="a">A</ToggleGroupItem>
@@ -43,31 +101,15 @@ export const Outline: Story = {
   ),
 }
 
-export const Sizes: Story = {
-  args: {},
-  render: () => (
-    <div className="flex flex-col gap-4">
-      <ToggleGroup type="single" size="sm">
-        <ToggleGroupItem value="a">S</ToggleGroupItem>
-        <ToggleGroupItem value="b">M</ToggleGroupItem>
-        <ToggleGroupItem value="c">L</ToggleGroupItem>
-      </ToggleGroup>
-      <ToggleGroup type="single" size="default">
-        <ToggleGroupItem value="a">S</ToggleGroupItem>
-        <ToggleGroupItem value="b">M</ToggleGroupItem>
-        <ToggleGroupItem value="c">L</ToggleGroupItem>
-      </ToggleGroup>
-      <ToggleGroup type="single" size="lg">
-        <ToggleGroupItem value="a">S</ToggleGroupItem>
-        <ToggleGroupItem value="b">M</ToggleGroupItem>
-        <ToggleGroupItem value="c">L</ToggleGroupItem>
-      </ToggleGroup>
-    </div>
-  ),
-}
-
 export const Disabled: Story = {
   args: {},
+  parameters: {
+    docs: {
+      description: {
+        story: "A toggle group in the disabled state, preventing interaction with all items.",
+      },
+    },
+  },
   render: () => (
     <ToggleGroup type="single" disabled>
       <ToggleGroupItem value="a">A</ToggleGroupItem>

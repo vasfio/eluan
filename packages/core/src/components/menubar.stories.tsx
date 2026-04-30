@@ -19,12 +19,57 @@ const meta: Meta<typeof Menubar> = {
   title: "Components/Menubar",
   component: Menubar,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A horizontal menu bar with dropdown menus, typically used for application-level navigation and actions.
+
+**Sub-components:** \`MenubarMenu\`, \`MenubarTrigger\`, \`MenubarContent\`, \`MenubarItem\`, \`MenubarSeparator\`, \`MenubarLabel\`, \`MenubarCheckboxItem\`, \`MenubarRadioGroup\`, \`MenubarRadioItem\`, \`MenubarSub\`, \`MenubarSubTrigger\`, \`MenubarSubContent\`, \`MenubarShortcut\`, \`MenubarGroup\`, \`MenubarPortal\`
+
+**Import**
+\`\`\`tsx
+import {
+  Menubar,
+  MenubarMenu,
+  MenubarTrigger,
+  MenubarContent,
+  MenubarItem,
+  MenubarSeparator,
+  MenubarShortcut,
+} from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Menubar>
+  <MenubarMenu>
+    <MenubarTrigger>File</MenubarTrigger>
+    <MenubarContent>
+      <MenubarItem>New Tab <MenubarShortcut>⌘T</MenubarShortcut></MenubarItem>
+      <MenubarSeparator />
+      <MenubarItem>Print</MenubarItem>
+    </MenubarContent>
+  </MenubarMenu>
+</Menubar>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A full menubar with File, Edit, and View menus demonstrating items, shortcuts, separators, checkbox items, and radio groups.",
+      },
+    },
+  },
   render: () => (
     <Menubar>
       <MenubarMenu>

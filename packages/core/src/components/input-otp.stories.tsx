@@ -10,12 +10,50 @@ const meta: Meta<typeof InputOTP> = {
   title: "Components/Input OTP",
   component: InputOTP,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A one-time password input with individual digit slots, keyboard navigation, paste support, and an optional separator for grouping digits.
+
+**Import**
+\`\`\`tsx
+import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<InputOTP maxLength={6} onComplete={(value) => console.log(value)}>
+  <InputOTPGroup>
+    <InputOTPSlot index={0} />
+    <InputOTPSlot index={1} />
+    <InputOTPSlot index={2} />
+  </InputOTPGroup>
+  <InputOTPSeparator />
+  <InputOTPGroup>
+    <InputOTPSlot index={3} />
+    <InputOTPSlot index={4} />
+    <InputOTPSlot index={5} />
+  </InputOTPGroup>
+</InputOTP>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A 6-digit OTP input with all slots in a single group.",
+      },
+    },
+  },
   render: () => (
     <InputOTP maxLength={6}>
       <InputOTPGroup>
@@ -31,6 +69,13 @@ export const Default: Story = {
 }
 
 export const WithSeparator: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "OTP input split into two groups of 3 digits with a separator in between.",
+      },
+    },
+  },
   render: () => (
     <InputOTP maxLength={6}>
       <InputOTPGroup>
@@ -49,6 +94,13 @@ export const WithSeparator: Story = {
 }
 
 export const FourDigits: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A 4-digit OTP input for shorter verification codes.",
+      },
+    },
+  },
   render: () => (
     <InputOTP maxLength={4}>
       <InputOTPGroup>
@@ -62,6 +114,13 @@ export const FourDigits: Story = {
 }
 
 export const WithLabel: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "OTP input with a label and helper text for verification code entry.",
+      },
+    },
+  },
   render: () => (
     <div className="space-y-2">
       <label className="text-sm font-medium">Enter verification code</label>

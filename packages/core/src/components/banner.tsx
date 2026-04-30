@@ -5,22 +5,22 @@ import { X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const bannerVariants = cva(
-  "relative flex items-center gap-[var(--spacing-sm)] w-full px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[var(--font-size-sm)] font-medium",
+  "relative flex items-center gap-[var(--spacing-sm)] w-full px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[length:var(--font-size-sm)] font-medium",
   {
     variants: {
       variant: {
         default:
-          "bg-[var(--interactive-bg-inverse)] text-[var(--interactive-fg-inverse)]",
+          "bg-[var(--interactive-bg-inverse)] text-[color:var(--interactive-fg-inverse)]",
         destructive:
-          "bg-[var(--destructive-bg-alt)] text-[var(--destructive-fg)] border border-[var(--destructive-border)] [&_svg]:text-[var(--destructive-fg)]",
+          "bg-[var(--destructive-bg-alt)] text-[color:var(--destructive-fg)] border border-[var(--destructive-border)] [&_svg]:text-[color:var(--destructive-fg)]",
         warning:
-          "bg-[var(--cautionary-bg-alt,var(--cautionary-bg))] text-[var(--cautionary-fg)] border border-[var(--cautionary-border)] [&_svg]:text-[var(--cautionary-fg)]",
+          "bg-[var(--cautionary-bg-alt,var(--cautionary-bg))] text-[color:var(--cautionary-fg)] border border-[var(--cautionary-border)] [&_svg]:text-[color:var(--cautionary-fg)]",
         success:
-          "bg-[var(--positive-bg-alt,var(--positive-bg))] text-[var(--positive-fg)] border border-[var(--positive-border)] [&_svg]:text-[var(--positive-fg)]",
+          "bg-[var(--positive-bg-alt,var(--positive-bg))] text-[color:var(--positive-fg)] border border-[var(--positive-border)] [&_svg]:text-[color:var(--positive-fg)]",
         info:
-          "bg-[var(--informative-bg-alt,var(--informative-bg))] text-[var(--informative-fg)] border border-[var(--informative-border)] [&_svg]:text-[var(--informative-fg)]",
+          "bg-[var(--informative-bg-alt,var(--informative-bg))] text-[color:var(--informative-fg)] border border-[var(--informative-border)] [&_svg]:text-[color:var(--informative-fg)]",
         neutral:
-          "bg-[var(--container-bg-alt)] text-[var(--container-fg-alt)] border border-[var(--container-border-alt)]",
+          "bg-[var(--container-bg-alt)] text-[color:var(--container-fg-alt)] border border-[var(--container-border-alt)]",
       },
       position: {
         top: "fixed top-0 left-0 right-0 z-50",

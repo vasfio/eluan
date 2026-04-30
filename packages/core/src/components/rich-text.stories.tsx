@@ -6,12 +6,43 @@ const meta: Meta<typeof RichText> = {
   title: "Components/Rich Text",
   component: RichText,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A rich text editor built on TipTap with a formatting toolbar supporting bold, italic, strikethrough, code, headings, lists, blockquotes, and undo/redo.
+
+**Import**
+\`\`\`tsx
+import { RichText } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<RichText
+  value={value}
+  onChange={setValue}
+  placeholder="Start typing..."
+  minHeight="150px"
+/>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "An empty rich text editor with placeholder text and full toolbar.",
+      },
+    },
+  },
   render: () => {
     const [value, setValue] = React.useState("")
     return (
@@ -27,6 +58,13 @@ export const Default: Story = {
 }
 
 export const WithInitialContent: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Editor pre-populated with HTML content including headings, bold text, and a list.",
+      },
+    },
+  },
   render: () => {
     const [value, setValue] = React.useState(
       "<h2>Welcome to Rich Text Editor</h2><p>This is a <strong>rich text editor</strong> with support for:</p><ul><li>Bold and italic text</li><li>Headings</li><li>Lists</li><li>And more!</li></ul>"
@@ -44,6 +82,13 @@ export const WithInitialContent: Story = {
 }
 
 export const CustomMinHeight: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Editor with a custom minimum height of 300px for longer-form content.",
+      },
+    },
+  },
   render: () => {
     const [value, setValue] = React.useState("")
     return (
@@ -60,6 +105,13 @@ export const CustomMinHeight: Story = {
 }
 
 export const Disabled: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A disabled editor that displays content but prevents editing.",
+      },
+    },
+  },
   render: () => (
     <div className="max-w-2xl">
       <RichText

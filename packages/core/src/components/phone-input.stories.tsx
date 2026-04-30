@@ -5,12 +5,42 @@ const meta: Meta<typeof PhoneInput> = {
   title: "Components/Phone Input",
   component: PhoneInput,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A phone number input with an integrated country code selector, searchable dropdown, and automatic formatting.
+
+**Import**
+\`\`\`tsx
+import { PhoneInput } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<PhoneInput
+  placeholder="Phone number"
+  defaultCountry="US"
+  onChange={(value, country) => console.log(value, country)}
+/>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Basic phone input with the default US country code selected.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[300px]">
       <PhoneInput placeholder="Phone number" />
@@ -19,6 +49,13 @@ export const Default: Story = {
 }
 
 export const WithDefaultCountry: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Phone input pre-set with United Kingdom as the default country.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[300px]">
       <PhoneInput placeholder="Phone number" defaultCountry="GB" />
@@ -27,6 +64,13 @@ export const WithDefaultCountry: Story = {
 }
 
 export const WithCallback: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Demonstrates the onChange and onCountryChange callback handlers.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[300px]">
       <PhoneInput
@@ -44,6 +88,13 @@ export const WithCallback: Story = {
 }
 
 export const LimitedCountries: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Phone input with a restricted set of countries (US, Canada, Mexico).",
+      },
+    },
+  },
   render: () => (
     <div className="w-[300px]">
       <PhoneInput
@@ -59,6 +110,13 @@ export const LimitedCountries: Story = {
 }
 
 export const Disabled: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Phone input in a disabled state where interaction is prevented.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[300px]">
       <PhoneInput placeholder="Phone number" disabled />

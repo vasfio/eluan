@@ -13,6 +13,51 @@ const meta: Meta<typeof Breadcrumb> = {
   title: "Components/Breadcrumb",
   component: Breadcrumb,
   tags: ["autodocs"],
+  argTypes: {
+    separator: {
+      description:
+        "Custom separator element rendered between breadcrumb items. Defaults to a `ChevronRight` icon.",
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A navigation aid that displays the user's current location within a hierarchical page structure.
+
+**Sub-components:** \`BreadcrumbList\`, \`BreadcrumbItem\`, \`BreadcrumbLink\`, \`BreadcrumbPage\`, \`BreadcrumbSeparator\`, \`BreadcrumbEllipsis\`
+
+**Import**
+\`\`\`tsx
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  BreadcrumbEllipsis,
+} from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/">Home</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbPage>Current</BreadcrumbPage>
+    </BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
@@ -36,6 +81,13 @@ export const Default: Story = {
       </BreadcrumbList>
     </Breadcrumb>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: "A three-level breadcrumb trail with links and a current page indicator.",
+      },
+    },
+  },
 }
 
 export const WithEllipsis: Story = {
@@ -60,6 +112,51 @@ export const WithEllipsis: Story = {
       </BreadcrumbList>
     </Breadcrumb>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: "A breadcrumb with a static ellipsis when no collapsed items are provided.",
+      },
+    },
+  },
+}
+
+export const WithCollapsedItems: Story = {
+  render: () => (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbEllipsis
+            items={[
+              { label: "Documentation", href: "/docs" },
+              { label: "Guides", href: "/docs/guides" },
+              { label: "Design System", href: "/docs/design-system" },
+            ]}
+          />
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/docs/components">Components</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "A breadcrumb with collapsed intermediate levels that open in a dropdown menu when the ellipsis is clicked.",
+      },
+    },
+  },
 }
 
 export const Simple: Story = {
@@ -76,4 +173,11 @@ export const Simple: Story = {
       </BreadcrumbList>
     </Breadcrumb>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: "A minimal two-level breadcrumb with just a home link and the current page.",
+      },
+    },
+  },
 }

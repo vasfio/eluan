@@ -5,18 +5,16 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const toggleVariants = cva(
-  "inline-flex items-center justify-center rounded-[var(--curves-md)] text-[var(--font-size-sm)] font-medium ring-offset-background transition-colors hover:bg-[var(--interactive-bg-hover)] hover:text-[var(--interactive-fg)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:pointer-events-none disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)] data-[state=on]:bg-[var(--interactive-bg-selected)] data-[state=on]:text-[var(--interactive-fg-selected)] [&_svg]:pointer-events-none [&_svg]:size-[var(--size-xxs)] [&_svg]:shrink-0 gap-[var(--spacing-sm)]",
+  "inline-flex items-center justify-center rounded-[var(--curves-md)] text-[length:var(--font-size-sm)] font-medium ring-offset-background transition-colors hover:bg-[var(--interactive-bg-hover)] hover:text-[color:var(--interactive-fg)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:pointer-events-none disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[color:var(--interactive-fg-disabled)] data-[state=on]:bg-[var(--interactive-bg-selected)] data-[state=on]:text-[color:var(--interactive-fg-selected)] [&_svg]:pointer-events-none [&_svg]:size-[var(--size-xxs)] [&_svg]:shrink-0 gap-[var(--spacing-sm)]",
   {
     variants: {
       variant: {
         default: "bg-transparent",
         outline:
-          "border border-[var(--interactive-border-alt)] bg-transparent hover:bg-[var(--interactive-bg-hover)] hover:text-[var(--interactive-fg)]",
+          "border border-[var(--interactive-border-alt)] bg-transparent hover:bg-[var(--interactive-bg-hover)] hover:text-[color:var(--interactive-fg)]",
       },
       size: {
         default: "h-[var(--size-lg)] px-[var(--spacing-md)] min-w-[var(--size-lg)]",
-        sm: "h-[var(--size-lg)] px-[var(--spacing-sm)] min-w-[var(--size-lg)]",
-        lg: "h-[var(--size-xl)] px-[var(--spacing-lg)] min-w-[var(--size-xl)]",
       },
     },
     defaultVariants: {

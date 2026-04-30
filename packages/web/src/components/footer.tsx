@@ -7,7 +7,7 @@ const footerVariants = cva("w-full", {
   variants: {
     variant: {
       default: "border-t border-[color:var(--container-border-alt)] bg-[var(--container-bg)]",
-      modern: "bg-[var(--container-bg-inverse)] text-[var(--container-fg-inverse)]",
+      modern: "bg-[var(--container-bg-inverse)] text-[color:var(--container-fg-inverse)]",
     },
     size: {
       sm: "py-[var(--spacing-lg)]",
@@ -69,7 +69,7 @@ const FooterTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn("font-heading text-[var(--font-size-sm)] font-semibold uppercase tracking-wider text-[var(--container-fg)]", className)}
+    className={cn("font-heading text-[length:var(--font-size-sm)] font-semibold uppercase tracking-wider text-[color:var(--container-fg)]", className)}
     {...props}
   />
 ))
@@ -92,7 +92,7 @@ const FooterLink = React.forwardRef<HTMLAnchorElement, FooterLinkProps>(
       <a
         ref={ref}
         className={cn(
-          "text-[var(--font-size-sm)] text-[var(--interactive-fg-alt)] transition-colors hover:text-[var(--interactive-fg)]",
+          "text-[length:var(--font-size-sm)] text-[color:var(--interactive-fg-alt)] transition-colors hover:text-[color:var(--interactive-fg)]",
           className
         )}
         {...props}
@@ -123,7 +123,7 @@ const FooterCopyright = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-[var(--font-size-sm)] text-[var(--container-fg-alt)]", className)}
+    className={cn("text-[length:var(--font-size-sm)] text-[color:var(--container-fg-alt)]", className)}
     {...props}
   />
 ))
@@ -154,7 +154,7 @@ const FooterSocialLink = React.forwardRef<
     ref={ref}
     aria-label={label}
     className={cn(
-      "text-[var(--interactive-fg-alt)] transition-colors hover:text-[var(--interactive-fg)]",
+      "text-[color:var(--interactive-fg-alt)] transition-colors hover:text-[color:var(--interactive-fg)]",
       className
     )}
     {...props}
@@ -184,7 +184,7 @@ const FooterBrand = React.forwardRef<HTMLDivElement, FooterBrandProps>(
       {...props}
     >
       {children ?? (
-        <span className="block font-heading text-[clamp(3rem,10vw,8rem)] font-extrabold uppercase leading-none tracking-tighter text-[var(--container-border-alt)]">
+        <span className="block font-heading text-[clamp(3rem,10vw,8rem)] font-extrabold uppercase leading-none tracking-tighter text-[color:var(--container-border-alt)]">
           {text}
         </span>
       )}
@@ -200,7 +200,7 @@ const FooterModernLink = React.forwardRef<HTMLAnchorElement, FooterLinkProps>(
       <a
         ref={ref}
         className={cn(
-          "group relative inline-block text-[var(--font-size-sm)] text-[var(--interactive-fg-alt)] transition-colors duration-200 hover:text-[var(--interactive-fg-inverse)]",
+          "group relative inline-block text-[length:var(--font-size-sm)] text-[color:var(--interactive-fg-alt)] transition-colors duration-200 hover:text-[color:var(--interactive-fg-inverse)]",
           className
         )}
         {...props}
@@ -222,7 +222,7 @@ const FooterModernSocialLink = React.forwardRef<
     ref={ref}
     aria-label={label}
     className={cn(
-      "inline-flex h-[var(--size-lg)] w-[var(--size-lg)] items-center justify-center rounded-full border border-[color:var(--container-border-alt)] text-[var(--interactive-fg-alt)] transition-all duration-200 hover:scale-110 hover:border-[color:var(--interactive-border-alt)] hover:text-[var(--interactive-fg-inverse)]",
+      "inline-flex h-[var(--size-lg)] w-[var(--size-lg)] items-center justify-center rounded-full border border-[color:var(--container-border-alt)] text-[color:var(--interactive-fg-alt)] transition-all duration-200 hover:scale-110 hover:border-[color:var(--interactive-border-alt)] hover:text-[color:var(--interactive-fg-inverse)]",
       className
     )}
     {...props}

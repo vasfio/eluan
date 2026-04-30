@@ -5,6 +5,31 @@ const meta: Meta<typeof Spinner> = {
   title: "Components/Spinner",
   component: Spinner,
   tags: ["autodocs"],
+  argTypes: {
+    size: {
+      description:
+        'Controls the spinner dimensions. Options: `"default"`, `"sm"`, `"lg"`, `"xl"`.',
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A circular loading indicator used to communicate that an action is in progress.
+
+**Import**
+\`\`\`tsx
+import { Spinner } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Spinner size="default" />
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
@@ -12,6 +37,13 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: () => <Spinner />,
+  parameters: {
+    docs: {
+      description: {
+        story: "The default spinner at the standard size.",
+      },
+    },
+  },
 }
 
 export const Sizes: Story = {
@@ -22,6 +54,13 @@ export const Sizes: Story = {
       <Spinner size="lg" />
     </div>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: "Shows the available size variants side by side: sm, default, and lg.",
+      },
+    },
+  },
 }
 
 export const WithText: Story = {
@@ -31,6 +70,13 @@ export const WithText: Story = {
       <span className="text-sm text-muted-foreground">Loading...</span>
     </div>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: "A spinner paired with a text label to provide additional loading context.",
+      },
+    },
+  },
 }
 
 export const InButton: Story = {
@@ -40,4 +86,11 @@ export const InButton: Story = {
       Processing...
     </button>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: "A spinner embedded inside a disabled button to indicate an in-progress action.",
+      },
+    },
+  },
 }

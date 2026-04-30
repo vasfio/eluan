@@ -28,9 +28,9 @@ const quoteVariants = cva(
 )
 
 const textSizes = {
-  sm: "text-[var(--font-size-sm)] sm:text-[var(--font-size-base)]",
-  default: "text-[var(--font-size-sm)] sm:text-[var(--font-size-base)]",
-  lg: "text-[var(--font-size-base)] sm:text-[var(--font-size-lg)]",
+  sm: "text-[length:var(--font-size-sm)] sm:text-[length:var(--font-size-base)]",
+  default: "text-[length:var(--font-size-sm)] sm:text-[length:var(--font-size-base)]",
+  lg: "text-[length:var(--font-size-base)] sm:text-[length:var(--font-size-lg)]",
 }
 
 export interface QuoteProps
@@ -48,7 +48,7 @@ const QuoteComponent = React.forwardRef<HTMLQuoteElement, QuoteProps>(
         {...props}
       >
         {showIcon && variant === "centered" && (
-          <QuoteIcon className="mx-auto mb-[var(--spacing-md)] h-[var(--size-md)] w-[var(--size-md)] text-[var(--container-fg-alt)]" />
+          <QuoteIcon className="mx-auto mb-[var(--spacing-md)] h-[var(--size-md)] w-[var(--size-md)] text-[color:var(--container-fg-alt)]" />
         )}
         {children}
       </blockquote>
@@ -64,7 +64,7 @@ const QuoteText = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "font-light italic text-[var(--container-fg)] leading-relaxed",
+      "font-light italic text-[color:var(--container-fg)] leading-relaxed",
       textSizes[size],
       className
     )}
@@ -126,7 +126,7 @@ const QuoteAuthorName = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <span
     ref={ref}
-    className={cn("font-medium text-[var(--container-fg)]", className)}
+    className={cn("font-medium text-[color:var(--container-fg)]", className)}
     {...props}
   />
 ))
@@ -138,7 +138,7 @@ const QuoteAuthorTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <span
     ref={ref}
-    className={cn("text-[var(--font-size-sm)] text-[var(--container-fg-alt)]", className)}
+    className={cn("text-[length:var(--font-size-sm)] text-[color:var(--container-fg-alt)]", className)}
     {...props}
   />
 ))

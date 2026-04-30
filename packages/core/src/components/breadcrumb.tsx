@@ -1,14 +1,15 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { ChevronRight, MoreHorizontal } from "lucide-react"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "./popover"
 
 import { cn } from "@/lib/utils"
 import { Button } from "./button"
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "./dropdown-menu"
 
 const Breadcrumb = React.forwardRef<
   HTMLElement,
@@ -25,7 +26,7 @@ const BreadcrumbList = React.forwardRef<
   <ol
     ref={ref}
     className={cn(
-      "flex flex-wrap items-center gap-[var(--spacing-xxs)] break-words text-[var(--font-size-sm)] text-[var(--interactive-fg-alt)] sm:gap-[var(--spacing-sm)]",
+      "flex flex-wrap items-center gap-[var(--spacing-xxs)] break-words text-[length:var(--font-size-sm)] text-[color:var(--interactive-fg-alt)] sm:gap-[var(--spacing-sm)]",
       className
     )}
     {...props}
@@ -56,7 +57,7 @@ const BreadcrumbLink = React.forwardRef<
   return (
     <Comp
       ref={ref}
-      className={cn("transition-colors hover:text-[var(--interactive-fg)]", className)}
+      className={cn("transition-colors hover:text-[color:var(--interactive-fg)]", className)}
       {...props}
     />
   )
@@ -96,55 +97,59 @@ BreadcrumbSeparator.displayName = "BreadcrumbSeparator"
 
 interface BreadcrumbEllipsisProps {
   className?: string
-  /** Pass collapsed breadcrumb items to show in the popover */
-  items?: { label: string; href?: string }[]
+  /** Pass collapsed breadcrumb items to show in the dropdown */
+  items?: { label: string; href?: string; onClick?: () => void }[]
 }
 
 const BreadcrumbEllipsis = ({
   className,
   items = [],
-}: BreadcrumbEllipsisProps) => (
-  <Popover>
-    <PopoverTrigger asChild>
-      <Button
-        variant="ghost"
-        size="icon"
-        className={cn("h-7 w-7", className)}
-        aria-label="Show more breadcrumbs"
+}: BreadcrumbEllipsisProps) => {
+  if (items.length === 0) {
+    return (
+      <span
+        role="presentation"
+        aria-hidden="true"
+        className={cn("flex h-7 w-7 items-center justify-center", className)}
       >
         <MoreHorizontal className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
-      </Button>
-    </PopoverTrigger>
-    <PopoverContent className="w-auto min-w-[140px] p-[var(--spacing-xxs)]" align="start" sideOffset={6}>
-      <div className="flex flex-col gap-[var(--spacing-xxs)]">
-        {items.length > 0 ? (
-          items.map((item, i) =>
-            item.href ? (
-              <a
-                key={i}
-                href={item.href}
-                className="flex items-center rounded-[var(--curves-sm)] px-[var(--spacing-sm)] py-[var(--spacing-xxs)] text-[var(--font-size-sm)] text-[var(--interactive-fg-alt)] hover:bg-[var(--interactive-bg-hover)] hover:text-[var(--interactive-fg)] transition-colors"
-              >
-                {item.label}
-              </a>
-            ) : (
-              <span
-                key={i}
-                className="flex items-center rounded-[var(--curves-sm)] px-[var(--spacing-sm)] py-[var(--spacing-xxs)] text-[var(--font-size-sm)] text-[var(--interactive-fg-disabled)]"
-              >
-                {item.label}
-              </span>
-            )
-          )
-        ) : (
-          <span className="flex items-center px-[var(--spacing-sm)] py-[var(--spacing-xxs)] text-[var(--font-size-sm)] text-[var(--interactive-fg-disabled)]">
-            No pages
-          </span>
-        )}
-      </div>
-    </PopoverContent>
-  </Popover>
-)
+        <span className="sr-only">More breadcrumbs</span>
+      </span>
+    )
+  }
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          size="icon"
+          className={cn("h-7 w-7", className)}
+          aria-label="Show more breadcrumbs"
+        >
+          <MoreHorizontal className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start">
+        {items.map((item, i) => (
+          <DropdownMenuItem
+            key={i}
+            disabled={!item.href && !item.onClick}
+            onClick={() => {
+              if (item.onClick) {
+                item.onClick()
+              } else if (item.href) {
+                window.location.href = item.href
+              }
+            }}
+          >
+            {item.label}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
 BreadcrumbEllipsis.displayName = "BreadcrumbEllipsis"
 
 export {

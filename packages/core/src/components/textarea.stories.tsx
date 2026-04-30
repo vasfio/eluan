@@ -5,6 +5,25 @@ const meta: Meta<typeof Textarea> = {
   title: "Components/Textarea",
   component: Textarea,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A multi-line text input field for collecting longer-form text content from users.
+
+**Import**
+\`\`\`tsx
+import { Textarea } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Textarea placeholder="Type your message here." />
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
@@ -24,6 +43,13 @@ export const Disabled: Story = {
 }
 
 export const WithLabel: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Textarea paired with a label element for accessibility and form context.",
+      },
+    },
+  },
   render: () => (
     <div className="grid w-full gap-1.5">
       <label htmlFor="message" className="text-sm font-medium">Your message</label>
@@ -33,6 +59,13 @@ export const WithLabel: Story = {
 }
 
 export const WithHelperText: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Textarea with both a label and helper text providing additional guidance to the user.",
+      },
+    },
+  },
   render: () => (
     <div className="grid w-full gap-1.5">
       <label htmlFor="message-2" className="text-sm font-medium">Your message</label>

@@ -6,6 +6,50 @@ const meta: Meta<typeof HeaderNavigation> = {
   title: "Web/HeaderNavigation",
   component: HeaderNavigation,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A responsive header navigation with logo, nav items, action buttons, and a mobile sheet menu that opens at a configurable breakpoint.
+
+**Import**
+\`\`\`tsx
+import { HeaderNavigation } from "@vasf/ragnar-web"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<HeaderNavigation
+  logo={<span>Logo</span>}
+  items={[{ label: "Home", href: "/" }]}
+  actions={<Button>Sign Up</Button>}
+  sticky
+/>
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    logo: {
+      description: "React node for the logo area.",
+    },
+    items: {
+      description: "Array of NavItem objects with label, href, onClick, active, and children.",
+    },
+    actions: {
+      description: "React node for action buttons (e.g. Sign In, Get Started).",
+    },
+    sticky: {
+      description: "Whether the header sticks to the top on scroll.",
+    },
+    transparent: {
+      description: "Whether the header has a transparent background.",
+    },
+    mobileBreakpoint: {
+      description: "Breakpoint at which to show the mobile menu: sm, md, or lg.",
+    },
+  },
 }
 
 export default meta
@@ -20,6 +64,7 @@ const defaultItems = [
 ]
 
 export const Default: Story = {
+  parameters: { docs: { description: { story: "Standard header with logo, 5 nav items, and sign-in/get-started actions." } } },
   render: () => (
     <HeaderNavigation
       logo={<span className="text-xl font-bold">Ragnar</span>}
@@ -35,6 +80,7 @@ export const Default: Story = {
 }
 
 export const Sticky: Story = {
+  parameters: { docs: { description: { story: "Sticky header that remains fixed at the top when scrolling." } } },
   render: () => (
     <div className="h-[200vh]">
       <HeaderNavigation
@@ -51,6 +97,7 @@ export const Sticky: Story = {
 }
 
 export const WithActiveItem: Story = {
+  parameters: { docs: { description: { story: "Demonstrates the active state highlight on the Home nav item." } } },
   render: () => (
     <HeaderNavigation
       logo={<span className="text-xl font-bold">Ragnar</span>}
@@ -66,6 +113,7 @@ export const WithActiveItem: Story = {
 }
 
 export const Transparent: Story = {
+  parameters: { docs: { description: { story: "Transparent header over a gradient background." } } },
   render: () => (
     <div className="bg-gradient-to-r from-primary to-primary/80 min-h-[300px]">
       <HeaderNavigation

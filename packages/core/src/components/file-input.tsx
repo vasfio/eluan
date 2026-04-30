@@ -42,6 +42,8 @@ function getFileType(file: File): FileType {
   return "other"
 }
 
+const EMPTY_FILES: File[] = []
+
 function formatFileSize(bytes: number): string {
   if (bytes === 0) return "0 B"
   const k = 1024
@@ -51,7 +53,7 @@ function formatFileSize(bytes: number): string {
 }
 
 const FileIcon = ({ type }: { type: FileType }) => {
-  const iconClass = "h-[var(--size-md)] w-[var(--size-md)]"
+  const iconClass = "h-6 w-6"
   switch (type) {
     case "image":
       return <Image className={cn(iconClass, "text-green-500")} />
@@ -84,7 +86,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
   (
     {
       className,
-      value = [],
+      value = EMPTY_FILES,
       onChange,
       maxFiles = 1,
       maxSize,
@@ -196,24 +198,24 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
               disabled={disabled}
               {...props}
             />
-            <Upload className={cn("h-[var(--size-lg)] w-[var(--size-lg)] mb-3", isDragging ? "text-primary" : "text-muted-foreground")} />
-            <p className="text-[var(--font-size-sm)] text-center">
+            <Upload className={cn("h-6 w-6 mb-3", isDragging ? "text-[color:var(--action-primary-bg)]" : "text-[color:var(--interactive-fg-alt)]")} />
+            <p className="text-[length:var(--font-size-sm)] text-center">
               {isDragging ? dragActiveText : dragInactiveText}
             </p>
             {maxSize && (
-              <p className="text-[var(--font-size-xs)] text-muted-foreground mt-1">
+              <p className="text-[length:var(--font-size-xs)] text-muted-foreground mt-1">
                 Max file size: {formatFileSize(maxSize)}
               </p>
             )}
             {maxFiles > 1 && (
-              <p className="text-[var(--font-size-xs)] text-muted-foreground">
+              <p className="text-[length:var(--font-size-xs)] text-muted-foreground">
                 Max {maxFiles} files
               </p>
             )}
           </div>
 
           {error && (
-            <p className="text-[var(--font-size-sm)] text-destructive">{error}</p>
+            <p className="text-[length:var(--font-size-sm)] text-destructive">{error}</p>
           )}
 
           {showPreview && files.length > 0 && (
@@ -233,8 +235,8 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                     <FileIcon type={fileInfo.type} />
                   )}
                   <div className="flex-1 min-w-0">
-                    <p className="text-[var(--font-size-sm)] font-medium truncate">{fileInfo.file.name}</p>
-                    <p className="text-[var(--font-size-xs)] text-muted-foreground">
+                    <p className="text-[length:var(--font-size-sm)] font-medium truncate">{fileInfo.file.name}</p>
+                    <p className="text-[length:var(--font-size-xs)] text-muted-foreground">
                       {formatFileSize(fileInfo.file.size)}
                     </p>
                   </div>
@@ -273,7 +275,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
           <button
             type="button"
             className={cn(
-              "flex h-[var(--size-lg)] items-center gap-2 rounded-md border border-input bg-background px-4 py-2 text-[var(--font-size-sm)] ring-offset-background hover:bg-accent",
+              "flex h-[var(--size-lg)] items-center gap-2 rounded-md border border-input bg-background px-4 py-2 text-[length:var(--font-size-sm)] ring-offset-background hover:bg-accent",
               disabled && "cursor-not-allowed opacity-50"
             )}
             onClick={() => !disabled && inputRef.current?.click()}
@@ -283,14 +285,14 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
             Choose {maxFiles > 1 ? "files" : "file"}
           </button>
           {files.length > 0 && !showPreview && (
-            <span className="flex items-center text-[var(--font-size-sm)] text-muted-foreground">
+            <span className="flex items-center text-[length:var(--font-size-sm)] text-muted-foreground">
               {files.length} file{files.length > 1 ? "s" : ""} selected
             </span>
           )}
         </div>
 
         {error && (
-          <p className="text-[var(--font-size-sm)] text-destructive">{error}</p>
+          <p className="text-[length:var(--font-size-sm)] text-destructive">{error}</p>
         )}
 
         {showPreview && files.length > 0 && (
@@ -298,7 +300,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
             {files.map((fileInfo, index) => (
               <div
                 key={index}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full border bg-muted/50 text-[var(--font-size-sm)]"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full border bg-muted/50 text-[length:var(--font-size-sm)]"
               >
                 {fileInfo.preview ? (
                   <img

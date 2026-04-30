@@ -95,7 +95,7 @@ const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
       <div
         ref={ref}
         className={cn(
-          "relative rounded-lg border bg-muted/50 text-[var(--font-size-sm)]",
+          "relative rounded-lg border bg-muted/50 text-[length:var(--font-size-sm)]",
           className
         )}
         {...props}
@@ -104,7 +104,7 @@ const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
           <div className="flex items-center justify-between border-b px-4 py-2 gap-2">
             <div className="flex items-center gap-2 overflow-x-auto">
               {filename && (
-                <span className="text-[var(--font-size-xs)] text-muted-foreground shrink-0">{filename}</span>
+                <span className="text-[length:var(--font-size-xs)] text-muted-foreground shrink-0">{filename}</span>
               )}
               {languages && languages.length > 1 && (
                 <div className="flex items-center gap-0.5 rounded-md bg-muted p-0.5">
@@ -114,7 +114,7 @@ const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
                       type="button"
                       onClick={() => setActiveLangIndex(idx)}
                       className={cn(
-                        "rounded px-2 py-0.5 text-[var(--font-size-xs)] font-medium transition-colors",
+                        "rounded px-2 py-0.5 text-[length:var(--font-size-xs)] font-medium transition-colors",
                         idx === activeLangIndex
                           ? "bg-background text-foreground shadow-sm"
                           : "text-muted-foreground hover:text-foreground"
@@ -130,7 +130,7 @@ const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
               <button
                 type="button"
                 onClick={handleCopy}
-                className="ml-auto flex items-center gap-1 rounded px-2 py-1 text-[var(--font-size-xs)] text-muted-foreground hover:bg-muted hover:text-foreground shrink-0"
+                className="ml-auto flex items-center gap-1 rounded px-2 py-1 text-[length:var(--font-size-xs)] text-muted-foreground hover:bg-muted hover:text-foreground shrink-0"
               >
                 {copied ? (
                   <>
@@ -148,7 +148,7 @@ const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
           </div>
         )}
         <div className="overflow-x-auto p-4">
-          <pre className={cn("font-mono text-[var(--font-size-sm)]", `language-${activeLanguage}`)}>
+          <pre className={cn("font-mono text-[length:var(--font-size-sm)]", `language-${activeLanguage}`)}>
             <code className={`language-${activeLanguage}`}>
               {lines.map((line, index) => (
                 <div

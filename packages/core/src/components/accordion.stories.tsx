@@ -10,6 +10,30 @@ const meta: Meta<typeof Accordion> = {
   title: "Components/Accordion",
   component: Accordion,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A vertically stacked set of collapsible sections built on Radix UI, allowing users to expand and collapse content panels.
+
+**Import**
+\`\`\`tsx
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Accordion type="single" collapsible>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>Section Title</AccordionTrigger>
+    <AccordionContent>Section content here.</AccordionContent>
+  </AccordionItem>
+</Accordion>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
@@ -17,6 +41,13 @@ type Story = StoryObj
 
 export const Default: Story = {
   args: {},
+  parameters: {
+    docs: {
+      description: {
+        story: "Single-mode accordion where only one item can be open at a time, with collapsible behavior enabled.",
+      },
+    },
+  },
   render: () => (
     <Accordion type="single" collapsible className="w-full">
       <AccordionItem value="item-1">
@@ -43,6 +74,13 @@ export const Default: Story = {
 
 export const Multiple: Story = {
   args: {},
+  parameters: {
+    docs: {
+      description: {
+        story: "Multiple-mode accordion allowing several items to be expanded simultaneously.",
+      },
+    },
+  },
   render: () => (
     <Accordion type="multiple" className="w-full">
       <AccordionItem value="item-1">

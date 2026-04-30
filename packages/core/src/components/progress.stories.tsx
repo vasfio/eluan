@@ -8,6 +8,26 @@ const meta: Meta<typeof Progress> = {
   argTypes: {
     value: {
       control: { type: "range", min: 0, max: 100 },
+      description: "The current progress value from 0 to 100. Omit for an indeterminate state.",
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A horizontal bar that indicates the completion progress of a task, built on Radix UI Progress primitive.
+
+**Import**
+\`\`\`tsx
+import { Progress } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Progress value={60} />
+\`\`\`
+        `,
+      },
     },
   },
 }
@@ -34,12 +54,26 @@ export const Full: Story = {
 }
 
 export const Indeterminate: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A progress bar without a value, representing an indeterminate loading state.",
+      },
+    },
+  },
   render: () => (
     <Progress className="w-[60%]" />
   ),
 }
 
 export const AllValues: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Displays progress bars at 0%, 25%, 50%, 75%, and 100% to show the visual range.",
+      },
+    },
+  },
   render: () => (
     <div className="flex flex-col gap-4">
       <div className="space-y-1">

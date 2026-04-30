@@ -43,9 +43,9 @@ npm install --legacy-peer-deps
 
 ## Theme setup (layout.tsx)
 ```tsx
-<html lang="en" data-theme="classic-retro" data-mode="dark">
+<html lang="en" data-theme="industrial-retro" data-mode="dark">
 ```
-Valid themes: `classic-retro`, `classic-black`, `lime`, `bold`, `beige`, `funky`, `sakura`, `violet`
+Valid themes: `industrial-retro`, `minimal`, `lime`, `bold`, `beige`, `funky`, `sakura`, `violet`
 Valid modes: `light`, `dark`, `dim`
 
 ## Auth pattern (NextAuth v5)

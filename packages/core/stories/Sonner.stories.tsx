@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { toast } from "sonner";
-import { Toaster } from "@/components/sonner";
+import { Sonner } from "@/components/sonner";
 import { Button } from "@/components/button";
 
 const meta: Meta = {
@@ -10,7 +10,7 @@ const meta: Meta = {
     (Story) => (
       <>
         <Story />
-        <Toaster />
+        <Sonner />
       </>
     ),
   ],

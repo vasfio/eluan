@@ -8,9 +8,9 @@ const newsletterVariants = cva("w-full", {
     variant: {
       default: "bg-[var(--container-bg)]",
       muted: "bg-[var(--container-bg-alt)]",
-      primary: "bg-[var(--action-primary-bg)] text-[var(--action-primary-fg)]",
-      gradient: "bg-[var(--action-primary-bg)] text-[var(--action-primary-fg)]",
-      dark: "bg-[var(--container-bg-inverse)] text-[var(--container-fg-inverse)]",
+      primary: "bg-[var(--action-primary-bg)] text-[color:var(--action-primary-fg)]",
+      gradient: "bg-[var(--action-primary-bg)] text-[color:var(--action-primary-fg)]",
+      dark: "bg-[var(--container-bg-inverse)] text-[color:var(--container-fg-inverse)]",
       card: "bg-[var(--container-bg)]",
     },
     size: {
@@ -61,7 +61,7 @@ const NewsletterIcon = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mb-[var(--spacing-md)] inline-flex h-[var(--size-xl)] w-[var(--size-xl)] items-center justify-center rounded-full bg-[var(--action-primary-bg)] text-[var(--action-primary-bg)]",
+      "mb-[var(--spacing-md)] inline-flex h-[var(--size-xl)] w-[var(--size-xl)] items-center justify-center rounded-full bg-[var(--action-primary-bg)] text-[color:var(--action-primary-bg)]",
       className
     )}
     {...props}
@@ -92,7 +92,7 @@ const NewsletterTitle = React.forwardRef<
   <h2
     ref={ref}
     className={cn(
-      "font-heading text-[var(--font-size-2xl)] font-bold tracking-tight sm:text-[var(--font-size-3xl)]",
+      "font-heading text-[length:var(--font-size-2xl)] font-bold tracking-tight sm:text-[length:var(--font-size-3xl)]",
       className
     )}
     {...props}
@@ -106,7 +106,7 @@ const NewsletterDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-[var(--spacing-md)] text-[var(--font-size-lg)] opacity-90", className)}
+    className={cn("mt-[var(--spacing-md)] text-[length:var(--font-size-lg)] opacity-90", className)}
     {...props}
   />
 ))
@@ -138,7 +138,7 @@ const NewsletterInput = React.forwardRef<HTMLInputElement, NewsletterInputProps>
       ref={ref}
       type="email"
       className={cn(
-        "flex-1 h-[var(--size-xl)] rounded-[var(--curves-lg)] border border-[color:var(--interactive-border-alt)] bg-[var(--interactive-bg)] px-[var(--spacing-md)] text-[var(--font-size-sm)] text-[var(--interactive-fg)] placeholder:text-[var(--interactive-fg-alt)] focus:outline-none focus:ring-1 focus:ring-[var(--interactive-fg)] focus:border-[var(--interactive-fg)]",
+        "flex-1 h-[var(--size-xl)] rounded-[var(--curves-lg)] border border-[color:var(--interactive-border-alt)] bg-[var(--interactive-bg)] px-[var(--spacing-md)] text-[length:var(--font-size-sm)] text-[color:var(--interactive-fg)] placeholder:text-[color:var(--interactive-fg-alt)] focus:outline-none focus:ring-1 focus:ring-[var(--interactive-fg)] focus:border-[var(--interactive-fg)]",
         className
       )}
       {...props}
@@ -153,7 +153,7 @@ const NewsletterDisclaimer = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-[var(--spacing-md)] text-[var(--font-size-xs)] opacity-70", className)}
+    className={cn("mt-[var(--spacing-md)] text-[length:var(--font-size-xs)] opacity-70", className)}
     {...props}
   />
 ))
@@ -166,7 +166,7 @@ const NewsletterSuccess = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "mt-[var(--spacing-lg)] flex items-center justify-center gap-[var(--spacing-sm)] text-[var(--positive-fg)]",
+      "mt-[var(--spacing-lg)] flex items-center justify-center gap-[var(--spacing-sm)] text-[color:var(--positive-fg)]",
       className
     )}
     {...props}

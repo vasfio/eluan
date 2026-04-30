@@ -9,9 +9,36 @@ const meta: Meta<typeof Input> = {
     type: {
       control: "select",
       options: ["text", "email", "password", "number", "search", "tel", "url"],
+      description: "The HTML input type. Automatically shows a leading icon for `email`, `password`, `search`, `tel`, and `url` types.",
     },
     disabled: {
       control: "boolean",
+      description: "Disables the input, preventing user interaction.",
+    },
+    icon: {
+      description: "A custom leading icon element. Overrides the auto-icon for the input type.",
+    },
+    trailing: {
+      description: "A trailing element (e.g. a button or icon) displayed at the end of the input.",
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A text input field with automatic type-based leading icons, optional custom icons, trailing elements, and a built-in password visibility toggle.
+
+**Import**
+\`\`\`tsx
+import { Input } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Input type="email" placeholder="Enter your email..." />
+\`\`\`
+        `,
+      },
     },
   },
 }
@@ -25,20 +52,6 @@ export const Default: Story = {
   },
 }
 
-export const Email: Story = {
-  args: {
-    type: "email",
-    placeholder: "Enter your email...",
-  },
-}
-
-export const Password: Story = {
-  args: {
-    type: "password",
-    placeholder: "Enter password...",
-  },
-}
-
 export const Disabled: Story = {
   args: {
     placeholder: "Disabled input",
@@ -47,6 +60,13 @@ export const Disabled: Story = {
 }
 
 export const WithLabel: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "An input paired with a label element for accessibility.",
+      },
+    },
+  },
   render: () => (
     <div className="grid w-full max-w-sm items-center gap-1.5">
       <label htmlFor="email" className="text-sm font-medium">Email</label>
@@ -56,6 +76,13 @@ export const WithLabel: Story = {
 }
 
 export const WithHelperText: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "An input with a label and helper text below for additional guidance.",
+      },
+    },
+  },
   render: () => (
     <div className="grid w-full max-w-sm items-center gap-1.5">
       <label htmlFor="email-2" className="text-sm font-medium">Email</label>
@@ -65,25 +92,3 @@ export const WithHelperText: Story = {
   ),
 }
 
-export const File: Story = {
-  render: () => (
-    <div className="grid w-full max-w-sm items-center gap-1.5">
-      <label htmlFor="picture" className="text-sm font-medium">Picture</label>
-      <Input id="picture" type="file" />
-    </div>
-  ),
-}
-
-export const AllTypes: Story = {
-  render: () => (
-    <div className="flex flex-col gap-4 max-w-sm">
-      <Input type="text" placeholder="Text input" />
-      <Input type="email" placeholder="Email input" />
-      <Input type="password" placeholder="Password input" />
-      <Input type="number" placeholder="Number input" />
-      <Input type="search" placeholder="Search input" />
-      <Input type="tel" placeholder="Phone input" />
-      <Input type="url" placeholder="URL input" />
-    </div>
-  ),
-}

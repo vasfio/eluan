@@ -24,12 +24,8 @@ const preview: Preview = {
       toolbar: {
         icon: "paintbrush",
         items: [
-          { value: "classic-retro", title: "🔥 Classic Retro" },
-          { value: "classic-black", title: "⬛ Classic Black" },
-          { value: "lime", title: "🟢 Lime" },
-          { value: "bold", title: "🔴 Bold" },
-          { value: "beige", title: "🟤 Beige" },
-          { value: "funky", title: "🟣 Funky" },
+          { value: "industrial-retro", title: "🔥 Industrial Retro" },
+          { value: "minimal", title: "⬛ Minimal" },
         ],
         dynamicTitle: true,
       },
@@ -49,14 +45,13 @@ const preview: Preview = {
     },
     curves: {
       name: "Curves",
-      description: "Border radius scale (Sharp / Slight / Sweeping / Rounded)",
+      description: "Border radius scale (Sharp / Slight / Sweeping)",
       toolbar: {
         icon: "circle",
         items: [
           { value: "sharp", title: "Sharp" },
           { value: "slight", title: "Slight" },
           { value: "sweeping", title: "Sweeping" },
-          { value: "rounded", title: "Rounded" },
         ],
         dynamicTitle: true,
       },
@@ -64,7 +59,7 @@ const preview: Preview = {
   },
   initialGlobals: {
     mode: "light",
-    theme: "classic-retro",
+    theme: "industrial-retro",
     spacing: "standard",
     curves: "slight",
   },
@@ -85,7 +80,7 @@ const preview: Preview = {
   decorators: [
     (Story, context) => {
       const mode = context.globals.mode || "light"
-      const theme = context.globals.theme || "classic-retro"
+      const theme = context.globals.theme || "industrial-retro"
       const spacing = context.globals.spacing || "standard"
       const curves = context.globals.curves || "slight"
 

@@ -7,7 +7,7 @@
  *   Layer 3: Themes      → Component-level tokens for different visual identities
  *
  * Usage:
- *   <html data-mode="light" data-theme="classic-retro">
+ *   <html data-mode="light" data-theme="industrial-retro">
  *   Primitives are always available via :root
  *   Mode sets semantic colors (backgrounds, foregrounds, palette tints)
  *   Theme sets component tokens (action, container, interactive, etc.)

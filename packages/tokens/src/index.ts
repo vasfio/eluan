@@ -14,12 +14,8 @@ export type Mode = (typeof modes)[number]
 // ============================================
 
 export const themes = [
-  "classic-retro",
-  "classic-black",
-  "lime",
-  "bold",
-  "beige",
-  "funky",
+  "industrial-retro",
+  "minimal",
 ] as const
 export type Theme = (typeof themes)[number]
 
@@ -34,7 +30,7 @@ export type SpacingScale = (typeof spacingScales)[number]
 // Available Curve Scales
 // ============================================
 
-export const curveScales = ["sharp", "slight", "sweeping", "rounded"] as const
+export const curveScales = ["sharp", "slight", "sweeping"] as const
 export type CurveScale = (typeof curveScales)[number]
 
 // ============================================
@@ -504,29 +500,13 @@ export const themeFonts: Record<
   Theme,
   { heading: string; body: string }
 > = {
-  "classic-retro": {
+  "industrial-retro": {
     heading: "Geist",
     body: "Geist",
   },
-  "classic-black": {
+  "minimal": {
     heading: "Inter",
     body: "Inter",
-  },
-  "lime": {
-    heading: "Manrope",
-    body: "Manrope",
-  },
-  "bold": {
-    heading: "Bebas Neue",
-    body: "Work Sans",
-  },
-  "beige": {
-    heading: "Instrument Serif",
-    body: "Plus Jakarta Sans",
-  },
-  "funky": {
-    heading: "Dela Gothic One",
-    body: "Plus Jakarta Sans",
   },
 }
 
@@ -557,32 +537,13 @@ export async function loadThemeFonts(theme: Theme): Promise<void> {
   if (_loadedFonts.has(theme)) return
 
   switch (theme) {
-    case "classic-retro":
+    case "industrial-retro":
       await import("@fontsource/geist/400.css")
       await import("@fontsource/geist/500.css")
       break
-    case "classic-black":
+    case "minimal":
       await import("@fontsource/inter/400.css")
       await import("@fontsource/inter/500.css")
-      break
-    case "lime":
-      await import("@fontsource/manrope/400.css")
-      await import("@fontsource/manrope/500.css")
-      break
-    case "bold":
-      await import("@fontsource/bebas-neue/400.css")
-      await import("@fontsource/work-sans/400.css")
-      await import("@fontsource/work-sans/500.css")
-      break
-    case "beige":
-      await import("@fontsource/instrument-serif/400.css")
-      await import("@fontsource/plus-jakarta-sans/400.css")
-      await import("@fontsource/plus-jakarta-sans/500.css")
-      break
-    case "funky":
-      await import("@fontsource/dela-gothic-one/400.css")
-      await import("@fontsource/plus-jakarta-sans/400.css")
-      await import("@fontsource/plus-jakarta-sans/500.css")
       break
   }
 

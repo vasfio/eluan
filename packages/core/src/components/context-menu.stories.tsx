@@ -18,12 +18,60 @@ const meta: Meta<typeof ContextMenu> = {
   title: "Components/Context Menu",
   component: ContextMenu,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A right-click menu that displays a list of actions or options relevant to the clicked area.
+
+**Import**
+\`\`\`tsx
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+  ContextMenuSeparator,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
+  ContextMenuCheckboxItem,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
+  ContextMenuLabel,
+  ContextMenuShortcut,
+  ContextMenuGroup,
+} from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<ContextMenu>
+  <ContextMenuTrigger>Right click here</ContextMenuTrigger>
+  <ContextMenuContent>
+    <ContextMenuItem>Cut</ContextMenuItem>
+    <ContextMenuItem>Copy</ContextMenuItem>
+    <ContextMenuItem>Paste</ContextMenuItem>
+  </ContextMenuContent>
+</ContextMenu>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A full-featured context menu with sub-menus, checkbox items, radio items, labels, and separators.",
+      },
+    },
+  },
   render: () => (
     <ContextMenu>
       <ContextMenuTrigger className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">
@@ -58,6 +106,13 @@ export const Default: Story = {
 }
 
 export const Simple: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A minimal context menu with basic menu items for common clipboard actions.",
+      },
+    },
+  },
   render: () => (
     <ContextMenu>
       <ContextMenuTrigger className="flex h-[100px] w-[200px] items-center justify-center rounded-md border text-sm">

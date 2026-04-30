@@ -5,12 +5,44 @@ const meta: Meta<typeof NumberInput> = {
   title: "Components/Number Input",
   component: NumberInput,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A numeric input with optional increment/decrement buttons, min/max clamping, configurable step size, and keyboard arrow key support.
+
+**Import**
+\`\`\`tsx
+import { NumberInput } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<NumberInput
+  min={0}
+  max={100}
+  step={5}
+  value={50}
+  onChange={(value) => console.log(value)}
+/>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Basic number input with increment/decrement controls.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[200px]">
       <NumberInput placeholder="Enter number" onChange={(value) => console.log("Value:", value)} />
@@ -19,6 +51,13 @@ export const Default: Story = {
 }
 
 export const WithMinMax: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Number input clamped to a 0-100 range.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[200px] space-y-2">
       <p className="text-sm text-muted-foreground">Range: 0 to 100</p>
@@ -28,6 +67,13 @@ export const WithMinMax: Story = {
 }
 
 export const WithStep: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Number input that increments and decrements by 5.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[200px] space-y-2">
       <p className="text-sm text-muted-foreground">Step: 5</p>
@@ -37,6 +83,13 @@ export const WithStep: Story = {
 }
 
 export const WithoutControls: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Plain number input without the increment/decrement buttons.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[200px]">
       <NumberInput
@@ -49,6 +102,13 @@ export const WithoutControls: Story = {
 }
 
 export const PositiveOnly: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Number input restricted to positive values only with allowNegative set to false.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[200px] space-y-2">
       <p className="text-sm text-muted-foreground">Positive numbers only</p>
@@ -58,6 +118,13 @@ export const PositiveOnly: Story = {
 }
 
 export const Quantity: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Compact quantity selector clamped between 1 and 99.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[150px] space-y-2">
       <p className="text-sm text-muted-foreground">Quantity selector</p>
@@ -67,6 +134,13 @@ export const Quantity: Story = {
 }
 
 export const Disabled: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Number input in a disabled state with controls grayed out.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[200px]">
       <NumberInput value={42} disabled />

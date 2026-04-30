@@ -5,12 +5,42 @@ const meta: Meta<typeof PasswordInput> = {
   title: "Components/Password Input",
   component: PasswordInput,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A password input with a visibility toggle and an optional strength indicator that checks configurable requirements (length, uppercase, lowercase, numbers, special characters).
+
+**Import**
+\`\`\`tsx
+import { PasswordInput } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<PasswordInput
+  placeholder="Enter password"
+  showStrengthIndicator
+  strengthRequirements={{ minLength: 8, requireUppercase: true }}
+/>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Basic password input with a visibility toggle button.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[300px]">
       <PasswordInput placeholder="Enter password" />
@@ -19,6 +49,13 @@ export const Default: Story = {
 }
 
 export const WithStrengthIndicator: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Password input with a strength progress bar and requirement checklist using default settings.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[300px]">
       <PasswordInput
@@ -31,6 +68,13 @@ export const WithStrengthIndicator: Story = {
 }
 
 export const CustomRequirements: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Strength indicator with custom requirements including a 12-character minimum length.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[300px]">
       <PasswordInput
@@ -49,6 +93,13 @@ export const CustomRequirements: Story = {
 }
 
 export const MinimalRequirements: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Strength indicator with only a 6-character minimum and no other requirements.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[300px]">
       <PasswordInput
@@ -67,6 +118,13 @@ export const MinimalRequirements: Story = {
 }
 
 export const Disabled: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Password input in a disabled state.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[300px]">
       <PasswordInput placeholder="Disabled" disabled />

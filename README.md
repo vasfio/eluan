@@ -20,13 +20,13 @@ pnpm add @vasf/ragnar-core @vasf/ragnar-tokens
 
 ```tsx
 // In your app's entry CSS (or import in JS)
-import "@vasf/ragnar-tokens/fonts/classic-retro"   // load fonts for your theme
+import "@vasf/ragnar-tokens/fonts/industrial-retro"   // load fonts for your theme
 import "@vasf/ragnar-core/styles.css"               // core styles + Tailwind utilities
 ```
 
 ```html
 <!-- Set tokens on the root element -->
-<html data-mode="light" data-theme="classic-retro" data-spacing="standard" data-curves="slight">
+<html data-mode="light" data-theme="industrial-retro" data-spacing="standard" data-curves="slight">
 ```
 
 ```tsx
@@ -123,7 +123,7 @@ Activated via HTML data attributes:
 ```html
 <html
   data-mode="light"           <!-- light | dim | dark -->
-  data-theme="classic-retro"  <!-- classic-retro | classic-black | lime | bold | beige | funky -->
+  data-theme="industrial-retro"  <!-- industrial-retro | minimal | lime | bold | beige | funky -->
   data-spacing="standard"     <!-- compact | standard | wide -->
   data-curves="slight"        <!-- sharp | slight | sweeping | rounded -->
 >
@@ -187,8 +187,8 @@ Fonts are split per theme so you only ship the fonts your app actually uses. Onl
 
 ```css
 /* Static import: pick the one matching your theme */
-@import "@vasf/ragnar-tokens/fonts/classic-retro";   /* Geist (heading + body) */
-@import "@vasf/ragnar-tokens/fonts/classic-black";   /* Inter (heading + body) */
+@import "@vasf/ragnar-tokens/fonts/industrial-retro";   /* Geist (heading + body) */
+@import "@vasf/ragnar-tokens/fonts/minimal";   /* Inter (heading + body) */
 @import "@vasf/ragnar-tokens/fonts/lime";            /* Manrope (heading + body) */
 @import "@vasf/ragnar-tokens/fonts/bold";            /* Bebas Neue (heading) + Work Sans (body) */
 @import "@vasf/ragnar-tokens/fonts/beige";           /* Instrument Serif (heading) + Plus Jakarta Sans (body) */
@@ -203,8 +203,8 @@ Fonts are split per theme so you only ship the fonts your app actually uses. Onl
 
 | Theme | Heading Font | Body Font | Mono Font |
 |-------|-------------|-----------|-----------|
-| `classic-retro` | Geist | Geist | Geist Mono |
-| `classic-black` | Inter | Inter | Geist Mono |
+| `industrial-retro` | Geist | Geist | Geist Mono |
+| `minimal` | Inter | Inter | Geist Mono |
 | `lime` | Manrope | Manrope | Geist Mono |
 | `bold` | Bebas Neue | Work Sans | Geist Mono |
 | `beige` | Instrument Serif | Plus Jakarta Sans | Geist Mono |
@@ -235,7 +235,7 @@ The default export provides all tokens as typed JavaScript constants, useful for
 import {
   // -- Enums & Types --
   modes,                // ["light", "dim", "dark"] as const
-  themes,               // ["classic-retro", "classic-black", "lime", "bold", "beige", "funky"] as const
+  themes,               // ["industrial-retro", "minimal", "lime", "bold", "beige", "funky"] as const
   spacingScales,        // ["compact", "standard", "wide"] as const
   curveScales,          // ["sharp", "slight", "sweeping", "rounded"] as const
   colorPalettes,        // ["blazeorange", "bluechill", ...20 total] as const
@@ -324,10 +324,10 @@ pnpm add @vasf/ragnar-core @vasf/ragnar-tokens
 import "@vasf/ragnar-core/styles.css"
 
 // 2. Import fonts for your theme
-import "@vasf/ragnar-tokens/fonts/classic-retro"
+import "@vasf/ragnar-tokens/fonts/industrial-retro"
 
 // 3. Set data attributes on your root element
-// <html data-mode="light" data-theme="classic-retro" data-spacing="standard" data-curves="slight">
+// <html data-mode="light" data-theme="industrial-retro" data-spacing="standard" data-curves="slight">
 ```
 
 ### Peer Dependencies
@@ -837,8 +837,8 @@ Control the visual identity. Set via `data-theme` on the root element.
 
 | Theme | Character | Heading Font | Body Font |
 |-------|-----------|-------------|-----------|
-| `classic-retro` | Clean, modern | Geist | Geist |
-| `classic-black` | Minimal, typographic | Inter | Inter |
+| `industrial-retro` | Clean, modern | Geist | Geist |
+| `minimal` | Minimal, typographic | Inter | Inter |
 | `lime` | Fresh, energetic | Manrope | Manrope |
 | `bold` | Strong, dramatic | Bebas Neue | Work Sans |
 | `beige` | Warm, editorial | Instrument Serif | Plus Jakarta Sans |

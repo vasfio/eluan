@@ -12,13 +12,11 @@ function pad(n: number) {
 }
 
 const timeInputVariants = cva(
-  "inline-flex items-center gap-[var(--spacing-xxs)] rounded-[var(--curves-md)] border bg-[var(--container-bg)] text-[var(--font-size-sm)] ring-offset-background transition-colors focus-within:ring-1 focus-within:ring-[var(--interactive-border)] focus-within:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)]",
+  "inline-flex items-center gap-[var(--spacing-xxs)] rounded-[var(--curves-md)] border bg-[var(--container-bg)] text-[length:var(--font-size-sm)] ring-offset-background transition-colors focus-within:ring-1 focus-within:ring-[var(--interactive-border)] focus-within:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[color:var(--interactive-fg-disabled)]",
   {
     variants: {
       size: {
-        sm: "h-[var(--size-md)] px-[var(--spacing-sm)] text-[var(--font-size-xs)]",
-        default: "h-[var(--size-lg)] px-[var(--spacing-md)] text-[var(--font-size-sm)]",
-        lg: "h-[var(--size-xl)] px-[var(--spacing-lg)] text-[var(--font-size-base)]",
+        default: "h-[var(--size-lg)] px-[var(--spacing-md)] text-[length:var(--font-size-sm)]",
       },
     },
     defaultVariants: {
@@ -187,13 +185,13 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
         className={cn(
           timeInputVariants({ size }),
           "border-[var(--interactive-border-alt)]",
-          disabled && "bg-[var(--interactive-bg-disabled)] text-[var(--interactive-fg-disabled)] pointer-events-none",
+          disabled && "bg-[var(--interactive-bg-disabled)] text-[color:var(--interactive-fg-disabled)] pointer-events-none",
           className
         )}
         {...props}
       >
         {showIcon && (
-          <Clock className="h-[var(--size-xxs)] w-[var(--size-xxs)] text-[var(--interactive-fg-alt)] shrink-0 mr-[var(--spacing-xs)]" />
+          <Clock className="h-[var(--size-xxs)] w-[var(--size-xxs)] text-[color:var(--interactive-fg-alt)] shrink-0 mr-[var(--spacing-xs)]" />
         )}
 
         {/* Hidden input for form submission */}
@@ -236,7 +234,7 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
           aria-label="Hours"
         />
 
-        <span className="text-[var(--interactive-fg-alt)] font-mono select-none">:</span>
+        <span className="text-[color:var(--interactive-fg-alt)] font-mono select-none">:</span>
 
         {/* Minutes segment */}
         <input
@@ -270,21 +268,19 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
         {format === "12" && (
           <div className="ml-[var(--spacing-xxs)] flex border-l border-[color:var(--interactive-border)] pl-[var(--spacing-xs)] gap-[var(--spacing-xxs)]">
             <Toggle
-              size="sm"
               pressed={period === "AM"}
               onPressedChange={() => togglePeriod("AM")}
               disabled={disabled}
-              className="h-[var(--size-sm)] px-[var(--spacing-xs)] text-[var(--font-size-xs)] min-w-0"
+              className="h-[var(--size-sm)] px-[var(--spacing-xs)] text-[length:var(--font-size-xs)] min-w-0"
               tabIndex={-1}
             >
               AM
             </Toggle>
             <Toggle
-              size="sm"
               pressed={period === "PM"}
               onPressedChange={() => togglePeriod("PM")}
               disabled={disabled}
-              className="h-[var(--size-sm)] px-[var(--spacing-xs)] text-[var(--font-size-xs)] min-w-0"
+              className="h-[var(--size-sm)] px-[var(--spacing-xs)] text-[length:var(--font-size-xs)] min-w-0"
               tabIndex={-1}
             >
               PM

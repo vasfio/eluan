@@ -13,12 +13,48 @@ const meta: Meta<typeof CTASection> = {
   title: "Web/CTASection",
   component: CTASection,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A call-to-action section with composable title, description, and action buttons, available in default, muted, primary, gradient, dark, and bordered variants.
+
+**Import**
+\`\`\`tsx
+import { CTASection, CTAContent, CTATitle, CTADescription, CTAActions, CTACard } from "@vasf/ragnar-web"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<CTASection variant="primary">
+  <CTAContent>
+    <CTATitle>Get started</CTATitle>
+    <CTADescription>Try it free.</CTADescription>
+    <CTAActions>
+      <Button>Sign Up</Button>
+    </CTAActions>
+  </CTAContent>
+</CTASection>
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    variant: {
+      description: "Background style: default, muted, primary, gradient, dark, or bordered.",
+    },
+    size: {
+      description: "Vertical padding: sm, default, or lg.",
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: { docs: { description: { story: "Default CTA with centered title, description, and two action buttons." } } },
   render: () => (
     <CTASection>
       <CTAContent>
@@ -37,6 +73,7 @@ export const Default: Story = {
 }
 
 export const Primary: Story = {
+  parameters: { docs: { description: { story: "Primary-colored background for high-visibility placement." } } },
   render: () => (
     <CTASection variant="primary">
       <CTAContent>
@@ -53,6 +90,7 @@ export const Primary: Story = {
 }
 
 export const Gradient: Story = {
+  parameters: { docs: { description: { story: "Gradient background with light-styled buttons." } } },
   render: () => (
     <CTASection variant="gradient">
       <CTAContent>
@@ -72,6 +110,7 @@ export const Gradient: Story = {
 }
 
 export const Split: Story = {
+  parameters: { docs: { description: { story: "Split layout with title/description on the left and actions on the right." } } },
   render: () => (
     <CTASection>
       <CTAContent align="split" maxWidth="full">
@@ -91,6 +130,7 @@ export const Split: Story = {
 }
 
 export const WithCard: Story = {
+  parameters: { docs: { description: { story: "CTA wrapped in a card container over a muted background." } } },
   render: () => (
     <CTASection variant="muted">
       <CTACard>

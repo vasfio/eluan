@@ -19,12 +19,47 @@ const meta: Meta<typeof FeatureSpot> = {
   title: "Web/FeatureSpot",
   component: FeatureSpot,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A feature spotlight section with grid or split (image + text) layouts, composable header, items with icons, and media slots.
+
+**Import**
+\`\`\`tsx
+import { FeatureSpot, FeatureSpotHeader, FeatureSpotTitle, FeatureSpotDescription, FeatureSpotGrid, FeatureSpotItem, FeatureSpotItemTitle, FeatureSpotItemDescription, FeatureSpotSplit, FeatureSpotContent, FeatureSpotMedia } from "@vasf/ragnar-web"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<FeatureSpot>
+  <FeatureSpotGrid columns={3}>
+    <FeatureSpotItem icon={<Icon />}>
+      <FeatureSpotItemTitle>Fast</FeatureSpotItemTitle>
+      <FeatureSpotItemDescription>Blazing speed.</FeatureSpotItemDescription>
+    </FeatureSpotItem>
+  </FeatureSpotGrid>
+</FeatureSpot>
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    layout: {
+      description: "Layout mode: grid, imageLeft, or imageRight.",
+    },
+    container: {
+      description: "Whether to wrap content in a centered container.",
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Grid: Story = {
+  parameters: { docs: { description: { story: "Six feature items in a 3-column grid with icons and descriptions." } } },
   render: () => (
     <FeatureSpot>
       <FeatureSpotHeader>
@@ -77,6 +112,7 @@ export const Grid: Story = {
 }
 
 export const SplitLayout: Story = {
+  parameters: { docs: { description: { story: "Split layout with text content on the left and a media placeholder on the right." } } },
   render: () => (
     <FeatureSpot>
       <FeatureSpotSplit>
@@ -115,6 +151,7 @@ export const SplitLayout: Story = {
 }
 
 export const ReverseSplit: Story = {
+  parameters: { docs: { description: { story: "Reversed split layout with the media on the left." } } },
   render: () => (
     <FeatureSpot>
       <FeatureSpotSplit reverse>

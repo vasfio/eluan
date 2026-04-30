@@ -22,12 +22,52 @@ const meta: Meta<typeof CookieBanner> = {
   title: "Web/CookieBanner",
   component: CookieBanner,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A cookie consent banner with configurable position and variant, plus a preferences modal for granular cookie control.
+
+**Import**
+\`\`\`tsx
+import { CookieBanner, CookieBannerContent, CookieBannerText, CookieBannerTitle, CookieBannerDescription, CookieBannerActions, CookieBannerLink, CookiePreferences, CookiePreferencesHeader, CookiePreferencesTitle, CookiePreferencesDescription, CookiePreferencesList, CookiePreferenceItem, CookiePreferencesFooter } from "@vasf/ragnar-web"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<CookieBanner isVisible position="bottom">
+  <CookieBannerContent>
+    <CookieBannerText>
+      <CookieBannerDescription>We use cookies.</CookieBannerDescription>
+    </CookieBannerText>
+    <CookieBannerActions>
+      <Button>Accept</Button>
+    </CookieBannerActions>
+  </CookieBannerContent>
+</CookieBanner>
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    position: {
+      description: "Banner placement: bottom, top, bottom-left, or bottom-right.",
+    },
+    variant: {
+      description: "Visual style: default, dark, or card.",
+    },
+    isVisible: {
+      description: "Whether the banner is visible.",
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: { docs: { description: { story: "Default bottom banner with description, preferences, reject, and accept buttons." } } },
   render: () => (
     <div className="relative min-h-[200px]">
       <CookieBanner isVisible>
@@ -52,6 +92,7 @@ export const Default: Story = {
 }
 
 export const WithTitle: Story = {
+  parameters: { docs: { description: { story: "Banner with a title heading above the description." } } },
   render: () => (
     <div className="relative min-h-[200px]">
       <CookieBanner isVisible>
@@ -73,6 +114,7 @@ export const WithTitle: Story = {
 }
 
 export const Corner: Story = {
+  parameters: { docs: { description: { story: "Card variant positioned in the bottom-right corner." } } },
   render: () => (
     <div className="relative min-h-[400px]">
       <CookieBanner isVisible position="bottom-right" variant="card">
@@ -93,6 +135,7 @@ export const Corner: Story = {
 }
 
 export const Dark: Story = {
+  parameters: { docs: { description: { story: "Dark variant with a single dismiss button." } } },
   render: () => (
     <div className="relative min-h-[200px]">
       <CookieBanner isVisible variant="dark">
@@ -112,6 +155,7 @@ export const Dark: Story = {
 }
 
 export const Preferences: Story = {
+  parameters: { docs: { description: { story: "Cookie preferences modal with toggleable categories for analytics and marketing cookies." } } },
   render: function PreferencesStory() {
     const [isOpen, setIsOpen] = React.useState(true)
     const [analytics, setAnalytics] = React.useState(false)

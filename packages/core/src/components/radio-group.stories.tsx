@@ -5,12 +5,47 @@ const meta: Meta<typeof RadioGroup> = {
   title: "Components/Radio Group",
   component: RadioGroup,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A set of mutually exclusive radio buttons that allows users to select a single option from a group.
+
+**Import**
+\`\`\`tsx
+import { RadioGroup, RadioGroupItem } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<RadioGroup defaultValue="option-one">
+  <div className="flex items-center space-x-2">
+    <RadioGroupItem value="option-one" id="option-one" />
+    <label htmlFor="option-one">Option One</label>
+  </div>
+  <div className="flex items-center space-x-2">
+    <RadioGroupItem value="option-two" id="option-two" />
+    <label htmlFor="option-two">Option Two</label>
+  </div>
+</RadioGroup>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A basic vertical radio group with three options and a default selection.",
+      },
+    },
+  },
   render: () => (
     <RadioGroup defaultValue="option-one">
       <div className="flex items-center space-x-2">
@@ -30,6 +65,13 @@ export const Default: Story = {
 }
 
 export const Horizontal: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Radio group items arranged horizontally using flex layout.",
+      },
+    },
+  },
   render: () => (
     <RadioGroup defaultValue="small" className="flex gap-4">
       <div className="flex items-center space-x-2">
@@ -49,6 +91,13 @@ export const Horizontal: Story = {
 }
 
 export const WithDescriptions: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Radio group items with secondary description text beneath each label.",
+      },
+    },
+  },
   render: () => (
     <RadioGroup defaultValue="comfortable">
       <div className="flex items-start space-x-2">

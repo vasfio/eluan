@@ -1,6 +1,8 @@
 import * as React from "react"
-import { Lock, Eye, EyeOff, Check, X } from "lucide-react"
+import { Check, X } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Input } from "./input"
+import { Progress } from "./progress"
 
 export interface PasswordInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
@@ -55,6 +57,13 @@ function calculateStrength(
   }
 }
 
+const strengthColors = {
+  weak: "bg-[var(--destructive-fg)] [&>div]:bg-[var(--destructive-fg)]",
+  medium: "bg-[var(--cautionary-fg)] [&>div]:bg-[var(--cautionary-fg)]",
+  strong: "bg-[var(--positive-fg)] [&>div]:bg-[var(--positive-fg)]",
+  none: "",
+}
+
 const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
   (
     {
@@ -67,8 +76,8 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
     },
     ref
   ) => {
-    const [showPassword, setShowPassword] = React.useState(false)
     const [strength, setStrength] = React.useState<StrengthResult | null>(null)
+    const [strengthLevel, setStrengthLevel] = React.useState<"weak" | "medium" | "strong" | "none">("none")
 
     const {
       minLength = 8,
@@ -84,24 +93,21 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
         const result = calculateStrength(value, strengthRequirements)
         setStrength(result)
 
+        let level: "weak" | "medium" | "strong"
         if (result.score < 0.4) {
-          onStrengthChange?.("weak")
+          level = "weak"
         } else if (result.score < 0.8) {
-          onStrengthChange?.("medium")
+          level = "medium"
         } else {
-          onStrengthChange?.("strong")
+          level = "strong"
         }
+        setStrengthLevel(level)
+        onStrengthChange?.(level)
       } else {
         setStrength(null)
+        setStrengthLevel("none")
       }
       onChange?.(e)
-    }
-
-    const getStrengthColor = () => {
-      if (!strength) return "bg-muted"
-      if (strength.score < 0.4) return "bg-red-500"
-      if (strength.score < 0.8) return "bg-yellow-500"
-      return "bg-[var(--positive-fg)]"
     }
 
     const getStrengthLabel = () => {
@@ -113,65 +119,45 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
 
     return (
       <div className="space-y-2">
-        <div className="relative">
-          <Lock className="absolute left-3 top-1/2 h-[var(--size-xxs)] w-[var(--size-xxs)] -translate-y-1/2 text-[var(--interactive-fg-alt)]" />
-          <input
-            type={showPassword ? "text" : "password"}
-            className={cn(
-              "flex h-[var(--size-lg)] w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] pl-10 pr-10 py-[var(--spacing-sm)] text-[var(--font-size-sm)] ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)]",
-              className
-            )}
-            ref={ref}
-            onChange={handleChange}
-            {...props}
-          />
-          <button
-            type="button"
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--interactive-fg-alt)] hover:text-[var(--interactive-fg)]"
-            onClick={() => setShowPassword(!showPassword)}
-            tabIndex={-1}
-          >
-            {showPassword ? (
-              <EyeOff className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
-            ) : (
-              <Eye className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
-            )}
-          </button>
-        </div>
+        <Input
+          type="password"
+          className={className}
+          ref={ref}
+          onChange={handleChange}
+          {...props}
+        />
 
         {showStrengthIndicator && strength && (
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <div className="flex-1 h-1.5 bg-[var(--interactive-bg-alt)] rounded-full overflow-hidden">
-                <div
-                  className={cn("h-full transition-all duration-300", getStrengthColor())}
-                  style={{ width: `${strength.score * 100}%` }}
-                />
-              </div>
-              <span className="text-[var(--font-size-xs)] text-[var(--interactive-fg-alt)] min-w-[50px]">
+              <Progress
+                value={strength.score * 100}
+                className={cn("h-1.5 flex-1", strengthColors[strengthLevel])}
+              />
+              <span className="text-[length:var(--font-size-xs)] text-[color:var(--interactive-fg-alt)] min-w-[50px]">
                 {getStrengthLabel()}
               </span>
             </div>
 
-            <ul className="grid grid-cols-2 gap-1 text-[var(--font-size-xs)]">
+            <ul className="grid grid-cols-2 gap-1 text-[length:var(--font-size-xs)]">
               <li className="flex items-center gap-1">
                 {strength.checks.length ? (
-                  <Check className="h-3 w-3 text-[var(--positive-fg)]" />
+                  <Check className="h-3 w-3 text-[color:var(--positive-fg)]" />
                 ) : (
-                  <X className="h-3 w-3 text-[var(--interactive-fg-alt)]" />
+                  <X className="h-3 w-3 text-[color:var(--interactive-fg-alt)]" />
                 )}
-                <span className={strength.checks.length ? "text-[var(--positive-fg)]" : "text-[var(--interactive-fg-alt)]"}>
+                <span className={strength.checks.length ? "text-[color:var(--positive-fg)]" : "text-[color:var(--interactive-fg-alt)]"}>
                   {minLength}+ characters
                 </span>
               </li>
               {requireUppercase && (
                 <li className="flex items-center gap-[var(--spacing-xxs)]">
                   {strength.checks.uppercase ? (
-                    <Check className="h-3 w-3 text-[var(--positive-fg)]" />
+                    <Check className="h-3 w-3 text-[color:var(--positive-fg)]" />
                   ) : (
-                    <X className="h-3 w-3 text-[var(--interactive-fg-alt)]" />
+                    <X className="h-3 w-3 text-[color:var(--interactive-fg-alt)]" />
                   )}
-                  <span className={strength.checks.uppercase ? "text-[var(--positive-fg)]" : "text-[var(--interactive-fg-alt)]"}>
+                  <span className={strength.checks.uppercase ? "text-[color:var(--positive-fg)]" : "text-[color:var(--interactive-fg-alt)]"}>
                     Uppercase letter
                   </span>
                 </li>
@@ -179,11 +165,11 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
               {requireLowercase && (
                 <li className="flex items-center gap-[var(--spacing-xxs)]">
                   {strength.checks.lowercase ? (
-                    <Check className="h-3 w-3 text-[var(--positive-fg)]" />
+                    <Check className="h-3 w-3 text-[color:var(--positive-fg)]" />
                   ) : (
-                    <X className="h-3 w-3 text-[var(--interactive-fg-alt)]" />
+                    <X className="h-3 w-3 text-[color:var(--interactive-fg-alt)]" />
                   )}
-                  <span className={strength.checks.lowercase ? "text-[var(--positive-fg)]" : "text-[var(--interactive-fg-alt)]"}>
+                  <span className={strength.checks.lowercase ? "text-[color:var(--positive-fg)]" : "text-[color:var(--interactive-fg-alt)]"}>
                     Lowercase letter
                   </span>
                 </li>
@@ -191,11 +177,11 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
               {requireNumbers && (
                 <li className="flex items-center gap-[var(--spacing-xxs)]">
                   {strength.checks.numbers ? (
-                    <Check className="h-3 w-3 text-[var(--positive-fg)]" />
+                    <Check className="h-3 w-3 text-[color:var(--positive-fg)]" />
                   ) : (
-                    <X className="h-3 w-3 text-[var(--interactive-fg-alt)]" />
+                    <X className="h-3 w-3 text-[color:var(--interactive-fg-alt)]" />
                   )}
-                  <span className={strength.checks.numbers ? "text-[var(--positive-fg)]" : "text-[var(--interactive-fg-alt)]"}>
+                  <span className={strength.checks.numbers ? "text-[color:var(--positive-fg)]" : "text-[color:var(--interactive-fg-alt)]"}>
                     Number
                   </span>
                 </li>
@@ -203,11 +189,11 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
               {requireSpecialChars && (
                 <li className="flex items-center gap-[var(--spacing-xxs)]">
                   {strength.checks.specialChars ? (
-                    <Check className="h-3 w-3 text-[var(--positive-fg)]" />
+                    <Check className="h-3 w-3 text-[color:var(--positive-fg)]" />
                   ) : (
-                    <X className="h-3 w-3 text-[var(--interactive-fg-alt)]" />
+                    <X className="h-3 w-3 text-[color:var(--interactive-fg-alt)]" />
                   )}
-                  <span className={strength.checks.specialChars ? "text-[var(--positive-fg)]" : "text-[var(--interactive-fg-alt)]"}>
+                  <span className={strength.checks.specialChars ? "text-[color:var(--positive-fg)]" : "text-[color:var(--interactive-fg-alt)]"}>
                     Special character
                   </span>
                 </li>

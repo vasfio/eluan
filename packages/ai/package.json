@@ -1,0 +1,86 @@
+{
+  "name": "@vasf/ragnar-ai",
+  "description": "AI UX pattern components for React — built on Ragnar Core, Tailwind CSS v4, and CVA",
+  "version": "0.1.0",
+  "license": "MIT",
+  "homepage": "https://github.com/frolda/ragnar#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frolda/ragnar.git",
+    "directory": "packages/ai"
+  },
+  "bugs": {
+    "url": "https://github.com/frolda/ragnar/issues"
+  },
+  "keywords": [
+    "react",
+    "ai",
+    "ui",
+    "components",
+    "ragnar"
+  ],
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "rm -rf dist && vite build && tsc -p tsconfig.build.json",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "storybook": "storybook dev -p 6007",
+    "build-storybook": "storybook build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "dependencies": {
+    "@vasf/ragnar-core": "workspace:^",
+    "@vasf/ragnar-tokens": "workspace:^",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.395.0",
+    "tailwind-merge": "^2.3.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^8.1.10",
+    "@storybook/addon-interactions": "^8.1.10",
+    "@storybook/addon-links": "^8.1.10",
+    "@storybook/blocks": "^8.1.10",
+    "@storybook/react": "^8.1.10",
+    "@storybook/react-vite": "^8.1.10",
+    "@storybook/test": "^8.1.10",
+    "@tailwindcss/vite": "^4.2.2",
+    "@types/node": "^20.14.2",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "@vitest/coverage-v8": "^4.0.18",
+    "jsdom": "^28.1.0",
+    "storybook": "^8.1.10",
+    "tailwindcss": "^4.2.2",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "^5.4.5",
+    "vite": "^5.3.1",
+    "vite-plugin-dts": "^3.9.1",
+    "vitest": "^4.0.18"
+  }
+}

@@ -11,6 +11,30 @@ const meta: Meta<typeof Tooltip> = {
   title: "Components/Tooltip",
   component: Tooltip,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A popup that displays additional information when hovering over or focusing on a trigger element.
+
+**Import**
+\`\`\`tsx
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<TooltipProvider>
+  <Tooltip>
+    <TooltipTrigger>Hover me</TooltipTrigger>
+    <TooltipContent>Tooltip text</TooltipContent>
+  </Tooltip>
+</TooltipProvider>
+\`\`\`
+        `,
+      },
+    },
+  },
   decorators: [
     (Story) => (
       <TooltipProvider>
@@ -34,9 +58,23 @@ export const Default: Story = {
       </TooltipContent>
     </Tooltip>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: "Basic tooltip that appears on hover with default positioning.",
+      },
+    },
+  },
 }
 
 export const Positions: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Demonstrates all four tooltip placement options using the `side` prop: top, right, bottom, and left.",
+      },
+    },
+  },
   render: () => (
     <div className="flex gap-4 items-center justify-center p-10">
       <Tooltip>
@@ -79,6 +117,13 @@ export const Positions: Story = {
 }
 
 export const WithIcon: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Tooltip attached to an icon button, useful for providing accessible labels on icon-only controls.",
+      },
+    },
+  },
   render: () => (
     <Tooltip>
       <TooltipTrigger asChild>

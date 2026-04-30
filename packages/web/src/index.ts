@@ -34,6 +34,7 @@ export * from "./components/contact-form"
 // ============================================
 
 export * from "./components/header-navigation"
+export * from "./components/navigation-menu"
 export * from "./components/footer"
 export * from "./components/announcement-bar"
 

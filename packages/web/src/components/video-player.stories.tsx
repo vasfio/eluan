@@ -12,6 +12,45 @@ const meta: Meta<typeof VideoPlayer> = {
   title: "Web/VideoPlayer",
   component: VideoPlayer,
   // Disable autodocs - video embeds cause memory issues when pre-rendered
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A video player component with play overlay, custom controls, and embed support for YouTube and Vimeo, plus a fullscreen video modal.
+
+**Import**
+\`\`\`tsx
+import { VideoPlayer, YouTubeEmbed, VimeoEmbed, VideoModal } from "@vasf/ragnar-web"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<VideoPlayer src="/video.mp4" poster="/poster.jpg" aspectRatio="video" rounded="lg" />
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    src: {
+      description: "Video source URL.",
+    },
+    poster: {
+      description: "Poster image URL shown before playback.",
+    },
+    showControls: {
+      description: "Whether to show native video controls during playback.",
+    },
+    showPlayButton: {
+      description: "Whether to show the play button overlay.",
+    },
+    rounded: {
+      description: "Corner radius: none, sm, md, lg, xl, or 2xl.",
+    },
+    aspectRatio: {
+      description: "Aspect ratio: video, square, 4/3, 21/9, or auto.",
+    },
+  },
 }
 
 export default meta
@@ -22,6 +61,7 @@ const sampleVideoUrl = "https://storage.googleapis.com/gtv-videos-bucket/sample/
 const samplePoster = "https://storage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg"
 
 export const Default: Story = {
+  parameters: { docs: { description: { story: "Default video player with a poster image and play button overlay." } } },
   render: () => (
     <div className="max-w-3xl mx-auto">
       <VideoPlayer
@@ -33,6 +73,7 @@ export const Default: Story = {
 }
 
 export const AutoPlay: Story = {
+  parameters: { docs: { description: { story: "Auto-playing muted video in a loop without the play button overlay." } } },
   render: () => (
     <div className="max-w-3xl mx-auto">
       <VideoPlayer
@@ -47,6 +88,7 @@ export const AutoPlay: Story = {
 }
 
 export const YouTube: Story = {
+  parameters: { docs: { description: { story: "YouTube video embed with lazy loading and thumbnail preview." } } },
   render: () => (
     <div className="max-w-3xl mx-auto">
       <YouTubeEmbed videoId="dQw4w9WgXcQ" />
@@ -55,6 +97,7 @@ export const YouTube: Story = {
 }
 
 export const Vimeo: Story = {
+  parameters: { docs: { description: { story: "Vimeo video embed." } } },
   render: () => (
     <div className="max-w-3xl mx-auto">
       <VimeoEmbed videoId="824804225" />
@@ -63,6 +106,7 @@ export const Vimeo: Story = {
 }
 
 export const AspectRatios: Story = {
+  parameters: { docs: { description: { story: "Comparing video, square, and cinematic (21:9) aspect ratios." } } },
   render: () => (
     <div className="space-y-8">
       <div>
@@ -84,6 +128,7 @@ export const AspectRatios: Story = {
 }
 
 export const RoundedVariants: Story = {
+  parameters: { docs: { description: { story: "Corner radius variants from none to 2xl." } } },
   render: () => (
     <div className="grid grid-cols-3 gap-4">
       <div>
@@ -103,6 +148,7 @@ export const RoundedVariants: Story = {
 }
 
 export const Modal: Story = {
+  parameters: { docs: { description: { story: "A button that opens a fullscreen video modal with escape-to-close." } } },
   render: function ModalStory() {
     const [isOpen, setIsOpen] = React.useState(false)
 
@@ -121,6 +167,7 @@ export const Modal: Story = {
 }
 
 export const BackgroundVideo: Story = {
+  parameters: { docs: { description: { story: "Video used as a background behind a hero overlay." } } },
   render: () => (
     <div className="relative h-[400px] overflow-hidden rounded-xl">
       <VideoPlayer

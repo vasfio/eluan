@@ -17,6 +17,40 @@ const meta: Meta<typeof FAQSection> = {
   title: "Web/FAQAccordion",
   component: FAQSection,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A composable FAQ accordion section with collapsible question/answer items, available in default, separated, and card variants.
+
+**Import**
+\`\`\`tsx
+import { FAQSection, FAQHeader, FAQTitle, FAQDescription, FAQList, FAQItem, FAQItemCard, FAQQuestion, FAQAnswer, FAQContact } from "@vasf/ragnar-web"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<FAQSection>
+  <FAQHeader>
+    <FAQTitle>FAQ</FAQTitle>
+  </FAQHeader>
+  <FAQList>
+    <FAQItem>
+      <FAQQuestion>Question?</FAQQuestion>
+      <FAQAnswer>Answer.</FAQAnswer>
+    </FAQItem>
+  </FAQList>
+</FAQSection>
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    size: {
+      description: "Vertical padding: sm, default, or lg.",
+    },
+  },
 }
 
 export default meta
@@ -46,6 +80,7 @@ const faqs = [
 ]
 
 export const Default: Story = {
+  parameters: { docs: { description: { story: "Full FAQ section with divider-style items, header, and a contact link." } } },
   render: () => (
     <FAQSection>
       <FAQHeader>
@@ -75,6 +110,7 @@ export const Default: Story = {
 }
 
 export const CardStyle: Story = {
+  parameters: { docs: { description: { story: "Card-styled FAQ items with bordered containers." } } },
   render: () => (
     <FAQSection>
       <FAQHeader>
@@ -93,6 +129,7 @@ export const CardStyle: Story = {
 }
 
 export const WithContactButton: Story = {
+  parameters: { docs: { description: { story: "FAQ with a contact support button below the question list." } } },
   render: () => (
     <FAQSection>
       <FAQHeader>

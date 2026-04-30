@@ -1,6 +1,7 @@
 import * as React from "react"
-import { Search, X, Loader2 } from "lucide-react"
+import { Search, Delete, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Input } from "./input"
 
 function assignRef<T>(ref: React.ForwardedRef<T>, value: T | null) {
   if (typeof ref === "function") {
@@ -95,38 +96,34 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
 
     const showClear = showClearButton && internalValue && !loading
 
+    const trailingEl = loading ? (
+      <Loader2 className="h-[var(--size-xxs)] w-[var(--size-xxs)] animate-spin text-[color:var(--interactive-fg-alt)]" />
+    ) : showClear ? (
+      <button
+        type="button"
+        className="p-0.5 hover:bg-[var(--interactive-bg-hover)] rounded"
+        onClick={handleClear}
+        tabIndex={-1}
+      >
+        <Delete className="h-[var(--size-xxs)] w-[var(--size-xxs)] text-[color:var(--interactive-fg-alt)]" />
+      </button>
+    ) : undefined
+
     return (
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 h-[var(--size-xxs)] w-[var(--size-xxs)] -translate-y-1/2 text-[var(--interactive-fg-alt)]" />
-        <input
-          type="search"
-          className={cn(
-            "flex h-[var(--size-lg)] w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] pl-10 pr-10 py-[var(--spacing-sm)] text-[var(--font-size-sm)] ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)]",
-            "[&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden",
-            className
-          )}
-          ref={ref}
-          value={internalValue}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          disabled={disabled || loading}
-          {...props}
-        />
-        <div className="absolute right-3 top-1/2 -translate-y-1/2">
-          {loading ? (
-            <Loader2 className="h-[var(--size-xxs)] w-[var(--size-xxs)] animate-spin text-[var(--interactive-fg-alt)]" />
-          ) : showClear ? (
-            <button
-              type="button"
-              className="p-0.5 hover:bg-[var(--interactive-bg-hover)] rounded"
-              onClick={handleClear}
-              tabIndex={-1}
-            >
-              <X className="h-[var(--size-xxs)] w-[var(--size-xxs)] text-[var(--interactive-fg-alt)]" />
-            </button>
-          ) : null}
-        </div>
-      </div>
+      <Input
+        type="search"
+        className={cn(
+          "[&_input]:[&::-webkit-search-cancel-button]:hidden [&_input]:[&::-webkit-search-decoration]:hidden",
+          className
+        )}
+        ref={ref}
+        value={internalValue}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        disabled={disabled || loading}
+        trailing={trailingEl}
+        {...props}
+      />
     )
   }
 )
@@ -159,117 +156,27 @@ const CommandSearch = React.forwardRef<HTMLInputElement, CommandSearchProps>(
       assignRef(ref, node)
     }
 
+    const shortcutEl = showShortcut ? (
+      <kbd className="pointer-events-none h-[var(--size-xs)] select-none items-center gap-[var(--spacing-xs)] rounded border bg-[var(--interactive-bg-alt)] px-[var(--spacing-xs)] font-mono text-[10px] font-medium text-[color:var(--interactive-fg-alt)] inline-flex">
+        <span className="text-[length:var(--font-size-xs)]">⌘</span>{shortcutKey}
+      </kbd>
+    ) : undefined
+
     return (
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 h-[var(--size-xxs)] w-[var(--size-xxs)] -translate-y-1/2 text-[var(--interactive-fg-alt)]" />
-        <input
-          type="search"
-          className={cn(
-            "flex h-[var(--size-lg)] w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] pl-10 py-[var(--spacing-sm)] text-[var(--font-size-sm)] ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)]",
-            "[&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden",
-            showShortcut ? "pr-16" : "pr-10",
-            className
-          )}
-          ref={combinedRef}
-          {...props}
-        />
-        {showShortcut && (
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-[var(--spacing-xxs)]">
-            <kbd className="pointer-events-none h-[var(--size-xs)] select-none items-center gap-[var(--spacing-xs)] rounded border bg-[var(--interactive-bg-alt)] px-[var(--spacing-xs)] font-mono text-[10px] font-medium text-[var(--interactive-fg-alt)] inline-flex">
-              <span className="text-[var(--font-size-xs)]">⌘</span>{shortcutKey}
-            </kbd>
-          </div>
+      <Input
+        type="search"
+        className={cn(
+          "[&_input]:[&::-webkit-search-cancel-button]:hidden [&_input]:[&::-webkit-search-decoration]:hidden",
+          className
         )}
-      </div>
+        ref={combinedRef}
+        trailing={shortcutEl}
+        {...props}
+      />
     )
   }
 )
 CommandSearch.displayName = "CommandSearch"
-
-// Expandable search that grows on focus
-export interface ExpandableSearchProps extends SearchInputProps {
-  collapsedWidth?: string
-  expandedWidth?: string
-}
-
-const ExpandableSearch = React.forwardRef<HTMLInputElement, ExpandableSearchProps>(
-  (
-    {
-      collapsedWidth = "40px",
-      expandedWidth = "250px",
-      className,
-      placeholder = "Search...",
-      ...props
-    },
-    ref
-  ) => {
-    const [isExpanded, setIsExpanded] = React.useState(false)
-    const [internalValue, setInternalValue] = React.useState(props.value || "")
-    const inputRef = React.useRef<HTMLInputElement | null>(null)
-    const { onChange, ...inputProps } = props
-
-    const handleFocus = () => setIsExpanded(true)
-
-    const handleBlur = () => {
-      if (!internalValue) {
-        setIsExpanded(false)
-      }
-    }
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setInternalValue(e.target.value)
-      onChange?.(e.target.value)
-    }
-
-    const handleIconClick = () => {
-      setIsExpanded(true)
-      setTimeout(() => inputRef.current?.focus(), 100)
-    }
-
-    const combinedRef = (node: HTMLInputElement) => {
-      inputRef.current = node
-      assignRef(ref, node)
-    }
-
-    return (
-      <div
-        className={cn(
-          "relative flex items-center transition-all duration-200 ease-in-out",
-          className
-        )}
-        style={{ width: isExpanded ? expandedWidth : collapsedWidth }}
-      >
-        <button
-          type="button"
-          className={cn(
-            "absolute left-0 flex h-[var(--size-lg)] w-[var(--size-lg)] items-center justify-center rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] hover:bg-[var(--interactive-bg-hover)] transition-colors",
-            isExpanded && "border-transparent hover:bg-transparent"
-          )}
-          onClick={handleIconClick}
-          tabIndex={isExpanded ? -1 : 0}
-        >
-          <Search className="h-[var(--size-xxs)] w-[var(--size-xxs)] text-[var(--interactive-fg-alt)]" />
-        </button>
-        <input
-          type="search"
-          className={cn(
-            "flex h-[var(--size-lg)] w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] pl-10 pr-[var(--spacing-md)] py-[var(--spacing-sm)] text-[var(--font-size-sm)] ring-offset-background placeholder:text-[var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)] transition-all duration-200",
-            "[&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden",
-            !isExpanded && "opacity-0 pointer-events-none"
-          )}
-          ref={combinedRef}
-          value={internalValue}
-          onChange={handleChange}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          placeholder={placeholder}
-          {...inputProps}
-        />
-      </div>
-    )
-  }
-)
-ExpandableSearch.displayName = "ExpandableSearch"
 
 // Autocomplete search with filterable dropdown
 export interface AutocompleteOption {
@@ -470,9 +377,9 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
         type="button"
         data-option
         className={cn(
-          "flex w-full items-center gap-[var(--spacing-sm)] rounded-[var(--curves-sm)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[var(--font-size-sm)] text-left",
+          "flex w-full items-center gap-[var(--spacing-sm)] rounded-[var(--curves-sm)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[length:var(--font-size-sm)] text-left",
           highlightedIndex === index && "bg-[var(--interactive-bg-hover)]",
-          option.disabled && "bg-[var(--interactive-bg-disabled)] text-[var(--interactive-fg-disabled)] cursor-not-allowed",
+          option.disabled && "bg-[var(--interactive-bg-disabled)] text-[color:var(--interactive-fg-disabled)] cursor-not-allowed",
           !option.disabled && "hover:bg-[var(--interactive-bg-hover)] cursor-pointer"
         )}
         onClick={() => handleSelect(option)}
@@ -483,7 +390,7 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
         <div className="flex-1 min-w-0">
           <div className="truncate font-medium">{option.label}</div>
           {option.description && (
-            <div className="truncate text-[var(--font-size-xs)] text-[var(--interactive-fg-alt)]">
+            <div className="truncate text-[length:var(--font-size-xs)] text-[color:var(--interactive-fg-alt)]">
               {option.description}
             </div>
           )}
@@ -493,19 +400,31 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
 
     const showDropdown = isOpen && (filteredOptions.length > 0 || loading || internalValue.length >= minChars)
 
+    const trailingEl = loading ? (
+      <Loader2 className="h-[var(--size-xxs)] w-[var(--size-xxs)] animate-spin text-[color:var(--interactive-fg)]" />
+    ) : internalValue ? (
+      <button
+        type="button"
+        className="p-0.5 hover:bg-[var(--interactive-bg-hover)] rounded"
+        onClick={handleClear}
+        tabIndex={-1}
+      >
+        <Delete className="h-[var(--size-xxs)] w-[var(--size-xxs)] text-[color:var(--interactive-fg)]" />
+      </button>
+    ) : undefined
+
     return (
       <div ref={containerRef} className={cn("relative", className)}>
-        <Search className="absolute left-3 top-1/2 h-[var(--size-xxs)] w-[var(--size-xxs)] -translate-y-1/2 text-[var(--interactive-fg-alt)] z-10" />
-        <input
+        <Input
           type="text"
+          icon={<Search className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />}
+          trailing={trailingEl}
           role="combobox"
           aria-expanded={isOpen}
           aria-autocomplete="list"
           aria-controls="autocomplete-list"
           autoComplete="off"
-          className={cn(
-            "flex h-[var(--size-lg)] w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] pl-10 pr-10 py-[var(--spacing-sm)] text-[var(--font-size-sm)] ring-offset-background placeholder:text-[var(--interactive-fg)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)]"
-          )}
+          className="[&_input]:placeholder:text-[color:var(--interactive-fg)]"
           ref={combinedRef}
           value={internalValue}
           onChange={handleChange}
@@ -515,20 +434,6 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
           placeholder={placeholder}
           {...props}
         />
-        <div className="absolute right-3 top-1/2 -translate-y-1/2">
-          {loading ? (
-            <Loader2 className="h-[var(--size-xxs)] w-[var(--size-xxs)] animate-spin text-[var(--interactive-fg)]" />
-          ) : internalValue ? (
-            <button
-              type="button"
-              className="p-0.5 hover:bg-[var(--interactive-bg-hover)] rounded"
-              onClick={handleClear}
-              tabIndex={-1}
-            >
-              <X className="h-[var(--size-xxs)] w-[var(--size-xxs)] text-[var(--interactive-fg)]" />
-            </button>
-          ) : null}
-        </div>
 
         {showDropdown && (
           <div
@@ -538,17 +443,17 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
           >
             {loading ? (
               <div className="flex items-center justify-center py-[var(--spacing-md)]">
-                <Loader2 className="h-[var(--size-xs)] w-[var(--size-xs)] animate-spin text-[var(--interactive-fg)]" />
+                <Loader2 className="h-[var(--size-xs)] w-[var(--size-xs)] animate-spin text-[color:var(--interactive-fg)]" />
               </div>
             ) : filteredOptions.length === 0 ? (
-              <div className="px-[var(--spacing-md)] py-[var(--spacing-md)] text-[var(--font-size-sm)] text-center text-[var(--interactive-fg)]">
+              <div className="px-[var(--spacing-md)] py-[var(--spacing-md)] text-[length:var(--font-size-sm)] text-center text-[color:var(--interactive-fg)]">
                 {emptyMessage}
               </div>
             ) : groupedOptions ? (
               <div className="p-1">
                 {Object.entries(groupedOptions).map(([groupName, groupOptions]) => (
                   <div key={groupName}>
-                    <div className="px-[var(--spacing-md)] py-[var(--spacing-xs)] text-[var(--font-size-xs)] font-semibold text-[var(--interactive-fg)]">
+                    <div className="px-[var(--spacing-md)] py-[var(--spacing-xs)] text-[length:var(--font-size-xs)] font-semibold text-[color:var(--interactive-fg)]">
                       {groupName}
                     </div>
                     {groupOptions.map((opt) => {
@@ -571,4 +476,4 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
 )
 AutocompleteSearch.displayName = "AutocompleteSearch"
 
-export { SearchInput, CommandSearch, ExpandableSearch, AutocompleteSearch }
+export { SearchInput, CommandSearch, AutocompleteSearch }

@@ -5,6 +5,36 @@ const meta: Meta<typeof PricingOptions> = {
   title: "Web/PricingOptions",
   component: PricingOptions,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A responsive pricing card grid that renders a set of plan options with features, prices, and call-to-action buttons.
+
+**Import**
+\`\`\`tsx
+import { PricingOptions } from "@vasf/ragnar-web"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<PricingOptions
+  columns={3}
+  options={[
+    { id: "free", name: "Free", price: 0, period: "month", features: ["1 project"] },
+    { id: "pro", name: "Pro", price: 29, period: "month", features: ["Unlimited"], highlighted: true },
+  ]}
+/>
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    columns: {
+      description: "Number of grid columns: 2, 3, or 4.",
+    },
+  },
 }
 
 export default meta
@@ -59,10 +89,12 @@ const pricingPlans = [
 ]
 
 export const Default: Story = {
+  parameters: { docs: { description: { story: "A 3-column pricing layout with a highlighted plan." } } },
   render: () => <PricingOptions options={pricingPlans} />,
 }
 
 export const TwoColumns: Story = {
+  parameters: { docs: { description: { story: "Two-column layout comparing monthly vs yearly billing with an original price strikethrough." } } },
   render: () => (
     <PricingOptions
       columns={2}
@@ -98,6 +130,7 @@ export const TwoColumns: Story = {
 }
 
 export const FourColumns: Story = {
+  parameters: { docs: { description: { story: "Four-column layout including a free tier and custom enterprise option." } } },
   render: () => (
     <PricingOptions
       columns={4}

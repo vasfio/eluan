@@ -43,7 +43,7 @@ const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
             disabled={disabled}
             className={cn(
               "w-full justify-start text-left font-normal border border-solid border-[var(--interactive-border-alt)]",
-              !value && "text-[var(--interactive-fg-alt)]",
+              !value && "text-[color:var(--interactive-fg-alt)]",
               className
             )}
           >
@@ -100,7 +100,7 @@ const DateRangePicker = React.forwardRef<HTMLButtonElement, DateRangePickerProps
             disabled={disabled}
             className={cn(
               "w-full justify-start text-left font-normal",
-              !value?.from && "text-[var(--interactive-fg-alt)]",
+              !value?.from && "text-[color:var(--interactive-fg-alt)]",
               className
             )}
           >

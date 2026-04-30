@@ -130,15 +130,15 @@ const EmailForm = React.forwardRef<HTMLFormElement, EmailFormProps>(
           </Button>
         </form>
         {helperText && status === "idle" && (
-          <p className="mt-[var(--spacing-sm)] text-[var(--font-size-sm)] text-[var(--container-fg-alt)]">{helperText}</p>
+          <p className="mt-[var(--spacing-sm)] text-[length:var(--font-size-sm)] text-[color:var(--container-fg-alt)]">{helperText}</p>
         )}
         {status === "success" && successMessage && (
-          <p className="mt-[var(--spacing-sm)] text-[var(--font-size-sm)] text-[var(--positive-fg)]">
+          <p className="mt-[var(--spacing-sm)] text-[length:var(--font-size-sm)] text-[color:var(--positive-fg)]">
             {successMessage}
           </p>
         )}
         {status === "error" && errorMessage && (
-          <p className="mt-[var(--spacing-sm)] text-[var(--font-size-sm)] text-[var(--destructive-fg)]">{errorMessage}</p>
+          <p className="mt-[var(--spacing-sm)] text-[length:var(--font-size-sm)] text-[color:var(--destructive-fg)]">{errorMessage}</p>
         )}
       </div>
     )

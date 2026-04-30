@@ -15,6 +15,44 @@ const meta: Meta<typeof Command> = {
   title: "Components/Command",
   component: Command,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A command palette / search interface built on \`cmdk\` for fast, keyboard-driven item selection and filtering.
+
+**Sub-components:** \`CommandDialog\`, \`CommandInput\`, \`CommandList\`, \`CommandEmpty\`, \`CommandGroup\`, \`CommandItem\`, \`CommandShortcut\`, \`CommandSeparator\`
+
+**Import**
+\`\`\`tsx
+import {
+  Command,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+  CommandShortcut,
+  CommandSeparator,
+} from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Command>
+  <CommandInput placeholder="Search..." />
+  <CommandList>
+    <CommandEmpty>No results.</CommandEmpty>
+    <CommandGroup heading="Actions">
+      <CommandItem>Profile</CommandItem>
+    </CommandGroup>
+  </CommandList>
+</Command>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
@@ -40,6 +78,13 @@ export const Default: Story = {
       </CommandList>
     </Command>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: "A command palette with grouped suggestions, a settings group with keyboard shortcuts, and a separator.",
+      },
+    },
+  },
 }
 
 export const Simple: Story = {
@@ -56,6 +101,13 @@ export const Simple: Story = {
       </CommandList>
     </Command>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: "A minimal command list with a search input and a flat list of options.",
+      },
+    },
+  },
 }
 
 export const WithShortcuts: Story = {
@@ -85,4 +137,11 @@ export const WithShortcuts: Story = {
       </CommandList>
     </Command>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story: "Command items with trailing keyboard shortcut hints displayed via CommandShortcut.",
+      },
+    },
+  },
 }

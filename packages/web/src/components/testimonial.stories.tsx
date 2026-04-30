@@ -5,12 +5,49 @@ const meta: Meta<typeof Testimonial> = {
   title: "Web/Testimonial",
   component: Testimonial,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+Displays customer testimonials with author info, optional star ratings, and a quote icon.
+
+**Import**
+\`\`\`tsx
+import { Testimonial, TestimonialGrid, TestimonialCarousel } from "@vasf/ragnar-web"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Testimonial
+  variant="card"
+  author={{ name: "Jane Doe", title: "CEO", company: "Acme" }}
+  rating={5}
+>
+  "Great product!"
+</Testimonial>
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    variant: {
+      description: "Visual style of the testimonial: default, card, minimal, or featured.",
+    },
+    rating: {
+      description: "Star rating from 1 to 5.",
+    },
+    showQuoteIcon: {
+      description: "Whether to show the decorative quote icon.",
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: { docs: { description: { story: "A single testimonial in the default layout with a star rating." } } },
   render: () => (
     <div className="max-w-xl mx-auto">
       <Testimonial
@@ -30,6 +67,7 @@ export const Default: Story = {
 }
 
 export const Card: Story = {
+  parameters: { docs: { description: { story: "The card variant adds a bordered container with hover shadow." } } },
   render: () => (
     <div className="max-w-md mx-auto">
       <Testimonial
@@ -49,6 +87,7 @@ export const Card: Story = {
 }
 
 export const Featured: Story = {
+  parameters: { docs: { description: { story: "A larger featured testimonial with extra padding for prominent display." } } },
   render: () => (
     <div className="max-w-3xl mx-auto">
       <Testimonial
@@ -69,6 +108,7 @@ export const Featured: Story = {
 }
 
 export const Grid: Story = {
+  parameters: { docs: { description: { story: "Multiple testimonials arranged in a responsive 3-column grid using TestimonialGrid." } } },
   render: () => (
     <TestimonialGrid columns={3}>
       <Testimonial
@@ -106,6 +146,7 @@ export const Grid: Story = {
 }
 
 export const Carousel: Story = {
+  parameters: { docs: { description: { story: "An auto-playing carousel that rotates through testimonials with dot navigation." } } },
   render: () => (
     <TestimonialCarousel
       testimonials={[

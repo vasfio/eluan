@@ -116,7 +116,7 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
             disabled={disabled}
             className={cn(
               "w-full justify-start text-left font-normal border border-solid border-[var(--interactive-border-alt)]",
-              !selectedDate && "text-[var(--interactive-fg-alt)]",
+              !selectedDate && "text-[color:var(--interactive-fg-alt)]",
               className
             )}
           >
@@ -152,7 +152,7 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
                     handleTimeChange("hour", String(num))
                   }
                 }}
-                className="w-[44px] rounded-md border border-input bg-background px-2 py-1.5 text-[var(--font-size-sm)] text-center tabular-nums focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-[44px] rounded-md border border-input bg-background px-2 py-1.5 text-[length:var(--font-size-sm)] text-center tabular-nums focus:outline-none focus:ring-1 focus:ring-ring"
               />
               <span className="text-muted-foreground font-medium">:</span>
               <input
@@ -168,7 +168,7 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
                     handleTimeChange("minute", String(num))
                   }
                 }}
-                className="w-[44px] rounded-md border border-input bg-background px-2 py-1.5 text-[var(--font-size-sm)] text-center tabular-nums focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-[44px] rounded-md border border-input bg-background px-2 py-1.5 text-[length:var(--font-size-sm)] text-center tabular-nums focus:outline-none focus:ring-1 focus:ring-ring"
               />
               {showSeconds && (
                 <>
@@ -186,7 +186,7 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
                         handleTimeChange("second", String(num))
                       }
                     }}
-                    className="w-[44px] rounded-md border border-input bg-background px-2 py-1.5 text-[var(--font-size-sm)] text-center tabular-nums focus:outline-none focus:ring-1 focus:ring-ring"
+                    className="w-[44px] rounded-md border border-input bg-background px-2 py-1.5 text-[length:var(--font-size-sm)] text-center tabular-nums focus:outline-none focus:ring-1 focus:ring-ring"
                   />
                 </>
               )}
@@ -196,7 +196,7 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
                     type="button"
                     onClick={() => handleTimeChange("ampm", "AM")}
                     className={cn(
-                      "px-2.5 py-1.5 text-[var(--font-size-xs)] font-medium transition-colors",
+                      "px-2.5 py-1.5 text-[length:var(--font-size-xs)] font-medium transition-colors",
                       getAmPm() === "AM"
                         ? "bg-foreground text-background"
                         : "bg-background text-muted-foreground hover:text-foreground"
@@ -208,7 +208,7 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
                     type="button"
                     onClick={() => handleTimeChange("ampm", "PM")}
                     className={cn(
-                      "px-2.5 py-1.5 text-[var(--font-size-xs)] font-medium transition-colors",
+                      "px-2.5 py-1.5 text-[length:var(--font-size-xs)] font-medium transition-colors",
                       getAmPm() === "PM"
                         ? "bg-foreground text-background"
                         : "bg-background text-muted-foreground hover:text-foreground"

@@ -38,7 +38,7 @@ const MenubarTrigger = React.forwardRef<
   <MenubarPrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex cursor-default select-none items-center rounded-[var(--curves-sm)] px-[var(--spacing-md)] py-[var(--spacing-xs)] text-[var(--font-size-sm)] font-medium outline-none focus:bg-[var(--interactive-bg-hover)] focus:text-[var(--interactive-fg)] data-[state=open]:bg-[var(--interactive-bg-hover)] data-[state=open]:text-[var(--interactive-fg)]",
+      "flex cursor-default select-none items-center rounded-[var(--curves-sm)] px-[var(--spacing-md)] py-[var(--spacing-xs)] text-[length:var(--font-size-sm)] font-medium outline-none focus:bg-[var(--interactive-bg-hover)] focus:text-[color:var(--interactive-fg)] data-[state=open]:bg-[var(--interactive-bg-hover)] data-[state=open]:text-[color:var(--interactive-fg)]",
       className
     )}
     {...props}
@@ -55,7 +55,7 @@ const MenubarSubTrigger = React.forwardRef<
   <MenubarPrimitive.SubTrigger
     ref={ref}
     className={cn(
-      "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-[var(--font-size-sm)] outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+      "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-[length:var(--font-size-sm)] outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
       inset && "pl-8",
       className
     )}
@@ -74,7 +74,7 @@ const MenubarSubContent = React.forwardRef<
   <MenubarPrimitive.SubContent
     ref={ref}
     className={cn(
-      "z-50 min-w-[8rem] overflow-hidden rounded-[var(--curves-md)] border bg-[var(--container-bg)] p-[var(--spacing-xxs)] text-[var(--container-fg)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      "z-50 min-w-[8rem] overflow-hidden rounded-[var(--curves-md)] border bg-[var(--container-bg)] p-[var(--spacing-xxs)] text-[color:var(--container-fg)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
       className
     )}
     {...props}
@@ -97,7 +97,7 @@ const MenubarContent = React.forwardRef<
         alignOffset={alignOffset}
         sideOffset={sideOffset}
         className={cn(
-          "z-50 min-w-[12rem] overflow-hidden rounded-[var(--curves-md)] border bg-[var(--container-bg)] p-[var(--spacing-xxs)] text-[var(--container-fg)] shadow-md data-[state=open]:animate-in data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+          "z-50 min-w-[12rem] overflow-hidden rounded-[var(--curves-md)] border bg-[var(--container-bg)] p-[var(--spacing-xxs)] text-[color:var(--container-fg)] shadow-md data-[state=open]:animate-in data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
           className
         )}
         {...props}
@@ -116,7 +116,7 @@ const MenubarItem = React.forwardRef<
   <MenubarPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-[var(--curves-sm)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[var(--font-size-sm)] outline-none focus:bg-[var(--interactive-bg-hover)] focus:text-[var(--interactive-fg)] data-[disabled]:pointer-events-none data-[disabled]:bg-[var(--interactive-bg-disabled)] data-[disabled]:text-[var(--interactive-fg-disabled)]",
+      "relative flex cursor-default select-none items-center rounded-[var(--curves-sm)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[length:var(--font-size-sm)] outline-none focus:bg-[var(--interactive-bg-hover)] focus:text-[color:var(--interactive-fg)] data-[disabled]:pointer-events-none data-[disabled]:bg-[var(--interactive-bg-disabled)] data-[disabled]:text-[color:var(--interactive-fg-disabled)]",
       inset && "pl-8",
       className
     )}
@@ -132,7 +132,7 @@ const MenubarCheckboxItem = React.forwardRef<
   <MenubarPrimitive.CheckboxItem
     ref={ref}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-[var(--curves-sm)] py-[var(--spacing-xs)] pl-8 pr-[var(--spacing-sm)] text-[var(--font-size-sm)] outline-none focus:bg-[var(--interactive-bg-hover)] focus:text-[var(--interactive-fg)] data-[disabled]:pointer-events-none data-[disabled]:bg-[var(--interactive-bg-disabled)] data-[disabled]:text-[var(--interactive-fg-disabled)]",
+      "relative flex cursor-default select-none items-center rounded-[var(--curves-sm)] py-[var(--spacing-xs)] pl-8 pr-[var(--spacing-sm)] text-[length:var(--font-size-sm)] outline-none focus:bg-[var(--interactive-bg-hover)] focus:text-[color:var(--interactive-fg)] data-[disabled]:pointer-events-none data-[disabled]:bg-[var(--interactive-bg-disabled)] data-[disabled]:text-[color:var(--interactive-fg-disabled)]",
       className
     )}
     checked={checked}
@@ -155,7 +155,7 @@ const MenubarRadioItem = React.forwardRef<
   <MenubarPrimitive.RadioItem
     ref={ref}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-[var(--curves-sm)] py-[var(--spacing-xs)] pl-8 pr-[var(--spacing-sm)] text-[var(--font-size-sm)] outline-none focus:bg-[var(--interactive-bg-hover)] focus:text-[var(--interactive-fg)] data-[disabled]:pointer-events-none data-[disabled]:bg-[var(--interactive-bg-disabled)] data-[disabled]:text-[var(--interactive-fg-disabled)]",
+      "relative flex cursor-default select-none items-center rounded-[var(--curves-sm)] py-[var(--spacing-xs)] pl-8 pr-[var(--spacing-sm)] text-[length:var(--font-size-sm)] outline-none focus:bg-[var(--interactive-bg-hover)] focus:text-[color:var(--interactive-fg)] data-[disabled]:pointer-events-none data-[disabled]:bg-[var(--interactive-bg-disabled)] data-[disabled]:text-[color:var(--interactive-fg-disabled)]",
       className
     )}
     {...props}
@@ -179,7 +179,7 @@ const MenubarLabel = React.forwardRef<
   <MenubarPrimitive.Label
     ref={ref}
     className={cn(
-      "px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[var(--font-size-sm)] font-semibold",
+      "px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[length:var(--font-size-sm)] font-semibold",
       inset && "pl-8",
       className
     )}
@@ -207,7 +207,7 @@ const MenubarShortcut = ({
   return (
     <span
       className={cn(
-        "ml-auto text-[var(--font-size-xs)] tracking-widest text-[var(--container-fg-alt)]",
+        "ml-auto text-[length:var(--font-size-xs)] tracking-widest text-[color:var(--container-fg-alt)]",
         className
       )}
       {...props}

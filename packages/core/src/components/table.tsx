@@ -9,7 +9,7 @@ const Table = React.forwardRef<
   <div className="relative w-full overflow-auto">
     <table
       ref={ref}
-      className={cn("w-full caption-bottom text-[var(--font-size-sm)]", className)}
+      className={cn("w-full caption-bottom text-[length:var(--font-size-sm)]", className)}
       {...props}
     />
   </div>
@@ -58,7 +58,7 @@ const TableRow = React.forwardRef<
   <tr
     ref={ref}
     className={cn(
-      "border-b transition-colors hover:bg-[var(--interactive-bg-hover)] data-[state=selected]:bg-[var(--interactive-bg-selected)] data-[state=selected]:text-[var(--interactive-fg-selected)]",
+      "border-b transition-colors hover:bg-[var(--interactive-bg-hover)] data-[state=selected]:bg-[var(--interactive-bg-selected)] data-[state=selected]:text-[color:var(--interactive-fg-selected)]",
       className
     )}
     {...props}
@@ -73,7 +73,7 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      "h-[var(--size-xl)] px-[var(--spacing-md)] text-left align-middle font-medium text-[var(--interactive-fg-alt)] [&:has([role=checkbox])]:pr-0",
+      "h-[var(--size-xl)] px-[var(--spacing-md)] text-left align-middle font-medium text-[color:var(--interactive-fg-alt)] [&:has([role=checkbox])]:pr-0",
       className
     )}
     {...props}
@@ -99,7 +99,7 @@ const TableCaption = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <caption
     ref={ref}
-    className={cn("mt-[var(--spacing-md)] text-[var(--font-size-sm)] text-[var(--interactive-fg-alt)]", className)}
+    className={cn("mt-[var(--spacing-md)] text-[length:var(--font-size-sm)] text-[color:var(--interactive-fg-alt)]", className)}
     {...props}
   />
 ))

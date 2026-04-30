@@ -55,12 +55,12 @@ const HeaderNavigation = React.forwardRef<HTMLElement, HeaderNavigationProps>(
 
     const renderNavItem = (item: NavItem, mobile = false) => {
       const baseClasses = mobile
-        ? "block w-full px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[var(--font-size-base)] font-medium text-[var(--interactive-fg)] hover:bg-[var(--interactive-bg-hover)] rounded-[var(--curves-lg)] transition-colors"
-        : "relative px-[var(--spacing-md)] py-[var(--spacing-xs)] text-[var(--font-size-sm)] font-normal text-[var(--interactive-fg-alt)] hover:text-[var(--interactive-fg)] transition-colors rounded-full"
+        ? "block w-full px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[length:var(--font-size-base)] font-medium text-[color:var(--interactive-fg)] hover:bg-[var(--interactive-bg-hover)] rounded-[var(--curves-lg)] transition-colors"
+        : "relative px-[var(--spacing-md)] py-[var(--spacing-xs)] text-[length:var(--font-size-sm)] font-normal text-[color:var(--interactive-fg-alt)] hover:text-[color:var(--interactive-fg)] transition-colors rounded-full"
 
       const activeClasses = mobile
         ? "bg-[var(--interactive-bg-alt)]"
-        : "bg-[var(--interactive-bg-alt)] text-[var(--interactive-fg)]"
+        : "bg-[var(--interactive-bg-alt)] text-[color:var(--interactive-fg)]"
 
       if (item.href) {
         return (

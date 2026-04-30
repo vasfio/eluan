@@ -75,42 +75,42 @@ const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(
         )}
       >
         {option.highlighted && option.highlightLabel && (
-          <span className="absolute -top-3 right-4 inline-flex items-center rounded-full bg-[var(--action-primary-bg)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[var(--font-size-xs)] font-normal text-[var(--action-primary-fg)]">
+          <span className="absolute -top-3 right-4 inline-flex items-center rounded-full bg-[var(--action-primary-bg)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[length:var(--font-size-xs)] font-normal text-[color:var(--action-primary-fg)]">
             {option.highlightLabel}
           </span>
         )}
         <div className="mb-[var(--spacing-md)] text-center">
-          <h3 className="font-heading text-[var(--font-size-lg)] font-medium text-[var(--container-fg)]">
+          <h3 className="font-heading text-[length:var(--font-size-lg)] font-medium text-[color:var(--container-fg)]">
             {option.name}
           </h3>
           {option.description && (
-            <p className="mt-[var(--spacing-xs)] text-[var(--font-size-sm)] text-[var(--container-fg-alt)]">
+            <p className="mt-[var(--spacing-xs)] text-[length:var(--font-size-sm)] text-[color:var(--container-fg-alt)]">
               {option.description}
             </p>
           )}
           <div className="mt-[var(--spacing-md)]">
             {option.originalPrice && (
-              <span className="mr-[var(--spacing-sm)] text-[var(--font-size-lg)] text-[var(--container-fg-alt)] line-through">
+              <span className="mr-[var(--spacing-sm)] text-[length:var(--font-size-lg)] text-[color:var(--container-fg-alt)] line-through">
                 {typeof option.originalPrice === "number"
                   ? `$${option.originalPrice}`
                   : option.originalPrice}
               </span>
             )}
-            <span className="font-heading text-[var(--font-size-4xl)] font-medium text-[var(--container-fg)]">
+            <span className="font-heading text-[length:var(--font-size-4xl)] font-medium text-[color:var(--container-fg)]">
               {typeof option.price === "number"
                 ? `$${option.price}`
                 : option.price}
             </span>
             {option.period && (
-              <span className="text-[var(--font-size-sm)] text-[var(--container-fg-alt)]">/{option.period}</span>
+              <span className="text-[length:var(--font-size-sm)] text-[color:var(--container-fg-alt)]">/{option.period}</span>
             )}
           </div>
         </div>
         <ul className="mb-[var(--spacing-lg)] flex-1 space-y-[var(--spacing-md)]">
           {option.features.map((feature, index) => (
             <li key={index} className="flex items-start gap-[var(--spacing-sm)]">
-              <Check className="h-[var(--size-xxs)] w-[var(--size-xxs)] shrink-0 text-[var(--positive-fg)]" />
-              <span className="text-[var(--font-size-sm)] text-[var(--container-fg)]">{feature}</span>
+              <Check className="h-[var(--size-xxs)] w-[var(--size-xxs)] shrink-0 text-[color:var(--positive-fg)]" />
+              <span className="text-[length:var(--font-size-sm)] text-[color:var(--container-fg)]">{feature}</span>
             </li>
           ))}
         </ul>

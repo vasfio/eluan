@@ -1,18 +1,48 @@
 import React from "react"
 import type { Meta, StoryObj } from "@storybook/react"
-import { SearchInput, CommandSearch, ExpandableSearch, AutocompleteSearch } from "./search-input"
+import { SearchInput, CommandSearch, AutocompleteSearch } from "./search-input"
 import { Code, FileText, Image, Music, Video } from "lucide-react"
 
 const meta: Meta<typeof SearchInput> = {
   title: "Components/Search Input",
   component: SearchInput,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A collection of search input variants including a basic search input with clear button, a command palette search with keyboard shortcut, and an autocomplete search with filterable dropdown.
+
+**Import**
+\`\`\`tsx
+import { SearchInput, CommandSearch, AutocompleteSearch } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<SearchInput
+  placeholder="Search..."
+  onSearch={(value) => console.log(value)}
+  debounceMs={300}
+/>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Basic search input with onChange and onSearch callbacks and a clear button.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[300px]">
       <SearchInput
@@ -25,6 +55,13 @@ export const Default: Story = {
 }
 
 export const WithDebounce: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Search input with 300ms debounce that delays the onSearch callback.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[300px] space-y-2">
       <SearchInput
@@ -38,6 +75,13 @@ export const WithDebounce: Story = {
 }
 
 export const Loading: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Search input in a loading state showing a spinner instead of the clear button.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[300px]">
       <SearchInput placeholder="Searching..." loading value="react components" />
@@ -46,6 +90,13 @@ export const Loading: Story = {
 }
 
 export const CommandPalette: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "CommandSearch variant with a keyboard shortcut badge that focuses the input on Cmd+K.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[300px] space-y-2">
       <CommandSearch placeholder="Search commands..." shortcutKey="K" />
@@ -55,26 +106,17 @@ export const CommandPalette: Story = {
 }
 
 export const CommandPaletteCustomKey: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "CommandSearch with a custom shortcut key (Cmd+P).",
+      },
+    },
+  },
   render: () => (
     <div className="w-[300px] space-y-2">
       <CommandSearch placeholder="Search files..." shortcutKey="P" />
       <p className="text-sm text-muted-foreground">Press ⌘P to focus</p>
-    </div>
-  ),
-}
-
-export const Expandable: Story = {
-  render: () => (
-    <div className="flex justify-end w-[300px]">
-      <ExpandableSearch placeholder="Search..." onChange={(value) => console.log("Value:", value)} />
-    </div>
-  ),
-}
-
-export const ExpandableCustomWidth: Story = {
-  render: () => (
-    <div className="flex justify-end w-[400px]">
-      <ExpandableSearch placeholder="Search everything..." collapsedWidth="40px" expandedWidth="350px" />
     </div>
   ),
 }
@@ -91,6 +133,13 @@ const autocompleteOptions = [
 ]
 
 export const Autocomplete: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "AutocompleteSearch with a filterable dropdown of framework options.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[350px]">
       <AutocompleteSearch
@@ -103,6 +152,13 @@ export const Autocomplete: Story = {
 }
 
 export const AutocompleteWithIcons: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Autocomplete options with leading icons for different file types.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[350px]">
       <AutocompleteSearch
@@ -121,6 +177,13 @@ export const AutocompleteWithIcons: Story = {
 }
 
 export const AutocompleteGrouped: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Autocomplete results grouped by ecosystem using the groupBy prop.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[350px]">
       <AutocompleteSearch
@@ -145,6 +208,13 @@ export const AutocompleteGrouped: Story = {
 }
 
 export const AutocompleteMinChars: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Autocomplete that requires at least 2 characters before showing results.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[350px] space-y-2">
       <AutocompleteSearch
@@ -160,6 +230,13 @@ export const AutocompleteMinChars: Story = {
 }
 
 export const AutocompleteLoading: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Simulates async autocomplete search with a 500ms loading delay.",
+      },
+    },
+  },
   render: function AutocompleteLoadingStory() {
     const [loading, setLoading] = React.useState(false)
     const [options, setOptions] = React.useState<typeof autocompleteOptions>([])
@@ -194,6 +271,13 @@ export const AutocompleteLoading: Story = {
 }
 
 export const AutocompleteDisabledOptions: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Autocomplete with some options marked as disabled and unselectable.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[350px]">
       <AutocompleteSearch
@@ -211,6 +295,13 @@ export const AutocompleteDisabledOptions: Story = {
 }
 
 export const Disabled: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Search input in a disabled state.",
+      },
+    },
+  },
   render: () => (
     <div className="w-[300px]">
       <SearchInput placeholder="Search disabled" disabled />

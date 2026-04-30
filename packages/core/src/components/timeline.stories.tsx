@@ -17,12 +17,53 @@ const meta: Meta<typeof Timeline> = {
   title: "Components/Timeline",
   component: Timeline,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A composable timeline component for displaying chronological events in vertical or horizontal layouts, with support for status variants and custom dot styles.
+
+**Import**
+\`\`\`tsx
+import {
+  Timeline, TimelineItem, TimelineLine, TimelineDot,
+  TimelineContent, TimelineHeader, TimelineTitle, TimelineDescription,
+  TimelineHorizontal, TimelineHorizontalItem, TimelineHorizontalLine,
+} from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Timeline>
+  <TimelineItem>
+    <TimelineLine />
+    <TimelineHeader>
+      <TimelineDot variant="filled" />
+      <TimelineTitle>Event Title</TimelineTitle>
+    </TimelineHeader>
+    <TimelineContent>
+      <TimelineDescription>Event details here.</TimelineDescription>
+    </TimelineContent>
+  </TimelineItem>
+</Timeline>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "A basic vertical timeline showing an order tracking flow with filled and default dot variants.",
+      },
+    },
+  },
   render: () => (
     <Timeline>
       <TimelineItem>
@@ -69,6 +110,13 @@ export const Default: Story = {
 }
 
 export const WithVariants: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Timeline items using success, warning, and error status variants with different line and dot styles.",
+      },
+    },
+  },
   render: () => (
     <Timeline>
       <TimelineItem variant="success">
@@ -105,6 +153,13 @@ export const WithVariants: Story = {
 }
 
 export const Horizontal: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Horizontal timeline layout using TimelineHorizontal, TimelineHorizontalItem, and TimelineHorizontalLine sub-components.",
+      },
+    },
+  },
   render: () => (
     <TimelineHorizontal>
       {["Step 1", "Step 2", "Step 3", "Complete"].map((label, i, arr) => (

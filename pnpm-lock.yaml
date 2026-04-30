@@ -70,6 +70,97 @@ importers:
         specifier: ~5.3.0
         version: 5.3.3
 
+  packages/ai:
+    dependencies:
+      '@vasf/ragnar-core':
+        specifier: workspace:^
+        version: link:../core
+      '@vasf/ragnar-tokens':
+        specifier: workspace:^
+        version: link:../tokens
+      class-variance-authority:
+        specifier: ^0.7.0
+        version: 0.7.1
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      lucide-react:
+        specifier: ^0.395.0
+        version: 0.395.0(react@18.3.1)
+      react:
+        specifier: ^18.0.0
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.0.0
+        version: 18.3.1(react@18.3.1)
+      tailwind-merge:
+        specifier: ^2.3.0
+        version: 2.6.1
+    devDependencies:
+      '@storybook/addon-essentials':
+        specifier: ^8.1.10
+        version: 8.6.14(@types/react@18.3.28)(storybook@8.6.15(prettier@2.8.8))
+      '@storybook/addon-interactions':
+        specifier: ^8.1.10
+        version: 8.6.14(storybook@8.6.15(prettier@2.8.8))
+      '@storybook/addon-links':
+        specifier: ^8.1.10
+        version: 8.6.15(react@18.3.1)(storybook@8.6.15(prettier@2.8.8))
+      '@storybook/blocks':
+        specifier: ^8.1.10
+        version: 8.6.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.15(prettier@2.8.8))
+      '@storybook/react':
+        specifier: ^8.1.10
+        version: 8.6.15(@storybook/test@8.6.15(storybook@8.6.15(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.15(prettier@2.8.8))(typescript@5.9.3)
+      '@storybook/react-vite':
+        specifier: ^8.1.10
+        version: 8.6.15(@storybook/test@8.6.15(storybook@8.6.15(prettier@2.8.8)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.57.1)(storybook@8.6.15(prettier@2.8.8))(typescript@5.9.3)(vite@5.4.21(@types/node@20.19.32)(lightningcss@1.32.0)(terser@5.46.0))
+      '@storybook/test':
+        specifier: ^8.1.10
+        version: 8.6.15(storybook@8.6.15(prettier@2.8.8))
+      '@tailwindcss/vite':
+        specifier: ^4.2.2
+        version: 4.2.2(vite@5.4.21(@types/node@20.19.32)(lightningcss@1.32.0)(terser@5.46.0))
+      '@types/node':
+        specifier: ^20.14.2
+        version: 20.19.32
+      '@types/react':
+        specifier: ^18.3.3
+        version: 18.3.28
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.7(@types/react@18.3.28)
+      '@vitejs/plugin-react':
+        specifier: ^4.3.1
+        version: 4.7.0(vite@5.4.21(@types/node@20.19.32)(lightningcss@1.32.0)(terser@5.46.0))
+      '@vitest/coverage-v8':
+        specifier: ^4.0.18
+        version: 4.0.18(vitest@4.0.18(@types/node@20.19.32)(jiti@2.6.1)(jsdom@28.1.0)(lightningcss@1.32.0)(terser@5.46.0)(yaml@2.8.2))
+      jsdom:
+        specifier: ^28.1.0
+        version: 28.1.0
+      storybook:
+        specifier: ^8.1.10
+        version: 8.6.15(prettier@2.8.8)
+      tailwindcss:
+        specifier: ^4.2.2
+        version: 4.2.2
+      tailwindcss-animate:
+        specifier: ^1.0.7
+        version: 1.0.7(tailwindcss@4.2.2)
+      typescript:
+        specifier: ^5.4.5
+        version: 5.9.3
+      vite:
+        specifier: ^5.3.1
+        version: 5.4.21(@types/node@20.19.32)(lightningcss@1.32.0)(terser@5.46.0)
+      vite-plugin-dts:
+        specifier: ^3.9.1
+        version: 3.9.1(@types/node@20.19.32)(rollup@4.57.1)(typescript@5.9.3)(vite@5.4.21(@types/node@20.19.32)(lightningcss@1.32.0)(terser@5.46.0))
+      vitest:
+        specifier: ^4.0.18
+        version: 4.0.18(@types/node@20.19.32)(jiti@2.6.1)(jsdom@28.1.0)(lightningcss@1.32.0)(terser@5.46.0)(yaml@2.8.2)
+
   packages/core:
     dependencies:
       '@radix-ui/react-accordion':
@@ -168,6 +259,9 @@ importers:
       cmdk:
         specifier: ^1.1.1
         version: 1.1.1(@types/react-dom@18.3.7(@types/react@18.3.28))(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      countries-list:
+        specifier: ^3.3.0
+        version: 3.3.0
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -341,6 +435,9 @@ importers:
       '@fontsource/bebas-neue':
         specifier: ^5.2.7
         version: 5.2.7
+      '@fontsource/bricolage-grotesque':
+        specifier: ^5.2.8
+        version: 5.2.10
       '@fontsource/dela-gothic-one':
         specifier: ^5.2.7
         version: 5.2.7
@@ -375,6 +472,9 @@ importers:
 
   packages/web:
     dependencies:
+      '@radix-ui/react-navigation-menu':
+        specifier: ^1.2.3
+        version: 1.2.14(@types/react-dom@18.3.7(@types/react@18.3.28))(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@vasf/ragnar-core':
         specifier: workspace:^
         version: link:../core
@@ -1839,6 +1939,9 @@ packages:
 
   '@fontsource/bebas-neue@5.2.7':
     resolution: {integrity: sha512-DsmBrmq55d9BCU0mt4DT4RZDdH8vhWRKEUOfbuNB1EEjMuwbtFvM8N+3gIlkYSFbsb10P8Q19BV5OdpMu2h0fA==}
+
+  '@fontsource/bricolage-grotesque@5.2.10':
+    resolution: {integrity: sha512-V2xS+1P7C8IrSypXLUx/bLtX/LsTlYtV2k2CsU+S/0t8qepZ2hvKSlyJIx7Ub/iY8Bbnj+IjAuUF9nvFz+BbIg==}
 
   '@fontsource/dela-gothic-one@5.2.7':
     resolution: {integrity: sha512-swkcFgr2HjPWbY7dGP/9H7zXePtwF6C5ASLriFSZ02nAh6zjUIudwz8TBWQu9mIXfbgWnvokZ0PjP2FWQGGIWQ==}
@@ -4250,6 +4353,9 @@ packages:
   cosmiconfig@5.2.1:
     resolution: {integrity: sha512-H65gsXo1SKjf8zmrJ67eJk8aIRKV5ff2D4uKZIBZShbhGSpEmsQOPW/SKMKYhSTrqR7ufy6RP69rPogdaPh/kA==}
     engines: {node: '>=4'}
+
+  countries-list@3.3.0:
+    resolution: {integrity: sha512-XRUjS+dcZuNh/fg3+mka3bXgcg4TbQZ1gaK5IJqO6qulerBANl1bmrd20P2dgmPkBpP+5FnejiSF1gd7bgAg+g==}
 
   crelt@1.0.6:
     resolution: {integrity: sha512-VQ2MBenTq1fWZUH9DJNGti7kKv6EeAuYr3cLwxUWhIu1baTaXh4Ib5W2CqHVqib4/MqbYGJqiL3Zb8GJZr3l4g==}
@@ -8948,6 +9054,8 @@ snapshots:
 
   '@fontsource/bebas-neue@5.2.7': {}
 
+  '@fontsource/bricolage-grotesque@5.2.10': {}
+
   '@fontsource/dela-gothic-one@5.2.7': {}
 
   '@fontsource/geist-mono@5.2.7': {}
@@ -11816,6 +11924,8 @@ snapshots:
       is-directory: 0.3.1
       js-yaml: 3.14.2
       parse-json: 4.0.0
+
+  countries-list@3.3.0: {}
 
   crelt@1.0.6: {}
 

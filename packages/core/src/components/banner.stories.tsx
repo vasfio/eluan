@@ -5,12 +5,60 @@ const meta: Meta<typeof Banner> = {
   title: "Components/Banner",
   component: Banner,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A prominent message bar for displaying system-wide notifications, alerts, or status updates with multiple semantic variants and positioning options.
+
+**Import**
+\`\`\`tsx
+import { Banner } from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Banner variant="info" dismissible onDismiss={() => setVisible(false)}>
+  New version available. Please refresh.
+</Banner>
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    variant: {
+      description: "Visual style of the banner. Accepts `\"default\"`, `\"info\"`, `\"success\"`, `\"warning\"`, `\"destructive\"`, or `\"neutral\"`. Defaults to `\"info\"`.",
+    },
+    position: {
+      description: "Positioning strategy. Accepts `\"top\"`, `\"bottom\"` (fixed to viewport edges), or `\"inline\"` (relative). Defaults to `\"inline\"`.",
+    },
+    icon: {
+      description: "Optional icon node rendered at the start of the banner.",
+    },
+    action: {
+      description: "Optional action node (e.g. a button) rendered at the end of the banner.",
+    },
+    dismissible: {
+      description: "When `true`, shows a close button to dismiss the banner. Defaults to `false`.",
+    },
+    onDismiss: {
+      description: "Callback fired when the dismiss button is clicked.",
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Banner with the default variant (inverse background colors).",
+      },
+    },
+  },
   render: () => (
     <Banner variant='default'>
       This is a default banner message.
@@ -19,6 +67,13 @@ export const Default: Story = {
 }
 
 export const Info: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Informational banner using the info variant.",
+      },
+    },
+  },
   render: () => (
     <Banner variant="info">
       This is an informational banner.
@@ -27,6 +82,13 @@ export const Info: Story = {
 }
 
 export const Success: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Success banner indicating a completed operation.",
+      },
+    },
+  },
   render: () => (
     <Banner variant="success">
       Operation completed successfully!
@@ -35,6 +97,13 @@ export const Success: Story = {
 }
 
 export const Warning: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Warning banner alerting users to potential issues.",
+      },
+    },
+  },
   render: () => (
     <Banner variant="warning">
       Please be aware of this warning.
@@ -43,6 +112,13 @@ export const Warning: Story = {
 }
 
 export const Destructive: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Destructive/error banner for critical failure messages.",
+      },
+    },
+  },
   render: () => (
     <Banner variant="destructive">
       An error occurred. Please try again.
@@ -51,6 +127,13 @@ export const Destructive: Story = {
 }
 
 export const AllVariants: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "All five banner variants displayed together for visual comparison.",
+      },
+    },
+  },
   render: () => (
     <div className="space-y-2">
       <Banner variant='default'>Default banner</Banner>

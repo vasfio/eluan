@@ -25,12 +25,49 @@ const meta: Meta<typeof ContactSection> = {
   title: "Web/ContactForm",
   component: ContactSection,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A full contact page section with composable contact info, detail items, social links, and a form with input, textarea, select, labels, and validation states.
+
+**Import**
+\`\`\`tsx
+import { ContactSection, ContactContent, ContactInfo, ContactHeader, ContactTitle, ContactDescription, ContactDetails, ContactDetailItem, ContactSocials, ContactSocialLink, ContactForm, ContactFormRow, ContactFormField, ContactFormLabel, ContactFormInput, ContactFormTextarea, ContactFormSelect, ContactFormError, ContactFormSuccess } from "@vasf/ragnar-web"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<ContactSection>
+  <ContactContent>
+    <ContactInfo>
+      <ContactTitle>Get in touch</ContactTitle>
+    </ContactInfo>
+    <ContactForm variant="card">
+      <ContactFormField>
+        <ContactFormLabel required>Email</ContactFormLabel>
+        <ContactFormInput type="email" />
+      </ContactFormField>
+    </ContactForm>
+  </ContactContent>
+</ContactSection>
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    size: {
+      description: "Vertical padding: sm, default, or lg.",
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: { docs: { description: { story: "Full contact page with info sidebar (email, phone, address, socials) and a card-styled form." } } },
   render: () => (
     <ContactSection>
       <ContactContent>
@@ -110,6 +147,7 @@ export const Default: Story = {
 }
 
 export const SimpleForm: Story = {
+  parameters: { docs: { description: { story: "A minimal standalone form with name, email, and message fields." } } },
   render: () => (
     <div className="max-w-md mx-auto p-8">
       <ContactForm>
@@ -132,6 +170,7 @@ export const SimpleForm: Story = {
 }
 
 export const CardForm: Story = {
+  parameters: { docs: { description: { story: "Card variant form with bordered container, row layout, and company field." } } },
   render: () => (
     <div className="max-w-lg mx-auto p-8">
       <ContactForm variant="card">

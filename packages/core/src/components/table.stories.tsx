@@ -14,6 +14,41 @@ const meta: Meta<typeof Table> = {
   title: "Components/Table",
   component: Table,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A set of composable table primitives for displaying structured tabular data with headers, rows, footers, and captions.
+
+**Import**
+\`\`\`tsx
+import {
+  Table, TableHeader, TableBody, TableFooter,
+  TableHead, TableRow, TableCell, TableCaption,
+} from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Name</TableHead>
+      <TableHead>Email</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>John</TableCell>
+      <TableCell>john@example.com</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
@@ -28,6 +63,13 @@ const invoices = [
 ]
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Full-featured table with header, body, footer, and caption displaying invoice data.",
+      },
+    },
+  },
   render: () => (
     <Table>
       <TableCaption>A list of your recent invoices.</TableCaption>
@@ -60,6 +102,13 @@ export const Default: Story = {
 }
 
 export const Simple: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Minimal table with only a header and body, without footer or caption.",
+      },
+    },
+  },
   render: () => (
     <Table>
       <TableHeader>

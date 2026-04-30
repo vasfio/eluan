@@ -55,6 +55,8 @@
   /* Keyframes */
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-dropdown-unroll: dropdown-unroll 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-dropdown-roll-up: dropdown-roll-up 180ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes accordion-down {
@@ -65,6 +67,201 @@
 @keyframes accordion-up {
   from { height: var(--radix-accordion-content-height); }
   to { height: 0; }
+}
+
+@keyframes dropdown-unroll {
+  from {
+    opacity: 0;
+    transform: scaleY(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes dropdown-roll-up {
+  from {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  to {
+    opacity: 0;
+    transform: scaleY(0.6);
+  }
+}
+
+/* ============================================
+ * Sonner Toast Overrides
+ * Override sonner's inline styles with token-based colors
+ * ============================================ */
+
+[data-sonner-toaster] [data-sonner-toast] {
+  background-color: var(--container-bg-alt) !important;
+  color: var(--container-fg) !important;
+  border-color: var(--container-border-alt) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+[data-sonner-toaster] [data-sonner-toast] [data-description] {
+  color: var(--container-fg-alt) !important;
+}
+
+[data-sonner-toaster] [data-sonner-toast][data-type="success"] {
+  background-color: var(--positive-bg) !important;
+  color: var(--positive-fg) !important;
+  border-color: var(--positive-border) !important;
+}
+
+[data-sonner-toaster] [data-sonner-toast][data-type="error"] {
+  background-color: var(--destructive-bg) !important;
+  color: var(--destructive-fg) !important;
+  border-color: var(--destructive-border) !important;
+}
+
+[data-sonner-toaster] [data-sonner-toast][data-type="warning"] {
+  background-color: var(--cautionary-bg) !important;
+  color: var(--cautionary-fg) !important;
+  border-color: var(--cautionary-border) !important;
+}
+
+[data-sonner-toaster] [data-sonner-toast][data-type="info"] {
+  background-color: var(--informative-bg) !important;
+  color: var(--informative-fg) !important;
+  border-color: var(--informative-border) !important;
+}
+
+/* ============================================
+ * Code Block — Prism.js Syntax Highlighting
+ * Hardcoded colors (to be replaced with tokens later)
+ * ============================================ */
+
+/* --- Base token color --- */
+code[class*="language-"] .token {
+  color: #abb2bf;
+}
+
+/* --- Comments --- */
+code[class*="language-"] .token.comment,
+code[class*="language-"] .token.prolog,
+code[class*="language-"] .token.doctype,
+code[class*="language-"] .token.cdata {
+  color: #5c6370;
+  font-style: italic;
+}
+
+/* --- Keywords --- */
+code[class*="language-"] .token.keyword,
+code[class*="language-"] .token.atrule,
+code[class*="language-"] .token.important {
+  color: #c678dd;
+}
+
+/* --- Strings & regex --- */
+code[class*="language-"] .token.string,
+code[class*="language-"] .token.char,
+code[class*="language-"] .token.attr-value,
+code[class*="language-"] .token.regex,
+code[class*="language-"] .token.template-string {
+  color: #98c379;
+}
+
+/* --- Numbers & booleans --- */
+code[class*="language-"] .token.number,
+code[class*="language-"] .token.boolean {
+  color: #d19a66;
+}
+
+/* --- Functions --- */
+code[class*="language-"] .token.function,
+code[class*="language-"] .token.method {
+  color: #61afef;
+}
+
+/* --- Types / class names --- */
+code[class*="language-"] .token.class-name,
+code[class*="language-"] .token.maybe-class-name,
+code[class*="language-"] .token.builtin {
+  color: #e5c07b;
+}
+
+/* --- Operators & punctuation --- */
+code[class*="language-"] .token.operator,
+code[class*="language-"] .token.arrow {
+  color: #56b6c2;
+}
+
+/* --- Punctuation (brackets, semicolons, etc.) --- */
+code[class*="language-"] .token.punctuation {
+  color: #abb2bf;
+}
+
+/* --- Property names (objects, CSS, JSON keys) --- */
+code[class*="language-"] .token.property,
+code[class*="language-"] .token.attr-name {
+  color: #e5c07b;
+}
+
+/* --- Tags (HTML/JSX) --- */
+code[class*="language-"] .token.tag {
+  color: #e06c75;
+}
+
+code[class*="language-"] .token.tag .token.punctuation {
+  color: #abb2bf;
+}
+
+code[class*="language-"] .token.tag .token.attr-name {
+  color: #d19a66;
+}
+
+code[class*="language-"] .token.tag .token.attr-value {
+  color: #98c379;
+}
+
+/* --- Selectors (CSS) --- */
+code[class*="language-"] .token.selector {
+  color: #c678dd;
+}
+
+/* --- Units & URLs (CSS) --- */
+code[class*="language-"] .token.unit,
+code[class*="language-"] .token.url {
+  color: #d19a66;
+}
+
+/* --- Variables & symbols --- */
+code[class*="language-"] .token.variable,
+code[class*="language-"] .token.symbol {
+  color: #e06c75;
+}
+
+/* --- Inserted / Deleted (diffs) --- */
+code[class*="language-"] .token.inserted {
+  color: #98c379;
+}
+
+code[class*="language-"] .token.deleted {
+  color: #e06c75;
+}
+
+/* --- Constant --- */
+code[class*="language-"] .token.constant {
+  color: #d19a66;
+}
+
+/* --- Namespace --- */
+code[class*="language-"] .token.namespace {
+  opacity: 0.7;
+}
+
+/* --- Bold / Italic modifiers --- */
+code[class*="language-"] .token.bold {
+  font-weight: 500;
+}
+
+code[class*="language-"] .token.italic {
+  font-style: italic;
 }
 
 /* ============================================

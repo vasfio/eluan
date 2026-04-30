@@ -8,8 +8,8 @@ const appDownloadSectionVariants = cva("w-full", {
     variant: {
       default: "bg-[var(--container-bg)]",
       muted: "bg-[var(--container-bg-alt)]",
-      dark: "bg-[var(--container-bg-inverse)] text-[var(--container-fg-inverse)]",
-      gradient: "bg-[var(--action-primary-bg)] text-[var(--action-primary-fg)]",
+      dark: "bg-[var(--container-bg-inverse)] text-[color:var(--container-fg-inverse)]",
+      gradient: "bg-[var(--action-primary-bg)] text-[color:var(--action-primary-fg)]",
     },
     size: {
       sm: "py-[var(--spacing-2xl)]",
@@ -72,7 +72,7 @@ const AppDownloadTitle = React.forwardRef<
   <h2
     ref={ref}
     className={cn(
-      "font-heading text-[var(--font-size-3xl)] font-bold tracking-tight sm:text-[var(--font-size-4xl)]",
+      "font-heading text-[length:var(--font-size-3xl)] font-bold tracking-tight sm:text-[length:var(--font-size-4xl)]",
       className
     )}
     {...props}
@@ -86,7 +86,7 @@ const AppDownloadDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-[var(--font-size-lg)] opacity-90", className)}
+    className={cn("text-[length:var(--font-size-lg)] opacity-90", className)}
     {...props}
   />
 ))
@@ -138,8 +138,8 @@ const AppStoreBadge = React.forwardRef<HTMLAnchorElement, AppStoreBadgeProps>(
         <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
       </svg>
       <div className="text-left">
-        <div className="text-[var(--font-size-xs)] opacity-80">Download on the</div>
-        <div className="text-[var(--font-size-lg)] font-semibold leading-tight">App Store</div>
+        <div className="text-[length:var(--font-size-xs)] opacity-80">Download on the</div>
+        <div className="text-[length:var(--font-size-lg)] font-semibold leading-tight">App Store</div>
       </div>
     </a>
   )
@@ -162,8 +162,8 @@ const GooglePlayBadge = React.forwardRef<
       <path d="M3 20.5v-17c0-.59.34-1.11.84-1.35L13.69 12l-9.85 9.85c-.5-.25-.84-.76-.84-1.35m13.81-5.38L6.05 21.34l8.49-8.49 2.27 2.27m3.35-4.31c.34.27.59.69.59 1.19s-.22.9-.57 1.18l-2.29 1.32-2.5-2.5 2.5-2.5 2.27 1.31M6.05 2.66l10.76 6.22-2.27 2.27-8.49-8.49z" />
     </svg>
     <div className="text-left">
-      <div className="text-[var(--font-size-xs)] opacity-80">Get it on</div>
-      <div className="text-[var(--font-size-lg)] font-semibold leading-tight">Google Play</div>
+      <div className="text-[length:var(--font-size-xs)] opacity-80">Get it on</div>
+      <div className="text-[length:var(--font-size-lg)] font-semibold leading-tight">Google Play</div>
     </div>
   </a>
 ))
@@ -249,7 +249,7 @@ const AppQRCode = React.forwardRef<HTMLDivElement, AppQRCodeProps>(
       <div className="mx-auto mb-[var(--spacing-sm)] h-32 w-32 rounded-[var(--curves-lg)] border bg-white p-[var(--spacing-sm)]">
         {children}
       </div>
-      <p className="text-[var(--font-size-sm)] text-[var(--container-fg-alt)]">{label}</p>
+      <p className="text-[length:var(--font-size-sm)] text-[color:var(--container-fg-alt)]">{label}</p>
     </div>
   )
 )

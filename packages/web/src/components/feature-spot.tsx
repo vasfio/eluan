@@ -51,7 +51,7 @@ const FeatureSpotEyebrow = React.forwardRef<
   <span
     ref={ref}
     className={cn(
-      "mb-[var(--spacing-sm)] inline-block text-[var(--font-size-xs)] font-medium uppercase tracking-widest text-[var(--action-primary-bg)]",
+      "mb-[var(--spacing-sm)] inline-block text-[length:var(--font-size-xs)] font-medium uppercase tracking-widest text-[color:var(--action-primary-bg)]",
       className
     )}
     {...props}
@@ -81,7 +81,7 @@ const FeatureSpotTitle = React.forwardRef<
   <Comp
     ref={ref}
     className={cn(
-      "font-heading text-[var(--font-size-3xl)] font-medium tracking-tight text-[var(--container-fg)] sm:text-[var(--font-size-4xl)] lg:text-[var(--font-size-5xl)]",
+      "font-heading text-[length:var(--font-size-3xl)] font-medium tracking-tight text-[color:var(--container-fg)] sm:text-[length:var(--font-size-4xl)] lg:text-[length:var(--font-size-5xl)]",
       className
     )}
     {...props}
@@ -96,7 +96,7 @@ const FeatureSpotDescription = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "mt-[var(--spacing-md)] text-[var(--font-size-lg)] leading-relaxed text-[var(--container-fg-alt)]",
+      "mt-[var(--spacing-md)] text-[length:var(--font-size-lg)] leading-relaxed text-[color:var(--container-fg-alt)]",
       className
     )}
     {...props}
@@ -142,7 +142,7 @@ const FeatureSpotItem = React.forwardRef<HTMLDivElement, FeatureSpotItemProps>(
       {...props}
     >
       {icon && (
-        <div className="flex h-[var(--size-lg)] w-[var(--size-lg)] items-center justify-center rounded-[var(--curves-lg)] bg-[var(--container-bg-alt)] text-[var(--container-fg)]">
+        <div className="flex h-[var(--size-lg)] w-[var(--size-lg)] items-center justify-center rounded-[var(--curves-lg)] bg-[var(--container-bg-alt)] text-[color:var(--container-fg)]">
           {icon}
         </div>
       )}
@@ -158,7 +158,7 @@ const FeatureSpotItemTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn("font-heading text-[var(--font-size-lg)] font-medium text-[var(--container-fg)]", className)}
+    className={cn("font-heading text-[length:var(--font-size-lg)] font-medium text-[color:var(--container-fg)]", className)}
     {...props}
   />
 ))
@@ -170,7 +170,7 @@ const FeatureSpotItemDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-[var(--container-fg-alt)] leading-relaxed", className)}
+    className={cn("text-[color:var(--container-fg-alt)] leading-relaxed", className)}
     {...props}
   />
 ))

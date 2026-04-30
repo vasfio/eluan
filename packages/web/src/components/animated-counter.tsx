@@ -8,9 +8,9 @@ import { cn } from "@/lib/utils"
 const counterVariants = cva("tabular-nums", {
   variants: {
     size: {
-      sm: "text-[var(--font-size-2xl)] font-bold",
-      default: "text-[var(--font-size-4xl)] font-bold",
-      lg: "text-[var(--font-size-5xl)] font-bold",
+      sm: "text-[length:var(--font-size-2xl)] font-bold",
+      default: "text-[length:var(--font-size-4xl)] font-bold",
+      lg: "text-[length:var(--font-size-5xl)] font-bold",
       xl: "text-6xl font-bold",
     },
   },
@@ -216,7 +216,7 @@ const CounterWithLabel = React.forwardRef<HTMLDivElement, CounterWithLabelProps>
   ({ label, labelClassName, className, ...counterProps }, ref) => (
     <div ref={ref} className={cn("text-center", className)}>
       <AnimatedCounter {...counterProps} />
-      <p className={cn("mt-[var(--spacing-sm)] text-[var(--font-size-sm)] text-[var(--container-fg-alt)]", labelClassName)}>
+      <p className={cn("mt-[var(--spacing-sm)] text-[length:var(--font-size-sm)] text-[color:var(--container-fg-alt)]", labelClassName)}>
         {label}
       </p>
     </div>
@@ -325,9 +325,9 @@ const CountdownTimer = React.forwardRef<HTMLDivElement, CountdownTimerProps>(
     }, [targetDate, onComplete])
 
     const sizes = {
-      sm: { value: "text-[var(--font-size-2xl)] font-bold", label: "text-[var(--font-size-xs)]" },
-      default: { value: "text-[var(--font-size-4xl)] font-bold", label: "text-[var(--font-size-sm)]" },
-      lg: { value: "text-[var(--font-size-5xl)] font-bold", label: "text-[var(--font-size-base)]" },
+      sm: { value: "text-[length:var(--font-size-2xl)] font-bold", label: "text-[length:var(--font-size-xs)]" },
+      default: { value: "text-[length:var(--font-size-4xl)] font-bold", label: "text-[length:var(--font-size-sm)]" },
+      lg: { value: "text-[length:var(--font-size-5xl)] font-bold", label: "text-[length:var(--font-size-base)]" },
     }
 
     return (
@@ -341,7 +341,7 @@ const CountdownTimer = React.forwardRef<HTMLDivElement, CountdownTimerProps>(
             <div className={cn("tabular-nums", sizes[size].value)}>
               {String(value).padStart(2, "0")}
             </div>
-            <div className={cn("text-[var(--container-fg-alt)]", sizes[size].label)}>
+            <div className={cn("text-[color:var(--container-fg-alt)]", sizes[size].label)}>
               {labels[key as keyof typeof labels]}
             </div>
           </div>

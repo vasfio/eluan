@@ -16,6 +16,45 @@ const meta: Meta<typeof Marquee> = {
   title: "Web/Marquee",
   component: Marquee,
   // Disable autodocs - infinite CSS animations cause memory issues when pre-rendered
+  parameters: {
+    docs: {
+      description: {
+        component: `
+An auto-scrolling marquee component for horizontal or vertical content loops, with optional fade edges and pause-on-hover, plus built-in testimonial card sub-components.
+
+**Import**
+\`\`\`tsx
+import { Marquee, MarqueeItem, VerticalMarquee, MarqueeTestimonial, MarqueeTestimonialContent, MarqueeTestimonialAuthor, MarqueeTestimonialAvatar, MarqueeTestimonialInfo, MarqueeTestimonialName, MarqueeTestimonialRole } from "@vasf/ragnar-web"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Marquee duration={40} direction="left" pauseOnHover>
+  <MarqueeItem>Item 1</MarqueeItem>
+  <MarqueeItem>Item 2</MarqueeItem>
+</Marquee>
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    variant: {
+      description: "Edge masking: default (no mask) or fade (gradient edges).",
+    },
+    duration: {
+      description: "Duration of one complete loop in seconds (default: 40).",
+    },
+    direction: {
+      description: "Scroll direction: left or right.",
+    },
+    pauseOnHover: {
+      description: "Whether to pause the animation on hover (default: true).",
+    },
+    gap: {
+      description: "Gap between items in pixels (default: 16).",
+    },
+  },
 }
 
 export default meta
@@ -28,6 +67,7 @@ const LogoPlaceholder = ({ name }: { name: string }) => (
 )
 
 export const Default: Story = {
+  parameters: { docs: { description: { story: "Default horizontal marquee with fade edges and logo placeholders." } } },
   render: () => (
     <Marquee>
       <MarqueeItem>
@@ -53,6 +93,7 @@ export const Default: Story = {
 }
 
 export const ReverseDirection: Story = {
+  parameters: { docs: { description: { story: "Marquee scrolling right-to-left with a custom duration." } } },
   render: () => (
     <Marquee direction="right" duration={30}>
       <MarqueeItem>
@@ -75,6 +116,7 @@ export const ReverseDirection: Story = {
 }
 
 export const NoFade: Story = {
+  parameters: { docs: { description: { story: "Marquee without edge fade masking." } } },
   render: () => (
     <Marquee variant="default" duration={20}>
       <MarqueeItem>
@@ -94,6 +136,7 @@ export const NoFade: Story = {
 }
 
 export const Testimonials: Story = {
+  parameters: { docs: { description: { story: "Scrolling testimonial cards using the MarqueeTestimonial sub-components." } } },
   render: () => (
     <Marquee duration={60} gap={24}>
       <MarqueeTestimonial>
@@ -137,6 +180,7 @@ export const Testimonials: Story = {
 }
 
 export const Vertical: Story = {
+  parameters: { docs: { description: { story: "Vertical marquee scrolling testimonials top-to-bottom." } } },
   render: () => (
     <div className="h-[400px]">
       <VerticalMarquee duration={20}>

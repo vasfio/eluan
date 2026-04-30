@@ -16,12 +16,49 @@ const meta: Meta<typeof Sheet> = {
   title: "Components/Sheet",
   component: Sheet,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A panel that slides in from any edge of the screen, used for supplementary content like forms, navigation, or detail views.
+
+**Import**
+\`\`\`tsx
+import {
+  Sheet, SheetTrigger, SheetContent, SheetHeader,
+  SheetTitle, SheetDescription, SheetFooter, SheetClose,
+} from "@vasf/ragnar-core"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Sheet>
+  <SheetTrigger>Open</SheetTrigger>
+  <SheetContent>
+    <SheetHeader>
+      <SheetTitle>Title</SheetTitle>
+      <SheetDescription>Description</SheetDescription>
+    </SheetHeader>
+  </SheetContent>
+</Sheet>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Sheet sliding in from the right (default side) with a profile edit form, header, and footer with save action.",
+      },
+    },
+  },
   render: () => (
     <Sheet>
       <SheetTrigger asChild>
@@ -55,6 +92,13 @@ export const Default: Story = {
 }
 
 export const Left: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Sheet that slides in from the left edge using `side=\"left\"`.",
+      },
+    },
+  },
   render: () => (
     <Sheet>
       <SheetTrigger asChild>
@@ -71,6 +115,13 @@ export const Left: Story = {
 }
 
 export const Top: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Sheet that slides in from the top edge using `side=\"top\"`.",
+      },
+    },
+  },
   render: () => (
     <Sheet>
       <SheetTrigger asChild>
@@ -87,6 +138,13 @@ export const Top: Story = {
 }
 
 export const Bottom: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Sheet that slides in from the bottom edge using `side=\"bottom\"`.",
+      },
+    },
+  },
   render: () => (
     <Sheet>
       <SheetTrigger asChild>

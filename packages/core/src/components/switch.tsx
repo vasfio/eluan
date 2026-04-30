@@ -11,7 +11,7 @@ const Switch = React.forwardRef<
     className={cn(
       "peer inline-flex h-[var(--size-xs)] w-[var(--size-lg)] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent",
       "transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 focus-visible:ring-offset-background",
-      "disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[var(--interactive-fg-disabled)]",
+      "disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[color:var(--interactive-fg-disabled)]",
       "data-[state=checked]:bg-[var(--interactive-bg-selected)] data-[state=unchecked]:bg-[var(--interactive-border-alt)]",
       className
     )}
@@ -21,7 +21,10 @@ const Switch = React.forwardRef<
     <SwitchPrimitives.Thumb
       className={cn(
         "pointer-events-none block h-[var(--size-xxs)] w-[var(--size-xxs)] rounded-full bg-[var(--interactive-bg)] shadow-sm ring-0 transition-transform",
-        "data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0"
+        // Translate by (track inner width − thumb width) so the right padding
+        // when checked matches the left padding when unchecked across all
+        // spacing densities. 4px accounts for the 2px transparent border on each side.
+        "data-[state=checked]:translate-x-[calc(var(--size-lg)-var(--size-xxs)-4px)] data-[state=unchecked]:translate-x-0"
       )}
     />
   </SwitchPrimitives.Root>

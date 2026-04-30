@@ -14,12 +14,46 @@ const meta: Meta<typeof Newsletter> = {
   title: "Web/Newsletter",
   component: Newsletter,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: `
+A newsletter subscription section with title, description, email input, and disclaimer, available in default, muted, primary, gradient, dark, and card variants.
+
+**Import**
+\`\`\`tsx
+import { Newsletter, NewsletterIcon, NewsletterTitle, NewsletterDescription, NewsletterForm, NewsletterInput, NewsletterDisclaimer, NewsletterSuccess } from "@vasf/ragnar-web"
+\`\`\`
+
+**Usage**
+\`\`\`tsx
+<Newsletter variant="default">
+  <NewsletterTitle>Subscribe</NewsletterTitle>
+  <NewsletterForm>
+    <NewsletterInput placeholder="Email" />
+    <Button type="submit">Join</Button>
+  </NewsletterForm>
+</Newsletter>
+\`\`\`
+        `,
+      },
+    },
+  },
+  argTypes: {
+    variant: {
+      description: "Background style: default, muted, primary, gradient, dark, or card.",
+    },
+    size: {
+      description: "Vertical padding: sm, default, or lg.",
+    },
+  },
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  parameters: { docs: { description: { story: "Default newsletter section with title, description, form, and disclaimer." } } },
   render: () => (
     <Newsletter>
       <NewsletterTitle>Subscribe to our newsletter</NewsletterTitle>
@@ -38,6 +72,7 @@ export const Default: Story = {
 }
 
 export const WithIcon: Story = {
+  parameters: { docs: { description: { story: "Muted variant with the default email icon above the title." } } },
   render: () => (
     <Newsletter variant="muted">
       <NewsletterIcon />
@@ -54,6 +89,7 @@ export const WithIcon: Story = {
 }
 
 export const Primary: Story = {
+  parameters: { docs: { description: { story: "Primary-colored background for high-visibility placement." } } },
   render: () => (
     <Newsletter variant="primary">
       <NewsletterTitle>Never miss an update</NewsletterTitle>
@@ -69,6 +105,7 @@ export const Primary: Story = {
 }
 
 export const Gradient: Story = {
+  parameters: { docs: { description: { story: "Gradient background with custom translucent input styling." } } },
   render: () => (
     <Newsletter variant="gradient">
       <NewsletterTitle>Get early access</NewsletterTitle>
@@ -84,6 +121,7 @@ export const Gradient: Story = {
 }
 
 export const Card: Story = {
+  parameters: { docs: { description: { story: "Card variant rendered inside a bordered container with shadow." } } },
   render: () => (
     <Newsletter variant="card">
       <NewsletterIcon />
