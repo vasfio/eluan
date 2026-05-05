@@ -269,8 +269,8 @@ importers:
         specifier: ^3.19.0
         version: 3.19.0
       '@vasf/ragnar-tokens':
-        specifier: workspace:^
-        version: link:../tokens
+        specifier: ^0.1.1
+        version: 0.1.1
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.1
@@ -1976,14 +1976,32 @@ packages:
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
 
+  '@fontsource/bebas-neue@5.2.7':
+    resolution: {integrity: sha512-DsmBrmq55d9BCU0mt4DT4RZDdH8vhWRKEUOfbuNB1EEjMuwbtFvM8N+3gIlkYSFbsb10P8Q19BV5OdpMu2h0fA==}
+
+  '@fontsource/dela-gothic-one@5.2.7':
+    resolution: {integrity: sha512-swkcFgr2HjPWbY7dGP/9H7zXePtwF6C5ASLriFSZ02nAh6zjUIudwz8TBWQu9mIXfbgWnvokZ0PjP2FWQGGIWQ==}
+
   '@fontsource/geist-mono@5.2.7':
     resolution: {integrity: sha512-xVPVFISJg/K0VVd+aQN0Y7X/sw9hUcJPyDWFJ5GpyU3bHELhoRsJkPSRSHXW32mOi0xZCUQDOaPj1sqIFJ1FGg==}
 
   '@fontsource/geist@5.2.8':
     resolution: {integrity: sha512-pI54klK6vz8fVpAVyV+iODGLEzw73cs1XJqV9PIXgW8MYMmBcwK6lKKaWqJrNHwEx8ppz9cuhussb6arXQ/PVQ==}
 
+  '@fontsource/instrument-serif@5.2.8':
+    resolution: {integrity: sha512-s+bkz+syj2rO00Rmq9g0P+PwuLig33DR1xDR8pTWmovH1pUjwnncrFk++q9mmOex8fUQ7oW80gPpPDaw7V1MMw==}
+
   '@fontsource/inter@5.2.8':
     resolution: {integrity: sha512-P6r5WnJoKiNVV+zvW2xM13gNdFhAEpQ9dQJHt3naLvfg+LkF2ldgSLiF4T41lf1SQCM9QmkqPTn4TH568IRagg==}
+
+  '@fontsource/manrope@5.2.8':
+    resolution: {integrity: sha512-gJHJmcuUk7qWcNCfcAri/DJQtXtBYqi9yKratr4jXhSo0I3xUtNNKI+igQIcw5c+m95g0vounk8ZnX/kb8o0TA==}
+
+  '@fontsource/plus-jakarta-sans@5.2.8':
+    resolution: {integrity: sha512-P5qE49fqdeD+7DXH1KBxmMPlB17LTz1zvBhFH0tFzfnYTKVJVyb0pR6plh0ZGXxcB+Oayb54FZZw3V42/DawTw==}
+
+  '@fontsource/work-sans@5.2.8':
+    resolution: {integrity: sha512-6LaHjVVgts+rnrcqvEkP2+iUB/jw1oDSYsGO0+TltAhnWki9Hnf/UGpgMQh2jcm0GEH8VqCPnq4PpmHLFzxXtQ==}
 
   '@gorhom/bottom-sheet@5.2.8':
     resolution: {integrity: sha512-+N27SMpbBxXZQ/IA2nlEV6RGxL/qSFHKfdFKcygvW+HqPG5jVNb1OqehLQsGfBP+Up42i0gW5ppI+DhpB7UCzA==}
@@ -3852,6 +3870,9 @@ packages:
     resolution: {integrity: sha512-TQMCz2pFJMfpNxmSfX1VSfTjwUIFx/mL+p1bnfM1xjjdla7Z+KnGMW/EhFbpckp3LyWAH4PgOsMwOMnIN+MBFg==}
     peerDependencies:
       '@urql/core': ^5.0.0
+
+  '@vasf/ragnar-tokens@0.1.1':
+    resolution: {integrity: sha512-HW9VfgWXlrY7px82rgd7xIZJyHT3FumibRPgfKVrot10lRMWRzPKvbW8BVzyDFqtzkZExlgKkpu1w0Sx95zqRg==}
 
   '@vitejs/plugin-react@4.7.0':
     resolution: {integrity: sha512-gUu9hwfWvvEDBBmgtAowQCojwZmJ5mcLn3aufeCsitijs3+f2NsrPtlAWIR6OPiqljl96GVCUbLe0HyqIpVaoA==}
@@ -9343,11 +9364,23 @@ snapshots:
 
   '@floating-ui/utils@0.2.10': {}
 
+  '@fontsource/bebas-neue@5.2.7': {}
+
+  '@fontsource/dela-gothic-one@5.2.7': {}
+
   '@fontsource/geist-mono@5.2.7': {}
 
   '@fontsource/geist@5.2.8': {}
 
+  '@fontsource/instrument-serif@5.2.8': {}
+
   '@fontsource/inter@5.2.8': {}
+
+  '@fontsource/manrope@5.2.8': {}
+
+  '@fontsource/plus-jakarta-sans@5.2.8': {}
+
+  '@fontsource/work-sans@5.2.8': {}
 
   '@gorhom/bottom-sheet@5.2.8(@types/react-native@0.72.8(react-native@0.76.6(@babel/core@7.29.0)(@babel/preset-env@7.29.0(@babel/core@7.29.0))(@types/react@18.3.28)(react@18.3.1)))(@types/react@18.3.28)(react-native-gesture-handler@2.20.2(react-native@0.76.6(@babel/core@7.29.0)(@babel/preset-env@7.29.0(@babel/core@7.29.0))(@types/react@18.3.28)(react@18.3.1))(react@18.3.1))(react-native-reanimated@3.16.7(@babel/core@7.29.0)(react-native@0.76.6(@babel/core@7.29.0)(@babel/preset-env@7.29.0(@babel/core@7.29.0))(@types/react@18.3.28)(react@18.3.1))(react@18.3.1))(react-native@0.76.6(@babel/core@7.29.0)(@babel/preset-env@7.29.0(@babel/core@7.29.0))(@types/react@18.3.28)(react@18.3.1))(react@18.3.1)':
     dependencies:
@@ -11592,6 +11625,18 @@ snapshots:
     dependencies:
       '@urql/core': 5.2.0
       wonka: 6.3.5
+
+  '@vasf/ragnar-tokens@0.1.1':
+    dependencies:
+      '@fontsource/bebas-neue': 5.2.7
+      '@fontsource/dela-gothic-one': 5.2.7
+      '@fontsource/geist': 5.2.8
+      '@fontsource/geist-mono': 5.2.7
+      '@fontsource/instrument-serif': 5.2.8
+      '@fontsource/inter': 5.2.8
+      '@fontsource/manrope': 5.2.8
+      '@fontsource/plus-jakarta-sans': 5.2.8
+      '@fontsource/work-sans': 5.2.8
 
   '@vitejs/plugin-react@4.7.0(vite@5.4.21(@types/node@20.19.32)(lightningcss@1.32.0)(terser@5.46.0))':
     dependencies:
