@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { ChevronDown, X } from "lucide-react"
+import { ChevronDown, Delete, X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Badge } from "./badge"
@@ -135,7 +135,9 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
                   onClick={handleClearAll}
                   aria-label="Clear all selections"
                 >
-                  <X className="h-3.5 w-3.5" />
+                  {/* Backspace glyph matches SearchInput's clear affordance — */}
+                  {/* signals "delete what was typed" rather than "close". */}
+                  <Delete className="h-3.5 w-3.5" />
                 </button>
               )}
               <ChevronDown className={cn("h-[var(--size-xxs)] w-[var(--size-xxs)] opacity-50 transition-transform", open && "rotate-180")} />

@@ -36,7 +36,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className={cn("relative flex w-full items-center", className)}>
         {hasLeading && (
-          <span className="pointer-events-none absolute left-3 flex items-center text-[color:var(--interactive-fg-alt)]">
+          <span className="pointer-events-none absolute left-[var(--spacing-md)] flex items-center text-[color:var(--interactive-fg-alt)]">
             {leadingIcon}
           </span>
         )}
@@ -47,11 +47,21 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             "ring-offset-background",
             "placeholder:text-[color:var(--interactive-fg-alt)]",
             "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:border-[var(--interactive-border)]",
+            // Validation: an aria-invalid input picks up the destructive border
+            // for both the static and focused states.
+            "aria-[invalid=true]:border-[var(--destructive-border)] aria-[invalid=true]:focus-visible:border-[var(--destructive-border)] aria-[invalid=true]:focus-visible:ring-[var(--destructive-border)]",
             "disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[color:var(--interactive-fg-disabled)]",
             "transition-colors",
             "file:border-0 file:bg-transparent file:text-[length:var(--font-size-sm)] file:font-medium file:text-[color:var(--interactive-fg)]",
-            hasLeading ? "pl-9" : "px-3",
-            hasTrailing ? "pr-9" : "pr-3",
+            // Horizontal padding is driven by spacing tokens: when an icon is
+            // present, pad = `spacing-md + size-xxs + spacing-sm` so the gap
+            // between icon and value scales with the active spacing density.
+            hasLeading
+              ? "pl-[calc(var(--spacing-md)+var(--size-xxs)+var(--spacing-sm))]"
+              : "pl-[var(--spacing-md)]",
+            hasTrailing
+              ? "pr-[calc(var(--spacing-md)+var(--size-xxs)+var(--spacing-sm))]"
+              : "pr-[var(--spacing-md)]",
             "py-[var(--spacing-sm)]"
           )}
           ref={ref}
@@ -62,14 +72,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             type="button"
             tabIndex={-1}
             onClick={() => setShowPassword((v) => !v)}
-            className="absolute right-3 flex items-center text-[color:var(--interactive-fg-alt)] hover:text-[color:var(--interactive-fg-hover)] transition-colors"
+            className="absolute right-[var(--spacing-md)] flex items-center text-[color:var(--interactive-fg-alt)] hover:text-[color:var(--interactive-fg-hover)] transition-colors"
             aria-label={showPassword ? "Hide password" : "Show password"}
           >
             {showPassword ? <EyeOff className="h-[var(--size-xxs)] w-[var(--size-xxs)]" /> : <Eye className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />}
           </button>
         )}
         {!isPassword && trailing && (
-          <span className="absolute right-3 flex items-center">
+          <span className="absolute right-[var(--spacing-md)] flex items-center">
             {trailing}
           </span>
         )}

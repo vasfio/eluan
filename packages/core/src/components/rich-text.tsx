@@ -257,7 +257,9 @@ const RichText = React.forwardRef<HTMLDivElement, RichTextProps>(
       <div
         ref={ref}
         className={cn(
-          "rounded-[var(--curves-md)] border bg-[var(--interactive-bg)]",
+          // overflow-hidden clips the toolbar's background to the rounded
+          // corners — without it the bg bleeds past the curve.
+          "overflow-hidden rounded-[var(--curves-md)] border bg-[var(--interactive-bg)]",
           disabled && "bg-[var(--interactive-bg-disabled)] text-[color:var(--interactive-fg-disabled)]",
           className
         )}

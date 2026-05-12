@@ -110,21 +110,23 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
     const handleHoursChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const raw = e.target.value.replace(/\D/g, "").slice(0, 2)
       setEditingH(raw)
+      if (raw === "") return
       const n = parseInt(raw)
       if (!isNaN(n) && n >= minH && n <= maxH) {
         setHours(n)
         emit(n, minutes, period)
-      }
-      // Auto-advance to minutes when 2 digits entered
-      if (raw.length === 2) {
-        minuteRef.current?.focus()
-        minuteRef.current?.select()
+        // Only auto-advance once the user has typed a fully valid 2-digit hour.
+        if (raw.length === 2) {
+          minuteRef.current?.focus()
+          minuteRef.current?.select()
+        }
       }
     }
 
     const handleMinutesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const raw = e.target.value.replace(/\D/g, "").slice(0, 2)
       setEditingM(raw)
+      if (raw === "") return
       const n = parseInt(raw)
       if (!isNaN(n) && n >= 0 && n <= 59) {
         setMinutes(n)
@@ -212,19 +214,29 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
           className={segmentCls}
           value={editingH !== null ? editingH : pad(hours)}
           onFocus={(e) => {
-            setEditingH(pad(hours))
+            // Just select the displayed text — don't enter edit mode yet.
+            // Editing only begins once the user actually types a digit, so
+            // a focus-then-blur without input is a no-op rather than a force
+            // reset to zero.
             requestAnimationFrame(() => e.target.select())
           }}
           onChange={handleHoursChange}
           onBlur={() => {
-            const n = parseInt(editingH || "")
+            // editingH is null when the user never typed — preserve the
+            // current value rather than committing an unwanted change.
+            if (editingH === null) return
+            const n = parseInt(editingH)
             if (!isNaN(n) && n >= minH && n <= maxH) {
               setHours(n)
               emit(n, minutes, period)
-            } else {
-              setHours(minH)
-              emit(minH, minutes, period)
+            } else if (!isNaN(n)) {
+              // Out-of-range numeric input: clamp into [minH, maxH] instead
+              // of snapping to zero (which discarded the user's intent).
+              const clamped = Math.max(minH, Math.min(maxH, n))
+              setHours(clamped)
+              emit(clamped, minutes, period)
             }
+            // Empty / non-numeric editingH: leave hours unchanged.
             setEditingH(null)
           }}
           onKeyDown={handleHoursKeyDown}
@@ -242,18 +254,19 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
           className={segmentCls}
           value={editingM !== null ? editingM : pad(minutes)}
           onFocus={(e) => {
-            setEditingM(pad(minutes))
             requestAnimationFrame(() => e.target.select())
           }}
           onChange={handleMinutesChange}
           onBlur={() => {
-            const n = parseInt(editingM || "")
+            if (editingM === null) return
+            const n = parseInt(editingM)
             if (!isNaN(n) && n >= 0 && n <= 59) {
               setMinutes(n)
               emit(hours, n, period)
-            } else {
-              setMinutes(0)
-              emit(hours, 0, period)
+            } else if (!isNaN(n)) {
+              const clamped = Math.max(0, Math.min(59, n))
+              setMinutes(clamped)
+              emit(hours, clamped, period)
             }
             setEditingM(null)
           }}

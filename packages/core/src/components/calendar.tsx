@@ -92,6 +92,9 @@ function Calendar({
           day: cn(
             "h-[var(--size-lg)] w-[var(--size-lg)] text-center text-[length:var(--font-size-sm)] p-0 relative",
             "[&:has([aria-selected].day-range-end)]:rounded-r-[var(--curves-lg)]",
+            // Range end always has a flat left edge — overrides the `first:` rule
+            // when the end day happens to be the first cell in its week row.
+            "[&:has([aria-selected].day-range-end)]:!rounded-l-none",
             "[&:has([aria-selected].day-outside)]:bg-[var(--interactive-bg-alt2)]",
             "first:[&:has([aria-selected])]:rounded-l-[var(--curves-lg)]",
             "last:[&:has([aria-selected])]:rounded-r-[var(--curves-lg)]",
@@ -107,7 +110,10 @@ function Calendar({
             "rounded-[var(--curves-lg)]",
             "[[data-range-complete]_&]:rounded-r-none [[data-range-complete]_&]:rounded-l-[var(--curves-lg)]"
           ),
-          range_end: "day-range-end bg-[var(--interactive-bg-selected)] text-[color:var(--interactive-fg-selected)] rounded-r-[var(--curves-lg)] rounded-l-none",
+          range_end: cn(
+            "day-range-end bg-[var(--interactive-bg-selected)] text-[color:var(--interactive-fg-selected)]",
+            "rounded-r-[var(--curves-lg)] !rounded-l-none"
+          ),
           selected: cn(
             "bg-[var(--interactive-bg-selected)] text-[color:var(--interactive-fg-selected)] rounded-[var(--curves-lg)]",
             "[&>button:hover]:bg-[var(--action-primary-bg-hover)] [&>button:hover]:text-[color:var(--interactive-fg-selected)]",

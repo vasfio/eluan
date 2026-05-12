@@ -9,10 +9,14 @@ const Switch = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SwitchPrimitives.Root
     className={cn(
-      "peer inline-flex h-[var(--size-xs)] w-[var(--size-lg)] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent",
+      // The 2px border preserves the thumb's stable offset across spacing
+      // densities. Its color must match the active track bg so it reads as a
+      // single solid pill rather than a haloed selection state.
+      "peer inline-flex h-[var(--size-xs)] w-[var(--size-lg)] shrink-0 cursor-pointer items-center rounded-full border-2",
       "transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 focus-visible:ring-offset-background",
       "disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[color:var(--interactive-fg-disabled)]",
-      "data-[state=checked]:bg-[var(--interactive-bg-selected)] data-[state=unchecked]:bg-[var(--interactive-border-alt)]",
+      "data-[state=checked]:bg-[var(--interactive-bg-selected)] data-[state=checked]:border-[var(--interactive-bg-selected)]",
+      "data-[state=unchecked]:bg-[var(--interactive-border-alt)] data-[state=unchecked]:border-[var(--interactive-border-alt)]",
       className
     )}
     {...props}

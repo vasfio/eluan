@@ -76,7 +76,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
           onValueChange={handleCountryChange}
           disabled={disabled}
         >
-          <SelectTrigger className="w-auto min-w-24 shrink-0 rounded-r-none gap-[var(--spacing-xxs)]">
+          <SelectTrigger className="w-auto min-w-24 shrink-0 !rounded-r-none gap-[var(--spacing-xxs)]">
             <span className="flex items-center gap-[var(--spacing-xxs)]">
               <span>{selectedCountry.flag}</span>
               <span className="text-[color:var(--interactive-fg-alt)]">{selectedCountry.dialCode}</span>

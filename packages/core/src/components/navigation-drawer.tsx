@@ -104,8 +104,8 @@ const NavigationDrawerHeader = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "flex h-14 items-center border-b border-[var(--container-border-alt)] px-[var(--spacing-md)]",
-        collapsed && "px-[var(--spacing-sm)]",
+        "flex h-12 items-center border-b border-[var(--container-border-alt)] px-[var(--spacing-sm)]",
+        collapsed && "px-[var(--spacing-xs)]",
         className
       )}
       {...props}
@@ -122,7 +122,16 @@ const NavigationDrawerContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex-1 overflow-y-auto p-[var(--spacing-sm)]", className)}
+    className={cn(
+      "flex-1 overflow-y-auto p-[var(--spacing-xs)]",
+      // Auto-hide the vertical scrollbar — only render a faint thumb while the
+      // drawer is being hovered or actively scrolled. `scrollbar-gutter: stable`
+      // keeps the layout from shifting when the thumb appears.
+      "[scrollbar-gutter:stable] [scrollbar-color:transparent_transparent] hover:[scrollbar-color:var(--container-border-alt)_transparent]",
+      "[&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-transparent hover:[&::-webkit-scrollbar-thumb]:bg-[var(--container-border-alt)]",
+      "[&::-webkit-scrollbar-thumb]:transition-colors",
+      className
+    )}
     {...props}
   />
 ))
@@ -134,7 +143,7 @@ const NavigationDrawerFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("border-t border-[var(--container-border-alt)] p-[var(--spacing-sm)]", className)}
+    className={cn("border-t border-[var(--container-border-alt)] p-[var(--spacing-xs)]", className)}
     {...props}
   />
 ))
@@ -168,7 +177,7 @@ const NavigationDrawerToggle = React.forwardRef<
 NavigationDrawerToggle.displayName = "NavigationDrawerToggle"
 
 const navigationDrawerItemVariants = cva(
-  "flex h-[var(--size-lg)] items-center gap-[var(--spacing-md)] rounded-[var(--curves-md)] px-[var(--spacing-md)] text-[length:var(--font-size-sm)] font-medium transition-colors hover:bg-[var(--interactive-bg-hover)] hover:text-[color:var(--interactive-fg)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border-alt)]",
+  "flex h-[var(--size-md)] items-center gap-[var(--spacing-sm)] rounded-[var(--curves-md)] px-[var(--spacing-sm)] text-[length:var(--font-size-xs)] font-medium transition-colors hover:bg-[var(--interactive-bg-hover)] hover:text-[color:var(--interactive-fg)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border-alt)]",
   {
     variants: {
       active: {
@@ -220,16 +229,18 @@ const NavigationDrawerGroup = React.forwardRef<
   const { collapsed } = useNavigationDrawer()
 
   return (
-    <div ref={ref} className={cn("py-[var(--spacing-sm)]", className)} {...props}>
+    <div ref={ref} className={cn("py-[var(--spacing-xs)]", className)} {...props}>
       {label && (
         <h4 className={cn(
-          "mb-[var(--spacing-xxs)] px-[var(--spacing-md)] text-[length:var(--font-size-xs)] font-semibold text-[color:var(--interactive-fg-alt)]",
+          // Smaller, heavier, and uppercase to read as a section heading
+          // rather than another link in the list.
+          "mb-[var(--spacing-xxs)] px-[var(--spacing-sm)] text-[0.6875rem] font-bold uppercase tracking-wider text-[color:var(--interactive-fg-alt)]",
           collapsed && "opacity-0"
         )}>
           {label}
         </h4>
       )}
-      <div className="space-y-1">{children}</div>
+      <div className="space-y-0.5">{children}</div>
     </div>
   )
 })

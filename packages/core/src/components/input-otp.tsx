@@ -151,7 +151,7 @@ const InputOTP = React.forwardRef<HTMLDivElement, InputOTPProps>(
               onFocus={(e) => e.target.select()}
               disabled={disabled}
               className={cn(
-                "h-[var(--size-xl)] w-[var(--size-lg)] rounded-[var(--spacing-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] text-center text-[length:var(--font-size-lg)] font-semibold tracking-widest transition-all",
+                "h-[var(--size-xl)] w-[var(--size-lg)] rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] text-center text-[length:var(--font-size-lg)] font-semibold tracking-widest transition-all",
                 "focus:outline-none focus:ring-1 focus:ring-[var(--interactive-border)] focus:ring-offset-1 focus:ring-offset-[var(--interactive-border)]",
                 "disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[color:var(--interactive-fg-disabled)]",
                 value && "bg-[var(--interactive-bg-alt)]"
