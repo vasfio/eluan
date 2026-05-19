@@ -48,7 +48,7 @@ const ContextMenuSubContent = React.forwardRef<
     className={cn(
       "z-50 min-w-[8rem] overflow-hidden rounded-[var(--curves-md)] border bg-[var(--container-bg)] p-[var(--spacing-xs)] text-[color:var(--container-fg)] shadow-md",
       "data-[state=open]:animate-dropdown-unroll data-[state=closed]:animate-dropdown-roll-up",
-      "data-[side=bottom]:origin-top data-[side=top]:origin-bottom data-[side=left]:origin-right data-[side=right]:origin-left",
+      "[transform-origin:var(--radix-context-menu-content-transform-origin)]",
       className
     )}
     {...props}
@@ -66,7 +66,7 @@ const ContextMenuContent = React.forwardRef<
       className={cn(
         "z-50 min-w-[8rem] overflow-hidden rounded-[var(--curves-md)] border bg-[var(--container-bg)] p-[var(--spacing-xxs)] text-[color:var(--container-fg)] shadow-md",
         "data-[state=open]:animate-dropdown-unroll data-[state=closed]:animate-dropdown-roll-up",
-        "data-[side=bottom]:origin-top data-[side=top]:origin-bottom data-[side=left]:origin-right data-[side=right]:origin-left",
+        "[transform-origin:var(--radix-context-menu-content-transform-origin)]",
         className
       )}
       {...props}

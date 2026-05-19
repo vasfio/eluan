@@ -232,9 +232,7 @@ const NavigationDrawerGroup = React.forwardRef<
     <div ref={ref} className={cn("py-[var(--spacing-xs)]", className)} {...props}>
       {label && (
         <h4 className={cn(
-          // Smaller, heavier, and uppercase to read as a section heading
-          // rather than another link in the list.
-          "mb-[var(--spacing-xxs)] px-[var(--spacing-sm)] text-[0.6875rem] font-bold uppercase tracking-wider text-[color:var(--interactive-fg-alt)]",
+          "mb-[var(--spacing-xxs)] px-[var(--spacing-sm)] text-[length:var(--font-size-xs)] font-semibold text-[color:var(--interactive-fg-alt)]",
           collapsed && "opacity-0"
         )}>
           {label}

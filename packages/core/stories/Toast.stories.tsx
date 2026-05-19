@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { toast } from "sonner";
-import { Sonner } from "@/components/sonner";
+import { Toast } from "@/components/toast";
 import { Button } from "@/components/button";
 
 const meta: Meta = {
-  title: "Components/Sonner",
+  title: "Components/Toast",
   tags: ["autodocs"],
   decorators: [
     (Story) => (
       <>
         <Story />
-        <Sonner />
+        <Toast />
       </>
     ),
   ],
@@ -119,7 +119,7 @@ export const PromiseToast: Story = {
       variant="outline"
       onClick={() => {
         const promiseFn = (): Promise<{ name: string }> =>
-          new Promise((resolve) => setTimeout(() => resolve({ name: "Sonner" }), 2000));
+          new Promise((resolve) => setTimeout(() => resolve({ name: "Toast" }), 2000));
 
         toast.promise(promiseFn, {
           loading: "Loading...",

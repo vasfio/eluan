@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { toast } from "sonner"
-import { Sonner } from "./sonner"
+import { Toast } from "./toast"
 import { Button } from "./button"
 
-const meta: Meta<typeof Sonner> = {
-  title: "Components/Sonner",
-  component: Sonner,
+const meta: Meta<typeof Toast> = {
+  title: "Components/Toast",
+  component: Toast,
   tags: ["autodocs"],
   decorators: [
     (Story) => (
       <>
         <Story />
-        <Sonner />
+        <Toast />
       </>
     ),
   ],
@@ -23,14 +23,14 @@ A toast notification system built on the \`sonner\` library, providing styled su
 
 **Import**
 \`\`\`tsx
-import { Sonner } from "@vasf/ragnar-core"
+import { Toast } from "@vasf/ragnar-core"
 import { toast } from "sonner"
 \`\`\`
 
 **Usage**
 \`\`\`tsx
-// Mount the Sonner once at the app root
-<Sonner />
+// Mount the Toast once at the app root
+<Toast />
 
 // Trigger toasts from anywhere
 toast("Default notification")

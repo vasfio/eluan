@@ -34,7 +34,7 @@ See the [theming guide](https://github.com/frolda/ragnar/blob/main/docs/theming.
 
 ## What's included
 
-Components span layout (`Card`, `Sheet`, `Drawer`, `Resizable`), forms (`Input`, `Select`, `Combobox`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`, etc.), data display (`Table`, `Tree View`, `Timeline`, `Calendar`), navigation (`Tabs`, `Breadcrumb`, `Command`, `NavigationDrawer`), feedback (`Toast`/`Sonner`, `Alert`, `Banner`, `Progress`), and overlays (`Dialog`, `Popover`, `Tooltip`, `ContextMenu`).
+Components span layout (`Card`, `Sheet`, `Drawer`, `Resizable`), forms (`Input`, `Select`, `Combobox`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`, etc.), data display (`Table`, `Tree View`, `Timeline`, `Calendar`), navigation (`Tabs`, `Breadcrumb`, `Command`, `NavigationDrawer`), feedback (`Toast`, `Alert`, `Banner`, `Progress`), and overlays (`Dialog`, `Popover`, `Tooltip`, `ContextMenu`).
 
 Full component list: see [Storybook](https://github.com/frolda/ragnar) or the source under `src/components/`.
 

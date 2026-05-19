@@ -1,13 +1,13 @@
 import { Toaster as SonnerPrimitive } from "sonner"
 
-type SonnerProps = React.ComponentProps<typeof SonnerPrimitive>
+type ToastProps = React.ComponentProps<typeof SonnerPrimitive>
 
 // Sonner ships with its own opinionated CSS that hardcodes font-family,
 // padding, and font-sizes on its toast elements. To make toasts inherit the
 // design system's tokens, we override each part with `!important` (Tailwind
 // `!` prefix) — matching Sonner's higher specificity. Border-radius is also
 // exposed by Sonner as a CSS variable, which we set inline.
-const Sonner = ({ ...props }: SonnerProps) => {
+const Toast = ({ ...props }: ToastProps) => {
   return (
     <SonnerPrimitive
       className="toaster group"
@@ -35,4 +35,4 @@ const Sonner = ({ ...props }: SonnerProps) => {
   )
 }
 
-export { Sonner, Sonner as Toaster }
+export { Toast }

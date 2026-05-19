@@ -112,14 +112,25 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
       setEditingH(raw)
       if (raw === "") return
       const n = parseInt(raw)
-      if (!isNaN(n) && n >= minH && n <= maxH) {
+      if (isNaN(n)) return
+
+      // Commit the value as the user types, but only if it's already in range
+      // (e.g. "0" in 12h mode is out of range while waiting for the second digit
+      // — leave hours untouched until they finish).
+      if (n >= minH && n <= maxH) {
         setHours(n)
         emit(n, minutes, period)
-        // Only auto-advance once the user has typed a fully valid 2-digit hour.
-        if (raw.length === 2) {
-          minuteRef.current?.focus()
-          minuteRef.current?.select()
-        }
+      }
+
+      // Auto-advance to minutes once the hour can't grow into another valid
+      // value. A second digit only matters when the first digit is small
+      // enough to be the tens place of a valid hour (e.g. 24h: "1" → 10-19,
+      // "2" → 20-23; 12h: "1" → 10-12). Anything larger is unambiguous and
+      // should move focus immediately.
+      const isComplete = raw.length === 2 || n > Math.floor(maxH / 10)
+      if (isComplete) {
+        minuteRef.current?.focus()
+        minuteRef.current?.select()
       }
     }
 
