@@ -1,51 +1,49 @@
 import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
-import { Play, Pause, Volume2, VolumeX, Maximize, Loader2 } from "lucide-react"
+import * as stylex from "@stylexjs/stylex"
+import { Loader2, Maximize, Pause, Play, Volume2, VolumeX } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+export type MediaRatio = "auto" | "square" | "video" | "portrait" | "wide"
+export type MediaRounded = "none" | "sm" | "md" | "lg" | "xl" | "full"
 
-const mediaVariants = cva("relative overflow-hidden", {
-  variants: {
-    ratio: {
-      auto: "",
-      square: "aspect-square",
-      video: "aspect-video",
-      portrait: "aspect-[3/4]",
-      wide: "aspect-[21/9]",
-    },
-    rounded: {
-      none: "",
-      sm: "rounded-[var(--curves-sm)]",
-      md: "rounded-[var(--curves-md)]",
-      lg: "rounded-[var(--curves-lg)]",
-      xl: "rounded-[var(--curves-xl)]",
-      full: "rounded-full",
-    },
-  },
-  defaultVariants: {
-    ratio: "auto",
-    rounded: "md",
-  },
-})
+type MediaVariantOptions = {
+  ratio?: MediaRatio | null
+  rounded?: MediaRounded | null
+}
+
+const mediaVariants = (_options?: MediaVariantOptions) => ""
 
 export interface ImageProps
-  extends React.ImgHTMLAttributes<HTMLImageElement>,
-    VariantProps<typeof mediaVariants> {
+  extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "className" | "style">,
+    MediaVariantOptions {
   fallback?: React.ReactNode
 }
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps>(
-  ({ className, ratio, rounded, fallback, alt, ...props }, ref) => {
+  (
+    {
+      ratio = "auto",
+      rounded = "md",
+      fallback,
+      alt,
+      onError,
+      onLoad,
+      ...props
+    },
+    ref
+  ) => {
     const [error, setError] = React.useState(false)
     const [loading, setLoading] = React.useState(true)
+    const mediaRatio = ratio ?? "auto"
+    const mediaRounded = rounded ?? "md"
 
     if (error && fallback) {
       return (
         <div
-          className={cn(
-            mediaVariants({ ratio, rounded }),
-            "flex items-center justify-center bg-[var(--container-bg-alt)]",
-            className
+          {...stylex.props(
+            styles.frame,
+            ratioStyles[mediaRatio],
+            roundedStyles[mediaRounded],
+            styles.fallbackFrame
           )}
         >
           {fallback}
@@ -54,19 +52,25 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
     }
 
     return (
-      <div className={cn(mediaVariants({ ratio, rounded }), className)}>
+      <div {...stylex.props(styles.frame, ratioStyles[mediaRatio], roundedStyles[mediaRounded])}>
         {loading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-[var(--container-bg-alt)]">
-            <Loader2 className="h-[var(--size-sm)] w-[var(--size-sm)] animate-spin text-[color:var(--container-fg-alt)]" />
+          <div {...stylex.props(styles.loadingOverlay)}>
+            <Loader2 {...stylex.props(styles.spinner)} />
           </div>
         )}
         <img
           ref={ref}
           alt={alt}
-          className={cn("h-full w-full object-cover", rounded && mediaVariants({ rounded }))}
-          onError={() => setError(true)}
-          onLoad={() => setLoading(false)}
+          onError={(event) => {
+            setError(true)
+            onError?.(event)
+          }}
+          onLoad={(event) => {
+            setLoading(false)
+            onLoad?.(event)
+          }}
           {...props}
+          {...stylex.props(styles.media, roundedStyles[mediaRounded])}
         />
       </div>
     )
@@ -75,104 +79,127 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
 Image.displayName = "Image"
 
 export interface VideoProps
-  extends React.VideoHTMLAttributes<HTMLVideoElement>,
-    VariantProps<typeof mediaVariants> {
+  extends Omit<React.VideoHTMLAttributes<HTMLVideoElement>, "className" | "style">,
+    MediaVariantOptions {
   showControls?: boolean
 }
 
 const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
-  ({ className, ratio = "video", rounded, showControls = true, ...props }, ref) => {
+  (
+    {
+      ratio = "video",
+      rounded = "md",
+      showControls = true,
+      onTimeUpdate,
+      onPlay,
+      onPause,
+      ...props
+    },
+    ref
+  ) => {
     const videoRef = React.useRef<HTMLVideoElement>(null)
     const [isPlaying, setIsPlaying] = React.useState(false)
     const [isMuted, setIsMuted] = React.useState(false)
     const [progress, setProgress] = React.useState(0)
+    const [controlsVisible, setControlsVisible] = React.useState(false)
+    const mediaRatio = ratio ?? "video"
+    const mediaRounded = rounded ?? "md"
 
     React.useImperativeHandle(ref, () => videoRef.current!)
 
     const togglePlay = () => {
-      if (videoRef.current) {
-        if (isPlaying) {
-          videoRef.current.pause()
-        } else {
-          videoRef.current.play()
-        }
-        setIsPlaying(!isPlaying)
+      if (!videoRef.current) return
+
+      if (isPlaying) {
+        videoRef.current.pause()
+      } else {
+        videoRef.current.play()
       }
     }
 
     const toggleMute = () => {
-      if (videoRef.current) {
-        videoRef.current.muted = !isMuted
-        setIsMuted(!isMuted)
-      }
+      if (!videoRef.current) return
+
+      videoRef.current.muted = !isMuted
+      setIsMuted(!isMuted)
     }
 
-    const handleTimeUpdate = () => {
+    const handleTimeUpdate = (event: React.SyntheticEvent<HTMLVideoElement>) => {
       if (videoRef.current) {
-        const progress =
-          (videoRef.current.currentTime / videoRef.current.duration) * 100
-        setProgress(progress)
+        const duration = videoRef.current.duration
+        setProgress(duration ? (videoRef.current.currentTime / duration) * 100 : 0)
       }
+
+      onTimeUpdate?.(event)
     }
 
     const handleFullscreen = () => {
-      if (videoRef.current) {
-        if (document.fullscreenElement) {
-          document.exitFullscreen()
-        } else {
-          videoRef.current.requestFullscreen()
-        }
+      if (!videoRef.current) return
+
+      if (document.fullscreenElement) {
+        document.exitFullscreen()
+      } else {
+        videoRef.current.requestFullscreen()
       }
     }
 
     return (
-      <div className={cn(mediaVariants({ ratio, rounded }), "group", className)}>
+      <div
+        onFocusCapture={() => setControlsVisible(true)}
+        onBlurCapture={() => setControlsVisible(false)}
+        onMouseEnter={() => setControlsVisible(true)}
+        onMouseLeave={() => setControlsVisible(false)}
+        {...stylex.props(styles.frame, ratioStyles[mediaRatio], roundedStyles[mediaRounded])}
+      >
         <video
           ref={videoRef}
-          className="h-full w-full object-cover"
           onTimeUpdate={handleTimeUpdate}
-          onPlay={() => setIsPlaying(true)}
-          onPause={() => setIsPlaying(false)}
+          onPlay={(event) => {
+            setIsPlaying(true)
+            onPlay?.(event)
+          }}
+          onPause={(event) => {
+            setIsPlaying(false)
+            onPause?.(event)
+          }}
           {...props}
+          {...stylex.props(styles.media)}
         />
         {showControls && (
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-[var(--spacing-md)] opacity-0 transition-opacity group-hover:opacity-100">
-            <div className="mb-[var(--spacing-sm)] h-[var(--spacing-xs)] w-full overflow-hidden rounded-full bg-white/30">
-              <div
-                className="h-full bg-white transition-all"
-                style={{ width: `${progress}%` }}
-              />
+          <div {...stylex.props(styles.controls, controlsVisible && styles.controlsVisible)}>
+            <div {...stylex.props(styles.progressTrack)}>
+              <div {...stylex.props(styles.progressFill)} style={{ width: `${progress}%` }} />
             </div>
-            <div className="flex items-center gap-[var(--spacing-sm)]">
+            <div {...stylex.props(styles.controlRow)}>
               <button
                 type="button"
                 onClick={togglePlay}
-                className="rounded-full p-1 text-[color:var(--interactive-fg-inverse)] hover:bg-white/20"
+                {...stylex.props(styles.controlButton)}
               >
                 {isPlaying ? (
-                  <Pause className="h-[var(--size-xs)] w-[var(--size-xs)]" />
+                  <Pause {...stylex.props(styles.controlIcon)} />
                 ) : (
-                  <Play className="h-[var(--size-xs)] w-[var(--size-xs)]" />
+                  <Play {...stylex.props(styles.controlIcon)} />
                 )}
               </button>
               <button
                 type="button"
                 onClick={toggleMute}
-                className="rounded-full p-1 text-[color:var(--interactive-fg-inverse)] hover:bg-white/20"
+                {...stylex.props(styles.controlButton)}
               >
                 {isMuted ? (
-                  <VolumeX className="h-[var(--size-xs)] w-[var(--size-xs)]" />
+                  <VolumeX {...stylex.props(styles.controlIcon)} />
                 ) : (
-                  <Volume2 className="h-[var(--size-xs)] w-[var(--size-xs)]" />
+                  <Volume2 {...stylex.props(styles.controlIcon)} />
                 )}
               </button>
-              <div className="flex-1" />
+              <div {...stylex.props(styles.spacer)} />
               <button
                 type="button"
                 onClick={handleFullscreen}
-                className="rounded-full p-[var(--spacing-xxs)] text-[color:var(--interactive-fg-inverse)] hover:bg-white/20"
+                {...stylex.props(styles.controlButton)}
               >
-                <Maximize className="h-[var(--size-xs)] w-[var(--size-xs)]" />
+                <Maximize {...stylex.props(styles.controlIcon)} />
               </button>
             </div>
           </div>
@@ -182,5 +209,158 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
   }
 )
 Video.displayName = "Video"
+
+const spin = stylex.keyframes({
+  to: {
+    transform: "rotate(360deg)",
+  },
+})
+
+const styles = stylex.create({
+  frame: {
+    overflow: "hidden",
+    position: "relative",
+  },
+  ratioAuto: {
+    aspectRatio: "auto",
+  },
+  ratioSquare: {
+    aspectRatio: "1 / 1",
+  },
+  ratioVideo: {
+    aspectRatio: "16 / 9",
+  },
+  ratioPortrait: {
+    aspectRatio: "3 / 4",
+  },
+  ratioWide: {
+    aspectRatio: "21 / 9",
+  },
+  roundedNone: {
+    borderRadius: 0,
+  },
+  roundedSm: {
+    borderRadius: "var(--curves-sm)",
+  },
+  roundedMd: {
+    borderRadius: "var(--curves-md)",
+  },
+  roundedLg: {
+    borderRadius: "var(--curves-lg)",
+  },
+  roundedXl: {
+    borderRadius: "var(--curves-xl)",
+  },
+  roundedFull: {
+    borderRadius: "var(--radius-radius-full)",
+  },
+  fallbackFrame: {
+    alignItems: "center",
+    backgroundColor: "var(--container-bg-alt)",
+    display: "flex",
+    justifyContent: "center",
+  },
+  loadingOverlay: {
+    alignItems: "center",
+    backgroundColor: "var(--container-bg-alt)",
+    bottom: 0,
+    display: "flex",
+    justifyContent: "center",
+    left: 0,
+    position: "absolute",
+    right: 0,
+    top: 0,
+  },
+  spinner: {
+    animationDuration: "1s",
+    animationIterationCount: "infinite",
+    animationName: spin,
+    animationTimingFunction: "linear",
+    color: "var(--container-fg-alt)",
+    height: "var(--size-sm)",
+    width: "var(--size-sm)",
+  },
+  media: {
+    height: "100%",
+    objectFit: "cover",
+    width: "100%",
+  },
+  controls: {
+    backgroundImage: "linear-gradient(to top, rgb(0 0 0 / 0.6), transparent)",
+    bottom: 0,
+    left: 0,
+    opacity: 0,
+    padding: "var(--spacing-md)",
+    position: "absolute",
+    right: 0,
+    transitionDuration: "150ms",
+    transitionProperty: "opacity",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+  },
+  controlsVisible: {
+    opacity: 1,
+  },
+  progressTrack: {
+    backgroundColor: "rgb(255 255 255 / 0.3)",
+    borderRadius: "var(--radius-radius-full)",
+    height: "var(--spacing-xs)",
+    marginBottom: "var(--spacing-sm)",
+    overflow: "hidden",
+    width: "100%",
+  },
+  progressFill: {
+    backgroundColor: "var(--container-fg-inverse)",
+    height: "100%",
+    transitionDuration: "150ms",
+    transitionProperty: "width",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+  },
+  controlRow: {
+    alignItems: "center",
+    display: "flex",
+    gap: "var(--spacing-sm)",
+  },
+  controlButton: {
+    backgroundColor: "transparent",
+    borderWidth: 0,
+    borderRadius: "var(--radius-radius-full)",
+    color: "var(--container-fg-inverse)",
+    cursor: "pointer",
+    padding: "var(--spacing-xxs)",
+    ":hover": {
+      backgroundColor: "rgb(255 255 255 / 0.2)",
+    },
+    ":focus": {
+      outlineStyle: "none",
+    },
+    ":focus-visible": {
+      boxShadow: "0 0 0 1px var(--container-fg-inverse)",
+    },
+  },
+  controlIcon: {
+    height: "var(--size-xs)",
+    width: "var(--size-xs)",
+  },
+  spacer: {
+    flex: 1,
+  },
+})
+
+const ratioStyles = {
+  auto: styles.ratioAuto,
+  square: styles.ratioSquare,
+  video: styles.ratioVideo,
+  portrait: styles.ratioPortrait,
+  wide: styles.ratioWide,
+} satisfies Record<MediaRatio, stylex.StyleXStyles>
+
+const roundedStyles = {
+  none: styles.roundedNone,
+  sm: styles.roundedSm,
+  md: styles.roundedMd,
+  lg: styles.roundedLg,
+  xl: styles.roundedXl,
+  full: styles.roundedFull,
+} satisfies Record<MediaRounded, stylex.StyleXStyles>
 
 export { Image, Video, mediaVariants }

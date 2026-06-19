@@ -1,10 +1,10 @@
 import * as React from "react"
+import * as stylex from "@stylexjs/stylex"
 import { Minus, Plus } from "lucide-react"
-import { cn } from "@/lib/utils"
 import { Input } from "./input"
 
 export interface NumberInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "value" | "onChange"> {
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "className" | "size" | "style" | "type" | "value" | "onChange"> {
   value?: number
   onChange?: (value: number | undefined) => void
   min?: number
@@ -15,10 +15,52 @@ export interface NumberInputProps
   clampOnBlur?: boolean
 }
 
+const styles = stylex.create({
+  controls: {
+    display: "flex",
+  },
+  controlButton: {
+    alignItems: "center",
+    backgroundColor: "var(--interactive-bg)",
+    borderColor: "var(--interactive-border-alt)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    color: "var(--interactive-fg)",
+    display: "flex",
+    height: "var(--size-lg)",
+    justifyContent: "center",
+    transitionDuration: "150ms",
+    transitionProperty: "background-color, border-color, color, opacity",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    width: "var(--size-lg)",
+    ":hover": {
+      backgroundColor: "var(--interactive-bg-hover)",
+    },
+    ":disabled": {
+      backgroundColor: "var(--interactive-bg)",
+      cursor: "not-allowed",
+      opacity: 0.5,
+    },
+  },
+  decrementButton: {
+    borderRightWidth: 0,
+    borderTopLeftRadius: "var(--curves-md)",
+    borderBottomLeftRadius: "var(--curves-md)",
+  },
+  incrementButton: {
+    borderLeftWidth: 0,
+    borderTopRightRadius: "var(--curves-md)",
+    borderBottomRightRadius: "var(--curves-md)",
+  },
+  icon: {
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+})
+
 const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
   (
     {
-      className,
       value,
       onChange,
       min,
@@ -121,7 +163,7 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
         <Input
           type="text"
           inputMode="decimal"
-          className={cn("[&_input]:font-mono", className)}
+          textStyle="mono"
           ref={ref}
           value={internalValue}
           onChange={handleChange}
@@ -134,26 +176,22 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     }
 
     return (
-      <div className="flex">
+      <div {...stylex.props(styles.controls)}>
         <button
           type="button"
-          className={cn(
-            "flex h-[var(--size-lg)] w-[var(--size-lg)] items-center justify-center rounded-l-[var(--curves-md)] border border-r-0 border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] hover:bg-[var(--interactive-bg-hover)]",
-            (!canDecrement() || disabled) && "opacity-50 cursor-not-allowed hover:bg-[var(--interactive-bg)]"
-          )}
+          {...stylex.props(styles.controlButton, styles.decrementButton)}
           onClick={decrement}
           disabled={!canDecrement() || disabled}
           tabIndex={-1}
         >
-          <Minus className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+          <Minus {...stylex.props(styles.icon)} />
         </button>
         <Input
           type="text"
           inputMode="decimal"
-          className={cn(
-            "flex-1 [&_input]:rounded-none [&_input]:border-l-0 [&_input]:border-r-0 [&_input]:text-center [&_input]:font-mono",
-            className
-          )}
+          attachment="middle"
+          textAlign="center"
+          textStyle="mono"
           ref={ref}
           value={internalValue}
           onChange={handleChange}
@@ -164,15 +202,12 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
         />
         <button
           type="button"
-          className={cn(
-            "flex h-[var(--size-lg)] w-[var(--size-lg)] items-center justify-center rounded-r-[var(--curves-md)] border border-l-0 border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] hover:bg-[var(--interactive-bg-hover)]",
-            (!canIncrement() || disabled) && "opacity-50 cursor-not-allowed hover:bg-[var(--interactive-bg)]"
-          )}
+          {...stylex.props(styles.controlButton, styles.incrementButton)}
           onClick={increment}
           disabled={!canIncrement() || disabled}
           tabIndex={-1}
         >
-          <Plus className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+          <Plus {...stylex.props(styles.icon)} />
         </button>
       </div>
     )

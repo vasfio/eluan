@@ -14,8 +14,10 @@ describe("Calendar", () => {
     expect(buttons.length).toBeGreaterThan(0);
   });
 
-  it("forwards className", () => {
-    const { container } = render(<Calendar mode="single" className="custom-cal" />);
-    expect(container.firstChild).toHaveClass("custom-cal");
+  it("does not forward className overrides", () => {
+    const { container } = render(
+      <Calendar {...({ className: "custom-cal" } as never)} mode="single" />
+    );
+    expect(container.querySelector(".custom-cal")).toBeNull();
   });
 });

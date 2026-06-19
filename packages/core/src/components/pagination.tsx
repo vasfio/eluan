@@ -1,8 +1,8 @@
 import * as React from "react"
+import * as stylex from "@stylexjs/stylex"
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react"
 
-import { cn } from "@/lib/utils"
-import { Button, ButtonProps, buttonVariants } from "./button"
+import { Button, type ButtonSize } from "./button"
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -10,95 +10,102 @@ import {
   DropdownMenuItem,
 } from "./dropdown-menu"
 
-const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
+type PaginationProps = Omit<React.ComponentProps<"nav">, "className" | "style">
+type PaginationContentProps = Omit<
+  React.ComponentProps<"ul">,
+  "className" | "style"
+>
+type PaginationItemProps = Omit<
+  React.ComponentProps<"li">,
+  "className" | "style"
+>
+
+const Pagination = ({ ...props }: PaginationProps) => (
   <nav
     role="navigation"
     aria-label="pagination"
-    className={cn("mx-auto flex w-full justify-center", className)}
     {...props}
+    {...stylex.props(paginationStyles.root)}
   />
 )
 Pagination.displayName = "Pagination"
 
 const PaginationContent = React.forwardRef<
   HTMLUListElement,
-  React.ComponentProps<"ul">
->(({ className, ...props }, ref) => (
+  PaginationContentProps
+>(({ ...props }, ref) => (
   <ul
     ref={ref}
-    className={cn("flex flex-row items-center gap-[var(--spacing-xxs)]", className)}
     {...props}
+    {...stylex.props(paginationStyles.content)}
   />
 ))
 PaginationContent.displayName = "PaginationContent"
 
 const PaginationItem = React.forwardRef<
   HTMLLIElement,
-  React.ComponentProps<"li">
->(({ className, ...props }, ref) => (
-  <li ref={ref} className={cn("", className)} {...props} />
+  PaginationItemProps
+>(({ ...props }, ref) => (
+  <li ref={ref} {...props} />
 ))
 PaginationItem.displayName = "PaginationItem"
 
+type PaginationLinkSize = Extract<ButtonSize, "default" | "sm" | "lg" | "icon">
+
 type PaginationLinkProps = {
+  edge?: boolean
   isActive?: boolean
-} & Pick<ButtonProps, "size"> &
-  React.ComponentProps<"a">
+  size?: PaginationLinkSize
+} & Omit<React.ComponentProps<"a">, "className" | "style">
 
 const PaginationLink = ({
-  className,
+  edge,
   isActive,
   size = "icon",
   ...props
 }: PaginationLinkProps) => (
   <a
     aria-current={isActive ? "page" : undefined}
-    className={cn(
-      buttonVariants({
-        variant: isActive ? "outline" : "ghost",
-        size,
-      }),
-      className
-    )}
     {...props}
+    {...stylex.props(
+      paginationLinkStyles.base,
+      paginationLinkSizeStyles[size],
+      isActive ? paginationLinkStyles.active : paginationLinkStyles.inactive,
+      edge && paginationLinkStyles.edge
+    )}
   />
 )
 PaginationLink.displayName = "PaginationLink"
 
-const PaginationPrevious = ({
-  className,
-  ...props
-}: React.ComponentProps<typeof PaginationLink>) => (
+const PaginationPrevious = (
+  props: React.ComponentProps<typeof PaginationLink>
+) => (
   <PaginationLink
     aria-label="Go to previous page"
+    edge
     size="default"
-    className={cn("gap-[var(--spacing-xxs)] pl-[var(--spacing-sm)]", className)}
     {...props}
   >
-    <ChevronLeft className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+    <ChevronLeft {...stylex.props(paginationStyles.icon)} />
     <span>Previous</span>
   </PaginationLink>
 )
 PaginationPrevious.displayName = "PaginationPrevious"
 
-const PaginationNext = ({
-  className,
-  ...props
-}: React.ComponentProps<typeof PaginationLink>) => (
+const PaginationNext = (props: React.ComponentProps<typeof PaginationLink>) => (
   <PaginationLink
     aria-label="Go to next page"
+    edge
     size="default"
-    className={cn("gap-[var(--spacing-xxs)] pl-[var(--spacing-sm)]", className)}
     {...props}
   >
     <span>Next</span>
-    <ChevronRight className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+    <ChevronRight {...stylex.props(paginationStyles.icon)} />
   </PaginationLink>
 )
 PaginationNext.displayName = "PaginationNext"
 
 interface PaginationEllipsisProps {
-  className?: string
   /** Array of hidden page numbers to show in the dropdown */
   pages?: number[]
   /** Callback when a page number is clicked in the dropdown */
@@ -106,7 +113,6 @@ interface PaginationEllipsisProps {
 }
 
 const PaginationEllipsis = ({
-  className,
   pages,
   onPageClick,
 }: PaginationEllipsisProps) => {
@@ -114,13 +120,10 @@ const PaginationEllipsis = ({
     return (
       <span
         aria-hidden
-        className={cn(
-          "flex h-[var(--size-lg)] w-[var(--size-lg)] items-center justify-center",
-          className
-        )}
+        {...stylex.props(paginationStyles.ellipsis)}
       >
-        <MoreHorizontal className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
-        <span className="sr-only">More pages</span>
+        <MoreHorizontal {...stylex.props(paginationStyles.icon)} />
+        <span {...stylex.props(paginationStyles.visuallyHidden)}>More pages</span>
       </span>
     )
   }
@@ -128,16 +131,8 @@ const PaginationEllipsis = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className={cn(
-            "h-[var(--size-lg)] w-[var(--size-lg)]",
-            className
-          )}
-          aria-label="Show more pages"
-        >
-          <MoreHorizontal className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+        <Button variant="ghost" size="icon" aria-label="Show more pages">
+          <MoreHorizontal {...stylex.props(paginationStyles.icon)} />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="center">
@@ -154,6 +149,123 @@ const PaginationEllipsis = ({
   )
 }
 PaginationEllipsis.displayName = "PaginationEllipsis"
+
+const paginationStyles = stylex.create({
+  root: {
+    display: "flex",
+    justifyContent: "center",
+    marginInline: "auto",
+    width: "100%",
+  },
+  content: {
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "row",
+    gap: "var(--spacing-xxs)",
+  },
+  ellipsis: {
+    alignItems: "center",
+    display: "flex",
+    height: "var(--size-lg)",
+    justifyContent: "center",
+    width: "var(--size-lg)",
+  },
+  icon: {
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+  visuallyHidden: {
+    borderWidth: 0,
+    clip: "rect(0, 0, 0, 0)",
+    height: 1,
+    margin: -1,
+    overflow: "hidden",
+    padding: 0,
+    position: "absolute",
+    whiteSpace: "nowrap",
+    width: 1,
+  },
+})
+
+const paginationLinkStyles = stylex.create({
+  base: {
+    alignItems: "center",
+    borderWidth: 0,
+    borderStyle: "solid",
+    borderColor: "transparent",
+    borderRadius: "var(--curves-md)",
+    boxSizing: "border-box",
+    display: "inline-flex",
+    fontSize: "var(--font-size-sm)",
+    fontWeight: 400,
+    gap: "var(--spacing-xs)",
+    justifyContent: "center",
+    textDecorationLine: "none",
+    transitionDuration: "150ms",
+    transitionProperty: "all",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    whiteSpace: "nowrap",
+    ":focus-visible": {
+      outlineColor: "var(--interactive-border)",
+      outlineOffset: "1px",
+      outlineStyle: "solid",
+      outlineWidth: "1px",
+    },
+  },
+  active: {
+    backgroundColor: "transparent",
+    borderColor: "var(--action-secondary-border)",
+    borderWidth: 1,
+    color: "var(--action-secondary-fg)",
+    ":hover": {
+      backgroundColor: "var(--action-secondary-bg-hover)",
+    },
+    ":active": {
+      backgroundColor: "var(--action-secondary-bg-active)",
+      color: "var(--action-secondary-fg-active)",
+    },
+  },
+  inactive: {
+    backgroundColor: "transparent",
+    color: "var(--action-tertiary-fg)",
+    ":hover": {
+      backgroundColor: "var(--action-tertiary-bg-hover)",
+      color: "var(--action-tertiary-fg-active)",
+    },
+  },
+  edge: {
+    gap: "var(--spacing-xxs)",
+    paddingLeft: "var(--spacing-sm)",
+  },
+  sizeDefault: {
+    height: "var(--size-lg)",
+    paddingBlock: "var(--spacing-sm)",
+    paddingInline: "var(--spacing-md)",
+  },
+  sizeSm: {
+    borderRadius: "var(--curves-sm)",
+    fontSize: "var(--font-size-xs)",
+    height: "var(--size-md)",
+    paddingInline: "var(--spacing-sm)",
+  },
+  sizeLg: {
+    borderRadius: "var(--curves-md)",
+    fontSize: "var(--font-size-base)",
+    height: "var(--size-xl)",
+    paddingInline: "var(--spacing-xl)",
+  },
+  sizeIcon: {
+    height: "var(--size-lg)",
+    width: "var(--size-lg)",
+  },
+})
+
+const paginationLinkSizeStyles = {
+  default: paginationLinkStyles.sizeDefault,
+  sm: paginationLinkStyles.sizeSm,
+  lg: paginationLinkStyles.sizeLg,
+  icon: paginationLinkStyles.sizeIcon,
+} satisfies Record<PaginationLinkSize, stylex.StyleXStyles>
 
 export {
   Pagination,

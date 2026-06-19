@@ -1,15 +1,18 @@
 /* Ragnar Design System Tokens (Primitives -> Modes -> Themes) */
+@layer tailwind, priority1, priority2, priority3, priority4, priority5, priority6, priority7, priority8, priority9, priority10;
+
 @import "@vasf/ragnar-tokens/css";
 
-@import "tailwindcss";
+@import "tailwindcss" layer(tailwind);
 
 @plugin "tailwindcss-animate";
 
 /* Dark mode via data-mode attribute */
 @custom-variant dark (&:where([data-mode="dark"], [data-mode="dark"] *));
 
-/* Scan AI component sources */
+/* Scan AI compatibility package + core component sources */
 @source "../**/*.{ts,tsx}";
+@source "../../../core/src/**/*.{ts,tsx}";
 
 /* ============================================
  * Theme Tokens -- maps CSS variables to Tailwind utilities

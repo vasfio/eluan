@@ -1,3 +1,4 @@
+import type * as React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
@@ -56,8 +57,12 @@ describe("Button", () => {
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
   });
 
-  it("forwards className", () => {
-    render(<Button className="extra-class">Styled</Button>);
-    expect(screen.getByRole("button")).toHaveClass("extra-class");
+  it("does not forward className overrides", () => {
+    const overrideProps = {
+      className: "extra-class",
+    } as unknown as React.ComponentProps<typeof Button>;
+
+    render(<Button {...overrideProps}>Styled</Button>);
+    expect(screen.getByRole("button")).not.toHaveClass("extra-class");
   });
 });

@@ -1,41 +1,55 @@
 import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as stylex from "@stylexjs/stylex"
+
+type FieldsetProps = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  "className" | "style"
+>
+
+type FieldsetDescriptionProps = Omit<
+  React.HTMLAttributes<HTMLParagraphElement>,
+  "className" | "style"
+>
+
+const styles = stylex.create({
+  root: {
+    borderColor: "var(--container-border-alt)",
+    borderRadius: "var(--curves-lg)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    display: "flex",
+    flexDirection: "column",
+    gap: "var(--spacing-lg)",
+    padding: "var(--spacing-lg)",
+  },
+  legend: {
+    color: "var(--container-fg)",
+    fontSize: "var(--font-size-sm)",
+    fontWeight: 500,
+    lineHeight: 1,
+    marginBlockEnd: "var(--spacing-lg)",
+  },
+  description: {
+    color: "var(--container-fg-alt)",
+    fontSize: "var(--font-size-sm)",
+  },
+})
 
 // Fieldset renders as a div to avoid the native <fieldset> legend-cuts-border-line behaviour
-const Fieldset = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("space-y-4 rounded-[var(--curves-lg)] border border-[var(--container-border-alt)] p-[var(--spacing-lg)]", className)}
-    {...props}
-  />
-))
+const Fieldset = React.forwardRef<HTMLDivElement, FieldsetProps>(
+  (props, ref) => <div ref={ref} {...props} {...stylex.props(styles.root)} />
+)
 Fieldset.displayName = "Fieldset"
 
-const FieldsetLegend = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("mb-[var(--spacing-lg)] text-[length:var(--font-size-sm)] font-medium text-[color:var(--container-fg)] leading-none", className)}
-    {...props}
-  />
-))
+const FieldsetLegend = React.forwardRef<HTMLDivElement, FieldsetProps>(
+  (props, ref) => <div ref={ref} {...props} {...stylex.props(styles.legend)} />
+)
 FieldsetLegend.displayName = "FieldsetLegend"
 
 const FieldsetDescription = React.forwardRef<
   HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-  <p
-    ref={ref}
-    className={cn("text-[length:var(--font-size-sm)] text-[color:var(--container-fg-alt)]", className)}
-    {...props}
-  />
-))
+  FieldsetDescriptionProps
+>((props, ref) => <p ref={ref} {...props} {...stylex.props(styles.description)} />)
 FieldsetDescription.displayName = "FieldsetDescription"
 
 export { Fieldset, FieldsetLegend, FieldsetDescription }

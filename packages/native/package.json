@@ -19,16 +19,17 @@
     "design-system",
     "ragnar"
   ],
+  "type": "module",
   "sideEffects": false,
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "react-native": "./dist/index.js",
       "import": "./dist/index.js",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.js"
     }
   },
   "files": [
@@ -53,7 +54,7 @@
     "react-native": ">=0.70.0 <0.80.0"
   },
   "dependencies": {
-    "@vasf/ragnar-tokens": "workspace:^"
+    "@vasf/ragnar-tokens": "^0.1.2"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^8.1.0",
@@ -65,7 +66,7 @@
     "@testing-library/react-native": "^13.3.3",
     "@types/react": "^18.3.3",
     "@types/react-native": "^0.72.0",
-    "@vitest/coverage-v8": "^4.0.18",
+    "@vitest/coverage-v8": "4.0.18",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-native-web": "^0.19.12",
@@ -73,6 +74,6 @@
     "storybook": "^8.1.0",
     "typescript": "^5.4.5",
     "vite": "^5.2.0",
-    "vitest": "^4.0.18"
+    "vitest": "4.0.18"
   }
 }

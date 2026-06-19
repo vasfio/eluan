@@ -1,12 +1,11 @@
 "use client"
 
 import * as React from "react"
+import * as stylex from "@stylexjs/stylex"
 import { Dot } from "lucide-react"
 
-import { cn } from "@/lib/utils"
-
 export interface InputOTPProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "className" | "onChange" | "style"> {
   /** Number of OTP slots */
   length?: number
   /** Called when OTP value changes */
@@ -19,10 +18,135 @@ export interface InputOTPProps
   autoFocus?: boolean
 }
 
+const caretBlink = stylex.keyframes({
+  "0%, 70%, 100%": {
+    opacity: 1,
+  },
+  "20%, 50%": {
+    opacity: 0,
+  },
+})
+
+const styles = stylex.create({
+  root: {
+    alignItems: "center",
+    display: "flex",
+    gap: "var(--spacing-sm)",
+  },
+  input: {
+    backgroundColor: "var(--interactive-bg)",
+    borderColor: "var(--interactive-border-alt)",
+    borderRadius: "var(--curves-md)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    fontSize: "var(--font-size-lg)",
+    fontWeight: 600,
+    height: "var(--size-xl)",
+    letterSpacing: "0.1em",
+    textAlign: "center",
+    transitionDuration: "150ms",
+    transitionProperty: "all",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    width: "var(--size-lg)",
+    ":focus": {
+      outlineStyle: "none",
+    },
+    ":focus-visible": {
+      boxShadow: "0 0 0 1px var(--interactive-border), 0 0 0 2px var(--interactive-border)",
+    },
+    ":disabled": {
+      backgroundColor: "var(--interactive-bg-disabled)",
+      color: "var(--interactive-fg-disabled)",
+      cursor: "not-allowed",
+    },
+  },
+  inputFilled: {
+    backgroundColor: "var(--interactive-bg-alt)",
+  },
+  divider: {
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "center",
+    width: "var(--size-xxs)",
+  },
+  dividerText: {
+    color: "var(--interactive-fg)",
+    fontSize: "var(--font-size-lg)",
+  },
+  slot: {
+    alignItems: "center",
+    borderColor: "var(--interactive-border-alt)",
+    borderRightStyle: "solid",
+    borderRightWidth: 1,
+    borderTopStyle: "solid",
+    borderTopWidth: 1,
+    borderBottomStyle: "solid",
+    borderBottomWidth: 1,
+    display: "flex",
+    fontSize: "var(--font-size-sm)",
+    height: "var(--size-lg)",
+    justifyContent: "center",
+    position: "relative",
+    transitionDuration: "150ms",
+    transitionProperty: "all",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    width: "var(--size-lg)",
+    ":first-child": {
+      borderLeftStyle: "solid",
+      borderLeftWidth: 1,
+      borderTopLeftRadius: "var(--curves-md)",
+      borderBottomLeftRadius: "var(--curves-md)",
+    },
+    ":last-child": {
+      borderTopRightRadius: "var(--curves-md)",
+      borderBottomRightRadius: "var(--curves-md)",
+    },
+  },
+  slotActive: {
+    boxShadow: "0 0 0 1px var(--interactive-border-alt)",
+    zIndex: 10,
+  },
+  slotInput: {
+    backgroundColor: "transparent",
+    borderWidth: 0,
+    height: "100%",
+    inset: 0,
+    outlineStyle: "none",
+    position: "absolute",
+    textAlign: "center",
+    width: "100%",
+  },
+  caretWrap: {
+    alignItems: "center",
+    display: "flex",
+    inset: 0,
+    justifyContent: "center",
+    pointerEvents: "none",
+    position: "absolute",
+  },
+  caret: {
+    animationDuration: "1000ms",
+    animationIterationCount: "infinite",
+    animationName: caretBlink,
+    animationTimingFunction: "linear",
+    backgroundColor: "var(--interactive-fg-alt)",
+    height: "var(--size-xxs)",
+    width: 1,
+  },
+  group: {
+    alignItems: "center",
+    display: "flex",
+  },
+  separatorIcon: {
+    color: "var(--container-fg)",
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+})
+
 const InputOTP = React.forwardRef<HTMLDivElement, InputOTPProps>(
   (
     {
-      className,
       length = 6,
       onChange,
       onComplete,
@@ -130,7 +254,7 @@ const InputOTP = React.forwardRef<HTMLDivElement, InputOTPProps>(
     return (
       <div
         ref={ref}
-        className={cn("flex items-center gap-[var(--spacing-sm)]", className)}
+        {...stylex.props(styles.root)}
         {...props}
       >
         {values.map((value, index) => (
@@ -150,16 +274,11 @@ const InputOTP = React.forwardRef<HTMLDivElement, InputOTPProps>(
               onPaste={handlePaste}
               onFocus={(e) => e.target.select()}
               disabled={disabled}
-              className={cn(
-                "h-[var(--size-xl)] w-[var(--size-lg)] rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] text-center text-[length:var(--font-size-lg)] font-semibold tracking-widest transition-all",
-                "focus:outline-none focus:ring-1 focus:ring-[var(--interactive-border)] focus:ring-offset-1 focus:ring-offset-[var(--interactive-border)]",
-                "disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[color:var(--interactive-fg-disabled)]",
-                value && "bg-[var(--interactive-bg-alt)]"
-              )}
+              {...stylex.props(styles.input, value !== "" && styles.inputFilled)}
             />
             {index === Math.floor(length / 2) - 1 && length > 3 && (
-              <div className="flex w-[var(--size-xxs)] items-center justify-center">
-                <span className="text-[color:var(--interactive-fg)] text-[length:var(--font-size-lg)]">-</span>
+              <div {...stylex.props(styles.divider)}>
+                <span {...stylex.props(styles.dividerText)}>-</span>
               </div>
             )}
           </React.Fragment>
@@ -173,29 +292,25 @@ InputOTP.displayName = "InputOTP"
 // Individual slot component for custom layouts
 const InputOTPSlot = React.forwardRef<
   HTMLInputElement,
-  React.InputHTMLAttributes<HTMLInputElement> & {
+  Omit<React.InputHTMLAttributes<HTMLInputElement>, "className" | "style"> & {
     index: number
     char?: string
     hasFakeCaret?: boolean
     isActive?: boolean
   }
->(({ className, index, char, hasFakeCaret, isActive, ...props }, ref) => (
+>(({ index: _index, char, hasFakeCaret, isActive, ...props }, ref) => (
   <div
-    className={cn(
-      "relative flex h-[var(--size-lg)] w-[var(--size-lg)] items-center justify-center border-y border-r border-[var(--interactive-border-alt)] text-[length:var(--font-size-sm)] transition-all first:rounded-l-[var(--curves-md)] first:border-l last:rounded-r-[var(--curves-md)]",
-      isActive && "z-10 ring-1 ring-[var(--interactive-border-alt)] ring-offset-background",
-      className
-    )}
+    {...stylex.props(styles.slot, isActive && styles.slotActive)}
   >
     <input
       ref={ref}
-      className="absolute inset-0 h-full w-full bg-transparent text-center outline-none"
+      {...stylex.props(styles.slotInput)}
       {...props}
     />
     {char}
     {hasFakeCaret && (
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <div className="h-4 w-px animate-caret-blink bg-[var(--interactive-fg-alt)] duration-1000" />
+      <div {...stylex.props(styles.caretWrap)}>
+        <div {...stylex.props(styles.caret)} />
       </div>
     )}
   </div>
@@ -204,9 +319,9 @@ InputOTPSlot.displayName = "InputOTPSlot"
 
 const InputOTPGroup = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("flex items-center", className)} {...props} />
+  Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style">
+>((props, ref) => (
+  <div ref={ref} {...props} {...stylex.props(styles.group)} />
 ))
 InputOTPGroup.displayName = "InputOTPGroup"
 
@@ -215,7 +330,7 @@ const InputOTPSeparator = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement>
 >(({ ...props }, ref) => (
   <div ref={ref} role="separator" {...props}>
-    <Dot className="h-[var(--size-xxs)] w-[var(--size-xxs)] text-[color:var(--container-fg)]" />
+    <Dot {...stylex.props(styles.separatorIcon)} />
   </div>
 ))
 InputOTPSeparator.displayName = "InputOTPSeparator"

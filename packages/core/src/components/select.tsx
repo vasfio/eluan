@@ -1,8 +1,7 @@
 import * as React from "react"
 import * as SelectPrimitive from "@radix-ui/react-select"
+import * as stylex from "@stylexjs/stylex"
 import { Check, ChevronDown, ChevronUp } from "lucide-react"
-
-import { cn } from "@/lib/utils"
 
 const Select = SelectPrimitive.Root
 
@@ -10,21 +9,223 @@ const SelectGroup = SelectPrimitive.Group
 
 const SelectValue = SelectPrimitive.Value
 
+type SelectTriggerProps = Omit<
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>,
+  "className" | "style"
+> & {
+  variant?: "default" | "calendarCaption" | "countryCode"
+}
+
+type SelectContentProps = Omit<
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>,
+  "className" | "style"
+> & {
+  layout?: "default" | "auto" | "country"
+}
+
+type SelectLabelProps = Omit<
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>,
+  "className" | "style"
+>
+
+type SelectItemProps = Omit<
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>,
+  "className" | "style"
+> & {
+  size?: "default" | "compact"
+}
+
+type SelectSeparatorProps = Omit<
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>,
+  "className" | "style"
+>
+
+type SelectScrollButtonProps = Omit<
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>,
+  "className" | "style"
+>
+
+const styles = stylex.create({
+  trigger: {
+    alignItems: "center",
+    backgroundColor: "var(--interactive-bg)",
+    borderColor: "var(--interactive-border-alt)",
+    borderRadius: "var(--curves-md)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    boxSizing: "border-box",
+    color: "var(--interactive-fg)",
+    display: "flex",
+    fontSize: "var(--font-size-sm)",
+    height: "var(--size-lg)",
+    justifyContent: "space-between",
+    paddingBlock: "var(--spacing-sm)",
+    paddingInline: "var(--spacing-md)",
+    width: "100%",
+    "::placeholder": {
+      color: "var(--interactive-fg-alt)",
+    },
+    ":focus": {
+      outlineStyle: "none",
+    },
+    ":focus-visible": {
+      borderColor: "var(--interactive-border)",
+      outlineColor: "var(--interactive-border)",
+      outlineOffset: "1px",
+      outlineStyle: "solid",
+      outlineWidth: "1px",
+    },
+    ":disabled": {
+      backgroundColor: "var(--interactive-bg-disabled)",
+      color: "var(--interactive-fg-disabled)",
+      cursor: "not-allowed",
+    },
+  },
+  triggerCalendarCaption: {
+    borderColor: "transparent",
+    boxShadow: "none",
+    flex: 1,
+    fontSize: "var(--font-size-xs)",
+    height: "var(--size-sm)",
+    paddingInline: "var(--spacing-xs)",
+    ":focus-visible": {
+      borderColor: "transparent",
+      outlineStyle: "none",
+    },
+  },
+  triggerCountryCode: {
+    borderBottomRightRadius: 0,
+    borderTopRightRadius: 0,
+    flexShrink: 0,
+    gap: "var(--spacing-xxs)",
+    minWidth: "calc(var(--size-xl) + var(--spacing-lg))",
+    width: "auto",
+  },
+  triggerIcon: {
+    height: "var(--size-xxs)",
+    opacity: 0.5,
+    width: "var(--size-xxs)",
+  },
+  scrollButton: {
+    alignItems: "center",
+    cursor: "default",
+    display: "flex",
+    justifyContent: "center",
+    paddingBlock: "var(--spacing-xxs)",
+  },
+  scrollIcon: {
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+  content: {
+    backgroundColor: "var(--container-bg)",
+    borderColor: "var(--container-border)",
+    borderRadius: "var(--curves-md)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+    color: "var(--container-fg)",
+    maxHeight: "24rem",
+    minWidth: "8rem",
+    overflow: "hidden",
+    position: "relative",
+    zIndex: 50,
+  },
+  contentAuto: {
+    minWidth: 0,
+    width: "auto",
+  },
+  contentCountry: {
+    minWidth: "17.5rem",
+  },
+  contentPopper: {
+    "[data-side=bottom]": {
+      transform: "translateY(var(--spacing-xxs))",
+    },
+    "[data-side=left]": {
+      transform: "translateX(calc(var(--spacing-xxs) * -1))",
+    },
+    "[data-side=right]": {
+      transform: "translateX(var(--spacing-xxs))",
+    },
+    "[data-side=top]": {
+      transform: "translateY(calc(var(--spacing-xxs) * -1))",
+    },
+  },
+  viewport: {
+    padding: "var(--spacing-xxs)",
+  },
+  viewportPopper: {
+    height: "var(--radix-select-trigger-height)",
+    minWidth: "var(--radix-select-trigger-width)",
+    width: "100%",
+  },
+  label: {
+    fontSize: "var(--font-size-sm)",
+    fontWeight: 600,
+    paddingBlock: "var(--spacing-xs)",
+    paddingLeft: "var(--spacing-md)",
+    paddingRight: "var(--spacing-sm)",
+  },
+  item: {
+    alignItems: "center",
+    borderRadius: "var(--curves-sm)",
+    cursor: "default",
+    display: "flex",
+    fontSize: "var(--font-size-sm)",
+    outlineStyle: "none",
+    paddingBlock: "var(--spacing-xs)",
+    paddingLeft: "calc(var(--size-xs) + var(--spacing-lg))",
+    paddingRight: "var(--spacing-sm)",
+    position: "relative",
+    userSelect: "none",
+    width: "100%",
+    ":focus": {
+      backgroundColor: "var(--interactive-bg-hover)",
+      color: "var(--interactive-fg)",
+    },
+    "[data-disabled]": {
+      backgroundColor: "var(--interactive-bg-disabled)",
+      color: "var(--interactive-fg-disabled)",
+      pointerEvents: "none",
+    },
+  },
+  itemCompact: {
+    fontSize: "var(--font-size-xs)",
+  },
+  itemIndicator: {
+    alignItems: "center",
+    display: "flex",
+    height: "var(--size-xs)",
+    justifyContent: "center",
+    left: "var(--spacing-sm)",
+    position: "absolute",
+    width: "var(--size-xs)",
+  },
+  separator: {
+    backgroundColor: "var(--container-bg-alt)",
+    height: 1,
+    marginBlock: "var(--spacing-xxs)",
+    marginInline: "calc(var(--spacing-xxs) * -1)",
+  },
+})
+
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
+  SelectTriggerProps
+>(({ children, variant = "default", ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
-    className={cn(
-      "flex h-[var(--size-lg)] w-full items-center justify-between rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[length:var(--font-size-sm)] ring-offset-background placeholder:text-[color:var(--interactive-fg-alt)] focus:outline-none focus:ring-1 focus:ring-[var(--interactive-border)] focus:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[color:var(--interactive-fg-disabled)] [&>span]:line-clamp-1",
-      className
-    )}
     {...props}
+    {...stylex.props(
+      styles.trigger,
+      variant === "calendarCaption" && styles.triggerCalendarCaption,
+      variant === "countryCode" && styles.triggerCountryCode
+    )}
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-[var(--size-xxs)] w-[var(--size-xxs)] opacity-50" />
+      <ChevronDown {...stylex.props(styles.triggerIcon)} />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ))
@@ -32,34 +233,28 @@ SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
 
 const SelectScrollUpButton = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
->(({ className, ...props }, ref) => (
+  SelectScrollButtonProps
+>(({ ...props }, ref) => (
   <SelectPrimitive.ScrollUpButton
     ref={ref}
-    className={cn(
-      "flex cursor-default items-center justify-center py-[var(--spacing-xxs)]",
-      className
-    )}
     {...props}
+    {...stylex.props(styles.scrollButton)}
   >
-    <ChevronUp className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+    <ChevronUp {...stylex.props(styles.scrollIcon)} />
   </SelectPrimitive.ScrollUpButton>
 ))
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName
 
 const SelectScrollDownButton = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
->(({ className, ...props }, ref) => (
+  SelectScrollButtonProps
+>(({ ...props }, ref) => (
   <SelectPrimitive.ScrollDownButton
     ref={ref}
-    className={cn(
-      "flex cursor-default items-center justify-center py-[var(--spacing-xxs)]",
-      className
-    )}
     {...props}
+    {...stylex.props(styles.scrollButton)}
   >
-    <ChevronDown className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+    <ChevronDown {...stylex.props(styles.scrollIcon)} />
   </SelectPrimitive.ScrollDownButton>
 ))
 SelectScrollDownButton.displayName =
@@ -67,27 +262,23 @@ SelectScrollDownButton.displayName =
 
 const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
->(({ className, children, position = "popper", ...props }, ref) => (
+  SelectContentProps
+>(({ children, layout = "default", position = "popper", ...props }, ref) => (
   <SelectPrimitive.Portal>
     <SelectPrimitive.Content
       ref={ref}
-      className={cn(
-        "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-[var(--curves-md)] border bg-[var(--container-bg)] text-[color:var(--container-fg)] shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-        position === "popper" &&
-          "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
-        className
-      )}
       position={position}
       {...props}
+      {...stylex.props(
+        styles.content,
+        position === "popper" && styles.contentPopper,
+        layout === "auto" && styles.contentAuto,
+        layout === "country" && styles.contentCountry
+      )}
     >
       <SelectScrollUpButton />
       <SelectPrimitive.Viewport
-        className={cn(
-          "p-1",
-          position === "popper" &&
-            "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]"
-        )}
+        {...stylex.props(styles.viewport, position === "popper" && styles.viewportPopper)}
       >
         {children}
       </SelectPrimitive.Viewport>
@@ -99,31 +290,28 @@ SelectContent.displayName = SelectPrimitive.Content.displayName
 
 const SelectLabel = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Label>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
->(({ className, ...props }, ref) => (
+  SelectLabelProps
+>(({ ...props }, ref) => (
   <SelectPrimitive.Label
     ref={ref}
-    className={cn("py-[var(--spacing-xs)] pl-[var(--spacing-md)] pr-[var(--spacing-sm)] text-[length:var(--font-size-sm)] font-semibold", className)}
     {...props}
+    {...stylex.props(styles.label)}
   />
 ))
 SelectLabel.displayName = SelectPrimitive.Label.displayName
 
 const SelectItem = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
->(({ className, children, ...props }, ref) => (
+  SelectItemProps
+>(({ children, size = "default", ...props }, ref) => (
   <SelectPrimitive.Item
     ref={ref}
-    className={cn(
-      "relative flex w-full cursor-default select-none items-center rounded-[var(--curves-sm)] py-[var(--spacing-xs)] pl-8 pr-[var(--spacing-sm)] text-[length:var(--font-size-sm)] outline-none focus:bg-[var(--interactive-bg-hover)] focus:text-[color:var(--interactive-fg)] data-[disabled]:pointer-events-none data-[disabled]:bg-[var(--interactive-bg-disabled)] data-[disabled]:text-[color:var(--interactive-fg-disabled)]",
-      className
-    )}
     {...props}
+    {...stylex.props(styles.item, size === "compact" && styles.itemCompact)}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span {...stylex.props(styles.itemIndicator)}>
       <SelectPrimitive.ItemIndicator>
-        <Check className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+        <Check {...stylex.props(styles.scrollIcon)} />
       </SelectPrimitive.ItemIndicator>
     </span>
 
@@ -134,12 +322,12 @@ SelectItem.displayName = SelectPrimitive.Item.displayName
 
 const SelectSeparator = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Separator>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
->(({ className, ...props }, ref) => (
+  SelectSeparatorProps
+>(({ ...props }, ref) => (
   <SelectPrimitive.Separator
     ref={ref}
-    className={cn("-mx-[var(--spacing-xxs)] my-[var(--spacing-xxs)] h-px bg-[var(--container-bg-alt)]", className)}
     {...props}
+    {...stylex.props(styles.separator)}
   />
 ))
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName

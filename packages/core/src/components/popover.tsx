@@ -1,26 +1,63 @@
 import * as React from "react"
 import * as PopoverPrimitive from "@radix-ui/react-popover"
-
-import { cn } from "@/lib/utils"
+import * as stylex from "@stylexjs/stylex"
 
 const Popover = PopoverPrimitive.Root
 
 const PopoverTrigger = PopoverPrimitive.Trigger
 
+type PopoverContentProps = Omit<
+  React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>,
+  "className" | "style"
+> & {
+  layout?: "default" | "calendar" | "calendarSingle" | "matchTrigger"
+}
+
+const styles = stylex.create({
+  content: {
+    backgroundColor: "var(--container-bg)",
+    borderColor: "var(--container-border)",
+    borderRadius: "var(--curves-md)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+    color: "var(--interactive-fg)",
+    outlineStyle: "none",
+    padding: "var(--spacing-md)",
+    width: "18rem",
+    zIndex: 50,
+  },
+  calendar: {
+    minWidth: 0,
+    padding: 0,
+    width: "auto",
+  },
+  calendarSingle: {
+    minWidth: "17.5rem",
+  },
+  matchTrigger: {
+    padding: 0,
+    width: "var(--radix-popover-trigger-width)",
+  },
+})
+
 const PopoverContent = React.forwardRef<
   React.ElementRef<typeof PopoverPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>
->(({ className, align = "center", sideOffset = 4, ...props }, ref) => (
+  PopoverContentProps
+>(({ align = "center", layout = "default", sideOffset = 4, ...props }, ref) => (
   <PopoverPrimitive.Portal>
     <PopoverPrimitive.Content
       ref={ref}
       align={align}
       sideOffset={sideOffset}
-      className={cn(
-        "z-50 w-72 rounded-[var(--curves-md)] border bg-[var(--container-bg)] p-[var(--spacing-md)] text-[color:var(--interactive-fg)] shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-        className
-      )}
       {...props}
+      {...stylex.props(
+        styles.content,
+        layout === "calendar" && styles.calendar,
+        layout === "calendarSingle" && styles.calendar,
+        layout === "calendarSingle" && styles.calendarSingle,
+        layout === "matchTrigger" && styles.matchTrigger
+      )}
     />
   </PopoverPrimitive.Portal>
 ))

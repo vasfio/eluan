@@ -1,126 +1,19 @@
-import React, { useEffect } from "react"
-import type { Preview } from "@storybook/react"
-import { loadThemeFonts, type Theme } from "../../tokens/src/index"
 import "../src/styles/globals.css"
 
+import type { Preview } from "@storybook/react"
+
+import {
+  createRagnarDecorator,
+  ragnarGlobalTypes,
+  ragnarInitialGlobals,
+  ragnarParameters,
+} from "../../../.storybook/ragnar-preview"
+
 const preview: Preview = {
-  globalTypes: {
-    mode: {
-      name: "Mode",
-      description: "Color mode (Light / Dim / Dark)",
-      toolbar: {
-        icon: "sun",
-        items: [
-          { value: "light", title: "☀️ Light", icon: "sun" },
-          { value: "dim", title: "🌤️ Dim", icon: "sunrisealt" },
-          { value: "dark", title: "🌙 Dark", icon: "moon" },
-        ],
-        dynamicTitle: true,
-      },
-    },
-    theme: {
-      name: "Theme",
-      description: "Visual theme identity",
-      toolbar: {
-        icon: "paintbrush",
-        items: [
-          { value: "industrial-retro", title: "🔥 Industrial Retro" },
-          { value: "minimal", title: "⬛ Minimal" },
-        ],
-        dynamicTitle: true,
-      },
-    },
-    spacing: {
-      name: "Spacing",
-      description: "Spacing scale (Compact / Standard / Wide)",
-      toolbar: {
-        icon: "ruler",
-        items: [
-          { value: "compact", title: "Compact" },
-          { value: "standard", title: "Standard" },
-          { value: "wide", title: "Wide" },
-        ],
-        dynamicTitle: true,
-      },
-    },
-    curves: {
-      name: "Curves",
-      description: "Border radius scale (Sharp / Slight / Sweeping)",
-      toolbar: {
-        icon: "circle",
-        items: [
-          { value: "sharp", title: "Sharp" },
-          { value: "slight", title: "Slight" },
-          { value: "sweeping", title: "Sweeping" },
-        ],
-        dynamicTitle: true,
-      },
-    },
-  },
-  initialGlobals: {
-    mode: "light",
-    theme: "industrial-retro",
-    spacing: "standard",
-    curves: "slight",
-  },
-  parameters: {
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/i,
-      },
-    },
-  },
-  decorators: [
-    (Story, context) => {
-      const mode = context.globals.mode || "light"
-      const theme = context.globals.theme || "industrial-retro"
-      const spacing = context.globals.spacing || "standard"
-      const curves = context.globals.curves || "slight"
-
-      // Load fonts for the active theme (lazy, cached)
-      useEffect(() => {
-        loadThemeFonts(theme as Theme)
-      }, [theme])
-
-      // Set attributes on the document root for CSS variable resolution
-      useEffect(() => {
-        document.documentElement.setAttribute("data-mode", mode)
-        document.documentElement.setAttribute("data-theme", theme)
-        document.documentElement.setAttribute("data-spacing", spacing)
-        document.documentElement.setAttribute("data-curves", curves)
-
-        return () => {
-          document.documentElement.removeAttribute("data-mode")
-          document.documentElement.removeAttribute("data-theme")
-          document.documentElement.removeAttribute("data-spacing")
-          document.documentElement.removeAttribute("data-curves")
-        }
-      }, [mode, theme, spacing, curves])
-
-      // Determine Storybook canvas background color based on mode
-      const bgColor =
-        mode === "dark"
-          ? "#262626"
-          : mode === "dim"
-            ? "#f9f7e0"
-            : "#ffffff"
-
-      return (
-        <div
-          data-mode={mode}
-          data-theme={theme}
-          data-spacing={spacing}
-          data-curves={curves}
-          style={{ backgroundColor: bgColor, minHeight: "100vh" }}
-        >
-          <div className="p-4" style={{ color: "var(--foregrounds-primary)" }}>
-            <Story />
-          </div>
-        </div>
-      )
-    },
-  ],
+  decorators: [createRagnarDecorator()],
+  globalTypes: ragnarGlobalTypes,
+  initialGlobals: ragnarInitialGlobals,
+  parameters: ragnarParameters,
 }
 
 export default preview

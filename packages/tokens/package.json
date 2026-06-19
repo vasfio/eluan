@@ -28,8 +28,8 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     },
     "./css": "./dist/tokens.css",
     "./fonts/all": "./dist/fonts.css",
@@ -37,9 +37,9 @@
     "./fonts/industrial-retro": "./dist/fonts-industrial-retro.css",
     "./fonts/minimal": "./dist/fonts-minimal.css",
     "./tailwind": {
+      "types": "./dist/tailwind.d.ts",
       "import": "./dist/tailwind.js",
-      "require": "./dist/tailwind.js",
-      "types": "./dist/tailwind.d.ts"
+      "require": "./dist/tailwind.js"
     }
   },
   "files": [

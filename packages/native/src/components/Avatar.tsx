@@ -10,7 +10,7 @@ import {
   useColorScheme,
 } from "react-native"
 import { fontSizes } from "@vasf/ragnar-tokens"
-import { sp, sz, curves, getSemanticColors } from "../utils/styles"
+import { sz, getSemanticColors } from "../utils/styles"
 
 export interface AvatarProps {
   /** Image source (uri or require) */

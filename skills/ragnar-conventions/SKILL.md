@@ -1,13 +1,13 @@
 ---
 name: ragnar-conventions
-description: Ragnar design system coding conventions for building, editing, or auditing components. Use when creating new components for @vasf/ragnar-core or @vasf/ragnar-web, fixing existing ones, or any task that involves Ragnar tokens, styling, or component patterns in the ragnar monorepo.
+description: Ragnar design system coding conventions for building, editing, or auditing components. Use when creating new components for @vasf/ragnar-core, fixing existing ones, or any task that involves Ragnar tokens, styling, or component patterns in the ragnar monorepo.
 ---
 
 # Ragnar Conventions
 
 ## Repo structure
-- `packages/core/src/components/` — core UI components
-- `packages/web/src/components/` — marketing/web sections
+- `packages/core/src/components/` — UI, marketing, and AI UX components
+- `packages/web/src/components/` — compatibility wrappers for Header, HeaderNavigation, and Footer
 - `packages/native/src/components/` — React Native components
 - Each component has a `.tsx` and a `.stories.tsx` file
 
@@ -40,7 +40,7 @@ Use CSS custom properties exclusively:
 1. `cd packages/core && npm run build` — verify clean build before committing
 2. Version bump: edit `package.json` version manually (workspace: protocol breaks npm version)
 3. Publish: `npm publish --access public --no-workspaces` from the package folder
-4. Commit with: `feat: ragnar core/web improvements — description`
+4. Commit with: `feat: ragnar core improvements - description`
 
 ## Common mistakes to avoid
 - Don't use `bg-primary`, `text-foreground` etc. (shadcn compat aliases) — use full token vars

@@ -1,13 +1,16 @@
 # @vasf/ragnar-core
 
-> 60+ accessible, themeable React UI components — built on Radix UI primitives, Tailwind CSS v4, and CVA.
+> Accessible, themeable React UI components, marketing patterns, and AI UX patterns — built on Radix UI primitives, Tailwind CSS v4, and CVA.
 
 Part of the [Ragnar](https://github.com/frolda/ragnar) design system.
 
 ## Install
 
 ```bash
+npm install @vasf/ragnar-core @vasf/ragnar-tokens
+yarn add @vasf/ragnar-core @vasf/ragnar-tokens
 pnpm add @vasf/ragnar-core @vasf/ragnar-tokens
+bun add @vasf/ragnar-core @vasf/ragnar-tokens
 ```
 
 ## Use
@@ -28,13 +31,19 @@ export default function App() {
 }
 ```
 
+Import an individual component entry when you want a narrower module:
+
+```tsx
+import { Button } from "@vasf/ragnar-core/button"
+```
+
 ## Theming
 
 See the [theming guide](https://github.com/frolda/ragnar/blob/main/docs/theming.md) for `RagnarProvider` setup, `useRagnarTheme()`, and how to define a custom theme via `createTheme()`.
 
 ## What's included
 
-Components span layout (`Card`, `Sheet`, `Drawer`, `Resizable`), forms (`Input`, `Select`, `Combobox`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`, etc.), data display (`Table`, `Tree View`, `Timeline`, `Calendar`), navigation (`Tabs`, `Breadcrumb`, `Command`, `NavigationDrawer`), feedback (`Toast`, `Alert`, `Banner`, `Progress`), and overlays (`Dialog`, `Popover`, `Tooltip`, `ContextMenu`).
+Components span layout (`Card`, `Sheet`, `Drawer`), forms (`Input`, `Select`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`, etc.), data display (`Table`, `Tree View`, `Timeline`, `Calendar`), navigation (`Tabs`, `Breadcrumb`, `Command`, `NavigationDrawer`), feedback (`Toast`, `Banner`, `Progress`), and overlays (`Dialog`, `AlertDialog`, `Popover`, `Tooltip`, `ContextMenu`).
 
 Full component list: see [Storybook](https://github.com/frolda/ragnar) or the source under `src/components/`.
 

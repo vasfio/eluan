@@ -8,12 +8,10 @@ describe("AspectRatio", () => {
     expect(screen.getByRole("img")).toBeInTheDocument();
   });
 
-  it("forwards className", () => {
-    // Radix AspectRatio.Root wraps in an outer positioned div + an inner
-    // styled div — className is applied to the inner element.
+  it("does not forward className overrides", () => {
     const { container } = render(
-      <AspectRatio className="custom-aspect" ratio={1} data-testid="ar"><div /></AspectRatio>
+      <AspectRatio {...({ className: "custom-aspect" } as never)} ratio={1} data-testid="ar"><div /></AspectRatio>
     );
-    expect(container.querySelector(".custom-aspect")).not.toBeNull();
+    expect(container.querySelector(".custom-aspect")).toBeNull();
   });
 });

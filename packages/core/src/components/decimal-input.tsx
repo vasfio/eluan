@@ -1,5 +1,5 @@
 import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as stylex from "@stylexjs/stylex"
 
 type CurrencyCode = "USD" | "EUR" | "GBP" | "JPY" | "CNY" | "KRW" | "INR" | "BRL" | "CAD" | "AUD" | "CHF"
 
@@ -25,7 +25,7 @@ const currencies: Record<CurrencyCode, CurrencyInfo> = {
 }
 
 export interface DecimalInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "value" | "onChange"> {
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "className" | "size" | "style" | "type" | "value" | "onChange"> {
   value?: number
   onChange?: (value: number | undefined) => void
   decimals?: number
@@ -40,6 +40,66 @@ export interface DecimalInputProps
   decimalSeparator?: string
   allowNegative?: boolean
 }
+
+const styles = stylex.create({
+  root: {
+    alignItems: "center",
+    display: "flex",
+    position: "relative",
+  },
+  affix: {
+    color: "var(--interactive-fg-alt)",
+    fontSize: "var(--font-size-sm)",
+    pointerEvents: "none",
+    position: "absolute",
+    whiteSpace: "nowrap",
+  },
+  prefix: {
+    left: "var(--spacing-md)",
+  },
+  suffix: {
+    right: "var(--spacing-md)",
+  },
+  input: {
+    backgroundColor: "var(--container-bg)",
+    borderColor: "var(--interactive-border-alt)",
+    borderRadius: "var(--curves-md)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    color: "var(--interactive-fg)",
+    display: "flex",
+    fontFamily: "var(--font-mono)",
+    fontSize: "var(--font-size-sm)",
+    height: "var(--size-lg)",
+    paddingBlock: "var(--spacing-sm)",
+    textAlign: "right",
+    transitionDuration: "150ms",
+    transitionProperty: "color, background-color, border-color",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    width: "100%",
+    "::placeholder": {
+      color: "var(--interactive-fg-alt)",
+    },
+    ":focus-visible": {
+      borderColor: "var(--interactive-border)",
+      outlineColor: "var(--interactive-border)",
+      outlineOffset: "1px",
+      outlineStyle: "solid",
+      outlineWidth: "1px",
+    },
+    ":disabled": {
+      backgroundColor: "var(--interactive-bg-disabled)",
+      color: "var(--interactive-fg-disabled)",
+      cursor: "not-allowed",
+    },
+  },
+  padStart: {
+    paddingLeft: "var(--spacing-md)",
+  },
+  padEnd: {
+    paddingRight: "var(--spacing-md)",
+  },
+})
 
 function formatNumber(
   value: number,
@@ -68,7 +128,6 @@ function parseNumber(
 const DecimalInput = React.forwardRef<HTMLInputElement, DecimalInputProps>(
   (
     {
-      className,
       value,
       onChange,
       decimals = 2,
@@ -179,11 +238,11 @@ const DecimalInput = React.forwardRef<HTMLInputElement, DecimalInputProps>(
     }, [effectiveSuffix])
 
     return (
-      <div className="relative flex items-center">
+      <div {...stylex.props(styles.root)}>
         {hasPrefix && (
           <span
             ref={prefixRef}
-            className="pointer-events-none absolute left-3 text-[color:var(--interactive-fg-alt)] text-[length:var(--font-size-sm)] whitespace-nowrap"
+            {...stylex.props(styles.affix, styles.prefix)}
           >
             {effectivePrefix}
             {effectivePrefixUnit}
@@ -192,16 +251,11 @@ const DecimalInput = React.forwardRef<HTMLInputElement, DecimalInputProps>(
         <input
           type="text"
           inputMode="decimal"
-          className={cn(
-            "flex h-[var(--size-lg)] w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--container-bg)] py-[var(--spacing-sm)] text-[length:var(--font-size-sm)] text-right ring-offset-background placeholder:text-[color:var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:border-[var(--interactive-border)] disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[color:var(--interactive-fg-disabled)] transition-colors font-mono",
-            !hasPrefix && "pl-3",
-            !hasSuffix && "pr-3",
-            className
-          )}
           style={{
-            paddingLeft: hasPrefix ? `${prefixWidth + 20}px` : undefined,
-            paddingRight: hasSuffix ? `${suffixWidth + 20}px` : undefined,
+            paddingLeft: hasPrefix ? `calc(${prefixWidth}px + var(--spacing-xl))` : undefined,
+            paddingRight: hasSuffix ? `calc(${suffixWidth}px + var(--spacing-xl))` : undefined,
           }}
+          {...stylex.props(styles.input, !hasPrefix && styles.padStart, !hasSuffix && styles.padEnd)}
           ref={ref}
           value={inputValue}
           onChange={handleChange}
@@ -213,7 +267,7 @@ const DecimalInput = React.forwardRef<HTMLInputElement, DecimalInputProps>(
         {hasSuffix && (
           <span
             ref={suffixRef}
-            className="pointer-events-none absolute right-3 text-[color:var(--interactive-fg-alt)] text-[length:var(--font-size-sm)] whitespace-nowrap"
+            {...stylex.props(styles.affix, styles.suffix)}
           >
             {effectiveSuffix}
           </span>

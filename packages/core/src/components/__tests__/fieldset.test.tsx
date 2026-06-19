@@ -14,8 +14,8 @@ describe("Fieldset", () => {
     expect(container.firstChild).toBeInTheDocument();
   });
 
-  it("forwards className", () => {
-    const { container } = render(<Fieldset className="mt-4">Fields</Fieldset>);
-    expect(container.firstChild).toHaveClass("mt-4");
+  it("does not forward className overrides", () => {
+    const { container } = render(<Fieldset {...({ className: "mt-4" } as never)}>Fields</Fieldset>);
+    expect(container.firstChild).not.toHaveClass("mt-4");
   });
 });

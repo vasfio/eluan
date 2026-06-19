@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ragnar Public Review"
+  short_description: "Audit Ragnar for public readiness."
+  default_prompt: "Review the Ragnar repository for open-source readiness and quality issues."

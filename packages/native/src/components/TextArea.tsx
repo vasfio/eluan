@@ -8,6 +8,9 @@ import {
   TextStyle,
   TextInputProps,
   useColorScheme,
+  NativeSyntheticEvent,
+  TextInputContentSizeChangeEventData,
+  TextInputFocusEventData,
 } from "react-native"
 import { fontSizes } from "@vasf/ragnar-tokens"
 import { sp, curves, getSemanticColors } from "../utils/styles"
@@ -67,17 +70,17 @@ export const TextArea = forwardRef<TextInput, TextAreaProps>(
     const [isFocused, setIsFocused] = useState(false)
     const [height, setHeight] = useState<number | undefined>(undefined)
 
-    const handleFocus = (e: any) => {
+    const handleFocus = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
       setIsFocused(true)
       onFocus?.(e)
     }
 
-    const handleBlur = (e: any) => {
+    const handleBlur = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
       setIsFocused(false)
       onBlur?.(e)
     }
 
-    const handleContentSizeChange = (e: any) => {
+    const handleContentSizeChange = (e: NativeSyntheticEvent<TextInputContentSizeChangeEventData>) => {
       if (autoGrow) {
         const newHeight = Math.min(e.nativeEvent.contentSize.height, maxHeight)
         setHeight(newHeight)

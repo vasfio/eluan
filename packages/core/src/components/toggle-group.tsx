@@ -1,53 +1,146 @@
 import * as React from "react"
 import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group"
-import { type VariantProps } from "class-variance-authority"
+import * as stylex from "@stylexjs/stylex"
 
-import { cn } from "@/lib/utils"
-import { toggleVariants } from "./toggle"
+import { type ToggleSize, type ToggleVariant } from "./toggle"
 
-const ToggleGroupContext = React.createContext<
-  VariantProps<typeof toggleVariants>
->({
+interface ToggleGroupVariantContext {
+  size: ToggleSize
+  variant: ToggleVariant
+}
+
+const ToggleGroupContext = React.createContext<ToggleGroupVariantContext>({
   size: "default",
   variant: "default",
 })
 
+interface ToggleGroupProps
+  extends Omit<
+    React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root>,
+    "className" | "style"
+  > {
+  size?: ToggleSize
+  variant?: ToggleVariant
+}
+
+interface ToggleGroupItemProps
+  extends Omit<
+    React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Item>,
+    "className" | "style"
+  > {
+  size?: ToggleSize
+  variant?: ToggleVariant
+}
+
+const styles = stylex.create({
+  root: {
+    alignItems: "center",
+    display: "flex",
+    gap: "var(--spacing-xs)",
+    justifyContent: "center",
+  },
+  item: {
+    alignItems: "center",
+    backgroundColor: "transparent",
+    borderColor: "transparent",
+    borderRadius: "var(--curves-md)",
+    borderStyle: "solid",
+    borderWidth: 0,
+    display: "inline-flex",
+    fontSize: "var(--font-size-sm)",
+    fontWeight: 500,
+    gap: "var(--spacing-sm)",
+    justifyContent: "center",
+    transitionDuration: "150ms",
+    transitionProperty: "color, background-color, border-color",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    ":hover": {
+      backgroundColor: "var(--interactive-bg-hover)",
+      color: "var(--interactive-fg)",
+    },
+    ":focus-visible": {
+      outlineColor: "var(--interactive-border)",
+      outlineOffset: "1px",
+      outlineStyle: "solid",
+      outlineWidth: "1px",
+    },
+    ":disabled": {
+      backgroundColor: "var(--interactive-bg-disabled)",
+      color: "var(--interactive-fg-disabled)",
+      pointerEvents: "none",
+    },
+    "[data-state=on]": {
+      backgroundColor: "var(--interactive-bg-selected)",
+      color: "var(--interactive-fg-selected)",
+    },
+  },
+  outline: {
+    borderColor: "var(--interactive-border-alt)",
+    borderWidth: 1,
+  },
+  sizeDefault: {
+    height: "var(--size-lg)",
+    minWidth: "var(--size-lg)",
+    paddingInline: "var(--spacing-md)",
+  },
+  sizeSm: {
+    fontSize: "var(--font-size-xs)",
+    height: "var(--size-sm)",
+    minWidth: 0,
+    paddingInline: "var(--spacing-xs)",
+  },
+  sizeIconMd: {
+    height: "var(--size-md)",
+    padding: 0,
+    width: "var(--size-md)",
+  },
+})
+
+const variantStyles = {
+  default: null,
+  outline: styles.outline,
+} satisfies Record<ToggleVariant, stylex.StyleXStyles | null>
+
+const sizeStyles = {
+  default: styles.sizeDefault,
+  sm: styles.sizeSm,
+  iconMd: styles.sizeIconMd,
+} satisfies Record<ToggleSize, stylex.StyleXStyles>
+
 const ToggleGroup = React.forwardRef<
   React.ElementRef<typeof ToggleGroupPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root> &
-    VariantProps<typeof toggleVariants>
->(({ className, variant, size, children, ...props }, ref) => (
-  <ToggleGroupPrimitive.Root
-    ref={ref}
-    className={cn("flex items-center justify-center gap-[var(--spacing-xs)]", className)}
-    {...props}
-  >
-    <ToggleGroupContext.Provider value={{ variant, size }}>
-      {children}
-    </ToggleGroupContext.Provider>
-  </ToggleGroupPrimitive.Root>
-))
+  ToggleGroupProps
+>(({ variant = "default", size = "default", children, ...props }, ref) => {
+  const Root = ToggleGroupPrimitive.Root as React.ElementType
+
+  return (
+    <Root ref={ref} {...props} {...stylex.props(styles.root)}>
+      <ToggleGroupContext.Provider value={{ variant, size }}>
+        {children}
+      </ToggleGroupContext.Provider>
+    </Root>
+  )
+})
 
 ToggleGroup.displayName = ToggleGroupPrimitive.Root.displayName
 
 const ToggleGroupItem = React.forwardRef<
   React.ElementRef<typeof ToggleGroupPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Item> &
-    VariantProps<typeof toggleVariants>
->(({ className, children, variant, size, ...props }, ref) => {
+  ToggleGroupItemProps
+>(({ children, variant, size, ...props }, ref) => {
   const context = React.useContext(ToggleGroupContext)
+  const resolvedVariant = variant ?? context.variant
+  const resolvedSize = size ?? context.size
 
   return (
     <ToggleGroupPrimitive.Item
       ref={ref}
-      className={cn(
-        toggleVariants({
-          variant: context.variant || variant,
-          size: context.size || size,
-        }),
-        className
-      )}
       {...props}
+      {...stylex.props(
+        styles.item,
+        variantStyles[resolvedVariant],
+        sizeStyles[resolvedSize]
+      )}
     >
       {children}
     </ToggleGroupPrimitive.Item>

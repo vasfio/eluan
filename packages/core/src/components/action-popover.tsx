@@ -1,5 +1,5 @@
 import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as stylex from "@stylexjs/stylex"
 import { MoreHorizontal } from "lucide-react"
 
 import {
@@ -25,11 +25,19 @@ export interface ActionPopoverProps {
   align?: "start" | "center" | "end"
   /** Which side of the trigger the menu appears on */
   side?: "top" | "bottom" | "left" | "right"
-  /** Additional class names for the trigger button */
-  className?: string
   /** Accessible label for the trigger button */
   "aria-label"?: string
 }
+
+const styles = stylex.create({
+  triggerIcon: {
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+  itemIcon: {
+    flexShrink: 0,
+  },
+})
 
 const ActionPopover = React.forwardRef<HTMLButtonElement, ActionPopoverProps>(
   (
@@ -37,7 +45,6 @@ const ActionPopover = React.forwardRef<HTMLButtonElement, ActionPopoverProps>(
       items,
       align = "end",
       side = "bottom",
-      className,
       "aria-label": ariaLabel = "Open actions menu",
     },
     ref
@@ -49,10 +56,9 @@ const ActionPopover = React.forwardRef<HTMLButtonElement, ActionPopoverProps>(
             ref={ref}
             variant="ghost"
             size="icon"
-            className={cn("h-[var(--size-lg)] w-[var(--size-lg)]", className)}
             aria-label={ariaLabel}
           >
-            <MoreHorizontal className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+            <MoreHorizontal {...stylex.props(styles.triggerIcon)} />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align={align} side={side}>
@@ -61,13 +67,10 @@ const ActionPopover = React.forwardRef<HTMLButtonElement, ActionPopoverProps>(
               key={index}
               onClick={item.onClick}
               disabled={item.disabled}
-              className={cn(
-                item.destructive &&
-                  "text-[color:var(--destructive-fg)] focus:text-[color:var(--destructive-fg)]"
-              )}
+              tone={item.destructive ? "destructive" : "default"}
             >
               {item.icon && (
-                <span className="shrink-0">{item.icon}</span>
+                <span {...stylex.props(styles.itemIcon)}>{item.icon}</span>
               )}
               {item.label}
             </DropdownMenuItem>

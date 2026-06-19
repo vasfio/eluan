@@ -20,7 +20,9 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@vasf/ragnar-core": ["../core/src/index.ts"],
+      "@vasf/ragnar-core/*": ["../core/src/*"]
     }
   },
   "include": ["src"],

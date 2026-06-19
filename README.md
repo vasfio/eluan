@@ -1,47 +1,50 @@
 # Ragnar Design System
 
-A multi-package design system monorepo built with React, Tailwind CSS v4, and Radix UI primitives. Ragnar provides a complete three-layer token architecture, 60+ core UI components, marketing/web components, and React Native components.
+A multi-package design system monorepo built with React, Tailwind CSS v4, and Radix UI primitives. Ragnar provides a complete three-layer token architecture, core UI components, marketing patterns, AI UX patterns, and React Native components.
 
 ## Packages
 
 | Package | Description | Version |
 |---------|-------------|---------|
-| [`@vasf/ragnar-tokens`](#vasfragnar-tokens) | Design tokens (colors, spacing, themes, fonts) | 0.1.1 |
-| [`@vasf/ragnar-core`](#vasfragnar-core) | Core UI components (buttons, inputs, dialogs, etc.) | 0.1.2 |
-| [`@vasf/ragnar-web`](#vasfragnar-web) | Marketing & web-specific components (hero, pricing, footer, etc.) | 0.1.1 |
+| [`@vasf/ragnar-tokens`](#vasfragnar-tokens) | Design tokens (colors, spacing, themes, fonts) | 0.1.2 |
+| [`@vasf/ragnar-core`](#vasfragnar-core) | UI components, marketing patterns, and AI UX patterns | 0.1.13 |
+| [`@vasf/ragnar-web`](#vasfragnar-web) | Compatibility exports for Header, HeaderNavigation, and Footer | 0.1.1 |
 | [`@vasf/ragnar-native`](#vasfragnar-native) | React Native components | 0.1.1 |
 
 ## Quick Start
 
 ```bash
-# Install
+npm install @vasf/ragnar-core @vasf/ragnar-tokens
+yarn add @vasf/ragnar-core @vasf/ragnar-tokens
 pnpm add @vasf/ragnar-core @vasf/ragnar-tokens
+bun add @vasf/ragnar-core @vasf/ragnar-tokens
 ```
 
 ```tsx
-// In your app's entry CSS (or import in JS)
-import "@vasf/ragnar-tokens/fonts/industrial-retro"   // load fonts for your theme
-import "@vasf/ragnar-core/styles.css"               // core styles + Tailwind utilities
-```
+import "@vasf/ragnar-core/styles.css"
+import "@vasf/ragnar-tokens/css"
 
-```html
-<!-- Set tokens on the root element -->
-<html data-mode="light" data-theme="industrial-retro" data-spacing="standard" data-curves="slight">
-```
-
-```tsx
-import { Button, Card, CardHeader, CardTitle, CardContent } from "@vasf/ragnar-core"
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  RagnarProvider,
+} from "@vasf/ragnar-core"
 
 function App() {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Hello Ragnar</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Button>Click me</Button>
-      </CardContent>
-    </Card>
+    <RagnarProvider defaultTheme="industrial-retro" defaultMode="light">
+      <Card>
+        <CardHeader>
+          <CardTitle>Hello Ragnar</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Button>Click me</Button>
+        </CardContent>
+      </Card>
+    </RagnarProvider>
   )
 }
 ```
@@ -79,12 +82,12 @@ pnpm lint
     |
     +---> @vasf/ragnar-core   (depends on tokens)
     |         |
-    |         +---> @vasf/ragnar-web  (depends on core + tokens)
+    |         +---> @vasf/ragnar-web  (compatibility facade)
     |
     +---> @vasf/ragnar-native (depends on tokens)
 ```
 
-Build order matters: always build `tokens` first, then `core`, then `web`.
+Build order matters: always build `tokens` first, then `core`, then compatibility packages such as `web`.
 
 ### Project Structure
 
@@ -92,8 +95,8 @@ Build order matters: always build `tokens` first, then `core`, then `web`.
 ragnar/
   packages/
     tokens/      @vasf/ragnar-tokens   Design tokens, CSS variables, fonts
-    core/        @vasf/ragnar-core     60+ UI components (Radix + Tailwind v4)
-    web/         @vasf/ragnar-web      29 marketing/web components
+    core/        @vasf/ragnar-core     UI, marketing, and AI UX components
+    web/         @vasf/ragnar-web      Header/Footer compatibility facade
     native/      @vasf/ragnar-native   22 React Native component categories
   package.json   Root workspace config, scripts
 ```
@@ -107,7 +110,10 @@ The token foundation of the design system. Provides CSS variables, TypeScript co
 ### Installation
 
 ```bash
+npm install @vasf/ragnar-tokens
+yarn add @vasf/ragnar-tokens
 pnpm add @vasf/ragnar-tokens
+bun add @vasf/ragnar-tokens
 ```
 
 ### Three-Layer Token Architecture
@@ -115,7 +121,7 @@ pnpm add @vasf/ragnar-tokens
 ```
 Layer 1: Primitives   Raw values (20 color palettes, spacing, radius, sizing, viewports)
 Layer 2: Modes        Semantic aliases that adapt to Light / Dim / Dark
-Layer 3: Themes       Component-level tokens for 6 different visual identities
+Layer 3: Themes       Component-level tokens for built-in and custom visual identities
 ```
 
 Activated via HTML data attributes:
@@ -123,9 +129,9 @@ Activated via HTML data attributes:
 ```html
 <html
   data-mode="light"           <!-- light | dim | dark -->
-  data-theme="industrial-retro"  <!-- industrial-retro | minimal | lime | bold | beige | funky -->
+  data-theme="industrial-retro"  <!-- industrial-retro | minimal | custom theme name -->
   data-spacing="standard"     <!-- compact | standard | wide -->
-  data-curves="slight"        <!-- sharp | slight | sweeping | rounded -->
+  data-curves="slight"        <!-- sharp | slight | sweeping -->
 >
 ```
 
@@ -189,10 +195,6 @@ Fonts are split per theme so you only ship the fonts your app actually uses. Onl
 /* Static import: pick the one matching your theme */
 @import "@vasf/ragnar-tokens/fonts/industrial-retro";   /* Geist (heading + body) */
 @import "@vasf/ragnar-tokens/fonts/minimal";   /* Inter (heading + body) */
-@import "@vasf/ragnar-tokens/fonts/lime";            /* Manrope (heading + body) */
-@import "@vasf/ragnar-tokens/fonts/bold";            /* Bebas Neue (heading) + Work Sans (body) */
-@import "@vasf/ragnar-tokens/fonts/beige";           /* Instrument Serif (heading) + Plus Jakarta Sans (body) */
-@import "@vasf/ragnar-tokens/fonts/funky";           /* Dela Gothic One (heading) + Plus Jakarta Sans (body) */
 
 /* Special imports */
 @import "@vasf/ragnar-tokens/fonts/base";            /* Geist Mono only (already in /css) */
@@ -205,10 +207,6 @@ Fonts are split per theme so you only ship the fonts your app actually uses. Onl
 |-------|-------------|-----------|-----------|
 | `industrial-retro` | Geist | Geist | Geist Mono |
 | `minimal` | Inter | Inter | Geist Mono |
-| `lime` | Manrope | Manrope | Geist Mono |
-| `bold` | Bebas Neue | Work Sans | Geist Mono |
-| `beige` | Instrument Serif | Plus Jakarta Sans | Geist Mono |
-| `funky` | Dela Gothic One | Plus Jakarta Sans | Geist Mono |
 
 All fonts are self-hosted via `@fontsource` -- no CDN dependency.
 
@@ -235,9 +233,9 @@ The default export provides all tokens as typed JavaScript constants, useful for
 import {
   // -- Enums & Types --
   modes,                // ["light", "dim", "dark"] as const
-  themes,               // ["industrial-retro", "minimal", "lime", "bold", "beige", "funky"] as const
+  themes,               // ["industrial-retro", "minimal"] as const
   spacingScales,        // ["compact", "standard", "wide"] as const
-  curveScales,          // ["sharp", "slight", "sweeping", "rounded"] as const
+  curveScales,          // ["sharp", "slight", "sweeping"] as const
   colorPalettes,        // ["blazeorange", "bluechill", ...20 total] as const
   colorShades,          // ["50", "100", "200", ... "950"] as const
   monoShades,           // ["0", "50", "100", ... "950"] as const
@@ -314,7 +312,10 @@ export default {
 ### Installation
 
 ```bash
+npm install @vasf/ragnar-core @vasf/ragnar-tokens
+yarn add @vasf/ragnar-core @vasf/ragnar-tokens
 pnpm add @vasf/ragnar-core @vasf/ragnar-tokens
+bun add @vasf/ragnar-core @vasf/ragnar-tokens
 ```
 
 ### Setup
@@ -343,97 +344,28 @@ import "@vasf/ragnar-tokens/fonts/industrial-retro"
 
 ```tsx
 import {
-  // -- Layout & Containers --
-  Accordion, AccordionItem, AccordionTrigger, AccordionContent,
-  AspectRatio,
-  Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter,
-  Collapsible, CollapsibleTrigger, CollapsibleContent,
-  Resizable, ResizablePanel, ResizablePanelGroup, ResizableHandle,
-  ScrollArea, ScrollBar,
-  Separator,
-  Sheet, SheetTrigger, SheetContent, SheetHeader, SheetFooter, SheetTitle, SheetDescription,
-  Sidebar, SidebarProvider, SidebarTrigger, SidebarContent, SidebarMenu, SidebarMenuItem,
-  Tabs, TabsList, TabsTrigger, TabsContent,
-
-  // -- Navigation --
-  Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage,
-  BreadcrumbSeparator, BreadcrumbEllipsis,
-  Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext,
-  ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem,
-  DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem,
-  Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem,
-  NavigationMenu, NavigationMenuList, NavigationMenuItem,
-  NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink,
-  NavigationDrawer,
-  Pagination, PaginationContent, PaginationItem, PaginationLink,
-  PaginationPrevious, PaginationNext, PaginationEllipsis,
-  Stepper,
-
-  // -- Forms & Inputs --
-  Button,
-  Checkbox,
-  Input,
-  InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator,
-  CreditCardInput,
-  DatePicker,
-  DatetimePicker,
-  DecimalInput,
-  EmailInput,
-  FileInput,
-  FormLabel,
-  MultiSelect,
-  NumberInput,
-  PasswordInput,
-  PhoneInput,
-  RadioGroup, RadioGroupItem,
-  SearchInput,
-  Select, SelectTrigger, SelectContent, SelectItem, SelectValue,
-  SelectGroup, SelectLabel,
-  Slider,
-  Switch,
-  Textarea,
-  TimeInput,
-  TimePicker,
-  Toggle,
-  ToggleGroup, ToggleGroupItem,
-
-  // -- Feedback & Overlays --
-  AlertDialog, AlertDialogTrigger, AlertDialogContent,
-  AlertDialogAction, AlertDialogCancel,
+  Accordion,
+  Avatar,
   Badge,
-  Banner,
+  Button,
   Calendar,
-  Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem,
-  Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter,
-  DialogTitle, DialogDescription,
+  Card,
+  Checkbox,
+  Command,
+  DatePicker,
+  Dialog,
   Drawer,
-  HoverCard, HoverCardTrigger, HoverCardContent,
-  Popover, PopoverTrigger, PopoverContent,
-  Progress,
-  Skeleton,
-  Spinner,
-  Timeline,
-  Tooltip, TooltipTrigger, TooltipContent, TooltipProvider,
-
-  // -- Data Display --
-  Table, TableHeader, TableBody, TableFooter, TableHead,
-  TableRow, TableCell, TableCaption,
+  DropdownMenu,
+  Input,
+  NavigationDrawer,
+  Popover,
+  Select,
+  Sheet,
+  Table,
+  Tabs,
+  Tooltip,
   TreeView,
-
-  // -- Media & Content --
-  Avatar, AvatarImage, AvatarFallback,
-  CodeBlock,
-  Kbd,
-  Media,
-  Rating,
-  RichText,
-  Fieldset,
-
-  // -- Toast --
-  Toaster,        // via Sonner
-
-  // -- Utility --
-  cn,             // clsx + tailwind-merge class name helper
+  cn,
 } from "@vasf/ragnar-core"
 ```
 
@@ -449,6 +381,16 @@ import { cn } from "@vasf/ragnar-core"
   isActive && "bg-[var(--interactive-bg-selected)]",
   className
 )} />
+```
+
+### Individual Component Imports
+
+Every core component also has a package subpath entry so consumers can import only the module they need:
+
+```tsx
+import { Button } from "@vasf/ragnar-core/button"
+import { AIPrompt } from "@vasf/ragnar-core/ai-prompt"
+import { Header } from "@vasf/ragnar-core/header"
 ```
 
 ### Using CSS Variables in Components
@@ -511,113 +453,33 @@ The Storybook toolbar lets you switch between all modes, themes, spacing scales,
 
 ## `@vasf/ragnar-web`
 
-29 marketing and web-specific component categories built on top of `@vasf/ragnar-core`.
+Compatibility package for web layout components. Marketing sections, media, visual effects, and other web patterns now live in `@vasf/ragnar-core`.
 
 ### Installation
 
 ```bash
+npm install @vasf/ragnar-web @vasf/ragnar-core @vasf/ragnar-tokens
+yarn add @vasf/ragnar-web @vasf/ragnar-core @vasf/ragnar-tokens
 pnpm add @vasf/ragnar-web @vasf/ragnar-core @vasf/ragnar-tokens
+bun add @vasf/ragnar-web @vasf/ragnar-core @vasf/ragnar-tokens
 ```
 
-### Setup
+### Use
 
 ```tsx
-// 1. Import web styles (includes core tokens + Tailwind + extra animations)
+import "@vasf/ragnar-core/styles.css"
+import "@vasf/ragnar-tokens/css"
 import "@vasf/ragnar-web/styles.css"
 
-// 2. Import fonts for your theme
-import "@vasf/ragnar-tokens/fonts/bold"
-
-// 3. Set data attributes
-// <html data-mode="light" data-theme="bold" data-spacing="standard" data-curves="slight">
+import { Header, HeaderNavigation, Footer } from "@vasf/ragnar-web"
 ```
 
-### Peer Dependencies
-
-```json
-{
-  "react": "^18.0.0",
-  "react-dom": "^18.0.0",
-  "three": ">=0.150.0"     // optional -- only needed for Shaders component
-}
-```
-
-### All Component Imports
+For new code, prefer importing these directly from core:
 
 ```tsx
-import {
-  // -- Marketing Sections --
-  Hero,
-  ContentSpot,
-  FeatureSpot,
-  CtaSection,
-  StatsSection,
-  TeamSection,
-  LogoCloud,
-  Testimonial,
-  Quote,
-  FaqAccordion,
-  SocialProof,
-
-  // -- Navigation & Layout --
-  HeaderNavigation,
-  Footer,
-  AnnouncementBar,
-
-  // -- Forms & Lead Capture --
-  EmailForm,
-  Newsletter,
-  ContactForm,
-
-  // -- Pricing --
-  PricingOptions,
-  PricingTable,
-
-  // -- Blog & Content --
-  BlogCard,
-  BentoGrid,
-
-  // -- Media --
-  VideoPlayer,
-  MapEmbed,
-
-  // -- App & Downloads --
-  AppDownload,
-
-  // -- Visual Effects --
-  Marquee,
-  AnimatedCounter,
-  Shaders,              // requires three.js peer dependency
-
-  // -- Overlays --
-  CookieBanner,
-
-  // -- Utility --
-  cn,
-} from "@vasf/ragnar-web"
-```
-
-### Additional Animations
-
-Beyond core's accordion animations, web adds:
-
-| Animation | CSS Class | Description |
-|-----------|-----------|-------------|
-| `marquee` | `animate-marquee` | Horizontal infinite scroll |
-| `marquee-vertical` | `animate-marquee-vertical` | Vertical infinite scroll |
-| `fade-in` | `animate-fade-in` | 0.3s opacity ease-out |
-| `footerFadeIn` | -- | Fade + translateY for footer reveals |
-| `gradient-shimmer` | -- | 3s background-position cycle |
-| `gradient-shift` | -- | 6s background-position cycle |
-
-### Storybook
-
-```bash
-# From monorepo root
-pnpm storybook:web
-
-# From packages/web directly
-pnpm storybook    # port 6007
+import { Header } from "@vasf/ragnar-core/header"
+import { HeaderNavigation } from "@vasf/ragnar-core/header-navigation"
+import { Footer } from "@vasf/ragnar-core/footer"
 ```
 
 ---
@@ -629,7 +491,10 @@ React Native components that share the same token system as the web packages.
 ### Installation
 
 ```bash
+npm install @vasf/ragnar-native @vasf/ragnar-tokens
+yarn add @vasf/ragnar-native @vasf/ragnar-tokens
 pnpm add @vasf/ragnar-native @vasf/ragnar-tokens
+bun add @vasf/ragnar-native @vasf/ragnar-tokens
 ```
 
 ### Peer Dependencies
@@ -734,12 +599,15 @@ function MyComponent() {
 
 ## Tailwind CSS v4 Integration
 
-Both `@vasf/ragnar-core` and `@vasf/ragnar-web` are built with Tailwind CSS v4. If you're building your own app on top of Ragnar and need your own Tailwind setup:
+`@vasf/ragnar-core` is built with Tailwind CSS v4. If you're building your own app on top of Ragnar and need your own Tailwind setup:
 
 ### Vite Setup
 
 ```bash
+npm install tailwindcss @tailwindcss/vite
+yarn add tailwindcss @tailwindcss/vite
 pnpm add tailwindcss @tailwindcss/vite
+bun add tailwindcss @tailwindcss/vite
 ```
 
 ```ts
@@ -839,10 +707,6 @@ Control the visual identity. Set via `data-theme` on the root element.
 |-------|-----------|-------------|-----------|
 | `industrial-retro` | Clean, modern | Geist | Geist |
 | `minimal` | Minimal, typographic | Inter | Inter |
-| `lime` | Fresh, energetic | Manrope | Manrope |
-| `bold` | Strong, dramatic | Bebas Neue | Work Sans |
-| `beige` | Warm, editorial | Instrument Serif | Plus Jakarta Sans |
-| `funky` | Playful, expressive | Dela Gothic One | Plus Jakarta Sans |
 
 ### Spacing Scales
 

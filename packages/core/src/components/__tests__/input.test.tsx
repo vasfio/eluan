@@ -38,11 +38,9 @@ describe("Input", () => {
     expect(screen.getByTestId("email-input")).toHaveAttribute("type", "email");
   });
 
-  it("forwards className to the wrapper", () => {
-    // Input wraps the <input> in a <div> for icons/trailing — className lands
-    // on the wrapper. Assert via DOM query rather than the textbox role.
-    const { container } = render(<Input className="custom" />);
-    expect(container.querySelector(".custom")).not.toBeNull();
+  it("does not forward className overrides", () => {
+    const { container } = render(<Input {...({ className: "custom" } as never)} />);
+    expect(container.querySelector(".custom")).toBeNull();
   });
 
   it("forwards defaultValue", () => {

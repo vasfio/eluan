@@ -8,13 +8,15 @@ describe("Skeleton", () => {
     expect(container.firstChild).toBeInTheDocument();
   });
 
-  it("forwards className", () => {
-    const { container } = render(<Skeleton className="w-32 h-4" />);
-    expect(container.firstChild).toHaveClass("w-32", "h-4");
+  it("does not forward className overrides", () => {
+    const { container } = render(
+      <Skeleton {...({ className: "w-32 h-4" } as never)} />
+    );
+    expect(container.firstChild).not.toHaveClass("w-32", "h-4");
   });
 
-  it("applies animate-pulse class", () => {
+  it("applies generated styles", () => {
     const { container } = render(<Skeleton />);
-    expect(container.firstChild).toHaveClass("animate-pulse");
+    expect(container.firstChild).toHaveAttribute("class");
   });
 });

@@ -1,7 +1,6 @@
 import * as React from "react"
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
-
-import { cn } from "@/lib/utils"
+import * as stylex from "@stylexjs/stylex"
 
 const TooltipProvider = ({ delayDuration = 200, ...props }: React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Provider>) => (
   <TooltipPrimitive.Provider delayDuration={delayDuration} {...props} />
@@ -11,18 +10,37 @@ const Tooltip = TooltipPrimitive.Root
 
 const TooltipTrigger = TooltipPrimitive.Trigger
 
+type TooltipContentProps = Omit<
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>,
+  "className" | "style"
+>
+
+const styles = stylex.create({
+  content: {
+    backgroundColor: "var(--container-bg)",
+    borderColor: "var(--container-border)",
+    borderRadius: "var(--curves-md)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+    color: "var(--container-fg)",
+    fontSize: "var(--font-size-sm)",
+    overflow: "hidden",
+    paddingBlock: "var(--spacing-xs)",
+    paddingInline: "var(--spacing-sm)",
+    zIndex: 50,
+  },
+})
+
 const TooltipContent = React.forwardRef<
   React.ElementRef<typeof TooltipPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
->(({ className, sideOffset = 4, ...props }, ref) => (
+  TooltipContentProps
+>(({ sideOffset = 4, ...props }, ref) => (
   <TooltipPrimitive.Content
     ref={ref}
     sideOffset={sideOffset}
-    className={cn(
-      "z-50 overflow-hidden rounded-[var(--curves-md)] border bg-[var(--container-bg)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[length:var(--font-size-sm)] text-[color:var(--container-fg)] shadow-lg animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-      className
-    )}
     {...props}
+    {...stylex.props(styles.content)}
   />
 ))
 TooltipContent.displayName = TooltipPrimitive.Content.displayName

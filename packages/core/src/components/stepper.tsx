@@ -1,7 +1,6 @@
 import * as React from "react"
+import * as stylex from "@stylexjs/stylex"
 import { Check } from "lucide-react"
-
-import { cn } from "@/lib/utils"
 
 export interface Step {
   id: string
@@ -10,7 +9,8 @@ export interface Step {
   icon?: React.ReactNode
 }
 
-export interface StepperProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface StepperProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style"> {
   steps: Step[]
   currentStep: number
   orientation?: "horizontal" | "vertical"
@@ -21,7 +21,6 @@ export interface StepperProps extends React.HTMLAttributes<HTMLDivElement> {
 const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
   (
     {
-      className,
       steps,
       currentStep,
       orientation = "horizontal",
@@ -32,82 +31,58 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
     ref
   ) => {
     const isVertical = orientation === "vertical"
-    // When `onStepClick` is provided every step is clickable. The legacy
-    // `allowClickOnCompleted` flag is preserved so existing call sites keep
-    // working — set to `false` to revert to the old completed-only behavior.
     const stepsClickable = !!onStepClick
 
     return (
       <div
         ref={ref}
-        className={cn(
-          "flex",
-          isVertical
-            ? "flex-col gap-[var(--spacing-md)]"
-            : "flex-row items-center",
-          className
-        )}
         {...props}
+        {...stylex.props(styles.root, isVertical ? styles.rootVertical : styles.rootHorizontal)}
       >
         {steps.map((step, index) => {
           const isCompleted = index < currentStep
           const isCurrent = index === currentStep
-          const isClickable =
-            stepsClickable &&
-            (allowClickOnCompleted ? true : isCompleted)
+          const isClickable = stepsClickable && (allowClickOnCompleted ? true : isCompleted)
+          const stateStyle = isCompleted
+            ? styles.buttonCompleted
+            : isCurrent
+              ? styles.buttonCurrent
+              : styles.buttonUpcoming
+          const titleStateStyle = isCurrent || isCompleted ? styles.titleActive : styles.titleMuted
 
           return (
             <React.Fragment key={step.id}>
               <div
-                className={cn(
-                  "flex",
-                  isVertical
-                    ? "flex-row items-start gap-[var(--spacing-sm)]"
-                    : "flex-col items-center gap-[var(--spacing-sm)]"
+                {...stylex.props(
+                  styles.step,
+                  isVertical ? styles.stepVertical : styles.stepHorizontal
                 )}
               >
                 <button
                   type="button"
                   disabled={!isClickable}
                   onClick={() => isClickable && onStepClick?.(index)}
-                  className={cn(
-                    "relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 text-[length:var(--font-size-sm)] font-medium transition-colors",
-                    "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1",
-                    isCompleted &&
-                      "border-[var(--interactive-bg-active)] bg-[var(--interactive-bg-active)] text-[color:var(--interactive-fg-active)]",
-                    isCurrent &&
-                      "border-[var(--interactive-bg-active)] bg-[var(--interactive-bg)] text-[color:var(--interactive-fg)]",
-                    !isCompleted && !isCurrent &&
-                      "border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] text-[color:var(--interactive-fg-alt)]",
-                    isClickable && "cursor-pointer",
-                    // Hover states tuned per state so each variant reads as actionable.
-                    isClickable && isCompleted &&
-                      "hover:border-[var(--action-primary-bg-hover)] hover:bg-[var(--action-primary-bg-hover)]",
-                    isClickable && isCurrent &&
-                      "hover:bg-[var(--interactive-bg-hover)]",
-                    isClickable && !isCompleted && !isCurrent &&
-                      "hover:border-[var(--interactive-bg-active)] hover:text-[color:var(--interactive-fg)]"
+                  {...stylex.props(
+                    styles.button,
+                    stateStyle,
+                    isClickable && styles.buttonClickable,
+                    isClickable && isCompleted && styles.buttonCompletedClickable,
+                    isClickable && isCurrent && styles.buttonCurrentClickable,
+                    isClickable && !isCompleted && !isCurrent && styles.buttonUpcomingClickable
                   )}
                 >
                   {isCompleted ? (
-                    <Check className="h-5 w-5" />
+                    <Check {...stylex.props(styles.checkIcon)} />
                   ) : (
                     step.icon ?? index + 1
                   )}
                 </button>
-                <div className={cn(!isVertical && "text-center")}>
-                  <p
-                    className={cn(
-                      "text-[length:var(--font-size-sm)] font-medium",
-                      isCurrent || isCompleted
-                        ? "text-[color:var(--foregrounds-primary)]"
-                        : "text-[color:var(--foregrounds-tertiary)]"
-                    )}
-                  >
+                <div {...stylex.props(!isVertical && styles.centeredText)}>
+                  <p {...stylex.props(styles.title, titleStateStyle)}>
                     {step.title}
                   </p>
                   {step.description && (
-                    <p className="mt-[var(--spacing-xxs)] text-[length:var(--font-size-xs)] text-[color:var(--foregrounds-tertiary)]">
+                    <p {...stylex.props(styles.description)}>
                       {step.description}
                     </p>
                   )}
@@ -115,17 +90,10 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
               </div>
               {index < steps.length - 1 && (
                 <div
-                  className={cn(
-                    "transition-colors",
-                    isVertical
-                      // Centered on the button column (button is h-10 w-10, so center is 20px).
-                      // `min-h-[var(--spacing-xl)]` gives the line a fixed visible height; the
-                      // parent `gap-md` provides equal breathing room above and below.
-                      ? "ml-5 min-h-[var(--spacing-xl)] w-0.5 -translate-x-1/2"
-                      : "mx-[var(--spacing-sm)] h-0.5 flex-1 min-w-[24px]",
-                    index < currentStep
-                      ? "bg-[var(--interactive-bg-active)]"
-                      : "bg-[var(--interactive-border-alt)]"
+                  {...stylex.props(
+                    styles.connector,
+                    isVertical ? styles.connectorVertical : styles.connectorHorizontal,
+                    index < currentStep ? styles.connectorComplete : styles.connectorIncomplete
                   )}
                 />
               )}
@@ -139,22 +107,155 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
 Stepper.displayName = "Stepper"
 
 export interface StepperContentProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style"> {
   step: number
   currentStep: number
 }
 
 const StepperContent = React.forwardRef<HTMLDivElement, StepperContentProps>(
-  ({ className, step, currentStep, children, ...props }, ref) => {
+  ({ step, currentStep, children, ...props }, ref) => {
     if (step !== currentStep) return null
 
     return (
-      <div ref={ref} className={cn("mt-[var(--spacing-md)]", className)} {...props}>
+      <div ref={ref} {...props} {...stylex.props(styles.content)}>
         {children}
       </div>
     )
   }
 )
 StepperContent.displayName = "StepperContent"
+
+const styles = stylex.create({
+  root: {
+    display: "flex",
+  },
+  rootHorizontal: {
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  rootVertical: {
+    flexDirection: "column",
+    gap: "var(--spacing-md)",
+  },
+  step: {
+    display: "flex",
+  },
+  stepHorizontal: {
+    alignItems: "center",
+    flexDirection: "column",
+    gap: "var(--spacing-sm)",
+  },
+  stepVertical: {
+    alignItems: "flex-start",
+    flexDirection: "row",
+    gap: "var(--spacing-sm)",
+  },
+  button: {
+    alignItems: "center",
+    borderRadius: "var(--radius-radius-full)",
+    borderStyle: "solid",
+    borderWidth: 2,
+    display: "flex",
+    flexShrink: 0,
+    fontSize: "var(--font-size-sm)",
+    fontWeight: 500,
+    height: "var(--size-lg)",
+    justifyContent: "center",
+    position: "relative",
+    transitionDuration: "150ms",
+    transitionProperty: "background-color, border-color, color",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    width: "var(--size-lg)",
+    ":focus-visible": {
+      boxShadow: "0 0 0 1px var(--interactive-border), 0 0 0 2px var(--container-bg)",
+      outlineStyle: "none",
+    },
+  },
+  buttonCompleted: {
+    backgroundColor: "var(--interactive-bg-active)",
+    borderColor: "var(--interactive-bg-active)",
+    color: "var(--interactive-fg-active)",
+  },
+  buttonCurrent: {
+    backgroundColor: "var(--interactive-bg)",
+    borderColor: "var(--interactive-bg-active)",
+    color: "var(--interactive-fg)",
+  },
+  buttonUpcoming: {
+    backgroundColor: "var(--interactive-bg)",
+    borderColor: "var(--interactive-border-alt)",
+    color: "var(--interactive-fg-alt)",
+  },
+  buttonClickable: {
+    cursor: "pointer",
+  },
+  buttonCompletedClickable: {
+    ":hover": {
+      backgroundColor: "var(--action-primary-bg-hover)",
+      borderColor: "var(--action-primary-bg-hover)",
+    },
+  },
+  buttonCurrentClickable: {
+    ":hover": {
+      backgroundColor: "var(--interactive-bg-hover)",
+    },
+  },
+  buttonUpcomingClickable: {
+    ":hover": {
+      borderColor: "var(--interactive-bg-active)",
+      color: "var(--interactive-fg)",
+    },
+  },
+  checkIcon: {
+    height: "var(--size-xs)",
+    width: "var(--size-xs)",
+  },
+  centeredText: {
+    textAlign: "center",
+  },
+  title: {
+    fontSize: "var(--font-size-sm)",
+    fontWeight: 500,
+    margin: 0,
+  },
+  titleActive: {
+    color: "var(--container-fg)",
+  },
+  titleMuted: {
+    color: "var(--container-fg-alt)",
+  },
+  description: {
+    color: "var(--container-fg-alt)",
+    fontSize: "var(--font-size-xs)",
+    margin: 0,
+    marginTop: "var(--spacing-xxs)",
+  },
+  connector: {
+    transitionDuration: "150ms",
+    transitionProperty: "background-color",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+  },
+  connectorVertical: {
+    marginLeft: "calc(var(--size-lg) / 2)",
+    minHeight: "var(--spacing-xl)",
+    transform: "translateX(-50%)",
+    width: "calc(var(--spacing-xxs) / 2)",
+  },
+  connectorHorizontal: {
+    flex: 1,
+    height: "calc(var(--spacing-xxs) / 2)",
+    marginInline: "var(--spacing-sm)",
+    minWidth: "var(--size-sm)",
+  },
+  connectorComplete: {
+    backgroundColor: "var(--interactive-bg-active)",
+  },
+  connectorIncomplete: {
+    backgroundColor: "var(--interactive-border-alt)",
+  },
+  content: {
+    marginTop: "var(--spacing-md)",
+  },
+})
 
 export { Stepper, StepperContent }

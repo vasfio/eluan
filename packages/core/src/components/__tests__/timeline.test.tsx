@@ -24,8 +24,12 @@ describe("Timeline", () => {
     expect(screen.getByText("Description one")).toBeInTheDocument();
   });
 
-  it("forwards className to Timeline", () => {
-    const { container } = render(<Timeline className="custom"><TimelineItem><TimelineContent /></TimelineItem></Timeline>);
-    expect(container.firstChild).toHaveClass("custom");
+  it("does not forward className overrides to Timeline", () => {
+    const { container } = render(
+      <Timeline {...({ className: "custom" } as never)}>
+        <TimelineItem><TimelineContent /></TimelineItem>
+      </Timeline>
+    );
+    expect(container.querySelector(".custom")).toBeNull();
   });
 });

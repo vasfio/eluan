@@ -13,10 +13,10 @@ describe("Image", () => {
     expect(screen.getByRole("img")).toHaveAttribute("src", "photo.jpg");
   });
 
-  it("forwards className to the wrapper", () => {
-    // Image wraps the <img> in a positioned <div> for aspect-ratio / fallback —
-    // className is applied to the wrapper, not the img.
-    const { container } = render(<Image src="x.jpg" alt="x" className="custom-img" />);
-    expect(container.querySelector(".custom-img")).not.toBeNull();
+  it("does not forward className overrides", () => {
+    const { container } = render(
+      <Image {...({ className: "custom-img" } as never)} src="x.jpg" alt="x" />
+    );
+    expect(container.querySelector(".custom-img")).toBeNull();
   });
 });

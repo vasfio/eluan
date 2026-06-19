@@ -9,6 +9,9 @@ import {
   TextInputProps,
   useColorScheme,
   Pressable,
+  NativeSyntheticEvent,
+  TextInputFocusEventData,
+  TextInputSubmitEditingEventData,
 } from "react-native"
 import { fontSizes } from "@vasf/ragnar-tokens"
 import { sp, sz, curves, getSemanticColors } from "../utils/styles"
@@ -56,12 +59,12 @@ export const Input = forwardRef<TextInput, InputProps>(
     const colors = getSemanticColors(colorScheme)
     const [isFocused, setIsFocused] = useState(false)
 
-    const handleFocus = (e: any) => {
+    const handleFocus = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
       setIsFocused(true)
       onFocus?.(e)
     }
 
-    const handleBlur = (e: any) => {
+    const handleBlur = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
       setIsFocused(false)
       onBlur?.(e)
     }
@@ -191,7 +194,7 @@ export const SearchInput = forwardRef<TextInput, SearchInputProps>(
     const colorScheme = useColorScheme() ?? "light"
     const colors = getSemanticColors(colorScheme)
 
-    const handleSubmit = (e: any) => {
+    const handleSubmit = (e: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => {
       onSearch?.(e.nativeEvent.text)
       onSubmitEditing?.(e)
     }

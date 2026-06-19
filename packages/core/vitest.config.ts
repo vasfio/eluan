@@ -1,9 +1,10 @@
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
+import stylex from "@stylexjs/unplugin";
 import path from "path";
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [stylex.vite({ useCSSLayers: true }), react()],
   test: {
     environment: "happy-dom",
     globals: true,

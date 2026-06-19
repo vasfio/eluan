@@ -40,15 +40,15 @@ describe("Tabs", () => {
     expect(tab1).toHaveAttribute("data-state", "inactive");
   });
 
-  it("forwards className to TabsList", () => {
+  it("does not forward className overrides to TabsList", () => {
     render(
       <Tabs defaultValue="a">
-        <TabsList className="custom-list">
+        <TabsList {...({ className: "custom-list" } as never)}>
           <TabsTrigger value="a">A</TabsTrigger>
         </TabsList>
         <TabsContent value="a">A content</TabsContent>
       </Tabs>
     );
-    expect(screen.getByRole("tablist")).toHaveClass("custom-list");
+    expect(screen.getByRole("tablist")).not.toHaveClass("custom-list");
   });
 });

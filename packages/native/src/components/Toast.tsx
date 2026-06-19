@@ -50,6 +50,23 @@ export function Toast({
   const translateY = useRef(new Animated.Value(-100)).current
   const opacity = useRef(new Animated.Value(0)).current
 
+  const dismiss = useCallback(() => {
+    Animated.parallel([
+      Animated.timing(translateY, {
+        toValue: -100,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(opacity, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      onDismiss?.()
+    })
+  }, [onDismiss, opacity, translateY])
+
   useEffect(() => {
     // Animate in
     Animated.parallel([
@@ -73,24 +90,7 @@ export function Toast({
       }, duration)
       return () => clearTimeout(timer)
     }
-  }, [duration])
-
-  const dismiss = () => {
-    Animated.parallel([
-      Animated.timing(translateY, {
-        toValue: -100,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-      Animated.timing(opacity, {
-        toValue: 0,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-    ]).start(() => {
-      onDismiss?.()
-    })
-  }
+  }, [dismiss, duration, opacity, translateY])
 
   const variantStyles = {
     default: {

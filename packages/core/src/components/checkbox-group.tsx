@@ -1,13 +1,13 @@
 import * as React from "react"
+import * as stylex from "@stylexjs/stylex"
 
-import { cn } from "@/lib/utils"
 import { Checkbox } from "./checkbox"
 import { Label } from "./form-label"
 
 interface CheckboxGroupContextValue {
-  value: string[]
-  onItemChange: (itemValue: string, checked: boolean) => void
   disabled?: boolean
+  onItemChange: (itemValue: string, checked: boolean) => void
+  value: string[]
 }
 
 const CheckboxGroupContext = React.createContext<CheckboxGroupContextValue | null>(null)
@@ -21,18 +21,58 @@ const useCheckboxGroup = () => {
 }
 
 export interface CheckboxGroupProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
-  value?: string[]
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style" | "onChange" | "defaultValue"> {
   defaultValue?: string[]
-  onValueChange?: (value: string[]) => void
   disabled?: boolean
+  onValueChange?: (value: string[]) => void
   orientation?: "vertical" | "horizontal"
+  value?: string[]
 }
+
+const styles = stylex.create({
+  groupVertical: {
+    display: "grid",
+    gap: "var(--spacing-md)",
+  },
+  groupHorizontal: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "var(--spacing-lg)",
+  },
+  item: {
+    display: "flex",
+    gap: "var(--spacing-sm)",
+  },
+  itemCenter: {
+    alignItems: "center",
+  },
+  itemStart: {
+    alignItems: "flex-start",
+  },
+  copy: {
+    display: "grid",
+    gap: "var(--spacing-xxs)",
+  },
+  labelWrap: {
+    cursor: "pointer",
+  },
+  disabledLabel: {
+    color: "var(--interactive-fg-disabled)",
+    cursor: "not-allowed",
+  },
+  description: {
+    color: "var(--interactive-fg-alt)",
+    fontSize: "var(--font-size-sm)",
+    margin: 0,
+  },
+  disabledDescription: {
+    color: "var(--interactive-fg-disabled)",
+  },
+})
 
 const CheckboxGroup = React.forwardRef<HTMLDivElement, CheckboxGroupProps>(
   (
     {
-      className,
       value: controlledValue,
       defaultValue = [],
       onValueChange,
@@ -65,11 +105,10 @@ const CheckboxGroup = React.forwardRef<HTMLDivElement, CheckboxGroupProps>(
         <div
           ref={ref}
           role="group"
-          className={cn(
-            orientation === "vertical" ? "grid gap-3" : "flex flex-wrap gap-4",
-            className
-          )}
           {...props}
+          {...stylex.props(
+            orientation === "vertical" ? styles.groupVertical : styles.groupHorizontal
+          )}
         >
           {children}
         </div>
@@ -80,47 +119,50 @@ const CheckboxGroup = React.forwardRef<HTMLDivElement, CheckboxGroupProps>(
 CheckboxGroup.displayName = "CheckboxGroup"
 
 export interface CheckboxGroupItemProps
-  extends Omit<React.ComponentPropsWithoutRef<typeof Checkbox>, "checked" | "onCheckedChange" | "value"> {
-  value: string
-  label: string
+  extends Omit<
+    React.ComponentPropsWithoutRef<typeof Checkbox>,
+    "checked" | "className" | "onCheckedChange" | "style" | "value"
+  > {
   description?: string
+  label: string
+  value: string
 }
 
 const CheckboxGroupItem = React.forwardRef<
   React.ElementRef<typeof Checkbox>,
   CheckboxGroupItemProps
->(({ className, value, label, description, disabled: itemDisabled, id, ...props }, ref) => {
+>(({ value, label, description, disabled: itemDisabled, id, ...props }, ref) => {
   const group = useCheckboxGroup()
   const checked = group.value.includes(value)
   const disabled = group.disabled || itemDisabled
   const itemId = id || `checkbox-${value}`
 
   return (
-    <div className={cn(description ? "flex items-start gap-[var(--spacing-sm)]" : "flex items-center gap-[var(--spacing-sm)]", className)}>
+    <div
+      {...stylex.props(
+        styles.item,
+        description ? styles.itemStart : styles.itemCenter
+      )}
+    >
       <Checkbox
         ref={ref}
         id={itemId}
         checked={checked}
         onCheckedChange={(c) => group.onItemChange(value, c === true)}
         disabled={disabled}
-        className={description ? "mt-0.5" : undefined}
         {...props}
       />
-      <div className="grid gap-[var(--spacing-xxs)]">
-        <Label
-          htmlFor={itemId}
-          className={cn(
-            "cursor-pointer",
-            disabled && "cursor-not-allowed text-[color:var(--interactive-fg-disabled)]"
-          )}
-        >
-          {label}
-        </Label>
+      <div {...stylex.props(styles.copy)}>
+        <span {...stylex.props(styles.labelWrap, disabled && styles.disabledLabel)}>
+          <Label htmlFor={itemId}>{label}</Label>
+        </span>
         {description && (
-          <p className={cn(
-            "text-[length:var(--font-size-sm)] text-[color:var(--interactive-fg-alt)]",
-            disabled && "text-[color:var(--interactive-fg-disabled)]"
-          )}>
+          <p
+            {...stylex.props(
+              styles.description,
+              disabled && styles.disabledDescription
+            )}
+          >
             {description}
           </p>
         )}

@@ -1,9 +1,8 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
+import * as stylex from "@stylexjs/stylex"
 import { ChevronLeft, ChevronRight, Menu } from "lucide-react"
 
-import { cn } from "@/lib/utils"
 import { Button } from "./button"
 import { Sheet, SheetContent, SheetTrigger } from "./sheet"
 
@@ -57,21 +56,23 @@ const NavigationDrawerProvider = ({
 
 const NavigationDrawer = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, children, ...props }, ref) => {
+  Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style">
+>(({ children, ...props }, ref) => {
   const { collapsed, isMobile } = useNavigationDrawer()
 
   if (isMobile) {
     return (
       <Sheet>
-        <SheetTrigger asChild>
-          <Button variant="ghost" size="icon" className="fixed top-3 left-3 z-40 md:hidden">
-            <Menu className="h-[var(--size-xs)] w-[var(--size-xs)]" />
-            <span className="sr-only">Open navigation</span>
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="left" className="w-64 p-0">
-          <nav className="flex h-full flex-col">{children}</nav>
+        <div {...stylex.props(navigationDrawerStyles.mobileTrigger)}>
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <Menu {...stylex.props(navigationDrawerStyles.menuIcon)} />
+              <span {...stylex.props(navigationDrawerStyles.srOnly)}>Open navigation</span>
+            </Button>
+          </SheetTrigger>
+        </div>
+        <SheetContent side="left" layout="navigationDrawer">
+          <nav {...stylex.props(navigationDrawerStyles.mobileNav)}>{children}</nav>
         </SheetContent>
       </Sheet>
     )
@@ -81,12 +82,11 @@ const NavigationDrawer = React.forwardRef<
     <aside
       ref={ref}
       data-collapsed={collapsed}
-      className={cn(
-        "flex h-full flex-col border-r border-[var(--container-border-alt)] bg-[var(--container-bg)] transition-[width] duration-300 ease-in-out",
-        collapsed ? "w-[var(--size-2xl)]" : "w-64",
-        className
-      )}
       {...props}
+      {...stylex.props(
+        navigationDrawerStyles.drawer,
+        collapsed ? navigationDrawerStyles.drawerCollapsed : navigationDrawerStyles.drawerExpanded
+      )}
     >
       {children}
     </aside>
@@ -96,19 +96,18 @@ NavigationDrawer.displayName = "NavigationDrawer"
 
 const NavigationDrawerHeader = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, children, ...props }, ref) => {
+  Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style">
+>(({ children, ...props }, ref) => {
   const { collapsed } = useNavigationDrawer()
 
   return (
     <div
       ref={ref}
-      className={cn(
-        "flex h-12 items-center border-b border-[var(--container-border-alt)] px-[var(--spacing-sm)]",
-        collapsed && "px-[var(--spacing-xs)]",
-        className
-      )}
       {...props}
+      {...stylex.props(
+        navigationDrawerStyles.header,
+        collapsed && navigationDrawerStyles.headerCollapsed
+      )}
     >
       {children}
     </div>
@@ -118,105 +117,284 @@ NavigationDrawerHeader.displayName = "NavigationDrawerHeader"
 
 const NavigationDrawerContent = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+  Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style">
+>((props, ref) => (
   <div
     ref={ref}
-    className={cn(
-      "flex-1 overflow-y-auto p-[var(--spacing-xs)]",
-      // Auto-hide the vertical scrollbar — only render a faint thumb while the
-      // drawer is being hovered or actively scrolled. `scrollbar-gutter: stable`
-      // keeps the layout from shifting when the thumb appears.
-      "[scrollbar-gutter:stable] [scrollbar-color:transparent_transparent] hover:[scrollbar-color:var(--container-border-alt)_transparent]",
-      "[&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-transparent hover:[&::-webkit-scrollbar-thumb]:bg-[var(--container-border-alt)]",
-      "[&::-webkit-scrollbar-thumb]:transition-colors",
-      className
-    )}
     {...props}
+    {...stylex.props(navigationDrawerStyles.content)}
   />
 ))
 NavigationDrawerContent.displayName = "NavigationDrawerContent"
 
 const NavigationDrawerFooter = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+  Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style">
+>((props, ref) => (
   <div
     ref={ref}
-    className={cn("border-t border-[var(--container-border-alt)] p-[var(--spacing-xs)]", className)}
     {...props}
+    {...stylex.props(navigationDrawerStyles.footer)}
   />
 ))
 NavigationDrawerFooter.displayName = "NavigationDrawerFooter"
 
 const NavigationDrawerToggle = React.forwardRef<
   HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement>
->(({ className, ...props }, ref) => {
+  Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "className" | "style">
+>((props, ref) => {
   const { collapsed, setCollapsed, isMobile } = useNavigationDrawer()
 
   if (isMobile) return null
 
   return (
-    <Button
+    <button
       ref={ref}
-      variant="ghost"
-      size="icon"
-      className={cn("h-[var(--size-md)] w-[var(--size-md)]", className)}
       onClick={() => setCollapsed(!collapsed)}
       {...props}
+      {...stylex.props(
+        navigationDrawerStyles.compactButton,
+        navigationDrawerStyles.ghostButton
+      )}
     >
       {collapsed ? (
-        <ChevronRight className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+        <ChevronRight {...stylex.props(navigationDrawerStyles.icon)} />
       ) : (
-        <ChevronLeft className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+        <ChevronLeft {...stylex.props(navigationDrawerStyles.icon)} />
       )}
-    </Button>
+    </button>
   )
 })
 NavigationDrawerToggle.displayName = "NavigationDrawerToggle"
 
-const navigationDrawerItemVariants = cva(
-  "flex h-[var(--size-md)] items-center gap-[var(--spacing-sm)] rounded-[var(--curves-md)] px-[var(--spacing-sm)] text-[length:var(--font-size-xs)] font-medium transition-colors hover:bg-[var(--interactive-bg-hover)] hover:text-[color:var(--interactive-fg)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border-alt)]",
-  {
-    variants: {
-      active: {
-        true: "bg-[var(--interactive-bg-active)] text-[color:var(--interactive-fg-active)] hover:bg-[var(--interactive-bg-active)] hover:text-[color:var(--interactive-fg-active)]",
-        false: "text-[color:var(--interactive-fg-alt)]",
-      },
+const navigationDrawerStyles = stylex.create({
+  mobileTrigger: {
+    left: "0.75rem",
+    position: "fixed",
+    top: "0.75rem",
+    zIndex: 40,
+    "@media (min-width: 768px)": {
+      display: "none",
     },
-    defaultVariants: {
-      active: false,
+  },
+  mobileNav: {
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+  },
+  menuIcon: {
+    height: "var(--size-xs)",
+    width: "var(--size-xs)",
+  },
+  drawer: {
+    backgroundColor: "var(--container-bg)",
+    borderRightColor: "var(--container-border-alt)",
+    borderRightStyle: "solid",
+    borderRightWidth: 1,
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+    transitionDuration: "300ms",
+    transitionProperty: "width",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+  },
+  drawerCollapsed: {
+    width: "calc(var(--size-xl) * 1.5)",
+  },
+  drawerExpanded: {
+    width: "16rem",
+  },
+  header: {
+    alignItems: "center",
+    borderBottomColor: "var(--container-border-alt)",
+    borderBottomStyle: "solid",
+    borderBottomWidth: 1,
+    display: "flex",
+    height: "var(--size-xl)",
+    paddingInline: "var(--spacing-sm)",
+  },
+  headerCollapsed: {
+    paddingInline: "var(--spacing-xs)",
+  },
+  content: {
+    flex: 1,
+    overflowY: "auto",
+    padding: "var(--spacing-xs)",
+    scrollbarColor: "transparent transparent",
+    scrollbarGutter: "stable",
+    ":hover": {
+      scrollbarColor: "var(--container-border-alt) transparent",
     },
-  }
-)
+    "::-webkit-scrollbar": {
+      width: "calc(var(--spacing-xs) + var(--spacing-xxs))",
+    },
+    "::-webkit-scrollbar-thumb": {
+      backgroundColor: "transparent",
+      borderRadius: "var(--radius-radius-full)",
+      transitionDuration: "150ms",
+      transitionProperty: "background-color",
+      transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    },
+    ":hover::-webkit-scrollbar-thumb": {
+      backgroundColor: "var(--container-border-alt)",
+    },
+  },
+  footer: {
+    borderTopColor: "var(--container-border-alt)",
+    borderTopStyle: "solid",
+    borderTopWidth: 1,
+    padding: "var(--spacing-xs)",
+  },
+  compactButton: {
+    alignItems: "center",
+    borderWidth: 0,
+    borderStyle: "solid",
+    borderColor: "transparent",
+    borderRadius: "var(--curves-md)",
+    boxSizing: "border-box",
+    display: "inline-flex",
+    fontSize: "var(--font-size-sm)",
+    fontWeight: 400,
+    gap: "var(--spacing-xs)",
+    height: "var(--size-md)",
+    justifyContent: "center",
+    textDecorationLine: "none",
+    transitionDuration: "150ms",
+    transitionProperty: "all",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    whiteSpace: "nowrap",
+    width: "var(--size-md)",
+    ":focus-visible": {
+      outlineColor: "var(--interactive-border)",
+      outlineOffset: "1px",
+      outlineStyle: "solid",
+      outlineWidth: "1px",
+    },
+    ":disabled": {
+      opacity: 0.5,
+      pointerEvents: "none",
+    },
+  },
+  ghostButton: {
+    backgroundColor: "transparent",
+    color: "var(--action-tertiary-fg)",
+    ":hover": {
+      backgroundColor: "var(--action-tertiary-bg-hover)",
+      color: "var(--action-tertiary-fg-active)",
+    },
+  },
+  icon: {
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+  item: {
+    alignItems: "center",
+    borderRadius: "var(--curves-md)",
+    color: "var(--interactive-fg-alt)",
+    display: "flex",
+    fontSize: "var(--font-size-xs)",
+    fontWeight: 500,
+    gap: "var(--spacing-sm)",
+    height: "var(--size-md)",
+    paddingInline: "var(--spacing-sm)",
+    textDecorationLine: "none",
+    transitionDuration: "150ms",
+    transitionProperty: "background-color, color",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    ":hover": {
+      backgroundColor: "var(--interactive-bg-hover)",
+      color: "var(--interactive-fg)",
+    },
+    ":focus-visible": {
+      boxShadow: "0 0 0 1px var(--interactive-border-alt)",
+      outlineStyle: "none",
+    },
+  },
+  itemActive: {
+    backgroundColor: "var(--interactive-bg-active)",
+    color: "var(--interactive-fg-active)",
+    ":hover": {
+      backgroundColor: "var(--interactive-bg-active)",
+      color: "var(--interactive-fg-active)",
+    },
+  },
+  itemCollapsed: {
+    width: "fit-content",
+  },
+  itemIcon: {
+    flexShrink: 0,
+  },
+  itemLabel: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+  group: {
+    paddingBlock: "var(--spacing-xs)",
+  },
+  groupLabel: {
+    color: "var(--interactive-fg-alt)",
+    fontSize: "var(--font-size-xs)",
+    fontWeight: 600,
+    margin: 0,
+    marginBottom: "var(--spacing-xxs)",
+    paddingInline: "var(--spacing-sm)",
+  },
+  groupLabelCollapsed: {
+    opacity: 0,
+  },
+  groupItems: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "var(--spacing-xxs)",
+  },
+  layout: {
+    display: "flex",
+    height: "100vh",
+  },
+  layoutContent: {
+    flex: 1,
+    overflow: "auto",
+  },
+  srOnly: {
+    borderWidth: 0,
+    clip: "rect(0, 0, 0, 0)",
+    height: 1,
+    margin: -1,
+    overflow: "hidden",
+    padding: 0,
+    position: "absolute",
+    whiteSpace: "nowrap",
+    width: 1,
+  },
+})
 
 export interface NavigationDrawerItemProps
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
-    VariantProps<typeof navigationDrawerItemVariants> {
+  extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "className" | "style"> {
   icon?: React.ReactNode
   asChild?: boolean
+  active?: boolean
 }
 
 const NavigationDrawerItem = React.forwardRef<
   HTMLAnchorElement,
   NavigationDrawerItemProps
->(({ className, icon, active, asChild, children, ...props }, ref) => {
+>(({ icon, active, asChild, children, ...props }, ref) => {
   const { collapsed } = useNavigationDrawer()
   const Comp = asChild ? Slot : "a"
 
   return (
     <Comp
       ref={ref}
-      className={cn(
-        navigationDrawerItemVariants({ active }),
-        collapsed && "w-fit",
-        className
+      {...stylex.props(
+        navigationDrawerStyles.item,
+        active && navigationDrawerStyles.itemActive,
+        collapsed && navigationDrawerStyles.itemCollapsed
       )}
       {...props}
     >
-      {icon && <span className="shrink-0">{icon}</span>}
-      {!collapsed && <span className="truncate">{children}</span>}
+      {icon && <span {...stylex.props(navigationDrawerStyles.itemIcon)}>{icon}</span>}
+      {!collapsed && <span {...stylex.props(navigationDrawerStyles.itemLabel)}>{children}</span>}
     </Comp>
   )
 })
@@ -224,21 +402,23 @@ NavigationDrawerItem.displayName = "NavigationDrawerItem"
 
 const NavigationDrawerGroup = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { label?: string }
->(({ className, label, children, ...props }, ref) => {
+  Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style"> & { label?: string }
+>(({ label, children, ...props }, ref) => {
   const { collapsed } = useNavigationDrawer()
 
   return (
-    <div ref={ref} className={cn("py-[var(--spacing-xs)]", className)} {...props}>
+    <div ref={ref} {...props} {...stylex.props(navigationDrawerStyles.group)}>
       {label && (
-        <h4 className={cn(
-          "mb-[var(--spacing-xxs)] px-[var(--spacing-sm)] text-[length:var(--font-size-xs)] font-semibold text-[color:var(--interactive-fg-alt)]",
-          collapsed && "opacity-0"
-        )}>
+        <h4
+          {...stylex.props(
+            navigationDrawerStyles.groupLabel,
+            collapsed && navigationDrawerStyles.groupLabelCollapsed
+          )}
+        >
           {label}
         </h4>
       )}
-      <div className="space-y-0.5">{children}</div>
+      <div {...stylex.props(navigationDrawerStyles.groupItems)}>{children}</div>
     </div>
   )
 })
@@ -267,19 +447,17 @@ interface NavigationDrawerLayoutProps {
   children: React.ReactNode
   sidebar: React.ReactNode
   defaultCollapsed?: boolean
-  className?: string
 }
 
 const NavigationDrawerLayout = ({
   children,
   sidebar,
   defaultCollapsed = false,
-  className,
 }: NavigationDrawerLayoutProps) => (
   <NavigationDrawerProvider defaultCollapsed={defaultCollapsed}>
-    <div className={cn("flex h-screen", className)}>
+    <div {...stylex.props(navigationDrawerStyles.layout)}>
       <NavigationDrawer>{sidebar}</NavigationDrawer>
-      <div className="flex-1 overflow-auto">{children}</div>
+      <div {...stylex.props(navigationDrawerStyles.layoutContent)}>{children}</div>
     </div>
   </NavigationDrawerProvider>
 )

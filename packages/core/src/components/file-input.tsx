@@ -1,6 +1,15 @@
 import * as React from "react"
-import { Upload, X, File, Image, FileText, Film, Music, Archive } from "lucide-react"
-import { cn } from "@/lib/utils"
+import * as stylex from "@stylexjs/stylex"
+import {
+  Archive,
+  File,
+  FileText,
+  Film,
+  Image as ImageIcon,
+  Music,
+  Upload,
+  X,
+} from "lucide-react"
 
 function assignRef<T>(ref: React.ForwardedRef<T>, value: T | null) {
   if (typeof ref === "function") {
@@ -29,16 +38,18 @@ function getFileType(file: File): FileType {
     mimeType.includes("text") ||
     mimeType.includes("spreadsheet") ||
     mimeType.includes("presentation")
-  )
+  ) {
     return "document"
+  }
   if (
     mimeType.includes("zip") ||
     mimeType.includes("rar") ||
     mimeType.includes("tar") ||
     mimeType.includes("gzip") ||
     mimeType.includes("7z")
-  )
+  ) {
     return "archive"
+  }
   return "other"
 }
 
@@ -53,25 +64,29 @@ function formatFileSize(bytes: number): string {
 }
 
 const FileIcon = ({ type }: { type: FileType }) => {
-  const iconClass = "h-6 w-6"
+  const iconStyles = [styles.fileTypeIcon, fileTypeStyles[type]]
+
   switch (type) {
     case "image":
-      return <Image className={cn(iconClass, "text-green-500")} />
+      return <ImageIcon {...stylex.props(iconStyles)} />
     case "document":
-      return <FileText className={cn(iconClass, "text-blue-500")} />
+      return <FileText {...stylex.props(iconStyles)} />
     case "video":
-      return <Film className={cn(iconClass, "text-purple-500")} />
+      return <Film {...stylex.props(iconStyles)} />
     case "audio":
-      return <Music className={cn(iconClass, "text-pink-500")} />
+      return <Music {...stylex.props(iconStyles)} />
     case "archive":
-      return <Archive className={cn(iconClass, "text-yellow-500")} />
+      return <Archive {...stylex.props(iconStyles)} />
     default:
-      return <File className={cn(iconClass, "text-gray-500")} />
+      return <File {...stylex.props(iconStyles)} />
   }
 }
 
 export interface FileInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "value" | "onChange"> {
+  extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    "className" | "style" | "type" | "value" | "onChange"
+  > {
   value?: File[]
   onChange?: (files: File[]) => void
   maxFiles?: number
@@ -85,7 +100,6 @@ export interface FileInputProps
 const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
   (
     {
-      className,
       value = EMPTY_FILES,
       onChange,
       maxFiles = 1,
@@ -135,7 +149,9 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
         validFiles.push(file)
       }
 
-      const combined = maxFiles === 1 ? validFiles.slice(0, 1) : [...value, ...validFiles].slice(0, maxFiles)
+      const combined = maxFiles === 1
+        ? validFiles.slice(0, 1)
+        : [...value, ...validFiles].slice(0, maxFiles)
       onChange?.(combined)
     }
 
@@ -173,82 +189,80 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
       assignRef(ref, node)
     }
 
+    const input = (
+      <input
+        type="file"
+        ref={combinedRef}
+        accept={accept}
+        multiple={maxFiles > 1}
+        onChange={handleChange}
+        disabled={disabled}
+        {...props}
+        {...stylex.props(styles.srOnly)}
+      />
+    )
+
     if (variant === "dropzone") {
       return (
-        <div className={cn("space-y-3", className)}>
+        <div {...stylex.props(styles.root)}>
           <div
-            className={cn(
-              "relative flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-8 transition-colors",
-              isDragging && "border-primary bg-primary/5",
-              !isDragging && "border-muted-foreground/25 hover:border-primary/50",
-              disabled && "cursor-not-allowed opacity-50"
-            )}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
             onClick={() => !disabled && inputRef.current?.click()}
+            {...stylex.props(
+              styles.dropzone,
+              isDragging ? styles.dropzoneDragging : styles.dropzoneIdle,
+              disabled && styles.disabled
+            )}
           >
-            <input
-              type="file"
-              ref={combinedRef}
-              className="sr-only"
-              accept={accept}
-              multiple={maxFiles > 1}
-              onChange={handleChange}
-              disabled={disabled}
-              {...props}
-            />
-            <Upload className={cn("h-6 w-6 mb-3", isDragging ? "text-[color:var(--action-primary-bg)]" : "text-[color:var(--interactive-fg-alt)]")} />
-            <p className="text-[length:var(--font-size-sm)] text-center">
+            {input}
+            <Upload {...stylex.props(styles.dropzoneIcon, isDragging && styles.dropzoneIconActive)} />
+            <p {...stylex.props(styles.dropzoneText)}>
               {isDragging ? dragActiveText : dragInactiveText}
             </p>
             {maxSize && (
-              <p className="text-[length:var(--font-size-xs)] text-muted-foreground mt-1">
+              <p {...stylex.props(styles.hint)}>
                 Max file size: {formatFileSize(maxSize)}
               </p>
             )}
             {maxFiles > 1 && (
-              <p className="text-[length:var(--font-size-xs)] text-muted-foreground">
+              <p {...stylex.props(styles.hint)}>
                 Max {maxFiles} files
               </p>
             )}
           </div>
 
-          {error && (
-            <p className="text-[length:var(--font-size-sm)] text-destructive">{error}</p>
-          )}
+          {error && <p {...stylex.props(styles.error)}>{error}</p>}
 
           {showPreview && files.length > 0 && (
-            <div className="space-y-2">
+            <div {...stylex.props(styles.previewListVertical)}>
               {files.map((fileInfo, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-3 p-3 rounded-lg border bg-muted/50"
-                >
+                <div key={index} {...stylex.props(styles.previewRow)}>
                   {fileInfo.preview ? (
                     <img
                       src={fileInfo.preview}
                       alt={fileInfo.file.name}
-                      className="h-[var(--size-xl)] w-[var(--size-xl)] rounded object-cover"
+                      {...stylex.props(styles.previewImageLarge)}
                     />
                   ) : (
                     <FileIcon type={fileInfo.type} />
                   )}
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[length:var(--font-size-sm)] font-medium truncate">{fileInfo.file.name}</p>
-                    <p className="text-[length:var(--font-size-xs)] text-muted-foreground">
+                  <div {...stylex.props(styles.fileMeta)}>
+                    <p {...stylex.props(styles.fileName)}>{fileInfo.file.name}</p>
+                    <p {...stylex.props(styles.fileSize)}>
                       {formatFileSize(fileInfo.file.size)}
                     </p>
                   </div>
                   <button
                     type="button"
-                    className="p-1 hover:bg-background rounded"
                     onClick={(e) => {
                       e.stopPropagation()
                       removeFile(index)
                     }}
+                    {...stylex.props(styles.removeButton)}
                   >
-                    <X className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+                    <X {...stylex.props(styles.removeIcon)} />
                   </button>
                 </div>
               ))}
@@ -258,66 +272,48 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
       )
     }
 
-    // Default variant
     return (
-      <div className={cn("space-y-2", className)}>
-        <div className="flex gap-2">
-          <input
-            type="file"
-            ref={combinedRef}
-            className="sr-only"
-            accept={accept}
-            multiple={maxFiles > 1}
-            onChange={handleChange}
-            disabled={disabled}
-            {...props}
-          />
+      <div {...stylex.props(styles.root)}>
+        <div {...stylex.props(styles.defaultControls)}>
+          {input}
           <button
             type="button"
-            className={cn(
-              "flex h-[var(--size-lg)] items-center gap-2 rounded-md border border-input bg-background px-4 py-2 text-[length:var(--font-size-sm)] ring-offset-background hover:bg-accent",
-              disabled && "cursor-not-allowed opacity-50"
-            )}
             onClick={() => !disabled && inputRef.current?.click()}
             disabled={disabled}
+            {...stylex.props(styles.chooseButton, disabled && styles.disabled)}
           >
-            <Upload className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+            <Upload {...stylex.props(styles.chooseIcon)} />
             Choose {maxFiles > 1 ? "files" : "file"}
           </button>
           {files.length > 0 && !showPreview && (
-            <span className="flex items-center text-[length:var(--font-size-sm)] text-muted-foreground">
+            <span {...stylex.props(styles.selectedCount)}>
               {files.length} file{files.length > 1 ? "s" : ""} selected
             </span>
           )}
         </div>
 
-        {error && (
-          <p className="text-[length:var(--font-size-sm)] text-destructive">{error}</p>
-        )}
+        {error && <p {...stylex.props(styles.error)}>{error}</p>}
 
         {showPreview && files.length > 0 && (
-          <div className="flex flex-wrap gap-2">
+          <div {...stylex.props(styles.previewListInline)}>
             {files.map((fileInfo, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full border bg-muted/50 text-[length:var(--font-size-sm)]"
-              >
+              <div key={index} {...stylex.props(styles.previewChip)}>
                 {fileInfo.preview ? (
                   <img
                     src={fileInfo.preview}
                     alt={fileInfo.file.name}
-                    className="h-[var(--size-xs)] w-[var(--size-xs)] rounded object-cover"
+                    {...stylex.props(styles.previewImageSmall)}
                   />
                 ) : (
-                  <File className="h-[var(--size-xxs)] w-[var(--size-xxs)] text-muted-foreground" />
+                  <File {...stylex.props(styles.chipIcon)} />
                 )}
-                <span className="max-w-[150px] truncate">{fileInfo.file.name}</span>
+                <span {...stylex.props(styles.chipName)}>{fileInfo.file.name}</span>
                 <button
                   type="button"
-                  className="p-0.5 hover:bg-background rounded-full"
                   onClick={() => removeFile(index)}
+                  {...stylex.props(styles.removeChipButton)}
                 >
-                  <X className="h-3 w-3" />
+                  <X {...stylex.props(styles.removeChipIcon)} />
                 </button>
               </div>
             ))}
@@ -329,7 +325,6 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
 )
 FileInput.displayName = "FileInput"
 
-// Simplified image-only input
 export interface ImageInputProps extends Omit<FileInputProps, "accept"> {
   acceptedFormats?: string[]
 }
@@ -347,7 +342,6 @@ const ImageInput = React.forwardRef<HTMLInputElement, ImageInputProps>(
 )
 ImageInput.displayName = "ImageInput"
 
-// Document upload input
 export interface DocumentInputProps extends Omit<FileInputProps, "accept"> {
   acceptedFormats?: string[]
 }
@@ -377,6 +371,244 @@ const DocumentInput = React.forwardRef<HTMLInputElement, DocumentInputProps>(
   }
 )
 DocumentInput.displayName = "DocumentInput"
+
+const styles = stylex.create({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "var(--spacing-sm)",
+  },
+  srOnly: {
+    borderWidth: 0,
+    clip: "rect(0, 0, 0, 0)",
+    height: 1,
+    margin: -1,
+    overflow: "hidden",
+    padding: 0,
+    position: "absolute",
+    whiteSpace: "nowrap",
+    width: 1,
+  },
+  fileTypeIcon: {
+    height: "var(--size-sm)",
+    width: "var(--size-sm)",
+  },
+  fileTypeImage: {
+    color: "var(--positive-fg)",
+  },
+  fileTypeDocument: {
+    color: "var(--informative-fg)",
+  },
+  fileTypeVideo: {
+    color: "var(--important-fg)",
+  },
+  fileTypeAudio: {
+    color: "var(--cautionary-fg)",
+  },
+  fileTypeArchive: {
+    color: "var(--cautionary-fg)",
+  },
+  fileTypeOther: {
+    color: "var(--interactive-fg-alt)",
+  },
+  dropzone: {
+    alignItems: "center",
+    borderRadius: "var(--curves-lg)",
+    borderStyle: "dashed",
+    borderWidth: 2,
+    cursor: "pointer",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    padding: "var(--spacing-xl)",
+    position: "relative",
+    transitionDuration: "150ms",
+    transitionProperty: "background-color, border-color, opacity",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+  },
+  dropzoneIdle: {
+    borderColor: "var(--interactive-border-alt)",
+    ":hover": {
+      borderColor: "var(--action-primary-bg-hover)",
+    },
+  },
+  dropzoneDragging: {
+    backgroundColor: "var(--action-primary-bg-selected)",
+    borderColor: "var(--action-primary-bg)",
+  },
+  disabled: {
+    cursor: "not-allowed",
+    opacity: 0.5,
+  },
+  dropzoneIcon: {
+    color: "var(--interactive-fg-alt)",
+    height: "var(--size-sm)",
+    marginBottom: "var(--spacing-sm)",
+    width: "var(--size-sm)",
+  },
+  dropzoneIconActive: {
+    color: "var(--action-primary-bg)",
+  },
+  dropzoneText: {
+    fontSize: "var(--font-size-sm)",
+    margin: 0,
+    textAlign: "center",
+  },
+  hint: {
+    color: "var(--container-fg-alt)",
+    fontSize: "var(--font-size-xs)",
+    margin: 0,
+    marginTop: "var(--spacing-xxs)",
+  },
+  error: {
+    color: "var(--destructive-fg)",
+    fontSize: "var(--font-size-sm)",
+    margin: 0,
+  },
+  previewListVertical: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "var(--spacing-sm)",
+  },
+  previewRow: {
+    alignItems: "center",
+    backgroundColor: "var(--container-bg-alt)",
+    borderColor: "var(--container-border)",
+    borderRadius: "var(--curves-lg)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    display: "flex",
+    gap: "var(--spacing-sm)",
+    padding: "var(--spacing-sm)",
+  },
+  previewImageLarge: {
+    borderRadius: "var(--curves-sm)",
+    height: "var(--size-xl)",
+    objectFit: "cover",
+    width: "var(--size-xl)",
+  },
+  fileMeta: {
+    flex: 1,
+    minWidth: 0,
+  },
+  fileName: {
+    fontSize: "var(--font-size-sm)",
+    fontWeight: 500,
+    margin: 0,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+  fileSize: {
+    color: "var(--container-fg-alt)",
+    fontSize: "var(--font-size-xs)",
+    margin: 0,
+  },
+  removeButton: {
+    backgroundColor: "transparent",
+    borderWidth: 0,
+    borderRadius: "var(--curves-sm)",
+    cursor: "pointer",
+    padding: "var(--spacing-xs)",
+    ":hover": {
+      backgroundColor: "var(--interactive-bg-hover)",
+    },
+  },
+  removeIcon: {
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+  defaultControls: {
+    display: "flex",
+    gap: "var(--spacing-sm)",
+  },
+  chooseButton: {
+    alignItems: "center",
+    backgroundColor: "var(--interactive-bg)",
+    borderColor: "var(--interactive-border-alt)",
+    borderRadius: "var(--curves-md)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    cursor: "pointer",
+    display: "flex",
+    fontSize: "var(--font-size-sm)",
+    gap: "var(--spacing-xs)",
+    height: "var(--size-lg)",
+    paddingBlock: "var(--spacing-sm)",
+    paddingInline: "var(--spacing-md)",
+    ":hover": {
+      backgroundColor: "var(--interactive-bg-hover)",
+    },
+  },
+  chooseIcon: {
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+  selectedCount: {
+    alignItems: "center",
+    color: "var(--container-fg-alt)",
+    display: "flex",
+    fontSize: "var(--font-size-sm)",
+  },
+  previewListInline: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "var(--spacing-sm)",
+  },
+  previewChip: {
+    alignItems: "center",
+    backgroundColor: "var(--container-bg-alt)",
+    borderColor: "var(--container-border)",
+    borderRadius: "var(--radius-radius-full)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    display: "flex",
+    fontSize: "var(--font-size-sm)",
+    gap: "var(--spacing-xs)",
+    paddingBlock: "var(--spacing-xs)",
+    paddingInline: "var(--spacing-sm)",
+  },
+  previewImageSmall: {
+    borderRadius: "var(--curves-sm)",
+    height: "var(--size-xs)",
+    objectFit: "cover",
+    width: "var(--size-xs)",
+  },
+  chipIcon: {
+    color: "var(--interactive-fg-alt)",
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+  chipName: {
+    maxWidth: 150,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+  removeChipButton: {
+    backgroundColor: "transparent",
+    borderWidth: 0,
+    borderRadius: "var(--radius-radius-full)",
+    cursor: "pointer",
+    padding: "var(--spacing-xxs)",
+    ":hover": {
+      backgroundColor: "var(--interactive-bg-hover)",
+    },
+  },
+  removeChipIcon: {
+    height: "calc(var(--spacing-sm) + var(--spacing-xxs))",
+    width: "calc(var(--spacing-sm) + var(--spacing-xxs))",
+  },
+})
+
+const fileTypeStyles = {
+  image: styles.fileTypeImage,
+  document: styles.fileTypeDocument,
+  video: styles.fileTypeVideo,
+  audio: styles.fileTypeAudio,
+  archive: styles.fileTypeArchive,
+  other: styles.fileTypeOther,
+} satisfies Record<FileType, stylex.StyleXStyles>
 
 export { FileInput, ImageInput, DocumentInput, formatFileSize, getFileType }
 export type { FileType, FileInfo }

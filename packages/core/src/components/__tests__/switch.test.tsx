@@ -34,8 +34,8 @@ describe("Switch", () => {
     expect(screen.getByRole("switch")).toHaveAttribute("data-state", "checked");
   });
 
-  it("forwards className", () => {
-    render(<Switch className="custom" />);
-    expect(screen.getByRole("switch")).toHaveClass("custom");
+  it("does not forward className overrides", () => {
+    render(<Switch {...({ className: "custom" } as never)} />);
+    expect(screen.getByRole("switch")).not.toHaveClass("custom");
   });
 });

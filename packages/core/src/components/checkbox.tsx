@@ -1,32 +1,82 @@
 import * as React from "react"
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
+import * as stylex from "@stylexjs/stylex"
 import { Check } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+type CheckboxProps = Omit<
+  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>,
+  "className" | "style"
+>
+
+const styles = stylex.create({
+  root: {
+    backgroundColor: "transparent",
+    borderColor: "var(--interactive-border-alt)",
+    borderRadius: "var(--curves-xs)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    boxSizing: "border-box",
+    flexShrink: 0,
+    height: "var(--size-xxs)",
+    minWidth: "var(--size-xxs)",
+    position: "relative",
+    transitionDuration: "150ms",
+    transitionProperty: "color, background-color, border-color",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    width: "var(--size-xxs)",
+    ":hover": {
+      backgroundColor: "var(--interactive-bg-hover)",
+      borderColor: "var(--interactive-border-alt)",
+      color: "var(--interactive-fg-alt)",
+    },
+    ":focus-visible": {
+      outlineColor: "var(--interactive-border)",
+      outlineOffset: "1px",
+      outlineStyle: "solid",
+      outlineWidth: "1px",
+    },
+    ":disabled": {
+      backgroundColor: "var(--interactive-bg-disabled)",
+      borderColor: "var(--interactive-border-disabled)",
+      cursor: "not-allowed",
+    },
+    "[data-state=checked]": {
+      backgroundColor: "var(--interactive-bg-selected)",
+      borderColor: "var(--interactive-bg-selected)",
+      color: "var(--interactive-fg-selected)",
+    },
+  },
+  indicator: {
+    alignItems: "center",
+    color: "currentColor",
+    display: "flex",
+    height: "100%",
+    justifyContent: "center",
+    transitionDuration: "150ms",
+    transitionProperty: "opacity",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    width: "100%",
+    "[data-state=unchecked]": {
+      opacity: 0,
+    },
+    "[data-state=checked]": {
+      opacity: 1,
+    },
+  },
+  icon: {
+    height: "var(--spacing-md)",
+    position: "absolute",
+    width: "var(--spacing-md)",
+  },
+})
 
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
->(({ className, ...props }, ref) => (
-  <CheckboxPrimitive.Root
-    ref={ref}
-    className={cn(
-      // Fixed size with min-w to prevent layout shift on check
-      "peer relative h-[var(--size-xxs)] w-[var(--size-xxs)] min-w-[var(--size-xxs)] shrink-0 rounded-[3px] border border-[var(--interactive-border-alt)]",
-      "ring-offset-background transition-colors",
-      "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1",
-      "disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:border-[var(--interactive-border-disabled)]",
-      "data-[state=checked]:bg-[var(--interactive-bg-selected)] data-[state=checked]:border-[var(--interactive-bg-selected)] data-[state=checked]:text-[color:var(--interactive-fg-selected)]",
-      "hover:border-[var(--interactive-border-alt)] hover:text-[color:var(--interactive-fg-alt)] hover:bg-[var(--interactive-bg-hover)]",
-      className
-    )}
-    {...props}
-  >
-    <CheckboxPrimitive.Indicator
-      forceMount
-      className="flex h-full w-full items-center justify-center text-current data-[state=unchecked]:opacity-0 data-[state=checked]:opacity-100 transition-opacity"
-    >
-      <Check className="h-3 w-3 absolute" strokeWidth={3} />
+  CheckboxProps
+>((props, ref) => (
+  <CheckboxPrimitive.Root ref={ref} {...props} {...stylex.props(styles.root)}>
+    <CheckboxPrimitive.Indicator forceMount {...stylex.props(styles.indicator)}>
+      <Check {...stylex.props(styles.icon)} strokeWidth={3} />
     </CheckboxPrimitive.Indicator>
   </CheckboxPrimitive.Root>
 ))

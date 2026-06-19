@@ -1,8 +1,7 @@
 import * as React from "react"
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
+import * as stylex from "@stylexjs/stylex"
 import { Check, ChevronRight } from "lucide-react"
-
-import { cn } from "@/lib/utils"
 
 const DropdownMenu = DropdownMenuPrimitive.Root
 
@@ -16,23 +15,243 @@ const DropdownMenuSub = DropdownMenuPrimitive.Sub
 
 const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup
 
+type DropdownMenuSubTriggerProps = Omit<
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger>,
+  "className" | "style"
+> & {
+  inset?: boolean
+}
+
+type DropdownMenuSubContentProps = Omit<
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>,
+  "className" | "style"
+>
+
+type DropdownMenuContentProps = Omit<
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>,
+  "className" | "style"
+>
+
+type DropdownMenuItemProps = Omit<
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item>,
+  "className" | "style"
+> & {
+  inset?: boolean
+  tone?: "default" | "destructive"
+}
+
+type DropdownMenuCheckboxItemProps = Omit<
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>,
+  "className" | "style"
+>
+
+type DropdownMenuRadioItemProps = Omit<
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem>,
+  "className" | "style"
+>
+
+type DropdownMenuLabelProps = Omit<
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label>,
+  "className" | "style"
+> & {
+  inset?: boolean
+}
+
+type DropdownMenuSeparatorProps = Omit<
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>,
+  "className" | "style"
+>
+
+type DropdownMenuShortcutProps = Omit<
+  React.HTMLAttributes<HTMLSpanElement>,
+  "className" | "style"
+>
+
+const styles = stylex.create({
+  itemBase: {
+    alignItems: "center",
+    borderRadius: "var(--curves-sm)",
+    cursor: "default",
+    display: "flex",
+    fontSize: "var(--font-size-sm)",
+    outlineStyle: "none",
+    paddingBlock: "var(--spacing-xs)",
+    paddingInline: "var(--spacing-sm)",
+    position: "relative",
+    userSelect: "none",
+    ":focus": {
+      backgroundColor: "var(--interactive-bg-hover)",
+      color: "var(--interactive-fg)",
+    },
+    "[data-disabled]": {
+      backgroundColor: "var(--interactive-bg-disabled)",
+      color: "var(--interactive-fg-disabled)",
+      pointerEvents: "none",
+    },
+  },
+  subTrigger: {
+    gap: "var(--spacing-xs)",
+    "[data-state=open]": {
+      backgroundColor: "var(--interactive-bg-hover)",
+    },
+  },
+  item: {
+    gap: "var(--spacing-sm)",
+    transitionDuration: "150ms",
+    transitionProperty: "background-color, color",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+  },
+  itemDestructive: {
+    color: "var(--destructive-fg)",
+    ":focus": {
+      color: "var(--destructive-fg)",
+    },
+  },
+  inset: {
+    paddingLeft: "calc(var(--spacing-lg) + var(--spacing-md))",
+  },
+  chevron: {
+    marginLeft: "auto",
+  },
+  content: {
+    backgroundColor: "var(--container-bg)",
+    borderColor: "var(--container-border)",
+    borderRadius: "var(--curves-md)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+    color: "var(--container-fg)",
+    minWidth: "8rem",
+    overflow: "hidden",
+    padding: "var(--spacing-xxs)",
+    transformOrigin: "var(--radix-dropdown-menu-content-transform-origin)",
+    zIndex: 50,
+    "[data-side=bottom]": {
+      transformOrigin: "top",
+    },
+    "[data-side=left]": {
+      transformOrigin: "right",
+    },
+    "[data-side=right]": {
+      transformOrigin: "left",
+    },
+    "[data-side=top]": {
+      transformOrigin: "bottom",
+    },
+  },
+  subContent: {
+    boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+  },
+  checkboxItem: {
+    justifyContent: "space-between",
+    transitionDuration: "150ms",
+    transitionProperty: "background-color, color",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    ":hover": {
+      backgroundColor: "var(--interactive-bg-hover)",
+    },
+    "[data-state=checked]": {
+      color: "var(--interactive-fg)",
+    },
+  },
+  radioItem: {
+    justifyContent: "space-between",
+    ":hover": {
+      backgroundColor: "var(--interactive-bg-hover)",
+    },
+  },
+  checkBox: {
+    alignItems: "center",
+    borderColor: "var(--interactive-border-alt)",
+    borderRadius: "var(--curves-xxs)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    display: "flex",
+    flexShrink: 0,
+    height: "var(--size-xxs)",
+    justifyContent: "center",
+    marginLeft: "auto",
+    paddingLeft: "var(--spacing-md)",
+    transitionDuration: "150ms",
+    transitionProperty: "background-color, border-color",
+    width: "var(--size-xxs)",
+  },
+  checkBoxChecked: {
+    backgroundColor: "var(--interactive-bg-active)",
+    borderColor: "var(--interactive-bg-active)",
+  },
+  checkIcon: {
+    color: "var(--interactive-fg-active)",
+    height: "calc(var(--size-xxs) - var(--spacing-xxs))",
+    width: "calc(var(--size-xxs) - var(--spacing-xxs))",
+  },
+  radioBox: {
+    alignItems: "center",
+    borderColor: "var(--interactive-border-alt)",
+    borderRadius: "var(--radius-radius-full)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    display: "flex",
+    flexShrink: 0,
+    height: "var(--size-xxs)",
+    justifyContent: "center",
+    marginLeft: "var(--spacing-sm)",
+    position: "relative",
+    width: "var(--size-xxs)",
+  },
+  radioIndicator: {
+    alignItems: "center",
+    backgroundColor: "var(--interactive-bg-active)",
+    borderColor: "var(--interactive-bg-active)",
+    borderRadius: "var(--radius-radius-full)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    display: "flex",
+    inset: 0,
+    justifyContent: "center",
+    position: "absolute",
+  },
+  radioDot: {
+    backgroundColor: "var(--interactive-fg-active)",
+    borderRadius: "var(--radius-radius-full)",
+    height: "calc(var(--spacing-xs) + var(--spacing-xxs))",
+    width: "calc(var(--spacing-xs) + var(--spacing-xxs))",
+  },
+  label: {
+    fontSize: "var(--font-size-sm)",
+    fontWeight: 600,
+    paddingBlock: "var(--spacing-sm)",
+    paddingInline: "var(--spacing-sm)",
+  },
+  separator: {
+    backgroundColor: "var(--container-bg-alt)",
+    height: 1,
+    marginBlock: "var(--spacing-xxs)",
+    marginInline: "calc(-1 * var(--spacing-xxs))",
+  },
+  shortcut: {
+    fontSize: "var(--font-size-xs)",
+    letterSpacing: "0.1em",
+    marginLeft: "auto",
+    opacity: 0.6,
+  },
+})
+
 const DropdownMenuSubTrigger = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.SubTrigger>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
-    inset?: boolean
-  }
->(({ className, inset, children, ...props }, ref) => (
+  DropdownMenuSubTriggerProps
+>(({ inset, children, ...props }, ref) => (
   <DropdownMenuPrimitive.SubTrigger
     ref={ref}
-    className={cn(
-      "flex cursor-default gap-[var(--spacing-xs)] select-none items-center rounded-[var(--curves-sm)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[length:var(--font-size-sm)] outline-none focus:bg-accent data-[state=open]:bg-[var(--interactive-bg-hover)] [&_svg]:pointer-events-none [&_svg]:size-[var(--size-xxs)] [&_svg]:shrink-0",
-      inset && "pl-8",
-      className
-    )}
     {...props}
+    {...stylex.props(
+      styles.itemBase,
+      styles.subTrigger,
+      inset && styles.inset
+    )}
   >
     {children}
-    <ChevronRight className="ml-auto" />
+    <ChevronRight {...stylex.props(styles.chevron)} />
   </DropdownMenuPrimitive.SubTrigger>
 ))
 DropdownMenuSubTrigger.displayName =
@@ -40,17 +259,12 @@ DropdownMenuSubTrigger.displayName =
 
 const DropdownMenuSubContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>
->(({ className, ...props }, ref) => (
+  DropdownMenuSubContentProps
+>(({ ...props }, ref) => (
   <DropdownMenuPrimitive.SubContent
     ref={ref}
-    className={cn(
-      "z-50 min-w-[8rem] overflow-hidden rounded-[var(--curves-md)] border bg-[var(--container-bg)] p-[var(--spacing-xxs)] text-[color:var(--container-fg)] shadow-lg",
-      "data-[state=open]:animate-dropdown-unroll data-[state=closed]:animate-dropdown-roll-up",
-      "data-[side=bottom]:origin-top data-[side=top]:origin-bottom data-[side=left]:origin-right data-[side=right]:origin-left",
-      className
-    )}
     {...props}
+    {...stylex.props(styles.content, styles.subContent)}
   />
 ))
 DropdownMenuSubContent.displayName =
@@ -58,19 +272,14 @@ DropdownMenuSubContent.displayName =
 
 const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
->(({ className, sideOffset = 4, ...props }, ref) => (
+  DropdownMenuContentProps
+>(({ sideOffset = 4, ...props }, ref) => (
   <DropdownMenuPrimitive.Portal>
     <DropdownMenuPrimitive.Content
       ref={ref}
       sideOffset={sideOffset}
-      className={cn(
-        "z-50 min-w-[8rem] overflow-hidden rounded-[var(--curves-md)] border bg-[var(--container-bg)] p-[var(--spacing-xxs)] text-[color:var(--container-fg)] shadow-md",
-        "data-[state=open]:animate-dropdown-unroll data-[state=closed]:animate-dropdown-roll-up",
-        "data-[side=bottom]:origin-top data-[side=top]:origin-bottom data-[side=left]:origin-right data-[side=right]:origin-left",
-        className
-      )}
       {...props}
+      {...stylex.props(styles.content)}
     />
   </DropdownMenuPrimitive.Portal>
 ))
@@ -78,44 +287,34 @@ DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName
 
 const DropdownMenuItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
-    inset?: boolean
-  }
->(({ className, inset, ...props }, ref) => (
+  DropdownMenuItemProps
+>(({ inset, tone = "default", ...props }, ref) => (
   <DropdownMenuPrimitive.Item
     ref={ref}
-    className={cn(
-      "relative flex cursor-default select-none items-center gap-[var(--spacing-sm)] rounded-[var(--curves-sm)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[length:var(--font-size-sm)] outline-none transition-colors focus:bg-[var(--interactive-bg-hover)] focus:text-[color:var(--interactive-fg)] data-[disabled]:pointer-events-none data-[disabled]:bg-[var(--interactive-bg-disabled)] data-[disabled]:text-[color:var(--interactive-fg-disabled)] [&_svg]:pointer-events-none [&_svg]:size-[var(--size-xxs)] [&_svg]:shrink-0",
-      inset && "pl-8",
-      className
-    )}
     {...props}
+    {...stylex.props(
+      styles.itemBase,
+      styles.item,
+      tone === "destructive" && styles.itemDestructive,
+      inset && styles.inset
+    )}
   />
 ))
 DropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName
 
 const DropdownMenuCheckboxItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>
->(({ className, children, checked, ...props }, ref) => (
+  DropdownMenuCheckboxItemProps
+>(({ children, checked, ...props }, ref) => (
   <DropdownMenuPrimitive.CheckboxItem
     ref={ref}
-    className={cn(
-      "relative flex cursor-default select-none items-center justify-between rounded-[var(--curves-sm)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[length:var(--font-size-sm)] outline-none transition-colors",
-      "hover:bg-[var(--interactive-bg-hover)] focus:bg-[var(--interactive-bg-hover)]",
-      "data-[state=checked]:text-[color:var(--interactive-fg)]",
-      "data-[disabled]:pointer-events-none data-[disabled]:bg-[var(--interactive-bg-disabled)] data-[disabled]:text-[color:var(--interactive-fg-disabled)]",
-      className
-    )}
     checked={checked}
     {...props}
+    {...stylex.props(styles.itemBase, styles.checkboxItem)}
   >
     {children}
-    <span className={cn(
-      "ml-auto pl-[var(--spacing-md)] flex h-4 w-4 shrink-0 items-center justify-center rounded-[3px] border border-[var(--interactive-border-alt)] transition-colors",
-      checked ? "bg-[var(--interactive-bg-active)] border-[var(--interactive-bg-active)]" : ""
-    )}>
-      {checked && <Check className="h-3 w-3 text-[color:var(--interactive-fg-active)]" />}
+    <span {...stylex.props(styles.checkBox, checked && styles.checkBoxChecked)}>
+      {checked && <Check {...stylex.props(styles.checkIcon)} />}
     </span>
   </DropdownMenuPrimitive.CheckboxItem>
 ))
@@ -124,23 +323,18 @@ DropdownMenuCheckboxItem.displayName =
 
 const DropdownMenuRadioItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.RadioItem>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem>
->(({ className, children, ...props }, ref) => (
+  DropdownMenuRadioItemProps
+>(({ children, ...props }, ref) => (
   <DropdownMenuPrimitive.RadioItem
     ref={ref}
-    className={cn(
-      "relative flex cursor-default select-none items-center justify-between rounded-[var(--curves-sm)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[length:var(--font-size-sm)] outline-none transition-colors",
-      "hover:bg-[var(--interactive-bg-hover)] focus:bg-[var(--interactive-bg-hover)]",
-      "data-[disabled]:pointer-events-none data-[disabled]:bg-[var(--interactive-bg-disabled)] data-[disabled]:text-[color:var(--interactive-fg-disabled)]",
-      className
-    )}
     {...props}
+    {...stylex.props(styles.itemBase, styles.radioItem)}
   >
     {children}
-    <span className="relative ml-[var(--spacing-sm)] flex h-[var(--size-xxs)] w-[var(--size-xxs)] shrink-0 items-center justify-center rounded-full border border-[var(--interactive-border-alt)]">
+    <span {...stylex.props(styles.radioBox)}>
       <DropdownMenuPrimitive.ItemIndicator>
-        <span className="absolute inset-0 rounded-full bg-[var(--interactive-bg-active)] border border-[var(--interactive-bg-active)] flex items-center justify-center">
-          <span className="h-1.5 w-1.5 rounded-full bg-[var(--interactive-fg-active)]" />
+        <span {...stylex.props(styles.radioIndicator)}>
+          <span {...stylex.props(styles.radioDot)} />
         </span>
       </DropdownMenuPrimitive.ItemIndicator>
     </span>
@@ -150,42 +344,35 @@ DropdownMenuRadioItem.displayName = DropdownMenuPrimitive.RadioItem.displayName
 
 const DropdownMenuLabel = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Label>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label> & {
-    inset?: boolean
-  }
->(({ className, inset, ...props }, ref) => (
+  DropdownMenuLabelProps
+>(({ inset, ...props }, ref) => (
   <DropdownMenuPrimitive.Label
     ref={ref}
-    className={cn(
-      "px-[var(--spacing-sm)] py-[var(--spacing-sm)] text-[length:var(--font-size-sm)] font-semibold",
-      inset && "pl-8",
-      className
-    )}
     {...props}
+    {...stylex.props(styles.label, inset && styles.inset)}
   />
 ))
 DropdownMenuLabel.displayName = DropdownMenuPrimitive.Label.displayName
 
 const DropdownMenuSeparator = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Separator>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>
->(({ className, ...props }, ref) => (
+  DropdownMenuSeparatorProps
+>(({ ...props }, ref) => (
   <DropdownMenuPrimitive.Separator
     ref={ref}
-    className={cn("-mx-[var(--spacing-xxs)] my-[var(--spacing-xxs)] h-px bg-[var(--container-bg-alt)]", className)}
     {...props}
+    {...stylex.props(styles.separator)}
   />
 ))
 DropdownMenuSeparator.displayName = DropdownMenuPrimitive.Separator.displayName
 
 const DropdownMenuShortcut = ({
-  className,
   ...props
-}: React.HTMLAttributes<HTMLSpanElement>) => {
+}: DropdownMenuShortcutProps) => {
   return (
     <span
-      className={cn("ml-auto text-[length:var(--font-size-xs)] tracking-widest opacity-60", className)}
       {...props}
+      {...stylex.props(styles.shortcut)}
     />
   )
 }

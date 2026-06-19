@@ -1,56 +1,158 @@
 import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
+import * as stylex from "@stylexjs/stylex"
 import { X } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+export type BadgeVariant =
+  | "default"
+  | "secondary"
+  | "destructive"
+  | "outline"
+  | "positive"
+  | "cautionary"
+  | "informative"
+  | "important"
 
-const badgeVariants = cva(
-  "inline-flex items-center border font-normal transition-colors focus:outline-none focus:ring-1 focus:ring-[var(--container-border)]/50 focus:ring-offset-1",
-  {
-    variants: {
-      variant: {
-        default:
-          "border-transparent bg-[var(--action-primary-bg)] text-[color:var(--action-primary-fg)]",
-        secondary:
-          "border-transparent bg-[var(--interactive-bg-alt2)] text-[color:var(--container-fg-alt)]",
-        destructive:
-          "border-transparent bg-[var(--destructive-bg-alt)] text-[color:var(--destructive-fg)]",
-        outline:
-          "border-[var(--container-border)] text-[color:var(--container-fg-alt)] bg-transparent",
-        positive:
-          "border-transparent bg-[var(--positive-bg)] text-[color:var(--positive-fg)]",
-        cautionary:
-          "border-transparent bg-[var(--cautionary-bg)] text-[color:var(--cautionary-fg)]",
-        informative:
-          "border-transparent bg-[var(--informative-bg)] text-[color:var(--informative-fg)]",
-        important:
-          "border-transparent bg-[var(--important-bg)] text-[color:var(--important-fg)]",
-      },
-      size: {
-        default:
-          "gap-1 rounded-[var(--curves-md)] px-[var(--spacing-xs)] py-[var(--spacing-xxs)] text-[length:var(--font-size-xs)]",
-        microdot:
-          "h-2.5 w-2.5 rounded-full p-0 border-0 ring-2 ring-[var(--container-bg)]",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
-)
+export type BadgeSize = "default" | "microdot"
 
 export interface BadgeProps
-  extends React.HTMLAttributes<HTMLSpanElement>,
-    VariantProps<typeof badgeVariants> {
+  extends Omit<React.HTMLAttributes<HTMLSpanElement>, "className" | "style"> {
   /** Show a remove button — call onRemove when clicked */
   onRemove?: () => void
   removable?: boolean
+  size?: BadgeSize
+  variant?: BadgeVariant
 }
 
-function Badge({ className, variant, size, onRemove, removable, children, ...props }: BadgeProps) {
+const styles = stylex.create({
+  root: {
+    alignItems: "center",
+    borderStyle: "solid",
+    borderWidth: 1,
+    display: "inline-flex",
+    fontWeight: 400,
+    transitionDuration: "150ms",
+    transitionProperty: "color, background-color, border-color",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    ":focus": {
+      outlineStyle: "none",
+    },
+    ":focus-visible": {
+      outlineColor: "color-mix(in srgb, var(--container-border) 50%, transparent)",
+      outlineOffset: "1px",
+      outlineStyle: "solid",
+      outlineWidth: "1px",
+    },
+  },
+  variantDefault: {
+    backgroundColor: "var(--action-primary-bg)",
+    borderColor: "transparent",
+    color: "var(--action-primary-fg)",
+  },
+  variantSecondary: {
+    backgroundColor: "var(--interactive-bg-alt2)",
+    borderColor: "transparent",
+    color: "var(--container-fg-alt)",
+  },
+  variantDestructive: {
+    backgroundColor: "var(--destructive-bg-alt)",
+    borderColor: "transparent",
+    color: "var(--destructive-fg)",
+  },
+  variantOutline: {
+    backgroundColor: "transparent",
+    borderColor: "var(--container-border)",
+    color: "var(--container-fg-alt)",
+  },
+  variantPositive: {
+    backgroundColor: "var(--positive-bg)",
+    borderColor: "transparent",
+    color: "var(--positive-fg)",
+  },
+  variantCautionary: {
+    backgroundColor: "var(--cautionary-bg)",
+    borderColor: "transparent",
+    color: "var(--cautionary-fg)",
+  },
+  variantInformative: {
+    backgroundColor: "var(--informative-bg)",
+    borderColor: "transparent",
+    color: "var(--informative-fg)",
+  },
+  variantImportant: {
+    backgroundColor: "var(--important-bg)",
+    borderColor: "transparent",
+    color: "var(--important-fg)",
+  },
+  sizeDefault: {
+    borderRadius: "var(--curves-md)",
+    fontSize: "var(--font-size-xs)",
+    gap: "var(--spacing-xs)",
+    paddingBlock: "var(--spacing-xxs)",
+    paddingInline: "var(--spacing-xs)",
+  },
+  sizeMicrodot: {
+    borderRadius: "var(--radius-radius-full)",
+    borderWidth: 0,
+    boxShadow: "0 0 0 2px var(--container-bg)",
+    height: "calc(var(--spacing-sm) + var(--spacing-xxs))",
+    padding: 0,
+    width: "calc(var(--spacing-sm) + var(--spacing-xxs))",
+  },
+  removeButton: {
+    backgroundColor: "transparent",
+    borderWidth: 0,
+    borderRadius: "var(--curves-xl)",
+    color: "inherit",
+    cursor: "pointer",
+    marginLeft: "var(--spacing-xxs)",
+    marginRight: "calc(var(--spacing-xxs) * -1)",
+    opacity: 0.6,
+    padding: 0,
+    transitionDuration: "150ms",
+    transitionProperty: "opacity",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    ":hover": {
+      opacity: 1,
+    },
+    ":focus": {
+      outlineStyle: "none",
+    },
+  },
+  removeIcon: {
+    height: "var(--spacing-md)",
+    width: "var(--spacing-md)",
+  },
+})
+
+const variantStyles = {
+  default: styles.variantDefault,
+  secondary: styles.variantSecondary,
+  destructive: styles.variantDestructive,
+  outline: styles.variantOutline,
+  positive: styles.variantPositive,
+  cautionary: styles.variantCautionary,
+  informative: styles.variantInformative,
+  important: styles.variantImportant,
+} satisfies Record<BadgeVariant, stylex.StyleXStyles>
+
+const sizeStyles = {
+  default: styles.sizeDefault,
+  microdot: styles.sizeMicrodot,
+} satisfies Record<BadgeSize, stylex.StyleXStyles>
+
+function Badge({
+  variant = "default",
+  size = "default",
+  onRemove,
+  removable,
+  children,
+  ...props
+}: BadgeProps) {
   return (
-    <span className={cn(badgeVariants({ variant, size }), className)} {...props}>
+    <span
+      {...props}
+      {...stylex.props(styles.root, variantStyles[variant], sizeStyles[size])}
+    >
       {size !== "microdot" && children}
       {size !== "microdot" && (removable || onRemove) && (
         <button
@@ -59,14 +161,14 @@ function Badge({ className, variant, size, onRemove, removable, children, ...pro
             e.stopPropagation()
             onRemove?.()
           }}
-          className="ml-[var(--spacing-xxs)] -mr-[var(--spacing-xxs)] rounded-[var(--curves-xl)] opacity-60 hover:opacity-100 transition-opacity focus:outline-none"
           aria-label="Remove"
+          {...stylex.props(styles.removeButton)}
         >
-          <X className="h-3 w-3" />
+          <X {...stylex.props(styles.removeIcon)} />
         </button>
       )}
     </span>
   )
 }
 
-export { Badge, badgeVariants }
+export { Badge }

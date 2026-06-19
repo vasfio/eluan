@@ -1,4 +1,5 @@
 import * as React from "react"
+import * as stylex from "@stylexjs/stylex"
 import { useEditor, useEditorState, EditorContent, type Editor } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import Placeholder from "@tiptap/extension-placeholder"
@@ -18,7 +19,6 @@ import {
   Minus,
 } from "lucide-react"
 
-import { cn } from "@/lib/utils"
 import { Toggle } from "./toggle"
 import { Separator } from "./separator"
 
@@ -42,7 +42,7 @@ const ToolbarButton = ({
     onPressedChange={onPressedChange}
     disabled={disabled}
     aria-label={tooltip}
-    className="h-[var(--size-md)] w-[var(--size-md)] p-0"
+    size="iconMd"
   >
     {children}
   </Toggle>
@@ -85,14 +85,14 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
   if (!editor || !state) return null
 
   return (
-    <div className="flex flex-wrap items-center gap-[var(--spacing-xs)] border-b bg-[var(--container-bg-alt)] p-1">
+    <div {...stylex.props(styles.toolbar)}>
       <ToolbarButton
         pressed={state.isBold}
         onPressedChange={() => editor.chain().focus().toggleBold().run()}
         disabled={!state.canBold}
         tooltip="Bold"
       >
-        <Bold className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+        <Bold {...stylex.props(styles.icon)} />
       </ToolbarButton>
       <ToolbarButton
         pressed={state.isItalic}
@@ -100,7 +100,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         disabled={!state.canItalic}
         tooltip="Italic"
       >
-        <Italic className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+        <Italic {...stylex.props(styles.icon)} />
       </ToolbarButton>
       <ToolbarButton
         pressed={state.isStrike}
@@ -108,7 +108,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         disabled={!state.canStrike}
         tooltip="Strikethrough"
       >
-        <Strikethrough className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+        <Strikethrough {...stylex.props(styles.icon)} />
       </ToolbarButton>
       <ToolbarButton
         pressed={state.isCode}
@@ -116,10 +116,10 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         disabled={!state.canCode}
         tooltip="Code"
       >
-        <Code className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+        <Code {...stylex.props(styles.icon)} />
       </ToolbarButton>
 
-      <Separator orientation="vertical" className="mx-[var(--spacing-xxs)] h-[var(--size-sm)]" />
+      <Separator orientation="vertical" variant="toolbar" />
 
       <ToolbarButton
         pressed={state.isH1}
@@ -128,7 +128,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         }
         tooltip="Heading 1"
       >
-        <Heading1 className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+        <Heading1 {...stylex.props(styles.icon)} />
       </ToolbarButton>
       <ToolbarButton
         pressed={state.isH2}
@@ -137,7 +137,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         }
         tooltip="Heading 2"
       >
-        <Heading2 className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+        <Heading2 {...stylex.props(styles.icon)} />
       </ToolbarButton>
       <ToolbarButton
         pressed={state.isH3}
@@ -146,41 +146,41 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         }
         tooltip="Heading 3"
       >
-        <Heading3 className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+        <Heading3 {...stylex.props(styles.icon)} />
       </ToolbarButton>
 
-      <Separator orientation="vertical" className="mx-[var(--spacing-xxs)] h-[var(--size-sm)]" />
+      <Separator orientation="vertical" variant="toolbar" />
 
       <ToolbarButton
         pressed={state.isBulletList}
         onPressedChange={() => editor.chain().focus().toggleBulletList().run()}
         tooltip="Bullet List"
       >
-        <List className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+        <List {...stylex.props(styles.icon)} />
       </ToolbarButton>
       <ToolbarButton
         pressed={state.isOrderedList}
         onPressedChange={() => editor.chain().focus().toggleOrderedList().run()}
         tooltip="Ordered List"
       >
-        <ListOrdered className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+        <ListOrdered {...stylex.props(styles.icon)} />
       </ToolbarButton>
       <ToolbarButton
         pressed={state.isBlockquote}
         onPressedChange={() => editor.chain().focus().toggleBlockquote().run()}
         tooltip="Quote"
       >
-        <Quote className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+        <Quote {...stylex.props(styles.icon)} />
       </ToolbarButton>
       <ToolbarButton
         pressed={false}
         onPressedChange={() => editor.chain().focus().setHorizontalRule().run()}
         tooltip="Horizontal Rule"
       >
-        <Minus className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+        <Minus {...stylex.props(styles.icon)} />
       </ToolbarButton>
 
-      <Separator orientation="vertical" className="mx-[var(--spacing-xxs)] h-[var(--size-sm)]" />
+      <Separator orientation="vertical" variant="toolbar" />
 
       <ToolbarButton
         pressed={false}
@@ -188,7 +188,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         disabled={!state.canUndo}
         tooltip="Undo"
       >
-        <Undo className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+        <Undo {...stylex.props(styles.icon)} />
       </ToolbarButton>
       <ToolbarButton
         pressed={false}
@@ -196,7 +196,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         disabled={!state.canRedo}
         tooltip="Redo"
       >
-        <Redo className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+        <Redo {...stylex.props(styles.icon)} />
       </ToolbarButton>
     </div>
   )
@@ -207,7 +207,6 @@ export interface RichTextProps {
   onChange?: (value: string) => void
   placeholder?: string
   disabled?: boolean
-  className?: string
   minHeight?: string
 }
 
@@ -218,7 +217,6 @@ const RichText = React.forwardRef<HTMLDivElement, RichTextProps>(
       onChange,
       placeholder = "Start typing...",
       disabled = false,
-      className,
       minHeight = "150px",
     },
     ref
@@ -256,34 +254,13 @@ const RichText = React.forwardRef<HTMLDivElement, RichTextProps>(
     return (
       <div
         ref={ref}
-        className={cn(
-          // overflow-hidden clips the toolbar's background to the rounded
-          // corners — without it the bg bleeds past the curve.
-          "overflow-hidden rounded-[var(--curves-md)] border bg-[var(--interactive-bg)]",
-          disabled && "bg-[var(--interactive-bg-disabled)] text-[color:var(--interactive-fg-disabled)]",
-          className
-        )}
+        {...stylex.props(styles.root, disabled && styles.rootDisabled)}
       >
+        <style>{proseMirrorStyles}</style>
         <RichTextToolbar editor={editor} />
         <EditorContent
           editor={editor}
-          className={cn(
-            "prose prose-sm dark:prose-invert max-w-none p-[var(--spacing-sm)] focus-within:outline-none",
-            "[&_.ProseMirror]:min-h-[var(--min-height)] [&_.ProseMirror]:outline-none",
-            "[&_.ProseMirror_h1]:text-[length:var(--font-size-3xl)] [&_.ProseMirror_h1]:font-bold [&_.ProseMirror_h1]:leading-tight [&_.ProseMirror_h1]:mt-[var(--spacing-lg)] [&_.ProseMirror_h1]:mb-[var(--spacing-md)]",
-            "[&_.ProseMirror_h2]:text-[length:var(--font-size-2xl)] [&_.ProseMirror_h2]:font-semibold [&_.ProseMirror_h2]:leading-snug [&_.ProseMirror_h2]:mt-[var(--spacing-md)] [&_.ProseMirror_h2]:mb-[var(--spacing-sm)]",
-            "[&_.ProseMirror_h3]:text-[length:var(--font-size-xl)] [&_.ProseMirror_h3]:font-semibold [&_.ProseMirror_h3]:leading-snug [&_.ProseMirror_h3]:mt-[var(--spacing-md)] [&_.ProseMirror_h3]:mb-[var(--spacing-sm)]",
-            // Tailwind's preflight strips ul/ol/blockquote styles — restore them explicitly
-            // so bullet/ordered lists and blockquotes render visibly in the editor content.
-            "[&_.ProseMirror_ul]:list-disc [&_.ProseMirror_ul]:pl-[var(--spacing-lg)] [&_.ProseMirror_ul]:my-[var(--spacing-sm)]",
-            "[&_.ProseMirror_ol]:list-decimal [&_.ProseMirror_ol]:pl-[var(--spacing-lg)] [&_.ProseMirror_ol]:my-[var(--spacing-sm)]",
-            "[&_.ProseMirror_li]:my-[var(--spacing-xxs)]",
-            "[&_.ProseMirror_li_p]:my-0",
-            "[&_.ProseMirror_blockquote]:border-l-4 [&_.ProseMirror_blockquote]:border-[color:var(--container-border-alt)] [&_.ProseMirror_blockquote]:pl-[var(--spacing-md)] [&_.ProseMirror_blockquote]:italic [&_.ProseMirror_blockquote]:text-[color:var(--interactive-fg-alt)] [&_.ProseMirror_blockquote]:my-[var(--spacing-sm)]",
-            "[&_.ProseMirror_code]:bg-[var(--interactive-bg-alt)] [&_.ProseMirror_code]:px-[var(--spacing-xxs)] [&_.ProseMirror_code]:py-0.5 [&_.ProseMirror_code]:rounded [&_.ProseMirror_code]:font-mono [&_.ProseMirror_code]:text-[length:var(--font-size-xs)]",
-            "[&_.ProseMirror_hr]:border-t [&_.ProseMirror_hr]:border-[color:var(--container-border-alt)] [&_.ProseMirror_hr]:my-[var(--spacing-md)]",
-            "[&_.ProseMirror_p.is-editor-empty:first-child::before]:text-[color:var(--interactive-fg-alt)] [&_.ProseMirror_p.is-editor-empty:first-child::before]:content-[attr(data-placeholder)] [&_.ProseMirror_p.is-editor-empty:first-child::before]:float-left [&_.ProseMirror_p.is-editor-empty:first-child::before]:h-0 [&_.ProseMirror_p.is-editor-empty:first-child::before]:pointer-events-none"
-          )}
+          className="ragnar-rich-text-content"
           style={{ "--min-height": minHeight } as React.CSSProperties}
         />
       </div>
@@ -291,5 +268,109 @@ const RichText = React.forwardRef<HTMLDivElement, RichTextProps>(
   }
 )
 RichText.displayName = "RichText"
+
+const styles = stylex.create({
+  root: {
+    backgroundColor: "var(--interactive-bg)",
+    borderColor: "var(--interactive-border-alt)",
+    borderRadius: "var(--curves-md)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    overflow: "hidden",
+  },
+  rootDisabled: {
+    backgroundColor: "var(--interactive-bg-disabled)",
+    color: "var(--interactive-fg-disabled)",
+  },
+  toolbar: {
+    alignItems: "center",
+    backgroundColor: "var(--container-bg-alt)",
+    borderBottomColor: "var(--container-border-alt)",
+    borderBottomStyle: "solid",
+    borderBottomWidth: 1,
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "var(--spacing-xs)",
+    padding: 4,
+  },
+  icon: {
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+})
+
+const proseMirrorStyles = `
+.ragnar-rich-text-content {
+  max-width: none;
+  padding: var(--spacing-sm);
+}
+.ragnar-rich-text-content:focus-within {
+  outline: none;
+}
+.ragnar-rich-text-content .ProseMirror {
+  min-height: var(--min-height);
+  outline: none;
+}
+.ragnar-rich-text-content .ProseMirror h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-block: var(--spacing-lg) var(--spacing-md);
+}
+.ragnar-rich-text-content .ProseMirror h2 {
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  line-height: 1.375;
+  margin-block: var(--spacing-md) var(--spacing-sm);
+}
+.ragnar-rich-text-content .ProseMirror h3 {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  line-height: 1.375;
+  margin-block: var(--spacing-md) var(--spacing-sm);
+}
+.ragnar-rich-text-content .ProseMirror ul {
+  list-style: disc;
+  margin-block: var(--spacing-sm);
+  padding-inline-start: var(--spacing-lg);
+}
+.ragnar-rich-text-content .ProseMirror ol {
+  list-style: decimal;
+  margin-block: var(--spacing-sm);
+  padding-inline-start: var(--spacing-lg);
+}
+.ragnar-rich-text-content .ProseMirror li {
+  margin-block: var(--spacing-xxs);
+}
+.ragnar-rich-text-content .ProseMirror li p {
+  margin-block: 0;
+}
+.ragnar-rich-text-content .ProseMirror blockquote {
+  border-left: 4px solid var(--container-border-alt);
+  color: var(--interactive-fg-alt);
+  font-style: italic;
+  margin-block: var(--spacing-sm);
+  padding-left: var(--spacing-md);
+}
+.ragnar-rich-text-content .ProseMirror code {
+  background-color: var(--interactive-bg-alt);
+  border-radius: var(--curves-xs);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  padding: 0.125rem var(--spacing-xxs);
+}
+.ragnar-rich-text-content .ProseMirror hr {
+  border: 0;
+  border-top: 1px solid var(--container-border-alt);
+  margin-block: var(--spacing-md);
+}
+.ragnar-rich-text-content .ProseMirror p.is-editor-empty:first-child::before {
+  color: var(--interactive-fg-alt);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+`
 
 export { RichText, RichTextToolbar }

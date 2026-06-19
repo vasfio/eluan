@@ -1,144 +1,263 @@
 import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
+import * as stylex from "@stylexjs/stylex"
 
-import { cn } from "@/lib/utils"
+type DivProps = Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style">
 
-const timelineVariants = cva("relative", {
-  variants: {
-    variant: {
-      default: "",
-      alternating: "",
-    },
+type TimelineProps = DivProps & {
+  variant?: "default" | "alternating"
+}
+
+type TimelineItemProps = DivProps & {
+  spacing?: "default" | "none"
+  variant?: "default" | "success" | "warning" | "error" | "info"
+}
+
+type TimelineLineProps = DivProps & {
+  variant?: "default" | "dashed" | "dotted"
+}
+
+type TimelineDotProps = DivProps & {
+  icon?: React.ReactNode
+  size?: "sm" | "default" | "lg"
+  variant?: "default" | "filled" | "outline" | "icon"
+}
+
+type TimelineContentProps = DivProps
+
+type TimelineHeaderProps = DivProps
+
+type TimelineTitleProps = Omit<
+  React.HTMLAttributes<HTMLHeadingElement>,
+  "className" | "style"
+> & {
+  size?: "default" | "sm"
+}
+
+type TimelineTimeProps = Omit<
+  React.TimeHTMLAttributes<HTMLTimeElement>,
+  "className" | "style"
+> & {
+  layout?: "default" | "inlineEnd"
+  size?: "default" | "xs"
+}
+
+type TimelineDescriptionProps = Omit<
+  React.HTMLAttributes<HTMLParagraphElement>,
+  "className" | "style"
+> & {
+  spacing?: "default" | "none" | "xs"
+  size?: "default" | "xs"
+}
+
+const styles = stylex.create({
+  timeline: {
+    position: "relative",
   },
-  defaultVariants: {
-    variant: "default",
+  item: {
+    paddingBottom: "var(--spacing-xl)",
+    paddingLeft: "calc(var(--size-sm) + var(--spacing-md))",
+    position: "relative",
+    ":last-child": {
+      paddingBottom: 0,
+    },
+    "--timeline-dot-bg": "var(--container-bg-alt)",
+    "--timeline-dot-border": "var(--container-bg)",
+    "--timeline-dot-color": "var(--container-fg)",
+  },
+  itemNoSpacing: {
+    paddingBottom: 0,
+  },
+  itemSuccess: {
+    "--timeline-dot-bg": "var(--positive-bg)",
+    "--timeline-dot-border": "var(--positive-fg)",
+    "--timeline-dot-color": "var(--positive-bg)",
+  },
+  itemWarning: {
+    "--timeline-dot-bg": "var(--cautionary-bg)",
+    "--timeline-dot-color": "var(--cautionary-fg)",
+  },
+  itemError: {
+    "--timeline-dot-bg": "var(--destructive-bg)",
+    "--timeline-dot-color": "var(--destructive-fg)",
+  },
+  itemInfo: {
+    "--timeline-dot-bg": "var(--informative-bg)",
+    "--timeline-dot-color": "var(--informative-fg)",
+  },
+  line: {
+    backgroundColor: "var(--container-border-alt)",
+    height: "calc(100% - var(--size-sm))",
+    left: "calc(var(--size-sm) / 2 - 0.5px)",
+    position: "absolute",
+    top: "var(--size-sm)",
+    width: 1,
+  },
+  lineDashed: {
+    backgroundColor: "transparent",
+    borderColor: "var(--container-border-alt)",
+    borderLeftStyle: "dashed",
+    borderLeftWidth: 1,
+  },
+  lineDotted: {
+    backgroundColor: "transparent",
+    borderColor: "var(--container-border-alt)",
+    borderLeftStyle: "dotted",
+    borderLeftWidth: 1,
+  },
+  dot: {
+    alignItems: "center",
+    backgroundColor: "var(--timeline-dot-bg, var(--container-bg-alt))",
+    borderColor: "var(--timeline-dot-border, var(--container-bg))",
+    borderRadius: "var(--radius-radius-full)",
+    borderStyle: "solid",
+    borderWidth: 2,
+    color: "var(--timeline-dot-color, var(--container-fg))",
+    display: "flex",
+    height: "var(--size-sm)",
+    justifyContent: "center",
+    left: 0,
+    position: "absolute",
+    top: 0,
+    width: "var(--size-sm)",
+  },
+  dotFilled: {
+    backgroundColor: "var(--container-bg)",
+    color: "var(--container-fg)",
+  },
+  dotOutline: {
+    backgroundColor: "var(--container-bg)",
+    borderColor: "var(--container-border-alt)",
+  },
+  dotIcon: {
+    backgroundColor: "var(--container-bg)",
+    color: "var(--container-fg)",
+  },
+  dotSm: {
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+  dotLg: {
+    height: "var(--size-md)",
+    width: "var(--size-md)",
+  },
+  content: {
+    paddingTop: "calc(var(--spacing-xxs) / 2)",
+  },
+  header: {
+    alignItems: "center",
+    display: "flex",
+    gap: "var(--spacing-sm)",
+    minHeight: "var(--size-sm)",
+  },
+  title: {
+    fontFamily: "var(--font-heading)",
+    fontWeight: 600,
+    letterSpacing: 0,
+    lineHeight: 1,
+  },
+  titleSm: {
+    fontSize: "var(--font-size-sm)",
+  },
+  time: {
+    color: "var(--interactive-fg-alt)",
+    fontSize: "var(--font-size-sm)",
+  },
+  timeXs: {
+    fontSize: "var(--font-size-xs)",
+  },
+  timeInlineEnd: {
+    flexShrink: 0,
+    marginLeft: "var(--spacing-sm)",
+  },
+  description: {
+    color: "var(--interactive-fg-alt)",
+    fontSize: "var(--font-size-sm)",
+    marginTop: "var(--spacing-sm)",
+  },
+  descriptionXs: {
+    fontSize: "var(--font-size-xs)",
+  },
+  descriptionNoSpacing: {
+    marginTop: 0,
+  },
+  descriptionXsSpacing: {
+    marginTop: "var(--spacing-xs)",
+  },
+  horizontal: {
+    alignItems: "flex-start",
+    display: "flex",
+    gap: "var(--spacing-md)",
+    position: "relative",
+  },
+  horizontalItem: {
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "column",
+    position: "relative",
+  },
+  horizontalLine: {
+    backgroundColor: "var(--container-border-alt)",
+    height: 1,
+    left: "calc(50% + var(--size-sm) / 2)",
+    position: "absolute",
+    top: "calc(var(--size-sm) / 2 - 0.5px)",
+    width: "calc(100% - var(--size-sm))",
   },
 })
 
-export interface TimelineProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof timelineVariants> {}
-
 const Timeline = React.forwardRef<HTMLDivElement, TimelineProps>(
-  ({ className, variant, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(timelineVariants({ variant }), className)}
-      {...props}
-    />
+  ({ variant: _variant = "default", ...props }, ref) => (
+    <div ref={ref} {...props} {...stylex.props(styles.timeline)} />
   )
 )
 Timeline.displayName = "Timeline"
 
-const timelineItemVariants = cva(
-  // Padding scales with the spacing density. Left padding clears the dot
-  // (`--size-sm`) plus a token-driven gap so content aligns to the right of
-  // the dot consistently across compact / standard / wide spacing.
-  "relative pb-[var(--spacing-xl)] pl-[calc(var(--size-sm)+var(--spacing-md))] last:pb-0",
-  {
-  variants: {
-    variant: {
-      default: "",
-      success: "[--timeline-dot-color:var(--positive-bg)] [--timeline-dot-bg:var(--positive-bg)] [--timeline-dot-border:var(--positive-fg)]",
-      warning: "[--timeline-dot-color:var(--cautionary-fg)] [--timeline-dot-bg:var(--cautionary-bg)]",
-      error: "[--timeline-dot-color:var(--destructive-fg)] [--timeline-dot-bg:var(--destructive-bg)]",
-      info: "[--timeline-dot-color:var(--informative-fg)] [--timeline-dot-bg:var(--informative-bg)]",
-    },
-  },
-  defaultVariants: {
-    variant: "default",
-  },
-})
-
-export interface TimelineItemProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof timelineItemVariants> {}
-
 const TimelineItem = React.forwardRef<HTMLDivElement, TimelineItemProps>(
-  ({ className, variant, ...props }, ref) => (
+  ({ spacing = "default", variant = "default", ...props }, ref) => (
     <div
       ref={ref}
-      className={cn(timelineItemVariants({ variant }), className)}
       {...props}
+      {...stylex.props(
+        styles.item,
+        spacing === "none" && styles.itemNoSpacing,
+        variant === "success" && styles.itemSuccess,
+        variant === "warning" && styles.itemWarning,
+        variant === "error" && styles.itemError,
+        variant === "info" && styles.itemInfo
+      )}
     />
   )
 )
 TimelineItem.displayName = "TimelineItem"
 
-const timelineLineVariants = cva(
-  // Position centred on the dot (`left = (size-sm / 2) - 0.5px` for the 1px
-  // line). `top` starts the line right below the dot, `h` extends it to the
-  // bottom of the item — both expressed in tokens so the line scales with
-  // the dot/spacing.
-  "absolute left-[calc(var(--size-sm)/2-0.5px)] top-[var(--size-sm)] h-[calc(100%-var(--size-sm))] w-px",
-  {
-    variants: {
-      variant: {
-        default: "bg-[var(--container-border-alt)]",
-        dashed: "border-l border-dashed border-[var(--container-border-alt)] bg-transparent",
-        dotted: "border-l border-dotted border-[var(--container-border-alt)] bg-transparent",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  }
-)
-
-export interface TimelineLineProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof timelineLineVariants> {}
-
 const TimelineLine = React.forwardRef<HTMLDivElement, TimelineLineProps>(
-  ({ className, variant, ...props }, ref) => (
+  ({ variant = "default", ...props }, ref) => (
     <div
       ref={ref}
-      className={cn(timelineLineVariants({ variant }), className)}
       {...props}
+      {...stylex.props(
+        styles.line,
+        variant === "dashed" && styles.lineDashed,
+        variant === "dotted" && styles.lineDotted
+      )}
     />
   )
 )
 TimelineLine.displayName = "TimelineLine"
 
-const timelineDotVariants = cva(
-  "absolute left-0 top-0 flex h-[var(--size-sm)] w-[var(--size-sm)] items-center justify-center rounded-full border-2 border-[var(--container-bg)]",
-  {
-    variants: {
-      variant: {
-        default: "bg-[var(--container-bg-alt)]",
-        filled: "bg-[var(--container-bg)] text-[color:var(--container-fg)]",
-        outline: "border-2 border-[var(--container-border-alt)] bg-[var(--container-bg)]",
-        icon: "bg-[var(--container-bg)] text-[color:var(--container-fg)]",
-      },
-      size: {
-        sm: "h-[var(--size-xxs)] w-[var(--size-xxs)]",
-        default: "h-[var(--size-sm)] w-[var(--size-sm)]",
-        lg: "h-[var(--size-md)] w-[var(--size-md)]",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
-)
-
-export interface TimelineDotProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof timelineDotVariants> {
-  icon?: React.ReactNode
-}
-
 const TimelineDot = React.forwardRef<HTMLDivElement, TimelineDotProps>(
-  ({ className, variant, size, icon, children, ...props }, ref) => (
+  ({ icon, size = "default", variant = "default", children, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn(
-        timelineDotVariants({ variant, size }),
-        "bg-[var(--timeline-dot-bg,var(--container-bg-alt))] text-[color:var(--timeline-dot-color,var(--container-fg))]",
-        className
-      )}
       {...props}
+      {...stylex.props(
+        styles.dot,
+        variant === "filled" && styles.dotFilled,
+        variant === "outline" && styles.dotOutline,
+        variant === "icon" && styles.dotIcon,
+        size === "sm" && styles.dotSm,
+        size === "lg" && styles.dotLg
+      )}
     >
       {icon || children}
     </div>
@@ -146,108 +265,82 @@ const TimelineDot = React.forwardRef<HTMLDivElement, TimelineDotProps>(
 )
 TimelineDot.displayName = "TimelineDot"
 
-const TimelineContent = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("pt-0.5", className)} {...props} />
-))
+const TimelineContent = React.forwardRef<HTMLDivElement, TimelineContentProps>(
+  ({ ...props }, ref) => (
+    <div ref={ref} {...props} {...stylex.props(styles.content)} />
+  )
+)
 TimelineContent.displayName = "TimelineContent"
 
-const TimelineHeader = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    // `min-h-[var(--size-sm)]` matches the dot's height so `items-center`
-    // vertically centres the title with the (absolutely positioned) dot
-    // regardless of the active spacing density.
-    className={cn(
-      "flex items-center gap-[var(--spacing-sm)] min-h-[var(--size-sm)]",
-      className
-    )}
-    {...props}
-  />
-))
+const TimelineHeader = React.forwardRef<HTMLDivElement, TimelineHeaderProps>(
+  ({ ...props }, ref) => (
+    <div ref={ref} {...props} {...stylex.props(styles.header)} />
+  )
+)
 TimelineHeader.displayName = "TimelineHeader"
 
-const TimelineTitle = React.forwardRef<
-  HTMLHeadingElement,
-  React.HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => (
-  <h3
-    ref={ref}
-    className={cn("font-heading font-semibold leading-none tracking-tight", className)}
-    {...props}
-  />
-))
+const TimelineTitle = React.forwardRef<HTMLHeadingElement, TimelineTitleProps>(
+  ({ size = "default", ...props }, ref) => (
+    <h3
+      ref={ref}
+      {...props}
+      {...stylex.props(styles.title, size === "sm" && styles.titleSm)}
+    />
+  )
+)
 TimelineTitle.displayName = "TimelineTitle"
 
-const TimelineTime = React.forwardRef<
-  HTMLTimeElement,
-  React.TimeHTMLAttributes<HTMLTimeElement>
->(({ className, ...props }, ref) => (
-  <time
-    ref={ref}
-    className={cn("text-[length:var(--font-size-sm)] text-[color:var(--interactive-fg-alt)]", className)}
-    {...props}
-  />
-))
+const TimelineTime = React.forwardRef<HTMLTimeElement, TimelineTimeProps>(
+  ({ layout = "default", size = "default", ...props }, ref) => (
+    <time
+      ref={ref}
+      {...props}
+      {...stylex.props(
+        styles.time,
+        size === "xs" && styles.timeXs,
+        layout === "inlineEnd" && styles.timeInlineEnd
+      )}
+    />
+  )
+)
 TimelineTime.displayName = "TimelineTime"
 
 const TimelineDescription = React.forwardRef<
   HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
+  TimelineDescriptionProps
+>(({ spacing = "default", size = "default", ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mt-[var(--spacing-sm)] text-[length:var(--font-size-sm)] text-[color:var(--interactive-fg-alt)]", className)}
     {...props}
+    {...stylex.props(
+      styles.description,
+      size === "xs" && styles.descriptionXs,
+      spacing === "none" && styles.descriptionNoSpacing,
+      spacing === "xs" && styles.descriptionXsSpacing
+    )}
   />
 ))
 TimelineDescription.displayName = "TimelineDescription"
 
-// Horizontal timeline
-const TimelineHorizontal = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("relative flex items-start gap-[var(--spacing-md)]", className)}
-    {...props}
-  />
-))
+const TimelineHorizontal = React.forwardRef<HTMLDivElement, DivProps>(
+  ({ ...props }, ref) => (
+    <div ref={ref} {...props} {...stylex.props(styles.horizontal)} />
+  )
+)
 TimelineHorizontal.displayName = "TimelineHorizontal"
 
-const TimelineHorizontalItem = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("relative flex flex-col items-center", className)}
-    {...props}
-  />
-))
+const TimelineHorizontalItem = React.forwardRef<HTMLDivElement, DivProps>(
+  ({ ...props }, ref) => (
+    <div ref={ref} {...props} {...stylex.props(styles.horizontalItem)} />
+  )
+)
 TimelineHorizontalItem.displayName = "TimelineHorizontalItem"
 
-const TimelineHorizontalLine = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      // Token-based positioning so the connecting line scales with `--size-sm`
-      // across spacing densities (was hardcoded 12px / top-3 = 12px).
-      "absolute left-[calc(50%+var(--size-sm)/2)] top-[calc(var(--size-sm)/2-0.5px)] h-px w-[calc(100%-var(--size-sm))] bg-[var(--container-border-alt)]",
-      className
-    )}
-    {...props}
-  />
-))
+const TimelineHorizontalLine = React.forwardRef<HTMLDivElement, DivProps>(
+  ({ ...props }, ref) => (
+    <div ref={ref} {...props} {...stylex.props(styles.horizontalLine)} />
+  )
+)
 TimelineHorizontalLine.displayName = "TimelineHorizontalLine"
 
 export {

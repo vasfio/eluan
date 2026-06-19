@@ -1,6 +1,6 @@
 import * as React from "react"
+import * as stylex from "@stylexjs/stylex"
 import { CreditCard, Calendar, Lock } from "lucide-react"
-import { cn } from "@/lib/utils"
 import { Input } from "./input"
 
 type CardType = "visa" | "mastercard" | "amex" | "discover" | "diners" | "jcb" | "unionpay" | "unknown"
@@ -172,6 +172,32 @@ const DinersClubLogo = () => (
   </svg>
 )
 
+const styles = stylex.create({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "var(--spacing-md)",
+  },
+  grid: {
+    display: "grid",
+    gap: "var(--spacing-md)",
+    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+  },
+  cardIcon: {
+    alignItems: "center",
+    color: "var(--interactive-fg-alt)",
+    display: "inline-flex",
+  },
+  iconXxs: {
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+  iconXs: {
+    height: "var(--size-xs)",
+    width: "var(--size-xs)",
+  },
+})
+
 const CardIcon = ({ type }: { type: CardType }) => {
   const logo = (() => {
     switch (type) {
@@ -183,12 +209,12 @@ const CardIcon = ({ type }: { type: CardType }) => {
       case "diners":     return <DinersClubLogo />
       case "unionpay":   return <UnionPayLogo />
       default:
-        return <CreditCard className="h-[var(--size-xs)] w-[var(--size-xs)]" />
+        return <CreditCard {...stylex.props(styles.iconXs)} />
     }
   })()
 
   return (
-    <span className="inline-flex items-center text-[color:var(--interactive-fg-alt)]">
+    <span {...stylex.props(styles.cardIcon)}>
       {logo}
     </span>
   )
@@ -202,28 +228,27 @@ export interface CreditCardInputProps {
     cardType: CardType
     isValid: boolean
   }) => void
-  className?: string
   disabled?: boolean
 }
 
 export interface CreditCardNumberInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "onChange"> {
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "className" | "size" | "style" | "type" | "onChange"> {
   onChange?: (value: string, cardType: CardType) => void
 }
 
 export interface CreditCardExpiryInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "onChange"> {
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "className" | "size" | "style" | "type" | "onChange"> {
   onChange?: (value: string) => void
 }
 
 export interface CreditCardCVVInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "onChange"> {
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "className" | "size" | "style" | "type" | "onChange"> {
   cardType?: CardType
   onChange?: (value: string) => void
 }
 
 const CreditCardNumberInput = React.forwardRef<HTMLInputElement, CreditCardNumberInputProps>(
-  ({ className, onChange, ...props }, ref) => {
+  ({ onChange, ...props }, ref) => {
     const [value, setValue] = React.useState("")
     const [cardType, setCardType] = React.useState<CardType>("unknown")
 
@@ -246,9 +271,9 @@ const CreditCardNumberInput = React.forwardRef<HTMLInputElement, CreditCardNumbe
         type="text"
         inputMode="numeric"
         autoComplete="cc-number"
-        icon={<CreditCard className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />}
+        icon={<CreditCard {...stylex.props(styles.iconXxs)} />}
         trailing={<CardIcon type={cardType} />}
-        className={cn("[&_input]:font-mono", className)}
+        textStyle="mono"
         ref={ref}
         value={value}
         onChange={handleChange}
@@ -261,7 +286,7 @@ const CreditCardNumberInput = React.forwardRef<HTMLInputElement, CreditCardNumbe
 CreditCardNumberInput.displayName = "CreditCardNumberInput"
 
 const CreditCardExpiryInput = React.forwardRef<HTMLInputElement, CreditCardExpiryInputProps>(
-  ({ className, onChange, ...props }, ref) => {
+  ({ onChange, ...props }, ref) => {
     const [value, setValue] = React.useState("")
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -278,8 +303,8 @@ const CreditCardExpiryInput = React.forwardRef<HTMLInputElement, CreditCardExpir
         type="text"
         inputMode="numeric"
         autoComplete="cc-exp"
-        icon={<Calendar className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />}
-        className={cn("[&_input]:font-mono", className)}
+        icon={<Calendar {...stylex.props(styles.iconXxs)} />}
+        textStyle="mono"
         ref={ref}
         value={value}
         onChange={handleChange}
@@ -292,7 +317,7 @@ const CreditCardExpiryInput = React.forwardRef<HTMLInputElement, CreditCardExpir
 CreditCardExpiryInput.displayName = "CreditCardExpiryInput"
 
 const CreditCardCVVInput = React.forwardRef<HTMLInputElement, CreditCardCVVInputProps>(
-  ({ className, cardType = "unknown", onChange, ...props }, ref) => {
+  ({ cardType = "unknown", onChange, ...props }, ref) => {
     const [value, setValue] = React.useState("")
     const maxLength = cardType === "amex" ? 4 : 3
 
@@ -309,8 +334,8 @@ const CreditCardCVVInput = React.forwardRef<HTMLInputElement, CreditCardCVVInput
         type="text"
         inputMode="numeric"
         autoComplete="cc-csc"
-        icon={<Lock className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />}
-        className={cn("[&_input]:font-mono", className)}
+        icon={<Lock {...stylex.props(styles.iconXxs)} />}
+        textStyle="mono"
         ref={ref}
         value={value}
         onChange={handleChange}
@@ -324,7 +349,7 @@ const CreditCardCVVInput = React.forwardRef<HTMLInputElement, CreditCardCVVInput
 CreditCardCVVInput.displayName = "CreditCardCVVInput"
 
 const CreditCardInput = React.forwardRef<HTMLDivElement, CreditCardInputProps>(
-  ({ className, onCardChange, disabled }, ref) => {
+  ({ onCardChange, disabled }, ref) => {
     const [number, setNumber] = React.useState("")
     const [expiry, setExpiry] = React.useState("")
     const [cvv, setCvv] = React.useState("")
@@ -348,7 +373,7 @@ const CreditCardInput = React.forwardRef<HTMLDivElement, CreditCardInputProps>(
     }, [number, expiry, cvv, cardType, onCardChange])
 
     return (
-      <div ref={ref} className={cn("space-y-3", className)}>
+      <div ref={ref} {...stylex.props(styles.root)}>
         <CreditCardNumberInput
           onChange={(value, type) => {
             setNumber(value)
@@ -356,7 +381,7 @@ const CreditCardInput = React.forwardRef<HTMLDivElement, CreditCardInputProps>(
           }}
           disabled={disabled}
         />
-        <div className="grid grid-cols-2 gap-3">
+        <div {...stylex.props(styles.grid)}>
           <CreditCardExpiryInput
             onChange={setExpiry}
             disabled={disabled}

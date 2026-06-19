@@ -1,33 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
-
-import { cn } from "@/lib/utils"
+import * as stylex from "@stylexjs/stylex"
 
 /** Tailwind `lg` breakpoint in pixels. */
 const LG_BREAKPOINT = 1024
-
-/**
- * Variants used for the **mobile overlay** mode only.
- * On large screens (>=1024px) the drawer is rendered inline (push mode) and these classes are not applied.
- * Only left and right sides are supported.
- */
-const drawerVariants = cva(
-  "fixed z-50 bg-[var(--container-bg)] transition-transform duration-300 ease-in-out",
-  {
-    variants: {
-      side: {
-        left: "inset-y-0 left-0 h-full w-3/4 max-w-sm border-r data-[state=closed]:-translate-x-full data-[state=open]:translate-x-0",
-        right:
-          "inset-y-0 right-0 h-full w-3/4 max-w-sm border-l data-[state=closed]:translate-x-full data-[state=open]:translate-x-0",
-      },
-    },
-    defaultVariants: {
-      side: "right",
-    },
-  }
-)
 
 // ---------------------------------------------------------------------------
 // Media-query hook
@@ -89,6 +66,149 @@ interface DrawerProps {
   onOpenChange?: (open: boolean) => void
 }
 
+type DrawerButtonProps = Omit<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  "className" | "style"
+>
+
+type DrawerDivProps = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  "className" | "style"
+>
+
+type DrawerHeadingProps = Omit<
+  React.HTMLAttributes<HTMLHeadingElement>,
+  "className" | "style"
+>
+
+type DrawerParagraphProps = Omit<
+  React.HTMLAttributes<HTMLParagraphElement>,
+  "className" | "style"
+>
+
+type DrawerSide = "left" | "right"
+
+type DrawerContentProps = DrawerDivProps & {
+  side?: DrawerSide
+}
+
+const styles = stylex.create({
+  overlay: {
+    backgroundColor: "var(--container-fg)",
+    inset: 0,
+    position: "fixed",
+    transitionDuration: "300ms",
+    transitionProperty: "opacity",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    zIndex: 50,
+  },
+  overlayOpen: {
+    opacity: 0.8,
+  },
+  overlayClosed: {
+    opacity: 0,
+    pointerEvents: "none",
+  },
+  content: {
+    backgroundColor: "var(--container-bg)",
+    borderColor: "var(--container-border)",
+    borderStyle: "solid",
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+    bottom: 0,
+    height: "100%",
+    maxWidth: "24rem",
+    position: "fixed",
+    top: 0,
+    transitionDuration: "300ms",
+    transitionProperty: "transform",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    width: "75%",
+    zIndex: 50,
+  },
+  contentLeft: {
+    borderLeftWidth: 0,
+    borderRightWidth: 1,
+    left: 0,
+    "[data-state=closed]": {
+      transform: "translateX(-100%)",
+    },
+    "[data-state=open]": {
+      transform: "translateX(0)",
+    },
+  },
+  contentRight: {
+    borderLeftWidth: 1,
+    borderRightWidth: 0,
+    right: 0,
+    "[data-state=closed]": {
+      transform: "translateX(100%)",
+    },
+    "[data-state=open]": {
+      transform: "translateX(0)",
+    },
+  },
+  inlineContent: {
+    backgroundColor: "var(--container-bg)",
+    borderColor: "var(--container-border)",
+    borderStyle: "solid",
+    flexShrink: 0,
+    height: "100vh",
+    overflow: "hidden",
+    position: "sticky",
+    top: 0,
+    transitionDuration: "300ms",
+    transitionProperty: "width",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+  },
+  inlineLeft: {
+    borderLeftWidth: 0,
+    borderRightWidth: 1,
+    order: -9999,
+  },
+  inlineRight: {
+    borderLeftWidth: 1,
+    borderRightWidth: 0,
+    order: 9999,
+  },
+  inlineOpen: {
+    width: "17.5rem",
+  },
+  inlineClosed: {
+    width: 0,
+  },
+  inlineInner: {
+    height: "100%",
+    width: "17.5rem",
+  },
+  inlineInnerClosed: {
+    visibility: "hidden",
+  },
+  header: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "var(--spacing-xs)",
+    padding: "var(--spacing-md)",
+  },
+  footer: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "var(--spacing-xs)",
+    marginTop: "auto",
+    padding: "var(--spacing-md)",
+  },
+  title: {
+    color: "var(--container-fg)",
+    fontFamily: "var(--font-heading)",
+    fontSize: "var(--font-size-lg)",
+    fontWeight: 600,
+  },
+  description: {
+    color: "var(--container-fg-alt)",
+    fontSize: "var(--font-size-sm)",
+  },
+})
+
 function Drawer({
   children,
   open: controlledOpen,
@@ -113,7 +233,7 @@ function Drawer({
 
 const DrawerTrigger = React.forwardRef<
   HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement>
+  DrawerButtonProps
 >(({ onClick, ...props }, ref) => {
   const { open, onOpenChange } = useDrawer()
 
@@ -132,7 +252,7 @@ DrawerTrigger.displayName = "DrawerTrigger"
 
 const DrawerClose = React.forwardRef<
   HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement>
+  DrawerButtonProps
 >(({ onClick, ...props }, ref) => {
   const { onOpenChange } = useDrawer()
 
@@ -163,18 +283,13 @@ const DrawerPortal = ({ children }: { children: React.ReactNode }) => {
 
 const DrawerOverlay = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, onClick, ...props }, ref) => {
+  DrawerDivProps
+>(({ onClick, ...props }, ref) => {
   const { open, onOpenChange } = useDrawer()
 
   return (
     <div
       ref={ref}
-      className={cn(
-        "fixed inset-0 z-50 bg-[var(--container-bg-inverse)] transition-opacity duration-300",
-        open ? "opacity-80" : "pointer-events-none opacity-0",
-        className
-      )}
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           onOpenChange(false)
@@ -182,21 +297,15 @@ const DrawerOverlay = React.forwardRef<
         onClick?.(e)
       }}
       {...props}
+      {...stylex.props(styles.overlay, open ? styles.overlayOpen : styles.overlayClosed)}
     />
   )
 })
 DrawerOverlay.displayName = "DrawerOverlay"
 
 // ---------------------------------------------------------------------------
-// DrawerContent
-// ---------------------------------------------------------------------------
-
-interface DrawerContentProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof drawerVariants> {}
-
 const DrawerContent = React.forwardRef<HTMLDivElement, DrawerContentProps>(
-  ({ className, side = "right", children, ...props }, ref) => {
+  ({ side = "right", children, ...props }, ref) => {
     const { open, onOpenChange, isLargeScreen } = useDrawer()
 
     const resolvedSide = side ?? "right"
@@ -229,15 +338,19 @@ const DrawerContent = React.forwardRef<HTMLDivElement, DrawerContentProps>(
         <div
           ref={ref}
           data-state={open ? "open" : "closed"}
-          className={cn(
-            "sticky top-0 h-screen shrink-0 bg-[var(--container-bg)] transition-[width] duration-300 ease-in-out overflow-hidden",
-            resolvedSide === "right" ? "border-l order-last" : "border-r order-first",
-            open ? "w-[280px]" : "w-0",
-            className
-          )}
           {...props}
+          {...stylex.props(
+            styles.inlineContent,
+            resolvedSide === "right" ? styles.inlineRight : styles.inlineLeft,
+            open ? styles.inlineOpen : styles.inlineClosed
+          )}
         >
-          <div className={cn("h-full w-[280px]", !open && "invisible")}>
+          <div
+            {...stylex.props(
+              styles.inlineInner,
+              !open && styles.inlineInnerClosed
+            )}
+          >
             {children}
           </div>
         </div>
@@ -251,8 +364,11 @@ const DrawerContent = React.forwardRef<HTMLDivElement, DrawerContentProps>(
         <div
           ref={ref}
           data-state={open ? "open" : "closed"}
-          className={cn(drawerVariants({ side: resolvedSide }), className)}
           {...props}
+          {...stylex.props(
+            styles.content,
+            resolvedSide === "right" ? styles.contentRight : styles.contentLeft
+          )}
         >
           {children}
         </div>
@@ -267,47 +383,45 @@ DrawerContent.displayName = "DrawerContent"
 // ---------------------------------------------------------------------------
 
 const DrawerHeader = ({
-  className,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
+}: DrawerDivProps) => (
   <div
-    className={cn("flex flex-col space-y-2 p-4", className)}
     {...props}
+    {...stylex.props(styles.header)}
   />
 )
 DrawerHeader.displayName = "DrawerHeader"
 
 const DrawerFooter = ({
-  className,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
+}: DrawerDivProps) => (
   <div
-    className={cn("mt-auto flex flex-col gap-2 p-4", className)}
     {...props}
+    {...stylex.props(styles.footer)}
   />
 )
 DrawerFooter.displayName = "DrawerFooter"
 
 const DrawerTitle = React.forwardRef<
   HTMLHeadingElement,
-  React.HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => (
+  DrawerHeadingProps
+>(({ ...props }, ref) => (
   <h2
     ref={ref}
-    className={cn("font-heading text-[length:var(--font-size-lg)] font-semibold text-foreground", className)}
     {...props}
+    {...stylex.props(styles.title)}
   />
 ))
 DrawerTitle.displayName = "DrawerTitle"
 
 const DrawerDescription = React.forwardRef<
   HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
+  DrawerParagraphProps
+>(({ ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-[length:var(--font-size-sm)] text-muted-foreground", className)}
     {...props}
+    {...stylex.props(styles.description)}
   />
 ))
 DrawerDescription.displayName = "DrawerDescription"
