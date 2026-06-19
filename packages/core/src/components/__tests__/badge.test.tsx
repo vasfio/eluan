@@ -29,8 +29,8 @@ describe("Badge", () => {
     expect(screen.getByText("Draft")).toBeInTheDocument();
   });
 
-  it("forwards className", () => {
-    render(<Badge className="custom-class">Tag</Badge>);
-    expect(screen.getByText("Tag")).toHaveClass("custom-class");
+  it("does not forward className overrides", () => {
+    render(<Badge {...({ className: "custom-class" } as never)}>Tag</Badge>);
+    expect(screen.getByText("Tag")).not.toHaveClass("custom-class");
   });
 });

@@ -1,8 +1,8 @@
 import * as React from "react"
+import * as stylex from "@stylexjs/stylex"
 import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
 
-import { cn } from "@/lib/utils"
 import { Button } from "./button"
 import { Calendar } from "./calendar"
 import {
@@ -16,7 +16,6 @@ export interface DateTimePickerProps {
   onChange?: (date: Date | undefined) => void
   placeholder?: string
   disabled?: boolean
-  className?: string
   showSeconds?: boolean
   use24Hour?: boolean
 }
@@ -28,7 +27,6 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
       onChange,
       placeholder = "Pick date and time",
       disabled = false,
-      className,
       showSeconds = false,
       use24Hour = false,
     },
@@ -112,15 +110,13 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
         <PopoverTrigger asChild>
           <Button
             ref={ref}
-            variant="ghost"
+            variant={selectedDate ? "input" : "inputMuted"}
+            fullWidth
+            align="start"
+            textAlign="left"
             disabled={disabled}
-            className={cn(
-              "w-full justify-start text-left font-normal border border-solid border-[var(--interactive-border-alt)]",
-              !selectedDate && "text-[color:var(--interactive-fg-alt)]",
-              className
-            )}
           >
-            <CalendarIcon className="mr-2 h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+            <CalendarIcon {...stylex.props(styles.triggerIcon)} />
             {selectedDate ? (
               format(selectedDate, dateTimeFormat)
             ) : (
@@ -128,15 +124,15 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
+        <PopoverContent layout="calendar" align="start">
           <Calendar
             mode="single"
             selected={selectedDate}
             onSelect={handleDateSelect}
             initialFocus
           />
-          <div className="border-t p-3">
-            <div className="flex items-center gap-2">
+          <div {...stylex.props(styles.timeSection)}>
+            <div {...stylex.props(styles.timeRow)}>
               <input
                 type="text"
                 inputMode="numeric"
@@ -152,9 +148,9 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
                     handleTimeChange("hour", String(num))
                   }
                 }}
-                className="w-[44px] rounded-md border border-input bg-background px-2 py-1.5 text-[length:var(--font-size-sm)] text-center tabular-nums focus:outline-none focus:ring-1 focus:ring-ring"
+                {...stylex.props(styles.timeInput)}
               />
-              <span className="text-muted-foreground font-medium">:</span>
+              <span {...stylex.props(styles.separator)}>:</span>
               <input
                 type="text"
                 inputMode="numeric"
@@ -168,11 +164,11 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
                     handleTimeChange("minute", String(num))
                   }
                 }}
-                className="w-[44px] rounded-md border border-input bg-background px-2 py-1.5 text-[length:var(--font-size-sm)] text-center tabular-nums focus:outline-none focus:ring-1 focus:ring-ring"
+                {...stylex.props(styles.timeInput)}
               />
               {showSeconds && (
                 <>
-                  <span className="text-muted-foreground font-medium">:</span>
+                  <span {...stylex.props(styles.separator)}>:</span>
                   <input
                     type="text"
                     inputMode="numeric"
@@ -186,33 +182,23 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
                         handleTimeChange("second", String(num))
                       }
                     }}
-                    className="w-[44px] rounded-md border border-input bg-background px-2 py-1.5 text-[length:var(--font-size-sm)] text-center tabular-nums focus:outline-none focus:ring-1 focus:ring-ring"
+                    {...stylex.props(styles.timeInput)}
                   />
                 </>
               )}
               {!use24Hour && (
-                <div className="flex rounded-md border border-input overflow-hidden">
+                <div {...stylex.props(styles.ampmGroup)}>
                   <button
                     type="button"
                     onClick={() => handleTimeChange("ampm", "AM")}
-                    className={cn(
-                      "px-2.5 py-1.5 text-[length:var(--font-size-xs)] font-medium transition-colors",
-                      getAmPm() === "AM"
-                        ? "bg-foreground text-background"
-                        : "bg-background text-muted-foreground hover:text-foreground"
-                    )}
+                    {...stylex.props(styles.ampmButton, getAmPm() === "AM" ? styles.ampmButtonActive : styles.ampmButtonInactive)}
                   >
                     AM
                   </button>
                   <button
                     type="button"
                     onClick={() => handleTimeChange("ampm", "PM")}
-                    className={cn(
-                      "px-2.5 py-1.5 text-[length:var(--font-size-xs)] font-medium transition-colors",
-                      getAmPm() === "PM"
-                        ? "bg-foreground text-background"
-                        : "bg-background text-muted-foreground hover:text-foreground"
-                    )}
+                    {...stylex.props(styles.ampmButton, getAmPm() === "PM" ? styles.ampmButtonActive : styles.ampmButtonInactive)}
                   >
                     PM
                   </button>
@@ -226,5 +212,76 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
   }
 )
 DateTimePicker.displayName = "DateTimePicker"
+
+const styles = stylex.create({
+  triggerIcon: {
+    height: "var(--size-xxs)",
+    marginRight: "var(--spacing-sm)",
+    width: "var(--size-xxs)",
+  },
+  timeSection: {
+    borderTopColor: "var(--container-border)",
+    borderTopStyle: "solid",
+    borderTopWidth: 1,
+    padding: "var(--spacing-md)",
+  },
+  timeRow: {
+    alignItems: "center",
+    display: "flex",
+    gap: "var(--spacing-sm)",
+  },
+  timeInput: {
+    backgroundColor: "var(--interactive-bg)",
+    borderColor: "var(--interactive-border-alt)",
+    borderRadius: "var(--curves-md)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    color: "var(--interactive-fg)",
+    fontSize: "var(--font-size-sm)",
+    fontVariantNumeric: "tabular-nums",
+    paddingBlock: "var(--spacing-xs)",
+    paddingInline: "var(--spacing-sm)",
+    textAlign: "center",
+    width: 44,
+    ":focus": {
+      outline: "none",
+      boxShadow: "0 0 0 1px var(--interactive-border)",
+    },
+  },
+  separator: {
+    color: "var(--container-fg-alt)",
+    fontWeight: 500,
+  },
+  ampmGroup: {
+    borderColor: "var(--interactive-border-alt)",
+    borderRadius: "var(--curves-md)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    display: "flex",
+    overflow: "hidden",
+  },
+  ampmButton: {
+    borderWidth: 0,
+    cursor: "pointer",
+    fontSize: "var(--font-size-xs)",
+    fontWeight: 500,
+    paddingBlock: "var(--spacing-xs)",
+    paddingInline: "var(--spacing-sm)",
+    transitionDuration: "150ms",
+    transitionProperty: "background-color, color",
+    transitionTimingFunction: "ease",
+  },
+  ampmButtonActive: {
+    backgroundColor: "var(--interactive-bg-selected)",
+    color: "var(--interactive-fg-selected)",
+  },
+  ampmButtonInactive: {
+    backgroundColor: "var(--interactive-bg)",
+    color: "var(--interactive-fg-alt)",
+    ":hover": {
+      color: "var(--interactive-fg)",
+    },
+  },
+})
 
 export { DateTimePicker }

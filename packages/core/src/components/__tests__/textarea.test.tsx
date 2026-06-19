@@ -32,9 +32,9 @@ describe("Textarea", () => {
     expect(onChange).toHaveBeenCalled();
   });
 
-  it("forwards className", () => {
-    render(<Textarea className="custom" />);
-    expect(screen.getByRole("textbox")).toHaveClass("custom");
+  it("does not forward className overrides", () => {
+    render(<Textarea {...({ className: "custom" } as never)} />);
+    expect(screen.getByRole("textbox")).not.toHaveClass("custom");
   });
 
   it("renders with rows attribute", () => {

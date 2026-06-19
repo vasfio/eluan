@@ -1,9 +1,9 @@
 "use client"
 
 import * as React from "react"
+import * as stylex from "@stylexjs/stylex"
 import { ChevronDown, Delete, X } from "lucide-react"
 
-import { cn } from "@/lib/utils"
 import { Badge } from "./badge"
 import {
   Command,
@@ -20,22 +20,144 @@ import {
 } from "./popover"
 
 export interface MultiSelectOption {
-  value: string
-  label: string
   disabled?: boolean
+  label: string
+  value: string
 }
 
 export interface MultiSelectProps {
-  options: MultiSelectOption[]
-  value?: string[]
+  disabled?: boolean
+  emptyMessage?: string
+  maxDisplayedItems?: number
   onChange?: (value: string[]) => void
+  options: MultiSelectOption[]
   placeholder?: string
   searchPlaceholder?: string
-  emptyMessage?: string
-  disabled?: boolean
-  className?: string
-  maxDisplayedItems?: number
+  value?: string[]
 }
+
+const styles = stylex.create({
+  trigger: {
+    alignItems: "center",
+    backgroundColor: "var(--interactive-bg)",
+    borderColor: "var(--interactive-border-alt)",
+    borderRadius: "var(--curves-md)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    display: "flex",
+    fontSize: "var(--font-size-sm)",
+    justifyContent: "space-between",
+    minHeight: "var(--size-lg)",
+    paddingBlock: "var(--spacing-sm)",
+    paddingInline: "var(--spacing-md)",
+    transitionDuration: "150ms",
+    transitionProperty: "color, background-color, border-color",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    width: "100%",
+    ":disabled": {
+      backgroundColor: "var(--interactive-bg-disabled)",
+      color: "var(--interactive-fg-disabled)",
+      cursor: "not-allowed",
+    },
+    ":focus": {
+      outlineStyle: "none",
+    },
+    ":focus-visible": {
+      borderColor: "var(--interactive-border)",
+      outlineColor: "var(--interactive-border)",
+      outlineOffset: "1px",
+      outlineStyle: "solid",
+      outlineWidth: "1px",
+    },
+  },
+  selectedWrap: {
+    alignItems: "center",
+    display: "flex",
+    flex: 1,
+    flexWrap: "wrap",
+    gap: "var(--spacing-xxs)",
+    minHeight: "var(--size-sm)",
+  },
+  placeholder: {
+    color: "var(--interactive-fg-alt)",
+  },
+  chipContent: {
+    alignItems: "center",
+    display: "inline-flex",
+    fontSize: "calc(var(--font-size-xs) - 0.0625rem)",
+    fontWeight: 400,
+    gap: "var(--spacing-xxs)",
+    lineHeight: 1.25,
+  },
+  chipRemove: {
+    backgroundColor: "transparent",
+    borderWidth: 0,
+    borderRadius: "var(--radius-radius-full)",
+    color: "inherit",
+    cursor: "pointer",
+    opacity: 0.6,
+    padding: 0,
+    transitionDuration: "150ms",
+    transitionProperty: "opacity",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    ":hover": {
+      opacity: 1,
+    },
+    ":focus": {
+      outlineStyle: "none",
+    },
+  },
+  removeIcon: {
+    height: "calc(var(--spacing-sm) + var(--spacing-xxs))",
+    width: "calc(var(--spacing-sm) + var(--spacing-xxs))",
+  },
+  controls: {
+    alignItems: "center",
+    display: "flex",
+    flexShrink: 0,
+    gap: "var(--spacing-xs)",
+    marginLeft: "var(--spacing-sm)",
+  },
+  clear: {
+    backgroundColor: "transparent",
+    borderWidth: 0,
+    borderRadius: "var(--radius-radius-full)",
+    color: "inherit",
+    cursor: "pointer",
+    opacity: 0.4,
+    padding: "var(--spacing-xxs)",
+    transitionDuration: "150ms",
+    transitionProperty: "opacity",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    ":hover": {
+      opacity: 1,
+    },
+    ":focus": {
+      outlineStyle: "none",
+    },
+  },
+  clearIcon: {
+    height: "calc(var(--spacing-md) + var(--spacing-xxs))",
+    width: "calc(var(--spacing-md) + var(--spacing-xxs))",
+  },
+  chevron: {
+    height: "var(--size-xxs)",
+    opacity: 0.5,
+    transitionDuration: "150ms",
+    transitionProperty: "transform",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    width: "var(--size-xxs)",
+  },
+  chevronOpen: {
+    transform: "rotate(180deg)",
+  },
+  selectedIcon: {
+    color: "var(--interactive-fg-alt)",
+    flexShrink: 0,
+    height: "calc(var(--spacing-md) + var(--spacing-xxs))",
+    width: "calc(var(--spacing-md) + var(--spacing-xxs))",
+  },
+})
 
 const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
   (
@@ -47,7 +169,6 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
       searchPlaceholder = "Search…",
       emptyMessage = "No items found.",
       disabled = false,
-      className,
       maxDisplayedItems = 4,
     },
     ref
@@ -75,7 +196,6 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
     const displayedOptions = selectedOptions.slice(0, maxDisplayedItems)
     const remaining = selectedOptions.length - maxDisplayedItems
 
-    // Split list: selected first, then unselected
     const sortedOptions = [
       ...options.filter((o) => value.includes(o.value)),
       ...options.filter((o) => !value.includes(o.value)),
@@ -90,69 +210,62 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
             role="combobox"
             aria-expanded={open}
             disabled={disabled}
-            className={cn(
-              "flex min-h-[var(--size-lg)] w-full items-center justify-between rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[length:var(--font-size-sm)]",
-              "ring-offset-background focus:outline-none focus:ring-1 focus:ring-[var(--interactive-border)] focus:border-[var(--interactive-border)]",
-              "disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[color:var(--interactive-fg-disabled)] transition-colors",
-              className
-            )}
+            {...stylex.props(styles.trigger)}
           >
-            <div className="flex flex-1 flex-wrap items-center gap-0.5 min-h-[1.5rem]">
+            <div {...stylex.props(styles.selectedWrap)}>
               {selectedOptions.length === 0 ? (
-                <span className="text-[color:var(--interactive-fg-alt)]">{placeholder}</span>
+                <span {...stylex.props(styles.placeholder)}>{placeholder}</span>
               ) : (
                 <>
                   {displayedOptions.map((option) => (
-                    <Badge
-                      key={option.value}
-                      variant="secondary"
-                      className="gap-0.5 px-1.5 py-0 h-5 text-[0.6875rem] leading-tight font-normal"
-                    >
-                      {option.label}
-                      <button
-                        type="button"
-                        className="rounded-full opacity-60 hover:opacity-100 transition-opacity outline-none"
-                        onMouseDown={(e) => e.preventDefault()}
-                        onClick={(e) => handleRemove(option.value, e)}
-                        aria-label={`Remove ${option.label}`}
-                      >
-                        <X className="h-2.5 w-2.5" />
-                      </button>
+                    <Badge key={option.value} variant="secondary">
+                      <span {...stylex.props(styles.chipContent)}>
+                        {option.label}
+                        <button
+                          type="button"
+                          onMouseDown={(e) => e.preventDefault()}
+                          onClick={(e) => handleRemove(option.value, e)}
+                          aria-label={`Remove ${option.label}`}
+                          {...stylex.props(styles.chipRemove)}
+                        >
+                          <X {...stylex.props(styles.removeIcon)} />
+                        </button>
+                      </span>
                     </Badge>
                   ))}
                   {remaining > 0 && (
-                    <Badge variant="secondary" className="px-1.5 py-0 h-5 text-[0.6875rem] leading-tight font-normal">+{remaining}</Badge>
+                    <Badge variant="secondary">
+                      <span {...stylex.props(styles.chipContent)}>+{remaining}</span>
+                    </Badge>
                   )}
                 </>
               )}
             </div>
-            <div className="flex items-center gap-1 ml-2 shrink-0">
+            <div {...stylex.props(styles.controls)}>
               {selectedOptions.length > 0 && (
                 <button
                   type="button"
-                  className="rounded-full p-0.5 opacity-40 hover:opacity-100 transition-opacity outline-none"
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={handleClearAll}
                   aria-label="Clear all selections"
+                  {...stylex.props(styles.clear)}
                 >
-                  {/* Backspace glyph matches SearchInput's clear affordance — */}
-                  {/* signals "delete what was typed" rather than "close". */}
-                  <Delete className="h-3.5 w-3.5" />
+                  <Delete {...stylex.props(styles.clearIcon)} />
                 </button>
               )}
-              <ChevronDown className={cn("h-[var(--size-xxs)] w-[var(--size-xxs)] opacity-50 transition-transform", open && "rotate-180")} />
+              <ChevronDown {...stylex.props(styles.chevron, open && styles.chevronOpen)} />
             </div>
           </button>
         </PopoverTrigger>
         <PopoverContent
-          className="p-0 w-[var(--radix-popover-trigger-width)]"
+          layout="matchTrigger"
           align="start"
           sideOffset={4}
         >
           <Command>
-            <CommandInput placeholder={searchPlaceholder} className="h-[var(--size-lg)]" />
+            <CommandInput placeholder={searchPlaceholder} density="compact" />
             <CommandList>
-              <CommandEmpty className="py-[var(--spacing-md)] text-center text-[length:var(--font-size-sm)] text-[color:var(--interactive-fg-alt)]">{emptyMessage}</CommandEmpty>
+              <CommandEmpty tone="muted">{emptyMessage}</CommandEmpty>
               <CommandGroup>
                 {sortedOptions.map((option) => {
                   const isSelected = value.includes(option.value)
@@ -163,15 +276,12 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
                       keywords={[option.value]}
                       disabled={option.disabled}
                       onSelect={() => handleSelect(option.value)}
-                      className={cn(
-                        "flex items-center justify-between gap-[var(--spacing-sm)] cursor-pointer",
-                        isSelected && "text-[color:var(--interactive-fg)] font-medium"
-                      )}
+                      selected={isSelected}
                     >
                       <span>{option.label}</span>
                       {isSelected && (
                         <X
-                          className="h-3.5 w-3.5 shrink-0 text-[color:var(--interactive-fg-alt)]"
+                          {...stylex.props(styles.selectedIcon)}
                           onClick={(e) => { e.stopPropagation(); handleSelect(option.value) }}
                         />
                       )}

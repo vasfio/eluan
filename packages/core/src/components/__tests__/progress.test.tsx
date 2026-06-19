@@ -22,8 +22,8 @@ describe("Progress", () => {
     expect(screen.getByRole("progressbar")).toBeInTheDocument();
   });
 
-  it("forwards className", () => {
-    render(<Progress value={50} className="custom" />);
-    expect(screen.getByRole("progressbar")).toHaveClass("custom");
+  it("does not forward className overrides", () => {
+    render(<Progress value={50} {...({ className: "custom" } as never)} />);
+    expect(screen.getByRole("progressbar")).not.toHaveClass("custom");
   });
 });

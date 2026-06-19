@@ -1,23 +1,175 @@
 import * as React from "react"
 import { type DialogProps } from "@radix-ui/react-dialog"
+import * as stylex from "@stylexjs/stylex"
 import { Command as CommandPrimitive } from "cmdk"
 import { Search } from "lucide-react"
 
-import { cn } from "@/lib/utils"
 import { Dialog, DialogContent } from "./dialog"
 import { Separator } from "./separator"
 
+type CommandScale = "default" | "dialog"
+
+type CommandProps = Omit<
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive>,
+  "className" | "style"
+>
+
+type CommandInputProps = Omit<
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>,
+  "className" | "size" | "style"
+> & {
+  density?: "default" | "compact"
+}
+
+type CommandListProps = Omit<
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.List>,
+  "className" | "style"
+>
+
+type CommandEmptyProps = Omit<
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>,
+  "className" | "style"
+> & {
+  tone?: "default" | "muted"
+}
+
+type CommandGroupProps = Omit<
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Group>,
+  "className" | "style"
+>
+
+type CommandItemProps = Omit<
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item>,
+  "className" | "style"
+> & {
+  selected?: boolean
+}
+
+type CommandShortcutProps = Omit<
+  React.HTMLAttributes<HTMLSpanElement>,
+  "className" | "style"
+>
+
+const CommandScaleContext = React.createContext<CommandScale>("default")
+
+const styles = stylex.create({
+  command: {
+    backgroundColor: "var(--container-bg)",
+    borderRadius: "var(--curves-md)",
+    color: "var(--container-fg)",
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+    overflow: "hidden",
+    width: "100%",
+  },
+  inputWrapper: {
+    alignItems: "center",
+    borderBottomColor: "var(--container-border)",
+    borderBottomStyle: "solid",
+    borderBottomWidth: 1,
+    display: "flex",
+    paddingInline: "var(--spacing-sm)",
+  },
+  searchIcon: {
+    flexShrink: 0,
+    height: "var(--size-xxs)",
+    marginRight: "var(--spacing-xs)",
+    opacity: 0.5,
+    width: "var(--size-xxs)",
+  },
+  searchIconDialog: {
+    height: "var(--size-xs)",
+    width: "var(--size-xs)",
+  },
+  input: {
+    backgroundColor: "transparent",
+    borderWidth: 0,
+    borderRadius: "var(--curves-md)",
+    color: "var(--interactive-fg)",
+    display: "flex",
+    fontSize: "var(--font-size-sm)",
+    height: "var(--size-xl)",
+    outlineStyle: "none",
+    paddingBlock: "var(--spacing-md)",
+    width: "100%",
+    "::placeholder": {
+      color: "var(--interactive-fg-alt)",
+    },
+    ":disabled": {
+      backgroundColor: "var(--interactive-bg-disabled)",
+      color: "var(--interactive-fg-disabled)",
+      cursor: "not-allowed",
+    },
+  },
+  inputCompact: {
+    height: "var(--size-lg)",
+  },
+  list: {
+    maxHeight: "18.75rem",
+    overflowX: "hidden",
+    overflowY: "auto",
+  },
+  empty: {
+    fontSize: "var(--font-size-sm)",
+    paddingBlock: "var(--spacing-lg)",
+    textAlign: "center",
+  },
+  emptyMuted: {
+    color: "var(--interactive-fg-alt)",
+    paddingBlock: "var(--spacing-md)",
+  },
+  group: {
+    color: "var(--interactive-fg)",
+    overflow: "hidden",
+    padding: "var(--spacing-xs)",
+  },
+  item: {
+    alignItems: "center",
+    borderRadius: "var(--curves-sm)",
+    cursor: "default",
+    display: "flex",
+    fontSize: "var(--font-size-sm)",
+    gap: "var(--spacing-xs)",
+    outlineStyle: "none",
+    paddingBlock: "var(--spacing-xs)",
+    paddingInline: "var(--spacing-xs)",
+    position: "relative",
+    userSelect: "none",
+    "[data-disabled=true]": {
+      backgroundColor: "var(--interactive-bg-disabled)",
+      color: "var(--interactive-fg-disabled)",
+      pointerEvents: "none",
+    },
+    "[data-selected=true]": {
+      backgroundColor: "var(--interactive-bg-selected)",
+      color: "var(--interactive-fg-selected)",
+    },
+  },
+  itemDialog: {
+    paddingBlock: "var(--spacing-sm)",
+    paddingInline: "var(--spacing-sm)",
+  },
+  itemSelected: {
+    color: "var(--interactive-fg)",
+    fontWeight: 500,
+  },
+  shortcut: {
+    color: "var(--container-fg-alt)",
+    fontSize: "var(--font-size-xs)",
+    letterSpacing: "0.1em",
+    marginLeft: "auto",
+  },
+})
+
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive>
->(({ className, ...props }, ref) => (
+  CommandProps
+>(({ ...props }, ref) => (
   <CommandPrimitive
     ref={ref}
-    className={cn(
-      "flex h-full w-full flex-col overflow-hidden rounded-[var(--curves-md)] bg-[var(--container-bg)] text-[color:var(--container-fg)]",
-      className
-    )}
     {...props}
+    {...stylex.props(styles.command)}
   />
 ))
 Command.displayName = CommandPrimitive.displayName
@@ -25,10 +177,10 @@ Command.displayName = CommandPrimitive.displayName
 const CommandDialog = ({ children, ...props }: DialogProps) => {
   return (
     <Dialog {...props}>
-      <DialogContent className="overflow-hidden p-0 shadow-lg">
-        <Command className="[&_[cmdk-group-heading]]:px-[var(--spacing-sm)] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-[color:var(--interactive-fg-alt)] [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-[var(--spacing-sm)] [&_[cmdk-input-wrapper]_svg]:h-[var(--size-xs)] [&_[cmdk-input-wrapper]_svg]:w-[var(--size-xs)] [&_[cmdk-input]]:h-[var(--size-xl)] [&_[cmdk-item]]:px-[var(--spacing-sm)] [&_[cmdk-item]]:py-[var(--spacing-sm)] [&_[cmdk-item]_svg]:h-[var(--size-xs)] [&_[cmdk-item]_svg]:w-[var(--size-xs)]">
-          {children}
-        </Command>
+      <DialogContent layout="command">
+        <CommandScaleContext.Provider value="dialog">
+          <Command>{children}</Command>
+        </CommandScaleContext.Provider>
       </DialogContent>
     </Dialog>
   )
@@ -36,59 +188,60 @@ const CommandDialog = ({ children, ...props }: DialogProps) => {
 
 const CommandInput = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
->(({ className, ...props }, ref) => (
-  <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
-    <Search className="mr-2 h-[var(--size-xxs)] w-[var(--size-xxs)] shrink-0 opacity-50" />
-    <CommandPrimitive.Input
-      ref={ref}
-      className={cn(
-        "flex h-[var(--size-xl)] w-full rounded-[var(--curves-md)] bg-transparent py-[var(--spacing-md)] text-[length:var(--font-size-sm)] outline-none placeholder:text-[color:var(--interactive-fg-alt)] disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[color:var(--interactive-fg-disabled)]",
-        className
-      )}
-      {...props}
-    />
-  </div>
-))
+  CommandInputProps
+>(({ density = "default", ...props }, ref) => {
+  const scale = React.useContext(CommandScaleContext)
+
+  return (
+    <div {...stylex.props(styles.inputWrapper)} cmdk-input-wrapper="">
+      <Search
+        {...stylex.props(
+          styles.searchIcon,
+          scale === "dialog" && styles.searchIconDialog
+        )}
+      />
+      <CommandPrimitive.Input
+        ref={ref}
+        {...props}
+        {...stylex.props(styles.input, density === "compact" && styles.inputCompact)}
+      />
+    </div>
+  )
+})
 CommandInput.displayName = CommandPrimitive.Input.displayName
 
 const CommandList = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.List>
->(({ className, ...props }, ref) => (
+  CommandListProps
+>(({ ...props }, ref) => (
   <CommandPrimitive.List
     ref={ref}
-    className={cn("max-h-[300px] overflow-y-auto overflow-x-hidden", className)}
     {...props}
+    {...stylex.props(styles.list)}
   />
 ))
 CommandList.displayName = CommandPrimitive.List.displayName
 
 const CommandEmpty = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Empty>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
->((props, ref) => (
+  CommandEmptyProps
+>(({ tone = "default", ...props }, ref) => (
   <CommandPrimitive.Empty
     ref={ref}
-    className="py-[var(--spacing-lg)] text-center text-[length:var(--font-size-sm)]"
     {...props}
+    {...stylex.props(styles.empty, tone === "muted" && styles.emptyMuted)}
   />
 ))
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName
 
 const CommandGroup = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Group>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Group>
->(({ className, ...props }, ref) => (
+  CommandGroupProps
+>(({ ...props }, ref) => (
   <CommandPrimitive.Group
     ref={ref}
-    className={cn(
-      // Heading horizontal padding matches CommandItem's `px-[var(--spacing-xs)]`
-      // so the group label visually aligns with the option text below it.
-      "overflow-hidden p-[var(--spacing-xs)] text-[color:var(--interactive-fg)] [&_[cmdk-group-heading]]:px-[var(--spacing-xs)] [&_[cmdk-group-heading]]:py-[var(--spacing-sm)] [&_[cmdk-group-heading]]:text-[length:var(--font-size-xs)] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-[color:var(--interactive-fg-alt)]",
-      className
-    )}
     {...props}
+    {...stylex.props(styles.group)}
   />
 ))
 CommandGroup.displayName = CommandPrimitive.Group.displayName
@@ -99,11 +252,11 @@ CommandGroup.displayName = CommandPrimitive.Group.displayName
 const CommandSeparator = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Separator>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Separator>
->(({ className, ...props }, ref) => (
+>(({ ...props }, ref) => (
   <CommandPrimitive.Separator asChild {...props}>
     <Separator
       ref={ref}
-      className={cn("-mx-[var(--spacing-xxs)] my-[var(--spacing-xxs)]", className)}
+      variant="command"
     />
   </CommandPrimitive.Separator>
 ))
@@ -111,30 +264,29 @@ CommandSeparator.displayName = CommandPrimitive.Separator.displayName
 
 const CommandItem = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item>
->(({ className, ...props }, ref) => (
-  <CommandPrimitive.Item
-    ref={ref}
-    className={cn(
-      "group relative flex cursor-default gap-[var(--spacing-xs)] select-none items-center rounded-[var(--curves-sm)] px-[var(--spacing-xs)] py-[var(--spacing-xs)] text-[length:var(--font-size-sm)] outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-[var(--interactive-bg-selected)] data-[selected=true]:text-[color:var(--interactive-fg-selected)] data-[disabled=true]:bg-[var(--interactive-bg-disabled)] data-[disabled=true]:text-[color:var(--interactive-fg-disabled)] [&_svg]:pointer-events-none [&_svg]:size-[var(--size-xxs)] [&_svg]:shrink-0",
-      className
-    )}
-    {...props}
-  />
-))
+  CommandItemProps
+>(({ selected = false, ...props }, ref) => {
+  const scale = React.useContext(CommandScaleContext)
+
+  return (
+    <CommandPrimitive.Item
+      ref={ref}
+      {...props}
+      {...stylex.props(
+        styles.item,
+        scale === "dialog" && styles.itemDialog,
+        selected && styles.itemSelected
+      )}
+    />
+  )
+})
 CommandItem.displayName = CommandPrimitive.Item.displayName
 
-const CommandShortcut = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLSpanElement>) => {
+const CommandShortcut = ({ ...props }: CommandShortcutProps) => {
   return (
     <span
-      className={cn(
-        "ml-auto text-[length:var(--font-size-xs)] tracking-widest text-[color:var(--container-fg-alt)] group-data-[selected=true]:text-[color:var(--container-fg-inverse)]",
-        className
-      )}
       {...props}
+      {...stylex.props(styles.shortcut)}
     />
   )
 }

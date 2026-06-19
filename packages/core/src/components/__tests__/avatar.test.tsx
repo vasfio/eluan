@@ -13,13 +13,13 @@ describe("Avatar", () => {
     expect(await screen.findByText("JD")).toBeInTheDocument();
   });
 
-  it("forwards className to root", () => {
+  it("does not forward className overrides", () => {
     const { container } = render(
-      <Avatar className="size-16">
+      <Avatar {...({ className: "size-16" } as never)}>
         <AvatarFallback>AB</AvatarFallback>
       </Avatar>
     );
-    expect(container.firstChild).toHaveClass("size-16");
+    expect(container.querySelector(".size-16")).toBeNull();
   });
 
   it("renders fallback without image", () => {

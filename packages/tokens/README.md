@@ -7,7 +7,10 @@ A three-layer token architecture (primitives → modes → themes) exposed as CS
 ## Install
 
 ```bash
+npm install @vasf/ragnar-tokens
+yarn add @vasf/ragnar-tokens
 pnpm add @vasf/ragnar-tokens
+bun add @vasf/ragnar-tokens
 ```
 
 ## Use

@@ -1,19 +1,32 @@
 import * as React from "react"
+import * as stylex from "@stylexjs/stylex"
 import { AlertCircle, CheckCircle2 } from "lucide-react"
-import { cn } from "@/lib/utils"
 import { Input } from "./input"
 
 export interface EmailInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
-  showValidation?: boolean
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "className" | "size" | "style" | "type"> {
   onValidationChange?: (isValid: boolean) => void
+  showValidation?: boolean
 }
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+const styles = stylex.create({
+  icon: {
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+  positive: {
+    color: "var(--positive-fg)",
+  },
+  destructive: {
+    color: "var(--destructive-fg)",
+  },
+})
+
 const EmailInput = React.forwardRef<HTMLInputElement, EmailInputProps>(
   (
-    { className, showValidation = false, onValidationChange, onChange, onBlur, ...props },
+    { showValidation = false, onValidationChange, onChange, onBlur, ...props },
     ref
   ) => {
     const [isValid, setIsValid] = React.useState<boolean | null>(null)
@@ -40,22 +53,18 @@ const EmailInput = React.forwardRef<HTMLInputElement, EmailInputProps>(
     const showStatus = showValidation && isTouched && isValid !== null
     const statusIcon = showStatus
       ? isValid
-        ? <CheckCircle2 className="h-[var(--size-xxs)] w-[var(--size-xxs)] text-[color:var(--positive-fg)]" />
-        : <AlertCircle className="h-[var(--size-xxs)] w-[var(--size-xxs)] text-[color:var(--destructive-fg)]" />
+        ? <CheckCircle2 {...stylex.props(styles.icon, styles.positive)} />
+        : <AlertCircle {...stylex.props(styles.icon, styles.destructive)} />
       : undefined
 
     return (
       <Input
         type="email"
-        className={cn(
-          showStatus && isValid && "[&_input]:border-[var(--positive-fg)] [&_input]:focus-visible:ring-[var(--positive-bg-alt)]",
-          showStatus && !isValid && "[&_input]:border-[var(--destructive-fg)] [&_input]:focus-visible:ring-[var(--destructive-bg-alt)]",
-          className
-        )}
         ref={ref}
         onChange={handleChange}
         onBlur={handleBlur}
         trailing={statusIcon}
+        validationTone={showStatus ? (isValid ? "positive" : "destructive") : "none"}
         {...props}
       />
     )

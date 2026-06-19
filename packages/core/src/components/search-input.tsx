@@ -1,6 +1,7 @@
 import * as React from "react"
-import { Search, Delete, Loader2 } from "lucide-react"
-import { cn } from "@/lib/utils"
+import * as stylex from "@stylexjs/stylex"
+import { Delete, Loader2, Search } from "lucide-react"
+
 import { Input } from "./input"
 
 function assignRef<T>(ref: React.ForwardedRef<T>, value: T | null) {
@@ -12,7 +13,10 @@ function assignRef<T>(ref: React.ForwardedRef<T>, value: T | null) {
 }
 
 export interface SearchInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "onChange"> {
+  extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    "className" | "size" | "style" | "type" | "onChange"
+  > {
   value?: string
   onChange?: (value: string) => void
   onSearch?: (value: string) => void
@@ -26,7 +30,6 @@ export interface SearchInputProps
 const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
   (
     {
-      className,
       value,
       onChange,
       onSearch,
@@ -41,13 +44,22 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     ref
   ) => {
     const [internalValue, setInternalValue] = React.useState(value || "")
-    const debounceRef = React.useRef<NodeJS.Timeout | null>(null)
+    const debounceRef = React.useRef<ReturnType<typeof setTimeout> | null>(null)
 
     React.useEffect(() => {
       if (value !== undefined) {
         setInternalValue(value)
       }
     }, [value])
+
+    const handleClear = React.useCallback(() => {
+      setInternalValue("")
+      onChange?.("")
+      onClear?.()
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current)
+      }
+    }, [onChange, onClear])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const newValue = e.target.value
@@ -77,15 +89,6 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       }
     }
 
-    const handleClear = () => {
-      setInternalValue("")
-      onChange?.("")
-      onClear?.()
-      if (debounceRef.current) {
-        clearTimeout(debounceRef.current)
-      }
-    }
-
     React.useEffect(() => {
       return () => {
         if (debounceRef.current) {
@@ -97,25 +100,21 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     const showClear = showClearButton && internalValue && !loading
 
     const trailingEl = loading ? (
-      <Loader2 className="h-[var(--size-xxs)] w-[var(--size-xxs)] animate-spin text-[color:var(--interactive-fg-alt)]" />
+      <Loader2 {...stylex.props(styles.loadingIcon)} />
     ) : showClear ? (
       <button
         type="button"
-        className="p-0.5 hover:bg-[var(--interactive-bg-hover)] rounded"
         onClick={handleClear}
         tabIndex={-1}
+        {...stylex.props(styles.clearButton)}
       >
-        <Delete className="h-[var(--size-xxs)] w-[var(--size-xxs)] text-[color:var(--interactive-fg-alt)]" />
+        <Delete {...stylex.props(styles.trailingIcon)} />
       </button>
     ) : undefined
 
     return (
       <Input
         type="search"
-        className={cn(
-          "[&_input]:[&::-webkit-search-cancel-button]:hidden [&_input]:[&::-webkit-search-decoration]:hidden",
-          className
-        )}
         ref={ref}
         value={internalValue}
         onChange={handleChange}
@@ -129,14 +128,13 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
 )
 SearchInput.displayName = "SearchInput"
 
-// Command palette style search
 export interface CommandSearchProps extends SearchInputProps {
   shortcutKey?: string
   showShortcut?: boolean
 }
 
 const CommandSearch = React.forwardRef<HTMLInputElement, CommandSearchProps>(
-  ({ shortcutKey = "K", showShortcut = true, className, onChange: _onChange, ...props }, ref) => {
+  ({ shortcutKey = "K", showShortcut = true, onChange: _onChange, ...props }, ref) => {
     const inputRef = React.useRef<HTMLInputElement | null>(null)
 
     React.useEffect(() => {
@@ -157,28 +155,17 @@ const CommandSearch = React.forwardRef<HTMLInputElement, CommandSearchProps>(
     }
 
     const shortcutEl = showShortcut ? (
-      <kbd className="pointer-events-none h-[var(--size-xs)] select-none items-center gap-[var(--spacing-xs)] rounded border bg-[var(--interactive-bg-alt)] px-[var(--spacing-xs)] font-mono text-[10px] font-medium text-[color:var(--interactive-fg-alt)] inline-flex">
-        <span className="text-[length:var(--font-size-xs)]">⌘</span>{shortcutKey}
+      <kbd {...stylex.props(styles.shortcut)}>
+        <span {...stylex.props(styles.shortcutModifier)}>⌘</span>
+        {shortcutKey}
       </kbd>
     ) : undefined
 
-    return (
-      <Input
-        type="search"
-        className={cn(
-          "[&_input]:[&::-webkit-search-cancel-button]:hidden [&_input]:[&::-webkit-search-decoration]:hidden",
-          className
-        )}
-        ref={combinedRef}
-        trailing={shortcutEl}
-        {...props}
-      />
-    )
+    return <Input type="search" ref={combinedRef} trailing={shortcutEl} {...props} />
   }
 )
 CommandSearch.displayName = "CommandSearch"
 
-// Autocomplete search with filterable dropdown
 export interface AutocompleteOption {
   value: string
   label: string
@@ -188,7 +175,10 @@ export interface AutocompleteOption {
 }
 
 export interface AutocompleteSearchProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "onChange" | "onSelect"> {
+  extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    "className" | "size" | "style" | "type" | "onChange" | "onSelect"
+  > {
   value?: string
   onChange?: (value: string) => void
   options: AutocompleteOption[]
@@ -214,7 +204,6 @@ const defaultFilterFn = (option: AutocompleteOption, query: string): boolean => 
 const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearchProps>(
   (
     {
-      className,
       value,
       onChange,
       options,
@@ -283,6 +272,16 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
       return groups
     }, [filteredOptions, groupBy])
 
+    const scrollToOption = (index: number) => {
+      if (listRef.current) {
+        const optionElements = listRef.current.querySelectorAll("[data-option]")
+        const element = optionElements[index] as HTMLElement
+        if (element) {
+          element.scrollIntoView({ block: "nearest" })
+        }
+      }
+    }
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const newValue = e.target.value
       setInternalValue(newValue)
@@ -308,11 +307,9 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
     }
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (!isOpen) {
-        if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-          setIsOpen(true)
-          return
-        }
+      if (!isOpen && (e.key === "ArrowDown" || e.key === "ArrowUp")) {
+        setIsOpen(true)
+        return
       }
 
       switch (e.key) {
@@ -349,16 +346,6 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
       }
     }
 
-    const scrollToOption = (index: number) => {
-      if (listRef.current) {
-        const optionElements = listRef.current.querySelectorAll("[data-option]")
-        const element = optionElements[index] as HTMLElement
-        if (element) {
-          element.scrollIntoView({ block: "nearest" })
-        }
-      }
-    }
-
     const handleClear = () => {
       setInternalValue("")
       onChange?.("")
@@ -376,21 +363,21 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
         key={option.value}
         type="button"
         data-option
-        className={cn(
-          "flex w-full items-center gap-[var(--spacing-sm)] rounded-[var(--curves-sm)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[length:var(--font-size-sm)] text-left",
-          highlightedIndex === index && "bg-[var(--interactive-bg-hover)]",
-          option.disabled && "bg-[var(--interactive-bg-disabled)] text-[color:var(--interactive-fg-disabled)] cursor-not-allowed",
-          !option.disabled && "hover:bg-[var(--interactive-bg-hover)] cursor-pointer"
-        )}
         onClick={() => handleSelect(option)}
         onMouseEnter={() => !option.disabled && setHighlightedIndex(index)}
         disabled={option.disabled}
+        {...stylex.props(
+          styles.option,
+          highlightedIndex === index && styles.optionHighlighted,
+          option.disabled && styles.optionDisabled,
+          !option.disabled && styles.optionEnabled
+        )}
       >
-        {option.icon && <span className="flex-shrink-0">{option.icon}</span>}
-        <div className="flex-1 min-w-0">
-          <div className="truncate font-medium">{option.label}</div>
+        {option.icon && <span {...stylex.props(styles.optionIcon)}>{option.icon}</span>}
+        <div {...stylex.props(styles.optionText)}>
+          <div {...stylex.props(styles.optionLabel)}>{option.label}</div>
           {option.description && (
-            <div className="truncate text-[length:var(--font-size-xs)] text-[color:var(--interactive-fg-alt)]">
+            <div {...stylex.props(styles.optionDescription)}>
               {option.description}
             </div>
           )}
@@ -401,30 +388,29 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
     const showDropdown = isOpen && (filteredOptions.length > 0 || loading || internalValue.length >= minChars)
 
     const trailingEl = loading ? (
-      <Loader2 className="h-[var(--size-xxs)] w-[var(--size-xxs)] animate-spin text-[color:var(--interactive-fg)]" />
+      <Loader2 {...stylex.props(styles.loadingIconStrong)} />
     ) : internalValue ? (
       <button
         type="button"
-        className="p-0.5 hover:bg-[var(--interactive-bg-hover)] rounded"
         onClick={handleClear}
         tabIndex={-1}
+        {...stylex.props(styles.clearButton)}
       >
-        <Delete className="h-[var(--size-xxs)] w-[var(--size-xxs)] text-[color:var(--interactive-fg)]" />
+        <Delete {...stylex.props(styles.trailingIconStrong)} />
       </button>
     ) : undefined
 
     return (
-      <div ref={containerRef} className={cn("relative", className)}>
+      <div ref={containerRef} {...stylex.props(styles.autocompleteRoot)}>
         <Input
           type="text"
-          icon={<Search className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />}
+          icon={<Search {...stylex.props(styles.searchIcon)} />}
           trailing={trailingEl}
           role="combobox"
           aria-expanded={isOpen}
           aria-autocomplete="list"
           aria-controls="autocomplete-list"
           autoComplete="off"
-          className="[&_input]:placeholder:text-[color:var(--interactive-fg)]"
           ref={combinedRef}
           value={internalValue}
           onChange={handleChange}
@@ -439,23 +425,19 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
           <div
             id="autocomplete-list"
             ref={listRef}
-            className="absolute z-50 mt-[var(--spacing-xs)] w-full rounded-[var(--curves-md)] border bg-[var(--container-bg)] shadow-md max-h-[300px] overflow-y-auto"
+            {...stylex.props(styles.dropdown)}
           >
             {loading ? (
-              <div className="flex items-center justify-center py-[var(--spacing-md)]">
-                <Loader2 className="h-[var(--size-xs)] w-[var(--size-xs)] animate-spin text-[color:var(--interactive-fg)]" />
+              <div {...stylex.props(styles.dropdownLoading)}>
+                <Loader2 {...stylex.props(styles.dropdownLoader)} />
               </div>
             ) : filteredOptions.length === 0 ? (
-              <div className="px-[var(--spacing-md)] py-[var(--spacing-md)] text-[length:var(--font-size-sm)] text-center text-[color:var(--interactive-fg)]">
-                {emptyMessage}
-              </div>
+              <div {...stylex.props(styles.emptyMessage)}>{emptyMessage}</div>
             ) : groupedOptions ? (
-              <div className="p-1">
+              <div {...stylex.props(styles.optionList)}>
                 {Object.entries(groupedOptions).map(([groupName, groupOptions]) => (
                   <div key={groupName}>
-                    <div className="px-[var(--spacing-md)] py-[var(--spacing-xs)] text-[length:var(--font-size-xs)] font-semibold text-[color:var(--interactive-fg)]">
-                      {groupName}
-                    </div>
+                    <div {...stylex.props(styles.groupHeading)}>{groupName}</div>
                     {groupOptions.map((opt) => {
                       const globalIndex = filteredOptions.indexOf(opt)
                       return renderOption(opt, globalIndex)
@@ -464,7 +446,7 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
                 ))}
               </div>
             ) : (
-              <div className="p-1">
+              <div {...stylex.props(styles.optionList)}>
                 {filteredOptions.map((opt, idx) => renderOption(opt, idx))}
               </div>
             )}
@@ -475,5 +457,173 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
   }
 )
 AutocompleteSearch.displayName = "AutocompleteSearch"
+
+const spin = stylex.keyframes({
+  to: {
+    transform: "rotate(360deg)",
+  },
+})
+
+const styles = stylex.create({
+  loadingIcon: {
+    animationDuration: "1s",
+    animationIterationCount: "infinite",
+    animationName: spin,
+    animationTimingFunction: "linear",
+    color: "var(--interactive-fg-alt)",
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+  loadingIconStrong: {
+    animationDuration: "1s",
+    animationIterationCount: "infinite",
+    animationName: spin,
+    animationTimingFunction: "linear",
+    color: "var(--interactive-fg)",
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+  clearButton: {
+    backgroundColor: "transparent",
+    borderWidth: 0,
+    borderRadius: "var(--curves-sm)",
+    cursor: "pointer",
+    padding: "var(--spacing-xxs)",
+    ":hover": {
+      backgroundColor: "var(--interactive-bg-hover)",
+    },
+  },
+  trailingIcon: {
+    color: "var(--interactive-fg-alt)",
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+  trailingIconStrong: {
+    color: "var(--interactive-fg)",
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+  shortcut: {
+    alignItems: "center",
+    backgroundColor: "var(--interactive-bg-alt)",
+    borderColor: "var(--interactive-border-alt)",
+    borderRadius: "var(--curves-sm)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    color: "var(--interactive-fg-alt)",
+    display: "inline-flex",
+    fontFamily: "var(--font-mono)",
+    fontSize: "calc(var(--font-size-xs) * 0.8333)",
+    fontWeight: 500,
+    gap: "var(--spacing-xs)",
+    height: "var(--size-xs)",
+    paddingInline: "var(--spacing-xs)",
+    pointerEvents: "none",
+    userSelect: "none",
+  },
+  shortcutModifier: {
+    fontSize: "var(--font-size-xs)",
+  },
+  autocompleteRoot: {
+    position: "relative",
+  },
+  searchIcon: {
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+  dropdown: {
+    backgroundColor: "var(--container-bg)",
+    borderColor: "var(--container-border-alt)",
+    borderRadius: "var(--curves-md)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+    marginTop: "var(--spacing-xs)",
+    maxHeight: 300,
+    overflowY: "auto",
+    position: "absolute",
+    width: "100%",
+    zIndex: 50,
+  },
+  dropdownLoading: {
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "center",
+    paddingBlock: "var(--spacing-md)",
+  },
+  dropdownLoader: {
+    animationDuration: "1s",
+    animationIterationCount: "infinite",
+    animationName: spin,
+    animationTimingFunction: "linear",
+    color: "var(--interactive-fg)",
+    height: "var(--size-xs)",
+    width: "var(--size-xs)",
+  },
+  emptyMessage: {
+    color: "var(--interactive-fg)",
+    fontSize: "var(--font-size-sm)",
+    padding: "var(--spacing-md)",
+    textAlign: "center",
+  },
+  optionList: {
+    padding: "var(--spacing-xxs)",
+  },
+  groupHeading: {
+    color: "var(--interactive-fg)",
+    fontSize: "var(--font-size-xs)",
+    fontWeight: 600,
+    paddingBlock: "var(--spacing-xs)",
+    paddingInline: "var(--spacing-md)",
+  },
+  option: {
+    alignItems: "center",
+    backgroundColor: "transparent",
+    borderWidth: 0,
+    borderRadius: "var(--curves-sm)",
+    color: "var(--interactive-fg)",
+    display: "flex",
+    fontSize: "var(--font-size-sm)",
+    gap: "var(--spacing-sm)",
+    paddingBlock: "var(--spacing-sm)",
+    paddingInline: "var(--spacing-md)",
+    textAlign: "left",
+    width: "100%",
+  },
+  optionEnabled: {
+    cursor: "pointer",
+    ":hover": {
+      backgroundColor: "var(--interactive-bg-hover)",
+    },
+  },
+  optionHighlighted: {
+    backgroundColor: "var(--interactive-bg-hover)",
+  },
+  optionDisabled: {
+    backgroundColor: "var(--interactive-bg-disabled)",
+    color: "var(--interactive-fg-disabled)",
+    cursor: "not-allowed",
+  },
+  optionIcon: {
+    flexShrink: 0,
+  },
+  optionText: {
+    flex: 1,
+    minWidth: 0,
+  },
+  optionLabel: {
+    fontWeight: 500,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+  optionDescription: {
+    color: "var(--interactive-fg-alt)",
+    fontSize: "var(--font-size-xs)",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+})
 
 export { SearchInput, CommandSearch, AutocompleteSearch }

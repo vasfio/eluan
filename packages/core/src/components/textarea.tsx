@@ -1,22 +1,53 @@
 import * as React from "react"
+import * as stylex from "@stylexjs/stylex"
 
-import { cn } from "@/lib/utils"
+export interface TextareaProps
+  extends Omit<React.ComponentProps<"textarea">, "className" | "style"> {}
 
-const Textarea = React.forwardRef<
-  HTMLTextAreaElement,
-  React.ComponentProps<"textarea">
->(({ className, ...props }, ref) => {
-  return (
-    <textarea
-      className={cn(
-        "flex min-h-[80px] w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--container-bg)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-[length:var(--font-size-base)] ring-offset-background placeholder:text-[color:var(--interactive-fg-alt)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[color:var(--interactive-fg-disabled)] md:text-[length:var(--font-size-sm)]",
-        className
-      )}
-      ref={ref}
-      {...props}
-    />
-  )
-})
+const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+  (props, ref) => {
+    return (
+      <textarea
+        ref={ref}
+        {...props}
+        {...stylex.props(styles.root)}
+      />
+    )
+  }
+)
 Textarea.displayName = "Textarea"
+
+const styles = stylex.create({
+  root: {
+    backgroundColor: "var(--container-bg)",
+    borderColor: "var(--interactive-border-alt)",
+    borderRadius: "var(--curves-md)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    display: "flex",
+    fontSize: "var(--font-size-base)",
+    minHeight: 80,
+    paddingBlock: "var(--spacing-sm)",
+    paddingInline: "var(--spacing-md)",
+    width: "100%",
+    "::placeholder": {
+      color: "var(--interactive-fg-alt)",
+    },
+    ":focus-visible": {
+      outlineColor: "var(--interactive-border)",
+      outlineOffset: 1,
+      outlineStyle: "solid",
+      outlineWidth: 1,
+    },
+    ":disabled": {
+      backgroundColor: "var(--interactive-bg-disabled)",
+      color: "var(--interactive-fg-disabled)",
+      cursor: "not-allowed",
+    },
+    "@media (min-width: 768px)": {
+      fontSize: "var(--font-size-sm)",
+    },
+  },
+})
 
 export { Textarea }

@@ -89,7 +89,7 @@ export interface KeyboardAwareScrollViewProps extends ScrollViewProps {
 }
 
 export function KeyboardAwareScrollView({
-  extraScrollHeight = 20,
+  extraScrollHeight: _extraScrollHeight = 20,
   ...props
 }: KeyboardAwareScrollViewProps) {
   // Note: For full keyboard awareness, consider using

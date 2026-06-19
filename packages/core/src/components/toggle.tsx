@@ -1,41 +1,99 @@
 import * as React from "react"
 import * as TogglePrimitive from "@radix-ui/react-toggle"
-import { cva, type VariantProps } from "class-variance-authority"
+import * as stylex from "@stylexjs/stylex"
 
-import { cn } from "@/lib/utils"
+export type ToggleVariant = "default" | "outline"
+export type ToggleSize = "default" | "sm" | "iconMd"
 
-const toggleVariants = cva(
-  "inline-flex items-center justify-center rounded-[var(--curves-md)] text-[length:var(--font-size-sm)] font-medium ring-offset-background transition-colors hover:bg-[var(--interactive-bg-hover)] hover:text-[color:var(--interactive-fg)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:pointer-events-none disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[color:var(--interactive-fg-disabled)] data-[state=on]:bg-[var(--interactive-bg-selected)] data-[state=on]:text-[color:var(--interactive-fg-selected)] [&_svg]:pointer-events-none [&_svg]:size-[var(--size-xxs)] [&_svg]:shrink-0 gap-[var(--spacing-sm)]",
-  {
-    variants: {
-      variant: {
-        default: "bg-transparent",
-        outline:
-          "border border-[var(--interactive-border-alt)] bg-transparent hover:bg-[var(--interactive-bg-hover)] hover:text-[color:var(--interactive-fg)]",
-      },
-      size: {
-        default: "h-[var(--size-lg)] px-[var(--spacing-md)] min-w-[var(--size-lg)]",
-      },
+export interface ToggleProps
+  extends Omit<
+    React.ComponentPropsWithoutRef<typeof TogglePrimitive.Root>,
+    "className" | "style"
+  > {
+  size?: ToggleSize
+  variant?: ToggleVariant
+}
+
+const styles = stylex.create({
+  root: {
+    alignItems: "center",
+    backgroundColor: "transparent",
+    borderColor: "transparent",
+    borderRadius: "var(--curves-md)",
+    borderStyle: "solid",
+    borderWidth: 0,
+    display: "inline-flex",
+    fontSize: "var(--font-size-sm)",
+    fontWeight: 500,
+    gap: "var(--spacing-sm)",
+    justifyContent: "center",
+    transitionDuration: "150ms",
+    transitionProperty: "color, background-color, border-color",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    ":hover": {
+      backgroundColor: "var(--interactive-bg-hover)",
+      color: "var(--interactive-fg)",
     },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
+    ":focus-visible": {
+      outlineColor: "var(--interactive-border)",
+      outlineOffset: "1px",
+      outlineStyle: "solid",
+      outlineWidth: "1px",
     },
-  }
-)
+    ":disabled": {
+      backgroundColor: "var(--interactive-bg-disabled)",
+      color: "var(--interactive-fg-disabled)",
+      pointerEvents: "none",
+    },
+    "[data-state=on]": {
+      backgroundColor: "var(--interactive-bg-selected)",
+      color: "var(--interactive-fg-selected)",
+    },
+  },
+  outline: {
+    borderColor: "var(--interactive-border-alt)",
+    borderWidth: 1,
+  },
+  sizeDefault: {
+    height: "var(--size-lg)",
+    minWidth: "var(--size-lg)",
+    paddingInline: "var(--spacing-md)",
+  },
+  sizeSm: {
+    fontSize: "var(--font-size-xs)",
+    height: "var(--size-sm)",
+    minWidth: 0,
+    paddingInline: "var(--spacing-xs)",
+  },
+  sizeIconMd: {
+    height: "var(--size-md)",
+    padding: 0,
+    width: "var(--size-md)",
+  },
+})
+
+const variantStyles = {
+  default: null,
+  outline: styles.outline,
+} satisfies Record<ToggleVariant, stylex.StyleXStyles | null>
+
+const sizeStyles = {
+  default: styles.sizeDefault,
+  sm: styles.sizeSm,
+  iconMd: styles.sizeIconMd,
+} satisfies Record<ToggleSize, stylex.StyleXStyles>
 
 const Toggle = React.forwardRef<
   React.ElementRef<typeof TogglePrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof TogglePrimitive.Root> &
-    VariantProps<typeof toggleVariants>
->(({ className, variant, size, ...props }, ref) => (
+  ToggleProps
+>(({ variant = "default", size = "default", ...props }, ref) => (
   <TogglePrimitive.Root
     ref={ref}
-    className={cn(toggleVariants({ variant, size, className }))}
     {...props}
+    {...stylex.props(styles.root, variantStyles[variant], sizeStyles[size])}
   />
 ))
 
 Toggle.displayName = TogglePrimitive.Root.displayName
 
-export { Toggle, toggleVariants }
+export { Toggle }

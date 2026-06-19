@@ -1,30 +1,15 @@
-import type { StorybookConfig } from "@storybook/react-vite";
-import { mergeConfig } from "vite";
-import path from "path";
+import { join, dirname } from "path"
+import { createRagnarReactViteStorybookConfig } from "./ragnar-main"
 
-const config: StorybookConfig = {
-  stories: ["../stories/**/*.mdx", "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
-  addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions",
+const workspaceRoot = dirname(__dirname)
+const coreRoot = join(workspaceRoot, "packages/core")
+
+export default createRagnarReactViteStorybookConfig({
+  coreRoot,
+  packageRoot: coreRoot,
+  stories: [
+    "../packages/core/src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    "../packages/web/src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    "../packages/ai/src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
-  framework: {
-    name: "@storybook/react-vite",
-    options: {},
-  },
-  docs: {
-    autodocs: "tag",
-  },
-  viteFinal: async (config) => {
-    return mergeConfig(config, {
-      resolve: {
-        alias: {
-          "@": path.resolve(__dirname, "../src"),
-        },
-      },
-    });
-  },
-};
-
-export default config;
+})

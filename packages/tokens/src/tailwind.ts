@@ -128,7 +128,7 @@ export const ragnarPreset: Partial<Config> = {
 
         // ================================
         // Layer 3: Theme Component Colors
-        // Adapt to selected theme (industrial-retro, lime, etc.)
+        // Adapt to selected theme (industrial-retro, minimal, or custom)
         // ================================
 
         // Action Primary

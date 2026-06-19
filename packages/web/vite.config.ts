@@ -22,6 +22,7 @@ export default defineConfig({
         'react',
         'react-dom',
         'react/jsx-runtime',
+        /^@vasf\/ragnar-core(\/.*)?$/,
         'three',
       ],
       output: {

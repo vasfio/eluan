@@ -1,29 +1,70 @@
 import * as React from "react"
 import * as SeparatorPrimitive from "@radix-ui/react-separator"
+import * as stylex from "@stylexjs/stylex"
 
-import { cn } from "@/lib/utils"
+type SeparatorProps = Omit<
+  React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>,
+  "className" | "style"
+> & {
+  variant?: "default" | "toolbar" | "inline" | "command"
+}
 
 const Separator = React.forwardRef<
   React.ElementRef<typeof SeparatorPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>
+  SeparatorProps
 >(
   (
-    { className, orientation = "horizontal", decorative = true, ...props },
+    { orientation = "horizontal", decorative = true, variant = "default", ...props },
     ref
   ) => (
     <SeparatorPrimitive.Root
       ref={ref}
       decorative={decorative}
       orientation={orientation}
-      className={cn(
-        "shrink-0 bg-[var(--container-border-alt)]",
-        orientation === "horizontal" ? "h-[1px] w-full" : "h-full w-[1px]",
-        className
-      )}
       {...props}
+      {...stylex.props(
+        styles.root,
+        orientation === "horizontal" ? styles.horizontal : styles.vertical,
+        variantStyles[variant]
+      )}
     />
   )
 )
 Separator.displayName = SeparatorPrimitive.Root.displayName
+
+const styles = stylex.create({
+  root: {
+    backgroundColor: "var(--container-border-alt)",
+    flexShrink: 0,
+  },
+  horizontal: {
+    height: 1,
+    width: "100%",
+  },
+  vertical: {
+    height: "100%",
+    width: 1,
+  },
+  toolbar: {
+    height: "var(--size-sm)",
+    marginInline: "var(--spacing-xxs)",
+  },
+  inline: {
+    height: "var(--size-xxs)",
+    marginInline: "var(--spacing-xxs)",
+    width: 1,
+  },
+  command: {
+    marginBlock: "var(--spacing-xxs)",
+    marginInline: "calc(var(--spacing-xxs) * -1)",
+  },
+})
+
+const variantStyles = {
+  default: null,
+  toolbar: styles.toolbar,
+  inline: styles.inline,
+  command: styles.command,
+} satisfies Record<NonNullable<SeparatorProps["variant"]>, stylex.StyleXStyles | null>
 
 export { Separator }

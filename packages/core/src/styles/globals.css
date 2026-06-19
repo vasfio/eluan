@@ -1,7 +1,9 @@
 /* Ragnar Design System Tokens (Primitives → Modes → Themes) */
+@layer tailwind, priority1, priority2, priority3, priority4, priority5, priority6, priority7, priority8, priority9, priority10;
+
 @import "@vasf/ragnar-tokens/css";
 
-@import "tailwindcss";
+@import "tailwindcss" layer(tailwind);
 
 @plugin "tailwindcss-animate";
 
@@ -57,6 +59,7 @@
   --animate-accordion-up: accordion-up 0.2s ease-out;
   --animate-dropdown-unroll: dropdown-unroll 250ms cubic-bezier(0.16, 1, 0.3, 1);
   --animate-dropdown-roll-up: dropdown-roll-up 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  --animate-fade-in: fade-in 0.3s ease-out;
 }
 
 @keyframes accordion-down {
@@ -89,6 +92,16 @@
     opacity: 0;
     transform: scaleY(0.6);
   }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes footerFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ============================================

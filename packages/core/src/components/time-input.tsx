@@ -1,33 +1,19 @@
 "use client"
 
 import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
+import * as stylex from "@stylexjs/stylex"
 import { Clock } from "lucide-react"
 
-import { cn } from "@/lib/utils"
 import { Toggle } from "./toggle"
 
 function pad(n: number) {
   return String(n).padStart(2, "0")
 }
 
-const timeInputVariants = cva(
-  "inline-flex items-center gap-[var(--spacing-xxs)] rounded-[var(--curves-md)] border bg-[var(--container-bg)] text-[length:var(--font-size-sm)] ring-offset-background transition-colors focus-within:ring-1 focus-within:ring-[var(--interactive-border)] focus-within:ring-offset-1 disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[color:var(--interactive-fg-disabled)]",
-  {
-    variants: {
-      size: {
-        default: "h-[var(--size-lg)] px-[var(--spacing-md)] text-[length:var(--font-size-sm)]",
-      },
-    },
-    defaultVariants: {
-      size: "default",
-    },
-  }
-)
+const timeInputVariants = () => ""
 
 export interface TimeInputProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange">,
-    VariantProps<typeof timeInputVariants> {
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style" | "onChange"> {
   /** Time value in "HH:MM" (24h) or "HH:MM AM/PM" (12h) format */
   value?: string
   /** Called when time changes */
@@ -42,6 +28,7 @@ export interface TimeInputProps
   placeholder?: string
   /** Name attribute for form submission */
   name?: string
+  size?: "default"
 }
 
 function parseTimeValue(value: string, format: "12" | "24") {
@@ -64,15 +51,14 @@ function parseTimeValue(value: string, format: "12" | "24") {
 const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
   (
     {
-      className,
-      size,
       value = "",
       onChange,
       format = "24",
       disabled = false,
       showIcon = true,
-      placeholder,
+      placeholder: _placeholder,
       name,
+      size: _size,
       ...props
     },
     ref
@@ -114,19 +100,11 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
       const n = parseInt(raw)
       if (isNaN(n)) return
 
-      // Commit the value as the user types, but only if it's already in range
-      // (e.g. "0" in 12h mode is out of range while waiting for the second digit
-      // — leave hours untouched until they finish).
       if (n >= minH && n <= maxH) {
         setHours(n)
         emit(n, minutes, period)
       }
 
-      // Auto-advance to minutes once the hour can't grow into another valid
-      // value. A second digit only matters when the first digit is small
-      // enough to be the tens place of a valid hour (e.g. 24h: "1" → 10-19,
-      // "2" → 20-23; 12h: "1" → 10-12). Anything larger is unambiguous and
-      // should move focus immediately.
       const isComplete = raw.length === 2 || n > Math.floor(maxH / 10)
       if (isComplete) {
         minuteRef.current?.focus()
@@ -189,25 +167,14 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
       emit(hours, minutes, newPeriod)
     }
 
-    const segmentCls =
-      "w-7 bg-transparent text-center font-mono tabular-nums outline-none selection:bg-[var(--container-bg-alt)] rounded px-[var(--spacing-xxs)] focus:bg-[var(--interactive-bg-hover)]"
-
     return (
       <div
         ref={ref}
-        className={cn(
-          timeInputVariants({ size }),
-          "border-[var(--interactive-border-alt)]",
-          disabled && "bg-[var(--interactive-bg-disabled)] text-[color:var(--interactive-fg-disabled)] pointer-events-none",
-          className
-        )}
         {...props}
+        {...stylex.props(styles.root, disabled && styles.disabled)}
       >
-        {showIcon && (
-          <Clock className="h-[var(--size-xxs)] w-[var(--size-xxs)] text-[color:var(--interactive-fg-alt)] shrink-0 mr-[var(--spacing-xs)]" />
-        )}
+        {showIcon && <Clock {...stylex.props(styles.icon)} />}
 
-        {/* Hidden input for form submission */}
         {name && (
           <input
             type="hidden"
@@ -220,34 +187,24 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
           />
         )}
 
-        {/* Hours segment */}
         <input
-          className={segmentCls}
+          {...stylex.props(styles.segment)}
           value={editingH !== null ? editingH : pad(hours)}
           onFocus={(e) => {
-            // Just select the displayed text — don't enter edit mode yet.
-            // Editing only begins once the user actually types a digit, so
-            // a focus-then-blur without input is a no-op rather than a force
-            // reset to zero.
             requestAnimationFrame(() => e.target.select())
           }}
           onChange={handleHoursChange}
           onBlur={() => {
-            // editingH is null when the user never typed — preserve the
-            // current value rather than committing an unwanted change.
             if (editingH === null) return
             const n = parseInt(editingH)
             if (!isNaN(n) && n >= minH && n <= maxH) {
               setHours(n)
               emit(n, minutes, period)
             } else if (!isNaN(n)) {
-              // Out-of-range numeric input: clamp into [minH, maxH] instead
-              // of snapping to zero (which discarded the user's intent).
               const clamped = Math.max(minH, Math.min(maxH, n))
               setHours(clamped)
               emit(clamped, minutes, period)
             }
-            // Empty / non-numeric editingH: leave hours unchanged.
             setEditingH(null)
           }}
           onKeyDown={handleHoursKeyDown}
@@ -257,12 +214,11 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
           aria-label="Hours"
         />
 
-        <span className="text-[color:var(--interactive-fg-alt)] font-mono select-none">:</span>
+        <span {...stylex.props(styles.separator)}>:</span>
 
-        {/* Minutes segment */}
         <input
           ref={minuteRef}
-          className={segmentCls}
+          {...stylex.props(styles.segment)}
           value={editingM !== null ? editingM : pad(minutes)}
           onFocus={(e) => {
             requestAnimationFrame(() => e.target.select())
@@ -288,14 +244,13 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
           aria-label="Minutes"
         />
 
-        {/* AM/PM toggle */}
         {format === "12" && (
-          <div className="ml-[var(--spacing-xxs)] flex border-l border-[color:var(--interactive-border)] pl-[var(--spacing-xs)] gap-[var(--spacing-xxs)]">
+          <div {...stylex.props(styles.periodToggle)}>
             <Toggle
               pressed={period === "AM"}
               onPressedChange={() => togglePeriod("AM")}
               disabled={disabled}
-              className="h-[var(--size-sm)] px-[var(--spacing-xs)] text-[length:var(--font-size-xs)] min-w-0"
+              size="sm"
               tabIndex={-1}
             >
               AM
@@ -304,7 +259,7 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
               pressed={period === "PM"}
               onPressedChange={() => togglePeriod("PM")}
               disabled={disabled}
-              className="h-[var(--size-sm)] px-[var(--spacing-xs)] text-[length:var(--font-size-xs)] min-w-0"
+              size="sm"
               tabIndex={-1}
             >
               PM
@@ -317,4 +272,71 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
 )
 TimeInput.displayName = "TimeInput"
 
-export { TimeInput }
+const styles = stylex.create({
+  root: {
+    alignItems: "center",
+    backgroundColor: "var(--container-bg)",
+    borderColor: "var(--interactive-border-alt)",
+    borderRadius: "var(--curves-md)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    color: "var(--interactive-fg)",
+    display: "inline-flex",
+    fontSize: "var(--font-size-sm)",
+    gap: "var(--spacing-xxs)",
+    height: "var(--size-lg)",
+    paddingInline: "var(--spacing-md)",
+    transitionDuration: "150ms",
+    transitionProperty: "background-color, border-color, color, box-shadow",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    ":focus-within": {
+      boxShadow: "0 0 0 1px var(--interactive-border), 0 0 0 2px var(--container-bg)",
+    },
+  },
+  disabled: {
+    backgroundColor: "var(--interactive-bg-disabled)",
+    color: "var(--interactive-fg-disabled)",
+    pointerEvents: "none",
+  },
+  icon: {
+    color: "var(--interactive-fg-alt)",
+    flexShrink: 0,
+    height: "var(--size-xxs)",
+    marginRight: "var(--spacing-xs)",
+    width: "var(--size-xxs)",
+  },
+  segment: {
+    backgroundColor: "transparent",
+    borderWidth: 0,
+    borderRadius: "var(--curves-sm)",
+    color: "inherit",
+    fontFamily: "var(--font-mono)",
+    fontVariantNumeric: "tabular-nums",
+    outlineStyle: "none",
+    paddingInline: "var(--spacing-xxs)",
+    textAlign: "center",
+    width: "1.75rem",
+    "::selection": {
+      backgroundColor: "var(--container-bg-alt)",
+    },
+    ":focus": {
+      backgroundColor: "var(--interactive-bg-hover)",
+    },
+  },
+  separator: {
+    color: "var(--interactive-fg-alt)",
+    fontFamily: "var(--font-mono)",
+    userSelect: "none",
+  },
+  periodToggle: {
+    borderLeftColor: "var(--interactive-border)",
+    borderLeftStyle: "solid",
+    borderLeftWidth: 1,
+    display: "flex",
+    gap: "var(--spacing-xxs)",
+    marginLeft: "var(--spacing-xxs)",
+    paddingLeft: "var(--spacing-xs)",
+  },
+})
+
+export { TimeInput, timeInputVariants }

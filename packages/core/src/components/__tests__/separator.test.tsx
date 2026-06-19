@@ -20,8 +20,10 @@ describe("Separator", () => {
     expect(screen.getByRole("separator")).toHaveAttribute("data-orientation", "vertical");
   });
 
-  it("forwards className", () => {
-    const { container } = render(<Separator className="my-sep" />);
-    expect(container.querySelector(".my-sep")).not.toBeNull();
+  it("does not forward className overrides", () => {
+    const { container } = render(
+      <Separator {...({ className: "my-sep" } as never)} />
+    );
+    expect(container.querySelector(".my-sep")).toBeNull();
   });
 });

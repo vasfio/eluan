@@ -56,17 +56,17 @@ export const Default: Story = {
         <CollapsibleTrigger asChild>
           <button className="flex w-full items-center justify-between gap-[var(--spacing-sm)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-left">
             <div className="flex flex-col gap-[var(--spacing-xxs)]">
-              <span className="text-[length:var(--font-size-sm)] font-semibold text-[var(--content-primary)]">
+              <span className="text-[length:var(--font-size-sm)] font-semibold text-[var(--container-fg)]">
                 Release Notes
               </span>
-              <span className="text-[length:var(--font-size-xs)] text-[var(--content-secondary)]">
+              <span className="text-[length:var(--font-size-xs)] text-[var(--container-fg-alt)]">
                 v2.4.0 — April 2026
               </span>
             </div>
             {isOpen ? (
-              <ChevronDown className="h-4 w-4 text-[var(--content-secondary)]" />
+              <ChevronDown className="h-4 w-4 text-[var(--container-fg-alt)]" />
             ) : (
-              <ChevronRight className="h-4 w-4 text-[var(--content-secondary)]" />
+              <ChevronRight className="h-4 w-4 text-[var(--container-fg-alt)]" />
             )}
           </button>
         </CollapsibleTrigger>
@@ -74,26 +74,26 @@ export const Default: Story = {
           <div className="border-t border-[var(--container-border-alt)] px-[var(--spacing-md)] py-[var(--spacing-sm)]">
             <ul className="flex flex-col gap-[var(--spacing-xs)]">
               <li className="flex items-start gap-[var(--spacing-xs)]">
-                <span className="mt-0.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--status-success)]" />
-                <span className="text-[length:var(--font-size-sm)] text-[var(--content-primary)]">
+                <span className="mt-0.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--positive-bg)]" />
+                <span className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]">
                   Added new Collapsible component with animation support
                 </span>
               </li>
               <li className="flex items-start gap-[var(--spacing-xs)]">
-                <span className="mt-0.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--status-info)]" />
-                <span className="text-[length:var(--font-size-sm)] text-[var(--content-primary)]">
+                <span className="mt-0.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--informative-bg)]" />
+                <span className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]">
                   Improved theme token coverage across all primitives
                 </span>
               </li>
               <li className="flex items-start gap-[var(--spacing-xs)]">
-                <span className="mt-0.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--status-warning)]" />
-                <span className="text-[length:var(--font-size-sm)] text-[var(--content-primary)]">
+                <span className="mt-0.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--cautionary-bg)]" />
+                <span className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]">
                   Fixed checkbox border-radius in sweeping curve scale
                 </span>
               </li>
               <li className="flex items-start gap-[var(--spacing-xs)]">
-                <span className="mt-0.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--status-danger)]" />
-                <span className="text-[length:var(--font-size-sm)] text-[var(--content-primary)]">
+                <span className="mt-0.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--destructive-bg)]" />
+                <span className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]">
                   Deprecated legacy color tokens (see migration guide)
                 </span>
               </li>
@@ -125,21 +125,21 @@ export const FilterPanel: Story = {
         <CollapsibleTrigger asChild>
           <button className="flex w-full items-center justify-between gap-[var(--spacing-sm)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-left">
             <div className="flex items-center gap-[var(--spacing-xs)]">
-              <Filter className="h-4 w-4 text-[var(--content-secondary)]" />
-              <span className="text-[length:var(--font-size-sm)] font-semibold text-[var(--content-primary)]">
+              <Filter className="h-4 w-4 text-[var(--container-fg-alt)]" />
+              <span className="text-[length:var(--font-size-sm)] font-semibold text-[var(--container-fg)]">
                 Filters
               </span>
             </div>
             {isOpen ? (
-              <ChevronDown className="h-4 w-4 text-[var(--content-secondary)]" />
+              <ChevronDown className="h-4 w-4 text-[var(--container-fg-alt)]" />
             ) : (
-              <ChevronRight className="h-4 w-4 text-[var(--content-secondary)]" />
+              <ChevronRight className="h-4 w-4 text-[var(--container-fg-alt)]" />
             )}
           </button>
         </CollapsibleTrigger>
         <CollapsibleContent>
           <div className="flex flex-col gap-[var(--spacing-sm)] border-t border-[var(--container-border-alt)] px-[var(--spacing-md)] py-[var(--spacing-sm)]">
-            <p className="text-[length:var(--font-size-xs)] font-medium text-[var(--content-secondary)]">
+            <p className="text-[length:var(--font-size-xs)] font-medium text-[var(--container-fg-alt)]">
               Category
             </p>
             {["Components", "Hooks", "Utilities", "Tokens"].map((label) => (
@@ -147,7 +147,7 @@ export const FilterPanel: Story = {
                 <Checkbox id={`filter-${label}`} />
                 <label
                   htmlFor={`filter-${label}`}
-                  className="text-[length:var(--font-size-sm)] text-[var(--content-primary)]"
+                  className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]"
                 >
                   {label}
                 </label>
@@ -196,20 +196,20 @@ export const Nested: Story = {
         <CollapsibleTrigger asChild>
           <button className="flex w-full items-center justify-between gap-[var(--spacing-sm)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-left hover:bg-[var(--container-bg-hover)] transition-colors">
             <div className="flex items-center gap-[var(--spacing-sm)]">
-              <Settings className="h-4 w-4 text-[var(--content-secondary)]" />
+              <Settings className="h-4 w-4 text-[var(--container-fg-alt)]" />
               <div className="flex flex-col">
-                <span className="text-[length:var(--font-size-sm)] font-medium text-[var(--content-primary)]">
+                <span className="text-[length:var(--font-size-sm)] font-medium text-[var(--container-fg)]">
                   {title}
                 </span>
-                <span className="text-[length:var(--font-size-xs)] text-[var(--content-secondary)]">
+                <span className="text-[length:var(--font-size-xs)] text-[var(--container-fg-alt)]">
                   {description}
                 </span>
               </div>
             </div>
             {open ? (
-              <ChevronDown className="h-4 w-4 text-[var(--content-secondary)]" />
+              <ChevronDown className="h-4 w-4 text-[var(--container-fg-alt)]" />
             ) : (
-              <ChevronRight className="h-4 w-4 text-[var(--content-secondary)]" />
+              <ChevronRight className="h-4 w-4 text-[var(--container-fg-alt)]" />
             )}
           </button>
         </CollapsibleTrigger>
@@ -233,7 +233,7 @@ export const Nested: Story = {
             <Checkbox id="settings-autosave" defaultChecked />
             <label
               htmlFor="settings-autosave"
-              className="text-[length:var(--font-size-sm)] text-[var(--content-primary)]"
+              className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]"
             >
               Enable autosave
             </label>
@@ -242,7 +242,7 @@ export const Nested: Story = {
             <Checkbox id="settings-analytics" />
             <label
               htmlFor="settings-analytics"
-              className="text-[length:var(--font-size-sm)] text-[var(--content-primary)]"
+              className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]"
             >
               Send usage analytics
             </label>
@@ -259,7 +259,7 @@ export const Nested: Story = {
             <Checkbox id="settings-animations" defaultChecked />
             <label
               htmlFor="settings-animations"
-              className="text-[length:var(--font-size-sm)] text-[var(--content-primary)]"
+              className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]"
             >
               Enable animations
             </label>
@@ -268,7 +268,7 @@ export const Nested: Story = {
             <Checkbox id="settings-compact" />
             <label
               htmlFor="settings-compact"
-              className="text-[length:var(--font-size-sm)] text-[var(--content-primary)]"
+              className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]"
             >
               Compact mode
             </label>
@@ -285,7 +285,7 @@ export const Nested: Story = {
             <Checkbox id="settings-email" defaultChecked />
             <label
               htmlFor="settings-email"
-              className="text-[length:var(--font-size-sm)] text-[var(--content-primary)]"
+              className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]"
             >
               Email notifications
             </label>
@@ -294,7 +294,7 @@ export const Nested: Story = {
             <Checkbox id="settings-push" defaultChecked />
             <label
               htmlFor="settings-push"
-              className="text-[length:var(--font-size-sm)] text-[var(--content-primary)]"
+              className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]"
             >
               Push notifications
             </label>

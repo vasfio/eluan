@@ -1,140 +1,24 @@
 import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
+import * as stylex from "@stylexjs/stylex"
 
-import { cn } from "@/lib/utils"
+type KbdVariant = "default" | "outline" | "ghost"
+type KbdSize = "sm" | "default" | "lg"
 
-const kbdVariants = cva(
-  "inline-flex items-center justify-center rounded-[var(--curves-sm)] border font-mono text-[length:var(--font-size-sm)] font-medium",
-  {
-    variants: {
-      variant: {
-        default:
-          "border-[var(--container-border-alt)] bg-[var(--container-bg-alt)] text-[color:var(--container-fg-alt)] shadow-[0_2px_0_0] shadow-[var(--container-border-alt)]",
-        outline: "border-[var(--container-border-alt)] bg-[var(--container-bg)] text-[color:var(--container-fg)]",
-        ghost: "border-transparent bg-transparent text-[color:var(--container-fg-alt)]",
-      },
-      size: {
-        sm: "h-[var(--size-xs)] min-w-[var(--size-xs)] px-[var(--spacing-xs)] text-[length:var(--font-size-xs)]",
-        default: "h-[var(--size-sm)] min-w-[var(--size-sm)] px-[var(--spacing-xs)]",
-        lg: "h-7 min-w-7 px-[var(--spacing-sm)] text-[length:var(--font-size-base)]",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
-)
+const kbdVariants = () => ""
 
 export interface KbdProps
-  extends React.HTMLAttributes<HTMLElement>,
-    VariantProps<typeof kbdVariants> {
-  /** The key or key combination to display */
+  extends Omit<React.HTMLAttributes<HTMLElement>, "className" | "style"> {
   keys?: string | string[]
+  size?: KbdSize
+  variant?: KbdVariant
 }
 
-// Map of key names to their display symbols
-const KEY_SYMBOLS: Record<string, string> = {
-  // Modifiers
-  cmd: "⌘",
-  command: "⌘",
-  ctrl: "⌃",
-  control: "⌃",
-  alt: "⌥",
-  option: "⌥",
-  opt: "⌥",
-  shift: "⇧",
-  meta: "⌘",
-  super: "⌘",
-  win: "⊞",
-  windows: "⊞",
+export type KbdGroupProps = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  "className" | "style"
+>
 
-  // Navigation
-  enter: "↵",
-  return: "↵",
-  tab: "⇥",
-  escape: "⎋",
-  esc: "⎋",
-  backspace: "⌫",
-  delete: "⌦",
-  del: "⌦",
-  space: "␣",
-  spacebar: "␣",
-
-  // Arrows
-  up: "↑",
-  down: "↓",
-  left: "←",
-  right: "→",
-  arrowup: "↑",
-  arrowdown: "↓",
-  arrowleft: "←",
-  arrowright: "→",
-
-  // Other
-  capslock: "⇪",
-  caps: "⇪",
-  pageup: "⇞",
-  pagedown: "⇟",
-  home: "↖",
-  end: "↘",
-  insert: "⎀",
-}
-
-function formatKey(key: string): string {
-  const lowercaseKey = key.toLowerCase().trim()
-  return KEY_SYMBOLS[lowercaseKey] || key.toUpperCase()
-}
-
-const Kbd = React.forwardRef<HTMLElement, KbdProps>(
-  ({ className, variant, size, keys, children, ...props }, ref) => {
-    // If keys prop is provided, format it
-    let content: React.ReactNode = children
-
-    if (keys) {
-      const keyArray = Array.isArray(keys) ? keys : keys.split("+")
-      content = keyArray.map((key, index) => (
-        <React.Fragment key={index}>
-          {index > 0 && (
-            <span className="mx-[var(--spacing-xxs)] text-[color:var(--interactive-fg-disabled)]">+</span>
-          )}
-          <span>{formatKey(key)}</span>
-        </React.Fragment>
-      ))
-    }
-
-    return (
-      <kbd
-        ref={ref}
-        className={cn(kbdVariants({ variant, size }), className)}
-        {...props}
-      >
-        {content}
-      </kbd>
-    )
-  }
-)
-Kbd.displayName = "Kbd"
-
-// Compound component for key combinations
-export interface KbdGroupProps extends React.HTMLAttributes<HTMLDivElement> {}
-
-const KbdGroup = React.forwardRef<HTMLDivElement, KbdGroupProps>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn("inline-flex items-center gap-[var(--spacing-xxs)]", className)}
-      {...props}
-    />
-  )
-)
-KbdGroup.displayName = "KbdGroup"
-
-// Helper component for common shortcuts
-export interface ShortcutProps
-  extends Omit<KbdProps, "keys">,
-    VariantProps<typeof kbdVariants> {
-  /** Shortcut type */
+export interface ShortcutProps extends Omit<KbdProps, "keys"> {
   shortcut:
     | "copy"
     | "paste"
@@ -152,11 +36,49 @@ export interface ShortcutProps
     | "bold"
     | "italic"
     | "underline"
-  /** Use Ctrl instead of Cmd on all platforms */
   forceCtrl?: boolean
 }
 
-// Common shortcuts mapping
+const KEY_SYMBOLS: Record<string, string> = {
+  cmd: "⌘",
+  command: "⌘",
+  ctrl: "⌃",
+  control: "⌃",
+  alt: "⌥",
+  option: "⌥",
+  opt: "⌥",
+  shift: "⇧",
+  meta: "⌘",
+  super: "⌘",
+  win: "⊞",
+  windows: "⊞",
+  enter: "↵",
+  return: "↵",
+  tab: "⇥",
+  escape: "⎋",
+  esc: "⎋",
+  backspace: "⌫",
+  delete: "⌦",
+  del: "⌦",
+  space: "␣",
+  spacebar: "␣",
+  up: "↑",
+  down: "↓",
+  left: "←",
+  right: "→",
+  arrowup: "↑",
+  arrowdown: "↓",
+  arrowleft: "←",
+  arrowright: "→",
+  capslock: "⇪",
+  caps: "⇪",
+  pageup: "⇞",
+  pagedown: "⇟",
+  home: "↖",
+  end: "↘",
+  insert: "⎀",
+}
+
 const SHORTCUTS: Record<ShortcutProps["shortcut"], string[]> = {
   copy: ["cmd", "c"],
   paste: ["cmd", "v"],
@@ -176,11 +98,113 @@ const SHORTCUTS: Record<ShortcutProps["shortcut"], string[]> = {
   underline: ["cmd", "u"],
 }
 
+const styles = stylex.create({
+  root: {
+    alignItems: "center",
+    borderRadius: "var(--curves-sm)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    display: "inline-flex",
+    fontFamily: "var(--font-mono)",
+    fontSize: "var(--font-size-sm)",
+    fontWeight: 500,
+    justifyContent: "center",
+  },
+  default: {
+    backgroundColor: "var(--container-bg-alt)",
+    borderColor: "var(--container-border-alt)",
+    boxShadow: "0 2px 0 0 var(--container-border-alt)",
+    color: "var(--container-fg-alt)",
+  },
+  outline: {
+    backgroundColor: "var(--container-bg)",
+    borderColor: "var(--container-border-alt)",
+    color: "var(--container-fg)",
+  },
+  ghost: {
+    backgroundColor: "transparent",
+    borderColor: "transparent",
+    color: "var(--container-fg-alt)",
+  },
+  sm: {
+    fontSize: "var(--font-size-xs)",
+    height: "var(--size-xs)",
+    minWidth: "var(--size-xs)",
+    paddingInline: "var(--spacing-xs)",
+  },
+  md: {
+    height: "var(--size-sm)",
+    minWidth: "var(--size-sm)",
+    paddingInline: "var(--spacing-xs)",
+  },
+  lg: {
+    fontSize: "var(--font-size-base)",
+    height: "var(--size-md)",
+    minWidth: "var(--size-md)",
+    paddingInline: "var(--spacing-sm)",
+  },
+  plus: {
+    color: "var(--interactive-fg-disabled)",
+    marginInline: "var(--spacing-xxs)",
+  },
+  group: {
+    alignItems: "center",
+    display: "inline-flex",
+    gap: "var(--spacing-xxs)",
+  },
+})
+
+function formatKey(key: string): string {
+  const lowercaseKey = key.toLowerCase().trim()
+  return KEY_SYMBOLS[lowercaseKey] || key.toUpperCase()
+}
+
+const Kbd = React.forwardRef<HTMLElement, KbdProps>(
+  ({ variant = "default", size = "default", keys, children, ...props }, ref) => {
+    let content: React.ReactNode = children
+
+    if (keys) {
+      const keyArray = Array.isArray(keys) ? keys : keys.split("+")
+      content = keyArray.map((key, index) => (
+        <React.Fragment key={index}>
+          {index > 0 && <span {...stylex.props(styles.plus)}>+</span>}
+          <span>{formatKey(key)}</span>
+        </React.Fragment>
+      ))
+    }
+
+    return (
+      <kbd
+        ref={ref}
+        {...props}
+        {...stylex.props(
+          styles.root,
+          variant === "default" && styles.default,
+          variant === "outline" && styles.outline,
+          variant === "ghost" && styles.ghost,
+          size === "sm" && styles.sm,
+          size === "default" && styles.md,
+          size === "lg" && styles.lg
+        )}
+      >
+        {content}
+      </kbd>
+    )
+  }
+)
+Kbd.displayName = "Kbd"
+
+const KbdGroup = React.forwardRef<HTMLDivElement, KbdGroupProps>(
+  ({ ...props }, ref) => (
+    <div ref={ref} {...props} {...stylex.props(styles.group)} />
+  )
+)
+KbdGroup.displayName = "KbdGroup"
+
 const Shortcut = React.forwardRef<HTMLElement, ShortcutProps>(
-  ({ shortcut, forceCtrl, variant, size, className, ...props }, ref) => {
+  ({ shortcut, forceCtrl, variant, size, ...props }, ref) => {
     const keys = SHORTCUTS[shortcut]
 
-    // Check if we're on Mac (for SSR safety, default to showing Cmd)
     const isMac =
       typeof navigator !== "undefined"
         ? navigator.platform.toLowerCase().includes("mac")
@@ -202,7 +226,6 @@ const Shortcut = React.forwardRef<HTMLElement, ShortcutProps>(
         keys={displayKeys}
         variant={variant}
         size={size}
-        className={className}
         {...props}
       />
     )

@@ -1,9 +1,8 @@
 "use client"
 
 import * as React from "react"
+import * as stylex from "@stylexjs/stylex"
 import { Eye, EyeOff, Search, Mail, Lock, Phone, Link } from "lucide-react"
-
-import { cn } from "@/lib/utils"
 
 const typeIcons: Record<string, React.ElementType> = {
   search: Search,
@@ -13,75 +12,235 @@ const typeIcons: Record<string, React.ElementType> = {
   url: Link,
 }
 
+export type InputValidationTone = "none" | "positive" | "destructive"
+export type InputTextStyle = "default" | "mono"
+export type InputSize = "default" | "lg"
+export type InputAttachment = "none" | "start" | "middle"
+export type InputTextAlign = "left" | "center"
+
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "className" | "size" | "style"> {
   /** Show a leading icon. Overrides the auto-icon for the input type. */
   icon?: React.ReactNode
   /** Show a trailing element (e.g. a button) */
   trailing?: React.ReactNode
+  attachment?: InputAttachment
+  size?: InputSize
+  textAlign?: InputTextAlign
+  textStyle?: InputTextStyle
+  validationTone?: InputValidationTone
 }
 
+const styles = stylex.create({
+  root: {
+    alignItems: "center",
+    display: "flex",
+    position: "relative",
+    width: "100%",
+  },
+  iconWrap: {
+    alignItems: "center",
+    color: "var(--interactive-fg-alt)",
+    display: "flex",
+    left: "var(--spacing-md)",
+    pointerEvents: "none",
+    position: "absolute",
+  },
+  icon: {
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+  input: {
+    backgroundColor: "var(--interactive-bg)",
+    borderColor: "var(--interactive-border-alt)",
+    borderRadius: "var(--curves-md)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    color: "var(--interactive-fg)",
+    display: "flex",
+    fontSize: "var(--font-size-sm)",
+    height: "var(--size-lg)",
+    paddingBlock: "var(--spacing-sm)",
+    transitionDuration: "150ms",
+    transitionProperty: "color, background-color, border-color",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    width: "100%",
+    "::-webkit-search-cancel-button": {
+      display: "none",
+    },
+    "::-webkit-search-decoration": {
+      display: "none",
+    },
+    "::placeholder": {
+      color: "var(--interactive-fg-alt)",
+    },
+    "::file-selector-button": {
+      backgroundColor: "transparent",
+      borderWidth: 0,
+      color: "var(--interactive-fg)",
+      fontSize: "var(--font-size-sm)",
+      fontWeight: 500,
+    },
+    ":focus-visible": {
+      borderColor: "var(--interactive-border)",
+      outlineColor: "var(--interactive-border)",
+      outlineOffset: "1px",
+      outlineStyle: "solid",
+      outlineWidth: "1px",
+    },
+    ":disabled": {
+      backgroundColor: "var(--interactive-bg-disabled)",
+      color: "var(--interactive-fg-disabled)",
+      cursor: "not-allowed",
+    },
+    "[aria-invalid=true]": {
+      borderColor: "var(--destructive-border)",
+    },
+  },
+  inputInvalidFocus: {
+    ":focus-visible": {
+      borderColor: "var(--destructive-border)",
+      outlineColor: "var(--destructive-border)",
+    },
+  },
+  inputPositive: {
+    borderColor: "var(--positive-fg)",
+    ":focus-visible": {
+      outlineColor: "var(--positive-bg-alt)",
+    },
+  },
+  inputDestructive: {
+    borderColor: "var(--destructive-fg)",
+    ":focus-visible": {
+      outlineColor: "var(--destructive-bg-alt)",
+    },
+  },
+  textMono: {
+    fontFamily: "var(--font-mono)",
+  },
+  sizeLg: {
+    height: "var(--size-xl)",
+  },
+  attachmentStart: {
+    borderLeftWidth: 0,
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
+  },
+  attachmentMiddle: {
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+    borderRadius: 0,
+  },
+  textCenter: {
+    textAlign: "center",
+  },
+  padLeading: {
+    paddingLeft: "calc(var(--spacing-md) + var(--size-xxs) + var(--spacing-sm))",
+  },
+  padNoLeading: {
+    paddingLeft: "var(--spacing-md)",
+  },
+  padTrailing: {
+    paddingRight: "calc(var(--spacing-md) + var(--size-xxs) + var(--spacing-sm))",
+  },
+  padNoTrailing: {
+    paddingRight: "var(--spacing-md)",
+  },
+  trailingButton: {
+    alignItems: "center",
+    backgroundColor: "transparent",
+    borderWidth: 0,
+    color: "var(--interactive-fg-alt)",
+    cursor: "pointer",
+    display: "flex",
+    padding: 0,
+    position: "absolute",
+    right: "var(--spacing-md)",
+    transitionDuration: "150ms",
+    transitionProperty: "color",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    ":hover": {
+      color: "var(--interactive-fg)",
+    },
+  },
+  trailingWrap: {
+    alignItems: "center",
+    display: "flex",
+    position: "absolute",
+    right: "var(--spacing-md)",
+  },
+})
+
+const validationStyles = {
+  none: null,
+  positive: styles.inputPositive,
+  destructive: styles.inputDestructive,
+} satisfies Record<InputValidationTone, stylex.StyleXStyles | null>
+
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, icon, trailing, ...props }, ref) => {
+  (
+    {
+      type,
+      icon,
+      trailing,
+      attachment = "none",
+      size = "default",
+      textAlign = "left",
+      textStyle = "default",
+      validationTone = "none",
+      ...props
+    },
+    ref
+  ) => {
     const [showPassword, setShowPassword] = React.useState(false)
 
     const isPassword = type === "password"
     const resolvedType = isPassword ? (showPassword ? "text" : "password") : type
 
     const AutoIcon = type ? typeIcons[type] : undefined
-    const leadingIcon = icon ?? (AutoIcon ? <AutoIcon className="h-[var(--size-xxs)] w-[var(--size-xxs)]" /> : null)
+    const leadingIcon = icon ?? (AutoIcon ? <AutoIcon {...stylex.props(styles.icon)} /> : null)
     const hasLeading = !!leadingIcon
     const hasTrailing = !!trailing || isPassword
 
     return (
-      <div className={cn("relative flex w-full items-center", className)}>
+      <div {...stylex.props(styles.root)}>
         {hasLeading && (
-          <span className="pointer-events-none absolute left-[var(--spacing-md)] flex items-center text-[color:var(--interactive-fg-alt)]">
-            {leadingIcon}
-          </span>
+          <span {...stylex.props(styles.iconWrap)}>{leadingIcon}</span>
         )}
         <input
           type={resolvedType}
-          className={cn(
-            "flex h-[var(--size-lg)] w-full rounded-[var(--curves-md)] border border-[var(--interactive-border-alt)] bg-[var(--interactive-bg)] text-[length:var(--font-size-sm)] text-[color:var(--interactive-fg)]",
-            "ring-offset-background",
-            "placeholder:text-[color:var(--interactive-fg-alt)]",
-            "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:border-[var(--interactive-border)]",
-            // Validation: an aria-invalid input picks up the destructive border
-            // for both the static and focused states.
-            "aria-[invalid=true]:border-[var(--destructive-border)] aria-[invalid=true]:focus-visible:border-[var(--destructive-border)] aria-[invalid=true]:focus-visible:ring-[var(--destructive-border)]",
-            "disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[color:var(--interactive-fg-disabled)]",
-            "transition-colors",
-            "file:border-0 file:bg-transparent file:text-[length:var(--font-size-sm)] file:font-medium file:text-[color:var(--interactive-fg)]",
-            // Horizontal padding is driven by spacing tokens: when an icon is
-            // present, pad = `spacing-md + size-xxs + spacing-sm` so the gap
-            // between icon and value scales with the active spacing density.
-            hasLeading
-              ? "pl-[calc(var(--spacing-md)+var(--size-xxs)+var(--spacing-sm))]"
-              : "pl-[var(--spacing-md)]",
-            hasTrailing
-              ? "pr-[calc(var(--spacing-md)+var(--size-xxs)+var(--spacing-sm))]"
-              : "pr-[var(--spacing-md)]",
-            "py-[var(--spacing-sm)]"
-          )}
           ref={ref}
           {...props}
+          {...stylex.props(
+            styles.input,
+            props["aria-invalid"] === true && styles.inputInvalidFocus,
+            validationStyles[validationTone],
+            textStyle === "mono" && styles.textMono,
+            size === "lg" && styles.sizeLg,
+            attachment === "start" && styles.attachmentStart,
+            attachment === "middle" && styles.attachmentMiddle,
+            textAlign === "center" && styles.textCenter,
+            hasLeading ? styles.padLeading : styles.padNoLeading,
+            hasTrailing ? styles.padTrailing : styles.padNoTrailing
+          )}
         />
         {isPassword && (
           <button
             type="button"
             tabIndex={-1}
             onClick={() => setShowPassword((v) => !v)}
-            className="absolute right-[var(--spacing-md)] flex items-center text-[color:var(--interactive-fg-alt)] hover:text-[color:var(--interactive-fg-hover)] transition-colors"
             aria-label={showPassword ? "Hide password" : "Show password"}
+            {...stylex.props(styles.trailingButton)}
           >
-            {showPassword ? <EyeOff className="h-[var(--size-xxs)] w-[var(--size-xxs)]" /> : <Eye className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />}
+            {showPassword ? (
+              <EyeOff {...stylex.props(styles.icon)} />
+            ) : (
+              <Eye {...stylex.props(styles.icon)} />
+            )}
           </button>
         )}
         {!isPassword && trailing && (
-          <span className="absolute right-[var(--spacing-md)] flex items-center">
-            {trailing}
-          </span>
+          <span {...stylex.props(styles.trailingWrap)}>{trailing}</span>
         )}
       </div>
     )

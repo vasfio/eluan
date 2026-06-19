@@ -9,6 +9,7 @@ import {
   Animated,
   PanResponder,
   LayoutChangeEvent,
+  GestureResponderEvent,
 } from "react-native"
 import { fontSizes } from "@vasf/ragnar-tokens"
 import { sp, getSemanticColors } from "../utils/styles"
@@ -164,7 +165,7 @@ export function Slider({
     setTrackWidth(width - currentSize.thumb)
   }
 
-  const handleTrackPress = (event: any) => {
+  const handleTrackPress = (event: GestureResponderEvent) => {
     if (disabled) return
 
     const { locationX } = event.nativeEvent

@@ -34,8 +34,8 @@ describe("Checkbox", () => {
     expect(screen.getByRole("checkbox")).toHaveAttribute("data-state", "checked");
   });
 
-  it("forwards className", () => {
-    render(<Checkbox className="custom" />);
-    expect(screen.getByRole("checkbox")).toHaveClass("custom");
+  it("does not forward className overrides", () => {
+    render(<Checkbox {...({ className: "custom" } as never)} />);
+    expect(screen.getByRole("checkbox")).not.toHaveClass("custom");
   });
 });

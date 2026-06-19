@@ -1,52 +1,60 @@
 import * as React from "react"
 import * as AvatarPrimitive from "@radix-ui/react-avatar"
+import * as stylex from "@stylexjs/stylex"
 
-import { cn } from "@/lib/utils"
+type AvatarProps = Omit<
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>,
+  "className" | "style"
+>
 
-const Avatar = React.forwardRef<
-  React.ElementRef<typeof AvatarPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>
->(({ className, ...props }, ref) => (
+const Avatar = React.forwardRef<React.ElementRef<typeof AvatarPrimitive.Root>, AvatarProps>(
+  (props, ref) => (
   <AvatarPrimitive.Root
     ref={ref}
-    className={cn(
-      "relative flex h-[var(--size-lg)] w-[var(--size-lg)] shrink-0 overflow-hidden rounded-full",
-      className
-    )}
     {...props}
+    {...stylex.props(styles.root)}
   />
-))
+  )
+)
 Avatar.displayName = AvatarPrimitive.Root.displayName
 
-const AvatarImage = React.forwardRef<
-  React.ElementRef<typeof AvatarPrimitive.Image>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>
->(({ className, ...props }, ref) => (
+type AvatarImageProps = Omit<
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>,
+  "className" | "style"
+>
+
+const AvatarImage = React.forwardRef<React.ElementRef<typeof AvatarPrimitive.Image>, AvatarImageProps>(
+  (props, ref) => (
   <AvatarPrimitive.Image
     ref={ref}
-    className={cn("aspect-square h-full w-full", className)}
     {...props}
+    {...stylex.props(styles.image)}
   />
-))
+  )
+)
 AvatarImage.displayName = AvatarPrimitive.Image.displayName
+
+type AvatarFallbackProps = Omit<
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>,
+  "className" | "style"
+>
 
 const AvatarFallback = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Fallback>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>
->(({ className, ...props }, ref) => (
+  AvatarFallbackProps
+>((props, ref) => (
   <AvatarPrimitive.Fallback
     ref={ref}
-    className={cn(
-      "flex h-full w-full items-center justify-center rounded-full bg-[var(--container-bg-alt)] text-[length:var(--font-size-xs)] font-medium text-[color:var(--container-fg-alt)]",
-      className
-    )}
     {...props}
+    {...stylex.props(styles.fallback)}
   />
 ))
 AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName
 
 // --- Notification badge overlay ---
-type AvatarBadgeProps = React.HTMLAttributes<HTMLSpanElement> & {
+type AvatarPosition = "top-right" | "bottom-right" | "top-left" | "bottom-left"
+
+type AvatarBadgeProps = Omit<React.HTMLAttributes<HTMLSpanElement>, "className" | "style"> & {
   position?: "top-right" | "bottom-right" | "top-left" | "bottom-left"
   /** Display a numeric count inside the badge. When provided, the badge enlarges to fit the number. */
   count?: number
@@ -55,14 +63,7 @@ type AvatarBadgeProps = React.HTMLAttributes<HTMLSpanElement> & {
 }
 
 const AvatarBadge = React.forwardRef<HTMLSpanElement, AvatarBadgeProps>(
-  ({ className, position = "top-right", count, max = 99, ...props }, ref) => {
-    const positionClasses = {
-      "top-right": "-top-1 -right-1",
-      "bottom-right": "-bottom-1 -right-1",
-      "top-left": "-top-1 -left-1",
-      "bottom-left": "-bottom-1 -left-1",
-    }
-
+  ({ position = "top-right", count, max = 99, ...props }, ref) => {
     const hasCount = count !== undefined && count > 0
     const displayCount = hasCount
       ? count > max
@@ -73,15 +74,12 @@ const AvatarBadge = React.forwardRef<HTMLSpanElement, AvatarBadgeProps>(
     return (
       <span
         ref={ref}
-        className={cn(
-          "absolute flex items-center justify-center rounded-full ring-2 ring-[var(--container-border)] bg-[var(--destructive-fg)] text-[color:var(--destructive-bg)]",
-          hasCount
-            ? "min-w-[18px] h-[18px] px-[var(--spacing-xs)] text-[10px] font-bold leading-none"
-            : "h-3 w-3",
-          positionClasses[position],
-          className
-        )}
         {...props}
+        {...stylex.props(
+          styles.badge,
+          hasCount ? styles.badgeCount : styles.badgeDot,
+          badgePositionStyles[position]
+        )}
       >
         {displayCount}
       </span>
@@ -93,32 +91,13 @@ AvatarBadge.displayName = "AvatarBadge"
 // --- Live / status indicator ---
 type AvatarStatusProps = {
   status: "online" | "offline" | "busy" | "away"
-  position?: "top-right" | "bottom-right" | "top-left" | "bottom-left"
-  className?: string
+  position?: AvatarPosition
 }
 
-const statusColors: Record<AvatarStatusProps["status"], string> = {
-  online: "bg-[var(--positive-fg)]",
-  offline: "bg-[var(--container-bg-alt)]",
-  busy: "bg-[var(--destructive-fg)]",
-  away: "bg-[var(--cautionary-bg-alt)]",
-}
-
-const AvatarStatus = ({ status, position = "bottom-right", className }: AvatarStatusProps) => {
-  const positionClasses = {
-    "top-right": "top-0 right-0",
-    "bottom-right": "bottom-0 right-0",
-    "top-left": "top-0 left-0",
-    "bottom-left": "bottom-0 left-0",
-  }
+const AvatarStatus = ({ status, position = "bottom-right" }: AvatarStatusProps) => {
   return (
     <span
-      className={cn(
-        "absolute h-2.5 w-2.5 rounded-full ring-2 ring-[var(--container-bg)]",
-        statusColors[status],
-        positionClasses[position],
-        className
-      )}
+      {...stylex.props(styles.status, statusStyles[status], statusPositionStyles[position])}
       aria-label={status}
     />
   )
@@ -128,10 +107,129 @@ AvatarStatus.displayName = "AvatarStatus"
 // --- Wrapper that handles relative positioning for overlays ---
 const AvatarWithStatus = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("relative inline-flex", className)} {...props} />
+  Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style">
+>((props, ref) => (
+  <div ref={ref} {...props} {...stylex.props(styles.withStatus)} />
 ))
 AvatarWithStatus.displayName = "AvatarWithStatus"
+
+const styles = stylex.create({
+  root: {
+    borderRadius: "var(--radius-radius-full)",
+    display: "flex",
+    flexShrink: 0,
+    height: "var(--size-lg)",
+    overflow: "hidden",
+    position: "relative",
+    width: "var(--size-lg)",
+  },
+  image: {
+    aspectRatio: "1 / 1",
+    height: "100%",
+    width: "100%",
+  },
+  fallback: {
+    alignItems: "center",
+    backgroundColor: "var(--container-bg-alt)",
+    borderRadius: "var(--radius-radius-full)",
+    color: "var(--container-fg-alt)",
+    display: "flex",
+    fontSize: "var(--font-size-xs)",
+    fontWeight: 500,
+    height: "100%",
+    justifyContent: "center",
+    width: "100%",
+  },
+  badge: {
+    alignItems: "center",
+    backgroundColor: "var(--destructive-fg)",
+    borderRadius: "var(--radius-radius-full)",
+    boxShadow: "0 0 0 2px var(--container-border)",
+    color: "var(--destructive-bg)",
+    display: "flex",
+    justifyContent: "center",
+    position: "absolute",
+  },
+  badgeCount: {
+    fontSize: "var(--font-size-xs)",
+    fontWeight: 700,
+    height: "var(--size-xxs)",
+    lineHeight: 1,
+    minWidth: "var(--size-xxs)",
+    paddingInline: "var(--spacing-xs)",
+  },
+  badgeDot: {
+    height: "var(--spacing-md)",
+    width: "var(--spacing-md)",
+  },
+  badgeTop: {
+    top: "calc(var(--spacing-xxs) * -1)",
+  },
+  badgeBottom: {
+    bottom: "calc(var(--spacing-xxs) * -1)",
+  },
+  badgeRight: {
+    right: "calc(var(--spacing-xxs) * -1)",
+  },
+  badgeLeft: {
+    left: "calc(var(--spacing-xxs) * -1)",
+  },
+  status: {
+    borderRadius: "var(--radius-radius-full)",
+    boxShadow: "0 0 0 2px var(--container-bg)",
+    height: "calc(var(--spacing-md) + var(--spacing-xxs))",
+    position: "absolute",
+    width: "calc(var(--spacing-md) + var(--spacing-xxs))",
+  },
+  statusTop: {
+    top: 0,
+  },
+  statusBottom: {
+    bottom: 0,
+  },
+  statusRight: {
+    right: 0,
+  },
+  statusLeft: {
+    left: 0,
+  },
+  statusOnline: {
+    backgroundColor: "var(--positive-fg)",
+  },
+  statusOffline: {
+    backgroundColor: "var(--container-bg-alt)",
+  },
+  statusBusy: {
+    backgroundColor: "var(--destructive-fg)",
+  },
+  statusAway: {
+    backgroundColor: "var(--cautionary-bg-alt)",
+  },
+  withStatus: {
+    display: "inline-flex",
+    position: "relative",
+  },
+})
+
+const badgePositionStyles = {
+  "top-right": [styles.badgeTop, styles.badgeRight],
+  "bottom-right": [styles.badgeBottom, styles.badgeRight],
+  "top-left": [styles.badgeTop, styles.badgeLeft],
+  "bottom-left": [styles.badgeBottom, styles.badgeLeft],
+} satisfies Record<AvatarPosition, stylex.StyleXStyles>
+
+const statusPositionStyles = {
+  "top-right": [styles.statusTop, styles.statusRight],
+  "bottom-right": [styles.statusBottom, styles.statusRight],
+  "top-left": [styles.statusTop, styles.statusLeft],
+  "bottom-left": [styles.statusBottom, styles.statusLeft],
+} satisfies Record<AvatarPosition, stylex.StyleXStyles>
+
+const statusStyles = {
+  online: styles.statusOnline,
+  offline: styles.statusOffline,
+  busy: styles.statusBusy,
+  away: styles.statusAway,
+} satisfies Record<AvatarStatusProps["status"], stylex.StyleXStyles>
 
 export { Avatar, AvatarImage, AvatarFallback, AvatarBadge, AvatarStatus, AvatarWithStatus }

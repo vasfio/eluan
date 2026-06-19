@@ -7,6 +7,35 @@ import "./styles.css"
 
 export * from "./components/accordion"
 export * from "./components/action-popover"
+export * from "./components/ai-action-plan"
+export * from "./components/ai-attachments"
+export * from "./components/ai-branches"
+export * from "./components/ai-caveat"
+export * from "./components/ai-citations"
+export * from "./components/ai-consent"
+export * from "./components/ai-controls"
+export * from "./components/ai-cost-estimate"
+export * from "./components/ai-disclosure"
+export * from "./components/ai-draft-indicator"
+export * from "./components/ai-filters"
+export * from "./components/ai-follow-up"
+export * from "./components/ai-footprints"
+export * from "./components/ai-gallery"
+export * from "./components/ai-inline-action"
+export * from "./components/ai-memory"
+export * from "./components/ai-model-selector"
+export * from "./components/ai-nudge"
+export * from "./components/ai-parameters"
+export * from "./components/ai-prompt"
+export * from "./components/ai-prompt-details"
+export * from "./components/ai-regenerate"
+export * from "./components/ai-shared-vision"
+export * from "./components/ai-stream-of-thought"
+export * from "./components/ai-suggestions"
+export * from "./components/ai-templates"
+export * from "./components/ai-variations"
+export * from "./components/ai-verification"
+export * from "./components/ai-watermark"
 export * from "./components/aspect-ratio"
 export * from "./components/avatar"
 export * from "./components/badge"
@@ -32,7 +61,10 @@ export * from "./components/dropdown-menu"
 export * from "./components/email-input"
 export * from "./components/fieldset"
 export * from "./components/file-input"
+export * from "./components/footer"
 export * from "./components/form-label"
+export * from "./components/header"
+export * from "./components/header-navigation"
 export * from "./components/hover-card"
 export * from "./components/input"
 export * from "./components/input-otp"
@@ -41,6 +73,7 @@ export * from "./components/media"
 export * from "./components/menubar"
 export * from "./components/multi-select"
 export * from "./components/navigation-drawer"
+export * from "./components/navigation-menu"
 export * from "./components/number-input"
 export * from "./components/pagination"
 export * from "./components/password-input"
@@ -56,7 +89,6 @@ export * from "./components/separator"
 export * from "./components/sheet"
 export * from "./components/skeleton"
 export * from "./components/slider"
-export * from "./components/toast"
 export * from "./components/spinner"
 export * from "./components/stepper"
 export * from "./components/switch"
@@ -65,13 +97,11 @@ export * from "./components/tabs"
 export * from "./components/textarea"
 export * from "./components/time-input"
 export * from "./components/timeline"
+export * from "./components/toast"
 export * from "./components/toggle"
 export * from "./components/toggle-group"
 export * from "./components/tooltip"
 export * from "./components/tree-view"
-
-// Re-export utilities
-export { cn } from "./lib/utils"
 
 // Provider for client-app theme setup
 export * from "./providers/ragnar-provider"
@@ -90,16 +120,3 @@ export {
   type SpacingScale,
   type CurveScale,
 } from "@vasf/ragnar-tokens"
-
-// ============================================
-// TODO: Future core components to consider
-// ============================================
-// - Color picker
-// - Tag input
-// - Combobox
-// - Data table (with sorting/filtering)
-// - Kanban board
-// - File upload dropzone
-// - Image cropper
-// - Emoji picker
-// - Mention input (@mentions)

@@ -1,8 +1,7 @@
 import * as React from "react"
 import * as CollapsiblePrimitive from "@radix-ui/react-collapsible"
+import * as stylex from "@stylexjs/stylex"
 import { ChevronRight, File, Folder, FolderOpen } from "lucide-react"
-
-import { cn } from "@/lib/utils"
 
 export interface TreeNode {
   id: string
@@ -12,7 +11,8 @@ export interface TreeNode {
   data?: unknown
 }
 
-export interface TreeViewProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "onSelect"> {
+export interface TreeViewProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style" | "onSelect"> {
   data: TreeNode[]
   selectedId?: string
   onSelect?: (node: TreeNode) => void
@@ -25,7 +25,6 @@ export interface TreeViewProps extends Omit<React.HTMLAttributes<HTMLDivElement>
 const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
   (
     {
-      className,
       data,
       selectedId,
       onSelect,
@@ -66,19 +65,15 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
             key={node.id}
             type="button"
             onClick={() => onSelect?.(node)}
-            className={cn(
-              "flex w-full items-center gap-[var(--spacing-sm)] rounded-md px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[length:var(--font-size-sm)] hover:bg-[var(--interactive-bg-hover)] focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)]",
-              // Selected items keep their selected bg/fg on hover (no hover state).
-              isSelected && "bg-[var(--interactive-bg-selected)] text-[color:var(--interactive-fg-selected)] hover:bg-[var(--interactive-bg-selected)] hover:text-[color:var(--interactive-fg-selected)]"
-            )}
+            {...stylex.props(styles.node, isSelected && styles.nodeSelected)}
             style={{ paddingLeft: `${depth * indentSize + 8}px` }}
           >
             {showIcons && (
-              <span className={cn("shrink-0 text-[color:var(--interactive-fg-alt)]", isSelected && "text-[color:var(--interactive-fg-selected)]")}>
-                {node.icon ?? <File className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />}
+              <span {...stylex.props(styles.iconWrap, isSelected && styles.iconSelected)}>
+                {node.icon ?? <File {...stylex.props(styles.icon)} />}
               </span>
             )}
-            <span className="truncate">{node.name}</span>
+            <span {...stylex.props(styles.label)}>{node.name}</span>
           </button>
         )
       }
@@ -93,34 +88,30 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
             <button
               type="button"
               onClick={() => onSelect?.(node)}
-              className={cn(
-                "flex w-full items-center gap-[var(--spacing-sm)] rounded-[var(--curves-md)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[length:var(--font-size-sm)] hover:bg-[var(--interactive-bg-hover)] focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)]",
-              // Selected items keep their selected bg/fg on hover (no hover state).
-              isSelected && "bg-[var(--interactive-bg-selected)] text-[color:var(--interactive-fg-selected)] hover:bg-[var(--interactive-bg-selected)] hover:text-[color:var(--interactive-fg-selected)]"
-              )}
+              {...stylex.props(styles.node, isSelected && styles.nodeSelected)}
               style={{ paddingLeft: `${depth * indentSize + 8}px` }}
             >
               <ChevronRight
-                className={cn(
-                  "h-[var(--size-xxs)] w-[var(--size-xxs)] shrink-0 text-[color:var(--interactive-fg-alt)] transition-transform",
-                  isExpanded && "rotate-90",
-                  isSelected && "text-[color:var(--interactive-fg-selected)]"
+                {...stylex.props(
+                  styles.chevron,
+                  isExpanded && styles.chevronExpanded,
+                  isSelected && styles.iconSelected
                 )}
               />
               {showIcons && (
-                <span className={cn("shrink-0 text-[color:var(--interactive-fg-alt)]", isSelected && "text-[color:var(--interactive-fg-selected)]")}>
+                <span {...stylex.props(styles.iconWrap, isSelected && styles.iconSelected)}>
                   {node.icon ??
                     (isExpanded ? (
-                      <FolderOpen className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+                      <FolderOpen {...stylex.props(styles.icon)} />
                     ) : (
-                      <Folder className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+                      <Folder {...stylex.props(styles.icon)} />
                     ))}
                 </span>
               )}
-              <span className="truncate">{node.name}</span>
+              <span {...stylex.props(styles.label)}>{node.name}</span>
             </button>
           </CollapsiblePrimitive.Trigger>
-          <CollapsiblePrimitive.Content className="overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
+          <CollapsiblePrimitive.Content {...stylex.props(styles.content)}>
             {node.children?.map((child) => renderNode(child, depth + 1))}
           </CollapsiblePrimitive.Content>
         </CollapsiblePrimitive.Root>
@@ -128,12 +119,110 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
     }
 
     return (
-      <div ref={ref} className={cn("space-y-1", className)} {...props}>
+      <div ref={ref} {...props} {...stylex.props(styles.root)}>
         {data.map((node) => renderNode(node))}
       </div>
     )
   }
 )
 TreeView.displayName = "TreeView"
+
+const accordionDown = stylex.keyframes({
+  from: {
+    height: 0,
+  },
+  to: {
+    height: "var(--radix-collapsible-content-height)",
+  },
+})
+
+const accordionUp = stylex.keyframes({
+  from: {
+    height: "var(--radix-collapsible-content-height)",
+  },
+  to: {
+    height: 0,
+  },
+})
+
+const styles = stylex.create({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "var(--spacing-xxs)",
+  },
+  node: {
+    alignItems: "center",
+    backgroundColor: "transparent",
+    borderWidth: 0,
+    borderRadius: "var(--curves-md)",
+    color: "var(--interactive-fg)",
+    display: "flex",
+    fontSize: "var(--font-size-sm)",
+    gap: "var(--spacing-sm)",
+    paddingBlock: "var(--spacing-xs)",
+    paddingRight: "var(--spacing-sm)",
+    textAlign: "left",
+    width: "100%",
+    ":hover": {
+      backgroundColor: "var(--interactive-bg-hover)",
+    },
+    ":focus": {
+      outlineStyle: "none",
+    },
+    ":focus-visible": {
+      boxShadow: "0 0 0 1px var(--interactive-border)",
+    },
+  },
+  nodeSelected: {
+    backgroundColor: "var(--interactive-bg-selected)",
+    color: "var(--interactive-fg-selected)",
+    ":hover": {
+      backgroundColor: "var(--interactive-bg-selected)",
+      color: "var(--interactive-fg-selected)",
+    },
+  },
+  iconWrap: {
+    color: "var(--interactive-fg-alt)",
+    flexShrink: 0,
+  },
+  iconSelected: {
+    color: "var(--interactive-fg-selected)",
+  },
+  icon: {
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+  chevron: {
+    color: "var(--interactive-fg-alt)",
+    flexShrink: 0,
+    height: "var(--size-xxs)",
+    transitionDuration: "150ms",
+    transitionProperty: "transform",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    width: "var(--size-xxs)",
+  },
+  chevronExpanded: {
+    transform: "rotate(90deg)",
+  },
+  label: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+  content: {
+    overflow: "hidden",
+    "[data-state=open]": {
+      animationDuration: "200ms",
+      animationName: accordionDown,
+      animationTimingFunction: "ease-out",
+    },
+    "[data-state=closed]": {
+      animationDuration: "200ms",
+      animationName: accordionUp,
+      animationTimingFunction: "ease-out",
+    },
+  },
+})
 
 export { TreeView }

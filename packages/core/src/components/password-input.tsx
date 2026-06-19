@@ -1,31 +1,31 @@
 import * as React from "react"
+import * as stylex from "@stylexjs/stylex"
 import { Check, X } from "lucide-react"
-import { cn } from "@/lib/utils"
 import { Input } from "./input"
 import { Progress } from "./progress"
 
 export interface PasswordInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "className" | "size" | "style" | "type"> {
+  onStrengthChange?: (strength: "weak" | "medium" | "strong") => void
   showStrengthIndicator?: boolean
   strengthRequirements?: {
     minLength?: number
-    requireUppercase?: boolean
     requireLowercase?: boolean
     requireNumbers?: boolean
     requireSpecialChars?: boolean
+    requireUppercase?: boolean
   }
-  onStrengthChange?: (strength: "weak" | "medium" | "strong") => void
 }
 
 interface StrengthResult {
-  score: number
   checks: {
     length: boolean
-    uppercase: boolean
     lowercase: boolean
     numbers: boolean
     specialChars: boolean
+    uppercase: boolean
   }
+  score: number
 }
 
 function calculateStrength(
@@ -57,17 +57,56 @@ function calculateStrength(
   }
 }
 
-const strengthColors = {
-  weak: "bg-[var(--destructive-fg)] [&>div]:bg-[var(--destructive-fg)]",
-  medium: "bg-[var(--cautionary-fg)] [&>div]:bg-[var(--cautionary-fg)]",
-  strong: "bg-[var(--positive-fg)] [&>div]:bg-[var(--positive-fg)]",
-  none: "",
-}
+const styles = stylex.create({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "var(--spacing-sm)",
+  },
+  strength: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "var(--spacing-sm)",
+  },
+  progressRow: {
+    alignItems: "center",
+    display: "flex",
+    gap: "var(--spacing-sm)",
+  },
+  label: {
+    color: "var(--interactive-fg-alt)",
+    fontSize: "var(--font-size-xs)",
+    minWidth: 50,
+  },
+  list: {
+    display: "grid",
+    fontSize: "var(--font-size-xs)",
+    gap: "var(--spacing-xs)",
+    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+    listStyleType: "none",
+    margin: 0,
+    padding: 0,
+  },
+  item: {
+    alignItems: "center",
+    display: "flex",
+    gap: "var(--spacing-xxs)",
+  },
+  icon: {
+    height: "var(--spacing-md)",
+    width: "var(--spacing-md)",
+  },
+  positive: {
+    color: "var(--positive-fg)",
+  },
+  muted: {
+    color: "var(--interactive-fg-alt)",
+  },
+})
 
 const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
   (
     {
-      className,
       showStrengthIndicator = false,
       strengthRequirements = {},
       onStrengthChange,
@@ -117,86 +156,68 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
       return "Strong"
     }
 
+    const Requirement = ({
+      passed,
+      children,
+    }: {
+      passed: boolean
+      children: React.ReactNode
+    }) => (
+      <li {...stylex.props(styles.item)}>
+        {passed ? (
+          <Check {...stylex.props(styles.icon, styles.positive)} />
+        ) : (
+          <X {...stylex.props(styles.icon, styles.muted)} />
+        )}
+        <span {...stylex.props(passed ? styles.positive : styles.muted)}>
+          {children}
+        </span>
+      </li>
+    )
+
     return (
-      <div className="space-y-2">
+      <div {...stylex.props(styles.root)}>
         <Input
           type="password"
-          className={className}
           ref={ref}
           onChange={handleChange}
           {...props}
         />
 
         {showStrengthIndicator && strength && (
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
+          <div {...stylex.props(styles.strength)}>
+            <div {...stylex.props(styles.progressRow)}>
               <Progress
                 value={strength.score * 100}
-                className={cn("h-1.5 flex-1", strengthColors[strengthLevel])}
+                size="sm"
+                tone={strengthLevel === "none" ? "default" : strengthLevel}
               />
-              <span className="text-[length:var(--font-size-xs)] text-[color:var(--interactive-fg-alt)] min-w-[50px]">
-                {getStrengthLabel()}
-              </span>
+              <span {...stylex.props(styles.label)}>{getStrengthLabel()}</span>
             </div>
 
-            <ul className="grid grid-cols-2 gap-1 text-[length:var(--font-size-xs)]">
-              <li className="flex items-center gap-1">
-                {strength.checks.length ? (
-                  <Check className="h-3 w-3 text-[color:var(--positive-fg)]" />
-                ) : (
-                  <X className="h-3 w-3 text-[color:var(--interactive-fg-alt)]" />
-                )}
-                <span className={strength.checks.length ? "text-[color:var(--positive-fg)]" : "text-[color:var(--interactive-fg-alt)]"}>
-                  {minLength}+ characters
-                </span>
-              </li>
+            <ul {...stylex.props(styles.list)}>
+              <Requirement passed={strength.checks.length}>
+                {minLength}+ characters
+              </Requirement>
               {requireUppercase && (
-                <li className="flex items-center gap-[var(--spacing-xxs)]">
-                  {strength.checks.uppercase ? (
-                    <Check className="h-3 w-3 text-[color:var(--positive-fg)]" />
-                  ) : (
-                    <X className="h-3 w-3 text-[color:var(--interactive-fg-alt)]" />
-                  )}
-                  <span className={strength.checks.uppercase ? "text-[color:var(--positive-fg)]" : "text-[color:var(--interactive-fg-alt)]"}>
-                    Uppercase letter
-                  </span>
-                </li>
+                <Requirement passed={strength.checks.uppercase}>
+                  Uppercase letter
+                </Requirement>
               )}
               {requireLowercase && (
-                <li className="flex items-center gap-[var(--spacing-xxs)]">
-                  {strength.checks.lowercase ? (
-                    <Check className="h-3 w-3 text-[color:var(--positive-fg)]" />
-                  ) : (
-                    <X className="h-3 w-3 text-[color:var(--interactive-fg-alt)]" />
-                  )}
-                  <span className={strength.checks.lowercase ? "text-[color:var(--positive-fg)]" : "text-[color:var(--interactive-fg-alt)]"}>
-                    Lowercase letter
-                  </span>
-                </li>
+                <Requirement passed={strength.checks.lowercase}>
+                  Lowercase letter
+                </Requirement>
               )}
               {requireNumbers && (
-                <li className="flex items-center gap-[var(--spacing-xxs)]">
-                  {strength.checks.numbers ? (
-                    <Check className="h-3 w-3 text-[color:var(--positive-fg)]" />
-                  ) : (
-                    <X className="h-3 w-3 text-[color:var(--interactive-fg-alt)]" />
-                  )}
-                  <span className={strength.checks.numbers ? "text-[color:var(--positive-fg)]" : "text-[color:var(--interactive-fg-alt)]"}>
-                    Number
-                  </span>
-                </li>
+                <Requirement passed={strength.checks.numbers}>
+                  Number
+                </Requirement>
               )}
               {requireSpecialChars && (
-                <li className="flex items-center gap-[var(--spacing-xxs)]">
-                  {strength.checks.specialChars ? (
-                    <Check className="h-3 w-3 text-[color:var(--positive-fg)]" />
-                  ) : (
-                    <X className="h-3 w-3 text-[color:var(--interactive-fg-alt)]" />
-                  )}
-                  <span className={strength.checks.specialChars ? "text-[color:var(--positive-fg)]" : "text-[color:var(--interactive-fg-alt)]"}>
-                    Special character
-                  </span>
-                </li>
+                <Requirement passed={strength.checks.specialChars}>
+                  Special character
+                </Requirement>
               )}
             </ul>
           </div>

@@ -1,8 +1,8 @@
 import * as React from "react"
+import * as stylex from "@stylexjs/stylex"
 import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
 
-import { cn } from "@/lib/utils"
 import { Button } from "./button"
 import { Calendar } from "./calendar"
 import {
@@ -16,7 +16,6 @@ export interface DatePickerProps {
   onChange?: (date: Date | undefined) => void
   placeholder?: string
   disabled?: boolean
-  className?: string
   dateFormat?: string
 }
 
@@ -27,7 +26,6 @@ const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
       onChange,
       placeholder = "Pick a date",
       disabled = false,
-      className,
       dateFormat = "PPP",
     },
     ref
@@ -39,19 +37,17 @@ const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
         <PopoverTrigger asChild>
           <Button
             ref={ref}
-            variant="ghost"
+            variant={value ? "input" : "inputMuted"}
+            fullWidth
+            align="start"
+            textAlign="left"
             disabled={disabled}
-            className={cn(
-              "w-full justify-start text-left font-normal border border-solid border-[var(--interactive-border-alt)]",
-              !value && "text-[color:var(--interactive-fg-alt)]",
-              className
-            )}
           >
-            <CalendarIcon className="mr-2 h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+            <CalendarIcon {...stylex.props(styles.triggerIcon)} />
             {value ? format(value, dateFormat) : <span>{placeholder}</span>}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto min-w-[280px] p-0" align="start">
+        <PopoverContent layout="calendarSingle" align="start">
           <Calendar
             mode="single"
             selected={value}
@@ -73,7 +69,6 @@ export interface DateRangePickerProps {
   onChange?: (range: { from: Date | undefined; to: Date | undefined }) => void
   placeholder?: string
   disabled?: boolean
-  className?: string
   dateFormat?: string
 }
 
@@ -84,7 +79,6 @@ const DateRangePicker = React.forwardRef<HTMLButtonElement, DateRangePickerProps
       onChange,
       placeholder = "Pick a date range",
       disabled = false,
-      className,
       dateFormat = "LLL dd, y",
     },
     ref
@@ -96,15 +90,13 @@ const DateRangePicker = React.forwardRef<HTMLButtonElement, DateRangePickerProps
         <PopoverTrigger asChild>
           <Button
             ref={ref}
-            variant="outline"
+            variant={value?.from ? "outline" : "inputMuted"}
+            fullWidth
+            align="start"
+            textAlign="left"
             disabled={disabled}
-            className={cn(
-              "w-full justify-start text-left font-normal",
-              !value?.from && "text-[color:var(--interactive-fg-alt)]",
-              className
-            )}
           >
-            <CalendarIcon className="mr-2 h-[var(--size-xxs)] w-[var(--size-xxs)]" />
+            <CalendarIcon {...stylex.props(styles.triggerIcon)} />
             {value?.from ? (
               value.to ? (
                 <>
@@ -119,7 +111,7 @@ const DateRangePicker = React.forwardRef<HTMLButtonElement, DateRangePickerProps
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
+        <PopoverContent layout="calendar" align="start">
           <Calendar
             mode="range"
             defaultMonth={value?.from}
@@ -136,5 +128,13 @@ const DateRangePicker = React.forwardRef<HTMLButtonElement, DateRangePickerProps
   }
 )
 DateRangePicker.displayName = "DateRangePicker"
+
+const styles = stylex.create({
+  triggerIcon: {
+    height: "var(--size-xxs)",
+    marginRight: "var(--spacing-sm)",
+    width: "var(--size-xxs)",
+  },
+})
 
 export { DatePicker, DateRangePicker }

@@ -1,44 +1,82 @@
 import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
+import * as stylex from "@stylexjs/stylex"
 
-import { cn } from "@/lib/utils"
-
-const spinnerVariants = cva(
-  "animate-spin rounded-full border-2 border-current border-t-transparent",
-  {
-    variants: {
-      size: {
-        default: "h-[var(--size-xs)] w-[var(--size-xs)]",
-        sm: "h-[var(--size-xxs)] w-[var(--size-xxs)]",
-        lg: "h-[var(--size-sm)] w-[var(--size-sm)]",
-        xl: "h-[var(--size-md)] w-[var(--size-md)]",
-      },
-    },
-    defaultVariants: {
-      size: "default",
-    },
-  }
-)
+export type SpinnerSize = "default" | "sm" | "lg" | "xl"
 
 export interface SpinnerProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof spinnerVariants> {}
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style"> {
+  size?: SpinnerSize
+}
 
 const Spinner = React.forwardRef<HTMLDivElement, SpinnerProps>(
-  ({ className, size, ...props }, ref) => {
+  ({ size = "default", ...props }, ref) => {
     return (
       <div
         ref={ref}
-        className={cn(spinnerVariants({ size }), className)}
         role="status"
         aria-label="Loading"
         {...props}
+        {...stylex.props(styles.root, sizeStyles[size])}
       >
-        <span className="sr-only">Loading...</span>
+        <span {...stylex.props(styles.srOnly)}>Loading...</span>
       </div>
     )
   }
 )
 Spinner.displayName = "Spinner"
 
-export { Spinner, spinnerVariants }
+const spin = stylex.keyframes({
+  to: {
+    transform: "rotate(360deg)",
+  },
+})
+
+const styles = stylex.create({
+  root: {
+    animationDuration: "1s",
+    animationIterationCount: "infinite",
+    animationName: spin,
+    animationTimingFunction: "linear",
+    borderColor: "currentColor",
+    borderRadius: "var(--radius-radius-full)",
+    borderStyle: "solid",
+    borderTopColor: "transparent",
+    borderWidth: 2,
+  },
+  sm: {
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+  default: {
+    height: "var(--size-xs)",
+    width: "var(--size-xs)",
+  },
+  lg: {
+    height: "var(--size-sm)",
+    width: "var(--size-sm)",
+  },
+  xl: {
+    height: "var(--size-md)",
+    width: "var(--size-md)",
+  },
+  srOnly: {
+    borderWidth: 0,
+    clip: "rect(0, 0, 0, 0)",
+    height: 1,
+    margin: -1,
+    overflow: "hidden",
+    padding: 0,
+    position: "absolute",
+    whiteSpace: "nowrap",
+    width: 1,
+  },
+})
+
+const sizeStyles = {
+  default: styles.default,
+  sm: styles.sm,
+  lg: styles.lg,
+  xl: styles.xl,
+} satisfies Record<SpinnerSize, stylex.StyleXStyles>
+
+export { Spinner }

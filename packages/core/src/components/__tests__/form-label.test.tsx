@@ -18,8 +18,8 @@ describe("FormLabel", () => {
     expect(screen.getByLabelText("Name")).toBeInTheDocument();
   });
 
-  it("forwards className", () => {
-    render(<FormLabel className="required">Field</FormLabel>);
-    expect(screen.getByText("Field")).toHaveClass("required");
+  it("does not forward className overrides", () => {
+    render(<FormLabel {...({ className: "required" } as never)}>Field</FormLabel>);
+    expect(screen.getByText("Field")).not.toHaveClass("required");
   });
 });

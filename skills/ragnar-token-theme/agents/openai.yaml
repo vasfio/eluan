@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ragnar Token Theme"
+  short_description: "Work with Ragnar tokens and themes."
+  default_prompt: "Update Ragnar tokens, theme CSS, or provider theme behavior safely."

@@ -5,7 +5,10 @@
 ## Install
 
 ```bash
+npm install @vasf/ragnar-native @vasf/ragnar-tokens
+yarn add @vasf/ragnar-native @vasf/ragnar-tokens
 pnpm add @vasf/ragnar-native @vasf/ragnar-tokens
+bun add @vasf/ragnar-native @vasf/ragnar-tokens
 ```
 
 ## Use

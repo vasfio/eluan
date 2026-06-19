@@ -8,8 +8,10 @@ describe("Spinner", () => {
     expect(container.firstChild).toBeInTheDocument();
   });
 
-  it("forwards className", () => {
-    const { container } = render(<Spinner className="text-red-500" />);
-    expect(container.firstChild).toHaveClass("text-red-500");
+  it("does not forward className overrides", () => {
+    const { container } = render(
+      <Spinner {...({ className: "text-red-500" } as never)} />
+    );
+    expect(container.firstChild).not.toHaveClass("text-red-500");
   });
 });

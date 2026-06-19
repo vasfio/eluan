@@ -22,7 +22,7 @@ export default defineConfig({
         'react',
         'react-dom',
         'react/jsx-runtime',
-        '@vasf/ragnar-core',
+        /^@vasf\/ragnar-core(\/.*)?$/,
       ],
       output: {
         banner: '"use client";',

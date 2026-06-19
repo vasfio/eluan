@@ -1,51 +1,109 @@
 import * as React from "react"
 import * as TabsPrimitive from "@radix-ui/react-tabs"
-
-import { cn } from "@/lib/utils"
+import * as stylex from "@stylexjs/stylex"
 
 const Tabs = TabsPrimitive.Root
 
+type TabsListProps = Omit<
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>,
+  "className" | "style"
+>
+
+type TabsTriggerProps = Omit<
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>,
+  "className" | "style"
+>
+
+type TabsContentProps = Omit<
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>,
+  "className" | "style"
+>
+
+const styles = stylex.create({
+  list: {
+    alignItems: "center",
+    backgroundColor: "var(--interactive-bg-alt)",
+    borderRadius: "var(--curves-md)",
+    color: "var(--interactive-fg-alt)",
+    display: "inline-flex",
+    justifyContent: "center",
+    minHeight: "var(--size-lg)",
+    padding: "var(--spacing-xs)",
+  },
+  trigger: {
+    alignItems: "center",
+    borderWidth: 0,
+    borderRadius: "var(--curves-sm)",
+    display: "inline-flex",
+    fontSize: "var(--font-size-sm)",
+    fontWeight: 500,
+    justifyContent: "center",
+    paddingBlock: "var(--spacing-xs)",
+    paddingInline: "var(--spacing-sm)",
+    transitionDuration: "150ms",
+    transitionProperty: "all",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    whiteSpace: "nowrap",
+    ":focus-visible": {
+      outlineColor: "var(--interactive-border)",
+      outlineOffset: "1px",
+      outlineStyle: "solid",
+      outlineWidth: "1px",
+    },
+    ":disabled": {
+      backgroundColor: "var(--interactive-bg-disabled)",
+      color: "var(--interactive-fg-disabled)",
+      pointerEvents: "none",
+    },
+    "[data-state=active]": {
+      backgroundColor: "var(--container-bg)",
+      boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+      color: "var(--interactive-fg)",
+    },
+  },
+  content: {
+    marginTop: "var(--spacing-sm)",
+    ":focus-visible": {
+      outlineColor: "var(--interactive-border)",
+      outlineOffset: "1px",
+      outlineStyle: "solid",
+      outlineWidth: "1px",
+    },
+  },
+})
+
 const TabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
->(({ className, ...props }, ref) => (
+  TabsListProps
+>(({ ...props }, ref) => (
   <TabsPrimitive.List
     ref={ref}
-    className={cn(
-      "inline-flex h-min-10 items-center justify-center rounded-[var(--curves-md)] bg-[var(--interactive-bg-alt)] p-[var(--spacing-xs)] text-[color:var(--interactive-fg-alt)]",
-      className
-    )}
     {...props}
+    {...stylex.props(styles.list)}
   />
 ))
 TabsList.displayName = TabsPrimitive.List.displayName
 
 const TabsTrigger = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
->(({ className, ...props }, ref) => (
+  TabsTriggerProps
+>(({ ...props }, ref) => (
   <TabsPrimitive.Trigger
     ref={ref}
-    className={cn(
-      "inline-flex items-center justify-center whitespace-nowrap rounded-[var(--curves-sm)] px-[var(--spacing-sm)] py-[var(--spacing-xs)] text-[length:var(--font-size-sm)] font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 disabled:pointer-events-none disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[color:var(--interactive-fg-disabled)] data-[state=active]:bg-[var(--container-bg)] data-[state=active]:text-[color:var(--interactive-fg)] data-[state=active]:shadow-sm",
-      className
-    )}
     {...props}
+    {...stylex.props(styles.trigger)}
   />
 ))
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
 
 const TabsContent = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
->(({ className, ...props }, ref) => (
+  TabsContentProps
+>(({ ...props }, ref) => (
   <TabsPrimitive.Content
     ref={ref}
-    className={cn(
-      "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1",
-      className
-    )}
     {...props}
+    {...stylex.props(styles.content)}
   />
 ))
 TabsContent.displayName = TabsPrimitive.Content.displayName

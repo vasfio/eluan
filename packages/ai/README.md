@@ -1,6 +1,6 @@
 # @vasf/ragnar-ai
 
-> AI UX pattern components for React — citations, drafts, action plans, attachments, branches, controls, and more. Built on `@vasf/ragnar-core`.
+> Compatibility package for AI UX pattern components. AI components now live in `@vasf/ragnar-core` and are re-exported here.
 
 > **Note:** This package is currently `private` — not yet published to npm. Pin to the workspace if developing inside the monorepo.
 
@@ -9,6 +9,12 @@
 ```tsx
 import "@vasf/ragnar-ai/styles.css"
 import { AICitations, AIDraftIndicator } from "@vasf/ragnar-ai"
+```
+
+Preferred for new code:
+
+```tsx
+import { AICitations } from "@vasf/ragnar-core/ai-citations"
 ```
 
 ## License

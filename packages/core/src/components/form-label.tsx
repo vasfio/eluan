@@ -1,44 +1,71 @@
 import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
-
-import { cn } from "@/lib/utils"
-
-const labelVariants = cva(
-  "text-[length:var(--font-size-sm)] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:text-[color:var(--interactive-fg-disabled)]",
-  {
-    variants: {
-      required: {
-        true: "after:ml-[var(--spacing-xxs)] after:text-[color:var(--destructive-fg)] after:content-['*']",
-        false: "",
-      },
-    },
-    defaultVariants: {
-      required: false,
-    },
-  }
-)
+import * as stylex from "@stylexjs/stylex"
 
 export interface LabelProps
-  extends React.LabelHTMLAttributes<HTMLLabelElement>,
-    VariantProps<typeof labelVariants> {
-  optional?: boolean
+  extends Omit<React.LabelHTMLAttributes<HTMLLabelElement>, "className" | "style"> {
   hint?: string
+  optional?: boolean
+  required?: boolean
 }
 
+type FormDescriptionProps = Omit<
+  React.HTMLAttributes<HTMLParagraphElement>,
+  "className" | "style"
+>
+
+interface FormMessageProps extends FormDescriptionProps {
+  error?: boolean
+}
+
+const styles = stylex.create({
+  root: {
+    alignItems: "baseline",
+    display: "flex",
+    gap: "var(--spacing-sm)",
+  },
+  label: {
+    fontSize: "var(--font-size-sm)",
+    fontWeight: 500,
+    lineHeight: 1,
+  },
+  required: {
+    "::after": {
+      color: "var(--destructive-fg)",
+      content: '"*"',
+      marginLeft: "var(--spacing-xxs)",
+    },
+  },
+  meta: {
+    color: "var(--interactive-fg-alt)",
+    fontSize: "var(--font-size-xs)",
+  },
+  description: {
+    color: "var(--interactive-fg-alt)",
+    fontSize: "var(--font-size-sm)",
+  },
+  message: {
+    fontSize: "var(--font-size-sm)",
+  },
+  error: {
+    color: "var(--destructive-fg)",
+  },
+  neutral: {
+    color: "var(--interactive-fg-alt)",
+  },
+})
+
 const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
-  ({ className, required, optional, hint, children, ...props }, ref) => (
-    <div className="flex items-baseline gap-[var(--spacing-sm)]">
+  ({ required = false, optional, hint, children, ...props }, ref) => (
+    <div {...stylex.props(styles.root)}>
       <label
         ref={ref}
-        className={cn(labelVariants({ required }), className)}
         {...props}
+        {...stylex.props(styles.label, required && styles.required)}
       >
         {children}
       </label>
-      {optional && (
-        <span className="text-[length:var(--font-size-xs)] text-[color:var(--interactive-fg-alt)]">(optional)</span>
-      )}
-      {hint && <span className="text-[length:var(--font-size-xs)] text-[color:var(--interactive-fg-alt)]">{hint}</span>}
+      {optional && <span {...stylex.props(styles.meta)}>(optional)</span>}
+      {hint && <span {...stylex.props(styles.meta)}>{hint}</span>}
     </div>
   )
 )
@@ -47,32 +74,20 @@ Label.displayName = "Label"
 /** @deprecated Use `Label` instead */
 const FormLabel = Label
 
-const FormDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-  <p
-    ref={ref}
-    className={cn("text-[length:var(--font-size-sm)] text-[color:var(--interactive-fg-alt)]", className)}
-    {...props}
-  />
-))
+const FormDescription = React.forwardRef<HTMLParagraphElement, FormDescriptionProps>(
+  (props, ref) => <p ref={ref} {...props} {...stylex.props(styles.description)} />
+)
 FormDescription.displayName = "FormDescription"
 
-const FormMessage = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement> & { error?: boolean }
->(({ className, error = true, ...props }, ref) => (
-  <p
-    ref={ref}
-    className={cn(
-      "text-[length:var(--font-size-sm)]",
-      error ? "text-destructive" : "text-[color:var(--interactive-fg-alt)]",
-      className
-    )}
-    {...props}
-  />
-))
+const FormMessage = React.forwardRef<HTMLParagraphElement, FormMessageProps>(
+  ({ error = true, ...props }, ref) => (
+    <p
+      ref={ref}
+      {...props}
+      {...stylex.props(styles.message, error ? styles.error : styles.neutral)}
+    />
+  )
+)
 FormMessage.displayName = "FormMessage"
 
-export { Label, FormLabel, FormDescription, FormMessage, labelVariants }
+export { Label, FormLabel, FormDescription, FormMessage }

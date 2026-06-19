@@ -10,10 +10,14 @@ describe("CodeBlock", () => {
     expect(container.querySelector("code")?.textContent).toContain("const x = 1");
   });
 
-  it("forwards className", () => {
+  it("does not forward className overrides", () => {
     const { container } = render(
-      <CodeBlock code="console.log()" language="javascript" className="custom" />
+      <CodeBlock
+        {...({ className: "custom" } as never)}
+        code="console.log()"
+        language="javascript"
+      />
     );
-    expect(container.querySelector(".custom")).not.toBeNull();
+    expect(container.querySelector(".custom")).toBeNull();
   });
 });

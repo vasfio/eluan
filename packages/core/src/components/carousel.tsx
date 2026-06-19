@@ -2,10 +2,8 @@ import * as React from "react"
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react"
+import * as stylex from "@stylexjs/stylex"
 import { ArrowLeft, ArrowRight } from "lucide-react"
-
-import { cn } from "@/lib/utils"
-import { Button } from "./button"
 
 type CarouselApi = UseEmblaCarouselType[1]
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
@@ -42,7 +40,7 @@ function useCarousel() {
 
 const Carousel = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & CarouselProps
+  Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style"> & CarouselProps
 >(
   (
     {
@@ -50,7 +48,6 @@ const Carousel = React.forwardRef<
       opts,
       setApi,
       plugins,
-      className,
       children,
       ...props
     },
@@ -135,10 +132,10 @@ const Carousel = React.forwardRef<
         <div
           ref={ref}
           onKeyDownCapture={handleKeyDown}
-          className={cn("relative", className)}
           role="region"
           aria-roledescription="carousel"
           {...props}
+          {...stylex.props(styles.root)}
         >
           {children}
         </div>
@@ -150,20 +147,19 @@ Carousel.displayName = "Carousel"
 
 const CarouselContent = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
+  Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style">
+>((props, ref) => {
   const { carouselRef, orientation } = useCarousel()
 
   return (
-    <div ref={carouselRef} className="overflow-hidden">
+    <div ref={carouselRef} {...stylex.props(styles.viewport)}>
       <div
         ref={ref}
-        className={cn(
-          "flex",
-          orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
-          className
-        )}
         {...props}
+        {...stylex.props(
+          styles.content,
+          orientation === "horizontal" ? styles.contentHorizontal : styles.contentVertical
+        )}
       />
     </div>
   )
@@ -172,8 +168,8 @@ CarouselContent.displayName = "CarouselContent"
 
 const CarouselItem = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
+  Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style">
+>((props, ref) => {
   const { orientation } = useCarousel()
 
   return (
@@ -181,12 +177,11 @@ const CarouselItem = React.forwardRef<
       ref={ref}
       role="group"
       aria-roledescription="slide"
-      className={cn(
-        "min-w-0 shrink-0 grow-0 basis-full",
-        orientation === "horizontal" ? "pl-4" : "pt-4",
-        className
-      )}
       {...props}
+      {...stylex.props(
+        styles.item,
+        orientation === "horizontal" ? styles.itemHorizontal : styles.itemVertical
+      )}
     />
   )
 })
@@ -194,61 +189,150 @@ CarouselItem.displayName = "CarouselItem"
 
 const CarouselPrevious = React.forwardRef<
   HTMLButtonElement,
-  React.ComponentProps<typeof Button>
->(({ className, variant = "ghost", size = "icon", ...props }, ref) => {
+  Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "className" | "style">
+>((props, ref) => {
   const { orientation, scrollPrev, canScrollPrev } = useCarousel()
 
   return (
-    <Button
+    <button
       ref={ref}
-      variant={variant}
-      size={size}
-      className={cn(
-        "absolute  h-[var(--size-md)] w-[var(--size-md)] rounded-full",
-        orientation === "horizontal"
-          ? "-left-12 top-1/2 -translate-y-1/2"
-          : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
-        className
-      )}
       disabled={!canScrollPrev}
       onClick={scrollPrev}
       {...props}
+      {...stylex.props(
+        styles.control,
+        orientation === "horizontal" ? styles.previousHorizontal : styles.previousVertical
+      )}
     >
-      <ArrowLeft className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
-      <span className="sr-only">Previous slide</span>
-    </Button>
+      <ArrowLeft {...stylex.props(styles.controlIcon)} />
+      <span {...stylex.props(styles.srOnly)}>Previous slide</span>
+    </button>
   )
 })
 CarouselPrevious.displayName = "CarouselPrevious"
 
 const CarouselNext = React.forwardRef<
   HTMLButtonElement,
-  React.ComponentProps<typeof Button>
->(({ className, variant = "ghost", size = "icon", ...props }, ref) => {
+  Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "className" | "style">
+>((props, ref) => {
   const { orientation, scrollNext, canScrollNext } = useCarousel()
 
   return (
-    <Button
+    <button
       ref={ref}
-      variant={variant}
-      size={size}
-      className={cn(
-        "absolute h-[var(--size-md)] w-[var(--size-md)] rounded-full",
-        orientation === "horizontal"
-          ? "-right-12 top-1/2 -translate-y-1/2"
-          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
-        className
-      )}
       disabled={!canScrollNext}
       onClick={scrollNext}
       {...props}
+      {...stylex.props(
+        styles.control,
+        orientation === "horizontal" ? styles.nextHorizontal : styles.nextVertical
+      )}
     >
-      <ArrowRight className="h-[var(--size-xxs)] w-[var(--size-xxs)]" />
-      <span className="sr-only">Next slide</span>
-    </Button>
+      <ArrowRight {...stylex.props(styles.controlIcon)} />
+      <span {...stylex.props(styles.srOnly)}>Next slide</span>
+    </button>
   )
 })
 CarouselNext.displayName = "CarouselNext"
+
+const controlOffset = "calc((var(--size-xl) + var(--spacing-md)) * -1)"
+
+const styles = stylex.create({
+  root: {
+    position: "relative",
+  },
+  viewport: {
+    overflow: "hidden",
+  },
+  content: {
+    display: "flex",
+  },
+  contentHorizontal: {
+    marginLeft: "calc(var(--spacing-md) * -1)",
+  },
+  contentVertical: {
+    flexDirection: "column",
+    marginTop: "calc(var(--spacing-md) * -1)",
+  },
+  item: {
+    flexBasis: "100%",
+    flexGrow: 0,
+    flexShrink: 0,
+    minWidth: 0,
+  },
+  itemHorizontal: {
+    paddingLeft: "var(--spacing-md)",
+  },
+  itemVertical: {
+    paddingTop: "var(--spacing-md)",
+  },
+  control: {
+    alignItems: "center",
+    backgroundColor: "transparent",
+    borderWidth: 0,
+    borderRadius: "var(--radius-radius-full)",
+    color: "var(--action-tertiary-fg)",
+    display: "inline-flex",
+    fontSize: "var(--font-size-sm)",
+    fontWeight: 400,
+    gap: "var(--spacing-xs)",
+    height: "var(--size-md)",
+    justifyContent: "center",
+    position: "absolute",
+    transitionDuration: "150ms",
+    transitionProperty: "background-color, color, opacity",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    whiteSpace: "nowrap",
+    width: "var(--size-md)",
+    ":hover": {
+      backgroundColor: "var(--action-tertiary-bg-hover)",
+      color: "var(--action-tertiary-fg-active)",
+    },
+    ":focus-visible": {
+      boxShadow: "0 0 0 1px var(--interactive-border), 0 0 0 2px var(--container-bg)",
+      outlineStyle: "none",
+    },
+    ":disabled": {
+      opacity: 0.5,
+      pointerEvents: "none",
+    },
+  },
+  previousHorizontal: {
+    left: controlOffset,
+    top: "50%",
+    transform: "translateY(-50%)",
+  },
+  previousVertical: {
+    left: "50%",
+    top: controlOffset,
+    transform: "translateX(-50%) rotate(90deg)",
+  },
+  nextHorizontal: {
+    right: controlOffset,
+    top: "50%",
+    transform: "translateY(-50%)",
+  },
+  nextVertical: {
+    bottom: controlOffset,
+    left: "50%",
+    transform: "translateX(-50%) rotate(90deg)",
+  },
+  controlIcon: {
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
+  },
+  srOnly: {
+    borderWidth: 0,
+    clip: "rect(0, 0, 0, 0)",
+    height: 1,
+    margin: -1,
+    overflow: "hidden",
+    padding: 0,
+    position: "absolute",
+    whiteSpace: "nowrap",
+    width: 1,
+  },
+})
 
 export {
   type CarouselApi,

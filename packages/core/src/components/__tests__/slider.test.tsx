@@ -20,8 +20,8 @@ describe("Slider", () => {
     expect(screen.getByRole("slider")).toHaveAttribute("data-disabled");
   });
 
-  it("forwards className", () => {
-    const { container } = render(<Slider defaultValue={[50]} className="custom" />);
-    expect(container.firstChild).toHaveClass("custom");
+  it("does not forward className overrides", () => {
+    const { container } = render(<Slider defaultValue={[50]} {...({ className: "custom" } as never)} />);
+    expect(container.firstChild).not.toHaveClass("custom");
   });
 });

@@ -17,8 +17,8 @@ describe("Banner", () => {
     expect(container.firstChild).toBeInTheDocument();
   });
 
-  it("forwards className", () => {
-    const { container } = render(<Banner className="extra">Notice</Banner>);
-    expect(container.firstChild).toHaveClass("extra");
+  it("does not forward className overrides", () => {
+    const { container } = render(<Banner {...({ className: "extra" } as never)}>Notice</Banner>);
+    expect(container.firstChild).not.toHaveClass("extra");
   });
 });

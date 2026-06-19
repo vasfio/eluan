@@ -1,6 +1,7 @@
 import * as React from "react"
 import { countries as countriesData, getEmojiFlag, type TCountryCode } from "countries-list"
-import { cn } from "@/lib/utils"
+import * as stylex from "@stylexjs/stylex"
+
 import { Input } from "./input"
 import { Select, SelectContent, SelectItem, SelectTrigger } from "./select"
 
@@ -21,7 +22,7 @@ const defaultCountries: Country[] = Object.entries(countriesData)
   .sort((a, b) => a.name.localeCompare(b.name))
 
 export interface PhoneInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "value" | "onChange"> {
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "className" | "size" | "style" | "type" | "value" | "onChange"> {
   countries?: Country[]
   defaultCountry?: string
   value?: string
@@ -29,10 +30,31 @@ export interface PhoneInputProps
   onCountryChange?: (country: Country) => void
 }
 
+const styles = stylex.create({
+  root: {
+    display: "flex",
+  },
+  triggerContent: {
+    alignItems: "center",
+    display: "flex",
+    gap: "var(--spacing-xxs)",
+  },
+  countryRow: {
+    alignItems: "center",
+    display: "flex",
+    gap: "var(--spacing-sm)",
+  },
+  countryName: {
+    flex: 1,
+  },
+  dialCode: {
+    color: "var(--interactive-fg-alt)",
+  },
+})
+
 const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
   (
     {
-      className,
       countries = defaultCountries,
       defaultCountry = "US",
       value,
@@ -70,29 +92,29 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
     }
 
     return (
-      <div className="flex">
+      <div {...stylex.props(styles.root)}>
         <Select
           value={selectedCountry.code}
           onValueChange={handleCountryChange}
           disabled={disabled}
         >
-          <SelectTrigger className="w-auto min-w-24 shrink-0 !rounded-r-none gap-[var(--spacing-xxs)]">
-            <span className="flex items-center gap-[var(--spacing-xxs)]">
+          <SelectTrigger variant="countryCode">
+            <span {...stylex.props(styles.triggerContent)}>
               <span>{selectedCountry.flag}</span>
-              <span className="text-[color:var(--interactive-fg-alt)]">{selectedCountry.dialCode}</span>
+              <span {...stylex.props(styles.dialCode)}>{selectedCountry.dialCode}</span>
             </span>
           </SelectTrigger>
-          <SelectContent className={cn("min-w-[280px]", "[&_[role=listbox]]:min-w-0 [&_[role=listbox]]:w-auto")}>
+          <SelectContent layout="country">
             {countries.map((country) => (
               <SelectItem
                 key={country.code}
                 value={country.code}
                 textValue={`${country.name} ${country.dialCode}`}
               >
-                <span className="flex items-center gap-[var(--spacing-sm)]">
+                <span {...stylex.props(styles.countryRow)}>
                   <span>{country.flag}</span>
-                  <span className="flex-1">{country.name}</span>
-                  <span className="text-[color:var(--interactive-fg-alt)]">{country.dialCode}</span>
+                  <span {...stylex.props(styles.countryName)}>{country.name}</span>
+                  <span {...stylex.props(styles.dialCode)}>{country.dialCode}</span>
                 </span>
               </SelectItem>
             ))}
@@ -102,7 +124,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
           type="tel"
           icon={null}
           ref={ref}
-          className={cn("flex-1 [&_input]:rounded-l-none [&_input]:border-l-0", className)}
+          attachment="start"
           value={phoneNumber}
           onChange={handlePhoneChange}
           disabled={disabled}

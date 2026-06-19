@@ -8,8 +8,10 @@ describe("ScrollArea", () => {
     expect(screen.getByText("Scrollable content")).toBeInTheDocument();
   });
 
-  it("forwards className", () => {
-    const { container } = render(<ScrollArea className="h-64"><p>Content</p></ScrollArea>);
-    expect(container.firstChild).toHaveClass("h-64");
+  it("does not forward className overrides", () => {
+    const { container } = render(
+      <ScrollArea {...({ className: "h-64" } as never)}><p>Content</p></ScrollArea>
+    );
+    expect(container.querySelector(".h-64")).toBeNull();
   });
 });

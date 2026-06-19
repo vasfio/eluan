@@ -1,4 +1,5 @@
 import * as React from "react"
+import * as stylex from "@stylexjs/stylex"
 import Prism from "prismjs"
 import "prismjs/components/prism-javascript"
 import "prismjs/components/prism-typescript"
@@ -15,8 +16,6 @@ import "prismjs/components/prism-sql"
 import "prismjs/components/prism-markdown"
 import "prismjs/components/prism-yaml"
 import { Check, Copy } from "lucide-react"
-
-import { cn } from "@/lib/utils"
 
 type Language =
   | "javascript"
@@ -35,7 +34,8 @@ type Language =
   | "yaml"
   | "text"
 
-export interface CodeBlockProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface CodeBlockProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style"> {
   code: string
   language?: Language
   showLineNumbers?: boolean
@@ -49,7 +49,6 @@ export interface CodeBlockProps extends React.HTMLAttributes<HTMLDivElement> {
 const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
   (
     {
-      className,
       code: codeProp,
       language: languageProp = "text",
       showLineNumbers = false,
@@ -65,18 +64,13 @@ const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
     const [highlightedCode, setHighlightedCode] = React.useState("")
     const [activeLangIndex, setActiveLangIndex] = React.useState(0)
 
-    // Resolve the active code and language from either the languages array or the single props
     const activeCode = languages ? languages[activeLangIndex].code : codeProp
     const activeLanguage = languages ? languages[activeLangIndex].language : languageProp
 
     React.useEffect(() => {
       if (activeLanguage !== "text") {
         const grammar = Prism.languages[activeLanguage]
-        if (grammar) {
-          setHighlightedCode(Prism.highlight(activeCode, grammar, activeLanguage))
-        } else {
-          setHighlightedCode(activeCode)
-        }
+        setHighlightedCode(grammar ? Prism.highlight(activeCode, grammar, activeLanguage) : activeCode)
       } else {
         setHighlightedCode(activeCode)
       }
@@ -94,30 +88,25 @@ const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
     return (
       <div
         ref={ref}
-        className={cn(
-          "relative rounded-lg border bg-muted/50 text-[length:var(--font-size-sm)]",
-          className
-        )}
         {...props}
+        {...stylex.props(styles.root)}
       >
         {showHeader && (
-          <div className="flex items-center justify-between border-b px-4 py-2 gap-2">
-            <div className="flex items-center gap-2 overflow-x-auto">
+          <div {...stylex.props(styles.header)}>
+            <div {...stylex.props(styles.headerMeta)}>
               {filename && (
-                <span className="text-[length:var(--font-size-xs)] text-muted-foreground shrink-0">{filename}</span>
+                <span {...stylex.props(styles.filename)}>{filename}</span>
               )}
               {languages && languages.length > 1 && (
-                <div className="flex items-center gap-0.5 rounded-md bg-muted p-0.5">
+                <div {...stylex.props(styles.languageTabs)}>
                   {languages.map((lang, idx) => (
                     <button
                       key={lang.language + idx}
                       type="button"
                       onClick={() => setActiveLangIndex(idx)}
-                      className={cn(
-                        "rounded px-2 py-0.5 text-[length:var(--font-size-xs)] font-medium transition-colors",
-                        idx === activeLangIndex
-                          ? "bg-background text-foreground shadow-sm"
-                          : "text-muted-foreground hover:text-foreground"
+                      {...stylex.props(
+                        styles.languageButton,
+                        idx === activeLangIndex ? styles.languageButtonActive : styles.languageButtonInactive
                       )}
                     >
                       {lang.label ?? lang.language}
@@ -130,16 +119,16 @@ const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
               <button
                 type="button"
                 onClick={handleCopy}
-                className="ml-auto flex items-center gap-1 rounded px-2 py-1 text-[length:var(--font-size-xs)] text-muted-foreground hover:bg-muted hover:text-foreground shrink-0"
+                {...stylex.props(styles.copyButton)}
               >
                 {copied ? (
                   <>
-                    <Check className="h-3 w-3" />
+                    <Check {...stylex.props(styles.buttonIcon)} />
                     Copied
                   </>
                 ) : (
                   <>
-                    <Copy className="h-3 w-3" />
+                    <Copy {...stylex.props(styles.buttonIcon)} />
                     Copy
                   </>
                 )}
@@ -147,20 +136,19 @@ const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
             )}
           </div>
         )}
-        <div className="overflow-x-auto p-4">
-          <pre className={cn("font-mono text-[length:var(--font-size-sm)]", `language-${activeLanguage}`)}>
+        <div {...stylex.props(styles.scroller)}>
+          <pre className={`${sx(styles.pre)} language-${activeLanguage}`}>
             <code className={`language-${activeLanguage}`}>
               {lines.map((line, index) => (
                 <div
                   key={index}
-                  className={cn(
-                    "leading-6",
-                    highlightLines.includes(index + 1) &&
-                      "bg-yellow-500/20 -mx-4 px-4"
+                  {...stylex.props(
+                    styles.line,
+                    highlightLines.includes(index + 1) && styles.highlightedLine
                   )}
                 >
                   {showLineNumbers && (
-                    <span className="mr-4 inline-block w-8 select-none text-right text-muted-foreground">
+                    <span {...stylex.props(styles.lineNumber)}>
                       {index + 1}
                     </span>
                   )}
@@ -175,5 +163,124 @@ const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
   }
 )
 CodeBlock.displayName = "CodeBlock"
+
+function sx(...stylesToApply: stylex.StyleXStyles[]) {
+  return stylex.props(...stylesToApply).className ?? ""
+}
+
+const styles = stylex.create({
+  root: {
+    backgroundColor: "var(--container-bg-alt)",
+    borderColor: "var(--container-border)",
+    borderRadius: "var(--curves-lg)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    color: "var(--container-fg)",
+    fontSize: "var(--font-size-sm)",
+    position: "relative",
+  },
+  header: {
+    alignItems: "center",
+    borderBottomColor: "var(--container-border)",
+    borderBottomStyle: "solid",
+    borderBottomWidth: 1,
+    display: "flex",
+    gap: "var(--spacing-sm)",
+    justifyContent: "space-between",
+    paddingBlock: "var(--spacing-sm)",
+    paddingInline: "var(--spacing-md)",
+  },
+  headerMeta: {
+    alignItems: "center",
+    display: "flex",
+    gap: "var(--spacing-sm)",
+    overflowX: "auto",
+  },
+  filename: {
+    color: "var(--container-fg-alt)",
+    flexShrink: 0,
+    fontSize: "var(--font-size-xs)",
+  },
+  languageTabs: {
+    alignItems: "center",
+    backgroundColor: "var(--interactive-bg-alt)",
+    borderRadius: "var(--curves-md)",
+    display: "flex",
+    gap: "var(--spacing-xxs)",
+    padding: "var(--spacing-xxs)",
+  },
+  languageButton: {
+    borderWidth: 0,
+    borderRadius: "var(--curves-sm)",
+    cursor: "pointer",
+    fontSize: "var(--font-size-xs)",
+    fontWeight: 500,
+    paddingBlock: "var(--spacing-xxs)",
+    paddingInline: "var(--spacing-sm)",
+    transitionDuration: "150ms",
+    transitionProperty: "background-color, color, box-shadow",
+    transitionTimingFunction: "ease",
+  },
+  languageButtonActive: {
+    backgroundColor: "var(--interactive-bg-selected)",
+    boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+    color: "var(--interactive-fg-selected)",
+  },
+  languageButtonInactive: {
+    backgroundColor: "transparent",
+    color: "var(--interactive-fg-alt)",
+    ":hover": {
+      color: "var(--interactive-fg)",
+    },
+  },
+  copyButton: {
+    alignItems: "center",
+    backgroundColor: "transparent",
+    borderRadius: "var(--curves-sm)",
+    borderWidth: 0,
+    color: "var(--interactive-fg-alt)",
+    cursor: "pointer",
+    display: "flex",
+    flexShrink: 0,
+    fontSize: "var(--font-size-xs)",
+    gap: "var(--spacing-xxs)",
+    marginLeft: "auto",
+    paddingBlock: "var(--spacing-xs)",
+    paddingInline: "var(--spacing-sm)",
+    ":hover": {
+      backgroundColor: "var(--interactive-bg-hover)",
+      color: "var(--interactive-fg)",
+    },
+  },
+  buttonIcon: {
+    height: 12,
+    width: 12,
+  },
+  scroller: {
+    overflowX: "auto",
+    padding: "var(--spacing-md)",
+  },
+  pre: {
+    fontFamily: "var(--font-mono)",
+    fontSize: "var(--font-size-sm)",
+    marginBlock: 0,
+  },
+  line: {
+    lineHeight: "1.5rem",
+  },
+  highlightedLine: {
+    backgroundColor: "var(--cautionary-bg-alt)",
+    marginInline: "calc(var(--spacing-md) * -1)",
+    paddingInline: "var(--spacing-md)",
+  },
+  lineNumber: {
+    color: "var(--container-fg-alt)",
+    display: "inline-block",
+    marginRight: "var(--spacing-md)",
+    textAlign: "right",
+    userSelect: "none",
+    width: "var(--size-xl)",
+  },
+})
 
 export { CodeBlock }

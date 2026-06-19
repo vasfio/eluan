@@ -1,36 +1,72 @@
 import * as React from "react"
 import * as SwitchPrimitives from "@radix-ui/react-switch"
+import * as stylex from "@stylexjs/stylex"
 
-import { cn } from "@/lib/utils"
+type SwitchProps = Omit<
+  React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>,
+  "className" | "style"
+>
+
+const styles = stylex.create({
+  root: {
+    alignItems: "center",
+    borderStyle: "solid",
+    borderWidth: 2,
+    cursor: "pointer",
+    display: "inline-flex",
+    flexShrink: 0,
+    height: "var(--size-xs)",
+    borderRadius: "var(--radius-radius-full)",
+    transitionDuration: "150ms",
+    transitionProperty: "color, background-color, border-color",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    width: "var(--size-lg)",
+    ":focus-visible": {
+      outlineColor: "var(--interactive-border)",
+      outlineOffset: "1px",
+      outlineStyle: "solid",
+      outlineWidth: "1px",
+    },
+    ":disabled": {
+      backgroundColor: "var(--interactive-bg-disabled)",
+      color: "var(--interactive-fg-disabled)",
+      cursor: "not-allowed",
+    },
+    "[data-state=checked]": {
+      backgroundColor: "var(--interactive-bg-selected)",
+      borderColor: "var(--interactive-bg-selected)",
+    },
+    "[data-state=unchecked]": {
+      backgroundColor: "var(--interactive-border-alt)",
+      borderColor: "var(--interactive-border-alt)",
+    },
+  },
+  thumb: {
+    backgroundColor: "var(--interactive-bg)",
+    borderRadius: "var(--radius-radius-full)",
+    boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+    display: "block",
+    height: "var(--size-xxs)",
+    pointerEvents: "none",
+    transitionDuration: "150ms",
+    transitionProperty: "transform",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    width: "var(--size-xxs)",
+    "[data-state=checked]": {
+      transform: "translateX(calc(var(--size-lg) - var(--size-xxs) - 4px))",
+    },
+    "[data-state=unchecked]": {
+      transform: "translateX(0)",
+    },
+  },
+})
 
 const Switch = React.forwardRef<
   React.ElementRef<typeof SwitchPrimitives.Root>,
-  React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>
->(({ className, ...props }, ref) => (
-  <SwitchPrimitives.Root
-    className={cn(
-      // The 2px border preserves the thumb's stable offset across spacing
-      // densities. Its color must match the active track bg so it reads as a
-      // single solid pill rather than a haloed selection state.
-      "peer inline-flex h-[var(--size-xs)] w-[var(--size-lg)] shrink-0 cursor-pointer items-center rounded-full border-2",
-      "transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1 focus-visible:ring-offset-background",
-      "disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[color:var(--interactive-fg-disabled)]",
-      "data-[state=checked]:bg-[var(--interactive-bg-selected)] data-[state=checked]:border-[var(--interactive-bg-selected)]",
-      "data-[state=unchecked]:bg-[var(--interactive-border-alt)] data-[state=unchecked]:border-[var(--interactive-border-alt)]",
-      className
-    )}
-    {...props}
-    ref={ref}
-  >
-    <SwitchPrimitives.Thumb
-      className={cn(
-        "pointer-events-none block h-[var(--size-xxs)] w-[var(--size-xxs)] rounded-full bg-[var(--interactive-bg)] shadow-sm ring-0 transition-transform",
-        // Translate by (track inner width − thumb width) so the right padding
-        // when checked matches the left padding when unchecked across all
-        // spacing densities. 4px accounts for the 2px transparent border on each side.
-        "data-[state=checked]:translate-x-[calc(var(--size-lg)-var(--size-xxs)-4px)] data-[state=unchecked]:translate-x-0"
-      )}
-    />
+  SwitchProps
+>((props, ref) => (
+  <SwitchPrimitives.Root ref={ref} {...props} {...stylex.props(styles.root)}>
+    <SwitchPrimitives.Thumb {...stylex.props(styles.thumb)} />
   </SwitchPrimitives.Root>
 ))
 Switch.displayName = SwitchPrimitives.Root.displayName

@@ -1,11 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { AspectRatio } from "./aspect-ratio"
-import { cn } from "@/lib/utils"
 
-const MeshGradient = ({ className }: { className?: string }) => (
+const MeshGradient = () => (
   <div
-    className={cn("w-full h-full", className)}
     style={{
+      borderRadius: "var(--curves-md)",
       background: `
         radial-gradient(at 40% 20%, var(--action-primary-bg) 0px, transparent 50%),
         radial-gradient(at 80% 0%, var(--informative-bg) 0px, transparent 50%),
@@ -14,6 +13,8 @@ const MeshGradient = ({ className }: { className?: string }) => (
         radial-gradient(at 0% 100%, var(--action-primary-bg) 0px, transparent 50%),
         var(--backgrounds-secondary)
       `,
+      height: "100%",
+      width: "100%",
     }}
   />
 )
@@ -64,7 +65,7 @@ export const Default: Story = {
   render: () => (
     <div className="w-[450px]">
       <AspectRatio ratio={16 / 9}>
-        <MeshGradient className="rounded-[var(--curves-md)]" />
+        <MeshGradient />
       </AspectRatio>
     </div>
   ),
@@ -81,7 +82,7 @@ export const Square: Story = {
   render: () => (
     <div className="w-[300px]">
       <AspectRatio ratio={1}>
-        <MeshGradient className="rounded-[var(--curves-md)]" />
+        <MeshGradient />
       </AspectRatio>
     </div>
   ),
@@ -98,7 +99,7 @@ export const Portrait: Story = {
   render: () => (
     <div className="w-[200px]">
       <AspectRatio ratio={3 / 4}>
-        <MeshGradient className="rounded-[var(--curves-md)]" />
+        <MeshGradient />
       </AspectRatio>
     </div>
   ),
@@ -117,19 +118,19 @@ export const Ratios: Story = {
       <div className="w-[200px]">
         <p className="text-[length:var(--font-size-sm)] mb-[var(--spacing-xs)]">16:9</p>
         <AspectRatio ratio={16 / 9}>
-          <MeshGradient className="rounded-[var(--curves-md)]" />
+          <MeshGradient />
         </AspectRatio>
       </div>
       <div className="w-[200px]">
         <p className="text-[length:var(--font-size-sm)] mb-[var(--spacing-xs)]">4:3</p>
         <AspectRatio ratio={4 / 3}>
-          <MeshGradient className="rounded-[var(--curves-md)]" />
+          <MeshGradient />
         </AspectRatio>
       </div>
       <div className="w-[200px]">
         <p className="text-[length:var(--font-size-sm)] mb-[var(--spacing-xs)]">1:1</p>
         <AspectRatio ratio={1}>
-          <MeshGradient className="rounded-[var(--curves-md)]" />
+          <MeshGradient />
         </AspectRatio>
       </div>
     </div>

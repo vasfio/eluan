@@ -1,46 +1,87 @@
 import * as React from "react"
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group"
+import * as stylex from "@stylexjs/stylex"
 
-import { cn } from "@/lib/utils"
+type RadioGroupProps = Omit<
+  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>,
+  "className" | "style"
+>
+
+type RadioGroupItemProps = Omit<
+  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item>,
+  "className" | "style"
+>
+
+const styles = stylex.create({
+  root: {
+    display: "grid",
+    gap: "var(--spacing-sm)",
+  },
+  item: {
+    aspectRatio: "1 / 1",
+    backgroundColor: "transparent",
+    borderColor: "var(--interactive-border-alt)",
+    borderRadius: "var(--radius-radius-full)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    height: "var(--size-xxs)",
+    transitionDuration: "150ms",
+    transitionProperty: "color, background-color, border-color",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    width: "var(--size-xxs)",
+    ":hover": {
+      backgroundColor: "var(--interactive-bg-hover)",
+    },
+    ":focus": {
+      outlineStyle: "none",
+    },
+    ":focus-visible": {
+      outlineColor: "var(--interactive-border)",
+      outlineOffset: "1px",
+      outlineStyle: "solid",
+      outlineWidth: "1px",
+    },
+    ":disabled": {
+      backgroundColor: "var(--interactive-bg-disabled)",
+      color: "var(--interactive-fg-disabled)",
+      cursor: "not-allowed",
+    },
+    "[data-state=checked]": {
+      backgroundColor: "var(--interactive-bg-selected)",
+      borderColor: "var(--interactive-bg-selected)",
+    },
+  },
+  indicator: {
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "center",
+  },
+  dot: {
+    backgroundColor: "var(--interactive-bg)",
+    borderRadius: "var(--radius-radius-full)",
+    height: "calc(var(--spacing-xs) + var(--spacing-xxs))",
+    width: "calc(var(--spacing-xs) + var(--spacing-xxs))",
+  },
+})
 
 const RadioGroup = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>
->(({ className, ...props }, ref) => {
-  return (
-    <RadioGroupPrimitive.Root
-      className={cn("grid gap-2", className)}
-      {...props}
-      ref={ref}
-    />
-  )
-})
+  RadioGroupProps
+>((props, ref) => (
+  <RadioGroupPrimitive.Root ref={ref} {...props} {...stylex.props(styles.root)} />
+))
 RadioGroup.displayName = RadioGroupPrimitive.Root.displayName
 
 const RadioGroupItem = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item>
->(({ className, ...props }, ref) => {
-  return (
-    <RadioGroupPrimitive.Item
-      ref={ref}
-      className={cn(
-        "aspect-square h-[var(--size-xxs)] w-[var(--size-xxs)] rounded-full border border-[var(--interactive-border-alt)]",
-        "ring-offset-background transition-colors",
-        "hover:bg-[var(--interactive-bg-hover)]",
-        "focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--interactive-border)] focus-visible:ring-offset-1",
-        "disabled:cursor-not-allowed disabled:bg-[var(--interactive-bg-disabled)] disabled:text-[color:var(--interactive-fg-disabled)]",
-        "data-[state=checked]:border-[var(--interactive-bg-selected)] data-[state=checked]:bg-[var(--interactive-bg-selected)]",
-        className
-      )}
-      {...props}
-    >
-      <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
-        <div className="h-1.5 w-1.5 rounded-full bg-[var(--interactive-bg)]" />
-      </RadioGroupPrimitive.Indicator>
-    </RadioGroupPrimitive.Item>
-  )
-})
+  RadioGroupItemProps
+>((props, ref) => (
+  <RadioGroupPrimitive.Item ref={ref} {...props} {...stylex.props(styles.item)}>
+    <RadioGroupPrimitive.Indicator {...stylex.props(styles.indicator)}>
+      <div {...stylex.props(styles.dot)} />
+    </RadioGroupPrimitive.Indicator>
+  </RadioGroupPrimitive.Item>
+))
 RadioGroupItem.displayName = RadioGroupPrimitive.Item.displayName
 
 export { RadioGroup, RadioGroupItem }
