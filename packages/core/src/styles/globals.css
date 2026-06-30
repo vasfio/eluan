@@ -1,66 +1,7 @@
-/* Ragnar Design System Tokens (Primitives → Modes → Themes) */
-@layer tailwind, priority1, priority2, priority3, priority4, priority5, priority6, priority7, priority8, priority9, priority10;
+/* Ragnar Design System Tokens (Primitives -> Modes -> Themes) */
+@layer base, priority1, priority2, priority3, priority4, priority5, priority6, priority7, priority8, priority9, priority10;
 
 @import "@vasf/ragnar-tokens/css";
-
-@import "tailwindcss" layer(tailwind);
-
-@plugin "tailwindcss-animate";
-
-/* Dark mode via data-mode attribute */
-@custom-variant dark (&:where([data-mode="dark"], [data-mode="dark"] *));
-
-/* Scan core component sources */
-@source "../**/*.{ts,tsx}";
-
-/* ============================================
- * Theme Tokens — maps CSS variables to Tailwind utilities
- * ============================================ */
-@theme inline {
-  /* Font families */
-  --font-heading: var(--font-heading);
-  --font-body: var(--font-body);
-  --font-mono: var(--font-mono);
-  --font-sans: var(--font-body);
-
-  /* Legacy shadcn/ui color compatibility */
-  --color-border: var(--backgrounds-quaternary);
-  --color-input: var(--backgrounds-quaternary);
-  --color-ring: var(--interactive-fg);
-  --color-background: var(--backgrounds-primary);
-  --color-foreground: var(--foregrounds-primary);
-  --color-primary: var(--action-primary-bg);
-  --color-primary-foreground: var(--action-primary-fg);
-  --color-secondary: var(--backgrounds-tertiary);
-  --color-secondary-foreground: var(--foregrounds-secondary);
-  --color-destructive: var(--destructive-bg);
-  --color-destructive-foreground: var(--destructive-fg);
-  --color-muted: var(--backgrounds-tertiary);
-  --color-muted-foreground: var(--foregrounds-quaternary);
-  --color-accent: var(--backgrounds-tertiary);
-  --color-accent-foreground: var(--foregrounds-secondary);
-  --color-popover: var(--container-bg);
-  --color-popover-foreground: var(--container-fg);
-  --color-card: var(--container-bg);
-  --color-card-foreground: var(--container-fg);
-
-  /* Border radius — semantic (adapts to data-curves attribute) */
-  --radius-none: var(--radius-radius-none);
-  --radius-xxs: var(--curves-xxs);
-  --radius-xs: var(--curves-xs);
-  --radius-sm: var(--curves-sm);
-  --radius-md: var(--curves-md);
-  --radius-lg: var(--curves-lg);
-  --radius-xl: var(--curves-xl);
-  --radius-full: var(--radius-radius-full);
-
-  /* Keyframes */
-  --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
-  --animate-dropdown-unroll: dropdown-unroll 250ms cubic-bezier(0.16, 1, 0.3, 1);
-  --animate-dropdown-roll-up: dropdown-roll-up 180ms cubic-bezier(0.4, 0, 0.2, 1);
-  --animate-fade-in: fade-in 0.3s ease-out;
-}
 
 @keyframes accordion-down {
   from { height: 0; }
@@ -116,8 +57,43 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
 }
 
+[data-sonner-toaster].ragnar-toaster [data-sonner-toast].ragnar-toast {
+  gap: var(--spacing-sm) !important;
+  border-radius: var(--curves-md) !important;
+  padding: var(--spacing-md) !important;
+  font-family: var(--font-body) !important;
+  font-size: var(--font-size-sm) !important;
+}
+
+[data-sonner-toaster].ragnar-toaster .ragnar-toast-title {
+  font-family: var(--font-body) !important;
+  font-size: var(--font-size-sm) !important;
+  font-weight: 500 !important;
+}
+
 [data-sonner-toaster] [data-sonner-toast] [data-description] {
   color: var(--container-fg-alt) !important;
+}
+
+[data-sonner-toaster].ragnar-toaster .ragnar-toast-description {
+  font-family: var(--font-body) !important;
+  font-size: var(--font-size-sm) !important;
+  opacity: 0.8 !important;
+}
+
+[data-sonner-toaster].ragnar-toaster .ragnar-toast-action {
+  border-radius: var(--curves-sm) !important;
+  background-color: var(--action-primary-bg) !important;
+  color: var(--action-primary-fg) !important;
+  font-family: var(--font-body) !important;
+  font-weight: 500 !important;
+}
+
+[data-sonner-toaster].ragnar-toaster .ragnar-toast-cancel {
+  border-radius: var(--curves-sm) !important;
+  background-color: var(--action-tertiary-bg) !important;
+  color: var(--action-tertiary-fg) !important;
+  font-family: var(--font-body) !important;
 }
 
 [data-sonner-toaster] [data-sonner-toast][data-type="success"] {
@@ -282,16 +258,11 @@ code[class*="language-"] .token.italic {
  * ============================================ */
 @layer base {
   * {
-    border-color: var(--color-border, var(--backgrounds-quaternary));
-    /* Cap font weight at medium (500) system-wide */
-    font-weight: min(var(--tw-font-weight, 400), 500);
-  }
-  body {
-    background-color: var(--color-background, var(--backgrounds-primary));
-    color: var(--color-foreground, var(--foregrounds-primary));
     font-weight: 400;
   }
-  /* Headings cap at medium */
+  body {
+    font-weight: 400;
+  }
   h1, h2, h3, h4, h5, h6 {
     font-weight: 500;
   }

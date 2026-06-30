@@ -16,7 +16,6 @@
     "design-tokens",
     "css-variables",
     "theme",
-    "tailwindcss",
     "ragnar"
   ],
   "sideEffects": [
@@ -35,12 +34,7 @@
     "./fonts/all": "./dist/fonts.css",
     "./fonts/base": "./dist/fonts-base.css",
     "./fonts/industrial-retro": "./dist/fonts-industrial-retro.css",
-    "./fonts/minimal": "./dist/fonts-minimal.css",
-    "./tailwind": {
-      "types": "./dist/tailwind.d.ts",
-      "import": "./dist/tailwind.js",
-      "require": "./dist/tailwind.js"
-    }
+    "./fonts/minimal": "./dist/fonts-minimal.css"
   },
   "files": [
     "dist"
@@ -53,7 +47,6 @@
     "dev": "tsc --watch"
   },
   "devDependencies": {
-    "tailwindcss": "^3.4.4",
     "typescript": "^5.4.5"
   },
   "dependencies": {

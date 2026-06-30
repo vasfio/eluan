@@ -37,14 +37,6 @@ import "@vasf/ragnar-tokens/fonts/minimal"
 import { themes, modes, type Theme } from "@vasf/ragnar-tokens"
 ```
 
-## Tailwind preset
-
-```ts
-// tailwind.config.ts
-import preset from "@vasf/ragnar-tokens/tailwind"
-export default { presets: [preset] }
-```
-
 ## Built-in themes
 
 `industrial-retro`, `minimal`. Define your own via `createTheme()` from `@vasf/ragnar-core`. See the [theming guide](https://github.com/frolda/ragnar/blob/main/docs/theming.md).

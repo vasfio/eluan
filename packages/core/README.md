@@ -1,6 +1,6 @@
 # @vasf/ragnar-core
 
-> Accessible, themeable React UI components, marketing patterns, and AI UX patterns — built on Radix UI primitives, Tailwind CSS v4, and CVA.
+> Accessible, themeable React UI components and marketing patterns — built on Radix UI primitives, StyleX, and Ragnar tokens.
 
 Part of the [Ragnar](https://github.com/frolda/ragnar) design system.
 

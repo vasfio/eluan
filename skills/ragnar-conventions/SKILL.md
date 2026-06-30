@@ -6,7 +6,7 @@ description: Ragnar design system coding conventions for building, editing, or a
 # Ragnar Conventions
 
 ## Repo structure
-- `packages/core/src/components/` — UI, marketing, and AI UX components
+- `packages/core/src/components/` — UI and marketing components
 - `packages/web/src/components/` — compatibility wrappers for Header, HeaderNavigation, and Footer
 - `packages/native/src/components/` — React Native components
 - Each component has a `.tsx` and a `.stories.tsx` file

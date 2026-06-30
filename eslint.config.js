@@ -25,7 +25,6 @@ export default [
       "**/*.config.{js,ts,mjs,cjs}",
       "**/vite.config.ts",
       "**/vitest.config.ts",
-      "**/tailwind.config.{js,ts}",
     ],
   },
 

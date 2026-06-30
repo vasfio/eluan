@@ -44,17 +44,11 @@ function createStorybookStylexCssPlugin(): Plugin {
 
           return source.includes("@layer priority")
         })
-        const target =
-          cssAssets.find((asset) => {
-            const source = asset.source?.toString() ?? ""
+        const target = cssAssets.find((asset) => {
+          const source = asset.source?.toString() ?? ""
 
-            return source.includes("tailwindcss") && source.includes("@layer tailwind")
-          }) ??
-          cssAssets.find((asset) => {
-            const source = asset.source?.toString() ?? ""
-
-            return source.includes("--container-bg") && source.includes("[data-theme")
-          })
+          return source.includes("--container-bg") && source.includes("[data-theme")
+        })
 
         if (!target || stylexAssets.length === 0) {
           return
@@ -104,15 +98,10 @@ function createStorybookStylexCssPlugin(): Plugin {
       const stylexFiles = readableCssFiles.filter((file) =>
         file.content.includes("@layer priority"),
       )
-      const target =
-        readableCssFiles.find(
-          (file) =>
-            file.content.includes("tailwindcss") && file.content.includes("@layer tailwind"),
-        ) ??
-        readableCssFiles.find(
-          (file) =>
-            file.content.includes("--container-bg") && file.content.includes("[data-theme"),
-        )
+      const target = readableCssFiles.find(
+        (file) =>
+          file.content.includes("--container-bg") && file.content.includes("[data-theme"),
+      )
 
       const targetHasStylexRules = /@layer priority\d+\s*\{[^}]*\.[\w-]+\s*\{/.test(
         target?.content ?? "",
@@ -158,11 +147,7 @@ export function createRagnarReactViteStorybookConfig({
       const stylexModule = await import(
         pathToFileURL(requireFromPackage.resolve("@stylexjs/unplugin")).href
       )
-      const tailwindcssModule = await import(
-        pathToFileURL(requireFromPackage.resolve("@tailwindcss/vite")).href
-      )
       const stylex = stylexModule.default ?? stylexModule
-      const tailwindcss = tailwindcssModule.default ?? tailwindcssModule
 
       return mergeConfig(
         config,
@@ -175,7 +160,6 @@ export function createRagnarReactViteStorybookConfig({
                 devPersistToDisk: true,
               }),
               createStorybookStylexCssPlugin(),
-              tailwindcss(),
             ],
             resolve: {
               alias: {

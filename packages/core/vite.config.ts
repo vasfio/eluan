@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import stylex from '@stylexjs/unplugin'
-import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 import { readdirSync } from 'fs'
 
@@ -32,7 +31,7 @@ const external = [
 ]
 
 export default defineConfig({
-  plugins: [stylex.vite({ useCSSLayers: true }), tailwindcss(), react()],
+  plugins: [stylex.vite({ useCSSLayers: true }), react()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

@@ -1,13 +1,13 @@
 # Ragnar Design System
 
-A multi-package design system monorepo built with React, Tailwind CSS v4, and Radix UI primitives. Ragnar provides a complete three-layer token architecture, core UI components, marketing patterns, AI UX patterns, and React Native components.
+A multi-package design system monorepo built with React, StyleX, and Radix UI primitives. Ragnar provides a complete three-layer token architecture, core UI components, marketing patterns, and React Native components.
 
 ## Packages
 
 | Package | Description | Version |
 |---------|-------------|---------|
 | [`@vasf/ragnar-tokens`](#vasfragnar-tokens) | Design tokens (colors, spacing, themes, fonts) | 0.1.2 |
-| [`@vasf/ragnar-core`](#vasfragnar-core) | UI components, marketing patterns, and AI UX patterns | 0.1.13 |
+| [`@vasf/ragnar-core`](#vasfragnar-core) | UI components and marketing patterns | 0.1.13 |
 | [`@vasf/ragnar-web`](#vasfragnar-web) | Compatibility exports for Header, HeaderNavigation, and Footer | 0.1.1 |
 | [`@vasf/ragnar-native`](#vasfragnar-native) | React Native components | 0.1.1 |
 
@@ -95,7 +95,7 @@ Build order matters: always build `tokens` first, then `core`, then compatibilit
 ragnar/
   packages/
     tokens/      @vasf/ragnar-tokens   Design tokens, CSS variables, fonts
-    core/        @vasf/ragnar-core     UI, marketing, and AI UX components
+    core/        @vasf/ragnar-core     UI and marketing components
     web/         @vasf/ragnar-web      Header/Footer compatibility facade
     native/      @vasf/ragnar-native   22 React Native component categories
   package.json   Root workspace config, scripts
@@ -287,27 +287,9 @@ import {
 } from "@vasf/ragnar-tokens"
 ```
 
-#### Tailwind CSS Preset (`@vasf/ragnar-tokens/tailwind`)
-
-A Tailwind v3 preset that maps all token CSS variables to Tailwind utility classes. Provides primitive and semantic color classes, custom spacing/sizing/screen utilities, border radius, and font families.
-
-```ts
-import { ragnarPreset } from "@vasf/ragnar-tokens/tailwind"
-
-// tailwind.config.js (v3)
-export default {
-  presets: [ragnarPreset],
-  // ...
-}
-```
-
-> **Note:** For Tailwind CSS v4 projects, the `@theme inline` blocks in core/web's `globals.css` handle theme registration directly. The preset is provided for backward compatibility or v3 consumers.
-
----
-
 ## `@vasf/ragnar-core`
 
-60+ UI components built on Radix UI primitives, styled with Tailwind CSS v4 and CVA (Class Variance Authority).
+60+ UI components built on Radix UI primitives, styled with StyleX and Ragnar tokens.
 
 ### Installation
 
@@ -321,7 +303,7 @@ bun add @vasf/ragnar-core @vasf/ragnar-tokens
 ### Setup
 
 ```tsx
-// 1. Import styles (includes token CSS + Tailwind utilities)
+// 1. Import styles (includes token CSS and component CSS)
 import "@vasf/ragnar-core/styles.css"
 
 // 2. Import fonts for your theme
@@ -369,58 +351,28 @@ import {
 } from "@vasf/ragnar-core"
 ```
 
-### The `cn()` Utility
-
-Combines `clsx` (conditional classes) with `tailwind-merge` (deduplication of conflicting Tailwind classes):
-
-```tsx
-import { cn } from "@vasf/ragnar-core"
-
-<div className={cn(
-  "flex items-center gap-2",
-  isActive && "bg-[var(--interactive-bg-selected)]",
-  className
-)} />
-```
-
 ### Individual Component Imports
 
 Every core component also has a package subpath entry so consumers can import only the module they need:
 
 ```tsx
 import { Button } from "@vasf/ragnar-core/button"
-import { AIPrompt } from "@vasf/ragnar-core/ai-prompt"
 import { Header } from "@vasf/ragnar-core/header"
 ```
 
-### Using CSS Variables in Components
+### Using CSS Variables
 
-Components reference design tokens via CSS variable arbitrary values. This is the primary pattern throughout the codebase:
+Components reference design tokens directly through CSS variables. Use plain CSS, inline styles, or StyleX objects:
 
 ```tsx
-// Direct variable references
-<div className="bg-[var(--container-bg)] text-[var(--container-fg)]" />
-
-// For border colors, use the color: hint to avoid Tailwind ambiguity
-<div className="border border-[color:var(--container-border-alt)]" />
-
-// Interactive states
-<button className="
-  bg-[var(--interactive-bg)]
-  hover:bg-[var(--interactive-bg-hover)]
-  active:bg-[var(--interactive-bg-active)]
-  disabled:bg-[var(--interactive-bg-disabled)]
-  disabled:text-[var(--interactive-fg-disabled)]
-" />
-
-// Semantic status colors
-<span className="text-[var(--destructive-fg)]" />   // errors
-<span className="text-[var(--positive-fg)]" />       // success
-<span className="text-[var(--cautionary-fg)]" />     // warnings
-<span className="text-[var(--informative-fg)]" />    // info
-
-// Spacing and curves tokens
-<div className="p-[var(--spacing-md)] rounded-[var(--curves-lg)]" />
+<div
+  style={{
+    backgroundColor: "var(--container-bg)",
+    color: "var(--container-fg)",
+    padding: "var(--spacing-md)",
+    borderRadius: "var(--curves-lg)",
+  }}
+/>
 ```
 
 ### Key Dependencies
@@ -592,96 +544,6 @@ function MyComponent() {
       <Text style={styles.title}>Hello</Text>
     </View>
   )
-}
-```
-
----
-
-## Tailwind CSS v4 Integration
-
-`@vasf/ragnar-core` is built with Tailwind CSS v4. If you're building your own app on top of Ragnar and need your own Tailwind setup:
-
-### Vite Setup
-
-```bash
-npm install tailwindcss @tailwindcss/vite
-yarn add tailwindcss @tailwindcss/vite
-pnpm add tailwindcss @tailwindcss/vite
-bun add tailwindcss @tailwindcss/vite
-```
-
-```ts
-// vite.config.ts
-import tailwindcss from "@tailwindcss/vite"
-import react from "@vitejs/plugin-react"
-
-export default defineConfig({
-  plugins: [tailwindcss(), react()],
-})
-```
-
-### CSS Entry Point
-
-```css
-/* app/globals.css */
-@import "@vasf/ragnar-tokens/css";
-@import "tailwindcss";
-
-@plugin "tailwindcss-animate";
-
-/* Dark mode via data-mode attribute (not .dark class) */
-@custom-variant dark (&:where([data-mode="dark"], [data-mode="dark"] *));
-
-/* Tell Tailwind where to scan for class usage */
-@source "../src/**/*.{ts,tsx}";
-
-/* Map Ragnar tokens to Tailwind utility classes */
-@theme inline {
-  /* Fonts */
-  --font-heading: var(--font-heading);
-  --font-body: var(--font-body);
-  --font-mono: var(--font-mono);
-  --font-sans: var(--font-body);
-
-  /* Colors (shadcn/ui compatibility layer) */
-  --color-background: var(--backgrounds-primary);
-  --color-foreground: var(--foregrounds-primary);
-  --color-primary: var(--action-primary-bg);
-  --color-primary-foreground: var(--action-primary-fg);
-  --color-secondary: var(--backgrounds-tertiary);
-  --color-secondary-foreground: var(--foregrounds-secondary);
-  --color-destructive: var(--destructive-bg);
-  --color-destructive-foreground: var(--destructive-fg);
-  --color-muted: var(--backgrounds-tertiary);
-  --color-muted-foreground: var(--foregrounds-quaternary);
-  --color-accent: var(--backgrounds-tertiary);
-  --color-accent-foreground: var(--foregrounds-secondary);
-  --color-popover: var(--container-bg);
-  --color-popover-foreground: var(--container-fg);
-  --color-card: var(--container-bg);
-  --color-card-foreground: var(--container-fg);
-  --color-border: var(--backgrounds-quaternary);
-  --color-input: var(--backgrounds-quaternary);
-  --color-ring: var(--interactive-fg);
-
-  /* Border radius (adapts to data-curves) */
-  --radius-sm: var(--curves-sm);
-  --radius-md: var(--curves-md);
-  --radius-lg: var(--curves-lg);
-}
-```
-
-### Storybook with Tailwind v4
-
-Because `@tailwindcss/vite` is an ESM-only package, import it dynamically in `.storybook/main.ts`:
-
-```ts
-// .storybook/main.ts
-viteFinal: async (config) => {
-  const tailwindcss = (await import("@tailwindcss/vite")).default
-  return mergeConfig(config, {
-    plugins: [tailwindcss()],
-  })
 }
 ```
 

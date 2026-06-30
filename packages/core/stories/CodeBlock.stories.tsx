@@ -146,7 +146,7 @@ export const JSON: Story = {
   "version": "1.0.0",
   "dependencies": {
     "react": "^18.0.0",
-    "tailwindcss": "^3.0.0"
+    "@stylexjs/stylex": "^0.19.0"
   }
 }`,
     language: "json",

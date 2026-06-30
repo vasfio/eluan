@@ -1,6 +1,6 @@
 ---
 name: ragnar-token-theme
-description: Work with Ragnar design tokens, theme CSS, modes, spacing density, curve scales, font loading, createTheme, custom theme support, or Tailwind token mappings. Use when editing packages/tokens/src/*.css, packages/tokens/src/index.ts, packages/tokens/src/tailwind.ts, RagnarProvider theme behavior, create-theme helpers, docs/theming.md, or any code involving data-theme, data-mode, data-spacing, data-curves, --container-bg, --interactive-border, --action-primary-bg, or similar semantic variables.
+description: Work with Ragnar design tokens, theme CSS, modes, spacing density, curve scales, font loading, createTheme, and custom theme support. Use when editing packages/tokens/src/*.css, packages/tokens/src/index.ts, RagnarProvider theme behavior, create-theme helpers, docs/theming.md, or any code involving data-theme, data-mode, data-spacing, data-curves, --container-bg, --interactive-border, --action-primary-bg, or similar semantic variables.
 ---
 
 # Ragnar Token Theme
@@ -30,9 +30,8 @@ When adding or renaming tokens:
 
 1. Add complete definitions for every built-in theme/mode/axis that should support the token.
 2. Update TypeScript exports in `packages/tokens/src/index.ts` when the public API changes.
-3. Update `packages/tokens/src/tailwind.ts` only when the Tailwind preset API changes.
-4. Update docs and examples that mention the changed token or axis.
-5. Search for the old name across `packages`, `docs`, and `README.md`.
+3. Update docs and examples that mention the changed token or axis.
+4. Search for the old name across `packages`, `docs`, and `README.md`.
 
 Prefer semantic names that describe usage, not color: `--interactive-border-alt`, not `--blue-border`.
 

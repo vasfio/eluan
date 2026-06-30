@@ -8,7 +8,7 @@ description: Scaffold a new Next.js web app using Vas's standard stack. Use when
 ## Stack
 - **Framework**: Next.js 15 (App Router, TypeScript)
 - **UI**: `@vasf/ragnar-core` (always `--legacy-peer-deps` due to React 19 peer dep)
-- **Styling**: Tailwind CSS v4 with `@tailwindcss/postcss`
+- **Styling**: Ragnar token CSS and app-owned CSS modules or StyleX
 - **Database**: Neon (serverless PostgreSQL) via Prisma
 - **Auth**: NextAuth v5 beta (`next-auth@beta`)
 - **Deploy**: Vercel
@@ -22,7 +22,7 @@ git init
 
 # 2. package.json — copy from finance-tracker as base
 # Key deps: next@^15, react@^19, @vasf/ragnar-core, prisma, @prisma/client,
-#           next-auth@beta, bcryptjs, date-fns, lucide-react, tailwind
+#           next-auth@beta, bcryptjs, date-fns, lucide-react
 
 # 3. Install
 npm install --legacy-peer-deps
@@ -36,7 +36,7 @@ npm install --legacy-peer-deps
 
 ## Required files
 - `src/app/layout.tsx` — html tag with `data-theme` and `data-mode` attributes
-- `src/app/globals.css` — `@import "@vasf/ragnar-core/styles.css"; @import "tailwindcss";`
+- `src/app/globals.css` — `@import "@vasf/ragnar-core/styles.css";`
 - `src/lib/prisma.ts` — singleton Prisma client
 - `src/lib/auth.ts` — NextAuth v5 config
 - `src/middleware.ts` — route protection

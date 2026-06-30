@@ -1,6 +1,6 @@
 ---
 name: ragnar-component-author
-description: Build, modify, or audit components in the Ragnar monorepo. Use for tasks in packages/core/src/components, packages/web/src/components, packages/ai/src/components, or packages/native/src/components; when adding component APIs, variants, stories, tests, Radix wrappers, forwardRef/displayName patterns, CVA variants, className merging, accessibility behavior, or replacing shadcn-style classes with Ragnar semantic tokens.
+description: Build, modify, or audit components in the Ragnar monorepo. Use for tasks in packages/core/src/components, packages/web/src/components, or packages/native/src/components; when adding component APIs, variants, stories, tests, Radix wrappers, forwardRef/displayName patterns, CVA variants, className merging, accessibility behavior, or replacing shadcn-style classes with Ragnar semantic tokens.
 ---
 
 # Ragnar Component Author

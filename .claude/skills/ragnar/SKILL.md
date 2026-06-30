@@ -1,11 +1,11 @@
 ---
 name: ragnar
-description: Use when building, theming, or extending UI in apps that depend on @vasf/ragnar-core, @vasf/ragnar-tokens, @vasf/ragnar-web, @vasf/ragnar-native, or @vasf/ragnar-ai. Covers component imports, theming via RagnarProvider/createTheme, the three-layer token architecture (CSS variables scoped to data-theme/data-mode/data-spacing/data-curves), TypeScript types, and the conventions consumers should follow when adding new components or tokens. Trigger when the user mentions Ragnar, @vasf/ragnar, RagnarProvider, useRagnarTheme, createTheme, design tokens with --container-bg / --interactive-bg-selected / --action-primary-bg etc., the data-theme="industrial-retro|minimal" attribute, or any of the components listed below.
+description: Use when building, theming, or extending UI in apps that depend on @vasf/ragnar-core, @vasf/ragnar-tokens, @vasf/ragnar-web, or @vasf/ragnar-native. Covers component imports, theming via RagnarProvider/createTheme, the three-layer token architecture (CSS variables scoped to data-theme/data-mode/data-spacing/data-curves), TypeScript types, and the conventions consumers should follow when adding new components or tokens. Trigger when the user mentions Ragnar, @vasf/ragnar, RagnarProvider, useRagnarTheme, createTheme, design tokens with --container-bg / --interactive-bg-selected / --action-primary-bg etc., the data-theme="industrial-retro|minimal" attribute, or any of the components listed below.
 ---
 
 # Ragnar Design System
 
-Ragnar is a React design system distributed as a pnpm-workspace monorepo. Consumers install `@vasf/ragnar-core` (components) and `@vasf/ragnar-tokens` (tokens/CSS); web-only and native-only components live in `@vasf/ragnar-web` and `@vasf/ragnar-native`. The `@vasf/ragnar-ai` package collects AI-UX patterns and is currently `private` (not yet on npm).
+Ragnar is a React design system distributed as a pnpm-workspace monorepo. Consumers install `@vasf/ragnar-core` (components) and `@vasf/ragnar-tokens` (tokens/CSS); web-only and native-only components live in `@vasf/ragnar-web` and `@vasf/ragnar-native`.
 
 This skill is the source of truth for: component inventory, the token architecture, the consumer setup pattern (`RagnarProvider`), how to define a custom theme (`createTheme`), and the conventions to follow when modifying or extending the library.
 
@@ -315,7 +315,6 @@ pnpm --filter @vasf/ragnar-core lint   # eslint v9, flat config at repo root
 - **Importing from `@vasf/ragnar-tokens` directly in app code** when `@vasf/ragnar-core` re-exports the same things.
 - **Custom themes without `extends`** — you'll inherit nothing and end up with white-on-white because most tokens won't resolve.
 - **Custom theme names that collide with built-ins** (`industrial-retro`, `minimal`) — Provider throws at mount.
-- **`@vasf/ragnar-ai` imports in production code** — currently `private`. Will fail to install from npm until promoted.
 
 ---
 

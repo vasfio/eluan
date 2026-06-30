@@ -10,6 +10,5 @@ export default createRagnarReactViteStorybookConfig({
   stories: [
     "../packages/core/src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
     "../packages/web/src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-    "../packages/ai/src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
 })
