@@ -1,5 +1,16 @@
 # @eluan/core
 
+## 0.1.0
+
+### Minor Changes
+
+- f9fd64d: Initial public release of the Eluan design system under the `@eluan` npm scope.
+
+### Patch Changes
+
+- Updated dependencies [f9fd64d]
+  - @eluan/tokens@0.1.0
+
 ## 2.0.0
 
 ### Major Changes
