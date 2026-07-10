@@ -1,13 +1,29 @@
 {
-  "name": "@vasf/ragnar-theme-generator",
-  "description": "CLI tool that generates accessible, light + dark mode Ragnar theme token sets from accent colors",
-  "version": "0.1.0",
+  "name": "@eluan/theme-generator",
+  "description": "CLI tool that generates accessible, light + dark mode Eluan theme token sets from accent colors",
+  "version": "0.0.0",
   "license": "MIT",
+  "homepage": "https://github.com/vasfio/eluan#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vasfio/eluan.git",
+    "directory": "packages/theme-generator"
+  },
+  "bugs": {
+    "url": "https://github.com/vasfio/eluan/issues"
+  },
+  "keywords": [
+    "design-tokens",
+    "theme",
+    "cli",
+    "eluan",
+    "color"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "ragnar-theme": "./dist/cli/generate.js"
+    "eluan-theme": "./dist/cli/generate.js"
   },
   "exports": {
     ".": {
@@ -18,8 +34,11 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "dev": "tsc --watch",
     "test": "vitest run",
     "test:watch": "vitest"

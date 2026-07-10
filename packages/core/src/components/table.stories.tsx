@@ -25,7 +25,7 @@ A set of composable table primitives for displaying structured tabular data with
 import {
   Table, TableHeader, TableBody, TableFooter,
   TableHead, TableRow, TableCell, TableCaption,
-} from "@vasf/ragnar-core"
+} from "@eluan/core"
 \`\`\`
 
 **Usage**

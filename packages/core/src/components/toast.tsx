@@ -3,11 +3,11 @@ import { Toaster as SonnerPrimitive } from "sonner"
 type ToastProps = React.ComponentProps<typeof SonnerPrimitive>
 
 // Sonner ships with opinionated CSS for font, spacing, and sizing. The global
-// stylesheet owns these class hooks so toasts inherit Ragnar tokens.
+// stylesheet owns these class hooks so toasts inherit Eluan tokens.
 const Toast = ({ ...props }: ToastProps) => {
   return (
     <SonnerPrimitive
-      className="ragnar-toaster"
+      className="eluan-toaster"
       style={
         {
           "--border-radius": "var(--curves-md)",
@@ -15,11 +15,11 @@ const Toast = ({ ...props }: ToastProps) => {
       }
       toastOptions={{
         classNames: {
-          toast: "ragnar-toast",
-          title: "ragnar-toast-title",
-          description: "ragnar-toast-description",
-          actionButton: "ragnar-toast-action",
-          cancelButton: "ragnar-toast-cancel",
+          toast: "eluan-toast",
+          title: "eluan-toast-title",
+          description: "eluan-toast-description",
+          actionButton: "eluan-toast-action",
+          cancelButton: "eluan-toast-cancel",
         },
       }}
       {...props}

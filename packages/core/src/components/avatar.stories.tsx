@@ -16,7 +16,7 @@ A circular image element representing a user or entity, with fallback initials, 
 
 **Import**
 \`\`\`tsx
-import { Avatar, AvatarImage, AvatarFallback, AvatarBadge, AvatarStatus, AvatarWithStatus } from "@vasf/ragnar-core"
+import { Avatar, AvatarImage, AvatarFallback, AvatarBadge, AvatarStatus, AvatarWithStatus } from "@eluan/core"
 \`\`\`
 
 **Usage**

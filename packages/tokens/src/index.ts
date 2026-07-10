@@ -1,6 +1,6 @@
-// Ragnar Design System - Token Exports
+// Eluan Design System - Token Exports
 // Three-layer architecture: Primitives → Modes → Themes
-// For CSS variable usage, import "@vasf/ragnar-tokens/css"
+// For CSS variable usage, import "@eluan/tokens/css"
 
 // ============================================
 // Available Modes
@@ -514,7 +514,7 @@ export const themeFonts: Record<
 // Dynamic Font Loader
 // ============================================
 // Loads theme-specific font CSS on demand via <link> injection.
-// The consumer's bundler must resolve @vasf/ragnar-tokens/fonts/* CSS.
+// The consumer's bundler must resolve @eluan/tokens/fonts/* CSS.
 //
 // Usage (React example):
 //   useEffect(() => { loadThemeFonts(theme) }, [theme])

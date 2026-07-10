@@ -1,19 +1,19 @@
 # Third-Party Notices
 
-Ragnar is built on, and redistributes portions of, the open-source projects
+Eluan is built on, and redistributes portions of, the open-source projects
 listed below. Each project is provided under its own license, and the relevant
 copyright and permission notices are reproduced here in satisfaction of those
 licenses.
 
-This file does not alter the license of Ragnar itself, which is stated in the
+This file does not alter the license of Eluan itself, which is stated in the
 root `LICENSE` file. It exists solely to give proper attribution to upstream
-work that Ragnar incorporates or derives from.
+work that Eluan incorporates or derives from.
 
 ---
 
 ## shadcn/ui
 
-Component patterns and source in Ragnar are derived from shadcn/ui.
+Component patterns and source in Eluan are derived from shadcn/ui.
 
 - **Project:** shadcn/ui — <https://github.com/shadcn-ui/ui>
 - **License:** MIT
@@ -47,7 +47,7 @@ SOFTWARE.
 
 ## Radix UI Primitives
 
-Ragnar's component behavior layer is built on Radix UI Primitives.
+Eluan's component behavior layer is built on Radix UI Primitives.
 
 - **Project:** Radix Primitives — <https://github.com/radix-ui/primitives>
 - **License:** MIT
@@ -81,7 +81,7 @@ SOFTWARE.
 
 ## class-variance-authority (CVA)
 
-Ragnar uses class-variance-authority for component variant management.
+Eluan uses class-variance-authority for component variant management.
 
 - **Project:** class-variance-authority — <https://github.com/joe-bell/cva>
 - **License:** Apache License 2.0

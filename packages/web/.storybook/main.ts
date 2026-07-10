@@ -1,10 +1,10 @@
 import { join, dirname } from "path"
-import { createRagnarReactViteStorybookConfig } from "../../../.storybook/ragnar-main"
+import { createEluanReactViteStorybookConfig } from "../../../.storybook/eluan-main"
 
 const packageRoot = dirname(__dirname)
 const coreRoot = join(dirname(packageRoot), "core")
 
-export default createRagnarReactViteStorybookConfig({
+export default createEluanReactViteStorybookConfig({
   coreRoot,
   disableTelemetry: true,
   packageRoot,

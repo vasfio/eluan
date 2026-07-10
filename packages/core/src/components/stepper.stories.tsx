@@ -14,7 +14,7 @@ A multi-step progress indicator that guides users through a sequential workflow,
 
 **Import**
 \`\`\`tsx
-import { Stepper, StepperContent } from "@vasf/ragnar-core"
+import { Stepper, StepperContent } from "@eluan/core"
 \`\`\`
 
 **Usage**

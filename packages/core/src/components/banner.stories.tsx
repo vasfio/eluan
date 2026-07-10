@@ -13,7 +13,7 @@ A prominent message bar for displaying system-wide notifications, alerts, or sta
 
 **Import**
 \`\`\`tsx
-import { Banner } from "@vasf/ragnar-core"
+import { Banner } from "@eluan/core"
 \`\`\`
 
 **Usage**

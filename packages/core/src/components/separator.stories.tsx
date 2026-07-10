@@ -24,7 +24,7 @@ A thin line used to visually divide content into sections, supporting both horiz
 
 **Import**
 \`\`\`tsx
-import { Separator } from "@vasf/ragnar-core"
+import { Separator } from "@eluan/core"
 \`\`\`
 
 **Usage**

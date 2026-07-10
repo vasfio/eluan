@@ -14,7 +14,7 @@ A label component with support for required indicators, optional badges, and hin
 
 **Import**
 \`\`\`tsx
-import { Label, FormDescription, FormMessage } from "@vasf/ragnar-core"
+import { Label, FormDescription, FormMessage } from "@eluan/core"
 \`\`\`
 
 **Usage**

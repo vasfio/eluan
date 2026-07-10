@@ -15,7 +15,7 @@ A set of layered content sections (tab panels) that are displayed one at a time,
 
 **Import**
 \`\`\`tsx
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@vasf/ragnar-core"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@eluan/core"
 \`\`\`
 
 **Usage**

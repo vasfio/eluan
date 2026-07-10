@@ -30,7 +30,7 @@ A toggle switch for turning an option on or off, built on Radix UI Switch primit
 
 **Import**
 \`\`\`tsx
-import { Switch } from "@vasf/ragnar-core"
+import { Switch } from "@eluan/core"
 \`\`\`
 
 **Usage**

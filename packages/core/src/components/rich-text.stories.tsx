@@ -14,7 +14,7 @@ A rich text editor built on TipTap with a formatting toolbar supporting bold, it
 
 **Import**
 \`\`\`tsx
-import { RichText } from "@vasf/ragnar-core"
+import { RichText } from "@eluan/core"
 \`\`\`
 
 **Usage**

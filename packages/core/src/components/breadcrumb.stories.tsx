@@ -37,7 +37,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
   BreadcrumbEllipsis,
-} from "@vasf/ragnar-core"
+} from "@eluan/core"
 \`\`\`
 
 **Usage**

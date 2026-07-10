@@ -1,23 +1,23 @@
 {
-  "name": "@vasf/ragnar-native",
-  "description": "React Native UI components sharing the Ragnar token system",
-  "version": "0.1.1",
+  "name": "@eluan/native",
+  "description": "React Native UI components sharing the Eluan token system",
+  "version": "0.1.0",
   "license": "MIT",
-  "homepage": "https://github.com/frolda/ragnar#readme",
+  "homepage": "https://github.com/vasfio/eluan#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/frolda/ragnar.git",
+    "url": "git+https://github.com/vasfio/eluan.git",
     "directory": "packages/native"
   },
   "bugs": {
-    "url": "https://github.com/frolda/ragnar/issues"
+    "url": "https://github.com/vasfio/eluan/issues"
   },
   "keywords": [
     "react-native",
     "ui",
     "components",
     "design-system",
-    "ragnar"
+    "eluan"
   ],
   "type": "module",
   "sideEffects": false,
@@ -33,8 +33,7 @@
     }
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "publishConfig": {
     "access": "public"
@@ -54,7 +53,7 @@
     "react-native": ">=0.70.0 <0.80.0"
   },
   "dependencies": {
-    "@vasf/ragnar-tokens": "^0.1.2"
+    "@eluan/tokens": "workspace:^"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^8.1.0",

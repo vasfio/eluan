@@ -1,0 +1,4 @@
+interface:
+  display_name: "Eluan Component Author"
+  short_description: "Build and modify Eluan components."
+  default_prompt: "Create or update a Eluan component following the design system conventions."

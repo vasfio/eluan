@@ -1,4 +1,4 @@
-import type { Theme } from "@vasf/ragnar-tokens"
+import type { Theme } from "@eluan/tokens"
 
 // ============================================
 // createTheme — define a custom theme with token overrides
@@ -14,7 +14,7 @@ import type { Theme } from "@vasf/ragnar-tokens"
 //   <html data-theme="industrial-retro" data-theme-custom="acme">
 //
 // `data-theme` carries the BASE theme so all 150 base tokens activate via
-// Ragnar's existing `[data-theme="industrial-retro"]` rule. Then a separate
+// Eluan's existing `[data-theme="industrial-retro"]` rule. Then a separate
 // `[data-theme-custom="acme"]` rule (emitted by `createTheme`) overrides
 // just the tokens listed in `tokens`. The custom rule loads after the base
 // (via the Provider's injected `<style>`) so equal-specificity overrides win.
@@ -55,9 +55,9 @@ export interface CustomTheme {
 }
 
 /**
- * Define a custom Ragnar theme by overriding tokens on top of a built-in
+ * Define a custom Eluan theme by overriding tokens on top of a built-in
  * theme. Returns a `CustomTheme` object you pass to
- * `<RagnarProvider customThemes={[...]} />`.
+ * `<EluanProvider customThemes={[...]} />`.
  *
  * @example
  * const acme = createTheme({

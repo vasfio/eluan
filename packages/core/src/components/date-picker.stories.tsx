@@ -31,7 +31,7 @@ A popover-based date picker that lets users select a single date from a calendar
 
 **Import**
 \`\`\`tsx
-import { DatePicker } from "@vasf/ragnar-core"
+import { DatePicker } from "@eluan/core"
 \`\`\`
 
 **Usage**

@@ -1,4 +1,4 @@
-# @vasf/ragnar-tokens
+# @eluan/tokens
 
 ## 2.0.0
 
@@ -16,4 +16,4 @@
 
 ### Patch Changes
 
-- c15992c: Initial public release setup for the Ragnar design system packages under the `@frolda` scope.
+- c15992c: Initial public release setup for the Eluan design system packages under the `@frolda` scope.

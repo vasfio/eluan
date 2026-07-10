@@ -8,7 +8,7 @@ import {
   PressableProps,
   useColorScheme,
 } from "react-native"
-import { fontSizes, fontWeights } from "@vasf/ragnar-tokens"
+import { fontSizes, fontWeights } from "@eluan/tokens"
 import { sp, sz, curves, getSemanticColors } from "../utils/styles"
 
 export interface ButtonProps extends Omit<PressableProps, "style"> {

@@ -25,7 +25,7 @@ A modal overlay that focuses the user's attention on a single task or piece of i
 
 **Import**
 \`\`\`tsx
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from "@vasf/ragnar-core"
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from "@eluan/core"
 \`\`\`
 
 **Usage**

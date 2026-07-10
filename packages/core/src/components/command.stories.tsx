@@ -34,7 +34,7 @@ import {
   CommandItem,
   CommandShortcut,
   CommandSeparator,
-} from "@vasf/ragnar-core"
+} from "@eluan/core"
 \`\`\`
 
 **Usage**

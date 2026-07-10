@@ -37,7 +37,7 @@ import {
   MenubarItem,
   MenubarSeparator,
   MenubarShortcut,
-} from "@vasf/ragnar-core"
+} from "@eluan/core"
 \`\`\`
 
 **Usage**

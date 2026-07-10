@@ -24,7 +24,7 @@ A keyboard key indicator that renders styled key cap representations, with autom
 
 **Import**
 \`\`\`tsx
-import { Kbd, KbdGroup, Shortcut } from "@vasf/ragnar-core"
+import { Kbd, KbdGroup, Shortcut } from "@eluan/core"
 \`\`\`
 
 **Usage**

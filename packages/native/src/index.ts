@@ -1,8 +1,8 @@
-// @vasf/ragnar-native - React Native Components
-// These components mirror @vasf/ragnar-core but for React Native
+// @eluan/native - React Native Components
+// These components mirror @eluan/core but for React Native
 
 // Re-export tokens for convenience
-export * from "@vasf/ragnar-tokens"
+export * from "@eluan/tokens"
 
 // ============================================
 // Core Components

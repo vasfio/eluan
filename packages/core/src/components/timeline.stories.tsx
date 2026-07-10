@@ -29,7 +29,7 @@ import {
   Timeline, TimelineItem, TimelineLine, TimelineDot,
   TimelineContent, TimelineHeader, TimelineTitle, TimelineDescription,
   TimelineHorizontal, TimelineHorizontalItem, TimelineHorizontalLine,
-} from "@vasf/ragnar-core"
+} from "@eluan/core"
 \`\`\`
 
 **Usage**

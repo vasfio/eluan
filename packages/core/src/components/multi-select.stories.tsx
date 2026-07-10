@@ -14,7 +14,7 @@ A multi-selection dropdown built on Command and Popover, displaying selected ite
 
 **Import**
 \`\`\`tsx
-import { MultiSelect } from "@vasf/ragnar-core"
+import { MultiSelect } from "@eluan/core"
 \`\`\`
 
 **Usage**

@@ -30,7 +30,7 @@ import {
   NavigationMenuContent,
   NavigationMenuLink,
   navigationMenuTriggerStyle,
-} from "@vasf/ragnar-core"
+} from "@eluan/core"
 \`\`\`
 
 **Usage**
@@ -105,7 +105,7 @@ export const Default: Story = {
                     href="#"
                   >
                     <div className="mb-2 mt-4 text-lg font-medium">
-                      Ragnar UI
+                      Eluan UI
                     </div>
                     <p className="text-sm leading-tight text-muted-foreground">
                       Beautifully designed components built with Radix UI and

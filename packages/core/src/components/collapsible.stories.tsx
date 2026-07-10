@@ -17,7 +17,7 @@ A component that toggles the visibility of its content section, allowing users t
 
 **Import**
 \`\`\`tsx
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@vasf/ragnar-core"
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@eluan/core"
 \`\`\`
 
 **Usage**

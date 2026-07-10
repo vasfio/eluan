@@ -27,7 +27,7 @@ A panel that slides in from any edge of the screen, used for supplementary conte
 import {
   Sheet, SheetTrigger, SheetContent, SheetHeader,
   SheetTitle, SheetDescription, SheetFooter, SheetClose,
-} from "@vasf/ragnar-core"
+} from "@eluan/core"
 \`\`\`
 
 **Usage**

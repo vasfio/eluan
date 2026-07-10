@@ -151,7 +151,7 @@ export interface FooterBrandProps
 }
 
 const FooterBrand = React.forwardRef<HTMLDivElement, FooterBrandProps>(
-  ({ text = "RAGNAR", children, ...props }, ref) => (
+  ({ text = "ELUAN", children, ...props }, ref) => (
     <div
       ref={ref}
       {...props}

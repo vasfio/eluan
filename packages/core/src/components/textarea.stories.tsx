@@ -13,7 +13,7 @@ A multi-line text input field for collecting longer-form text content from users
 
 **Import**
 \`\`\`tsx
-import { Textarea } from "@vasf/ragnar-core"
+import { Textarea } from "@eluan/core"
 \`\`\`
 
 **Usage**

@@ -1,16 +1,16 @@
 {
-  "name": "@vasf/ragnar-core",
-  "description": "Accessible UI components for React — built on Radix UI, StyleX, and Ragnar tokens",
-  "version": "0.1.13",
+  "name": "@eluan/core",
+  "description": "Accessible UI components for React — built on Radix UI, StyleX, and Eluan tokens",
+  "version": "0.0.0",
   "license": "MIT",
-  "homepage": "https://github.com/frolda/ragnar#readme",
+  "homepage": "https://github.com/vasfio/eluan#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/frolda/ragnar.git",
+    "url": "git+https://github.com/vasfio/eluan.git",
     "directory": "packages/core"
   },
   "bugs": {
-    "url": "https://github.com/frolda/ragnar/issues"
+    "url": "https://github.com/vasfio/eluan/issues"
   },
   "keywords": [
     "react",
@@ -18,7 +18,7 @@
     "components",
     "design-system",
     "radix-ui",
-    "ragnar"
+    "eluan"
   ],
   "type": "module",
   "main": "./dist/index.js",
@@ -96,7 +96,7 @@
     "@tiptap/extension-placeholder": "^3.19.0",
     "@tiptap/react": "^3.19.0",
     "@tiptap/starter-kit": "^3.19.0",
-    "@vasf/ragnar-tokens": "^0.1.2",
+    "@eluan/tokens": "workspace:^",
     "cmdk": "^1.1.1",
     "countries-list": "^3.3.0",
     "date-fns": "^4.1.0",

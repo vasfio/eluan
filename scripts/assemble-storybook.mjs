@@ -15,7 +15,7 @@ writeFileSync(
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ragnar Storybook</title>
+  <title>Eluan Storybook</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: system-ui, -apple-system, sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #fafafa; }
@@ -28,7 +28,7 @@ writeFileSync(
 </head>
 <body>
   <div class="container">
-    <h1>Ragnar Design System</h1>
+    <h1>Eluan Design System</h1>
     <div class="links">
       <a href="./core/">Core</a>
       <a href="./web/">Web</a>

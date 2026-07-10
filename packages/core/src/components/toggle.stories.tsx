@@ -30,7 +30,7 @@ A two-state button that can be toggled on or off, commonly used for formatting c
 
 **Import**
 \`\`\`tsx
-import { Toggle } from "@vasf/ragnar-core"
+import { Toggle } from "@eluan/core"
 \`\`\`
 
 **Usage**

@@ -1,32 +1,32 @@
-# @vasf/ragnar-core
+# @eluan/core
 
-> Accessible, themeable React UI components and marketing patterns — built on Radix UI primitives, StyleX, and Ragnar tokens.
+> Accessible, themeable React UI components and marketing patterns — built on Radix UI primitives, StyleX, and Eluan tokens.
 
-Part of the [Ragnar](https://github.com/frolda/ragnar) design system.
+Part of the [Eluan](https://github.com/vasfio/eluan) design system.
 
 ## Install
 
 ```bash
-npm install @vasf/ragnar-core @vasf/ragnar-tokens
-yarn add @vasf/ragnar-core @vasf/ragnar-tokens
-pnpm add @vasf/ragnar-core @vasf/ragnar-tokens
-bun add @vasf/ragnar-core @vasf/ragnar-tokens
+npm install @eluan/core @eluan/tokens
+yarn add @eluan/core @eluan/tokens
+pnpm add @eluan/core @eluan/tokens
+bun add @eluan/core @eluan/tokens
 ```
 
 ## Use
 
 ```tsx
 // Import once at the entry of your app
-import "@vasf/ragnar-core/styles.css"
-import "@vasf/ragnar-tokens/css"
+import "@eluan/core/styles.css"
+import "@eluan/tokens/css"
 
-import { Button, RagnarProvider } from "@vasf/ragnar-core"
+import { Button, EluanProvider } from "@eluan/core"
 
 export default function App() {
   return (
-    <RagnarProvider defaultTheme="industrial-retro">
+    <EluanProvider defaultTheme="industrial-retro">
       <Button>Hello</Button>
-    </RagnarProvider>
+    </EluanProvider>
   )
 }
 ```
@@ -34,18 +34,18 @@ export default function App() {
 Import an individual component entry when you want a narrower module:
 
 ```tsx
-import { Button } from "@vasf/ragnar-core/button"
+import { Button } from "@eluan/core/button"
 ```
 
 ## Theming
 
-See the [theming guide](https://github.com/frolda/ragnar/blob/main/docs/theming.md) for `RagnarProvider` setup, `useRagnarTheme()`, and how to define a custom theme via `createTheme()`.
+See the [theming guide](https://github.com/vasfio/eluan/blob/main/docs/theming.md) for `EluanProvider` setup, `useEluanTheme()`, and how to define a custom theme via `createTheme()`.
 
 ## What's included
 
 Components span layout (`Card`, `Sheet`, `Drawer`), forms (`Input`, `Select`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`, etc.), data display (`Table`, `Tree View`, `Timeline`, `Calendar`), navigation (`Tabs`, `Breadcrumb`, `Command`, `NavigationDrawer`), feedback (`Toast`, `Banner`, `Progress`), and overlays (`Dialog`, `AlertDialog`, `Popover`, `Tooltip`, `ContextMenu`).
 
-Full component list: see [Storybook](https://github.com/frolda/ragnar) or the source under `src/components/`.
+Full component list: see [Storybook](https://github.com/vasfio/eluan) or the source under `src/components/`.
 
 ## License
 

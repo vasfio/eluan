@@ -20,11 +20,11 @@ type ConfigFile = {
 
 function printUsage() {
   console.log(`
-ragnar-theme generate — Generate a complete Ragnar theme from accent colors
+eluan-theme generate — Generate a complete Eluan theme from accent colors
 
 Usage:
-  ragnar-theme generate --accent "#FF4A2C" [--accent "#0F3D3E"] [options]
-  ragnar-theme generate                     (interactive mode)
+  eluan-theme generate --accent "#FF4A2C" [--accent "#0F3D3E"] [options]
+  eluan-theme generate                     (interactive mode)
 
 Options:
   --accent <hex>          Accent color (1-3 allowed, repeat flag for multiple)
@@ -36,7 +36,7 @@ Options:
   --help                  Show this help
 
 Config file:
-  Place a ragnar-theme.config.json in your project root, or pass --config <path>.
+  Place a eluan-theme.config.json in your project root, or pass --config <path>.
   Schema: { "name": "ocean", "accents": ["#FF4A2C"], "outDir": "./tokens" }
   CLI flags override config file values.
 `);
@@ -52,7 +52,7 @@ function loadConfigFile(configPath?: string): ConfigFile | null {
     return JSON.parse(readFileSync(resolved, 'utf-8'));
   }
 
-  const defaultPath = resolve('ragnar-theme.config.json');
+  const defaultPath = resolve('eluan-theme.config.json');
   if (existsSync(defaultPath)) {
     return JSON.parse(readFileSync(defaultPath, 'utf-8'));
   }
@@ -66,7 +66,7 @@ function isValidHex(input: string): boolean {
 
 async function runInteractive(): Promise<GeneratorConfig & { outDir: string }> {
   console.log('');
-  console.log('ragnar-theme — Interactive theme generator');
+  console.log('eluan-theme — Interactive theme generator');
   console.log('');
 
   const nameResponse = await prompts({

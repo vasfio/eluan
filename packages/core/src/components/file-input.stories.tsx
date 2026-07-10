@@ -14,7 +14,7 @@ A file upload input available in button or dropzone variants, with drag-and-drop
 
 **Import**
 \`\`\`tsx
-import { FileInput, ImageInput, DocumentInput } from "@vasf/ragnar-core"
+import { FileInput, ImageInput, DocumentInput } from "@eluan/core"
 \`\`\`
 
 **Usage**

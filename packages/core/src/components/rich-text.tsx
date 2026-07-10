@@ -260,7 +260,7 @@ const RichText = React.forwardRef<HTMLDivElement, RichTextProps>(
         <RichTextToolbar editor={editor} />
         <EditorContent
           editor={editor}
-          className="ragnar-rich-text-content"
+          className="eluan-rich-text-content"
           style={{ "--min-height": minHeight } as React.CSSProperties}
         />
       </div>
@@ -300,71 +300,71 @@ const styles = stylex.create({
 })
 
 const proseMirrorStyles = `
-.ragnar-rich-text-content {
+.eluan-rich-text-content {
   max-width: none;
   padding: var(--spacing-sm);
 }
-.ragnar-rich-text-content:focus-within {
+.eluan-rich-text-content:focus-within {
   outline: none;
 }
-.ragnar-rich-text-content .ProseMirror {
+.eluan-rich-text-content .ProseMirror {
   min-height: var(--min-height);
   outline: none;
 }
-.ragnar-rich-text-content .ProseMirror h1 {
+.eluan-rich-text-content .ProseMirror h1 {
   font-size: var(--font-size-3xl);
   font-weight: 700;
   line-height: 1.25;
   margin-block: var(--spacing-lg) var(--spacing-md);
 }
-.ragnar-rich-text-content .ProseMirror h2 {
+.eluan-rich-text-content .ProseMirror h2 {
   font-size: var(--font-size-2xl);
   font-weight: 600;
   line-height: 1.375;
   margin-block: var(--spacing-md) var(--spacing-sm);
 }
-.ragnar-rich-text-content .ProseMirror h3 {
+.eluan-rich-text-content .ProseMirror h3 {
   font-size: var(--font-size-xl);
   font-weight: 600;
   line-height: 1.375;
   margin-block: var(--spacing-md) var(--spacing-sm);
 }
-.ragnar-rich-text-content .ProseMirror ul {
+.eluan-rich-text-content .ProseMirror ul {
   list-style: disc;
   margin-block: var(--spacing-sm);
   padding-inline-start: var(--spacing-lg);
 }
-.ragnar-rich-text-content .ProseMirror ol {
+.eluan-rich-text-content .ProseMirror ol {
   list-style: decimal;
   margin-block: var(--spacing-sm);
   padding-inline-start: var(--spacing-lg);
 }
-.ragnar-rich-text-content .ProseMirror li {
+.eluan-rich-text-content .ProseMirror li {
   margin-block: var(--spacing-xxs);
 }
-.ragnar-rich-text-content .ProseMirror li p {
+.eluan-rich-text-content .ProseMirror li p {
   margin-block: 0;
 }
-.ragnar-rich-text-content .ProseMirror blockquote {
+.eluan-rich-text-content .ProseMirror blockquote {
   border-left: 4px solid var(--container-border-alt);
   color: var(--interactive-fg-alt);
   font-style: italic;
   margin-block: var(--spacing-sm);
   padding-left: var(--spacing-md);
 }
-.ragnar-rich-text-content .ProseMirror code {
+.eluan-rich-text-content .ProseMirror code {
   background-color: var(--interactive-bg-alt);
   border-radius: var(--curves-xs);
   font-family: var(--font-mono);
   font-size: var(--font-size-xs);
   padding: 0.125rem var(--spacing-xxs);
 }
-.ragnar-rich-text-content .ProseMirror hr {
+.eluan-rich-text-content .ProseMirror hr {
   border: 0;
   border-top: 1px solid var(--container-border-alt);
   margin-block: var(--spacing-md);
 }
-.ragnar-rich-text-content .ProseMirror p.is-editor-empty:first-child::before {
+.eluan-rich-text-content .ProseMirror p.is-editor-empty:first-child::before {
   color: var(--interactive-fg-alt);
   content: attr(data-placeholder);
   float: left;

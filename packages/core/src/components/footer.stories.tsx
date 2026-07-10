@@ -29,7 +29,7 @@ A composable footer with link sections, social icons, copyright, and a modern da
 
 **Import**
 \`\`\`tsx
-import { Footer, FooterContent, FooterSection, FooterTitle, FooterLinks, FooterLink, FooterBottom, FooterCopyright, FooterSocial, FooterSocialLink, FooterBrand, FooterModernLink, FooterModernSocialLink, FooterStagger } from "@vasf/ragnar-core"
+import { Footer, FooterContent, FooterSection, FooterTitle, FooterLinks, FooterLink, FooterBottom, FooterCopyright, FooterSocial, FooterSocialLink, FooterBrand, FooterModernLink, FooterModernSocialLink, FooterStagger } from "@eluan/core"
 \`\`\`
 
 **Usage**
@@ -109,7 +109,7 @@ export const Default: Story = {
       </FooterContent>
       <FooterBottom>
         <FooterCopyright>
-          © 2024 Ragnar. All rights reserved.
+          © 2024 Eluan. All rights reserved.
         </FooterCopyright>
         <FooterSocial>
           <FooterSocialLink href="#" label="Twitter">
@@ -174,7 +174,7 @@ export const Modern: Story = {
       </div>
       <FooterBottom className="border-zinc-800">
         <FooterCopyright className="text-zinc-500">
-          © 2024 Ragnar. All rights reserved.
+          © 2024 Eluan. All rights reserved.
         </FooterCopyright>
         <div className="flex items-center gap-3">
           <FooterModernSocialLink href="#" label="Twitter">
@@ -198,7 +198,7 @@ export const Small: Story = {
     <Footer size="sm">
       <FooterBottom className="mt-0 border-0 pt-0">
         <FooterCopyright>
-          © 2024 Ragnar. All rights reserved.
+          © 2024 Eluan. All rights reserved.
         </FooterCopyright>
         <div className="flex gap-4 text-sm text-muted-foreground">
           <a href="#" className="hover:text-foreground">Privacy</a>

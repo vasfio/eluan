@@ -12,7 +12,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
-      name: 'RagnarWeb',
+      name: 'EluanWeb',
       formats: ['es', 'cjs'],
       fileName: (format) => (format === 'cjs' ? 'index.cjs' : 'index.js'),
     },
@@ -21,7 +21,7 @@ export default defineConfig({
         'react',
         'react-dom',
         'react/jsx-runtime',
-        /^@vasf\/ragnar-core(\/.*)?$/,
+        /^@eluan\/core(\/.*)?$/,
         'three',
       ],
       output: {

@@ -27,7 +27,7 @@ A versatile container component used to group and display content in a visually 
 
 **Import**
 \`\`\`tsx
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@vasf/ragnar-core"
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@eluan/core"
 \`\`\`
 
 **Usage**

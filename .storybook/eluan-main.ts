@@ -5,7 +5,7 @@ import { join } from "path"
 import { pathToFileURL } from "url"
 import { mergeConfig, type Plugin, type UserConfig } from "vite"
 
-type RagnarStorybookConfigOptions = {
+type EluanStorybookConfigOptions = {
   aliases?: Record<string, string>
   coreRoot: string
   disableTelemetry?: boolean
@@ -28,7 +28,7 @@ function isStorybookStylexCssTarget(fileName: string) {
 
 function createStorybookStylexCssPlugin(): Plugin {
   return {
-    name: "ragnar-storybook-stylex-css",
+    name: "eluan-storybook-stylex-css",
     enforce: "post",
     generateBundle: {
       order: "post",
@@ -123,14 +123,14 @@ function createStorybookStylexCssPlugin(): Plugin {
   }
 }
 
-export function createRagnarReactViteStorybookConfig({
+export function createEluanReactViteStorybookConfig({
   aliases,
   coreRoot,
   disableTelemetry,
   packageRoot,
   stories,
   vite,
-}: RagnarStorybookConfigOptions): StorybookConfig {
+}: EluanStorybookConfigOptions): StorybookConfig {
   return {
     stories,
     addons,
@@ -164,8 +164,8 @@ export function createRagnarReactViteStorybookConfig({
             resolve: {
               alias: {
                 "@": join(packageRoot, "src"),
-                "@vasf/ragnar-core": join(coreRoot, "src/index.ts"),
-                "@vasf/ragnar-core/": `${join(coreRoot, "src")}/`,
+                "@eluan/core": join(coreRoot, "src/index.ts"),
+                "@eluan/core/": `${join(coreRoot, "src")}/`,
                 ...aliases,
               },
             },

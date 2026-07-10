@@ -1,9 +1,9 @@
 import { dirname } from "path"
-import { createRagnarReactViteStorybookConfig } from "../../../.storybook/ragnar-main"
+import { createEluanReactViteStorybookConfig } from "../../../.storybook/eluan-main"
 
 const packageRoot = dirname(__dirname)
 
-export default createRagnarReactViteStorybookConfig({
+export default createEluanReactViteStorybookConfig({
   coreRoot: packageRoot,
   packageRoot,
   stories: ["../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],

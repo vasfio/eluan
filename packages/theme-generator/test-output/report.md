@@ -27,5 +27,5 @@
 
 - `primitives.json` — W3C Design Tokens format
 - `semantic.json` — Semantic map with light/dark refs
-- `theme.css` — Drop-in CSS for Ragnar
+- `theme.css` — Drop-in CSS for Eluan
 - `preview.html` — Visual smoke test

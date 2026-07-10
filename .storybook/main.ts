@@ -1,10 +1,10 @@
 import { join, dirname } from "path"
-import { createRagnarReactViteStorybookConfig } from "./ragnar-main"
+import { createEluanReactViteStorybookConfig } from "./eluan-main"
 
 const workspaceRoot = dirname(__dirname)
 const coreRoot = join(workspaceRoot, "packages/core")
 
-export default createRagnarReactViteStorybookConfig({
+export default createEluanReactViteStorybookConfig({
   coreRoot,
   packageRoot: coreRoot,
   stories: [

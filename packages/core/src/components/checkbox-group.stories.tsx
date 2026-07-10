@@ -13,7 +13,7 @@ A group of checkboxes with managed state for selecting multiple options from a l
 
 **Import**
 \`\`\`tsx
-import { CheckboxGroup, CheckboxGroupItem } from "@vasf/ragnar-core"
+import { CheckboxGroup, CheckboxGroupItem } from "@eluan/core"
 \`\`\`
 
 **Usage**

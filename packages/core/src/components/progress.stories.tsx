@@ -19,7 +19,7 @@ A horizontal bar that indicates the completion progress of a task, built on Radi
 
 **Import**
 \`\`\`tsx
-import { Progress } from "@vasf/ragnar-core"
+import { Progress } from "@eluan/core"
 \`\`\`
 
 **Usage**

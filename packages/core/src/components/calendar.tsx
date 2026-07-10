@@ -84,12 +84,12 @@ function Calendar({
           weekdays: sx(styles.weekdays),
           weekday: sx(styles.weekday),
           week: sx(styles.week),
-          day: `${sx(styles.day)} ragnar-calendar-day`,
-          day_button: `${sx(styles.dayButton)} ragnar-calendar-day-button`,
-          range_start: `${sx(styles.rangeStart)} day-range-start ragnar-calendar-range-start`,
-          range_end: `${sx(styles.rangeEnd)} day-range-end ragnar-calendar-range-end`,
-          selected: `${sx(styles.selected)} ragnar-calendar-selected`,
-          today: `${sx(styles.today)} ragnar-calendar-today`,
+          day: `${sx(styles.day)} eluan-calendar-day`,
+          day_button: `${sx(styles.dayButton)} eluan-calendar-day-button`,
+          range_start: `${sx(styles.rangeStart)} day-range-start eluan-calendar-range-start`,
+          range_end: `${sx(styles.rangeEnd)} day-range-end eluan-calendar-range-end`,
+          selected: `${sx(styles.selected)} eluan-calendar-selected`,
+          today: `${sx(styles.today)} eluan-calendar-today`,
           outside: `${sx(styles.outside)} day-outside`,
           disabled: sx(styles.dayDisabled),
           range_middle: sx(styles.rangeMiddle),
@@ -303,46 +303,46 @@ const calendarStyles = `
     padding-left: var(--spacing-lg);
   }
 }
-.ragnar-calendar-day:has([aria-selected].day-range-end) {
+.eluan-calendar-day:has([aria-selected].day-range-end) {
   border-bottom-right-radius: var(--curves-lg);
   border-top-right-radius: var(--curves-lg);
 }
-.ragnar-calendar-day:has([aria-selected].day-range-end) {
+.eluan-calendar-day:has([aria-selected].day-range-end) {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
 }
-.ragnar-calendar-day:has([aria-selected].day-outside) {
+.eluan-calendar-day:has([aria-selected].day-outside) {
   background-color: var(--interactive-bg-alt2);
 }
-.ragnar-calendar-day:first-child:has([aria-selected]) {
+.eluan-calendar-day:first-child:has([aria-selected]) {
   border-bottom-left-radius: var(--curves-lg);
   border-top-left-radius: var(--curves-lg);
 }
-.ragnar-calendar-day:last-child:has([aria-selected]) {
+.eluan-calendar-day:last-child:has([aria-selected]) {
   border-bottom-right-radius: var(--curves-lg);
   border-top-right-radius: var(--curves-lg);
 }
-.ragnar-calendar-day:focus-within {
+.eluan-calendar-day:focus-within {
   position: relative;
   z-index: 20;
 }
-[data-range-complete] .ragnar-calendar-range-start {
+[data-range-complete] .eluan-calendar-range-start {
   border-bottom-left-radius: var(--curves-lg);
   border-bottom-right-radius: 0;
   border-top-left-radius: var(--curves-lg);
   border-top-right-radius: 0;
 }
-.ragnar-calendar-selected > button:hover {
+.eluan-calendar-selected > button:hover {
   background-color: var(--action-primary-bg-hover);
   color: var(--interactive-fg-selected);
 }
-.ragnar-calendar-selected:focus {
+.eluan-calendar-selected:focus {
   box-shadow: 0 0 0 1px var(--interactive-border);
 }
-.ragnar-calendar-today > button {
+.eluan-calendar-today > button {
   position: relative;
 }
-.ragnar-calendar-today > button::after {
+.eluan-calendar-today > button::after {
   background-color: currentColor;
   border-radius: var(--radius-radius-full);
   bottom: 0.5rem;

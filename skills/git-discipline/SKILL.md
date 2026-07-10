@@ -41,7 +41,7 @@ If push is rejected (diverged remote):
 
 ## Repos
 All live at `~/Documents/github/` and remote at `github.com/frolda/`
-- ragnar, finance-tracker, merch-mockup-flask, taiwanese-learning, japanese-learning
+- eluan, finance-tracker, merch-mockup-flask, taiwanese-learning, japanese-learning
 - ocean-yoga-backend, ds-prototype, vasf-io, thought-net
 
 ## gitignore defaults (ensure these are ignored)

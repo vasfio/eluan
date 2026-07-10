@@ -19,7 +19,7 @@ A circular loading indicator used to communicate that an action is in progress.
 
 **Import**
 \`\`\`tsx
-import { Spinner } from "@vasf/ragnar-core"
+import { Spinner } from "@eluan/core"
 \`\`\`
 
 **Usage**

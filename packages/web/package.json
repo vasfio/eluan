@@ -1,23 +1,23 @@
 {
-  "name": "@vasf/ragnar-web",
+  "name": "@eluan/web",
   "description": "Marketing and web-specific components for React — hero, pricing, footer, and more",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "license": "MIT",
-  "homepage": "https://github.com/frolda/ragnar#readme",
+  "homepage": "https://github.com/vasfio/eluan#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/frolda/ragnar.git",
+    "url": "git+https://github.com/vasfio/eluan.git",
     "directory": "packages/web"
   },
   "bugs": {
-    "url": "https://github.com/frolda/ragnar/issues"
+    "url": "https://github.com/vasfio/eluan/issues"
   },
   "keywords": [
     "react",
     "ui",
     "marketing",
     "landing-page",
-    "ragnar"
+    "eluan"
   ],
   "type": "module",
   "main": "./dist/index.js",
@@ -61,8 +61,8 @@
     }
   },
   "dependencies": {
-    "@vasf/ragnar-core": "^0.1.13",
-    "@vasf/ragnar-tokens": "^0.1.2"
+    "@eluan/core": "workspace:^",
+    "@eluan/tokens": "workspace:^"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^8.1.10",

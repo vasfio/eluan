@@ -3,10 +3,10 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@vasf/ragnar-native": ["../../packages/native/src"],
-      "@vasf/ragnar-native/*": ["../../packages/native/src/*"],
-      "@vasf/ragnar-tokens": ["../../packages/tokens/src"],
-      "@vasf/ragnar-tokens/*": ["../../packages/tokens/src/*"]
+      "@eluan/native": ["../../packages/native/src"],
+      "@eluan/native/*": ["../../packages/native/src/*"],
+      "@eluan/tokens": ["../../packages/tokens/src"],
+      "@eluan/tokens/*": ["../../packages/tokens/src/*"]
     }
   },
   "include": [

@@ -8,7 +8,7 @@ import {
   TextStyle,
   useColorScheme,
 } from "react-native"
-import { fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@eluan/tokens"
 import { sp, curves, getSemanticColors } from "../utils/styles"
 
 export interface CheckboxProps {

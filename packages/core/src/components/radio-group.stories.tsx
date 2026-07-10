@@ -13,7 +13,7 @@ A set of mutually exclusive radio buttons that allows users to select a single o
 
 **Import**
 \`\`\`tsx
-import { RadioGroup, RadioGroupItem } from "@vasf/ragnar-core"
+import { RadioGroup, RadioGroupItem } from "@eluan/core"
 \`\`\`
 
 **Usage**

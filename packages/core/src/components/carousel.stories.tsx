@@ -43,7 +43,7 @@ import {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
-} from "@vasf/ragnar-core"
+} from "@eluan/core"
 \`\`\`
 
 **Usage**

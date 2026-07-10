@@ -8,41 +8,41 @@ import {
   type Mode,
   type SpacingScale,
   type Theme,
-} from "@vasf/ragnar-tokens"
+} from "@eluan/tokens"
 
 import type { CustomTheme } from "./create-theme"
 
 // ============================================
-// Ragnar theme provider
+// Eluan theme provider
 // ============================================
-// A drop-in React context for setting Ragnar's theme axes (theme, mode,
+// A drop-in React context for setting Eluan's theme axes (theme, mode,
 // spacing, curves) in a client app. It writes the corresponding `data-*`
 // attributes to a target element (defaults to `<html>`) so the CSS variables
-// in @vasf/ragnar-tokens activate, and dynamically loads the fonts for the
+// in @eluan/tokens activate, and dynamically loads the fonts for the
 // active theme.
 //
 // Usage:
-//   import { RagnarProvider } from "@vasf/ragnar-core"
+//   import { EluanProvider } from "@eluan/core"
 //
 //   export default function App() {
 //     return (
-//       <RagnarProvider defaultTheme="industrial-retro" defaultMode="light">
+//       <EluanProvider defaultTheme="industrial-retro" defaultMode="light">
 //         <YourApp />
-//       </RagnarProvider>
+//       </EluanProvider>
 //     )
 //   }
 //
 // Custom themes (via `createTheme`):
 //   const acme = createTheme({ name: "acme", extends: "industrial-retro", tokens: {...} })
-//   <RagnarProvider customThemes={[acme]} defaultTheme="acme">…
+//   <EluanProvider customThemes={[acme]} defaultTheme="acme">…
 //
 // To read or change values from anywhere inside the tree:
-//   const { theme, setTheme, mode, setMode } = useRagnarTheme()
+//   const { theme, setTheme, mode, setMode } = useEluanTheme()
 
 /** Either a built-in theme name or a custom theme name (when registered). */
 export type ThemeName = Theme | string
 
-export interface RagnarThemeState {
+export interface EluanThemeState {
   theme: ThemeName
   mode: Mode
   spacing: SpacingScale
@@ -53,18 +53,18 @@ export interface RagnarThemeState {
   setCurves: (c: CurveScale) => void
 }
 
-const RagnarThemeContext = React.createContext<RagnarThemeState | null>(null)
+const EluanThemeContext = React.createContext<EluanThemeState | null>(null)
 
 const STORAGE_KEYS = {
-  theme: "ragnar:theme",
-  mode: "ragnar:mode",
-  spacing: "ragnar:spacing",
-  curves: "ragnar:curves",
+  theme: "eluan:theme",
+  mode: "eluan:mode",
+  spacing: "eluan:spacing",
+  curves: "eluan:curves",
 } as const
 
-const STYLE_ELEMENT_ID = "ragnar-custom-themes"
+const STYLE_ELEMENT_ID = "eluan-custom-themes"
 
-export interface RagnarProviderProps {
+export interface EluanProviderProps {
   /**
    * Initial theme — built-in name (e.g. "industrial-retro", "minimal") or
    * a custom theme name registered via `customThemes`. Default: `"industrial-retro"`.
@@ -123,7 +123,7 @@ function getSystemMode(): Mode {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
 }
 
-function resolveTarget(target: RagnarProviderProps["target"]): HTMLElement | null {
+function resolveTarget(target: EluanProviderProps["target"]): HTMLElement | null {
   if (typeof document === "undefined") return null
   if (target instanceof HTMLElement) return target
   if (target === "body") return document.body
@@ -134,7 +134,7 @@ function isBuiltInTheme(name: string): name is Theme {
   return (builtInThemes as readonly string[]).includes(name)
 }
 
-export function RagnarProvider({
+export function EluanProvider({
   defaultTheme = "industrial-retro",
   defaultMode,
   defaultSpacing = "standard",
@@ -144,7 +144,7 @@ export function RagnarProvider({
   followSystemMode = true,
   target = "html",
   children,
-}: RagnarProviderProps) {
+}: EluanProviderProps) {
   // Build a name → custom theme lookup. Validates that all names are unique
   // and don't collide with built-in theme names.
   const customThemeMap = React.useMemo(() => {
@@ -153,11 +153,11 @@ export function RagnarProvider({
     for (const t of customThemes) {
       if (isBuiltInTheme(t.name)) {
         throw new Error(
-          `RagnarProvider: custom theme name "${t.name}" collides with a built-in theme.`
+          `EluanProvider: custom theme name "${t.name}" collides with a built-in theme.`
         )
       }
       if (map.has(t.name)) {
-        throw new Error(`RagnarProvider: duplicate custom theme name "${t.name}".`)
+        throw new Error(`EluanProvider: duplicate custom theme name "${t.name}".`)
       }
       map.set(t.name, t)
     }
@@ -266,7 +266,7 @@ export function RagnarProvider({
     (t: ThemeName) => {
       if (!isValidThemeName(t)) {
         console.warn(
-          `RagnarProvider: setTheme("${t}") — unknown theme name. Did you forget to pass it via customThemes?`
+          `EluanProvider: setTheme("${t}") — unknown theme name. Did you forget to pass it via customThemes?`
         )
         return
       }
@@ -297,24 +297,24 @@ export function RagnarProvider({
     [persist]
   )
 
-  const value = React.useMemo<RagnarThemeState>(
+  const value = React.useMemo<EluanThemeState>(
     () => ({ theme, mode, spacing, curves, setTheme, setMode, setSpacing, setCurves }),
     [theme, mode, spacing, curves, setTheme, setMode, setSpacing, setCurves]
   )
 
   return (
-    <RagnarThemeContext.Provider value={value}>{children}</RagnarThemeContext.Provider>
+    <EluanThemeContext.Provider value={value}>{children}</EluanThemeContext.Provider>
   )
 }
 
 /**
- * Read and update the active Ragnar theme axes from anywhere in the tree.
- * Must be used inside a `<RagnarProvider>`.
+ * Read and update the active Eluan theme axes from anywhere in the tree.
+ * Must be used inside a `<EluanProvider>`.
  */
-export function useRagnarTheme(): RagnarThemeState {
-  const ctx = React.useContext(RagnarThemeContext)
+export function useEluanTheme(): EluanThemeState {
+  const ctx = React.useContext(EluanThemeContext)
   if (!ctx) {
-    throw new Error("useRagnarTheme must be used within a <RagnarProvider>")
+    throw new Error("useEluanTheme must be used within a <EluanProvider>")
   }
   return ctx
 }

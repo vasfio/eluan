@@ -1,9 +1,9 @@
 ---
-name: ragnar-conventions
-description: Ragnar design system coding conventions for building, editing, or auditing components. Use when creating new components for @vasf/ragnar-core, fixing existing ones, or any task that involves Ragnar tokens, styling, or component patterns in the ragnar monorepo.
+name: eluan-conventions
+description: Eluan design system coding conventions for building, editing, or auditing components. Use when creating new components for @eluan/core, fixing existing ones, or any task that involves Eluan tokens, styling, or component patterns in the eluan monorepo.
 ---
 
-# Ragnar Conventions
+# Eluan Conventions
 
 ## Repo structure
 - `packages/core/src/components/` — UI and marketing components
@@ -40,9 +40,9 @@ Use CSS custom properties exclusively:
 1. `cd packages/core && npm run build` — verify clean build before committing
 2. Version bump: edit `package.json` version manually (workspace: protocol breaks npm version)
 3. Publish: `npm publish --access public --no-workspaces` from the package folder
-4. Commit with: `feat: ragnar core improvements - description`
+4. Commit with: `feat: eluan core improvements - description`
 
 ## Common mistakes to avoid
 - Don't use `bg-primary`, `text-foreground` etc. (shadcn compat aliases) — use full token vars
 - Don't use `workspace:*` in deps when building standalone — replace with published semver
-- Don't import from `@radix-ui/*` directly in new components — always wrap in a Ragnar component
+- Don't import from `@radix-ui/*` directly in new components — always wrap in a Eluan component

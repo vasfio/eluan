@@ -36,7 +36,7 @@ A layout primitive that enforces a consistent width-to-height ratio for its chil
 
 **Import**
 \`\`\`tsx
-import { AspectRatio } from "@vasf/ragnar-core"
+import { AspectRatio } from "@eluan/core"
 \`\`\`
 
 **Usage**

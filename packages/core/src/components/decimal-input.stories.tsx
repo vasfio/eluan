@@ -42,7 +42,7 @@ A numeric input for decimal values with formatting, min/max clamping, and option
 
 **Import**
 \`\`\`tsx
-import { DecimalInput, CurrencyInput, PercentageInput, UnitInput } from "@vasf/ragnar-core"
+import { DecimalInput, CurrencyInput, PercentageInput, UnitInput } from "@eluan/core"
 \`\`\`
 
 **Usage**

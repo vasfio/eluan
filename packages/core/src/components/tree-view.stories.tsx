@@ -38,7 +38,7 @@ A hierarchical tree view for displaying nested data such as file systems, with s
 
 **Import**
 \`\`\`tsx
-import { TreeView, type TreeNode } from "@vasf/ragnar-core"
+import { TreeView, type TreeNode } from "@eluan/core"
 \`\`\`
 
 **Usage**

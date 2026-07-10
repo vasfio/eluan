@@ -18,7 +18,7 @@ A one-time password input with individual digit slots, keyboard navigation, past
 
 **Import**
 \`\`\`tsx
-import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from "@vasf/ragnar-core"
+import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from "@eluan/core"
 \`\`\`
 
 **Usage**

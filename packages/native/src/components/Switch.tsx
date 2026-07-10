@@ -9,7 +9,7 @@ import {
   useColorScheme,
   Animated,
 } from "react-native"
-import { fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@eluan/tokens"
 import { sp, sz, getSemanticColors } from "../utils/styles"
 
 export interface SwitchProps {

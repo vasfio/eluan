@@ -19,7 +19,7 @@ A popup that displays additional information when hovering over or focusing on a
 
 **Import**
 \`\`\`tsx
-import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@vasf/ragnar-core"
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@eluan/core"
 \`\`\`
 
 **Usage**

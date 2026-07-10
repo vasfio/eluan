@@ -41,7 +41,7 @@ import {
   ContextMenuLabel,
   ContextMenuShortcut,
   ContextMenuGroup,
-} from "@vasf/ragnar-core"
+} from "@eluan/core"
 \`\`\`
 
 **Usage**

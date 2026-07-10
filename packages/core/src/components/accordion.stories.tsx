@@ -18,7 +18,7 @@ A vertically stacked set of collapsible sections built on Radix UI, allowing use
 
 **Import**
 \`\`\`tsx
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@vasf/ragnar-core"
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@eluan/core"
 \`\`\`
 
 **Usage**

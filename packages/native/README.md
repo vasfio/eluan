@@ -1,20 +1,20 @@
-# @vasf/ragnar-native
+# @eluan/native
 
-> React Native UI components sharing the [Ragnar](https://github.com/frolda/ragnar) design system's token architecture.
+> React Native UI components sharing the [Eluan](https://github.com/vasfio/eluan) design system's token architecture.
 
 ## Install
 
 ```bash
-npm install @vasf/ragnar-native @vasf/ragnar-tokens
-yarn add @vasf/ragnar-native @vasf/ragnar-tokens
-pnpm add @vasf/ragnar-native @vasf/ragnar-tokens
-bun add @vasf/ragnar-native @vasf/ragnar-tokens
+npm install @eluan/native @eluan/tokens
+yarn add @eluan/native @eluan/tokens
+pnpm add @eluan/native @eluan/tokens
+bun add @eluan/native @eluan/tokens
 ```
 
 ## Use
 
 ```tsx
-import { Button, Card } from "@vasf/ragnar-native"
+import { Button, Card } from "@eluan/native"
 
 export default function Screen() {
   return (

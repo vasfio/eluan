@@ -1,14 +1,14 @@
 ---
 name: app-scaffold
-description: Scaffold a new Next.js web app using Vas's standard stack. Use when creating a new web application from scratch, setting up a new repo, or bootstrapping a project with the standard Ragnar + Neon + NextAuth setup.
+description: Scaffold a new Next.js web app using Vas's standard stack. Use when creating a new web application from scratch, setting up a new repo, or bootstrapping a project with the standard Eluan + Neon + NextAuth setup.
 ---
 
 # App Scaffold — Vas's Standard Stack
 
 ## Stack
 - **Framework**: Next.js 15 (App Router, TypeScript)
-- **UI**: `@vasf/ragnar-core` (always `--legacy-peer-deps` due to React 19 peer dep)
-- **Styling**: Ragnar token CSS and app-owned CSS modules or StyleX
+- **UI**: `@eluan/core` (always `--legacy-peer-deps` due to React 19 peer dep)
+- **Styling**: Eluan token CSS and app-owned CSS modules or StyleX
 - **Database**: Neon (serverless PostgreSQL) via Prisma
 - **Auth**: NextAuth v5 beta (`next-auth@beta`)
 - **Deploy**: Vercel
@@ -21,7 +21,7 @@ mkdir <app-name> && cd <app-name>
 git init
 
 # 2. package.json — copy from finance-tracker as base
-# Key deps: next@^15, react@^19, @vasf/ragnar-core, prisma, @prisma/client,
+# Key deps: next@^15, react@^19, @eluan/core, prisma, @prisma/client,
 #           next-auth@beta, bcryptjs, date-fns, lucide-react
 
 # 3. Install
@@ -36,7 +36,7 @@ npm install --legacy-peer-deps
 
 ## Required files
 - `src/app/layout.tsx` — html tag with `data-theme` and `data-mode` attributes
-- `src/app/globals.css` — `@import "@vasf/ragnar-core/styles.css";`
+- `src/app/globals.css` — `@import "@eluan/core/styles.css";`
 - `src/lib/prisma.ts` — singleton Prisma client
 - `src/lib/auth.ts` — NextAuth v5 config
 - `src/middleware.ts` — route protection

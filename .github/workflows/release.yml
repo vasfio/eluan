@@ -4,21 +4,19 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
 
 permissions:
   contents: write
   pull-requests: write
-  id-token: write
-
-concurrency:
-  group: release
-  cancel-in-progress: false
+  id-token: write # mandatory for npm trusted publishing (OIDC)
 
 jobs:
   release:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -31,23 +29,27 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: pnpm
-          registry-url: https://registry.npmjs.org
+
+      # Trusted publishing (OIDC) requires npm >= 11.5.1; Node's bundled npm can lag.
+      - name: Upgrade npm
+        run: npm install -g npm@latest
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build publishable packages
-        run: pnpm build:publish
+      - name: Build packages
+        run: pnpm -r build
 
-      - name: Version or publish packages
+      - name: Create Release Pull Request or Publish
         uses: changesets/action@v1
         with:
-          version: pnpm version-packages
-          publish: pnpm release
-          title: "chore: release packages"
-          commit: "chore: release packages"
+          version: pnpm changeset version
+          publish: pnpm changeset publish --provenance
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # @changesets/cli 2.31 does not forward --provenance to npm; this env var
+          # is what actually turns on provenance generation during `npm publish`.
+          # OIDC trusted publishing supplies auth — no NPM_TOKEN anywhere.
           NPM_CONFIG_PROVENANCE: true

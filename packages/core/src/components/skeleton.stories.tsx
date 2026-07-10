@@ -13,7 +13,7 @@ A placeholder animation component used to indicate loading content before data i
 
 **Import**
 \`\`\`tsx
-import { Skeleton } from "@vasf/ragnar-core"
+import { Skeleton } from "@eluan/core"
 \`\`\`
 
 **Usage**

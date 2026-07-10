@@ -13,7 +13,7 @@ A password input with a visibility toggle and an optional strength indicator tha
 
 **Import**
 \`\`\`tsx
-import { PasswordInput } from "@vasf/ragnar-core"
+import { PasswordInput } from "@eluan/core"
 \`\`\`
 
 **Usage**

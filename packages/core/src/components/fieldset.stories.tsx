@@ -15,7 +15,7 @@ A styled container for grouping related form controls with an optional legend an
 
 **Import**
 \`\`\`tsx
-import { Fieldset, FieldsetLegend, FieldsetDescription } from "@vasf/ragnar-core"
+import { Fieldset, FieldsetLegend, FieldsetDescription } from "@eluan/core"
 \`\`\`
 
 **Usage**

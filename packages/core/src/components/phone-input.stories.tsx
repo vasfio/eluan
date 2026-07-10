@@ -13,7 +13,7 @@ A phone number input with an integrated country code selector, searchable dropdo
 
 **Import**
 \`\`\`tsx
-import { PhoneInput } from "@vasf/ragnar-core"
+import { PhoneInput } from "@eluan/core"
 \`\`\`
 
 **Usage**

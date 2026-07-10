@@ -2,7 +2,7 @@
 
 import "./styles.css"
 
-// @vasf/ragnar-core - Core UI Components
+// @eluan/core - Core UI Components
 // Re-export all components
 
 export * from "./components/accordion"
@@ -75,7 +75,7 @@ export * from "./components/tooltip"
 export * from "./components/tree-view"
 
 // Provider for client-app theme setup
-export * from "./providers/ragnar-provider"
+export * from "./providers/eluan-provider"
 export * from "./providers/create-theme"
 
 // Re-export token types/helpers so consumers don't need a separate import
@@ -90,4 +90,4 @@ export {
   type Mode,
   type SpacingScale,
   type CurveScale,
-} from "@vasf/ragnar-tokens"
+} from "@eluan/tokens"

@@ -28,7 +28,7 @@ On large screens (>=1024px), the drawer renders inline in push mode. On small sc
 import {
   Drawer, DrawerTrigger, DrawerContent, DrawerHeader,
   DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose,
-} from "@vasf/ragnar-core"
+} from "@eluan/core"
 \`\`\`
 
 **Usage**

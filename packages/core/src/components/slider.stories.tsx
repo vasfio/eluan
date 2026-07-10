@@ -13,7 +13,7 @@ An input control for selecting a numeric value or range from a bounded interval 
 
 **Import**
 \`\`\`tsx
-import { Slider } from "@vasf/ragnar-core"
+import { Slider } from "@eluan/core"
 \`\`\`
 
 **Usage**

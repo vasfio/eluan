@@ -1,0 +1,4 @@
+interface:
+  display_name: "Eluan Token Theme"
+  short_description: "Work with Eluan tokens and themes."
+  default_prompt: "Update Eluan tokens, theme CSS, or provider theme behavior safely."

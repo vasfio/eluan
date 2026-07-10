@@ -23,7 +23,7 @@ import {
   CreditCardNumberInput,
   CreditCardExpiryInput,
   CreditCardCVVInput,
-} from "@vasf/ragnar-core"
+} from "@eluan/core"
 \`\`\`
 
 **Usage**

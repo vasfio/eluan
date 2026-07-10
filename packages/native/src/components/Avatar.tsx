@@ -9,7 +9,7 @@ import {
   ImageSourcePropType,
   useColorScheme,
 } from "react-native"
-import { fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@eluan/tokens"
 import { sz, getSemanticColors } from "../utils/styles"
 
 export interface AvatarProps {

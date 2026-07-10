@@ -1,5 +1,5 @@
 import { StyleSheet, ViewStyle, TextStyle, ImageStyle } from "react-native"
-import { primitiveColors, radius, spacing, fontSizes, fontWeights } from "@vasf/ragnar-tokens"
+import { primitiveColors, radius, spacing, fontSizes, fontWeights } from "@eluan/tokens"
 
 // Alias tokens to the names expected by createThemedStyles
 const colors = primitiveColors
@@ -182,7 +182,7 @@ export function getSemanticTokens(scheme: ColorScheme) {
 // ============================================
 
 /**
- * Creates themed styles using Ragnar design tokens
+ * Creates themed styles using Eluan design tokens
  *
  * @example
  * const styles = createThemedStyles((tokens, scheme) => ({

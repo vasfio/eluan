@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { HeaderNavigation } from "./header-navigation"
-import { Button } from "@vasf/ragnar-core"
+import { Button } from "@eluan/core"
 
 const meta: Meta<typeof HeaderNavigation> = {
   title: "Web/HeaderNavigation",
@@ -14,7 +14,7 @@ A responsive header navigation with logo, nav items, action buttons, and a mobil
 
 **Import**
 \`\`\`tsx
-import { HeaderNavigation } from "@vasf/ragnar-core"
+import { HeaderNavigation } from "@eluan/core"
 \`\`\`
 
 **Usage**
@@ -67,7 +67,7 @@ export const Default: Story = {
   parameters: { docs: { description: { story: "Standard header with logo, 5 nav items, and sign-in/get-started actions." } } },
   render: () => (
     <HeaderNavigation
-      logo={<span className="text-xl font-bold">Ragnar</span>}
+      logo={<span className="text-xl font-bold">Eluan</span>}
       items={defaultItems}
       actions={
         <>
@@ -85,7 +85,7 @@ export const Sticky: Story = {
     <div className="h-[200vh]">
       <HeaderNavigation
         sticky
-        logo={<span className="text-xl font-bold">Ragnar</span>}
+        logo={<span className="text-xl font-bold">Eluan</span>}
         items={defaultItems}
         actions={<Button>Sign Up</Button>}
       />
@@ -100,7 +100,7 @@ export const WithActiveItem: Story = {
   parameters: { docs: { description: { story: "Demonstrates the active state highlight on the Home nav item." } } },
   render: () => (
     <HeaderNavigation
-      logo={<span className="text-xl font-bold">Ragnar</span>}
+      logo={<span className="text-xl font-bold">Eluan</span>}
       items={[
         { label: "Home", href: "#", active: true },
         { label: "Products", href: "#products" },
@@ -118,7 +118,7 @@ export const Transparent: Story = {
     <div className="bg-gradient-to-r from-primary to-primary/80 min-h-[300px]">
       <HeaderNavigation
         transparent
-        logo={<span className="text-xl font-bold text-primary-foreground">Ragnar</span>}
+        logo={<span className="text-xl font-bold text-primary-foreground">Eluan</span>}
         items={defaultItems.map(item => ({
           ...item,
           className: "text-primary-foreground/80 hover:text-primary-foreground"

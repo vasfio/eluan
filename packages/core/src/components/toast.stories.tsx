@@ -23,7 +23,7 @@ A toast notification system built on the \`sonner\` library, providing styled su
 
 **Import**
 \`\`\`tsx
-import { Toast } from "@vasf/ragnar-core"
+import { Toast } from "@eluan/core"
 import { toast } from "sonner"
 \`\`\`
 

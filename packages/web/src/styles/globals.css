@@ -1,7 +1,7 @@
-/* Ragnar Design System Tokens (Primitives -> Modes -> Themes) */
+/* Eluan Design System Tokens (Primitives -> Modes -> Themes) */
 @layer base, priority1, priority2, priority3, priority4, priority5, priority6, priority7, priority8, priority9, priority10;
 
-@import "@vasf/ragnar-tokens/css";
+@import "@eluan/tokens/css";
 
 @keyframes accordion-down {
   from { height: 0; }

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Eluan Consumer Setup"
+  short_description: "Wire Eluan into consumer apps."
+  default_prompt: "Set up Eluan in a React, Vite, or Next.js application."

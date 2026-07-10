@@ -15,7 +15,7 @@ A date picker calendar built on react-day-picker with month/year dropdown naviga
 
 **Import**
 \`\`\`tsx
-import { Calendar } from "@vasf/ragnar-core"
+import { Calendar } from "@eluan/core"
 \`\`\`
 
 **Usage**

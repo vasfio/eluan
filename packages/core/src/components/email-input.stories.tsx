@@ -13,7 +13,7 @@ An email input with a mail icon and optional inline validation that shows a succ
 
 **Import**
 \`\`\`tsx
-import { EmailInput } from "@vasf/ragnar-core"
+import { EmailInput } from "@eluan/core"
 \`\`\`
 
 **Usage**

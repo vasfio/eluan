@@ -14,7 +14,7 @@ A popup card that appears on hover, designed to preview content behind a link or
 
 **Import**
 \`\`\`tsx
-import { HoverCard, HoverCardTrigger, HoverCardContent } from "@vasf/ragnar-core"
+import { HoverCard, HoverCardTrigger, HoverCardContent } from "@eluan/core"
 \`\`\`
 
 **Usage**

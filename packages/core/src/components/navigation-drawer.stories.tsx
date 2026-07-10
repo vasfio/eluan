@@ -33,7 +33,7 @@ import {
   NavigationDrawerToggle,
   NavigationDrawerItem,
   NavigationDrawerGroup,
-} from "@vasf/ragnar-core"
+} from "@eluan/core"
 \`\`\`
 
 **Usage**

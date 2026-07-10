@@ -1,9 +1,9 @@
 ---
-name: ragnar-public-review
-description: Audit the Ragnar design system for open-source and portfolio readiness. Use for repository-wide review, pre-release checks, packaging metadata, stale docs, README quality, package exports, lockfile hygiene, generated artifacts, lint/test/build reliability, public API consistency, accessibility risks, dependency drift, or checking that code is legible and impressive for prospects or employers.
+name: eluan-public-review
+description: Audit the Eluan design system for open-source and portfolio readiness. Use for repository-wide review, pre-release checks, packaging metadata, stale docs, README quality, package exports, lockfile hygiene, generated artifacts, lint/test/build reliability, public API consistency, accessibility risks, dependency drift, or checking that code is legible and impressive for prospects or employers.
 ---
 
-# Ragnar Public Review
+# Eluan Public Review
 
 ## Review Stance
 
@@ -43,10 +43,10 @@ rg -n 'lime|bold|beige|funky|Resizable|Sidebar|TimePicker|Rating' README.md docs
 For consumer package-manager compatibility, inspect packed package metadata:
 
 ```bash
-pnpm --filter @vasf/ragnar-core pack --pack-destination /private/tmp
-pnpm --filter @vasf/ragnar-web pack --pack-destination /private/tmp
-pnpm --filter @vasf/ragnar-tokens pack --pack-destination /private/tmp
-tar -xOf /private/tmp/vasf-ragnar-web-*.tgz package/package.json
+pnpm --filter @eluan/core pack --pack-destination /private/tmp
+pnpm --filter @eluan/web pack --pack-destination /private/tmp
+pnpm --filter @eluan/tokens pack --pack-destination /private/tmp
+tar -xOf /private/tmp/eluan-web-*.tgz package/package.json
 ```
 
 The packed `package.json` should contain normal semver dependencies, not `workspace:` specifiers. Consumer docs should show npm/yarn/pnpm/bun install commands where appropriate.

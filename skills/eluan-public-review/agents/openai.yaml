@@ -1,0 +1,4 @@
+interface:
+  display_name: "Eluan Public Review"
+  short_description: "Audit Eluan for public readiness."
+  default_prompt: "Review the Eluan repository for open-source readiness and quality issues."

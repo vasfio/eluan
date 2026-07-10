@@ -14,7 +14,7 @@ A custom scrollable container that provides consistent cross-browser scrollbar s
 
 **Import**
 \`\`\`tsx
-import { ScrollArea, ScrollBar } from "@vasf/ragnar-core"
+import { ScrollArea, ScrollBar } from "@eluan/core"
 \`\`\`
 
 **Usage**

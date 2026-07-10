@@ -14,7 +14,7 @@ A floating panel that appears next to a trigger element, used to display rich in
 
 **Import**
 \`\`\`tsx
-import { Popover, PopoverTrigger, PopoverContent } from "@vasf/ragnar-core"
+import { Popover, PopoverTrigger, PopoverContent } from "@eluan/core"
 \`\`\`
 
 **Usage**

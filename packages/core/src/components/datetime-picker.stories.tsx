@@ -34,7 +34,7 @@ A combined date and time picker that lets users select a date from a calendar an
 
 **Import**
 \`\`\`tsx
-import { DateTimePicker } from "@vasf/ragnar-core"
+import { DateTimePicker } from "@eluan/core"
 \`\`\`
 
 **Usage**

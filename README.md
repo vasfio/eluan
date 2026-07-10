@@ -1,28 +1,28 @@
-# Ragnar Design System
+# Eluan Design System
 
-A multi-package design system monorepo built with React, StyleX, and Radix UI primitives. Ragnar provides a complete three-layer token architecture, core UI components, marketing patterns, and React Native components.
+A multi-package design system monorepo built with React, StyleX, and Radix UI primitives. Eluan provides a complete three-layer token architecture, core UI components, marketing patterns, and React Native components.
 
 ## Packages
 
 | Package | Description | Version |
 |---------|-------------|---------|
-| [`@vasf/ragnar-tokens`](#vasfragnar-tokens) | Design tokens (colors, spacing, themes, fonts) | 0.1.2 |
-| [`@vasf/ragnar-core`](#vasfragnar-core) | UI components and marketing patterns | 0.1.13 |
-| [`@vasf/ragnar-web`](#vasfragnar-web) | Compatibility exports for Header, HeaderNavigation, and Footer | 0.1.1 |
-| [`@vasf/ragnar-native`](#vasfragnar-native) | React Native components | 0.1.1 |
+| [`@eluan/tokens`](#eluantokens) | Design tokens (colors, spacing, themes, fonts) | 0.1.2 |
+| [`@eluan/core`](#eluancore) | UI components and marketing patterns | 0.1.13 |
+| [`@eluan/web`](#eluanweb) | Compatibility exports for Header, HeaderNavigation, and Footer | 0.1.1 |
+| [`@eluan/native`](#eluannative) | React Native components | 0.1.1 |
 
 ## Quick Start
 
 ```bash
-npm install @vasf/ragnar-core @vasf/ragnar-tokens
-yarn add @vasf/ragnar-core @vasf/ragnar-tokens
-pnpm add @vasf/ragnar-core @vasf/ragnar-tokens
-bun add @vasf/ragnar-core @vasf/ragnar-tokens
+npm install @eluan/core @eluan/tokens
+yarn add @eluan/core @eluan/tokens
+pnpm add @eluan/core @eluan/tokens
+bun add @eluan/core @eluan/tokens
 ```
 
 ```tsx
-import "@vasf/ragnar-core/styles.css"
-import "@vasf/ragnar-tokens/css"
+import "@eluan/core/styles.css"
+import "@eluan/tokens/css"
 
 import {
   Button,
@@ -30,21 +30,21 @@ import {
   CardHeader,
   CardTitle,
   CardContent,
-  RagnarProvider,
-} from "@vasf/ragnar-core"
+  EluanProvider,
+} from "@eluan/core"
 
 function App() {
   return (
-    <RagnarProvider defaultTheme="industrial-retro" defaultMode="light">
+    <EluanProvider defaultTheme="industrial-retro" defaultMode="light">
       <Card>
         <CardHeader>
-          <CardTitle>Hello Ragnar</CardTitle>
+          <CardTitle>Hello Eluan</CardTitle>
         </CardHeader>
         <CardContent>
           <Button>Click me</Button>
         </CardContent>
       </Card>
-    </RagnarProvider>
+    </EluanProvider>
   )
 }
 ```
@@ -78,13 +78,13 @@ pnpm lint
 ### Dependency Graph
 
 ```
-@vasf/ragnar-tokens          (foundational - no internal deps)
+@eluan/tokens          (foundational - no internal deps)
     |
-    +---> @vasf/ragnar-core   (depends on tokens)
+    +---> @eluan/core   (depends on tokens)
     |         |
-    |         +---> @vasf/ragnar-web  (compatibility facade)
+    |         +---> @eluan/web  (compatibility facade)
     |
-    +---> @vasf/ragnar-native (depends on tokens)
+    +---> @eluan/native (depends on tokens)
 ```
 
 Build order matters: always build `tokens` first, then `core`, then compatibility packages such as `web`.
@@ -92,28 +92,28 @@ Build order matters: always build `tokens` first, then `core`, then compatibilit
 ### Project Structure
 
 ```
-ragnar/
+eluan/
   packages/
-    tokens/      @vasf/ragnar-tokens   Design tokens, CSS variables, fonts
-    core/        @vasf/ragnar-core     UI and marketing components
-    web/         @vasf/ragnar-web      Header/Footer compatibility facade
-    native/      @vasf/ragnar-native   22 React Native component categories
+    tokens/      @eluan/tokens   Design tokens, CSS variables, fonts
+    core/        @eluan/core     UI and marketing components
+    web/         @eluan/web      Header/Footer compatibility facade
+    native/      @eluan/native   22 React Native component categories
   package.json   Root workspace config, scripts
 ```
 
 ---
 
-## `@vasf/ragnar-tokens`
+## `@eluan/tokens`
 
 The token foundation of the design system. Provides CSS variables, TypeScript constants, self-hosted fonts, and a Tailwind CSS preset.
 
 ### Installation
 
 ```bash
-npm install @vasf/ragnar-tokens
-yarn add @vasf/ragnar-tokens
-pnpm add @vasf/ragnar-tokens
-bun add @vasf/ragnar-tokens
+npm install @eluan/tokens
+yarn add @eluan/tokens
+pnpm add @eluan/tokens
+bun add @eluan/tokens
 ```
 
 ### Three-Layer Token Architecture
@@ -137,13 +137,13 @@ Activated via HTML data attributes:
 
 ### Exports
 
-#### CSS Tokens (`@vasf/ragnar-tokens/css`)
+#### CSS Tokens (`@eluan/tokens/css`)
 
 The main CSS entry point. Imports all token layers (primitives, modes, themes, spacing, curves) and sets base styles. Only loads the shared Geist Mono font; theme-specific fonts are loaded separately.
 
 ```css
 /* In your app's CSS or globals.css */
-@import "@vasf/ragnar-tokens/css";
+@import "@eluan/tokens/css";
 ```
 
 This provides all CSS variables across all three layers:
@@ -193,12 +193,12 @@ Fonts are split per theme so you only ship the fonts your app actually uses. Onl
 
 ```css
 /* Static import: pick the one matching your theme */
-@import "@vasf/ragnar-tokens/fonts/industrial-retro";   /* Geist (heading + body) */
-@import "@vasf/ragnar-tokens/fonts/minimal";   /* Inter (heading + body) */
+@import "@eluan/tokens/fonts/industrial-retro";   /* Geist (heading + body) */
+@import "@eluan/tokens/fonts/minimal";   /* Inter (heading + body) */
 
 /* Special imports */
-@import "@vasf/ragnar-tokens/fonts/base";            /* Geist Mono only (already in /css) */
-@import "@vasf/ragnar-tokens/fonts/all";             /* All fonts (for Storybook / development) */
+@import "@eluan/tokens/fonts/base";            /* Geist Mono only (already in /css) */
+@import "@eluan/tokens/fonts/all";             /* All fonts (for Storybook / development) */
 ```
 
 **Theme Font Mapping:**
@@ -215,7 +215,7 @@ All fonts are self-hosted via `@fontsource` -- no CDN dependency.
 For apps that support runtime theme switching:
 
 ```tsx
-import { loadThemeFonts, type Theme } from "@vasf/ragnar-tokens"
+import { loadThemeFonts, type Theme } from "@eluan/tokens"
 
 // In a React component or theme provider:
 useEffect(() => {
@@ -225,7 +225,7 @@ useEffect(() => {
 
 `loadThemeFonts()` uses dynamic `import()` so your bundler (Vite, webpack) code-splits each theme's fonts into a separate chunk. Fonts are cached after first load -- switching back to a previously loaded theme is instant.
 
-#### TypeScript API (`@vasf/ragnar-tokens`)
+#### TypeScript API (`@eluan/tokens`)
 
 The default export provides all tokens as typed JavaScript constants, useful for React Native, server-side logic, or any non-CSS context.
 
@@ -284,30 +284,30 @@ import {
   type FontWeightToken,
   type ShadowToken,
   type BreakpointToken,
-} from "@vasf/ragnar-tokens"
+} from "@eluan/tokens"
 ```
 
-## `@vasf/ragnar-core`
+## `@eluan/core`
 
-60+ UI components built on Radix UI primitives, styled with StyleX and Ragnar tokens.
+60+ UI components built on Radix UI primitives, styled with StyleX and Eluan tokens.
 
 ### Installation
 
 ```bash
-npm install @vasf/ragnar-core @vasf/ragnar-tokens
-yarn add @vasf/ragnar-core @vasf/ragnar-tokens
-pnpm add @vasf/ragnar-core @vasf/ragnar-tokens
-bun add @vasf/ragnar-core @vasf/ragnar-tokens
+npm install @eluan/core @eluan/tokens
+yarn add @eluan/core @eluan/tokens
+pnpm add @eluan/core @eluan/tokens
+bun add @eluan/core @eluan/tokens
 ```
 
 ### Setup
 
 ```tsx
 // 1. Import styles (includes token CSS and component CSS)
-import "@vasf/ragnar-core/styles.css"
+import "@eluan/core/styles.css"
 
 // 2. Import fonts for your theme
-import "@vasf/ragnar-tokens/fonts/industrial-retro"
+import "@eluan/tokens/fonts/industrial-retro"
 
 // 3. Set data attributes on your root element
 // <html data-mode="light" data-theme="industrial-retro" data-spacing="standard" data-curves="slight">
@@ -348,7 +348,7 @@ import {
   Tooltip,
   TreeView,
   cn,
-} from "@vasf/ragnar-core"
+} from "@eluan/core"
 ```
 
 ### Individual Component Imports
@@ -356,8 +356,8 @@ import {
 Every core component also has a package subpath entry so consumers can import only the module they need:
 
 ```tsx
-import { Button } from "@vasf/ragnar-core/button"
-import { Header } from "@vasf/ragnar-core/header"
+import { Button } from "@eluan/core/button"
+import { Header } from "@eluan/core/header"
 ```
 
 ### Using CSS Variables
@@ -403,50 +403,50 @@ The Storybook toolbar lets you switch between all modes, themes, spacing scales,
 
 ---
 
-## `@vasf/ragnar-web`
+## `@eluan/web`
 
-Compatibility package for web layout components. Marketing sections, media, visual effects, and other web patterns now live in `@vasf/ragnar-core`.
+Compatibility package for web layout components. Marketing sections, media, visual effects, and other web patterns now live in `@eluan/core`.
 
 ### Installation
 
 ```bash
-npm install @vasf/ragnar-web @vasf/ragnar-core @vasf/ragnar-tokens
-yarn add @vasf/ragnar-web @vasf/ragnar-core @vasf/ragnar-tokens
-pnpm add @vasf/ragnar-web @vasf/ragnar-core @vasf/ragnar-tokens
-bun add @vasf/ragnar-web @vasf/ragnar-core @vasf/ragnar-tokens
+npm install @eluan/web @eluan/core @eluan/tokens
+yarn add @eluan/web @eluan/core @eluan/tokens
+pnpm add @eluan/web @eluan/core @eluan/tokens
+bun add @eluan/web @eluan/core @eluan/tokens
 ```
 
 ### Use
 
 ```tsx
-import "@vasf/ragnar-core/styles.css"
-import "@vasf/ragnar-tokens/css"
-import "@vasf/ragnar-web/styles.css"
+import "@eluan/core/styles.css"
+import "@eluan/tokens/css"
+import "@eluan/web/styles.css"
 
-import { Header, HeaderNavigation, Footer } from "@vasf/ragnar-web"
+import { Header, HeaderNavigation, Footer } from "@eluan/web"
 ```
 
 For new code, prefer importing these directly from core:
 
 ```tsx
-import { Header } from "@vasf/ragnar-core/header"
-import { HeaderNavigation } from "@vasf/ragnar-core/header-navigation"
-import { Footer } from "@vasf/ragnar-core/footer"
+import { Header } from "@eluan/core/header"
+import { HeaderNavigation } from "@eluan/core/header-navigation"
+import { Footer } from "@eluan/core/footer"
 ```
 
 ---
 
-## `@vasf/ragnar-native`
+## `@eluan/native`
 
 React Native components that share the same token system as the web packages.
 
 ### Installation
 
 ```bash
-npm install @vasf/ragnar-native @vasf/ragnar-tokens
-yarn add @vasf/ragnar-native @vasf/ragnar-tokens
-pnpm add @vasf/ragnar-native @vasf/ragnar-tokens
-bun add @vasf/ragnar-native @vasf/ragnar-tokens
+npm install @eluan/native @eluan/tokens
+yarn add @eluan/native @eluan/tokens
+pnpm add @eluan/native @eluan/tokens
+bun add @eluan/native @eluan/tokens
 ```
 
 ### Peer Dependencies
@@ -462,7 +462,7 @@ bun add @vasf/ragnar-native @vasf/ragnar-tokens
 
 ```tsx
 import {
-  // All @vasf/ragnar-tokens exports are re-exported
+  // All @eluan/tokens exports are re-exported
   primitiveColors, themes, modes, spacing, radius,
   type Theme, type Mode,
 
@@ -513,7 +513,7 @@ import {
   // -- Utilities --
   createThemedStyles,           // Factory for themed StyleSheets
   hslToRgb,                     // HSL to rgb() for RN compatibility
-} from "@vasf/ragnar-native"
+} from "@eluan/native"
 ```
 
 ### Themed Styles
@@ -521,7 +521,7 @@ import {
 React Native doesn't support CSS variables. Use `createThemedStyles` to create color-scheme-aware StyleSheets using the token primitives:
 
 ```tsx
-import { createThemedStyles } from "@vasf/ragnar-native"
+import { createThemedStyles } from "@eluan/native"
 
 const useStyles = createThemedStyles((tokens, colorScheme) => ({
   container: {
@@ -619,7 +619,7 @@ These are the semantic token groups that each theme maps to its own color palett
 
 ## Publishing
 
-Packages are published to npm under the `@vasf` scope.
+Packages are published to npm under the `@eluan` scope.
 
 ```bash
 # Version packages (via changesets)

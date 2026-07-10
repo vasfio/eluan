@@ -27,7 +27,7 @@ describe('CLI: bin entry point', () => {
 
   it('shows help with no command', () => {
     const { stdout, exitCode } = run([]);
-    expect(stdout).toContain('ragnar-theme generate');
+    expect(stdout).toContain('eluan-theme generate');
     expect(exitCode).toBe(0);
   });
 
@@ -42,7 +42,7 @@ describe('CLI: --name flag', () => {
   let outDir: string;
 
   beforeEach(() => {
-    outDir = join(tmpdir(), `ragnar-test-name-${Date.now()}`);
+    outDir = join(tmpdir(), `eluan-test-name-${Date.now()}`);
   });
 
   afterEach(() => {
@@ -74,8 +74,8 @@ describe('CLI: config file support', () => {
   let configDir: string;
 
   beforeEach(() => {
-    outDir = join(tmpdir(), `ragnar-test-config-${Date.now()}`);
-    configDir = join(tmpdir(), `ragnar-test-configdir-${Date.now()}`);
+    outDir = join(tmpdir(), `eluan-test-config-${Date.now()}`);
+    configDir = join(tmpdir(), `eluan-test-configdir-${Date.now()}`);
     mkdirSync(configDir, { recursive: true });
   });
 
@@ -100,8 +100,8 @@ describe('CLI: config file support', () => {
     expect(css).toContain('[data-theme="from-config"]');
   });
 
-  it('auto-detects ragnar-theme.config.json in cwd', () => {
-    writeFileSync(join(configDir, 'ragnar-theme.config.json'), JSON.stringify({
+  it('auto-detects eluan-theme.config.json in cwd', () => {
+    writeFileSync(join(configDir, 'eluan-theme.config.json'), JSON.stringify({
       name: 'auto-detected',
       accents: ['#0F3D3E'],
       outDir,
@@ -146,7 +146,7 @@ describe('CLI: generate command', () => {
   let outDir: string;
 
   beforeEach(() => {
-    outDir = join(tmpdir(), `ragnar-test-gen-${Date.now()}`);
+    outDir = join(tmpdir(), `eluan-test-gen-${Date.now()}`);
   });
 
   afterEach(() => {

@@ -15,7 +15,7 @@ A collection of search input variants including a basic search input with clear 
 
 **Import**
 \`\`\`tsx
-import { SearchInput, CommandSearch, AutocompleteSearch } from "@vasf/ragnar-core"
+import { SearchInput, CommandSearch, AutocompleteSearch } from "@eluan/core"
 \`\`\`
 
 **Usage**

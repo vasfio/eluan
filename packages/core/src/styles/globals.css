@@ -1,7 +1,7 @@
-/* Ragnar Design System Tokens (Primitives -> Modes -> Themes) */
+/* Eluan Design System Tokens (Primitives -> Modes -> Themes) */
 @layer base, priority1, priority2, priority3, priority4, priority5, priority6, priority7, priority8, priority9, priority10;
 
-@import "@vasf/ragnar-tokens/css";
+@import "@eluan/tokens/css";
 
 @keyframes accordion-down {
   from { height: 0; }
@@ -57,7 +57,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
 }
 
-[data-sonner-toaster].ragnar-toaster [data-sonner-toast].ragnar-toast {
+[data-sonner-toaster].eluan-toaster [data-sonner-toast].eluan-toast {
   gap: var(--spacing-sm) !important;
   border-radius: var(--curves-md) !important;
   padding: var(--spacing-md) !important;
@@ -65,7 +65,7 @@
   font-size: var(--font-size-sm) !important;
 }
 
-[data-sonner-toaster].ragnar-toaster .ragnar-toast-title {
+[data-sonner-toaster].eluan-toaster .eluan-toast-title {
   font-family: var(--font-body) !important;
   font-size: var(--font-size-sm) !important;
   font-weight: 500 !important;
@@ -75,13 +75,13 @@
   color: var(--container-fg-alt) !important;
 }
 
-[data-sonner-toaster].ragnar-toaster .ragnar-toast-description {
+[data-sonner-toaster].eluan-toaster .eluan-toast-description {
   font-family: var(--font-body) !important;
   font-size: var(--font-size-sm) !important;
   opacity: 0.8 !important;
 }
 
-[data-sonner-toaster].ragnar-toaster .ragnar-toast-action {
+[data-sonner-toaster].eluan-toaster .eluan-toast-action {
   border-radius: var(--curves-sm) !important;
   background-color: var(--action-primary-bg) !important;
   color: var(--action-primary-fg) !important;
@@ -89,7 +89,7 @@
   font-weight: 500 !important;
 }
 
-[data-sonner-toaster].ragnar-toaster .ragnar-toast-cancel {
+[data-sonner-toaster].eluan-toaster .eluan-toast-cancel {
   border-radius: var(--curves-sm) !important;
   background-color: var(--action-tertiary-bg) !important;
   color: var(--action-tertiary-fg) !important;

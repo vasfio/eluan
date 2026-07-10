@@ -14,7 +14,7 @@ A segmented time input supporting 12-hour and 24-hour formats with keyboard navi
 
 **Import**
 \`\`\`tsx
-import { TimeInput } from "@vasf/ragnar-core"
+import { TimeInput } from "@eluan/core"
 \`\`\`
 
 **Usage**

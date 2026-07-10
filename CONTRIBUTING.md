@@ -1,4 +1,4 @@
-# Contributing to Ragnar
+# Contributing to Eluan
 
 Thanks for taking an interest in contributing. This document covers how to work within the monorepo, add or modify components, and get changes merged.
 
@@ -15,8 +15,8 @@ Thanks for taking an interest in contributing. This document covers how to work 
 ## Setup
 
 ```bash
-git clone https://github.com/vasf/ragnar.git
-cd ragnar
+git clone https://github.com/vasfio/eluan.git
+cd eluan
 pnpm install
 ```
 
@@ -38,12 +38,12 @@ pnpm storybook:web      # web/marketing components — port 6007
 ## Monorepo Structure
 
 ```
-ragnar/
+eluan/
   packages/
-    tokens/    @vasf/ragnar-tokens   Design tokens, CSS variables, fonts
-    core/      @vasf/ragnar-core     60+ UI components (Radix + Tailwind v4)
-    web/       @vasf/ragnar-web      Marketing & web components
-    native/    @vasf/ragnar-native   React Native components
+    tokens/    @eluan/tokens   Design tokens, CSS variables, fonts
+    core/      @eluan/core     60+ UI components (Radix + Tailwind v4)
+    web/       @eluan/web      Marketing & web components
+    native/    @eluan/native   React Native components
   apps/
     storybook-native/                Native Storybook (Expo)
 ```
@@ -62,7 +62,7 @@ Build order always matters: `tokens` → `core` → `web`. Native only depends o
 4. Run tests: `pnpm test`
 5. Check Storybook visually: `pnpm storybook`
 
-### Adding a new component to `@vasf/ragnar-core`
+### Adding a new component to `@eluan/core`
 
 1. Create `packages/core/src/components/my-component.tsx`
 
@@ -97,11 +97,11 @@ Build order always matters: `tokens` → `core` → `web`. Native only depends o
 2. Export from `packages/core/src/index.ts`
 3. Create stories with `tags: ["autodocs"]`
 
-### Adding a new component to `@vasf/ragnar-web`
+### Adding a new component to `@eluan/web`
 
-Same pattern in `packages/web/src/components/`. Can import from `@vasf/ragnar-core`.
+Same pattern in `packages/web/src/components/`. Can import from `@eluan/core`.
 
-### Adding a new component to `@vasf/ragnar-native`
+### Adding a new component to `@eluan/native`
 
 Use React Native primitives and `createThemedStyles` / `getSemanticColors` from `../utils/styles` instead of Tailwind.
 

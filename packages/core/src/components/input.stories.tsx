@@ -30,7 +30,7 @@ A text input field with automatic type-based leading icons, optional custom icon
 
 **Import**
 \`\`\`tsx
-import { Input } from "@vasf/ragnar-core"
+import { Input } from "@eluan/core"
 \`\`\`
 
 **Usage**

@@ -10,25 +10,25 @@ import {
   type SpacingScale,
   type Theme,
 } from "../packages/tokens/src/index"
-import { RagnarProvider } from "../packages/core/src/providers/ragnar-provider"
+import { EluanProvider } from "../packages/core/src/providers/eluan-provider"
 
 if (import.meta.env.DEV) {
   void import("virtual:stylex:runtime")
 }
 
-type RagnarGlobals = {
+type EluanGlobals = {
   curves: CurveScale
   mode: Mode
   spacing: SpacingScale
   theme: Theme
 }
 
-type RagnarPreviewOptions = {
+type EluanPreviewOptions = {
   padded?: boolean
   parameters?: Preview["parameters"]
 }
 
-type RagnarStorybookFrameProps = {
+type EluanStorybookFrameProps = {
   Story: React.ComponentType
   context: {
     globals: Record<string, unknown>
@@ -37,16 +37,16 @@ type RagnarStorybookFrameProps = {
 }
 
 const initialGlobals = {
-  ragnarCurves: "slight",
-  ragnarMode: "light",
-  ragnarSpacing: "standard",
-  ragnarTheme: "industrial-retro",
+  eluanCurves: "slight",
+  eluanMode: "light",
+  eluanSpacing: "standard",
+  eluanTheme: "industrial-retro",
 } satisfies Preview["initialGlobals"]
 
 const globalTypes = {
-  ragnarMode: {
+  eluanMode: {
     name: "Mode",
-    description: "Ragnar color mode",
+    description: "Eluan color mode",
     toolbar: {
       icon: "sun",
       items: modes.map((value) => ({
@@ -56,9 +56,9 @@ const globalTypes = {
       dynamicTitle: true,
     },
   },
-  ragnarTheme: {
+  eluanTheme: {
     name: "Theme",
-    description: "Ragnar visual theme",
+    description: "Eluan visual theme",
     toolbar: {
       icon: "paintbrush",
       items: themes.map((value) => ({
@@ -71,9 +71,9 @@ const globalTypes = {
       dynamicTitle: true,
     },
   },
-  ragnarSpacing: {
+  eluanSpacing: {
     name: "Spacing",
-    description: "Ragnar spacing scale",
+    description: "Eluan spacing scale",
     toolbar: {
       icon: "ruler",
       items: spacingScales.map((value) => ({
@@ -83,9 +83,9 @@ const globalTypes = {
       dynamicTitle: true,
     },
   },
-  ragnarCurves: {
+  eluanCurves: {
     name: "Curves",
-    description: "Ragnar border radius scale",
+    description: "Eluan border radius scale",
     toolbar: {
       icon: "circle",
       items: curveScales.map((value) => ({
@@ -114,23 +114,23 @@ function oneOf<T extends readonly string[]>(value: unknown, allowed: T, fallback
   return typeof value === "string" && allowed.includes(value) ? (value as T[number]) : fallback
 }
 
-function readGlobals(globals: Record<string, unknown>): RagnarGlobals {
+function readGlobals(globals: Record<string, unknown>): EluanGlobals {
   return {
-    curves: oneOf(globals.ragnarCurves ?? globals.curves, curveScales, "slight"),
-    mode: oneOf(globals.ragnarMode ?? globals.mode, modes, "light"),
-    spacing: oneOf(globals.ragnarSpacing ?? globals.spacing, spacingScales, "standard"),
-    theme: oneOf(globals.ragnarTheme ?? globals.theme, themes, "industrial-retro"),
+    curves: oneOf(globals.eluanCurves ?? globals.curves, curveScales, "slight"),
+    mode: oneOf(globals.eluanMode ?? globals.mode, modes, "light"),
+    spacing: oneOf(globals.eluanSpacing ?? globals.spacing, spacingScales, "standard"),
+    theme: oneOf(globals.eluanTheme ?? globals.theme, themes, "industrial-retro"),
   }
 }
 
-function applyThemeAttributes(element: HTMLElement, globals: RagnarGlobals) {
+function applyThemeAttributes(element: HTMLElement, globals: EluanGlobals) {
   element.setAttribute("data-curves", globals.curves)
   element.setAttribute("data-mode", globals.mode)
   element.setAttribute("data-spacing", globals.spacing)
   element.setAttribute("data-theme", globals.theme)
 }
 
-function RagnarStorybookFrame({ Story, context, padded }: RagnarStorybookFrameProps) {
+function EluanStorybookFrame({ Story, context, padded }: EluanStorybookFrameProps) {
   const globals = readGlobals(context.globals)
   const providerKey = `${globals.theme}:${globals.mode}:${globals.spacing}:${globals.curves}`
 
@@ -143,7 +143,7 @@ function RagnarStorybookFrame({ Story, context, padded }: RagnarStorybookFramePr
   }, [globals.curves, globals.mode, globals.spacing, globals.theme])
 
   return (
-    <RagnarProvider
+    <EluanProvider
       key={providerKey}
       defaultCurves={globals.curves}
       defaultMode={globals.mode}
@@ -154,7 +154,7 @@ function RagnarStorybookFrame({ Story, context, padded }: RagnarStorybookFramePr
       target="html"
     >
       <div
-        data-ragnar-storybook-root=""
+        data-eluan-storybook-root=""
         style={{
           backgroundColor: "var(--container-bg)",
           color: "var(--container-fg)",
@@ -166,11 +166,11 @@ function RagnarStorybookFrame({ Story, context, padded }: RagnarStorybookFramePr
           <Story />
         </div>
       </div>
-    </RagnarProvider>
+    </EluanProvider>
   )
 }
 
-export function createRagnarPreview(options: RagnarPreviewOptions = {}): Preview {
+export function createEluanPreview(options: EluanPreviewOptions = {}): Preview {
   const { padded = true, parameters: parameterOverrides } = options
 
   return {
@@ -182,20 +182,20 @@ export function createRagnarPreview(options: RagnarPreviewOptions = {}): Preview
     },
     decorators: [
       (Story, context) => (
-        <RagnarStorybookFrame Story={Story} context={context} padded={padded} />
+        <EluanStorybookFrame Story={Story} context={context} padded={padded} />
       ),
     ],
   }
 }
 
-export const ragnarGlobalTypes = globalTypes
-export const ragnarInitialGlobals = initialGlobals
-export const ragnarParameters = parameters
+export const eluanGlobalTypes = globalTypes
+export const eluanInitialGlobals = initialGlobals
+export const eluanParameters = parameters
 
-export function createRagnarDecorator(options: RagnarPreviewOptions = {}): Decorator {
+export function createEluanDecorator(options: EluanPreviewOptions = {}): Decorator {
   const { padded = true } = options
 
   return (Story, context) => (
-    <RagnarStorybookFrame Story={Story} context={context} padded={padded} />
+    <EluanStorybookFrame Story={Story} context={context} padded={padded} />
   )
 }

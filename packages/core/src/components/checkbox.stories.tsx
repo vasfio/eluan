@@ -30,7 +30,7 @@ A toggle control that allows users to select or deselect an option, built on Rad
 
 **Import**
 \`\`\`tsx
-import { Checkbox } from "@vasf/ragnar-core"
+import { Checkbox } from "@eluan/core"
 \`\`\`
 
 **Usage**

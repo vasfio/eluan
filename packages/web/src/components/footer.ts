@@ -1,1 +1,1 @@
-export * from "@vasf/ragnar-core/footer"
+export * from "@eluan/core/footer"

@@ -11,16 +11,16 @@ echo "=== Working directory ==="
 pwd
 
 echo "=== Building tokens ==="
-pnpm --filter @vasf/ragnar-tokens build
+pnpm --filter @eluan/tokens build
 
 echo "=== Building core ==="
-pnpm --filter @vasf/ragnar-core build
+pnpm --filter @eluan/core build
 
 echo "=== Building core storybook ==="
-pnpm --filter @vasf/ragnar-core build-storybook
+pnpm --filter @eluan/core build-storybook
 
 echo "=== Building web storybook ==="
-pnpm --filter @vasf/ragnar-web build-storybook
+pnpm --filter @eluan/web build-storybook
 
 echo "=== Assembling storybook ==="
 node scripts/assemble-storybook.mjs

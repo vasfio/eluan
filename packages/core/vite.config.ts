@@ -17,7 +17,7 @@ const external = [
   'react/jsx-runtime',
   'three',
   '@stylexjs/stylex',
-  '@vasf/ragnar-tokens',
+  '@eluan/tokens',
   /^@radix-ui\//,
   /^@tiptap\//,
   'cmdk',
@@ -40,7 +40,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: entries,
-      name: 'RagnarCore',
+      name: 'EluanCore',
       formats: ['es', 'cjs'],
       fileName: (format, entryName) => (format === 'cjs' ? `${entryName}.cjs` : `${entryName}.js`),
     },

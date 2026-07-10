@@ -1,13 +1,13 @@
 ---
-name: ragnar-token-theme
-description: Work with Ragnar design tokens, theme CSS, modes, spacing density, curve scales, font loading, createTheme, and custom theme support. Use when editing packages/tokens/src/*.css, packages/tokens/src/index.ts, RagnarProvider theme behavior, create-theme helpers, docs/theming.md, or any code involving data-theme, data-mode, data-spacing, data-curves, --container-bg, --interactive-border, --action-primary-bg, or similar semantic variables.
+name: eluan-token-theme
+description: Work with Eluan design tokens, theme CSS, modes, spacing density, curve scales, font loading, createTheme, and custom theme support. Use when editing packages/tokens/src/*.css, packages/tokens/src/index.ts, EluanProvider theme behavior, create-theme helpers, docs/theming.md, or any code involving data-theme, data-mode, data-spacing, data-curves, --container-bg, --interactive-border, --action-primary-bg, or similar semantic variables.
 ---
 
-# Ragnar Token Theme
+# Eluan Token Theme
 
 ## Architecture
 
-Ragnar has three CSS-variable layers:
+Eluan has three CSS-variable layers:
 
 1. `primitives.css`: raw values such as `--color-mono-200`.
 2. `modes.css`: light/dim/dark aliases such as `--backgrounds-primary`.
@@ -37,7 +37,7 @@ Prefer semantic names that describe usage, not color: `--interactive-border-alt`
 
 ## Custom Themes
 
-Custom themes should go through `createTheme()` and `RagnarProvider customThemes`.
+Custom themes should go through `createTheme()` and `EluanProvider customThemes`.
 
 The provider uses both:
 
@@ -50,21 +50,21 @@ This lets custom themes inherit a built-in base and override only supplied token
 
 Token CSS exports:
 
-- `@vasf/ragnar-tokens/css`
-- `@vasf/ragnar-tokens/fonts/base`
-- `@vasf/ragnar-tokens/fonts/industrial-retro`
-- `@vasf/ragnar-tokens/fonts/minimal`
-- `@vasf/ragnar-tokens/fonts/all`
+- `@eluan/tokens/css`
+- `@eluan/tokens/fonts/base`
+- `@eluan/tokens/fonts/industrial-retro`
+- `@eluan/tokens/fonts/minimal`
+- `@eluan/tokens/fonts/all`
 
-Provider-driven apps should normally import `@vasf/ragnar-core/styles.css` and `@vasf/ragnar-tokens/css`, then let `RagnarProvider` lazy-load active theme fonts.
+Provider-driven apps should normally import `@eluan/core/styles.css` and `@eluan/tokens/css`, then let `EluanProvider` lazy-load active theme fonts.
 
 ## Verification
 
 Run:
 
 ```bash
-pnpm --filter @vasf/ragnar-tokens build
-pnpm --filter @vasf/ragnar-core test
+pnpm --filter @eluan/tokens build
+pnpm --filter @eluan/core test
 pnpm run build:publish
 ```
 

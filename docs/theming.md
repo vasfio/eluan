@@ -1,6 +1,6 @@
-# Theming Ragnar in your app
+# Theming Eluan in your app
 
-Ragnar ships with two built-in themes (`industrial-retro`, `minimal`) and a CSS-variable architecture you can extend without forking the package. This guide covers:
+Eluan ships with two built-in themes (`industrial-retro`, `minimal`) and a CSS-variable architecture you can extend without forking the package. This guide covers:
 
 1. [Setup — drop-in provider](#setup)
 2. [Switching themes at runtime](#switching-themes-at-runtime)
@@ -16,45 +16,45 @@ Ragnar ships with two built-in themes (`industrial-retro`, `minimal`) and a CSS-
 Install both packages:
 
 ```bash
-pnpm add @vasf/ragnar-core @vasf/ragnar-tokens
+pnpm add @eluan/core @eluan/tokens
 ```
 
-In your app entry point, import the token CSS once and wrap your app in `RagnarProvider`:
+In your app entry point, import the token CSS once and wrap your app in `EluanProvider`:
 
 ```tsx
 // app.tsx
-import "@vasf/ragnar-core/styles.css"
-import "@vasf/ragnar-tokens/css"
+import "@eluan/core/styles.css"
+import "@eluan/tokens/css"
 
-import { RagnarProvider } from "@vasf/ragnar-core"
+import { EluanProvider } from "@eluan/core"
 
 export default function App() {
   return (
-    <RagnarProvider
+    <EluanProvider
       defaultTheme="industrial-retro"
       defaultMode="light"
       defaultSpacing="standard"
       defaultCurves="slight"
     >
       <YourApp />
-    </RagnarProvider>
+    </EluanProvider>
   )
 }
 ```
 
-The provider writes `data-theme`, `data-mode`, `data-spacing`, and `data-curves` to `<html>` (or any element you choose via the `target` prop). Every Ragnar component reads from these tokens, so the theme is applied globally with no other configuration.
+The provider writes `data-theme`, `data-mode`, `data-spacing`, and `data-curves` to `<html>` (or any element you choose via the `target` prop). Every Eluan component reads from these tokens, so the theme is applied globally with no other configuration.
 
 ---
 
 ## Switching themes at runtime
 
-Use the `useRagnarTheme()` hook from anywhere inside the tree:
+Use the `useEluanTheme()` hook from anywhere inside the tree:
 
 ```tsx
-import { useRagnarTheme } from "@vasf/ragnar-core"
+import { useEluanTheme } from "@eluan/core"
 
 function ThemeSwitcher() {
-  const { theme, setTheme, mode, setMode } = useRagnarTheme()
+  const { theme, setTheme, mode, setMode } = useEluanTheme()
 
   return (
     <>
@@ -77,7 +77,7 @@ Use `createTheme()` to define your own theme by overriding only the tokens you c
 
 ```tsx
 // theme/acme.ts
-import { createTheme } from "@vasf/ragnar-core"
+import { createTheme } from "@eluan/core"
 
 export const acmeTheme = createTheme({
   name: "acme",
@@ -98,19 +98,19 @@ Register it on the provider via `customThemes` and activate it just like a built
 
 ```tsx
 // app.tsx
-import { RagnarProvider } from "@vasf/ragnar-core"
+import { EluanProvider } from "@eluan/core"
 import { acmeTheme } from "./theme/acme"
 
 export default function App() {
   return (
-    <RagnarProvider customThemes={[acmeTheme]} defaultTheme="acme">
+    <EluanProvider customThemes={[acmeTheme]} defaultTheme="acme">
       <YourApp />
-    </RagnarProvider>
+    </EluanProvider>
   )
 }
 ```
 
-`setTheme("acme")` from `useRagnarTheme()` works the same way as for built-in themes.
+`setTheme("acme")` from `useEluanTheme()` works the same way as for built-in themes.
 
 ### How inheritance works
 
@@ -125,7 +125,7 @@ CSS doesn't support selector-level inheritance, so a custom theme can't simply e
 
 Both selectors have equal CSS specificity, but the custom theme's `<style>` element is appended after the base CSS, so your overrides win on equal-specificity ties.
 
-You can also load fonts that aren't bundled with Ragnar — just `@import` them in your stylesheet and reference the family in `--font-heading` / `--font-body` / `--font-mono`.
+You can also load fonts that aren't bundled with Eluan — just `@import` them in your stylesheet and reference the family in `--font-heading` / `--font-body` / `--font-mono`.
 
 ---
 
@@ -154,7 +154,7 @@ If you only want to theme a portion of the page (e.g. a settings drawer in a dif
 
 ```tsx
 import { useEffect, useRef } from "react"
-import { RagnarProvider } from "@vasf/ragnar-core"
+import { EluanProvider } from "@eluan/core"
 
 function ThemedRegion() {
   const ref = useRef<HTMLDivElement>(null)
@@ -163,9 +163,9 @@ function ThemedRegion() {
     <div ref={ref}>
       {/* Once `ref.current` exists, point the provider at it */}
       {ref.current && (
-        <RagnarProvider target={ref.current} defaultTheme="minimal">
+        <EluanProvider target={ref.current} defaultTheme="minimal">
           {/* …components in this subtree get the alternate theme */}
-        </RagnarProvider>
+        </EluanProvider>
       )}
     </div>
   )
@@ -184,9 +184,9 @@ For a simpler sub-tree override of a single token, set the CSS variable inline:
 
 ## SSR, persistence, and OS preference
 
-`<RagnarProvider>` defaults to:
+`<EluanProvider>` defaults to:
 
-- **`persist={true}`** — stores the user's theme/mode/spacing/curves choices in `localStorage` under keys `ragnar:theme`, `ragnar:mode`, etc., so they survive reloads. Set `persist={false}` for stateless behaviour.
+- **`persist={true}`** — stores the user's theme/mode/spacing/curves choices in `localStorage` under keys `eluan:theme`, `eluan:mode`, etc., so they survive reloads. Set `persist={false}` for stateless behaviour.
 - **`followSystemMode={true}`** — when `defaultMode` isn't set and no stored preference exists, the provider reads `prefers-color-scheme` and reacts to OS-level changes. Set `followSystemMode={false}` to opt out.
 
 ### Avoiding flash of wrong theme on SSR
@@ -199,10 +199,10 @@ Server-rendered apps will briefly render with the default theme before hydration
 (function () {
   try {
     var html = document.documentElement
-    var t = localStorage.getItem("ragnar:theme")
-    var m = localStorage.getItem("ragnar:mode")
-    var s = localStorage.getItem("ragnar:spacing")
-    var c = localStorage.getItem("ragnar:curves")
+    var t = localStorage.getItem("eluan:theme")
+    var m = localStorage.getItem("eluan:mode")
+    var s = localStorage.getItem("eluan:spacing")
+    var c = localStorage.getItem("eluan:curves")
     if (t) html.setAttribute("data-theme", t)
     if (m) html.setAttribute("data-mode", m)
     if (s) html.setAttribute("data-spacing", s)
@@ -220,8 +220,8 @@ For Next.js you can render this via `next/script` with `strategy="beforeInteract
 
 | API | Purpose |
 |---|---|
-| `<RagnarProvider>` | Sets data-attrs, manages persistence, syncs OS mode |
-| `useRagnarTheme()` | Hook returning the active theme + setters |
+| `<EluanProvider>` | Sets data-attrs, manages persistence, syncs OS mode |
+| `useEluanTheme()` | Hook returning the active theme + setters |
 | `createTheme({ name, extends, tokens })` | Define a custom theme |
 | `loadThemeFonts(name)` | Manually preload a built-in theme's fonts |
 | `themes` | Array of built-in theme names |

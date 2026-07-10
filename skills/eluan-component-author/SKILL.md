@@ -1,9 +1,9 @@
 ---
-name: ragnar-component-author
-description: Build, modify, or audit components in the Ragnar monorepo. Use for tasks in packages/core/src/components, packages/web/src/components, or packages/native/src/components; when adding component APIs, variants, stories, tests, Radix wrappers, forwardRef/displayName patterns, CVA variants, className merging, accessibility behavior, or replacing shadcn-style classes with Ragnar semantic tokens.
+name: eluan-component-author
+description: Build, modify, or audit components in the Eluan monorepo. Use for tasks in packages/core/src/components, packages/web/src/components, or packages/native/src/components; when adding component APIs, variants, stories, tests, Radix wrappers, forwardRef/displayName patterns, CVA variants, className merging, accessibility behavior, or replacing shadcn-style classes with Eluan semantic tokens.
 ---
 
-# Ragnar Component Author
+# Eluan Component Author
 
 ## Workflow
 
@@ -25,7 +25,7 @@ description: Build, modify, or audit components in the Ragnar monorepo. Use for 
 
 ## Token Rules
 
-Use Ragnar semantic CSS variables instead of shadcn aliases or hardcoded Tailwind values:
+Use Eluan semantic CSS variables instead of shadcn aliases or hardcoded Tailwind values:
 
 - Background: `bg-[var(--container-bg)]`, `bg-[var(--interactive-bg)]`, `bg-[var(--interactive-bg-hover)]`
 - Text color: `text-[color:var(--container-fg)]`, `text-[color:var(--container-fg-alt)]`
@@ -50,12 +50,12 @@ Avoid `bg-primary`, `text-foreground`, `text-muted-foreground`, `border-input`, 
 Use package-scoped commands:
 
 ```bash
-pnpm --filter @vasf/ragnar-core lint
-pnpm --filter @vasf/ragnar-core test
-pnpm --filter @vasf/ragnar-web lint
-pnpm --filter @vasf/ragnar-web test
-pnpm --filter @vasf/ragnar-native lint
-pnpm --filter @vasf/ragnar-native test
+pnpm --filter @eluan/core lint
+pnpm --filter @eluan/core test
+pnpm --filter @eluan/web lint
+pnpm --filter @eluan/web test
+pnpm --filter @eluan/native lint
+pnpm --filter @eluan/native test
 ```
 
 For public package changes, finish with:

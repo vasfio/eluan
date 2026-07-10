@@ -27,7 +27,7 @@ A group of toggle buttons that supports single or multiple selection, with varia
 
 **Import**
 \`\`\`tsx
-import { ToggleGroup, ToggleGroupItem } from "@vasf/ragnar-core"
+import { ToggleGroup, ToggleGroupItem } from "@eluan/core"
 \`\`\`
 
 **Usage**

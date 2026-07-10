@@ -1,6 +1,6 @@
-# @vasf/storybook-native
+# @eluan/storybook-native
 
-On-device Storybook for testing `@vasf/ragnar-native` components on iOS and Android.
+On-device Storybook for testing `@eluan/native` components on iOS and Android.
 
 ## Getting Started
 
@@ -43,7 +43,7 @@ Then scan the QR code with the Expo Go app.
 
 ## Components Available
 
-The following components from `@vasf/ragnar-native` are included:
+The following components from `@eluan/native` are included:
 
 ### Core Components
 - Button, Card, Input, TextArea

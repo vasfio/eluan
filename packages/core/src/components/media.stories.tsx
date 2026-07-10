@@ -28,7 +28,7 @@ Media components for displaying images and videos with built-in aspect ratios, l
 
 **Import**
 \`\`\`tsx
-import { Image, Video } from "@vasf/ragnar-core"
+import { Image, Video } from "@eluan/core"
 \`\`\`
 
 **Usage**

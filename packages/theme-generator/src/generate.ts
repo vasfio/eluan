@@ -101,7 +101,7 @@ function buildReport(
   lines.push('');
   lines.push(`- \`primitives.json\` — W3C Design Tokens format`);
   lines.push(`- \`semantic.json\` — Semantic map with light/dark refs`);
-  lines.push(`- \`theme.css\` — Drop-in CSS for Ragnar`);
+  lines.push(`- \`theme.css\` — Drop-in CSS for Eluan`);
   lines.push(`- \`preview.html\` — Visual smoke test`);
 
   return lines.join('\n');

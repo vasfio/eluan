@@ -36,7 +36,7 @@ A syntax-highlighted code block with optional line numbers, copy button, filenam
 
 **Import**
 \`\`\`tsx
-import { CodeBlock } from "@vasf/ragnar-core"
+import { CodeBlock } from "@eluan/core"
 \`\`\`
 
 **Usage**
@@ -139,7 +139,7 @@ const cssCode = `/* Card component styles */
 }`
 
 const jsonCode = `{
-  "name": "@vasf/ragnar-core",
+  "name": "@eluan/core",
   "version": "0.1.5",
   "description": "60+ accessible UI components for React",
   "keywords": ["react", "design-system", "components"],

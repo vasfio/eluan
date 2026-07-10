@@ -6,17 +6,17 @@ describe("Footer", () => {
   it("renders footer content", () => {
     render(
       <Footer>
-        <FooterBrand>Ragnar</FooterBrand>
+        <FooterBrand>Eluan</FooterBrand>
         <FooterLinks>
           <a href="/privacy">Privacy</a>
           <a href="/terms">Terms</a>
         </FooterLinks>
-        <FooterCopyright>© 2025 Ragnar</FooterCopyright>
+        <FooterCopyright>© 2025 Eluan</FooterCopyright>
       </Footer>
     );
-    expect(screen.getByText("Ragnar")).toBeInTheDocument();
+    expect(screen.getByText("Eluan")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Privacy" })).toBeInTheDocument();
-    expect(screen.getByText("© 2025 Ragnar")).toBeInTheDocument();
+    expect(screen.getByText("© 2025 Eluan")).toBeInTheDocument();
   });
 
   it("renders as footer landmark", () => {

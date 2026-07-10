@@ -1,4 +1,0 @@
-interface:
-  display_name: "Ragnar Consumer Setup"
-  short_description: "Wire Ragnar into consumer apps."
-  default_prompt: "Set up Ragnar in a React, Vite, or Next.js application."

@@ -13,7 +13,7 @@ A numeric input with optional increment/decrement buttons, min/max clamping, con
 
 **Import**
 \`\`\`tsx
-import { NumberInput } from "@vasf/ragnar-core"
+import { NumberInput } from "@eluan/core"
 \`\`\`
 
 **Usage**

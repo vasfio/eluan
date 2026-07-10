@@ -1,22 +1,22 @@
 {
-  "name": "@vasf/ragnar-tokens",
-  "description": "Design tokens, CSS variables, themes, and fonts for the Ragnar design system",
-  "version": "0.1.2",
+  "name": "@eluan/tokens",
+  "description": "Design tokens, CSS variables, themes, and fonts for the Eluan design system",
+  "version": "0.0.0",
   "license": "MIT",
-  "homepage": "https://github.com/frolda/ragnar#readme",
+  "homepage": "https://github.com/vasfio/eluan#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/frolda/ragnar.git",
+    "url": "git+https://github.com/vasfio/eluan.git",
     "directory": "packages/tokens"
   },
   "bugs": {
-    "url": "https://github.com/frolda/ragnar/issues"
+    "url": "https://github.com/vasfio/eluan/issues"
   },
   "keywords": [
     "design-tokens",
     "css-variables",
     "theme",
-    "ragnar"
+    "eluan"
   ],
   "sideEffects": [
     "**/*.css"

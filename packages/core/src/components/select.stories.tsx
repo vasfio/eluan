@@ -25,7 +25,7 @@ import {
   Select, SelectTrigger, SelectValue, SelectContent,
   SelectItem, SelectGroup, SelectLabel, SelectSeparator,
   SelectScrollUpButton, SelectScrollDownButton,
-} from "@vasf/ragnar-core"
+} from "@eluan/core"
 \`\`\`
 
 **Usage**

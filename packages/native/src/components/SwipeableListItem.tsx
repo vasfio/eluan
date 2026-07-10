@@ -10,7 +10,7 @@ import {
   useColorScheme,
   LayoutChangeEvent,
 } from "react-native"
-import { fontSizes } from "@vasf/ragnar-tokens"
+import { fontSizes } from "@eluan/tokens"
 import { sp, getSemanticColors } from "../utils/styles"
 
 export interface SwipeAction {

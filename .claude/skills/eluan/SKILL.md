@@ -1,19 +1,19 @@
 ---
-name: ragnar
-description: Use when building, theming, or extending UI in apps that depend on @vasf/ragnar-core, @vasf/ragnar-tokens, @vasf/ragnar-web, or @vasf/ragnar-native. Covers component imports, theming via RagnarProvider/createTheme, the three-layer token architecture (CSS variables scoped to data-theme/data-mode/data-spacing/data-curves), TypeScript types, and the conventions consumers should follow when adding new components or tokens. Trigger when the user mentions Ragnar, @vasf/ragnar, RagnarProvider, useRagnarTheme, createTheme, design tokens with --container-bg / --interactive-bg-selected / --action-primary-bg etc., the data-theme="industrial-retro|minimal" attribute, or any of the components listed below.
+name: eluan
+description: Use when building, theming, or extending UI in apps that depend on @eluan/core, @eluan/tokens, @eluan/web, or @eluan/native. Covers component imports, theming via EluanProvider/createTheme, the three-layer token architecture (CSS variables scoped to data-theme/data-mode/data-spacing/data-curves), TypeScript types, and the conventions consumers should follow when adding new components or tokens. Trigger when the user mentions Eluan, @eluan, EluanProvider, useEluanTheme, createTheme, design tokens with --container-bg / --interactive-bg-selected / --action-primary-bg etc., the data-theme="industrial-retro|minimal" attribute, or any of the components listed below.
 ---
 
-# Ragnar Design System
+# Eluan Design System
 
-Ragnar is a React design system distributed as a pnpm-workspace monorepo. Consumers install `@vasf/ragnar-core` (components) and `@vasf/ragnar-tokens` (tokens/CSS); web-only and native-only components live in `@vasf/ragnar-web` and `@vasf/ragnar-native`.
+Eluan is a React design system distributed as a pnpm-workspace monorepo. Consumers install `@eluan/core` (components) and `@eluan/tokens` (tokens/CSS); web-only and native-only components live in `@eluan/web` and `@eluan/native`.
 
-This skill is the source of truth for: component inventory, the token architecture, the consumer setup pattern (`RagnarProvider`), how to define a custom theme (`createTheme`), and the conventions to follow when modifying or extending the library.
+This skill is the source of truth for: component inventory, the token architecture, the consumer setup pattern (`EluanProvider`), how to define a custom theme (`createTheme`), and the conventions to follow when modifying or extending the library.
 
 ## When this skill applies
 
 Trigger on any of:
-- Imports from `@vasf/ragnar-*` packages
-- Mentions of `RagnarProvider`, `useRagnarTheme`, `createTheme`, `loadThemeFonts`
+- Imports from `@eluan/*` packages
+- Mentions of `EluanProvider`, `useEluanTheme`, `createTheme`, `loadThemeFonts`
 - Component names from the inventory below (e.g. "the Calendar component", "Sonner toaster", "Tree View")
 - CSS-variable names like `--container-bg`, `--interactive-fg-selected`, `--action-primary-bg-hover`, etc.
 - The `data-theme="industrial-retro" | "minimal"` attribute or `data-mode`, `data-spacing`, `data-curves`
@@ -21,8 +21,8 @@ Trigger on any of:
 
 ## When this skill does NOT apply
 
-- Generic React/Tailwind questions unrelated to Ragnar
-- shadcn/ui questions — Ragnar **was** shadcn-derived but has diverged: do NOT assume class names like `bg-primary`, `text-foreground`, etc. exist. Use the token variables.
+- Generic React/Tailwind questions unrelated to Eluan
+- shadcn/ui questions — Eluan **was** shadcn-derived but has diverged: do NOT assume class names like `bg-primary`, `text-foreground`, etc. exist. Use the token variables.
 
 ---
 
@@ -59,33 +59,33 @@ There are **only two built-in themes**: `industrial-retro` and `minimal`. The pr
 
 ```tsx
 // app entry (e.g. main.tsx, _app.tsx, layout.tsx)
-import "@vasf/ragnar-core/styles.css"
-import "@vasf/ragnar-tokens/css"
+import "@eluan/core/styles.css"
+import "@eluan/tokens/css"
 
-import { RagnarProvider } from "@vasf/ragnar-core"
+import { EluanProvider } from "@eluan/core"
 
 export default function App() {
   return (
-    <RagnarProvider
+    <EluanProvider
       defaultTheme="industrial-retro"
       defaultMode="light"
       defaultSpacing="standard"
       defaultCurves="slight"
     >
       <Routes />
-    </RagnarProvider>
+    </EluanProvider>
   )
 }
 ```
 
-`RagnarProvider` writes the four `data-*` attributes on `<html>` (configurable via `target` prop), lazy-loads the active theme's fonts via `loadThemeFonts()`, persists user choices to `localStorage` (`ragnar:theme`, `ragnar:mode`, `ragnar:spacing`, `ragnar:curves`), and follows OS `prefers-color-scheme` until the user picks a mode.
+`EluanProvider` writes the four `data-*` attributes on `<html>` (configurable via `target` prop), lazy-loads the active theme's fonts via `loadThemeFonts()`, persists user choices to `localStorage` (`eluan:theme`, `eluan:mode`, `eluan:spacing`, `eluan:curves`), and follows OS `prefers-color-scheme` until the user picks a mode.
 
 To read or change values from anywhere:
 
 ```tsx
-import { useRagnarTheme } from "@vasf/ragnar-core"
+import { useEluanTheme } from "@eluan/core"
 
-const { theme, mode, spacing, curves, setTheme, setMode, setSpacing, setCurves } = useRagnarTheme()
+const { theme, mode, spacing, curves, setTheme, setMode, setSpacing, setCurves } = useEluanTheme()
 ```
 
 ### Avoiding flash-of-wrong-theme on SSR
@@ -97,10 +97,10 @@ Inject this inline script in `<head>` before the app script so the data-attribut
 (function () {
   try {
     var html = document.documentElement
-    var t = localStorage.getItem("ragnar:theme")
-    var m = localStorage.getItem("ragnar:mode")
-    var s = localStorage.getItem("ragnar:spacing")
-    var c = localStorage.getItem("ragnar:curves")
+    var t = localStorage.getItem("eluan:theme")
+    var m = localStorage.getItem("eluan:mode")
+    var s = localStorage.getItem("eluan:spacing")
+    var c = localStorage.getItem("eluan:curves")
     if (t) html.setAttribute("data-theme", t)
     if (m) html.setAttribute("data-mode", m)
     if (s) html.setAttribute("data-spacing", s)
@@ -116,10 +116,10 @@ For Next.js: render via `next/script` with `strategy="beforeInteractive"`.
 
 ## Custom themes (`createTheme`)
 
-CSS doesn't support selector-level inheritance, so a custom theme can't simply override a few tokens and inherit the rest by name. Ragnar solves this with a two-attribute trick: when a custom theme is active, the Provider sets BOTH `data-theme=<base>` AND `data-theme-custom=<name>`. The base activates ~150 base tokens; the custom selector overrides only what you provide.
+CSS doesn't support selector-level inheritance, so a custom theme can't simply override a few tokens and inherit the rest by name. Eluan solves this with a two-attribute trick: when a custom theme is active, the Provider sets BOTH `data-theme=<base>` AND `data-theme-custom=<name>`. The base activates ~150 base tokens; the custom selector overrides only what you provide.
 
 ```tsx
-import { createTheme, RagnarProvider } from "@vasf/ragnar-core"
+import { createTheme, EluanProvider } from "@eluan/core"
 
 const acme = createTheme({
   name: "acme",                  // unique, alphanumeric + hyphen
@@ -134,18 +134,18 @@ const acme = createTheme({
   },
 })
 
-<RagnarProvider customThemes={[acme]} defaultTheme="acme">…</RagnarProvider>
+<EluanProvider customThemes={[acme]} defaultTheme="acme">…</EluanProvider>
 ```
 
-Behind the scenes: `createTheme` returns `{ name, extends, css }` where `css` is a `[data-theme-custom="<name>"] { ... }` block. The Provider injects all custom themes' CSS into a single `<style id="ragnar-custom-themes">` element appended to `<head>`.
+Behind the scenes: `createTheme` returns `{ name, extends, css }` where `css` is a `[data-theme-custom="<name>"] { ... }` block. The Provider injects all custom themes' CSS into a single `<style id="eluan-custom-themes">` element appended to `<head>`.
 
 `setTheme("acme")` then works exactly like a built-in theme.
 
 ---
 
-## Component inventory (`@vasf/ragnar-core`)
+## Component inventory (`@eluan/core`)
 
-Import any of these from `@vasf/ragnar-core`:
+Import any of these from `@eluan/core`:
 
 **Forms / inputs**
 `Button` · `Input` (auto-icon by `type="search|email|password|tel|url"`, plus `icon` and `trailing` props for custom leading/trailing) · `Textarea` · `Select` (Radix-based, with a 32px left padding to clear the check indicator) · `MultiSelect` · `Combobox` (via `Command`) · `Checkbox` · `CheckboxGroup` (with `CheckboxGroupItem`) · `RadioGroup` (with `RadioGroupItem`) · `Switch` · `Slider` · `Toggle` · `ToggleGroup` (with `ToggleGroupItem`) · `Fieldset` · `Label` (re-exported as `FormLabel`, also exports `FormDescription` and `FormMessage`) · `EmailInput` · `PasswordInput` · `PhoneInput` (uses the `countries-list` package — full country list, common short names, `+1`/`+44`/etc dial codes) · `NumberInput` · `DecimalInput` · `SearchInput` (with `CommandSearch` and `AutocompleteSearch` variants — uses `Delete` lucide icon for clear, not `X`) · `FileInput` · `CreditCardInput` (sub-components `CreditCardNumberInput`, `CreditCardExpiryInput`, `CreditCardCVVInput` — all card logos use `currentColor` + `fillRule="evenodd"` for transparent internal cutouts) · `InputOTP` · `RichText` (TipTap v3 — uses `useEditorState` for reactive toolbar, the toolbar bg is `var(--container-bg-alt)`)
@@ -166,11 +166,11 @@ Import any of these from `@vasf/ragnar-core`:
 `Separator` (defaults to `decorative={true}` — pass `decorative={false}` to render with `role="separator"`) · `ScrollArea` · `AspectRatio` · `Collapsible` · `Resizable` (deleted — do not reference)
 
 **Provider & helpers**
-`RagnarProvider` · `useRagnarTheme()` · `createTheme()` · `cn()` (className merge utility from `lib/utils`)
+`EluanProvider` · `useEluanTheme()` · `createTheme()` · `cn()` (className merge utility from `lib/utils`)
 
-### Re-exported from `@vasf/ragnar-tokens`
+### Re-exported from `@eluan/tokens`
 
-`themes`, `modes`, `spacingScales`, `curveScales`, `themeFonts`, `loadThemeFonts`, and the types `Theme`, `Mode`, `SpacingScale`, `CurveScale`. Consumers should import these from `@vasf/ragnar-core` to avoid a separate dep.
+`themes`, `modes`, `spacingScales`, `curveScales`, `themeFonts`, `loadThemeFonts`, and the types `Theme`, `Mode`, `SpacingScale`, `CurveScale`. Consumers should import these from `@eluan/core` to avoid a separate dep.
 
 ---
 
@@ -232,7 +232,7 @@ It's theme- and mode-aware. Only deviate (e.g. for validation states) when there
 
 ## Conventions for adding / modifying components
 
-These are the patterns the codebase already follows. Match them when extending Ragnar:
+These are the patterns the codebase already follows. Match them when extending Eluan:
 
 1. **Use semantic tokens, never hex / shadcn classes.** No `bg-primary`, `text-foreground`, `bg-destructive`, `h-9`, `rounded-lg` — they were removed during the token migration. Always: `bg-[var(--container-bg)]`, `text-[color:var(--container-fg-alt)]`, `h-[var(--size-lg)]`, `rounded-[var(--curves-md)]`.
 
@@ -240,7 +240,7 @@ These are the patterns the codebase already follows. Match them when extending R
 
 3. **Composition over duplication.** When adding a new specialized input (e.g. `EmailInput`, `NumberInput`), build it on top of the base `Input` component using its `icon` and `trailing` props. Don't reimplement the input chrome. If a component needs to show a leading icon, the `Input` component auto-resolves icons from `type="search|email|password|tel|url"`; pass `icon={null}` to suppress.
 
-4. **Radix `asChild` for class-of-Slot patterns.** When you want a Ragnar component to render its children as the actual element (e.g. `<Button asChild><a href="…">…</a></Button>`), forward `asChild` through to the underlying primitive.
+4. **Radix `asChild` for class-of-Slot patterns.** When you want a Eluan component to render its children as the actual element (e.g. `<Button asChild><a href="…">…</a></Button>`), forward `asChild` through to the underlying primitive.
 
 5. **CVA for variants.** All variant-bearing components use `cva` (class-variance-authority). Variants live in a `<componentName>Variants` const, exported when consumers need the keys.
 
@@ -269,7 +269,7 @@ These are the patterns the codebase already follows. Match them when extending R
 | `rounded-[var(--curves-md)]` | `rounded-md` (breaks the curves axis) |
 | `h-[var(--size-lg)]` | `h-10` (breaks density) |
 | `text-[length:var(--font-size-sm)]` | `text-sm` (works in some contexts but breaks density-scaled font sizing) |
-| Use `<RagnarProvider>` + `useRagnarTheme()` | Manually manage the `data-*` attributes |
+| Use `<EluanProvider>` + `useEluanTheme()` | Manually manage the `data-*` attributes |
 | `createTheme({ extends, tokens })` | Write a full 150-token CSS block |
 | `customThemes` prop on Provider | Inject a `<style>` tag yourself |
 | Override per-component via `className` | Edit the component source for one-off colors |
@@ -279,12 +279,12 @@ These are the patterns the codebase already follows. Match them when extending R
 
 ## Build / test / lint (for contributors)
 
-The monorepo uses pnpm workspaces. The currently-published package is `@vasf/ragnar-core`. The other packages are buildable but not all are on npm.
+The monorepo uses pnpm workspaces. The currently-published package is `@eluan/core`. The other packages are buildable but not all are on npm.
 
 ```bash
 pnpm -r build        # build every package
-pnpm --filter @vasf/ragnar-core test   # 192 tests via vitest + happy-dom
-pnpm --filter @vasf/ragnar-core lint   # eslint v9, flat config at repo root
+pnpm --filter @eluan/core test   # 192 tests via vitest + happy-dom
+pnpm --filter @eluan/core lint   # eslint v9, flat config at repo root
 ```
 
 **Why happy-dom not jsdom**: `jsdom@28` ships `html-encoding-sniffer@6` which requires the ESM-only `@exodus/bytes` via `require()` — fails under Node 20.x's strict ESM. happy-dom is a drop-in replacement.
@@ -311,8 +311,8 @@ pnpm --filter @vasf/ragnar-core lint   # eslint v9, flat config at repo root
 - **Re-introducing removed themes** (`lime`, `bold`, `beige`, `funky`) — they were intentionally removed.
 - **Hardcoding hex colors in components** — should be tokens.
 - **Adding a new token without a fallback in both built-in themes** — will break for whichever theme is missing it.
-- **Bypassing `RagnarProvider`** by setting `data-*` attributes manually inside React effects — works but loses persistence + font lazy-loading + system mode sync.
-- **Importing from `@vasf/ragnar-tokens` directly in app code** when `@vasf/ragnar-core` re-exports the same things.
+- **Bypassing `EluanProvider`** by setting `data-*` attributes manually inside React effects — works but loses persistence + font lazy-loading + system mode sync.
+- **Importing from `@eluan/tokens` directly in app code** when `@eluan/core` re-exports the same things.
 - **Custom themes without `extends`** — you'll inherit nothing and end up with white-on-white because most tokens won't resolve.
 - **Custom theme names that collide with built-ins** (`industrial-retro`, `minimal`) — Provider throws at mount.
 
@@ -322,7 +322,7 @@ pnpm --filter @vasf/ragnar-core lint   # eslint v9, flat config at repo root
 
 ```tsx
 // Provider
-<RagnarProvider
+<EluanProvider
   defaultTheme?:    "industrial-retro" | "minimal" | string  // default "industrial-retro"
   defaultMode?:     "light" | "dark"                         // default OS preference
   defaultSpacing?:  "compact" | "standard" | "wide"          // default "standard"
@@ -337,7 +337,7 @@ pnpm --filter @vasf/ragnar-core lint   # eslint v9, flat config at repo root
 const {
   theme, mode, spacing, curves,
   setTheme, setMode, setSpacing, setCurves,
-} = useRagnarTheme()
+} = useEluanTheme()
 
 // Custom theme factory
 createTheme({

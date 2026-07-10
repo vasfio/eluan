@@ -27,7 +27,7 @@ A button with an ellipsis (MoreHorizontal) icon that opens a dropdown menu of ac
 
 **Import**
 \`\`\`tsx
-import { ActionPopover } from "@vasf/ragnar-core"
+import { ActionPopover } from "@eluan/core"
 \`\`\`
 
 **Usage**
