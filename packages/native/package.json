@@ -2,6 +2,7 @@
   "name": "@eluan/native",
   "description": "React Native UI components sharing the Eluan token system",
   "version": "0.1.0",
+  "private": true,
   "license": "MIT",
   "homepage": "https://github.com/vasfio/eluan#readme",
   "repository": {

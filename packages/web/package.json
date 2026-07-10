@@ -2,6 +2,7 @@
   "name": "@eluan/web",
   "description": "Marketing and web-specific components for React — hero, pricing, footer, and more",
   "version": "0.1.0",
+  "private": true,
   "license": "MIT",
   "homepage": "https://github.com/vasfio/eluan#readme",
   "repository": {
