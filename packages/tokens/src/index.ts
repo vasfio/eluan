@@ -43,6 +43,7 @@ export const colorPalettes = [
   "blueribbon",
   "bostonblue",
   "cerise",
+  "concrete",
   "crimson",
   "electriclime",
   "electricviolet",
@@ -80,7 +81,7 @@ export const colorShades = [
 ] as const
 export type ColorShade = (typeof colorShades)[number]
 
-// Mono has an extra "0" shade for pure white
+// Mono and concrete have an extra "0" shade for pure white
 export const monoShades = ["0", ...colorShades] as const
 export type MonoShade = (typeof monoShades)[number]
 
@@ -154,6 +155,20 @@ export const primitiveColors = {
     800: "#9d1945",
     900: "#821d3e",
     950: "#4d0c20",
+  },
+  concrete: {
+    0: "#ffffff",
+    50: "#fafbf9",
+    100: "#eef0eb",
+    200: "#d7dace",
+    300: "#bfc4b1",
+    400: "#a7ae93",
+    500: "#909876",
+    600: "#757d5e",
+    700: "#5a6048",
+    800: "#3f4332",
+    900: "#2c2f23",
+    950: "#1b1d15",
   },
   crimson: {
     50: "#fdf2f2",

@@ -56,6 +56,7 @@ const styles = stylex.create({
     borderRadius: "var(--curves-md)",
     borderStyle: "solid",
     borderWidth: 1,
+    boxShadow: "var(--skeuo-recessed)",
     color: "var(--interactive-fg)",
     display: "flex",
     fontSize: "var(--font-size-sm)",

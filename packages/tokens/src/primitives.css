@@ -75,6 +75,21 @@
   --color-cerise-900: #821d3e;
   --color-cerise-950: #4d0c20;
 
+  /* Concrete — warm mineral grey, ported from Remlo's ink ramp (remlo-apple).
+     Steps 0–800 are ink0–ink9; 900/950 extend the same hue for dark surfaces. */
+  --color-concrete-0: oklch(100% 0 0); /* #ffffff */
+  --color-concrete-50: oklch(98.68% 0.0028 128.49); /* #fafbf9 */
+  --color-concrete-100: oklch(95.22% 0.007 124.45); /* #eef0eb */
+  --color-concrete-200: oklch(88.27% 0.0165 118.16); /* #d7dace */
+  --color-concrete-300: oklch(81.11% 0.0267 118.99); /* #bfc4b1 */
+  --color-concrete-400: oklch(73.78% 0.0385 119.16); /* #a7ae93 */
+  --color-concrete-500: oklch(66.39% 0.0492 118.51); /* #909876 */
+  --color-concrete-600: oklch(57.44% 0.0466 119.64); /* #757d5e */
+  --color-concrete-700: oklch(47.67% 0.0377 119.25); /* #5a6048 */
+  --color-concrete-800: oklch(37.38% 0.0284 118.54); /* #3f4332 */
+  --color-concrete-900: oklch(29.82% 0.0213 119.11); /* #2c2f23 */
+  --color-concrete-950: oklch(22.57% 0.0152 119.03); /* #1b1d15 */
+
   /* Crimson */
   --color-crimson-50: #fdf2f2;
   --color-crimson-100: #fde3e4;

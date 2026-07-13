@@ -47,10 +47,14 @@ export interface ButtonProps
   size?: ButtonSize
 }
 
-const shadows = {
-  sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-  md: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
-}
+/* Solid variants render as physical key caps (see --skeuo-* theme tokens) */
+const RAISED_VARIANTS: ReadonlySet<ButtonVariant> = new Set([
+  "default",
+  "destructive",
+  "caution",
+  "positive",
+  "secondary",
+])
 
 const styles = stylex.create({
   base: {
@@ -83,14 +87,24 @@ const styles = stylex.create({
   },
   variantDefault: {
     backgroundColor: "var(--action-primary-bg)",
-    boxShadow: shadows.sm,
     color: "var(--action-primary-fg)",
     ":hover": {
       backgroundColor: "var(--action-primary-bg-hover)",
-      boxShadow: shadows.md,
     },
     ":active": {
       backgroundColor: "var(--action-primary-bg-active)",
+    },
+  },
+  /* Raised key cap: convex face at rest, lifts on hover, seats into the
+     housing when pressed. */
+  raisedCap: {
+    boxShadow: "var(--skeuo-raised)",
+    ":hover": {
+      boxShadow: "var(--skeuo-raised-hover)",
+    },
+    ":active": {
+      boxShadow: "var(--skeuo-pressed)",
+      transform: "translateY(1px)",
     },
   },
   variantDestructive: {
@@ -331,6 +345,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           styles.base,
           sizeStyles[size],
           variantStyles[variant],
+          RAISED_VARIANTS.has(variant) && styles.raisedCap,
           align === "start" && styles.alignStart,
           fullWidth && styles.fullWidth,
           shape === "round" && styles.round,

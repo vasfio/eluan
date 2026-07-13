@@ -15,6 +15,15 @@
   --font-body: "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
+  /* Skeuomorphism — machined control faces after Rams-era Braun hardware:
+     raised caps for keys, recessed wells for fields, pressed for latched
+     (selected/active) states, bezel for printed label plates. */
+  --skeuo-raised: inset 0 1px 0 var(--skeuo-highlight), inset 0 -1px 0 var(--skeuo-shade), 0 1px 2px var(--skeuo-shadow);
+  --skeuo-raised-hover: inset 0 1px 0 var(--skeuo-highlight), inset 0 -1px 0 var(--skeuo-shade), 0 2px 4px var(--skeuo-shadow);
+  --skeuo-pressed: inset 0 1px 2px var(--skeuo-shadow), inset 0 2px 4px var(--skeuo-shade);
+  --skeuo-recessed: inset 0 1px 2px var(--skeuo-shade), inset 0 2px 3px var(--skeuo-shade), 0 1px 0 var(--skeuo-highlight);
+  --skeuo-bezel: inset 0 1px 0 var(--skeuo-highlight), 0 1px 1px var(--skeuo-shade);
+
   --container-bg: var(--backgrounds-primary);
   --container-bg-alt: var(--backgrounds-secondary);
   --container-bg-inverse: var(--foregrounds-secondary);
@@ -167,6 +176,12 @@
   --font-heading: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  /* Skeuomorphism tokens — flat by design in minimal */
+  --skeuo-raised: none;
+  --skeuo-raised-hover: none;
+  --skeuo-pressed: none;
+  --skeuo-recessed: none;
+  --skeuo-bezel: none;
   --container-bg: var(--backgrounds-primary);
   --container-bg-alt: var(--backgrounds-secondary);
   --container-bg-inverse: var(--foregrounds-secondary);

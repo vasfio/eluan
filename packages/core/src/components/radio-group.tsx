@@ -24,9 +24,10 @@ const styles = stylex.create({
     borderRadius: "var(--radius-radius-full)",
     borderStyle: "solid",
     borderWidth: 1,
+    boxShadow: "var(--skeuo-recessed)",
     height: "var(--size-xxs)",
     transitionDuration: "150ms",
-    transitionProperty: "color, background-color, border-color",
+    transitionProperty: "color, background-color, border-color, box-shadow",
     transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
     width: "var(--size-xxs)",
     ":hover": {
@@ -49,6 +50,7 @@ const styles = stylex.create({
     "[data-state=checked]": {
       backgroundColor: "var(--interactive-bg-selected)",
       borderColor: "var(--interactive-bg-selected)",
+      boxShadow: "var(--skeuo-pressed)",
     },
   },
   indicator: {

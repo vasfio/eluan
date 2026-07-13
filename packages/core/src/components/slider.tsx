@@ -19,6 +19,7 @@ const styles = stylex.create({
   track: {
     backgroundColor: "var(--interactive-bg-alt)",
     borderRadius: "var(--radius-radius-full)",
+    boxShadow: "var(--skeuo-recessed)",
     flexGrow: 1,
     height: "calc(var(--spacing-xs) + var(--spacing-xxs))",
     overflow: "hidden",
@@ -39,7 +40,7 @@ const styles = stylex.create({
     borderRadius: "var(--radius-radius-full)",
     borderStyle: "solid",
     borderWidth: 1,
-    boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+    boxShadow: "var(--skeuo-raised)",
     display: "block",
     height: "var(--size-xxs)",
     transitionDuration: "150ms",

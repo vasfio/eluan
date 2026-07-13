@@ -28,7 +28,7 @@ const styles = stylex.create({
     gap: "var(--spacing-sm)",
     justifyContent: "center",
     transitionDuration: "150ms",
-    transitionProperty: "color, background-color, border-color",
+    transitionProperty: "color, background-color, border-color, box-shadow",
     transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
     ":hover": {
       backgroundColor: "var(--interactive-bg-hover)",
@@ -47,6 +47,7 @@ const styles = stylex.create({
     },
     "[data-state=on]": {
       backgroundColor: "var(--interactive-bg-selected)",
+      boxShadow: "var(--skeuo-pressed)",
       color: "var(--interactive-fg-selected)",
     },
   },

@@ -24,6 +24,7 @@ const styles = stylex.create({
     borderRadius: "var(--curves-md)",
     borderStyle: "solid",
     borderWidth: 1,
+    boxShadow: "var(--skeuo-recessed)",
     display: "flex",
     fontSize: "var(--font-size-base)",
     minHeight: 80,

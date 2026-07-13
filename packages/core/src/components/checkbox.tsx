@@ -15,13 +15,14 @@ const styles = stylex.create({
     borderRadius: "var(--curves-xs)",
     borderStyle: "solid",
     borderWidth: 1,
+    boxShadow: "var(--skeuo-recessed)",
     boxSizing: "border-box",
     flexShrink: 0,
     height: "var(--size-xxs)",
     minWidth: "var(--size-xxs)",
     position: "relative",
     transitionDuration: "150ms",
-    transitionProperty: "color, background-color, border-color",
+    transitionProperty: "color, background-color, border-color, box-shadow",
     transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
     width: "var(--size-xxs)",
     ":hover": {
@@ -43,6 +44,7 @@ const styles = stylex.create({
     "[data-state=checked]": {
       backgroundColor: "var(--interactive-bg-selected)",
       borderColor: "var(--interactive-bg-selected)",
+      boxShadow: "var(--skeuo-pressed)",
       color: "var(--interactive-fg-selected)",
     },
   },
