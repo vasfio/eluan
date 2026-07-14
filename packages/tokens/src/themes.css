@@ -63,19 +63,15 @@
   --skeuo-raised:
     inset 0.5px 0.5px 0 var(--skeuo-highlight),
     inset -0.5px -0.5px 0 var(--skeuo-shade),
-    0.4px 0.4px 0.6px -0.75px var(--skeuo-shadow),
-    1.2px 1.2px 1.7px -1.5px var(--skeuo-shadow),
-    2.7px 2.7px 3.8px -2.25px var(--skeuo-shadow),
-    5.9px 5.9px 8.3px -3px var(--skeuo-shadow);
+    0 1px 1.5px -0.5px var(--skeuo-shade),
+    0.5px 2px 6px -1px var(--skeuo-shadow),
+    1px 5px 14px -3px var(--skeuo-shadow);
   --skeuo-raised-hover:
     inset 0.5px 0.5px 0 var(--skeuo-highlight),
     inset -0.5px -0.5px 0 var(--skeuo-shade),
-    0.6px 0.6px 0.8px -0.5px var(--skeuo-shadow),
-    1.4px 1.4px 2px -0.9px var(--skeuo-shadow),
-    2.5px 2.5px 3.6px -1.4px var(--skeuo-shadow),
-    4.2px 4.2px 6px -1.9px var(--skeuo-shadow),
-    6.8px 6.8px 9.7px -2.3px var(--skeuo-shadow),
-    11.2px 11.2px 15.8px -2.8px var(--skeuo-shadow);
+    0 1.5px 2px -0.5px var(--skeuo-shade),
+    1px 4px 10px -2px var(--skeuo-shadow),
+    2px 9px 22px -4px var(--skeuo-shadow);
   --skeuo-pressed:
     inset 0.5px 0.5px 1.5px var(--skeuo-shade),
     inset 1.5px 1.5px 3px var(--skeuo-shadow),
