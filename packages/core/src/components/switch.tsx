@@ -44,6 +44,7 @@ const styles = stylex.create({
   },
   thumb: {
     backgroundColor: "var(--interactive-bg)",
+    backgroundImage: "var(--skeuo-surface-raised)",
     borderRadius: "var(--radius-radius-full)",
     boxShadow: "var(--skeuo-raised)",
     display: "block",

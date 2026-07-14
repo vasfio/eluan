@@ -11,12 +11,15 @@
  
 [data-mode="Light"],
 [data-mode="light"] {
-  /* Skeuomorphic light ingredients — how hard edge highlights and shadows
-     read against this mode's surfaces (shadows carry the active theme's
-     neutral-950 tone) */
-  --skeuo-highlight: rgba(255, 255, 255, 0.9);
-  --skeuo-shade: color-mix(in srgb, var(--color-neutral-950) 14%, transparent);
-  --skeuo-shadow: color-mix(in srgb, var(--color-neutral-950) 20%, transparent);
+  /* Skeuomorphic light ingredients — light falls from the top-left along a
+     127deg diagonal. Shadows carry the active theme's neutral-950 tone; the
+     surface gradients are translucent overlays that model convex (raised)
+     and concave (pressed) faces over any base color. */
+  --skeuo-highlight: rgba(255, 255, 255, 0.6);
+  --skeuo-shade: color-mix(in srgb, var(--color-neutral-950) 18%, transparent);
+  --skeuo-shadow: color-mix(in srgb, var(--color-neutral-950) 13%, transparent);
+  --skeuo-surface-raised: linear-gradient(127deg, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0.06) 45%, color-mix(in srgb, var(--color-neutral-950) 10%, transparent) 100%);
+  --skeuo-surface-pressed: linear-gradient(127deg, color-mix(in srgb, var(--color-neutral-950) 8%, transparent) 0%, rgba(255, 255, 255, 0.02) 60%, rgba(255, 255, 255, 0.1) 100%);
   --backgrounds-primary: var(--color-neutral-0);
   --backgrounds-secondary: var(--color-neutral-100);
   --backgrounds-tertiary: var(--color-neutral-200);
@@ -125,9 +128,11 @@
 
 [data-mode="dim"] {
   /* Skeuomorphic light ingredients (shadows carry the teak-950 tone) */
-  --skeuo-highlight: rgba(255, 255, 255, 0.7);
-  --skeuo-shade: rgba(51, 35, 25, 0.16);
-  --skeuo-shadow: rgba(51, 35, 25, 0.22);
+  --skeuo-highlight: rgba(255, 255, 255, 0.5);
+  --skeuo-shade: rgba(51, 35, 25, 0.2);
+  --skeuo-shadow: rgba(51, 35, 25, 0.15);
+  --skeuo-surface-raised: linear-gradient(127deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.05) 45%, rgba(51, 35, 25, 0.1) 100%);
+  --skeuo-surface-pressed: linear-gradient(127deg, rgba(51, 35, 25, 0.08) 0%, rgba(255, 255, 255, 0.02) 60%, rgba(255, 255, 255, 0.08) 100%);
   --backgrounds-primary: var(--color-teak-100);
   --backgrounds-secondary: var(--color-teak-200);
   --backgrounds-tertiary: var(--color-teak-300);
@@ -236,9 +241,11 @@
 
 [data-mode="dark"] {
   /* Skeuomorphic light ingredients — highlights dim, shadows deepen in dark */
-  --skeuo-highlight: rgba(255, 255, 255, 0.08);
-  --skeuo-shade: rgba(0, 0, 0, 0.5);
-  --skeuo-shadow: rgba(0, 0, 0, 0.6);
+  --skeuo-highlight: rgba(255, 255, 255, 0.1);
+  --skeuo-shade: rgba(0, 0, 0, 0.55);
+  --skeuo-shadow: rgba(0, 0, 0, 0.4);
+  --skeuo-surface-raised: linear-gradient(127deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 45%, rgba(0, 0, 0, 0.25) 100%);
+  --skeuo-surface-pressed: linear-gradient(127deg, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.05) 60%, rgba(255, 255, 255, 0.04) 100%);
   --backgrounds-primary: var(--color-neutral-800);
   --backgrounds-secondary: var(--color-neutral-900);
   --backgrounds-tertiary: var(--color-neutral-950);

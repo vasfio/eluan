@@ -95,16 +95,23 @@ const styles = stylex.create({
       backgroundColor: "var(--action-primary-bg-active)",
     },
   },
-  /* Raised key cap: convex face at rest, lifts on hover, seats into the
-     housing when pressed. */
+  /* Raised key cap: convex face (top-left lit gradient) at rest, longer
+     shadow on hover, seats into the housing with a concave face when
+     pressed. Flattens when disabled. */
   raisedCap: {
+    backgroundImage: "var(--skeuo-surface-raised)",
     boxShadow: "var(--skeuo-raised)",
     ":hover": {
       boxShadow: "var(--skeuo-raised-hover)",
     },
     ":active": {
+      backgroundImage: "var(--skeuo-surface-pressed)",
       boxShadow: "var(--skeuo-pressed)",
-      transform: "translateY(1px)",
+      transform: "translateY(0.5px)",
+    },
+    ":disabled": {
+      backgroundImage: "none",
+      boxShadow: "none",
     },
   },
   variantDestructive: {
