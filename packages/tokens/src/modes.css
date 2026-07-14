@@ -12,20 +12,21 @@
 [data-mode="Light"],
 [data-mode="light"] {
   /* Skeuomorphic light ingredients — how hard edge highlights and shadows
-     read against this mode's surfaces (shadows carry the concrete-950 tone) */
+     read against this mode's surfaces (shadows carry the active theme's
+     neutral-950 tone) */
   --skeuo-highlight: rgba(255, 255, 255, 0.9);
-  --skeuo-shade: rgba(27, 29, 21, 0.14);
-  --skeuo-shadow: rgba(27, 29, 21, 0.2);
-  --backgrounds-primary: var(--color-concrete-0);
-  --backgrounds-secondary: var(--color-concrete-100);
-  --backgrounds-tertiary: var(--color-concrete-200);
-  --backgrounds-quaternary: var(--color-concrete-300);
-  --backgrounds-quinary: var(--color-concrete-400);
-  --foregrounds-primary: var(--color-concrete-950);
-  --foregrounds-secondary: var(--color-concrete-800);
-  --foregrounds-tertiary: var(--color-concrete-600);
-  --foregrounds-quaternary: var(--color-concrete-500);
-  --foregrounds-quinary: var(--color-concrete-400);
+  --skeuo-shade: color-mix(in srgb, var(--color-neutral-950) 14%, transparent);
+  --skeuo-shadow: color-mix(in srgb, var(--color-neutral-950) 20%, transparent);
+  --backgrounds-primary: var(--color-neutral-0);
+  --backgrounds-secondary: var(--color-neutral-100);
+  --backgrounds-tertiary: var(--color-neutral-200);
+  --backgrounds-quaternary: var(--color-neutral-300);
+  --backgrounds-quinary: var(--color-neutral-400);
+  --foregrounds-primary: var(--color-neutral-950);
+  --foregrounds-secondary: var(--color-neutral-800);
+  --foregrounds-tertiary: var(--color-neutral-600);
+  --foregrounds-quaternary: var(--color-neutral-500);
+  --foregrounds-quinary: var(--color-neutral-400);
   --maitai-main: var(--color-maitai-500);
   --maitai-background: var(--color-maitai-50);
   --maitai-tint: var(--color-maitai-100);
@@ -238,16 +239,16 @@
   --skeuo-highlight: rgba(255, 255, 255, 0.08);
   --skeuo-shade: rgba(0, 0, 0, 0.5);
   --skeuo-shadow: rgba(0, 0, 0, 0.6);
-  --backgrounds-primary: var(--color-concrete-800);
-  --backgrounds-secondary: var(--color-concrete-900);
-  --backgrounds-tertiary: var(--color-concrete-950);
-  --backgrounds-quaternary: var(--color-concrete-700);
-  --backgrounds-quinary: var(--color-concrete-600);
-  --foregrounds-primary: var(--color-concrete-0);
-  --foregrounds-secondary: var(--color-concrete-100);
-  --foregrounds-tertiary: var(--color-concrete-200);
-  --foregrounds-quaternary: var(--color-concrete-300);
-  --foregrounds-quinary: var(--color-concrete-400);
+  --backgrounds-primary: var(--color-neutral-800);
+  --backgrounds-secondary: var(--color-neutral-900);
+  --backgrounds-tertiary: var(--color-neutral-950);
+  --backgrounds-quaternary: var(--color-neutral-700);
+  --backgrounds-quinary: var(--color-neutral-600);
+  --foregrounds-primary: var(--color-neutral-0);
+  --foregrounds-secondary: var(--color-neutral-100);
+  --foregrounds-tertiary: var(--color-neutral-200);
+  --foregrounds-quaternary: var(--color-neutral-300);
+  --foregrounds-quinary: var(--color-neutral-400);
   --maitai-main: var(--color-maitai-500);
   --maitai-background: var(--color-maitai-950);
   --maitai-tint: var(--color-maitai-900);

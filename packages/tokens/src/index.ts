@@ -526,6 +526,18 @@ export const themeFonts: Record<
 }
 
 // ============================================
+// Theme → Neutral Ramp Mapping
+// ============================================
+// Which raw palette each theme aliases to --color-neutral-* (see themes.css).
+// Cross-platform consumers and sync tooling (e.g. Figma variables) can use
+// this to resolve mode backgrounds/foregrounds per theme.
+
+export const themeNeutrals: Record<Theme, ColorPalette> = {
+  "industrial-retro": "concrete",
+  "minimal": "mono",
+}
+
+// ============================================
 // Dynamic Font Loader
 // ============================================
 // Loads theme-specific font CSS on demand via <link> injection.

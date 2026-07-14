@@ -7,10 +7,48 @@
  * ============================================ */
 @import "./modes.css";
 /* ----------------------------------------
+ * Neutral ramp — theme-selected alias
+ * Each theme points --color-neutral-* at the raw scale that carries its
+ * monochrome identity; modes.css derives backgrounds/foregrounds from it,
+ * so mode step logic stays shared while the ramp swaps per brand.
+ * Custom themes can remap the ramp via createTheme token overrides.
+ * The :root default mirrors industrial-retro for unthemed scopes and must
+ * precede the theme blocks so the attribute selectors win the cascade.
+ * ---------------------------------------- */
+:root {
+  --color-neutral-0: var(--color-concrete-0);
+  --color-neutral-50: var(--color-concrete-50);
+  --color-neutral-100: var(--color-concrete-100);
+  --color-neutral-200: var(--color-concrete-200);
+  --color-neutral-300: var(--color-concrete-300);
+  --color-neutral-400: var(--color-concrete-400);
+  --color-neutral-500: var(--color-concrete-500);
+  --color-neutral-600: var(--color-concrete-600);
+  --color-neutral-700: var(--color-concrete-700);
+  --color-neutral-800: var(--color-concrete-800);
+  --color-neutral-900: var(--color-concrete-900);
+  --color-neutral-950: var(--color-concrete-950);
+}
+
+/* ----------------------------------------
  * Theme: Classic Retro
  * Based on Blaze Orange
  * ---------------------------------------- */
  [data-theme="industrial-retro"] {
+  /* Neutral ramp — concrete (Remlo's warm mineral grey) */
+  --color-neutral-0: var(--color-concrete-0);
+  --color-neutral-50: var(--color-concrete-50);
+  --color-neutral-100: var(--color-concrete-100);
+  --color-neutral-200: var(--color-concrete-200);
+  --color-neutral-300: var(--color-concrete-300);
+  --color-neutral-400: var(--color-concrete-400);
+  --color-neutral-500: var(--color-concrete-500);
+  --color-neutral-600: var(--color-concrete-600);
+  --color-neutral-700: var(--color-concrete-700);
+  --color-neutral-800: var(--color-concrete-800);
+  --color-neutral-900: var(--color-concrete-900);
+  --color-neutral-950: var(--color-concrete-950);
+
   --font-heading: "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -173,6 +211,19 @@
 }
 
 [data-theme="minimal"] {
+  /* Neutral ramp — mono (pure achromatic grey) */
+  --color-neutral-0: var(--color-mono-0);
+  --color-neutral-50: var(--color-mono-50);
+  --color-neutral-100: var(--color-mono-100);
+  --color-neutral-200: var(--color-mono-200);
+  --color-neutral-300: var(--color-mono-300);
+  --color-neutral-400: var(--color-mono-400);
+  --color-neutral-500: var(--color-mono-500);
+  --color-neutral-600: var(--color-mono-600);
+  --color-neutral-700: var(--color-mono-700);
+  --color-neutral-800: var(--color-mono-800);
+  --color-neutral-900: var(--color-mono-900);
+  --color-neutral-950: var(--color-mono-950);
   --font-heading: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
