@@ -36,18 +36,25 @@ const styles = stylex.create({
   },
   thumb: {
     backgroundColor: "var(--interactive-bg)",
+    /* Three layers: two tiled dimple-grid layers (--skeuo-dimple) over the
+       convex face — the size/repeat/position lists below map onto them. */
     backgroundImage: "var(--skeuo-dimple), var(--skeuo-surface-raised)",
+    backgroundPosition: "center, center, center",
+    backgroundRepeat: "repeat, repeat, no-repeat",
+    backgroundSize: "var(--skeuo-dimple-size, auto), var(--skeuo-dimple-size, auto), auto",
     borderColor: "var(--interactive-bg-selected)",
-    borderRadius: "var(--radius-radius-full)",
+    /* 50% renders a circle on the square minimal thumb and an ellipse on
+       the wider industrial-retro fader cap */
+    borderRadius: "50%",
     borderStyle: "solid",
     borderWidth: 1,
     boxShadow: "var(--skeuo-raised)",
     display: "block",
-    height: "var(--size-xxs)",
+    height: "var(--slider-thumb-height, var(--size-xxs))",
     transitionDuration: "150ms",
     transitionProperty: "color, background-color, border-color",
     transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-    width: "var(--size-xxs)",
+    width: "var(--slider-thumb-width, var(--size-xxs))",
     ":focus-visible": {
       outlineColor: "var(--interactive-border)",
       outlineOffset: "1px",

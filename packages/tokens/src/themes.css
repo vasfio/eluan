@@ -83,12 +83,18 @@
     inset 0.5px 0.5px 0 var(--skeuo-highlight),
     inset -0.5px -0.5px 0 var(--skeuo-shade),
     0.5px 0.5px 1px var(--skeuo-shadow);
-  /* Machined finger dimple (grip indent on knobs/thumbs): a concave dot
-     under the same top-left light — dark pit shifted up-left over a light
-     lip shifted down-right. Sized in % so it scales with the control. */
+  /* Machined dimple grid (knurled grip on knobs/thumbs): one concave dot
+     per tile under the same top-left light — dark pit up-left over a light
+     lip down-right. Always exactly two image layers: consumers tile them
+     via background-size/-repeat lists using --skeuo-dimple-size. */
   --skeuo-dimple:
-    radial-gradient(circle at 47% 47%, var(--skeuo-shade) 0%, var(--skeuo-shade) 16%, transparent 24%),
-    radial-gradient(circle at 53% 53%, var(--skeuo-highlight) 0%, var(--skeuo-highlight) 17%, transparent 25%);
+    radial-gradient(circle at 44% 44%, var(--skeuo-shade) 0%, var(--skeuo-shade) 16%, transparent 28%),
+    radial-gradient(circle at 58% 58%, var(--skeuo-highlight) 0%, var(--skeuo-highlight) 16%, transparent 28%);
+  --skeuo-dimple-size: 5px 5px;
+
+  /* Slider — fader-cap thumb: a wide ellipse with the knurled grip */
+  --slider-thumb-width: calc(var(--size-xxs) * 1.75);
+  --slider-thumb-height: calc(var(--size-xxs) * 1.25);
 
   --container-bg: var(--backgrounds-primary);
   --container-bg-alt: var(--backgrounds-secondary);
@@ -264,6 +270,9 @@
   --skeuo-surface-raised: none;
   --skeuo-surface-pressed: none;
   --skeuo-dimple: none;
+  --skeuo-dimple-size: auto;
+  --slider-thumb-width: var(--size-xxs);
+  --slider-thumb-height: var(--size-xxs);
   --container-bg: var(--backgrounds-primary);
   --container-bg-alt: var(--backgrounds-secondary);
   --container-bg-inverse: var(--foregrounds-secondary);
