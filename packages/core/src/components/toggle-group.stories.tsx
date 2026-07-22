@@ -10,7 +10,7 @@ const meta: Meta<typeof ToggleGroup> = {
       description: "Selection mode: \"single\" allows one active item, \"multiple\" allows many.",
     },
     variant: {
-      description: "Visual style variant: \"default\" or \"outline\".",
+      description: "Visual style variant.",
     },
     size: {
       description: "Size of the toggle items.",
@@ -79,24 +79,6 @@ export const Multiple: Story = {
       <ToggleGroupItem value="bold" aria-label="Toggle bold">B</ToggleGroupItem>
       <ToggleGroupItem value="italic" aria-label="Toggle italic">I</ToggleGroupItem>
       <ToggleGroupItem value="underline" aria-label="Toggle underline">U</ToggleGroupItem>
-    </ToggleGroup>
-  ),
-}
-
-export const Outline: Story = {
-  args: {},
-  parameters: {
-    docs: {
-      description: {
-        story: "A toggle group using the \"outline\" variant style.",
-      },
-    },
-  },
-  render: () => (
-    <ToggleGroup type="single" variant="outline">
-      <ToggleGroupItem value="a">A</ToggleGroupItem>
-      <ToggleGroupItem value="b">B</ToggleGroupItem>
-      <ToggleGroupItem value="c">C</ToggleGroupItem>
     </ToggleGroup>
   ),
 }

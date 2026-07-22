@@ -49,14 +49,20 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: () => (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <Button variant="outline">Hover me</Button>
-      </TooltipTrigger>
-      <TooltipContent>
-        <p>Add to library</p>
-      </TooltipContent>
-    </Tooltip>
+    <div
+      style={{
+        padding: "var(--spacing-4xl) var(--spacing-xl) var(--spacing-xl)",
+      }}
+    >
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button variant="outline">Hover me</Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Add to library</p>
+        </TooltipContent>
+      </Tooltip>
+    </div>
   ),
   parameters: {
     docs: {
@@ -76,10 +82,18 @@ export const Positions: Story = {
     },
   },
   render: () => (
-    <div className="flex gap-4 items-center justify-center p-10">
+    <div
+      style={{
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "column",
+        gap: "var(--spacing-lg)",
+        padding: "var(--spacing-4xl)",
+      }}
+    >
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="outline">Top</Button>
+          <Button variant="ghost">Top</Button>
         </TooltipTrigger>
         <TooltipContent side="top">
           <p>Tooltip on top</p>
@@ -88,7 +102,7 @@ export const Positions: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="outline">Right</Button>
+          <Button variant="ghost">Right</Button>
         </TooltipTrigger>
         <TooltipContent side="right">
           <p>Tooltip on right</p>
@@ -97,7 +111,7 @@ export const Positions: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="outline">Bottom</Button>
+          <Button variant="ghost">Bottom</Button>
         </TooltipTrigger>
         <TooltipContent side="bottom">
           <p>Tooltip on bottom</p>
@@ -106,7 +120,7 @@ export const Positions: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="outline">Left</Button>
+          <Button variant="ghost">Left</Button>
         </TooltipTrigger>
         <TooltipContent side="left">
           <p>Tooltip on left</p>
@@ -125,15 +139,21 @@ export const WithIcon: Story = {
     },
   },
   render: () => (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <span className="text-lg">?</span>
-        </Button>
-      </TooltipTrigger>
-      <TooltipContent>
-        <p>Need help? Click for more info.</p>
-      </TooltipContent>
-    </Tooltip>
+    <div
+      style={{
+        padding: "var(--spacing-4xl) var(--spacing-xl) var(--spacing-xl)",
+      }}
+    >
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button variant="ghost" size="icon">
+            <span style={{ fontSize: "var(--font-size-lg)" }}>?</span>
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Need help? Click for more info.</p>
+        </TooltipContent>
+      </Tooltip>
+    </div>
   ),
 }

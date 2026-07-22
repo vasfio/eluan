@@ -71,6 +71,14 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
     const [editingM, setEditingM] = React.useState<string | null>(null)
 
     const minuteRef = React.useRef<HTMLInputElement>(null)
+    // When a segment gains focus (or is reset via arrow keys) its display
+    // shows the current padded value. The next digit typed should START a
+    // fresh entry rather than append to the existing digits, so we track a
+    // "fresh" flag per segment and take only the newest digit on that first
+    // keystroke. This avoids the truncation bug where typing over a
+    // pre-filled 2-digit value produced a stale value and auto-advanced.
+    const hoursFreshRef = React.useRef(true)
+    const minutesFreshRef = React.useRef(true)
 
     const maxH = format === "12" ? 12 : 23
     const minH = format === "12" ? 1 : 0
@@ -94,7 +102,11 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
     )
 
     const handleHoursChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const raw = e.target.value.replace(/\D/g, "").slice(0, 2)
+      const digits = e.target.value.replace(/\D/g, "")
+      // First keystroke since focus/reset: start a fresh number from the
+      // most recently typed digit. After that, accumulate up to two digits.
+      const raw = hoursFreshRef.current ? digits.slice(-1) : digits.slice(0, 2)
+      hoursFreshRef.current = false
       setEditingH(raw)
       if (raw === "") return
       const n = parseInt(raw)
@@ -105,15 +117,26 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
         emit(n, minutes, period)
       }
 
+      // Advance only once the value can no longer be extended: either two
+      // digits have been entered, or the single first digit is high enough
+      // that any second digit would exceed the max (24h: >=3, 12h: >=2).
       const isComplete = raw.length === 2 || n > Math.floor(maxH / 10)
       if (isComplete) {
-        minuteRef.current?.focus()
-        minuteRef.current?.select()
+        // Defer the focus move so React first commits `editingH` for this
+        // keystroke. A synchronous focus() would fire the hours `onBlur`
+        // with a stale `editingH` closure (the previous digit) and clobber
+        // the value that was just entered.
+        requestAnimationFrame(() => {
+          minuteRef.current?.focus()
+          minuteRef.current?.select()
+        })
       }
     }
 
     const handleMinutesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const raw = e.target.value.replace(/\D/g, "").slice(0, 2)
+      const digits = e.target.value.replace(/\D/g, "")
+      const raw = minutesFreshRef.current ? digits.slice(-1) : digits.slice(0, 2)
+      minutesFreshRef.current = false
       setEditingM(raw)
       if (raw === "") return
       const n = parseInt(raw)
@@ -129,6 +152,8 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
         let nh = hours + 1
         if (nh > maxH) nh = minH
         setHours(nh)
+        setEditingH(null)
+        hoursFreshRef.current = true
         emit(nh, minutes, period)
       }
       if (e.key === "ArrowDown") {
@@ -136,6 +161,8 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
         let nh = hours - 1
         if (nh < minH) nh = maxH
         setHours(nh)
+        setEditingH(null)
+        hoursFreshRef.current = true
         emit(nh, minutes, period)
       }
       if (e.key === ":") {
@@ -151,6 +178,8 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
         let nm = minutes + 1
         if (nm > 59) nm = 0
         setMinutes(nm)
+        setEditingM(null)
+        minutesFreshRef.current = true
         emit(hours, nm, period)
       }
       if (e.key === "ArrowDown") {
@@ -158,6 +187,8 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
         let nm = minutes - 1
         if (nm < 0) nm = 59
         setMinutes(nm)
+        setEditingM(null)
+        minutesFreshRef.current = true
         emit(hours, nm, period)
       }
     }
@@ -191,6 +222,7 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
           {...stylex.props(styles.segment)}
           value={editingH !== null ? editingH : pad(hours)}
           onFocus={(e) => {
+            hoursFreshRef.current = true
             requestAnimationFrame(() => e.target.select())
           }}
           onChange={handleHoursChange}
@@ -210,7 +242,6 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
           onKeyDown={handleHoursKeyDown}
           disabled={disabled}
           inputMode="numeric"
-          maxLength={2}
           aria-label="Hours"
         />
 
@@ -221,6 +252,7 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
           {...stylex.props(styles.segment)}
           value={editingM !== null ? editingM : pad(minutes)}
           onFocus={(e) => {
+            minutesFreshRef.current = true
             requestAnimationFrame(() => e.target.select())
           }}
           onChange={handleMinutesChange}
@@ -240,7 +272,6 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
           onKeyDown={handleMinutesKeyDown}
           disabled={disabled}
           inputMode="numeric"
-          maxLength={2}
           aria-label="Minutes"
         />
 
@@ -290,7 +321,11 @@ const styles = stylex.create({
     transitionProperty: "background-color, border-color, color, box-shadow",
     transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
     ":focus-within": {
-      boxShadow: "0 0 0 1px var(--interactive-border), 0 0 0 2px var(--container-bg)",
+      borderColor: "var(--interactive-border)",
+      outlineColor: "var(--interactive-border)",
+      outlineOffset: "1px",
+      outlineStyle: "solid",
+      outlineWidth: "1px",
     },
   },
   disabled: {

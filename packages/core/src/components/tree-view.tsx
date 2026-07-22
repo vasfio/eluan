@@ -11,6 +11,16 @@ export interface TreeNode {
   data?: unknown
 }
 
+// Custom icons may arrive at any intrinsic size (e.g. Lucide defaults to 24px).
+// Clone valid elements to fill the fixed-size icon slot so they match text height.
+const renderIcon = (icon: React.ReactNode): React.ReactNode =>
+  React.isValidElement(icon)
+    ? React.cloneElement(
+        icon as React.ReactElement<{ width?: string; height?: string }>,
+        { width: "100%", height: "100%" }
+      )
+    : icon
+
 export interface TreeViewProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style" | "onSelect"> {
   data: TreeNode[]
@@ -70,7 +80,11 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
           >
             {showIcons && (
               <span {...stylex.props(styles.iconWrap, isSelected && styles.iconSelected)}>
-                {node.icon ?? <File {...stylex.props(styles.icon)} />}
+                {node.icon ? (
+                  renderIcon(node.icon)
+                ) : (
+                  <File {...stylex.props(styles.icon)} />
+                )}
               </span>
             )}
             <span {...stylex.props(styles.label)}>{node.name}</span>
@@ -100,12 +114,13 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
               />
               {showIcons && (
                 <span {...stylex.props(styles.iconWrap, isSelected && styles.iconSelected)}>
-                  {node.icon ??
-                    (isExpanded ? (
-                      <FolderOpen {...stylex.props(styles.icon)} />
-                    ) : (
-                      <Folder {...stylex.props(styles.icon)} />
-                    ))}
+                  {node.icon ? (
+                    renderIcon(node.icon)
+                  ) : isExpanded ? (
+                    <FolderOpen {...stylex.props(styles.icon)} />
+                  ) : (
+                    <Folder {...stylex.props(styles.icon)} />
+                  )}
                 </span>
               )}
               <span {...stylex.props(styles.label)}>{node.name}</span>
@@ -183,8 +198,13 @@ const styles = stylex.create({
     },
   },
   iconWrap: {
+    alignItems: "center",
     color: "var(--interactive-fg-alt)",
+    display: "flex",
     flexShrink: 0,
+    height: "var(--size-xxs)",
+    justifyContent: "center",
+    width: "var(--size-xxs)",
   },
   iconSelected: {
     color: "var(--interactive-fg-selected)",

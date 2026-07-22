@@ -71,17 +71,56 @@ export const Default: Story = {
             Make changes to your profile here. Click save when you&apos;re done.
           </SheetDescription>
         </SheetHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <label htmlFor="name" className="text-right text-sm">Name</label>
-            <Input id="name" value="John Doe" className="col-span-3" />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "var(--spacing-md)",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "var(--spacing-xs)",
+            }}
+          >
+            <label
+              htmlFor="name"
+              style={{
+                fontSize: "var(--font-size-sm)",
+                fontWeight: 500,
+                color: "var(--interactive-fg)",
+              }}
+            >
+              Name
+            </label>
+            <Input id="name" defaultValue="John Doe" />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <label htmlFor="username" className="text-right text-sm">Username</label>
-            <Input id="username" value="@johndoe" className="col-span-3" />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "var(--spacing-xs)",
+            }}
+          >
+            <label
+              htmlFor="username"
+              style={{
+                fontSize: "var(--font-size-sm)",
+                fontWeight: 500,
+                color: "var(--interactive-fg)",
+              }}
+            >
+              Username
+            </label>
+            <Input id="username" defaultValue="@johndoe" />
           </div>
         </div>
         <SheetFooter>
+          <SheetClose asChild>
+            <Button variant="outline">Cancel</Button>
+          </SheetClose>
           <SheetClose asChild>
             <Button type="submit">Save changes</Button>
           </SheetClose>

@@ -1,5 +1,21 @@
+import React from "react"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Input } from "./input"
+import { Label } from "./form-label"
+
+const fieldStackStyle: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "column",
+  gap: "var(--spacing-sm)",
+  maxWidth: 384,
+  width: "100%",
+}
+
+const hintStyle: React.CSSProperties = {
+  color: "var(--container-fg-alt)",
+  fontSize: "var(--font-size-xs)",
+  margin: 0,
+}
 
 const meta: Meta<typeof Input> = {
   title: "Components/Input",
@@ -68,8 +84,8 @@ export const WithLabel: Story = {
     },
   },
   render: () => (
-    <div className="grid w-full max-w-sm items-center gap-1.5">
-      <label htmlFor="email" className="text-sm font-medium">Email</label>
+    <div style={fieldStackStyle}>
+      <Label htmlFor="email">Email</Label>
       <Input type="email" id="email" placeholder="Email" />
     </div>
   ),
@@ -84,10 +100,10 @@ export const WithHelperText: Story = {
     },
   },
   render: () => (
-    <div className="grid w-full max-w-sm items-center gap-1.5">
-      <label htmlFor="email-2" className="text-sm font-medium">Email</label>
+    <div style={fieldStackStyle}>
+      <Label htmlFor="email-2">Email</Label>
       <Input type="email" id="email-2" placeholder="Email" />
-      <p className="text-sm text-muted-foreground">Enter your email address.</p>
+      <p style={hintStyle}>Enter your email address.</p>
     </div>
   ),
 }

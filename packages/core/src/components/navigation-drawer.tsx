@@ -142,27 +142,29 @@ NavigationDrawerFooter.displayName = "NavigationDrawerFooter"
 const NavigationDrawerToggle = React.forwardRef<
   HTMLButtonElement,
   Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "className" | "style">
->((props, ref) => {
+>(({ onClick, ...props }, ref) => {
   const { collapsed, setCollapsed, isMobile } = useNavigationDrawer()
 
   if (isMobile) return null
 
   return (
-    <button
+    <Button
       ref={ref}
-      onClick={() => setCollapsed(!collapsed)}
+      variant="ghost"
+      size="compactIcon"
+      aria-label={collapsed ? "Expand navigation" : "Collapse navigation"}
+      onClick={(event) => {
+        setCollapsed(!collapsed)
+        onClick?.(event)
+      }}
       {...props}
-      {...stylex.props(
-        navigationDrawerStyles.compactButton,
-        navigationDrawerStyles.ghostButton
-      )}
     >
       {collapsed ? (
         <ChevronRight {...stylex.props(navigationDrawerStyles.icon)} />
       ) : (
         <ChevronLeft {...stylex.props(navigationDrawerStyles.icon)} />
       )}
-    </button>
+    </Button>
   )
 })
 NavigationDrawerToggle.displayName = "NavigationDrawerToggle"
@@ -199,7 +201,9 @@ const navigationDrawerStyles = stylex.create({
     transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
   },
   drawerCollapsed: {
-    width: "calc(var(--size-xl) * 1.5)",
+    // Icon-button width plus equal horizontal padding on each side
+    // (matching the content/footer inline padding) so items read centered.
+    width: "calc(var(--size-md) + var(--spacing-xs) * 2)",
   },
   drawerExpanded: {
     width: "16rem",
@@ -245,44 +249,6 @@ const navigationDrawerStyles = stylex.create({
     borderTopWidth: 1,
     padding: "var(--spacing-xs)",
   },
-  compactButton: {
-    alignItems: "center",
-    borderWidth: 0,
-    borderStyle: "solid",
-    borderColor: "transparent",
-    borderRadius: "var(--curves-md)",
-    boxSizing: "border-box",
-    display: "inline-flex",
-    fontSize: "var(--font-size-sm)",
-    fontWeight: 400,
-    gap: "var(--spacing-xs)",
-    height: "var(--size-md)",
-    justifyContent: "center",
-    textDecorationLine: "none",
-    transitionDuration: "150ms",
-    transitionProperty: "all",
-    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-    whiteSpace: "nowrap",
-    width: "var(--size-md)",
-    ":focus-visible": {
-      outlineColor: "var(--interactive-border)",
-      outlineOffset: "1px",
-      outlineStyle: "solid",
-      outlineWidth: "1px",
-    },
-    ":disabled": {
-      opacity: 0.5,
-      pointerEvents: "none",
-    },
-  },
-  ghostButton: {
-    backgroundColor: "transparent",
-    color: "var(--action-tertiary-fg)",
-    ":hover": {
-      backgroundColor: "var(--action-tertiary-bg-hover)",
-      color: "var(--action-tertiary-fg-active)",
-    },
-  },
   icon: {
     height: "var(--size-xxs)",
     width: "var(--size-xxs)",
@@ -319,10 +285,20 @@ const navigationDrawerStyles = stylex.create({
     },
   },
   itemCollapsed: {
-    width: "fit-content",
+    // Fixed square that centers its icon; the content/footer inline padding
+    // supplies the equal space on each side (no justifyContent hack on the
+    // container — the drawer width shrinks to fit instead).
+    justifyContent: "center",
+    paddingInline: 0,
+    width: "var(--size-md)",
   },
   itemIcon: {
+    alignItems: "center",
+    display: "flex",
     flexShrink: 0,
+    height: "var(--size-xxs)",
+    justifyContent: "center",
+    width: "var(--size-xxs)",
   },
   itemLabel: {
     overflow: "hidden",
@@ -350,7 +326,24 @@ const navigationDrawerStyles = stylex.create({
   },
   layout: {
     display: "flex",
-    height: "100vh",
+    // Fill the parent's height so the sidebar stretches to it. Consumers give
+    // the layout a bounded height (a fixed wrapper, or 100vh on the page root).
+    height: "100%",
+  },
+  layoutMain: {
+    display: "flex",
+    flex: 1,
+    flexDirection: "column",
+    minWidth: 0,
+  },
+  layoutBar: {
+    alignItems: "center",
+    borderBottomColor: "var(--container-border-alt)",
+    borderBottomStyle: "solid",
+    borderBottomWidth: 1,
+    display: "flex",
+    height: "var(--size-xl)",
+    paddingInline: "var(--spacing-sm)",
   },
   layoutContent: {
     flex: 1,
@@ -393,7 +386,16 @@ const NavigationDrawerItem = React.forwardRef<
       )}
       {...props}
     >
-      {icon && <span {...stylex.props(navigationDrawerStyles.itemIcon)}>{icon}</span>}
+      {icon && (
+        <span {...stylex.props(navigationDrawerStyles.itemIcon)}>
+          {React.isValidElement(icon)
+            ? React.cloneElement(
+                icon as React.ReactElement<{ width?: string; height?: string }>,
+                { width: "100%", height: "100%" }
+              )
+            : icon}
+        </span>
+      )}
       {!collapsed && <span {...stylex.props(navigationDrawerStyles.itemLabel)}>{children}</span>}
     </Comp>
   )
@@ -428,6 +430,10 @@ NavigationDrawerGroup.displayName = "NavigationDrawerGroup"
  * Layout helper that renders the navigation drawer alongside main content.
  * Wraps everything in the provider so open/close/collapse all work automatically.
  *
+ * The collapse/expand toggle sits in a bar above the content column — outside
+ * the sidebar panel — so it stays visible and clickable in both the expanded
+ * and collapsed states.
+ *
  * Usage:
  * ```tsx
  * <NavigationDrawerLayout
@@ -436,7 +442,6 @@ NavigationDrawerGroup.displayName = "NavigationDrawerGroup"
  *     <NavigationDrawerContent>
  *       <NavigationDrawerItem href="/" icon={<Home />} active>Home</NavigationDrawerItem>
  *     </NavigationDrawerContent>
- *     <NavigationDrawerFooter><NavigationDrawerToggle /></NavigationDrawerFooter>
  *   </>}
  * >
  *   <main>Page content</main>
@@ -457,7 +462,14 @@ const NavigationDrawerLayout = ({
   <NavigationDrawerProvider defaultCollapsed={defaultCollapsed}>
     <div {...stylex.props(navigationDrawerStyles.layout)}>
       <NavigationDrawer>{sidebar}</NavigationDrawer>
-      <div {...stylex.props(navigationDrawerStyles.layoutContent)}>{children}</div>
+      <div {...stylex.props(navigationDrawerStyles.layoutMain)}>
+        <div {...stylex.props(navigationDrawerStyles.layoutBar)}>
+          <NavigationDrawerToggle />
+        </div>
+        <div {...stylex.props(navigationDrawerStyles.layoutContent)}>
+          {children}
+        </div>
+      </div>
     </div>
   </NavigationDrawerProvider>
 )

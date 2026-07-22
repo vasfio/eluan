@@ -43,7 +43,7 @@ See the [theming guide](https://github.com/vasfio/eluan/blob/main/docs/theming.m
 
 ## What's included
 
-Components span layout (`Card`, `Sheet`, `Drawer`), forms (`Input`, `Select`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`, etc.), data display (`Table`, `Tree View`, `Timeline`, `Calendar`), navigation (`Tabs`, `Breadcrumb`, `Command`, `NavigationDrawer`), feedback (`Toast`, `Banner`, `Progress`), and overlays (`Dialog`, `AlertDialog`, `Popover`, `Tooltip`, `ContextMenu`).
+Components span layout (`Card`, `Sheet`, `Drawer`), forms (`Input`, `Select`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`, etc.), data display (`Table`, `Tree View`, `Calendar`), navigation (`Tabs`, `Breadcrumb`, `Command`, `NavigationDrawer`), feedback (`Toast`, `Banner`, `Progress`), and overlays (`Dialog`, `AlertDialog`, `Popover`, `Tooltip`, `ContextMenu`).
 
 Full component list: see [Storybook](https://github.com/vasfio/eluan) or the source under `src/components/`.
 

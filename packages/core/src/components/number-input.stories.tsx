@@ -44,7 +44,7 @@ export const Default: Story = {
     },
   },
   render: () => (
-    <div className="w-[200px]">
+    <div style={{ maxWidth: 200 }}>
       <NumberInput placeholder="Enter number" onChange={(value) => console.log("Value:", value)} />
     </div>
   ),
@@ -59,8 +59,8 @@ export const WithMinMax: Story = {
     },
   },
   render: () => (
-    <div className="w-[200px] space-y-2">
-      <p className="text-sm text-muted-foreground">Range: 0 to 100</p>
+    <div style={{ maxWidth: 200, display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
+      <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)" }}>Range: 0 to 100</p>
       <NumberInput min={0} max={100} value={50} onChange={(value) => console.log("Value:", value)} />
     </div>
   ),
@@ -75,8 +75,8 @@ export const WithStep: Story = {
     },
   },
   render: () => (
-    <div className="w-[200px] space-y-2">
-      <p className="text-sm text-muted-foreground">Step: 5</p>
+    <div style={{ maxWidth: 200, display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
+      <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)" }}>Step: 5</p>
       <NumberInput step={5} value={0} onChange={(value) => console.log("Value:", value)} />
     </div>
   ),
@@ -91,7 +91,7 @@ export const WithoutControls: Story = {
     },
   },
   render: () => (
-    <div className="w-[200px]">
+    <div style={{ maxWidth: 200 }}>
       <NumberInput
         showControls={false}
         placeholder="Enter number"
@@ -110,8 +110,8 @@ export const PositiveOnly: Story = {
     },
   },
   render: () => (
-    <div className="w-[200px] space-y-2">
-      <p className="text-sm text-muted-foreground">Positive numbers only</p>
+    <div style={{ maxWidth: 200, display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
+      <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)" }}>Positive numbers only</p>
       <NumberInput allowNegative={false} min={0} onChange={(value) => console.log("Value:", value)} />
     </div>
   ),
@@ -126,8 +126,8 @@ export const Quantity: Story = {
     },
   },
   render: () => (
-    <div className="w-[150px] space-y-2">
-      <p className="text-sm text-muted-foreground">Quantity selector</p>
+    <div style={{ maxWidth: 200, display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
+      <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)" }}>Quantity selector</p>
       <NumberInput min={1} max={99} value={1} onChange={(value) => console.log("Quantity:", value)} />
     </div>
   ),
@@ -142,7 +142,7 @@ export const Disabled: Story = {
     },
   },
   render: () => (
-    <div className="w-[200px]">
+    <div style={{ maxWidth: 200 }}>
       <NumberInput value={42} disabled />
     </div>
   ),

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Spinner } from "./spinner"
+import { Button } from "./button"
 
 const meta: Meta<typeof Spinner> = {
   title: "Components/Spinner",
@@ -48,7 +49,7 @@ export const Default: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <div className="flex items-center gap-4">
+    <div style={{ alignItems: "center", display: "flex", gap: "var(--spacing-lg)" }}>
       <Spinner size="sm" />
       <Spinner size="default" />
       <Spinner size="lg" />
@@ -65,9 +66,11 @@ export const Sizes: Story = {
 
 export const WithText: Story = {
   render: () => (
-    <div className="flex items-center gap-2">
+    <div style={{ alignItems: "center", display: "flex", gap: "var(--spacing-sm)" }}>
       <Spinner size="sm" />
-      <span className="text-sm text-muted-foreground">Loading...</span>
+      <span style={{ fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)" }}>
+        Loading...
+      </span>
     </div>
   ),
   parameters: {
@@ -81,10 +84,10 @@ export const WithText: Story = {
 
 export const InButton: Story = {
   render: () => (
-    <button className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-primary-foreground" disabled>
-      <Spinner size="sm" className="text-primary-foreground" />
+    <Button disabled>
+      <Spinner size="sm" />
       Processing...
-    </button>
+    </Button>
   ),
   parameters: {
     docs: {

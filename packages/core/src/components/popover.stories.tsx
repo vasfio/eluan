@@ -1,3 +1,4 @@
+import * as React from "react"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Popover, PopoverContent, PopoverTrigger } from "./popover"
 import { Button } from "./button"
@@ -44,30 +45,46 @@ export const Default: Story = {
   render: () => (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline">Open popover</Button>
+        <Button variant="ghost">Open popover</Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80">
-        <div className="grid gap-4">
-          <div className="space-y-2">
-            <h4 className="font-medium leading-none">Dimensions</h4>
-            <p className="text-sm text-muted-foreground">
+      <PopoverContent>
+        <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-xxs)" }}>
+            <h4 style={{ fontSize: "var(--font-size-sm)", fontWeight: 500, margin: 0 }}>
+              Dimensions
+            </h4>
+            <p style={{ fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)", margin: 0 }}>
               Set the dimensions for the layer.
             </p>
           </div>
-          <div className="grid gap-2">
-            <div className="grid grid-cols-3 items-center gap-4">
-              <label htmlFor="width" className="text-sm">Width</label>
-              <input id="width" defaultValue="100%" className="col-span-2 h-8 rounded-md border px-2" />
+          <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", alignItems: "center", gap: "var(--spacing-sm)" }}>
+              <label htmlFor="width" style={{ fontSize: "var(--font-size-sm)" }}>Width</label>
+              <input id="width" defaultValue="100%" style={inputStyle} />
             </div>
-            <div className="grid grid-cols-3 items-center gap-4">
-              <label htmlFor="height" className="text-sm">Height</label>
-              <input id="height" defaultValue="25px" className="col-span-2 h-8 rounded-md border px-2" />
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", alignItems: "center", gap: "var(--spacing-sm)" }}>
+              <label htmlFor="height" style={{ fontSize: "var(--font-size-sm)" }}>Height</label>
+              <input id="height" defaultValue="25px" style={inputStyle} />
             </div>
           </div>
         </div>
       </PopoverContent>
     </Popover>
   ),
+}
+
+const inputStyle: React.CSSProperties = {
+  backgroundColor: "var(--container-bg)",
+  borderColor: "var(--container-border)",
+  borderRadius: "var(--curves-sm)",
+  borderStyle: "solid",
+  borderWidth: 1,
+  boxSizing: "border-box",
+  color: "var(--container-fg)",
+  fontSize: "var(--font-size-sm)",
+  height: "var(--size-md)",
+  paddingInline: "var(--spacing-xs)",
+  width: "100%",
 }
 
 export const Positions: Story = {
@@ -79,30 +96,39 @@ export const Positions: Story = {
     },
   },
   render: () => (
-    <div className="flex gap-4 items-center justify-center p-20">
+    <div
+      style={{
+        alignItems: "center",
+        display: "flex",
+        gap: "var(--spacing-lg)",
+        justifyContent: "center",
+        minHeight: "24rem",
+        padding: "var(--spacing-2xl)",
+      }}
+    >
       <Popover>
         <PopoverTrigger asChild>
           <Button variant="outline">Top</Button>
         </PopoverTrigger>
-        <PopoverContent side="top">Popover on top</PopoverContent>
+        <PopoverContent side="top" avoidCollisions={false}>Popover on top</PopoverContent>
       </Popover>
       <Popover>
         <PopoverTrigger asChild>
           <Button variant="outline">Right</Button>
         </PopoverTrigger>
-        <PopoverContent side="right">Popover on right</PopoverContent>
+        <PopoverContent side="right" avoidCollisions={false}>Popover on right</PopoverContent>
       </Popover>
       <Popover>
         <PopoverTrigger asChild>
           <Button variant="outline">Bottom</Button>
         </PopoverTrigger>
-        <PopoverContent side="bottom">Popover on bottom</PopoverContent>
+        <PopoverContent side="bottom" avoidCollisions={false}>Popover on bottom</PopoverContent>
       </Popover>
       <Popover>
         <PopoverTrigger asChild>
           <Button variant="outline">Left</Button>
         </PopoverTrigger>
-        <PopoverContent side="left">Popover on left</PopoverContent>
+        <PopoverContent side="left" avoidCollisions={false}>Popover on left</PopoverContent>
       </Popover>
     </div>
   ),

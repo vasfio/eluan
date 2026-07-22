@@ -1,11 +1,18 @@
+import * as React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, it, expect } from "vitest";
-import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle } from "../drawer";
+import { describe, it, expect, vi } from "vitest";
+import {
+  Drawer,
+  DrawerTrigger,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+} from "../drawer";
 
 describe("Drawer", () => {
-  const TestDrawer = () => (
-    <Drawer>
+  const TestDrawer = (props: Partial<React.ComponentProps<typeof Drawer>>) => (
+    <Drawer {...props}>
       <DrawerTrigger>Open Drawer</DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
@@ -16,26 +23,73 @@ describe("Drawer", () => {
     </Drawer>
   );
 
-  it("renders trigger", () => {
+  const panelOf = (title: HTMLElement) =>
+    title.closest("[data-state]") as HTMLElement;
+
+  it("renders the trigger", () => {
     render(<TestDrawer />);
     expect(screen.getByText("Open Drawer")).toBeInTheDocument();
   });
 
-  // Drawer (vaul) renders content into the DOM by default; opening the
-  // drawer just adds `aria-hidden="false"` and similar attributes. We
-  // assert the title is in the DOM (always-mounted) rather than measure
-  // visibility, which happy-dom doesn't reliably compute for animated
-  // overlay transitions.
-  it("renders the title (always mounted)", () => {
+  it("keeps content mounted inline and closed by default", () => {
     render(<TestDrawer />);
-    expect(screen.getByText("Drawer Title")).toBeInTheDocument();
+    const title = screen.getByText("Drawer Title");
+    // The inline panel is always mounted; it collapses rather than unmounts.
+    expect(title).toBeInTheDocument();
+    expect(panelOf(title)).toHaveAttribute("data-state", "closed");
+    expect(screen.getByText("Open Drawer")).toHaveAttribute(
+      "aria-expanded",
+      "false"
+    );
   });
 
-  it("clicks the trigger without throwing", async () => {
+  it("expands the panel when the trigger is clicked (uncontrolled)", async () => {
     render(<TestDrawer />);
+    const trigger = screen.getByText("Open Drawer");
+    await userEvent.click(trigger);
+    expect(panelOf(screen.getByText("Drawer Title"))).toHaveAttribute(
+      "data-state",
+      "open"
+    );
+    expect(trigger).toHaveAttribute("aria-expanded", "true");
+  });
+
+  it("toggles the panel closed again on a second click", async () => {
+    render(<TestDrawer defaultOpen />);
+    const trigger = screen.getByText("Open Drawer");
+    expect(panelOf(screen.getByText("Drawer Title"))).toHaveAttribute(
+      "data-state",
+      "open"
+    );
+    await userEvent.click(trigger);
+    expect(panelOf(screen.getByText("Drawer Title"))).toHaveAttribute(
+      "data-state",
+      "closed"
+    );
+  });
+
+  it("respects the controlled open prop and calls onOpenChange", async () => {
+    const onOpenChange = vi.fn();
+    const { rerender } = render(
+      <TestDrawer open={false} onOpenChange={onOpenChange} />
+    );
+    expect(panelOf(screen.getByText("Drawer Title"))).toHaveAttribute(
+      "data-state",
+      "closed"
+    );
+
     await userEvent.click(screen.getByText("Open Drawer"));
-    // No assertion — happy-dom can't reliably observe vaul's open transition.
-    // The smoke value here is that clicking doesn't crash the component.
-    expect(screen.getByText("Drawer Title")).toBeInTheDocument();
+    // Controlled: state does not change until the parent updates the prop.
+    expect(onOpenChange).toHaveBeenCalledWith(true);
+    expect(panelOf(screen.getByText("Drawer Title"))).toHaveAttribute(
+      "data-state",
+      "closed"
+    );
+
+    rerender(<TestDrawer open onOpenChange={onOpenChange} />);
+    expect(panelOf(screen.getByText("Drawer Title"))).toHaveAttribute(
+      "data-state",
+      "open"
+    );
   });
 });

@@ -17,6 +17,11 @@ const meta: Meta<typeof Toast> = {
   ],
   parameters: {
     docs: {
+      // Each story renders in its own isolated iframe with a bounded height.
+      // Sonner broadcasts to every mounted Toaster on the page; inline:false
+      // gives each story its own document so a trigger only fires the toast in
+      // its own iframe, and the reduced height keeps the example above the fold.
+      story: { inline: false, height: "320px" },
       description: {
         component: `
 A toast notification system built on the \`sonner\` library, providing styled success, error, warning, info, and default toasts with theme-aware styling.
@@ -50,7 +55,13 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: () => (
-    <div className="flex gap-2 flex-wrap">
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "var(--spacing-sm)",
+      }}
+    >
       <Button onClick={() => toast("This is a default toast")}>
         Show Toast
       </Button>
@@ -74,15 +85,18 @@ export const AllVariants: Story = {
     },
   },
   render: () => (
-    <div className="flex gap-2 flex-wrap">
-      <Button
-        variant="outline"
-        onClick={() => toast("Event has been created")}
-      >
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "var(--spacing-sm)",
+      }}
+    >
+      <Button variant="ghost" onClick={() => toast("Event has been created")}>
         Default
       </Button>
       <Button
-        variant="outline"
+        variant="ghost"
         onClick={() =>
           toast.success("Successfully saved!", {
             description: "Your changes have been saved.",
@@ -92,7 +106,7 @@ export const AllVariants: Story = {
         Success
       </Button>
       <Button
-        variant="outline"
+        variant="ghost"
         onClick={() =>
           toast.error("Something went wrong", {
             description: "There was an error processing your request.",
@@ -102,7 +116,7 @@ export const AllVariants: Story = {
         Error
       </Button>
       <Button
-        variant="outline"
+        variant="ghost"
         onClick={() =>
           toast.warning("Warning!", {
             description: "Please review your input.",
@@ -112,7 +126,7 @@ export const AllVariants: Story = {
         Warning
       </Button>
       <Button
-        variant="outline"
+        variant="ghost"
         onClick={() =>
           toast.info("Did you know?", {
             description: "You can customize these toasts.",
@@ -183,7 +197,7 @@ export const CustomDuration: Story = {
     },
   },
   render: () => (
-    <div className="flex gap-2">
+    <div style={{ display: "flex", gap: "var(--spacing-sm)" }}>
       <Button
         variant="outline"
         onClick={() =>

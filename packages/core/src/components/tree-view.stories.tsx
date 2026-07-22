@@ -1,7 +1,15 @@
 import React from "react"
 import type { Meta, StoryObj } from "@storybook/react"
 import { TreeView, type TreeNode } from "./tree-view"
-import { FileText, Image, Music, Video, Code } from "lucide-react"
+import { Button } from "./button"
+import {
+  FileText,
+  Image,
+  Music,
+  Video,
+  ChevronsUpDown,
+  ChevronsDownUp,
+} from "lucide-react"
 
 const meta: Meta<typeof TreeView> = {
   title: "Components/Tree View",
@@ -109,7 +117,14 @@ export const Default: Story = {
   render: () => {
     const [selectedId, setSelectedId] = React.useState<string>()
     return (
-      <div className="w-[300px] border rounded-lg p-2">
+      <div
+        style={{
+          border: "1px solid var(--container-border-alt)",
+          borderRadius: "var(--curves-lg)",
+          padding: "var(--spacing-sm)",
+          width: "300px",
+        }}
+      >
         <TreeView
           data={fileSystemData}
           selectedId={selectedId}
@@ -124,37 +139,37 @@ const mediaData: TreeNode[] = [
   {
     id: "images",
     name: "Images",
-    icon: <Image className="h-4 w-4" />,
+    icon: <Image />,
     children: [
-      { id: "img-1", name: "photo-1.jpg", icon: <Image className="h-4 w-4" /> },
-      { id: "img-2", name: "photo-2.jpg", icon: <Image className="h-4 w-4" /> },
-      { id: "img-3", name: "banner.png", icon: <Image className="h-4 w-4" /> },
+      { id: "img-1", name: "photo-1.jpg", icon: <Image /> },
+      { id: "img-2", name: "photo-2.jpg", icon: <Image /> },
+      { id: "img-3", name: "banner.png", icon: <Image /> },
     ],
   },
   {
     id: "music",
     name: "Music",
-    icon: <Music className="h-4 w-4" />,
+    icon: <Music />,
     children: [
-      { id: "music-1", name: "song.mp3", icon: <Music className="h-4 w-4" /> },
-      { id: "music-2", name: "podcast.mp3", icon: <Music className="h-4 w-4" /> },
+      { id: "music-1", name: "song.mp3", icon: <Music /> },
+      { id: "music-2", name: "podcast.mp3", icon: <Music /> },
     ],
   },
   {
     id: "videos",
     name: "Videos",
-    icon: <Video className="h-4 w-4" />,
+    icon: <Video />,
     children: [
-      { id: "video-1", name: "intro.mp4", icon: <Video className="h-4 w-4" /> },
+      { id: "video-1", name: "intro.mp4", icon: <Video /> },
     ],
   },
   {
     id: "documents",
     name: "Documents",
-    icon: <FileText className="h-4 w-4" />,
+    icon: <FileText />,
     children: [
-      { id: "doc-1", name: "report.pdf", icon: <FileText className="h-4 w-4" /> },
-      { id: "doc-2", name: "notes.txt", icon: <FileText className="h-4 w-4" /> },
+      { id: "doc-1", name: "report.pdf", icon: <FileText /> },
+      { id: "doc-2", name: "notes.txt", icon: <FileText /> },
     ],
   },
 ]
@@ -170,7 +185,14 @@ export const WithCustomIcons: Story = {
   render: () => {
     const [selectedId, setSelectedId] = React.useState<string>()
     return (
-      <div className="w-[300px] border rounded-lg p-2">
+      <div
+        style={{
+          border: "1px solid var(--container-border-alt)",
+          borderRadius: "var(--curves-lg)",
+          padding: "var(--spacing-sm)",
+          width: "300px",
+        }}
+      >
         <TreeView
           data={mediaData}
           selectedId={selectedId}
@@ -192,7 +214,14 @@ export const WithoutIcons: Story = {
   render: () => {
     const [selectedId, setSelectedId] = React.useState<string>()
     return (
-      <div className="w-[300px] border rounded-lg p-2">
+      <div
+        style={{
+          border: "1px solid var(--container-border-alt)",
+          borderRadius: "var(--curves-lg)",
+          padding: "var(--spacing-sm)",
+          width: "300px",
+        }}
+      >
         <TreeView
           data={fileSystemData}
           selectedId={selectedId}
@@ -216,22 +245,49 @@ export const ControlledExpansion: Story = {
     const [selectedId, setSelectedId] = React.useState<string>()
     const [expandedIds, setExpandedIds] = React.useState<string[]>(["1"])
     return (
-      <div className="space-y-4">
-        <div className="flex gap-2">
-          <button
-            className="px-3 py-1 text-sm border rounded"
-            onClick={() => setExpandedIds([])}
-          >
-            Collapse All
-          </button>
-          <button
-            className="px-3 py-1 text-sm border rounded"
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "var(--spacing-lg)",
+        }}
+      >
+        <div style={{ display: "flex", gap: "var(--spacing-sm)" }}>
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Expand all"
             onClick={() => setExpandedIds(["1", "1-1", "1-2", "2"])}
           >
-            Expand All
-          </button>
+            <ChevronsUpDown
+              style={{
+                height: "var(--size-xxs)",
+                width: "var(--size-xxs)",
+              }}
+            />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Collapse all"
+            onClick={() => setExpandedIds([])}
+          >
+            <ChevronsDownUp
+              style={{
+                height: "var(--size-xxs)",
+                width: "var(--size-xxs)",
+              }}
+            />
+          </Button>
         </div>
-        <div className="w-[300px] border rounded-lg p-2">
+        <div
+          style={{
+            border: "1px solid var(--container-border-alt)",
+            borderRadius: "var(--curves-lg)",
+            padding: "var(--spacing-sm)",
+            width: "300px",
+          }}
+        >
           <TreeView
             data={fileSystemData}
             selectedId={selectedId}
@@ -240,29 +296,6 @@ export const ControlledExpansion: Story = {
             onExpandChange={setExpandedIds}
           />
         </div>
-      </div>
-    )
-  },
-}
-
-export const LargerIndent: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: "A tree view with a larger indentation size (32px) for deeper visual nesting.",
-      },
-    },
-  },
-  render: () => {
-    const [selectedId, setSelectedId] = React.useState<string>()
-    return (
-      <div className="w-[350px] border rounded-lg p-2">
-        <TreeView
-          data={fileSystemData}
-          selectedId={selectedId}
-          onSelect={(node) => setSelectedId(node.id)}
-          indentSize={32}
-        />
       </div>
     )
   },

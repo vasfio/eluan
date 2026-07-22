@@ -42,7 +42,7 @@ export const Default: Story = {
     },
   },
   render: () => (
-    <div className="w-[300px]">
+    <div style={{ maxWidth: 288 }}>
       <PasswordInput placeholder="Enter password" />
     </div>
   ),
@@ -57,7 +57,7 @@ export const WithStrengthIndicator: Story = {
     },
   },
   render: () => (
-    <div className="w-[300px]">
+    <div style={{ maxWidth: 288 }}>
       <PasswordInput
         placeholder="Create a strong password"
         showStrengthIndicator
@@ -76,7 +76,7 @@ export const CustomRequirements: Story = {
     },
   },
   render: () => (
-    <div className="w-[300px]">
+    <div style={{ maxWidth: 288 }}>
       <PasswordInput
         placeholder="Enter password"
         showStrengthIndicator
@@ -101,7 +101,7 @@ export const MinimalRequirements: Story = {
     },
   },
   render: () => (
-    <div className="w-[300px]">
+    <div style={{ maxWidth: 288 }}>
       <PasswordInput
         placeholder="Simple password"
         showStrengthIndicator
@@ -126,7 +126,7 @@ export const Disabled: Story = {
     },
   },
   render: () => (
-    <div className="w-[300px]">
+    <div style={{ maxWidth: 288 }}>
       <PasswordInput placeholder="Disabled" disabled />
     </div>
   ),

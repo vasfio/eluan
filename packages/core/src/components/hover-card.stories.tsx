@@ -1,3 +1,4 @@
+import * as React from "react"
 import type { Meta, StoryObj } from "@storybook/react"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./hover-card"
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar"
@@ -46,27 +47,50 @@ export const Default: Story = {
     },
   },
   render: () => (
-    <HoverCard>
-      <HoverCardTrigger asChild>
-        <a href="#" className="text-sm font-medium underline underline-offset-4">@nextjs</a>
-      </HoverCardTrigger>
-      <HoverCardContent className="w-80">
-        <div className="flex justify-between space-x-4">
-          <Avatar>
-            <AvatarImage src="https://github.com/vercel.png" />
-            <AvatarFallback>VC</AvatarFallback>
-          </Avatar>
-          <div className="space-y-1">
-            <h4 className="text-sm font-semibold">@nextjs</h4>
-            <p className="text-sm">The React Framework – created and maintained by @vercel.</p>
-            <div className="flex items-center pt-2">
-              <span className="text-xs text-muted-foreground">Joined December 2021</span>
+    <div style={storyWrapper}>
+      <HoverCard>
+        <HoverCardTrigger asChild>
+          <a
+            href="#"
+            style={{
+              fontSize: "var(--font-size-sm)",
+              fontWeight: 500,
+              textDecorationLine: "underline",
+              textUnderlineOffset: "4px",
+            }}
+          >
+            @nextjs
+          </a>
+        </HoverCardTrigger>
+        <HoverCardContent>
+          <div style={{ display: "flex", gap: "var(--spacing-md)" }}>
+            <Avatar>
+              <AvatarImage src="https://github.com/vercel.png" />
+              <AvatarFallback>VC</AvatarFallback>
+            </Avatar>
+            <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-xxs)" }}>
+              <h4 style={{ fontSize: "var(--font-size-sm)", fontWeight: 600, margin: 0 }}>@nextjs</h4>
+              <p style={{ fontSize: "var(--font-size-sm)", margin: 0 }}>
+                The React Framework – created and maintained by @vercel.
+              </p>
+              <div style={{ alignItems: "center", display: "flex", paddingTop: "var(--spacing-xs)" }}>
+                <span style={{ fontSize: "var(--font-size-xs)", color: "var(--container-fg-alt)" }}>
+                  Joined December 2021
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      </HoverCardContent>
-    </HoverCard>
+        </HoverCardContent>
+      </HoverCard>
+    </div>
   ),
+}
+
+const storyWrapper: React.CSSProperties = {
+  display: "flex",
+  justifyContent: "center",
+  minHeight: "20rem",
+  padding: "var(--spacing-2xl)",
 }
 
 export const Simple: Story = {
@@ -78,13 +102,26 @@ export const Simple: Story = {
     },
   },
   render: () => (
-    <HoverCard>
-      <HoverCardTrigger asChild>
-        <span className="cursor-pointer text-sm font-medium underline">Hover me</span>
-      </HoverCardTrigger>
-      <HoverCardContent>
-        <p className="text-sm">This is a simple hover card with some content.</p>
-      </HoverCardContent>
-    </HoverCard>
+    <div style={storyWrapper}>
+      <HoverCard>
+        <HoverCardTrigger asChild>
+          <span
+            style={{
+              cursor: "pointer",
+              fontSize: "var(--font-size-sm)",
+              fontWeight: 500,
+              textDecorationLine: "underline",
+            }}
+          >
+            Hover me
+          </span>
+        </HoverCardTrigger>
+        <HoverCardContent>
+          <p style={{ fontSize: "var(--font-size-sm)", margin: 0 }}>
+            This is a simple hover card with some content.
+          </p>
+        </HoverCardContent>
+      </HoverCard>
+    </div>
   ),
 }

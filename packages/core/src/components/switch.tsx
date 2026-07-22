@@ -53,9 +53,10 @@ const styles = stylex.create({
     transitionDuration: "150ms",
     transitionProperty: "transform",
     transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-    width: "var(--size-xxs)",
+    width: "calc(var(--size-xxs) * 1.3)",
     "[data-state=checked]": {
-      transform: "translateX(calc(var(--size-lg) - var(--size-xxs) - 4px))",
+      transform:
+        "translateX(calc(var(--size-lg) - (var(--size-xxs) * 1.3) - 4px))",
     },
     "[data-state=unchecked]": {
       transform: "translateX(0)",

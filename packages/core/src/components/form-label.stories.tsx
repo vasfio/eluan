@@ -1,6 +1,19 @@
+import React from "react"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Label } from "./form-label"
 import { Input } from "./input"
+
+const pairStyle: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "column",
+  gap: "var(--spacing-xs)",
+}
+
+const hintStyle: React.CSSProperties = {
+  color: "var(--container-fg-alt)",
+  fontSize: "var(--font-size-xs)",
+  margin: 0,
+}
 
 const meta: Meta<typeof Label> = {
   title: "Components/Label",
@@ -39,7 +52,7 @@ export const Default: Story = {
     },
   },
   render: () => (
-    <div className="space-y-2">
+    <div style={pairStyle}>
       <Label htmlFor="email">Email</Label>
       <Input id="email" type="email" placeholder="Enter your email" />
     </div>
@@ -55,7 +68,7 @@ export const Required: Story = {
     },
   },
   render: () => (
-    <div className="space-y-2">
+    <div style={pairStyle}>
       <Label htmlFor="name" required>Name</Label>
       <Input id="name" placeholder="Enter your name" />
     </div>
@@ -71,10 +84,10 @@ export const WithDescription: Story = {
     },
   },
   render: () => (
-    <div className="space-y-2">
+    <div style={pairStyle}>
       <Label htmlFor="username">Username</Label>
       <Input id="username" placeholder="Choose a username" />
-      <p className="text-sm text-muted-foreground">This will be your public display name.</p>
+      <p style={hintStyle}>This will be your public display name.</p>
     </div>
   ),
 }
@@ -88,8 +101,8 @@ export const Disabled: Story = {
     },
   },
   render: () => (
-    <div className="space-y-2">
-      <Label htmlFor="disabled-input" className="opacity-50 cursor-not-allowed">Disabled Field</Label>
+    <div style={pairStyle}>
+      <Label htmlFor="disabled-input" disabled>Disabled Field</Label>
       <Input id="disabled-input" disabled placeholder="Disabled" />
     </div>
   ),

@@ -13,7 +13,7 @@ export interface NavItem {
   active?: boolean
 }
 
-export interface HeaderNavigationProps
+export interface HeaderProps
   extends Omit<React.HTMLAttributes<HTMLElement>, "className" | "style"> {
   logo?: React.ReactNode
   items?: NavItem[]
@@ -23,7 +23,7 @@ export interface HeaderNavigationProps
   mobileBreakpoint?: "sm" | "md" | "lg"
 }
 
-const HeaderNavigation = React.forwardRef<HTMLElement, HeaderNavigationProps>(
+const Header = React.forwardRef<HTMLElement, HeaderProps>(
   (
     {
       logo,
@@ -39,35 +39,45 @@ const HeaderNavigation = React.forwardRef<HTMLElement, HeaderNavigationProps>(
     const [mobileOpen, setMobileOpen] = React.useState(false)
 
     const renderNavItem = (item: NavItem, mobile = false) => {
-      const navItemStyles = mobile
-        ? [styles.mobileItem, item.active && styles.mobileItemActive]
-        : [styles.desktopItem, item.active && styles.desktopItemActive]
+      // Nav links render as ghost buttons; the active item is highlighted
+      // with the filled secondary variant. Main CTAs are supplied via `actions`.
+      const variant = item.active ? "secondary" : "ghost"
+      const layoutProps = mobile
+        ? ({ fullWidth: true, align: "start" } as const)
+        : ({ size: "sm" } as const)
 
       if (item.href) {
         return (
-          <a
+          <Button
             key={item.label}
-            href={item.href}
-            {...stylex.props(...navItemStyles)}
-            onClick={() => mobile && setMobileOpen(false)}
+            asChild
+            variant={variant}
+            {...layoutProps}
           >
-            {item.label}
-          </a>
+            <a
+              href={item.href}
+              aria-current={item.active ? "page" : undefined}
+              onClick={() => mobile && setMobileOpen(false)}
+            >
+              {item.label}
+            </a>
+          </Button>
         )
       }
 
       return (
-        <button
+        <Button
           key={item.label}
           type="button"
+          variant={variant}
+          {...layoutProps}
           onClick={() => {
             item.onClick?.()
             if (mobile) setMobileOpen(false)
           }}
-          {...stylex.props(...navItemStyles, styles.buttonItem)}
         >
           {item.label}
-        </button>
+        </Button>
       )
     }
 
@@ -121,7 +131,7 @@ const HeaderNavigation = React.forwardRef<HTMLElement, HeaderNavigationProps>(
     )
   }
 )
-HeaderNavigation.displayName = "HeaderNavigation"
+Header.displayName = "Header"
 
 const styles = stylex.create({
   header: {
@@ -159,60 +169,12 @@ const styles = stylex.create({
   desktopNav: {
     alignItems: "center",
     display: "none",
-    gap: "var(--spacing-sm)",
+    gap: "var(--spacing-xs)",
   },
   desktopActions: {
     alignItems: "center",
     display: "none",
     gap: "var(--spacing-md)",
-  },
-  desktopItem: {
-    borderRadius: "var(--radius-radius-full)",
-    color: "var(--interactive-fg-alt)",
-    fontSize: "var(--font-size-sm)",
-    fontWeight: 400,
-    paddingBlock: "var(--spacing-xs)",
-    paddingInline: "var(--spacing-md)",
-    position: "relative",
-    textDecoration: "none",
-    transitionDuration: "150ms",
-    transitionProperty: "background-color, color",
-    transitionTimingFunction: "ease",
-    ":hover": {
-      color: "var(--interactive-fg)",
-    },
-  },
-  desktopItemActive: {
-    backgroundColor: "var(--interactive-bg-alt)",
-    color: "var(--interactive-fg)",
-  },
-  mobileItem: {
-    backgroundColor: "transparent",
-    borderRadius: "var(--curves-lg)",
-    borderWidth: 0,
-    boxSizing: "border-box",
-    color: "var(--interactive-fg)",
-    display: "block",
-    fontSize: "var(--font-size-base)",
-    fontWeight: 500,
-    paddingBlock: "var(--spacing-sm)",
-    paddingInline: "var(--spacing-md)",
-    textDecoration: "none",
-    transitionDuration: "150ms",
-    transitionProperty: "background-color",
-    transitionTimingFunction: "ease",
-    width: "100%",
-    ":hover": {
-      backgroundColor: "var(--interactive-bg-hover)",
-    },
-  },
-  mobileItemActive: {
-    backgroundColor: "var(--interactive-bg-alt)",
-  },
-  buttonItem: {
-    cursor: "pointer",
-    fontFamily: "inherit",
-    textAlign: "left",
   },
   mobilePanel: {
     display: "flex",
@@ -287,4 +249,4 @@ const mobileBreakpointStyles = stylex.create({
   },
 })
 
-export { HeaderNavigation }
+export { Header }

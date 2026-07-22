@@ -10,22 +10,22 @@ import {
   FooterCopyright,
   FooterSocial,
   FooterSocialLink,
-  FooterBrand,
   FooterModernLink,
   FooterModernSocialLink,
   FooterStagger,
 } from "./footer"
+import { Button } from "@eluan/core"
 import { Twitter, Github, Linkedin } from "lucide-react"
 
 const meta: Meta<typeof Footer> = {
-  title: "Web/Footer",
+  title: "Components/Footer",
   component: Footer,
   tags: ["autodocs"],
   parameters: {
     docs: {
       description: {
         component: `
-A composable footer with link sections, social icons, copyright, and a modern dark variant with brand wordmark and animated links.
+A composable footer with link sections, social icons, copyright, and a modern dark variant with a full-bleed brand wordmark and staggered fade-in. Link items render as Button \`variant="link"\`.
 
 **Import**
 \`\`\`tsx
@@ -58,6 +58,9 @@ import { Footer, FooterContent, FooterSection, FooterTitle, FooterLinks, FooterL
     },
     size: {
       description: "Vertical padding: sm, default, or lg.",
+    },
+    wordmark: {
+      description: "Full-bleed brand wordmark rendered at the bottom edge with its lower half clipped.",
     },
   },
 }
@@ -113,13 +116,13 @@ export const Default: Story = {
         </FooterCopyright>
         <FooterSocial>
           <FooterSocialLink href="#" label="Twitter">
-            <Twitter className="h-5 w-5" />
+            <Twitter size={20} />
           </FooterSocialLink>
           <FooterSocialLink href="#" label="GitHub">
-            <Github className="h-5 w-5" />
+            <Github size={20} />
           </FooterSocialLink>
           <FooterSocialLink href="#" label="LinkedIn">
-            <Linkedin className="h-5 w-5" />
+            <Linkedin size={20} />
           </FooterSocialLink>
         </FooterSocial>
       </FooterBottom>
@@ -128,84 +131,95 @@ export const Default: Story = {
 }
 
 export const Modern: Story = {
-  parameters: { docs: { description: { story: "Dark modern variant with a large brand wordmark, animated hover links, and staggered fade-in." } } },
+  parameters: { docs: { description: { story: "Dark modern variant with a giant full-bleed brand wordmark clipped at the bottom edge, link-variant buttons, and a staggered fade-in." } } },
   render: () => (
-    <Footer variant="modern" size="lg">
-      <FooterBrand />
-      <div className="mt-10">
-        <FooterStagger className="grid gap-8 md:grid-cols-2 lg:grid-cols-4" delayMs={100}>
-          <FooterSection>
-            <FooterTitle className="text-zinc-300">Product</FooterTitle>
-            <FooterLinks>
-              <FooterModernLink href="#">Features</FooterModernLink>
-              <FooterModernLink href="#">Pricing</FooterModernLink>
-              <FooterModernLink href="#">Documentation</FooterModernLink>
-              <FooterModernLink href="#">Changelog</FooterModernLink>
-            </FooterLinks>
-          </FooterSection>
-          <FooterSection>
-            <FooterTitle className="text-zinc-300">Company</FooterTitle>
-            <FooterLinks>
-              <FooterModernLink href="#">About</FooterModernLink>
-              <FooterModernLink href="#">Blog</FooterModernLink>
-              <FooterModernLink href="#">Careers</FooterModernLink>
-              <FooterModernLink href="#">Press</FooterModernLink>
-            </FooterLinks>
-          </FooterSection>
-          <FooterSection>
-            <FooterTitle className="text-zinc-300">Resources</FooterTitle>
-            <FooterLinks>
-              <FooterModernLink href="#">Community</FooterModernLink>
-              <FooterModernLink href="#">Help Center</FooterModernLink>
-              <FooterModernLink href="#">Partners</FooterModernLink>
-              <FooterModernLink href="#">Status</FooterModernLink>
-            </FooterLinks>
-          </FooterSection>
-          <FooterSection>
-            <FooterTitle className="text-zinc-300">Legal</FooterTitle>
-            <FooterLinks>
-              <FooterModernLink href="#">Privacy</FooterModernLink>
-              <FooterModernLink href="#">Terms</FooterModernLink>
-              <FooterModernLink href="#">Cookie Policy</FooterModernLink>
-              <FooterModernLink href="#">Licenses</FooterModernLink>
-            </FooterLinks>
-          </FooterSection>
-        </FooterStagger>
-      </div>
-      <FooterBottom className="border-zinc-800">
-        <FooterCopyright className="text-zinc-500">
+    <Footer variant="modern" size="lg" wordmark="Eluan">
+      <FooterStagger delayMs={100}>
+        <FooterSection>
+          <FooterTitle>Product</FooterTitle>
+          <FooterLinks>
+            <FooterModernLink href="#">Features</FooterModernLink>
+            <FooterModernLink href="#">Pricing</FooterModernLink>
+            <FooterModernLink href="#">Documentation</FooterModernLink>
+            <FooterModernLink href="#">Changelog</FooterModernLink>
+          </FooterLinks>
+        </FooterSection>
+        <FooterSection>
+          <FooterTitle>Company</FooterTitle>
+          <FooterLinks>
+            <FooterModernLink href="#">About</FooterModernLink>
+            <FooterModernLink href="#">Blog</FooterModernLink>
+            <FooterModernLink href="#">Careers</FooterModernLink>
+            <FooterModernLink href="#">Press</FooterModernLink>
+          </FooterLinks>
+        </FooterSection>
+        <FooterSection>
+          <FooterTitle>Resources</FooterTitle>
+          <FooterLinks>
+            <FooterModernLink href="#">Community</FooterModernLink>
+            <FooterModernLink href="#">Help Center</FooterModernLink>
+            <FooterModernLink href="#">Partners</FooterModernLink>
+            <FooterModernLink href="#">Status</FooterModernLink>
+          </FooterLinks>
+        </FooterSection>
+        <FooterSection>
+          <FooterTitle>Legal</FooterTitle>
+          <FooterLinks>
+            <FooterModernLink href="#">Privacy</FooterModernLink>
+            <FooterModernLink href="#">Terms</FooterModernLink>
+            <FooterModernLink href="#">Cookie Policy</FooterModernLink>
+            <FooterModernLink href="#">Licenses</FooterModernLink>
+          </FooterLinks>
+        </FooterSection>
+      </FooterStagger>
+      <FooterBottom>
+        <FooterCopyright>
           © 2024 Eluan. All rights reserved.
         </FooterCopyright>
-        <div className="flex items-center gap-3">
+        <FooterSocial>
           <FooterModernSocialLink href="#" label="Twitter">
-            <Twitter className="h-4 w-4" />
+            <Twitter size={16} />
           </FooterModernSocialLink>
           <FooterModernSocialLink href="#" label="GitHub">
-            <Github className="h-4 w-4" />
+            <Github size={16} />
           </FooterModernSocialLink>
           <FooterModernSocialLink href="#" label="LinkedIn">
-            <Linkedin className="h-4 w-4" />
+            <Linkedin size={16} />
           </FooterModernSocialLink>
-        </div>
+        </FooterSocial>
       </FooterBottom>
     </Footer>
   ),
 }
 
 export const Small: Story = {
-  parameters: { docs: { description: { story: "Compact footer with only copyright and inline links." } } },
+  parameters: { docs: { description: { story: "Compact footer with only copyright and inline link-variant buttons." } } },
   render: () => (
     <Footer size="sm">
-      <FooterBottom className="mt-0 border-0 pt-0">
+      <div
+        style={{
+          alignItems: "center",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "var(--spacing-md)",
+          justifyContent: "space-between",
+        }}
+      >
         <FooterCopyright>
           © 2024 Eluan. All rights reserved.
         </FooterCopyright>
-        <div className="flex gap-4 text-sm text-muted-foreground">
-          <a href="#" className="hover:text-foreground">Privacy</a>
-          <a href="#" className="hover:text-foreground">Terms</a>
-          <a href="#" className="hover:text-foreground">Contact</a>
+        <div style={{ display: "flex", gap: "var(--spacing-md)" }}>
+          <Button asChild variant="link">
+            <a href="#">Privacy</a>
+          </Button>
+          <Button asChild variant="link">
+            <a href="#">Terms</a>
+          </Button>
+          <Button asChild variant="link">
+            <a href="#">Contact</a>
+          </Button>
         </div>
-      </FooterBottom>
+      </div>
     </Footer>
   ),
 }

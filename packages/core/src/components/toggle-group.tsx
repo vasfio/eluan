@@ -4,9 +4,13 @@ import * as stylex from "@stylexjs/stylex"
 
 import { type ToggleSize, type ToggleVariant } from "./toggle"
 
+// Toggle Group intentionally does not support the "outline" variant that the
+// standalone Toggle offers — it only renders the default style.
+type ToggleGroupVariant = Exclude<ToggleVariant, "outline">
+
 interface ToggleGroupVariantContext {
   size: ToggleSize
-  variant: ToggleVariant
+  variant: ToggleGroupVariant
 }
 
 const ToggleGroupContext = React.createContext<ToggleGroupVariantContext>({
@@ -20,7 +24,7 @@ interface ToggleGroupProps
     "className" | "style"
   > {
   size?: ToggleSize
-  variant?: ToggleVariant
+  variant?: ToggleGroupVariant
 }
 
 interface ToggleGroupItemProps
@@ -29,7 +33,7 @@ interface ToggleGroupItemProps
     "className" | "style"
   > {
   size?: ToggleSize
-  variant?: ToggleVariant
+  variant?: ToggleGroupVariant
 }
 
 const styles = stylex.create({
@@ -65,7 +69,6 @@ const styles = stylex.create({
       outlineWidth: "1px",
     },
     ":disabled": {
-      backgroundColor: "var(--interactive-bg-disabled)",
       color: "var(--interactive-fg-disabled)",
       pointerEvents: "none",
     },
@@ -75,10 +78,6 @@ const styles = stylex.create({
       boxShadow: "var(--skeuo-pressed)",
       color: "var(--interactive-fg-selected)",
     },
-  },
-  outline: {
-    borderColor: "var(--interactive-border-alt)",
-    borderWidth: 1,
   },
   sizeDefault: {
     height: "var(--size-lg)",
@@ -100,8 +99,7 @@ const styles = stylex.create({
 
 const variantStyles = {
   default: null,
-  outline: styles.outline,
-} satisfies Record<ToggleVariant, stylex.StyleXStyles | null>
+} satisfies Record<ToggleGroupVariant, stylex.StyleXStyles | null>
 
 const sizeStyles = {
   default: styles.sizeDefault,

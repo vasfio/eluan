@@ -16,6 +16,12 @@ const styles = stylex.create({
   root: {
     display: "grid",
     gap: "var(--spacing-sm)",
+    "[aria-orientation=horizontal]": {
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      gap: "var(--spacing-lg)",
+    },
   },
   item: {
     aspectRatio: "1 / 1",
@@ -25,6 +31,8 @@ const styles = stylex.create({
     borderStyle: "solid",
     borderWidth: 1,
     boxShadow: "var(--skeuo-recessed)",
+    boxSizing: "border-box",
+    flexShrink: 0,
     height: "var(--size-xxs)",
     transitionDuration: "150ms",
     transitionProperty: "color, background-color, border-color, box-shadow",
@@ -57,7 +65,18 @@ const styles = stylex.create({
   indicator: {
     alignItems: "center",
     display: "flex",
+    height: "100%",
     justifyContent: "center",
+    transitionDuration: "150ms",
+    transitionProperty: "opacity",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    width: "100%",
+    "[data-state=unchecked]": {
+      opacity: 0,
+    },
+    "[data-state=checked]": {
+      opacity: 1,
+    },
   },
   dot: {
     backgroundColor: "var(--interactive-bg)",
@@ -80,7 +99,7 @@ const RadioGroupItem = React.forwardRef<
   RadioGroupItemProps
 >((props, ref) => (
   <RadioGroupPrimitive.Item ref={ref} {...props} {...stylex.props(styles.item)}>
-    <RadioGroupPrimitive.Indicator {...stylex.props(styles.indicator)}>
+    <RadioGroupPrimitive.Indicator forceMount {...stylex.props(styles.indicator)}>
       <div {...stylex.props(styles.dot)} />
     </RadioGroupPrimitive.Indicator>
   </RadioGroupPrimitive.Item>

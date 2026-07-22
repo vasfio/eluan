@@ -373,7 +373,16 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
           !option.disabled && styles.optionEnabled
         )}
       >
-        {option.icon && <span {...stylex.props(styles.optionIcon)}>{option.icon}</span>}
+        {option.icon && (
+          <span {...stylex.props(styles.optionIcon)}>
+            {React.isValidElement(option.icon)
+              ? React.cloneElement(
+                  option.icon as React.ReactElement<{ width?: string; height?: string }>,
+                  { width: "100%", height: "100%" }
+                )
+              : option.icon}
+          </span>
+        )}
         <div {...stylex.props(styles.optionText)}>
           <div {...stylex.props(styles.optionLabel)}>{option.label}</div>
           {option.description && (
@@ -435,13 +444,16 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
               <div {...stylex.props(styles.emptyMessage)}>{emptyMessage}</div>
             ) : groupedOptions ? (
               <div {...stylex.props(styles.optionList)}>
-                {Object.entries(groupedOptions).map(([groupName, groupOptions]) => (
+                {Object.entries(groupedOptions).map(([groupName, groupOptions], groupIndex, groups) => (
                   <div key={groupName}>
                     <div {...stylex.props(styles.groupHeading)}>{groupName}</div>
                     {groupOptions.map((opt) => {
                       const globalIndex = filteredOptions.indexOf(opt)
                       return renderOption(opt, globalIndex)
                     })}
+                    {groupIndex < groups.length - 1 && (
+                      <div {...stylex.props(styles.groupSeparator)} />
+                    )}
                   </div>
                 ))}
               </div>
@@ -570,11 +582,19 @@ const styles = stylex.create({
     padding: "var(--spacing-xxs)",
   },
   groupHeading: {
-    color: "var(--interactive-fg)",
+    color: "var(--container-fg-alt)",
     fontSize: "var(--font-size-xs)",
-    fontWeight: 600,
+    fontWeight: 400,
+    letterSpacing: "0.04em",
     paddingBlock: "var(--spacing-xs)",
     paddingInline: "var(--spacing-md)",
+    textTransform: "uppercase",
+  },
+  groupSeparator: {
+    borderBottomColor: "var(--container-border)",
+    borderBottomStyle: "solid",
+    borderBottomWidth: 1,
+    marginBlock: "var(--spacing-xxs)",
   },
   option: {
     alignItems: "center",
@@ -605,7 +625,11 @@ const styles = stylex.create({
     cursor: "not-allowed",
   },
   optionIcon: {
+    alignItems: "center",
+    display: "flex",
     flexShrink: 0,
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
   },
   optionText: {
     flex: 1,

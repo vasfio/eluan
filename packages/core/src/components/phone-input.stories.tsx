@@ -42,7 +42,7 @@ export const Default: Story = {
     },
   },
   render: () => (
-    <div className="w-[300px]">
+    <div style={{ maxWidth: 288 }}>
       <PhoneInput placeholder="Phone number" />
     </div>
   ),
@@ -57,7 +57,7 @@ export const WithDefaultCountry: Story = {
     },
   },
   render: () => (
-    <div className="w-[300px]">
+    <div style={{ maxWidth: 288 }}>
       <PhoneInput placeholder="Phone number" defaultCountry="GB" />
     </div>
   ),
@@ -72,7 +72,7 @@ export const WithCallback: Story = {
     },
   },
   render: () => (
-    <div className="w-[300px]">
+    <div style={{ maxWidth: 288 }}>
       <PhoneInput
         placeholder="Phone number"
         onChange={(value, country) => {
@@ -96,7 +96,7 @@ export const LimitedCountries: Story = {
     },
   },
   render: () => (
-    <div className="w-[300px]">
+    <div style={{ maxWidth: 288 }}>
       <PhoneInput
         placeholder="Phone number"
         countries={[
@@ -118,7 +118,7 @@ export const Disabled: Story = {
     },
   },
   render: () => (
-    <div className="w-[300px]">
+    <div style={{ maxWidth: 288 }}>
       <PhoneInput placeholder="Phone number" disabled />
     </div>
   ),

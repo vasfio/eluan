@@ -47,22 +47,24 @@ export const Default: Story = {
     },
   },
   render: () => (
-    <Tabs defaultValue="account" className="w-[400px]">
+    <div style={{ width: 400 }}>
+    <Tabs defaultValue="account">
       <TabsList>
         <TabsTrigger value="account">Account</TabsTrigger>
         <TabsTrigger value="password">Password</TabsTrigger>
       </TabsList>
       <TabsContent value="account">
-        <p className="text-sm text-muted-foreground">
+        <p style={{ fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)" }}>
           Make changes to your account here. Click save when you&apos;re done.
         </p>
       </TabsContent>
       <TabsContent value="password">
-        <p className="text-sm text-muted-foreground">
+        <p style={{ fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)" }}>
           Change your password here. After saving, you&apos;ll be logged out.
         </p>
       </TabsContent>
     </Tabs>
+    </div>
   ),
 }
 
@@ -75,38 +77,48 @@ export const MultipleTabs: Story = {
     },
   },
   render: () => (
-    <Tabs defaultValue="overview" className="w-[600px]">
+    <div style={{ width: 600 }}>
+    <Tabs defaultValue="overview">
       <TabsList>
         <TabsTrigger value="overview">Overview</TabsTrigger>
         <TabsTrigger value="analytics">Analytics</TabsTrigger>
         <TabsTrigger value="reports">Reports</TabsTrigger>
         <TabsTrigger value="notifications">Notifications</TabsTrigger>
       </TabsList>
-      <TabsContent value="overview" className="p-4">
-        <h3 className="font-medium">Overview</h3>
-        <p className="text-sm text-muted-foreground mt-2">
+      <TabsContent value="overview">
+        <div style={{ padding: "var(--spacing-lg)" }}>
+        <h3 style={{ fontWeight: 500 }}>Overview</h3>
+        <p style={{ fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)", marginTop: "var(--spacing-sm)" }}>
           Your project overview and quick stats.
         </p>
+        </div>
       </TabsContent>
-      <TabsContent value="analytics" className="p-4">
-        <h3 className="font-medium">Analytics</h3>
-        <p className="text-sm text-muted-foreground mt-2">
+      <TabsContent value="analytics">
+        <div style={{ padding: "var(--spacing-lg)" }}>
+        <h3 style={{ fontWeight: 500 }}>Analytics</h3>
+        <p style={{ fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)", marginTop: "var(--spacing-sm)" }}>
           View your analytics and insights.
         </p>
+        </div>
       </TabsContent>
-      <TabsContent value="reports" className="p-4">
-        <h3 className="font-medium">Reports</h3>
-        <p className="text-sm text-muted-foreground mt-2">
+      <TabsContent value="reports">
+        <div style={{ padding: "var(--spacing-lg)" }}>
+        <h3 style={{ fontWeight: 500 }}>Reports</h3>
+        <p style={{ fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)", marginTop: "var(--spacing-sm)" }}>
           Generate and download reports.
         </p>
+        </div>
       </TabsContent>
-      <TabsContent value="notifications" className="p-4">
-        <h3 className="font-medium">Notifications</h3>
-        <p className="text-sm text-muted-foreground mt-2">
+      <TabsContent value="notifications">
+        <div style={{ padding: "var(--spacing-lg)" }}>
+        <h3 style={{ fontWeight: 500 }}>Notifications</h3>
+        <p style={{ fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)", marginTop: "var(--spacing-sm)" }}>
           Manage your notification preferences.
         </p>
+        </div>
       </TabsContent>
     </Tabs>
+    </div>
   ),
 }
 
@@ -119,7 +131,8 @@ export const DisabledTab: Story = {
     },
   },
   render: () => (
-    <Tabs defaultValue="active" className="w-[400px]">
+    <div style={{ width: 400 }}>
+    <Tabs defaultValue="active">
       <TabsList>
         <TabsTrigger value="active">Active</TabsTrigger>
         <TabsTrigger value="disabled" disabled>Disabled</TabsTrigger>
@@ -129,5 +142,6 @@ export const DisabledTab: Story = {
       <TabsContent value="disabled">Disabled tab content</TabsContent>
       <TabsContent value="other">Other tab content</TabsContent>
     </Tabs>
+    </div>
   ),
 }

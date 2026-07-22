@@ -16,8 +16,14 @@ type ScrollBarProps = Omit<
 
 const styles = stylex.create({
   root: {
+    // Fill the sizing wrapper the consumer provides. Because the component
+    // omits `className`/`style`, height must come from a bounded parent; with
+    // `height: 100%` the viewport's own `height: 100%` finally resolves against
+    // a real value (and falls back to content height when the parent is auto).
+    height: "100%",
     overflow: "hidden",
     position: "relative",
+    width: "100%",
   },
   viewport: {
     borderRadius: "inherit",

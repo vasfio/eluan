@@ -32,11 +32,12 @@ const styles = stylex.create({
 const HoverCardContent = React.forwardRef<
   React.ElementRef<typeof HoverCardPrimitive.Content>,
   HoverCardContentProps
->(({ align = "center", sideOffset = 4, ...props }, ref) => (
+>(({ align = "center", sideOffset = 4, collisionPadding = 8, ...props }, ref) => (
   <HoverCardPrimitive.Content
     ref={ref}
     align={align}
     sideOffset={sideOffset}
+    collisionPadding={collisionPadding}
     {...props}
     {...stylex.props(styles.content)}
   />

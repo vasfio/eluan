@@ -4,7 +4,12 @@ import * as stylex from "@stylexjs/stylex"
 import { Command as CommandPrimitive } from "cmdk"
 import { Search } from "lucide-react"
 
-import { Dialog, DialogContent } from "./dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "./dialog"
 import { Separator } from "./separator"
 
 type CommandScale = "default" | "dialog"
@@ -13,6 +18,11 @@ type CommandProps = Omit<
   React.ComponentPropsWithoutRef<typeof CommandPrimitive>,
   "className" | "style"
 >
+
+type CommandDialogProps = DialogProps & {
+  title?: string
+  description?: string
+}
 
 type CommandInputProps = Omit<
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>,
@@ -62,6 +72,27 @@ const styles = stylex.create({
     height: "100%",
     overflow: "hidden",
     width: "100%",
+  },
+  // Standalone (inline) palettes own their surface: a bordered, elevated card.
+  // The dialog variant suppresses this because `DialogContent` already supplies
+  // the border + shadow, avoiding a doubled outline.
+  commandSurface: {
+    borderColor: "var(--container-border)",
+    borderStyle: "solid",
+    borderWidth: 1,
+    boxShadow:
+      "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+  },
+  srOnly: {
+    borderWidth: 0,
+    clip: "rect(0, 0, 0, 0)",
+    height: 1,
+    margin: -1,
+    overflow: "hidden",
+    padding: 0,
+    position: "absolute",
+    whiteSpace: "nowrap",
+    width: 1,
   },
   inputWrapper: {
     alignItems: "center",
@@ -162,22 +193,60 @@ const styles = stylex.create({
   },
 })
 
+// cmdk renders the group heading itself (an internal `[cmdk-group-heading]`
+// element we never author), so StyleX cannot reach it. This raw rule — scoped
+// to a literal `.eluan-command` class on the root, mirroring the calendar.tsx
+// pattern — restyles that heading with design tokens. Without it, headings
+// render as unstyled, full-size body text.
+const commandStyles = `
+.eluan-command [cmdk-group-heading] {
+  color: var(--container-fg-alt);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  padding-block: var(--spacing-xs);
+  padding-inline: var(--spacing-xs);
+}
+`
+
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,
   CommandProps
->(({ ...props }, ref) => (
-  <CommandPrimitive
-    ref={ref}
-    {...props}
-    {...stylex.props(styles.command)}
-  />
-))
+>(({ children, ...props }, ref) => {
+  const scale = React.useContext(CommandScaleContext)
+  const { className, style } = stylex.props(
+    styles.command,
+    scale === "default" && styles.commandSurface
+  )
+
+  return (
+    <CommandPrimitive
+      ref={ref}
+      {...props}
+      className={`${className ?? ""} eluan-command`}
+      style={style}
+    >
+      <style>{commandStyles}</style>
+      {children}
+    </CommandPrimitive>
+  )
+})
 Command.displayName = CommandPrimitive.displayName
 
-const CommandDialog = ({ children, ...props }: DialogProps) => {
+const CommandDialog = ({
+  children,
+  title = "Command Menu",
+  description = "Search for a command to run.",
+  ...props
+}: CommandDialogProps) => {
   return (
     <Dialog {...props}>
       <DialogContent layout="command">
+        {/* Radix requires a title/description on dialog content for a11y;
+            keep them present but visually hidden for the command palette. */}
+        <div {...stylex.props(styles.srOnly)}>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
+        </div>
         <CommandScaleContext.Provider value="dialog">
           <Command>{children}</Command>
         </CommandScaleContext.Provider>

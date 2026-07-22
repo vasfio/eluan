@@ -1,10 +1,32 @@
+import React from "react"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Textarea } from "./textarea"
+import { Label } from "./form-label"
+
+const fieldStackStyle: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "column",
+  gap: "var(--spacing-sm)",
+  width: "100%",
+}
+
+const hintStyle: React.CSSProperties = {
+  color: "var(--container-fg-alt)",
+  fontSize: "var(--font-size-xs)",
+  margin: 0,
+}
 
 const meta: Meta<typeof Textarea> = {
   title: "Components/Textarea",
   component: Textarea,
   tags: ["autodocs"],
+  decorators: [
+    (Story) => (
+      <div style={{ maxWidth: 288 }}>
+        <Story />
+      </div>
+    ),
+  ],
   parameters: {
     docs: {
       description: {
@@ -51,8 +73,8 @@ export const WithLabel: Story = {
     },
   },
   render: () => (
-    <div className="grid w-full gap-1.5">
-      <label htmlFor="message" className="text-sm font-medium">Your message</label>
+    <div style={fieldStackStyle}>
+      <Label htmlFor="message">Your message</Label>
       <Textarea placeholder="Type your message here." id="message" />
     </div>
   ),
@@ -67,10 +89,10 @@ export const WithHelperText: Story = {
     },
   },
   render: () => (
-    <div className="grid w-full gap-1.5">
-      <label htmlFor="message-2" className="text-sm font-medium">Your message</label>
+    <div style={fieldStackStyle}>
+      <Label htmlFor="message-2">Your message</Label>
       <Textarea placeholder="Type your message here." id="message-2" />
-      <p className="text-sm text-muted-foreground">Your message will be copied to the support team.</p>
+      <p style={hintStyle}>Your message will be copied to the support team.</p>
     </div>
   ),
 }

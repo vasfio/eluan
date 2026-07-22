@@ -22,4 +22,11 @@ describe("FormLabel", () => {
     render(<FormLabel {...({ className: "required" } as never)}>Field</FormLabel>);
     expect(screen.getByText("Field")).not.toHaveClass("required");
   });
+
+  it("renders a disabled label without forwarding the disabled attribute", () => {
+    render(<FormLabel htmlFor="x" disabled>Disabled Field</FormLabel>);
+    const label = screen.getByText("Disabled Field");
+    expect(label).toBeInTheDocument();
+    expect(label).not.toHaveAttribute("disabled");
+  });
 });

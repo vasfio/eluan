@@ -42,7 +42,9 @@ const styles = stylex.create({
     width: "100%",
   },
   vertical: {
+    alignSelf: "stretch",
     height: "100%",
+    minHeight: "var(--size-xxs)",
     width: 1,
   },
   toolbar: {

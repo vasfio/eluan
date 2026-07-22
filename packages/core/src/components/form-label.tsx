@@ -3,6 +3,7 @@ import * as stylex from "@stylexjs/stylex"
 
 export interface LabelProps
   extends Omit<React.LabelHTMLAttributes<HTMLLabelElement>, "className" | "style"> {
+  disabled?: boolean
   hint?: string
   optional?: boolean
   required?: boolean
@@ -27,6 +28,10 @@ const styles = stylex.create({
     fontSize: "var(--font-size-sm)",
     fontWeight: 500,
     lineHeight: 1,
+  },
+  labelDisabled: {
+    color: "var(--interactive-fg-disabled)",
+    cursor: "not-allowed",
   },
   required: {
     "::after": {
@@ -55,12 +60,16 @@ const styles = stylex.create({
 })
 
 const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
-  ({ required = false, optional, hint, children, ...props }, ref) => (
+  ({ required = false, optional, hint, disabled = false, children, ...props }, ref) => (
     <div {...stylex.props(styles.root)}>
       <label
         ref={ref}
         {...props}
-        {...stylex.props(styles.label, required && styles.required)}
+        {...stylex.props(
+          styles.label,
+          required && styles.required,
+          disabled && styles.labelDisabled
+        )}
       >
         {children}
       </label>

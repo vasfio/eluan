@@ -1,3 +1,4 @@
+import * as React from "react"
 import type { Meta, StoryObj } from "@storybook/react"
 import {
   DropdownMenu,
@@ -77,7 +78,7 @@ export const Default: Story = {
       <DropdownMenuTrigger asChild>
         <Button variant="outline">Open</Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
+      <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Profile</DropdownMenuItem>
@@ -91,54 +92,101 @@ export const Default: Story = {
   ),
 }
 
-export const WithCheckboxes: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: "Dropdown menu with checkbox items for toggling visibility of UI panels.",
-      },
-    },
-  },
-  render: () => (
+const CheckboxesDemo = () => {
+  const [statusBar, setStatusBar] = React.useState(true)
+  const [activityBar, setActivityBar] = React.useState(false)
+  const [panel, setPanel] = React.useState(false)
+
+  return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline">Options</Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
+      <DropdownMenuContent>
         <DropdownMenuLabel>Appearance</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuCheckboxItem checked>Status Bar</DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem>Activity Bar</DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem>Panel</DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+          checked={statusBar}
+          onCheckedChange={setStatusBar}
+          onSelect={(event) => event.preventDefault()}
+        >
+          Status Bar
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+          checked={activityBar}
+          onCheckedChange={setActivityBar}
+          onSelect={(event) => event.preventDefault()}
+        >
+          Activity Bar
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+          checked={panel}
+          onCheckedChange={setPanel}
+          onSelect={(event) => event.preventDefault()}
+        >
+          Panel
+        </DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  ),
+  )
+}
+
+export const WithCheckboxes: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: "Dropdown menu with checkbox items for toggling visibility of UI panels. Toggling persists via component state and the menu stays open.",
+      },
+    },
+  },
+  render: () => <CheckboxesDemo />,
+}
+
+const RadioItemsDemo = () => {
+  const [theme, setTheme] = React.useState("light")
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline">Theme</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuLabel>Select Theme</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
+          <DropdownMenuRadioItem
+            value="light"
+            onSelect={(event) => event.preventDefault()}
+          >
+            Light
+          </DropdownMenuRadioItem>
+          <DropdownMenuRadioItem
+            value="dark"
+            onSelect={(event) => event.preventDefault()}
+          >
+            Dark
+          </DropdownMenuRadioItem>
+          <DropdownMenuRadioItem
+            value="system"
+            onSelect={(event) => event.preventDefault()}
+          >
+            System
+          </DropdownMenuRadioItem>
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
 }
 
 export const WithRadioItems: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Dropdown menu with radio items for single-selection (theme picker).",
+        story: "Dropdown menu with radio items for single-selection (theme picker). Selection persists via component state and the menu stays open.",
       },
     },
   },
-  render: () => (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline">Theme</Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>Select Theme</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuRadioGroup value="light">
-          <DropdownMenuRadioItem value="light">Light</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="system">System</DropdownMenuRadioItem>
-        </DropdownMenuRadioGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  ),
+  render: () => <RadioItemsDemo />,
 }
 
 export const WithSubmenu: Story = {
@@ -154,7 +202,7 @@ export const WithSubmenu: Story = {
       <DropdownMenuTrigger asChild>
         <Button variant="outline">More</Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
+      <DropdownMenuContent>
         <DropdownMenuItem>New Tab</DropdownMenuItem>
         <DropdownMenuItem>New Window</DropdownMenuItem>
         <DropdownMenuSub>

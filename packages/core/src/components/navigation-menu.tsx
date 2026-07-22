@@ -92,16 +92,16 @@ const styles = stylex.create({
     },
   },
   chevron: {
-    height: "var(--spacing-sm)",
-    marginLeft: "var(--spacing-xxs)",
-    position: "relative",
-    top: 1,
-    transitionDuration: "200ms",
+    height: "var(--size-xxs)",
+    marginLeft: "var(--spacing-xs)",
+    transitionDuration: "150ms",
     transitionProperty: "transform",
-    width: "var(--spacing-sm)",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    width: "var(--size-xxs)",
   },
   content: {
     left: 0,
+    padding: "var(--spacing-lg)",
     top: 0,
     width: "100%",
     "@media (min-width: 768px)": {
@@ -155,6 +155,15 @@ const styles = stylex.create({
   },
 })
 
+// Radix sets data-state="open" on the trigger button; StyleX cannot express a
+// parent-state selector, so the open-chevron rotation is injected as raw CSS
+// keyed on a literal class (mirrors calendar.tsx's approach).
+const navigationMenuStyles = `
+[data-state="open"] > .eluan-navmenu-chevron {
+  transform: rotate(180deg);
+}
+`
+
 const NavigationMenu = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Root>,
   NavigationMenuRootProps
@@ -164,6 +173,7 @@ const NavigationMenu = React.forwardRef<
     {...props}
     {...stylex.props(styles.root)}
   >
+    <style>{navigationMenuStyles}</style>
     {children}
     <NavigationMenuViewport />
   </NavigationMenuPrimitive.Root>
@@ -190,19 +200,23 @@ const navigationMenuTriggerStyle = () =>
 const NavigationMenuTrigger = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Trigger>,
   NavigationMenuTriggerProps
->(({ children, ...props }, ref) => (
-  <NavigationMenuPrimitive.Trigger
-    ref={ref}
-    {...props}
-    {...stylex.props(styles.trigger)}
-  >
-    {children}{" "}
-    <ChevronDown
-      aria-hidden="true"
-      {...stylex.props(styles.chevron)}
-    />
-  </NavigationMenuPrimitive.Trigger>
-))
+>(({ children, ...props }, ref) => {
+  const chevronProps = stylex.props(styles.chevron)
+  return (
+    <NavigationMenuPrimitive.Trigger
+      ref={ref}
+      {...props}
+      {...stylex.props(styles.trigger)}
+    >
+      {children}
+      <ChevronDown
+        aria-hidden="true"
+        className={`${chevronProps.className ?? ""} eluan-navmenu-chevron`}
+        style={chevronProps.style}
+      />
+    </NavigationMenuPrimitive.Trigger>
+  )
+})
 NavigationMenuTrigger.displayName = NavigationMenuPrimitive.Trigger.displayName
 
 const NavigationMenuContent = React.forwardRef<

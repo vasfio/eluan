@@ -1,3 +1,4 @@
+import * as React from "react"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Kbd, KbdGroup, Shortcut } from "./kbd"
 
@@ -87,7 +88,7 @@ export const Variants: Story = {
     },
   },
   render: () => (
-    <div className="flex gap-4">
+    <div style={{ display: "flex", alignItems: "center", gap: "var(--spacing-md)" }}>
       <Kbd variant="default">Ctrl</Kbd>
       <Kbd variant="outline">Ctrl</Kbd>
       <Kbd variant="ghost">Ctrl</Kbd>
@@ -104,7 +105,7 @@ export const Sizes: Story = {
     },
   },
   render: () => (
-    <div className="flex items-center gap-4">
+    <div style={{ display: "flex", alignItems: "center", gap: "var(--spacing-md)" }}>
       <Kbd size="sm">⌘K</Kbd>
       <Kbd size="default">⌘K</Kbd>
       <Kbd size="lg">⌘K</Kbd>
@@ -121,33 +122,31 @@ export const CommonShortcuts: Story = {
     },
   },
   render: () => (
-    <div className="space-y-2">
-      <div className="flex items-center justify-between w-64">
-        <span className="text-sm">Copy</span>
-        <Shortcut shortcut="copy" />
-      </div>
-      <div className="flex items-center justify-between w-64">
-        <span className="text-sm">Paste</span>
-        <Shortcut shortcut="paste" />
-      </div>
-      <div className="flex items-center justify-between w-64">
-        <span className="text-sm">Undo</span>
-        <Shortcut shortcut="undo" />
-      </div>
-      <div className="flex items-center justify-between w-64">
-        <span className="text-sm">Redo</span>
-        <Shortcut shortcut="redo" />
-      </div>
-      <div className="flex items-center justify-between w-64">
-        <span className="text-sm">Save</span>
-        <Shortcut shortcut="save" />
-      </div>
-      <div className="flex items-center justify-between w-64">
-        <span className="text-sm">Find</span>
-        <Shortcut shortcut="find" />
-      </div>
+    <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
+      {(
+        [
+          ["Copy", "copy"],
+          ["Paste", "paste"],
+          ["Undo", "undo"],
+          ["Redo", "redo"],
+          ["Save", "save"],
+          ["Find", "find"],
+        ] as const
+      ).map(([label, shortcut]) => (
+        <div key={shortcut} style={shortcutRow}>
+          <span style={{ fontSize: "var(--font-size-sm)" }}>{label}</span>
+          <Shortcut shortcut={shortcut} />
+        </div>
+      ))}
     </div>
   ),
+}
+
+const shortcutRow: React.CSSProperties = {
+  alignItems: "center",
+  display: "flex",
+  justifyContent: "space-between",
+  width: "16rem",
 }
 
 export const KeyGroup: Story = {
@@ -176,7 +175,15 @@ export const InContext: Story = {
     },
   },
   render: () => (
-    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+    <div
+      style={{
+        alignItems: "center",
+        color: "var(--container-fg-alt)",
+        display: "flex",
+        fontSize: "var(--font-size-sm)",
+        gap: "var(--spacing-xs)",
+      }}
+    >
       Press <Kbd keys="cmd+k" /> to open command palette
     </div>
   ),

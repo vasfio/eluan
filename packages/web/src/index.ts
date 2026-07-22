@@ -6,5 +6,4 @@ import "./styles.css"
 // Marketing, AI, and visual-effect components now live in @eluan/core.
 
 export * from "./components/header"
-export * from "./components/header-navigation"
 export * from "./components/footer"

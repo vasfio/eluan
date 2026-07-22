@@ -253,6 +253,12 @@ const styles = stylex.create({
       backgroundColor: "var(--interactive-bg-hover)",
       borderRadius: "var(--curves-lg)",
     },
+    ":focus-visible": {
+      outlineColor: "var(--interactive-border)",
+      outlineOffset: "1px",
+      outlineStyle: "solid",
+      outlineWidth: "1px",
+    },
   },
   rangeStart: {
     backgroundColor: "var(--interactive-bg-selected)",
@@ -333,9 +339,6 @@ const calendarStyles = `
 .eluan-calendar-selected > button:hover {
   background-color: var(--action-primary-bg-hover);
   color: var(--interactive-fg-selected);
-}
-.eluan-calendar-selected:focus {
-  box-shadow: 0 0 0 1px var(--interactive-border);
 }
 .eluan-calendar-today > button {
   position: relative;

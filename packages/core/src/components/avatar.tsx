@@ -140,24 +140,33 @@ const styles = stylex.create({
     justifyContent: "center",
     width: "100%",
   },
-  /* Positioned inside the avatar's box so the badge overlaps the image
-     edge rather than hanging outside the container. */
+  /* Anchored to a corner, then shifted so the badge's center sits on the
+     avatar's circular rim at the diagonal — half over the image, half
+     outside the container. */
   badge: {
     display: "inline-flex",
     position: "absolute",
     zIndex: 1,
   },
-  badgeTop: {
+  badgeTopRight: {
     top: 0,
-  },
-  badgeBottom: {
-    bottom: 0,
-  },
-  badgeRight: {
     right: 0,
+    transform: "translate(35%, -35%)",
   },
-  badgeLeft: {
+  badgeBottomRight: {
+    bottom: 0,
+    right: 0,
+    transform: "translate(35%, 35%)",
+  },
+  badgeTopLeft: {
+    top: 0,
     left: 0,
+    transform: "translate(-35%, -35%)",
+  },
+  badgeBottomLeft: {
+    bottom: 0,
+    left: 0,
+    transform: "translate(-35%, 35%)",
   },
   status: {
     borderRadius: "var(--radius-radius-full)",
@@ -197,10 +206,10 @@ const styles = stylex.create({
 })
 
 const badgePositionStyles = {
-  "top-right": [styles.badgeTop, styles.badgeRight],
-  "bottom-right": [styles.badgeBottom, styles.badgeRight],
-  "top-left": [styles.badgeTop, styles.badgeLeft],
-  "bottom-left": [styles.badgeBottom, styles.badgeLeft],
+  "top-right": styles.badgeTopRight,
+  "bottom-right": styles.badgeBottomRight,
+  "top-left": styles.badgeTopLeft,
+  "bottom-left": styles.badgeBottomLeft,
 } satisfies Record<AvatarPosition, stylex.StyleXStyles>
 
 const statusPositionStyles = {

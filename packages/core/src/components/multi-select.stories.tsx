@@ -148,14 +148,22 @@ export const MaxSelections: Story = {
   render: () => {
     const [selected, setSelected] = React.useState<string[]>([])
     return (
-      <div className="space-y-2">
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
         <MultiSelect
           options={options}
           value={selected}
           onChange={setSelected}
           placeholder="Select up to 3..."
         />
-        <p className="text-sm text-muted-foreground">Maximum 3 selections allowed</p>
+        <p
+          style={{
+            color: "var(--container-fg-alt)",
+            fontSize: "var(--font-size-xs)",
+            margin: 0,
+          }}
+        >
+          Maximum 3 selections allowed
+        </p>
       </div>
     )
   },

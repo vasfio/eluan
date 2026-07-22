@@ -51,7 +51,6 @@ const styles = stylex.create({
       outlineWidth: "1px",
     },
     ":disabled": {
-      backgroundColor: "var(--interactive-bg-disabled)",
       color: "var(--interactive-fg-disabled)",
       pointerEvents: "none",
     },

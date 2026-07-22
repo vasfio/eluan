@@ -3,10 +3,29 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { SearchInput, CommandSearch, AutocompleteSearch } from "./search-input"
 import { Code, FileText, Image, Music, Video } from "lucide-react"
 
+const stackStyle: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "column",
+  gap: "var(--spacing-sm)",
+}
+
+const hintStyle: React.CSSProperties = {
+  color: "var(--container-fg-alt)",
+  fontSize: "var(--font-size-xs)",
+  margin: 0,
+}
+
 const meta: Meta<typeof SearchInput> = {
   title: "Components/Search Input",
   component: SearchInput,
   tags: ["autodocs"],
+  decorators: [
+    (Story) => (
+      <div style={{ maxWidth: 288 }}>
+        <Story />
+      </div>
+    ),
+  ],
   parameters: {
     docs: {
       description: {
@@ -44,13 +63,11 @@ export const Default: Story = {
     },
   },
   render: () => (
-    <div className="w-[300px]">
-      <SearchInput
-        placeholder="Search..."
-        onChange={(value) => console.log("Value:", value)}
-        onSearch={(value) => console.log("Search:", value)}
-      />
-    </div>
+    <SearchInput
+      placeholder="Search..."
+      onChange={(value) => console.log("Value:", value)}
+      onSearch={(value) => console.log("Search:", value)}
+    />
   ),
 }
 
@@ -63,13 +80,13 @@ export const WithDebounce: Story = {
     },
   },
   render: () => (
-    <div className="w-[300px] space-y-2">
+    <div style={stackStyle}>
       <SearchInput
         placeholder="Type to search (300ms debounce)"
         debounceMs={300}
         onSearch={(value) => console.log("Debounced search:", value)}
       />
-      <p className="text-sm text-muted-foreground">Check console for debounced output</p>
+      <p style={hintStyle}>Check console for debounced output</p>
     </div>
   ),
 }
@@ -83,9 +100,7 @@ export const Loading: Story = {
     },
   },
   render: () => (
-    <div className="w-[300px]">
-      <SearchInput placeholder="Searching..." loading value="react components" />
-    </div>
+    <SearchInput placeholder="Searching..." loading value="react components" />
   ),
 }
 
@@ -98,9 +113,9 @@ export const CommandPalette: Story = {
     },
   },
   render: () => (
-    <div className="w-[300px] space-y-2">
+    <div style={stackStyle}>
       <CommandSearch placeholder="Search commands..." shortcutKey="K" />
-      <p className="text-sm text-muted-foreground">Press ⌘K to focus</p>
+      <p style={hintStyle}>Press ⌘K to focus</p>
     </div>
   ),
 }
@@ -114,9 +129,9 @@ export const CommandPaletteCustomKey: Story = {
     },
   },
   render: () => (
-    <div className="w-[300px] space-y-2">
+    <div style={stackStyle}>
       <CommandSearch placeholder="Search files..." shortcutKey="P" />
-      <p className="text-sm text-muted-foreground">Press ⌘P to focus</p>
+      <p style={hintStyle}>Press ⌘P to focus</p>
     </div>
   ),
 }
@@ -141,13 +156,11 @@ export const Autocomplete: Story = {
     },
   },
   render: () => (
-    <div className="w-[350px]">
-      <AutocompleteSearch
-        placeholder="Search frameworks..."
-        options={autocompleteOptions}
-        onSelect={(option) => console.log("Selected:", option)}
-      />
-    </div>
+    <AutocompleteSearch
+      placeholder="Search frameworks..."
+      options={autocompleteOptions}
+      onSelect={(option) => console.log("Selected:", option)}
+    />
   ),
 }
 
@@ -160,19 +173,17 @@ export const AutocompleteWithIcons: Story = {
     },
   },
   render: () => (
-    <div className="w-[350px]">
-      <AutocompleteSearch
-        placeholder="Search files..."
-        options={[
-          { value: "doc1", label: "Document.pdf", description: "PDF Document", icon: <FileText className="h-4 w-4 text-red-500" /> },
-          { value: "img1", label: "Photo.jpg", description: "Image file", icon: <Image className="h-4 w-4 text-green-500" /> },
-          { value: "vid1", label: "Video.mp4", description: "Video file", icon: <Video className="h-4 w-4 text-purple-500" /> },
-          { value: "mus1", label: "Song.mp3", description: "Audio file", icon: <Music className="h-4 w-4 text-pink-500" /> },
-          { value: "code1", label: "App.tsx", description: "TypeScript React", icon: <Code className="h-4 w-4 text-blue-500" /> },
-        ]}
-        onSelect={(option) => console.log("Selected:", option)}
-      />
-    </div>
+    <AutocompleteSearch
+      placeholder="Search files..."
+      options={[
+        { value: "doc1", label: "Document.pdf", description: "PDF Document", icon: <FileText /> },
+        { value: "img1", label: "Photo.jpg", description: "Image file", icon: <Image /> },
+        { value: "vid1", label: "Video.mp4", description: "Video file", icon: <Video /> },
+        { value: "mus1", label: "Song.mp3", description: "Audio file", icon: <Music /> },
+        { value: "code1", label: "App.tsx", description: "TypeScript React", icon: <Code /> },
+      ]}
+      onSelect={(option) => console.log("Selected:", option)}
+    />
   ),
 }
 
@@ -185,25 +196,23 @@ export const AutocompleteGrouped: Story = {
     },
   },
   render: () => (
-    <div className="w-[350px]">
-      <AutocompleteSearch
-        placeholder="Search frameworks..."
-        options={[
-          { value: "react", label: "React", description: "JavaScript library" },
-          { value: "redux", label: "Redux", description: "State management" },
-          { value: "vue", label: "Vue", description: "Progressive framework" },
-          { value: "vuex", label: "Vuex", description: "State management for Vue" },
-          { value: "angular", label: "Angular", description: "Platform" },
-          { value: "ngrx", label: "NgRx", description: "Reactive state for Angular" },
-        ]}
-        groupBy={(option) => {
-          if (option.value.startsWith("react") || option.value === "redux") return "React Ecosystem"
-          if (option.value.startsWith("vue") || option.value === "vuex") return "Vue Ecosystem"
-          return "Angular Ecosystem"
-        }}
-        onSelect={(option) => console.log("Selected:", option)}
-      />
-    </div>
+    <AutocompleteSearch
+      placeholder="Search frameworks..."
+      options={[
+        { value: "react", label: "React", description: "JavaScript library" },
+        { value: "redux", label: "Redux", description: "State management" },
+        { value: "vue", label: "Vue", description: "Progressive framework" },
+        { value: "vuex", label: "Vuex", description: "State management for Vue" },
+        { value: "angular", label: "Angular", description: "Platform" },
+        { value: "ngrx", label: "NgRx", description: "Reactive state for Angular" },
+      ]}
+      groupBy={(option) => {
+        if (option.value.startsWith("react") || option.value === "redux") return "React Ecosystem"
+        if (option.value.startsWith("vue") || option.value === "vuex") return "Vue Ecosystem"
+        return "Angular Ecosystem"
+      }}
+      onSelect={(option) => console.log("Selected:", option)}
+    />
   ),
 }
 
@@ -216,7 +225,7 @@ export const AutocompleteMinChars: Story = {
     },
   },
   render: () => (
-    <div className="w-[350px] space-y-2">
+    <div style={stackStyle}>
       <AutocompleteSearch
         placeholder="Type at least 2 characters..."
         options={autocompleteOptions}
@@ -224,7 +233,7 @@ export const AutocompleteMinChars: Story = {
         showAllOnFocus={false}
         onSelect={(option) => console.log("Selected:", option)}
       />
-      <p className="text-sm text-muted-foreground">Dropdown appears after typing 2+ characters</p>
+      <p style={hintStyle}>Dropdown appears after typing 2+ characters</p>
     </div>
   ),
 }
@@ -254,7 +263,7 @@ export const AutocompleteLoading: Story = {
     }
 
     return (
-      <div className="w-[350px] space-y-2">
+      <div style={stackStyle}>
         <AutocompleteSearch
           placeholder="Search (async)..."
           options={options}
@@ -264,7 +273,7 @@ export const AutocompleteLoading: Story = {
           onChange={handleChange}
           onSelect={(option) => console.log("Selected:", option)}
         />
-        <p className="text-sm text-muted-foreground">Simulates async search with 500ms delay</p>
+        <p style={hintStyle}>Simulates async search with 500ms delay</p>
       </div>
     )
   },
@@ -279,18 +288,16 @@ export const AutocompleteDisabledOptions: Story = {
     },
   },
   render: () => (
-    <div className="w-[350px]">
-      <AutocompleteSearch
-        placeholder="Search frameworks..."
-        options={[
-          { value: "react", label: "React", description: "Available" },
-          { value: "vue", label: "Vue", description: "Coming soon", disabled: true },
-          { value: "angular", label: "Angular", description: "Available" },
-          { value: "svelte", label: "Svelte", description: "Coming soon", disabled: true },
-        ]}
-        onSelect={(option) => console.log("Selected:", option)}
-      />
-    </div>
+    <AutocompleteSearch
+      placeholder="Search frameworks..."
+      options={[
+        { value: "react", label: "React", description: "Available" },
+        { value: "vue", label: "Vue", description: "Coming soon", disabled: true },
+        { value: "angular", label: "Angular", description: "Available" },
+        { value: "svelte", label: "Svelte", description: "Coming soon", disabled: true },
+      ]}
+      onSelect={(option) => console.log("Selected:", option)}
+    />
   ),
 }
 
@@ -302,9 +309,5 @@ export const Disabled: Story = {
       },
     },
   },
-  render: () => (
-    <div className="w-[300px]">
-      <SearchInput placeholder="Search disabled" disabled />
-    </div>
-  ),
+  render: () => <SearchInput placeholder="Search disabled" disabled />,
 }

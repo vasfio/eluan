@@ -1,3 +1,4 @@
+import * as React from "react"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Separator } from "./separator"
 
@@ -50,23 +51,33 @@ export const Horizontal: Story = {
     },
   },
   render: () => (
-    <div>
-      <div className="space-y-1">
-        <h4 className="text-sm font-medium leading-none">Radix Primitives</h4>
-        <p className="text-sm text-muted-foreground">
+    <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-md)" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-xxs)" }}>
+        <h4 style={{ fontSize: "var(--font-size-base)", fontWeight: 500, margin: 0 }}>
+          Radix Primitives
+        </h4>
+        <p style={{ fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)", margin: 0 }}>
           An open-source UI component library.
         </p>
       </div>
-      <Separator className="my-4" />
-      <div className="flex h-5 items-center space-x-4 text-sm">
-        <div>Blog</div>
+      <Separator />
+      <div style={inlineNav}>
+        <span>Blog</span>
         <Separator orientation="vertical" />
-        <div>Docs</div>
+        <span>Docs</span>
         <Separator orientation="vertical" />
-        <div>Source</div>
+        <span>Source</span>
       </div>
     </div>
   ),
+}
+
+const inlineNav: React.CSSProperties = {
+  alignItems: "center",
+  display: "flex",
+  fontSize: "var(--font-size-sm)",
+  gap: "var(--spacing-md)",
+  height: "var(--size-xs)",
 }
 
 export const Vertical: Story = {
@@ -78,12 +89,12 @@ export const Vertical: Story = {
     },
   },
   render: () => (
-    <div className="flex h-5 items-center space-x-4 text-sm">
-      <div>Blog</div>
+    <div style={inlineNav}>
+      <span>Blog</span>
       <Separator orientation="vertical" />
-      <div>Docs</div>
+      <span>Docs</span>
       <Separator orientation="vertical" />
-      <div>Source</div>
+      <span>Source</span>
     </div>
   ),
 }
@@ -97,21 +108,40 @@ export const InList: Story = {
     },
   },
   render: () => (
-    <div className="w-[300px]">
-      <div className="py-3">
-        <p className="text-sm font-medium">Item 1</p>
-        <p className="text-xs text-muted-foreground">Description for item 1</p>
+    <div style={{ maxWidth: "20rem" }}>
+      <div style={listItem}>
+        <p style={listTitle}>Item 1</p>
+        <p style={listDesc}>Description for item 1</p>
       </div>
       <Separator />
-      <div className="py-3">
-        <p className="text-sm font-medium">Item 2</p>
-        <p className="text-xs text-muted-foreground">Description for item 2</p>
+      <div style={listItem}>
+        <p style={listTitle}>Item 2</p>
+        <p style={listDesc}>Description for item 2</p>
       </div>
       <Separator />
-      <div className="py-3">
-        <p className="text-sm font-medium">Item 3</p>
-        <p className="text-xs text-muted-foreground">Description for item 3</p>
+      <div style={listItem}>
+        <p style={listTitle}>Item 3</p>
+        <p style={listDesc}>Description for item 3</p>
       </div>
     </div>
   ),
+}
+
+const listItem: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "column",
+  gap: "var(--spacing-xxs)",
+  paddingBlock: "var(--spacing-sm)",
+}
+
+const listTitle: React.CSSProperties = {
+  fontSize: "var(--font-size-sm)",
+  fontWeight: 500,
+  margin: 0,
+}
+
+const listDesc: React.CSSProperties = {
+  color: "var(--container-fg-alt)",
+  fontSize: "var(--font-size-xs)",
+  margin: 0,
 }

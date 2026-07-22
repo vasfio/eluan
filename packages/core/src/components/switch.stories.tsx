@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Switch } from "./switch"
+import { Label } from "./form-label"
 
 const meta: Meta<typeof Switch> = {
   title: "Components/Switch",
@@ -60,9 +61,15 @@ export const WithLabel: Story = {
     },
   },
   render: () => (
-    <div className="flex items-center space-x-2">
+    <div
+      style={{
+        alignItems: "center",
+        display: "flex",
+        gap: "var(--spacing-sm)",
+      }}
+    >
       <Switch id="airplane-mode" />
-      <label htmlFor="airplane-mode" className="text-sm font-medium">Airplane Mode</label>
+      <Label htmlFor="airplane-mode">Airplane Mode</Label>
     </div>
   ),
 }
@@ -76,9 +83,15 @@ export const Disabled: Story = {
     },
   },
   render: () => (
-    <div className="flex items-center space-x-2">
+    <div
+      style={{
+        alignItems: "center",
+        display: "flex",
+        gap: "var(--spacing-sm)",
+      }}
+    >
       <Switch id="disabled" disabled />
-      <label htmlFor="disabled" className="text-sm font-medium opacity-70">Disabled</label>
+      <Label htmlFor="disabled">Disabled</Label>
     </div>
   ),
 }
@@ -92,9 +105,15 @@ export const CheckedByDefault: Story = {
     },
   },
   render: () => (
-    <div className="flex items-center space-x-2">
+    <div
+      style={{
+        alignItems: "center",
+        display: "flex",
+        gap: "var(--spacing-sm)",
+      }}
+    >
       <Switch id="checked" defaultChecked />
-      <label htmlFor="checked" className="text-sm font-medium">Enabled by default</label>
+      <Label htmlFor="checked">Enabled by default</Label>
     </div>
   ),
 }
@@ -108,20 +127,69 @@ export const SettingsExample: Story = {
     },
   },
   render: () => (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <div className="space-y-0.5">
-          <label className="text-sm font-medium">Marketing emails</label>
-          <p className="text-sm text-muted-foreground">Receive emails about new products.</p>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "var(--spacing-lg)",
+        minWidth: "320px",
+      }}
+    >
+      <div
+        style={{
+          alignItems: "center",
+          display: "flex",
+          gap: "var(--spacing-lg)",
+          justifyContent: "space-between",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "var(--spacing-xxs)",
+          }}
+        >
+          <Label htmlFor="marketing-emails">Marketing emails</Label>
+          <p
+            style={{
+              color: "var(--container-fg-alt)",
+              fontSize: "var(--font-size-xs)",
+              margin: 0,
+            }}
+          >
+            Receive emails about new products.
+          </p>
         </div>
-        <Switch />
+        <Switch id="marketing-emails" />
       </div>
-      <div className="flex items-center justify-between">
-        <div className="space-y-0.5">
-          <label className="text-sm font-medium">Security emails</label>
-          <p className="text-sm text-muted-foreground">Receive emails about account activity.</p>
+      <div
+        style={{
+          alignItems: "center",
+          display: "flex",
+          gap: "var(--spacing-lg)",
+          justifyContent: "space-between",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "var(--spacing-xxs)",
+          }}
+        >
+          <Label htmlFor="security-emails">Security emails</Label>
+          <p
+            style={{
+              color: "var(--container-fg-alt)",
+              fontSize: "var(--font-size-xs)",
+              margin: 0,
+            }}
+          >
+            Receive emails about account activity.
+          </p>
         </div>
-        <Switch defaultChecked />
+        <Switch id="security-emails" defaultChecked />
       </div>
     </div>
   ),

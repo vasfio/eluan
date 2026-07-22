@@ -64,21 +64,19 @@ function formatFileSize(bytes: number): string {
 }
 
 const FileIcon = ({ type }: { type: FileType }) => {
-  const iconStyles = [styles.fileTypeIcon, fileTypeStyles[type]]
-
   switch (type) {
     case "image":
-      return <ImageIcon {...stylex.props(iconStyles)} />
+      return <ImageIcon {...stylex.props(styles.fileTypeIcon)} />
     case "document":
-      return <FileText {...stylex.props(iconStyles)} />
+      return <FileText {...stylex.props(styles.fileTypeIcon)} />
     case "video":
-      return <Film {...stylex.props(iconStyles)} />
+      return <Film {...stylex.props(styles.fileTypeIcon)} />
     case "audio":
-      return <Music {...stylex.props(iconStyles)} />
+      return <Music {...stylex.props(styles.fileTypeIcon)} />
     case "archive":
-      return <Archive {...stylex.props(iconStyles)} />
+      return <Archive {...stylex.props(styles.fileTypeIcon)} />
     default:
-      return <File {...stylex.props(iconStyles)} />
+      return <File {...stylex.props(styles.fileTypeIcon)} />
   }
 }
 
@@ -162,6 +160,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
 
     const handleDragOver = (e: React.DragEvent) => {
       e.preventDefault()
+      if (disabled) return
       setIsDragging(true)
     }
 
@@ -213,7 +212,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
             {...stylex.props(
               styles.dropzone,
               isDragging ? styles.dropzoneDragging : styles.dropzoneIdle,
-              disabled && styles.disabled
+              disabled && styles.dropzoneDisabled
             )}
           >
             {input}
@@ -239,15 +238,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
             <div {...stylex.props(styles.previewListVertical)}>
               {files.map((fileInfo, index) => (
                 <div key={index} {...stylex.props(styles.previewRow)}>
-                  {fileInfo.preview ? (
-                    <img
-                      src={fileInfo.preview}
-                      alt={fileInfo.file.name}
-                      {...stylex.props(styles.previewImageLarge)}
-                    />
-                  ) : (
-                    <FileIcon type={fileInfo.type} />
-                  )}
+                  <FileIcon type={fileInfo.type} />
                   <div {...stylex.props(styles.fileMeta)}>
                     <p {...stylex.props(styles.fileName)}>{fileInfo.file.name}</p>
                     <p {...stylex.props(styles.fileSize)}>
@@ -298,15 +289,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
           <div {...stylex.props(styles.previewListInline)}>
             {files.map((fileInfo, index) => (
               <div key={index} {...stylex.props(styles.previewChip)}>
-                {fileInfo.preview ? (
-                  <img
-                    src={fileInfo.preview}
-                    alt={fileInfo.file.name}
-                    {...stylex.props(styles.previewImageSmall)}
-                  />
-                ) : (
-                  <File {...stylex.props(styles.chipIcon)} />
-                )}
+                <File {...stylex.props(styles.chipIcon)} />
                 <span {...stylex.props(styles.chipName)}>{fileInfo.file.name}</span>
                 <button
                   type="button"
@@ -390,26 +373,9 @@ const styles = stylex.create({
     width: 1,
   },
   fileTypeIcon: {
-    height: "var(--size-sm)",
-    width: "var(--size-sm)",
-  },
-  fileTypeImage: {
-    color: "var(--positive-fg)",
-  },
-  fileTypeDocument: {
-    color: "var(--informative-fg)",
-  },
-  fileTypeVideo: {
-    color: "var(--important-fg)",
-  },
-  fileTypeAudio: {
-    color: "var(--cautionary-fg)",
-  },
-  fileTypeArchive: {
-    color: "var(--cautionary-fg)",
-  },
-  fileTypeOther: {
     color: "var(--interactive-fg-alt)",
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
   },
   dropzone: {
     alignItems: "center",
@@ -428,17 +394,28 @@ const styles = stylex.create({
   },
   dropzoneIdle: {
     borderColor: "var(--interactive-border-alt)",
+    // Hover only fills the background — border stays put.
     ":hover": {
-      borderColor: "var(--action-primary-bg-hover)",
+      backgroundColor: "var(--interactive-bg-hover)",
     },
   },
+  // Drag-over / active mirrors the hover fill, no border change.
   dropzoneDragging: {
-    backgroundColor: "var(--action-primary-bg-selected)",
-    borderColor: "var(--action-primary-bg)",
+    backgroundColor: "var(--interactive-bg-hover)",
+    borderColor: "var(--interactive-border-alt)",
   },
   disabled: {
     cursor: "not-allowed",
     opacity: 0.5,
+  },
+  // Disabled dropzone: filled disabled surface, no hover, cursor blocked.
+  dropzoneDisabled: {
+    backgroundColor: "var(--interactive-bg-disabled)",
+    color: "var(--interactive-fg-disabled)",
+    cursor: "not-allowed",
+    ":hover": {
+      backgroundColor: "var(--interactive-bg-disabled)",
+    },
   },
   dropzoneIcon: {
     color: "var(--interactive-fg-alt)",
@@ -472,20 +449,14 @@ const styles = stylex.create({
   },
   previewRow: {
     alignItems: "center",
-    backgroundColor: "var(--container-bg-alt)",
+    backgroundColor: "var(--container-bg)",
     borderColor: "var(--container-border)",
-    borderRadius: "var(--curves-lg)",
+    borderRadius: "var(--curves-md)",
     borderStyle: "solid",
     borderWidth: 1,
     display: "flex",
     gap: "var(--spacing-sm)",
     padding: "var(--spacing-sm)",
-  },
-  previewImageLarge: {
-    borderRadius: "var(--curves-sm)",
-    height: "var(--size-xl)",
-    objectFit: "cover",
-    width: "var(--size-xl)",
   },
   fileMeta: {
     flex: 1,
@@ -568,12 +539,6 @@ const styles = stylex.create({
     paddingBlock: "var(--spacing-xs)",
     paddingInline: "var(--spacing-sm)",
   },
-  previewImageSmall: {
-    borderRadius: "var(--curves-sm)",
-    height: "var(--size-xs)",
-    objectFit: "cover",
-    width: "var(--size-xs)",
-  },
   chipIcon: {
     color: "var(--interactive-fg-alt)",
     height: "var(--size-xxs)",
@@ -600,15 +565,6 @@ const styles = stylex.create({
     width: "calc(var(--spacing-sm) + var(--spacing-xxs))",
   },
 })
-
-const fileTypeStyles = {
-  image: styles.fileTypeImage,
-  document: styles.fileTypeDocument,
-  video: styles.fileTypeVideo,
-  audio: styles.fileTypeAudio,
-  archive: styles.fileTypeArchive,
-  other: styles.fileTypeOther,
-} satisfies Record<FileType, stylex.StyleXStyles>
 
 export { FileInput, ImageInput, DocumentInput, formatFileSize, getFileType }
 export type { FileType, FileInfo }

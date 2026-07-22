@@ -1,3 +1,4 @@
+import * as React from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { ScrollArea } from "../scroll-area";
@@ -10,7 +11,13 @@ describe("ScrollArea", () => {
 
   it("does not forward className overrides", () => {
     const { container } = render(
-      <ScrollArea {...({ className: "h-64" } as never)}><p>Content</p></ScrollArea>
+      <ScrollArea
+        {...({ className: "h-64" } as unknown as React.ComponentProps<
+          typeof ScrollArea
+        >)}
+      >
+        <p>Content</p>
+      </ScrollArea>
     );
     expect(container.querySelector(".h-64")).toBeNull();
   });

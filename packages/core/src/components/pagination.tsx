@@ -165,6 +165,7 @@ const paginationStyles = stylex.create({
   },
   ellipsis: {
     alignItems: "center",
+    color: "var(--interactive-fg-alt)",
     display: "flex",
     height: "var(--size-lg)",
     justifyContent: "center",
@@ -213,24 +214,17 @@ const paginationLinkStyles = stylex.create({
     },
   },
   active: {
-    backgroundColor: "transparent",
-    borderColor: "var(--action-secondary-border)",
+    backgroundColor: "var(--interactive-bg-selected)",
+    borderColor: "var(--interactive-bg-selected)",
     borderWidth: 1,
-    color: "var(--action-secondary-fg)",
-    ":hover": {
-      backgroundColor: "var(--action-secondary-bg-hover)",
-    },
-    ":active": {
-      backgroundColor: "var(--action-secondary-bg-active)",
-      color: "var(--action-secondary-fg-active)",
-    },
+    color: "var(--interactive-fg-selected)",
   },
   inactive: {
     backgroundColor: "transparent",
-    color: "var(--action-tertiary-fg)",
+    color: "var(--interactive-fg)",
     ":hover": {
-      backgroundColor: "var(--action-tertiary-bg-hover)",
-      color: "var(--action-tertiary-fg-active)",
+      backgroundColor: "var(--interactive-bg-hover)",
+      color: "var(--interactive-fg-hover)",
     },
   },
   edge: {

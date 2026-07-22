@@ -1,6 +1,8 @@
 import * as React from "react"
 import * as stylex from "@stylexjs/stylex"
 
+import { Button } from "./button"
+
 type FooterVariant = "default" | "modern" | null | undefined
 type FooterSize = "sm" | "default" | "lg" | null | undefined
 
@@ -13,10 +15,12 @@ export interface FooterProps
   extends Omit<React.HTMLAttributes<HTMLElement>, "className" | "style"> {
   variant?: FooterVariant
   size?: FooterSize
+  /** Full-bleed brand wordmark rendered at the bottom edge, lower half clipped. */
+  wordmark?: string
 }
 
 const Footer = React.forwardRef<HTMLElement, FooterProps>(
-  ({ variant = "default", size = "default", children, ...props }, ref) => {
+  ({ variant = "default", size = "default", wordmark, children, ...props }, ref) => {
     const resolvedVariant = variant ?? "default"
     const resolvedSize = size ?? "default"
 
@@ -24,9 +28,21 @@ const Footer = React.forwardRef<HTMLElement, FooterProps>(
       <footer
         ref={ref}
         {...props}
-        {...stylex.props(styles.footer, footerVariantStyles[resolvedVariant], footerSizeStyles[resolvedSize])}
+        {...stylex.props(
+          styles.footer,
+          footerVariantStyles[resolvedVariant],
+          footerSizeStyles[resolvedSize],
+          wordmark != null && styles.footerClip
+        )}
       >
-        <div {...stylex.props(styles.container)}>{children}</div>
+        <div {...stylex.props(styles.container, wordmark != null && styles.containerAbove)}>
+          {children}
+        </div>
+        {wordmark != null && (
+          <span aria-hidden="true" {...stylex.props(styles.wordmark)}>
+            {wordmark}
+          </span>
+        )}
       </footer>
     )
   }
@@ -77,13 +93,13 @@ export interface FooterLinkProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "className" | "style"> {}
 
 const FooterLink = React.forwardRef<HTMLAnchorElement, FooterLinkProps>(
-  (props, ref) => (
-    <li>
-      <a
-        ref={ref}
-        {...props}
-        {...stylex.props(styles.link)}
-      />
+  ({ children, ...props }, ref) => (
+    <li {...stylex.props(styles.linkItem)}>
+      <Button asChild variant="link">
+        <a ref={ref} {...props}>
+          {children}
+        </a>
+      </Button>
     </li>
   )
 )
@@ -134,14 +150,11 @@ const FooterSocialLink = React.forwardRef<
   HTMLAnchorElement,
   FooterSocialLinkProps
 >(({ label, children, ...props }, ref) => (
-  <a
-    ref={ref}
-    aria-label={label}
-    {...props}
-    {...stylex.props(styles.socialLink)}
-  >
-    {children}
-  </a>
+  <Button asChild variant="ghost" size="icon">
+    <a ref={ref} aria-label={label} {...props}>
+      {children}
+    </a>
+  </Button>
 ))
 FooterSocialLink.displayName = "FooterSocialLink"
 
@@ -169,14 +182,12 @@ FooterBrand.displayName = "FooterBrand"
 
 const FooterModernLink = React.forwardRef<HTMLAnchorElement, FooterLinkProps>(
   ({ children, ...props }, ref) => (
-    <li>
-      <a
-        ref={ref}
-        {...props}
-        {...stylex.props(styles.modernLink)}
-      >
-        {children}
-      </a>
+    <li {...stylex.props(styles.linkItem)}>
+      <Button asChild variant="link">
+        <a ref={ref} {...props}>
+          {children}
+        </a>
+      </Button>
     </li>
   )
 )
@@ -186,14 +197,11 @@ const FooterModernSocialLink = React.forwardRef<
   HTMLAnchorElement,
   FooterSocialLinkProps
 >(({ label, children, ...props }, ref) => (
-  <a
-    ref={ref}
-    aria-label={label}
-    {...props}
-    {...stylex.props(styles.modernSocialLink)}
-  >
-    {children}
-  </a>
+  <Button asChild variant="outline" size="icon" shape="round">
+    <a ref={ref} aria-label={label} {...props}>
+      {children}
+    </a>
+  </Button>
 ))
 FooterModernSocialLink.displayName = "FooterModernSocialLink"
 
@@ -207,7 +215,7 @@ const FooterStagger = React.forwardRef<HTMLDivElement, FooterStaggerProps>(
   ({ delayMs = 80, children, ...props }, ref) => {
     const items = React.Children.toArray(children)
     return (
-      <div ref={ref} {...props}>
+      <div ref={ref} {...props} {...stylex.props(styles.stagger)}>
         {items.map((child, i) => (
           <div
             key={i}
@@ -238,6 +246,10 @@ const styles = stylex.create({
   footer: {
     width: "100%",
   },
+  footerClip: {
+    overflow: "hidden",
+    position: "relative",
+  },
   footerDefault: {
     backgroundColor: "var(--container-bg)",
     borderColor: "var(--container-border-alt)",
@@ -256,6 +268,29 @@ const styles = stylex.create({
     maxWidth: "80rem",
     paddingInline: "var(--spacing-md)",
     width: "100%",
+  },
+  containerAbove: {
+    position: "relative",
+    zIndex: 1,
+  },
+  wordmark: {
+    bottom: 0,
+    color: "var(--container-border-alt)",
+    fontFamily: "var(--font-heading)",
+    fontSize: "clamp(4rem, 30vw, 22rem)",
+    fontWeight: 600,
+    left: 0,
+    letterSpacing: "-0.04em",
+    lineHeight: 0.8,
+    margin: 0,
+    pointerEvents: "none",
+    position: "absolute",
+    right: 0,
+    textAlign: "center",
+    transform: "translateY(50%)",
+    userSelect: "none",
+    whiteSpace: "nowrap",
+    zIndex: 0,
   },
   content: {
     display: "grid",
@@ -288,16 +323,8 @@ const styles = stylex.create({
     marginBlock: 0,
     paddingInlineStart: 0,
   },
-  link: {
-    color: "var(--interactive-fg-alt)",
-    fontSize: "var(--font-size-sm)",
-    textDecoration: "none",
-    transitionDuration: "150ms",
-    transitionProperty: "color",
-    transitionTimingFunction: "ease",
-    ":hover": {
-      color: "var(--interactive-fg)",
-    },
+  linkItem: {
+    display: "flex",
   },
   bottom: {
     alignItems: "center",
@@ -325,16 +352,6 @@ const styles = stylex.create({
     display: "flex",
     gap: "var(--spacing-md)",
   },
-  socialLink: {
-    color: "var(--interactive-fg-alt)",
-    textDecoration: "none",
-    transitionDuration: "150ms",
-    transitionProperty: "color",
-    transitionTimingFunction: "ease",
-    ":hover": {
-      color: "var(--interactive-fg)",
-    },
-  },
   brand: {
     borderBottomColor: "var(--container-border-alt)",
     borderBottomStyle: "solid",
@@ -353,43 +370,13 @@ const styles = stylex.create({
     lineHeight: 1,
     textTransform: "uppercase",
   },
-  modernLink: {
-    backgroundImage: "linear-gradient(var(--container-fg-inverse), var(--container-fg-inverse))",
-    backgroundPosition: "left bottom",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "0 1px",
-    color: "var(--interactive-fg-alt)",
-    display: "inline-block",
-    fontSize: "var(--font-size-sm)",
-    position: "relative",
-    textDecoration: "none",
-    transitionDuration: "200ms, 300ms",
-    transitionProperty: "color, background-size",
-    transitionTimingFunction: "ease",
-    ":hover": {
-      backgroundSize: "100% 1px",
-      color: "var(--container-fg-inverse)",
-    },
-  },
-  modernSocialLink: {
-    alignItems: "center",
-    borderColor: "var(--container-border-alt)",
-    borderRadius: "var(--radius-radius-full)",
-    borderStyle: "solid",
-    borderWidth: 1,
-    color: "var(--interactive-fg-alt)",
-    display: "inline-flex",
-    height: "var(--size-lg)",
-    justifyContent: "center",
-    textDecoration: "none",
-    transitionDuration: "200ms",
-    transitionProperty: "border-color, color, transform",
-    transitionTimingFunction: "ease",
-    width: "var(--size-lg)",
-    ":hover": {
-      borderColor: "var(--interactive-border-alt)",
-      color: "var(--container-fg-inverse)",
-      transform: "scale(1.1)",
+  stagger: {
+    display: "grid",
+    gap: "var(--spacing-lg)",
+    gridTemplateColumns: {
+      default: "1fr",
+      "@media (min-width: 768px)": "repeat(2, minmax(0, 1fr))",
+      "@media (min-width: 1024px)": "repeat(4, minmax(0, 1fr))",
     },
   },
   fadeItem: {

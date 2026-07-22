@@ -42,7 +42,7 @@ export const Default: Story = {
     },
   },
   render: () => (
-    <div className="w-[300px]">
+    <div style={{ maxWidth: 288 }}>
       <EmailInput placeholder="Enter your email" />
     </div>
   ),
@@ -57,13 +57,13 @@ export const WithValidation: Story = {
     },
   },
   render: () => (
-    <div className="w-[300px] space-y-2">
+    <div style={{ maxWidth: 288, display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
       <EmailInput
         placeholder="Enter your email"
         showValidation
         onValidationChange={(isValid) => console.log("Valid:", isValid)}
       />
-      <p className="text-sm text-muted-foreground">
+      <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)" }}>
         Type an email and click outside to see validation
       </p>
     </div>
@@ -79,7 +79,7 @@ export const Disabled: Story = {
     },
   },
   render: () => (
-    <div className="w-[300px]">
+    <div style={{ maxWidth: 288 }}>
       <EmailInput placeholder="Disabled" disabled />
     </div>
   ),

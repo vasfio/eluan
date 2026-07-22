@@ -9,6 +9,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "./navigation-menu"
+import { Button } from "./button"
 
 const meta: Meta<typeof NavigationMenu> = {
   title: "Components/Navigation Menu",
@@ -18,7 +19,7 @@ const meta: Meta<typeof NavigationMenu> = {
     docs: {
       description: {
         component: `
-A horizontal navigation menu with dropdown content panels, animated transitions, and support for trigger items and direct links.
+A horizontal navigation menu with dropdown content panels, animated transitions, and support for trigger items and direct links. Built on Radix; the open trigger's chevron rotates to point up.
 
 **Import**
 \`\`\`tsx
@@ -38,12 +39,15 @@ import {
 <NavigationMenu>
   <NavigationMenuList>
     <NavigationMenuItem>
-      <NavigationMenuTrigger>Getting Started</NavigationMenuTrigger>
+      <NavigationMenuTrigger>Clothing</NavigationMenuTrigger>
       <NavigationMenuContent>
-        <ul className="grid gap-3 p-4 w-[400px]">
-          <li>...</li>
-        </ul>
+        {/* megamenu grid of NavigationMenuLink items */}
       </NavigationMenuContent>
+    </NavigationMenuItem>
+    <NavigationMenuItem>
+      <NavigationMenuLink className={navigationMenuTriggerStyle()} href="#">
+        Sale
+      </NavigationMenuLink>
     </NavigationMenuItem>
   </NavigationMenuList>
 </NavigationMenu>
@@ -57,107 +61,244 @@ import {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const listItemClassName =
-  "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a"> & { title: string }
->(({ className, title, children, ...props }, ref) => {
+/**
+ * A single megamenu link. Hover/focus state is handled in JS because Storybook
+ * stories use inline styles (which cannot express `:hover`); all values are
+ * pulled from design tokens.
+ */
+const MegaLink = ({
+  children,
+  href = "#",
+}: {
+  children: React.ReactNode
+  href?: string
+}) => {
+  const [active, setActive] = React.useState(false)
   return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={className ? `${listItemClassName} ${className}` : listItemClassName}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
+    <NavigationMenuLink asChild>
+      <a
+        href={href}
+        onMouseEnter={() => setActive(true)}
+        onMouseLeave={() => setActive(false)}
+        onFocus={() => setActive(true)}
+        onBlur={() => setActive(false)}
+        style={{
+          backgroundColor: active ? "var(--interactive-bg-hover)" : "transparent",
+          borderRadius: "var(--curves-md)",
+          color: active ? "var(--interactive-fg)" : "var(--container-fg)",
+          display: "block",
+          fontSize: "var(--font-size-sm)",
+          padding: "var(--spacing-sm) var(--spacing-md)",
+          textDecoration: "none",
+          transitionDuration: "150ms",
+          transitionProperty: "background-color, color",
+          transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+        }}
+      >
+        {children}
+      </a>
+    </NavigationMenuLink>
   )
-})
-ListItem.displayName = "ListItem"
+}
+
+/** A labelled column of megamenu links. */
+const MegaColumn = ({
+  heading,
+  links,
+}: {
+  heading: string
+  links: string[]
+}) => (
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      gap: "var(--spacing-xxs)",
+    }}
+  >
+    <div
+      style={{
+        color: "var(--container-fg-alt)",
+        fontSize: "var(--font-size-xs)",
+        fontWeight: 400,
+        letterSpacing: "0.04em",
+        marginBottom: "var(--spacing-xxs)",
+        padding: "0 var(--spacing-md)",
+        textTransform: "uppercase",
+      }}
+    >
+      {heading}
+    </div>
+    {links.map((label) => (
+      <MegaLink key={label}>{label}</MegaLink>
+    ))}
+  </div>
+)
+
+/** Wrapper that gives each open panel room so it is never clipped. */
+const StoryFrame = ({ children }: { children: React.ReactNode }) => (
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      minHeight: 480,
+      padding: "var(--spacing-2xl)",
+    }}
+  >
+    {children}
+  </div>
+)
 
 export const Default: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Full navigation menu with dropdown content panels containing grid layouts of links.",
+        story:
+          "An e-commerce megamenu: category triggers open multi-column panels of links, one with a featured card, alongside a plain Sale link.",
       },
     },
   },
   render: () => (
-    <NavigationMenu>
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Getting Started</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li className="row-span-3">
-                <NavigationMenuLink asChild>
-                  <a
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                    href="#"
+    <StoryFrame>
+      <NavigationMenu>
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>Clothing</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <div
+                style={{
+                  display: "grid",
+                  gap: "var(--spacing-lg)",
+                  gridTemplateColumns: "repeat(3, minmax(0, 1fr)) 15rem",
+                  width: 720,
+                }}
+              >
+                <MegaColumn
+                  heading="Men"
+                  links={["T-Shirts", "Shirts", "Jeans", "Jackets", "Shoes"]}
+                />
+                <MegaColumn
+                  heading="Women"
+                  links={["Dresses", "Tops", "Skirts", "Knitwear", "Shoes"]}
+                />
+                <MegaColumn
+                  heading="Kids"
+                  links={["Tops", "Bottoms", "Outerwear", "Footwear"]}
+                />
+                <div
+                  style={{
+                    backgroundColor: "var(--container-bg-alt)",
+                    borderRadius: "var(--curves-md)",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "var(--spacing-sm)",
+                    padding: "var(--spacing-lg)",
+                  }}
+                >
+                  <div
+                    style={{
+                      color: "var(--container-fg)",
+                      fontSize: "var(--font-size-base)",
+                      fontWeight: 500,
+                    }}
                   >
-                    <div className="mb-2 mt-4 text-lg font-medium">
-                      Eluan UI
-                    </div>
-                    <p className="text-sm leading-tight text-muted-foreground">
-                      Beautifully designed components built with Radix UI and
-                      Tailwind CSS.
-                    </p>
-                  </a>
-                </NavigationMenuLink>
-              </li>
-              <ListItem href="#" title="Introduction">
-                Re-usable components built using Radix UI and Tailwind CSS.
-              </ListItem>
-              <ListItem href="#" title="Installation">
-                How to install dependencies and structure your app.
-              </ListItem>
-              <ListItem href="#" title="Typography">
-                Styles for headings, paragraphs, lists...etc
-              </ListItem>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Components</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-              <ListItem title="Alert Dialog" href="#">
-                A modal dialog that interrupts the user with important content.
-              </ListItem>
-              <ListItem title="Hover Card" href="#">
-                For sighted users to preview content available behind a link.
-              </ListItem>
-              <ListItem title="Progress" href="#">
-                Displays an indicator showing the completion progress of a task.
-              </ListItem>
-              <ListItem title="Scroll-area" href="#">
-                Visually or semantically separates content.
-              </ListItem>
-              <ListItem title="Tabs" href="#">
-                A set of layered sections of content.
-              </ListItem>
-              <ListItem title="Tooltip" href="#">
-                A popup that displays information related to an element.
-              </ListItem>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink className={navigationMenuTriggerStyle()} href="#">
-            Documentation
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
+                    Summer Collection
+                  </div>
+                  <p
+                    style={{
+                      color: "var(--container-fg-alt)",
+                      fontSize: "var(--font-size-sm)",
+                      lineHeight: 1.5,
+                      margin: 0,
+                    }}
+                  >
+                    Lightweight linens and breezy essentials, just in for the
+                    season.
+                  </p>
+                  <div style={{ marginTop: "var(--spacing-xs)" }}>
+                    <Button variant="link">Shop now</Button>
+                  </div>
+                </div>
+              </div>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>Electronics</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <div
+                style={{
+                  display: "grid",
+                  gap: "var(--spacing-lg)",
+                  gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                  width: 600,
+                }}
+              >
+                <MegaColumn
+                  heading="Computing"
+                  links={[
+                    "Laptops",
+                    "Desktops",
+                    "Monitors",
+                    "Keyboards",
+                    "Storage",
+                  ]}
+                />
+                <MegaColumn
+                  heading="Audio"
+                  links={["Headphones", "Earbuds", "Speakers", "Turntables"]}
+                />
+                <MegaColumn
+                  heading="Mobile"
+                  links={[
+                    "Smartphones",
+                    "Tablets",
+                    "Smartwatches",
+                    "Chargers",
+                  ]}
+                />
+              </div>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>Home &amp; Living</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <div
+                style={{
+                  display: "grid",
+                  gap: "var(--spacing-lg)",
+                  gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                  width: 600,
+                }}
+              >
+                <MegaColumn
+                  heading="Kitchen"
+                  links={["Cookware", "Utensils", "Appliances", "Storage"]}
+                />
+                <MegaColumn
+                  heading="Bedroom"
+                  links={["Bedding", "Pillows", "Mattresses", "Lighting"]}
+                />
+                <MegaColumn
+                  heading="Decor"
+                  links={["Wall Art", "Rugs", "Plants", "Candles"]}
+                />
+              </div>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              className={navigationMenuTriggerStyle()}
+              href="#"
+            >
+              Sale
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+    </StoryFrame>
   ),
 }
 
@@ -165,34 +306,49 @@ export const Simple: Story = {
   parameters: {
     docs: {
       description: {
-        story: "A simple navigation menu with direct links and no dropdown content.",
+        story:
+          "A simple navigation menu with direct links and no dropdown content.",
       },
     },
   },
   render: () => (
-    <NavigationMenu>
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuLink className={navigationMenuTriggerStyle()} href="#">
-            Home
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink className={navigationMenuTriggerStyle()} href="#">
-            About
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink className={navigationMenuTriggerStyle()} href="#">
-            Services
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink className={navigationMenuTriggerStyle()} href="#">
-            Contact
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
+    <StoryFrame>
+      <NavigationMenu>
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              className={navigationMenuTriggerStyle()}
+              href="#"
+            >
+              Home
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              className={navigationMenuTriggerStyle()}
+              href="#"
+            >
+              Shop
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              className={navigationMenuTriggerStyle()}
+              href="#"
+            >
+              Sale
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              className={navigationMenuTriggerStyle()}
+              href="#"
+            >
+              Contact
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+    </StoryFrame>
   ),
 }

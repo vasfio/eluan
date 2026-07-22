@@ -50,9 +50,10 @@ const ToolbarButton = ({
 
 interface RichTextToolbarProps {
   editor: Editor | null
+  disabled?: boolean
 }
 
-const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
+const RichTextToolbar = ({ editor, disabled = false }: RichTextToolbarProps) => {
   // Subscribe to editor state so the toolbar re-renders on every transaction.
   // In TipTap v3, `useEditor` no longer auto-re-renders on transactions for
   // performance — we have to opt-in via `useEditorState`.
@@ -62,6 +63,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
       const ed = ctx.editor
       if (!ed) return null
       return {
+        isEditable: ed.isEditable,
         isBold: ed.isActive("bold"),
         canBold: ed.can().chain().focus().toggleBold().run(),
         isItalic: ed.isActive("italic"),
@@ -84,12 +86,17 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
 
   if (!editor || !state) return null
 
+  // When the editor is not editable, every toolbar control must be truly
+  // disabled — the Toggle's :disabled style sets pointer-events: none and the
+  // disabled foreground colour, which also suppresses hover backgrounds.
+  const isDisabled = disabled || !state.isEditable
+
   return (
     <div {...stylex.props(styles.toolbar)}>
       <ToolbarButton
         pressed={state.isBold}
         onPressedChange={() => editor.chain().focus().toggleBold().run()}
-        disabled={!state.canBold}
+        disabled={isDisabled || !state.canBold}
         tooltip="Bold"
       >
         <Bold {...stylex.props(styles.icon)} />
@@ -97,7 +104,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
       <ToolbarButton
         pressed={state.isItalic}
         onPressedChange={() => editor.chain().focus().toggleItalic().run()}
-        disabled={!state.canItalic}
+        disabled={isDisabled || !state.canItalic}
         tooltip="Italic"
       >
         <Italic {...stylex.props(styles.icon)} />
@@ -105,7 +112,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
       <ToolbarButton
         pressed={state.isStrike}
         onPressedChange={() => editor.chain().focus().toggleStrike().run()}
-        disabled={!state.canStrike}
+        disabled={isDisabled || !state.canStrike}
         tooltip="Strikethrough"
       >
         <Strikethrough {...stylex.props(styles.icon)} />
@@ -113,7 +120,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
       <ToolbarButton
         pressed={state.isCode}
         onPressedChange={() => editor.chain().focus().toggleCode().run()}
-        disabled={!state.canCode}
+        disabled={isDisabled || !state.canCode}
         tooltip="Code"
       >
         <Code {...stylex.props(styles.icon)} />
@@ -126,6 +133,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         onPressedChange={() =>
           editor.chain().focus().toggleHeading({ level: 1 }).run()
         }
+        disabled={isDisabled}
         tooltip="Heading 1"
       >
         <Heading1 {...stylex.props(styles.icon)} />
@@ -135,6 +143,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         onPressedChange={() =>
           editor.chain().focus().toggleHeading({ level: 2 }).run()
         }
+        disabled={isDisabled}
         tooltip="Heading 2"
       >
         <Heading2 {...stylex.props(styles.icon)} />
@@ -144,6 +153,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
         onPressedChange={() =>
           editor.chain().focus().toggleHeading({ level: 3 }).run()
         }
+        disabled={isDisabled}
         tooltip="Heading 3"
       >
         <Heading3 {...stylex.props(styles.icon)} />
@@ -154,6 +164,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
       <ToolbarButton
         pressed={state.isBulletList}
         onPressedChange={() => editor.chain().focus().toggleBulletList().run()}
+        disabled={isDisabled}
         tooltip="Bullet List"
       >
         <List {...stylex.props(styles.icon)} />
@@ -161,6 +172,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
       <ToolbarButton
         pressed={state.isOrderedList}
         onPressedChange={() => editor.chain().focus().toggleOrderedList().run()}
+        disabled={isDisabled}
         tooltip="Ordered List"
       >
         <ListOrdered {...stylex.props(styles.icon)} />
@@ -168,6 +180,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
       <ToolbarButton
         pressed={state.isBlockquote}
         onPressedChange={() => editor.chain().focus().toggleBlockquote().run()}
+        disabled={isDisabled}
         tooltip="Quote"
       >
         <Quote {...stylex.props(styles.icon)} />
@@ -175,6 +188,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
       <ToolbarButton
         pressed={false}
         onPressedChange={() => editor.chain().focus().setHorizontalRule().run()}
+        disabled={isDisabled}
         tooltip="Horizontal Rule"
       >
         <Minus {...stylex.props(styles.icon)} />
@@ -185,7 +199,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
       <ToolbarButton
         pressed={false}
         onPressedChange={() => editor.chain().focus().undo().run()}
-        disabled={!state.canUndo}
+        disabled={isDisabled || !state.canUndo}
         tooltip="Undo"
       >
         <Undo {...stylex.props(styles.icon)} />
@@ -193,7 +207,7 @@ const RichTextToolbar = ({ editor }: RichTextToolbarProps) => {
       <ToolbarButton
         pressed={false}
         onPressedChange={() => editor.chain().focus().redo().run()}
-        disabled={!state.canRedo}
+        disabled={isDisabled || !state.canRedo}
         tooltip="Redo"
       >
         <Redo {...stylex.props(styles.icon)} />
@@ -257,7 +271,7 @@ const RichText = React.forwardRef<HTMLDivElement, RichTextProps>(
         {...stylex.props(styles.root, disabled && styles.rootDisabled)}
       >
         <style>{proseMirrorStyles}</style>
-        <RichTextToolbar editor={editor} />
+        <RichTextToolbar editor={editor} disabled={disabled} />
         <EditorContent
           editor={editor}
           className="eluan-rich-text-content"

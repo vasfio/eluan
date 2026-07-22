@@ -1,37 +1,8 @@
 "use client"
 
 import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
 import * as stylex from "@stylexjs/stylex"
-
-/** Tailwind `lg` breakpoint in pixels. */
-const LG_BREAKPOINT = 1024
-
-// ---------------------------------------------------------------------------
-// Media-query hook
-// ---------------------------------------------------------------------------
-
-function useIsLargeScreen() {
-  const [isLarge, setIsLarge] = React.useState(() => {
-    if (typeof window === "undefined") return false
-    return window.innerWidth >= LG_BREAKPOINT
-  })
-
-  React.useEffect(() => {
-    const mql = window.matchMedia(`(min-width: ${LG_BREAKPOINT}px)`)
-    const handler = (e: MediaQueryListEvent | MediaQueryList) =>
-      setIsLarge(e.matches)
-    // Set initial value on the client (handles SSR mismatch).
-    handler(mql)
-    mql.addEventListener("change", handler as (e: MediaQueryListEvent) => void)
-    return () =>
-      mql.removeEventListener(
-        "change",
-        handler as (e: MediaQueryListEvent) => void
-      )
-  }, [])
-
-  return isLarge
-}
 
 // ---------------------------------------------------------------------------
 // Context
@@ -40,7 +11,6 @@ function useIsLargeScreen() {
 interface DrawerContextValue {
   open: boolean
   onOpenChange: (open: boolean) => void
-  isLargeScreen: boolean
 }
 
 const DrawerContext = React.createContext<DrawerContextValue | undefined>(
@@ -56,7 +26,7 @@ function useDrawer() {
 }
 
 // ---------------------------------------------------------------------------
-// Drawer (root)
+// Types
 // ---------------------------------------------------------------------------
 
 interface DrawerProps {
@@ -69,7 +39,9 @@ interface DrawerProps {
 type DrawerButtonProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   "className" | "style"
->
+> & {
+  asChild?: boolean
+}
 
 type DrawerDivProps = Omit<
   React.HTMLAttributes<HTMLDivElement>,
@@ -90,98 +62,55 @@ type DrawerSide = "left" | "right"
 
 type DrawerContentProps = DrawerDivProps & {
   side?: DrawerSide
+  /** Panel width when open. Number is treated as px. Defaults to 320px. */
+  width?: number | string
 }
 
+// ---------------------------------------------------------------------------
+// Styles
+// ---------------------------------------------------------------------------
+
 const styles = stylex.create({
-  overlay: {
-    backgroundColor: "var(--container-fg)",
-    inset: 0,
-    position: "fixed",
-    transitionDuration: "300ms",
-    transitionProperty: "opacity",
-    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-    zIndex: 50,
+  layout: {
+    display: "flex",
+    flexDirection: "row",
+    height: "100%",
+    width: "100%",
   },
-  overlayOpen: {
-    opacity: 0.8,
-  },
-  overlayClosed: {
-    opacity: 0,
-    pointerEvents: "none",
-  },
-  content: {
+  panel: {
     backgroundColor: "var(--container-bg)",
     borderColor: "var(--container-border)",
     borderStyle: "solid",
     borderTopWidth: 0,
     borderBottomWidth: 0,
-    bottom: 0,
-    height: "100%",
-    maxWidth: "24rem",
-    position: "fixed",
-    top: 0,
-    transitionDuration: "300ms",
-    transitionProperty: "transform",
-    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-    width: "75%",
-    zIndex: 50,
-  },
-  contentLeft: {
-    borderLeftWidth: 0,
-    borderRightWidth: 1,
-    left: 0,
-    "[data-state=closed]": {
-      transform: "translateX(-100%)",
-    },
-    "[data-state=open]": {
-      transform: "translateX(0)",
-    },
-  },
-  contentRight: {
-    borderLeftWidth: 1,
-    borderRightWidth: 0,
-    right: 0,
-    "[data-state=closed]": {
-      transform: "translateX(100%)",
-    },
-    "[data-state=open]": {
-      transform: "translateX(0)",
-    },
-  },
-  inlineContent: {
-    backgroundColor: "var(--container-bg)",
-    borderColor: "var(--container-border)",
-    borderStyle: "solid",
     flexShrink: 0,
-    height: "100vh",
+    height: "100%",
     overflow: "hidden",
-    position: "sticky",
-    top: 0,
     transitionDuration: "300ms",
     transitionProperty: "width",
     transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
   },
-  inlineLeft: {
+  panelLeft: {
     borderLeftWidth: 0,
     borderRightWidth: 1,
-    order: -9999,
+    order: -1,
   },
-  inlineRight: {
+  panelRight: {
     borderLeftWidth: 1,
     borderRightWidth: 0,
-    order: 9999,
+    order: 1,
   },
-  inlineOpen: {
-    width: "17.5rem",
-  },
-  inlineClosed: {
+  panelClosed: {
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
     width: 0,
   },
-  inlineInner: {
+  inner: {
+    display: "flex",
+    flexDirection: "column",
     height: "100%",
-    width: "17.5rem",
   },
-  inlineInnerClosed: {
+  innerClosed: {
     visibility: "hidden",
   },
   header: {
@@ -209,6 +138,19 @@ const styles = stylex.create({
   },
 })
 
+const dynamicStyles = stylex.create({
+  width: (value: string) => ({ width: value }),
+})
+
+function resolveWidth(width: number | string | undefined): string {
+  if (width == null) return "320px"
+  return typeof width === "number" ? `${width}px` : width
+}
+
+// ---------------------------------------------------------------------------
+// Drawer (root / provider)
+// ---------------------------------------------------------------------------
+
 function Drawer({
   children,
   open: controlledOpen,
@@ -216,163 +158,129 @@ function Drawer({
   onOpenChange,
 }: DrawerProps) {
   const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen)
-  const open = controlledOpen ?? uncontrolledOpen
-  const setOpen = onOpenChange ?? setUncontrolledOpen
-  const isLargeScreen = useIsLargeScreen()
+  const isControlled = controlledOpen !== undefined
+  const open = isControlled ? controlledOpen : uncontrolledOpen
+
+  const setOpen = React.useCallback(
+    (next: boolean) => {
+      if (!isControlled) setUncontrolledOpen(next)
+      onOpenChange?.(next)
+    },
+    [isControlled, onOpenChange]
+  )
+
+  const value = React.useMemo(
+    () => ({ open, onOpenChange: setOpen }),
+    [open, setOpen]
+  )
 
   return (
-    <DrawerContext.Provider value={{ open, onOpenChange: setOpen, isLargeScreen }}>
-      {children}
-    </DrawerContext.Provider>
+    <DrawerContext.Provider value={value}>{children}</DrawerContext.Provider>
   )
 }
+
+// ---------------------------------------------------------------------------
+// Layout
+// ---------------------------------------------------------------------------
+
+/**
+ * Flex-row container that places the main content and the inline
+ * {@link DrawerContent} panel side by side. Render it inside a `<Drawer>`.
+ * The panel collapses/expands within this row, so the main content reclaims
+ * the freed space automatically.
+ */
+const DrawerLayout = React.forwardRef<HTMLDivElement, DrawerDivProps>(
+  ({ ...props }, ref) => (
+    <div ref={ref} {...props} {...stylex.props(styles.layout)} />
+  )
+)
+DrawerLayout.displayName = "DrawerLayout"
 
 // ---------------------------------------------------------------------------
 // Trigger / Close
 // ---------------------------------------------------------------------------
 
-const DrawerTrigger = React.forwardRef<
-  HTMLButtonElement,
-  DrawerButtonProps
->(({ onClick, ...props }, ref) => {
-  const { open, onOpenChange } = useDrawer()
+const DrawerTrigger = React.forwardRef<HTMLButtonElement, DrawerButtonProps>(
+  ({ asChild = false, onClick, ...props }, ref) => {
+    const { open, onOpenChange } = useDrawer()
+    const Comp = asChild ? Slot : "button"
 
-  return (
-    <button
-      ref={ref}
-      onClick={(e) => {
-        onOpenChange(!open)
-        onClick?.(e)
-      }}
-      {...props}
-    />
-  )
-})
+    return (
+      <Comp
+        ref={ref}
+        type={asChild ? undefined : "button"}
+        aria-expanded={open}
+        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+          onOpenChange(!open)
+          onClick?.(e)
+        }}
+        {...props}
+      />
+    )
+  }
+)
 DrawerTrigger.displayName = "DrawerTrigger"
 
-const DrawerClose = React.forwardRef<
-  HTMLButtonElement,
-  DrawerButtonProps
->(({ onClick, ...props }, ref) => {
-  const { onOpenChange } = useDrawer()
+const DrawerClose = React.forwardRef<HTMLButtonElement, DrawerButtonProps>(
+  ({ asChild = false, onClick, ...props }, ref) => {
+    const { onOpenChange } = useDrawer()
+    const Comp = asChild ? Slot : "button"
 
-  return (
-    <button
-      ref={ref}
-      onClick={(e) => {
-        onOpenChange(false)
-        onClick?.(e)
-      }}
-      {...props}
-    />
-  )
-})
+    return (
+      <Comp
+        ref={ref}
+        type={asChild ? undefined : "button"}
+        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+          onOpenChange(false)
+          onClick?.(e)
+        }}
+        {...props}
+      />
+    )
+  }
+)
 DrawerClose.displayName = "DrawerClose"
 
 // ---------------------------------------------------------------------------
-// Portal / Overlay (mobile only)
+// Content (inline collapsible panel)
 // ---------------------------------------------------------------------------
 
-const DrawerPortal = ({ children }: { children: React.ReactNode }) => {
-  const { open } = useDrawer()
-
-  if (!open) return null
-
-  return <>{children}</>
-}
-
-const DrawerOverlay = React.forwardRef<
-  HTMLDivElement,
-  DrawerDivProps
->(({ onClick, ...props }, ref) => {
-  const { open, onOpenChange } = useDrawer()
-
-  return (
-    <div
-      ref={ref}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) {
-          onOpenChange(false)
-        }
-        onClick?.(e)
-      }}
-      {...props}
-      {...stylex.props(styles.overlay, open ? styles.overlayOpen : styles.overlayClosed)}
-    />
-  )
-})
-DrawerOverlay.displayName = "DrawerOverlay"
-
-// ---------------------------------------------------------------------------
 const DrawerContent = React.forwardRef<HTMLDivElement, DrawerContentProps>(
-  ({ side = "right", children, ...props }, ref) => {
-    const { open, onOpenChange, isLargeScreen } = useDrawer()
+  ({ side = "right", width, children, ...props }, ref) => {
+    const { open, onOpenChange } = useDrawer()
+    const resolvedWidth = resolveWidth(width)
 
-    const resolvedSide = side ?? "right"
-
-    // ----- side-effects -----
     React.useEffect(() => {
+      if (!open) return
       const handleEscape = (e: KeyboardEvent) => {
-        if (e.key === "Escape") {
-          onOpenChange(false)
-        }
+        if (e.key === "Escape") onOpenChange(false)
       }
+      document.addEventListener("keydown", handleEscape)
+      return () => document.removeEventListener("keydown", handleEscape)
+    }, [open, onOpenChange])
 
-      if (open) {
-        document.addEventListener("keydown", handleEscape)
-        // Only lock scroll on mobile overlay mode
-        if (!isLargeScreen) {
-          document.body.style.overflow = "hidden"
-        }
-      }
-
-      return () => {
-        document.removeEventListener("keydown", handleEscape)
-        document.body.style.overflow = ""
-      }
-    }, [open, onOpenChange, isLargeScreen])
-
-    // ----- Large screen: inline push mode -----
-    if (isLargeScreen) {
-      return (
-        <div
-          ref={ref}
-          data-state={open ? "open" : "closed"}
-          {...props}
-          {...stylex.props(
-            styles.inlineContent,
-            resolvedSide === "right" ? styles.inlineRight : styles.inlineLeft,
-            open ? styles.inlineOpen : styles.inlineClosed
-          )}
-        >
-          <div
-            {...stylex.props(
-              styles.inlineInner,
-              !open && styles.inlineInnerClosed
-            )}
-          >
-            {children}
-          </div>
-        </div>
-      )
-    }
-
-    // ----- Small screen: overlay mode -----
     return (
-      <DrawerPortal>
-        <DrawerOverlay />
+      <div
+        ref={ref}
+        data-state={open ? "open" : "closed"}
+        aria-hidden={!open}
+        {...props}
+        {...stylex.props(
+          styles.panel,
+          side === "left" ? styles.panelLeft : styles.panelRight,
+          open ? dynamicStyles.width(resolvedWidth) : styles.panelClosed
+        )}
+      >
         <div
-          ref={ref}
-          data-state={open ? "open" : "closed"}
-          {...props}
           {...stylex.props(
-            styles.content,
-            resolvedSide === "right" ? styles.contentRight : styles.contentLeft
+            styles.inner,
+            dynamicStyles.width(resolvedWidth),
+            !open && styles.innerClosed
           )}
         >
           {children}
         </div>
-      </DrawerPortal>
+      </div>
     )
   }
 )
@@ -382,54 +290,34 @@ DrawerContent.displayName = "DrawerContent"
 // Header / Footer / Title / Description
 // ---------------------------------------------------------------------------
 
-const DrawerHeader = ({
-  ...props
-}: DrawerDivProps) => (
-  <div
-    {...props}
-    {...stylex.props(styles.header)}
-  />
+const DrawerHeader = ({ ...props }: DrawerDivProps) => (
+  <div {...props} {...stylex.props(styles.header)} />
 )
 DrawerHeader.displayName = "DrawerHeader"
 
-const DrawerFooter = ({
-  ...props
-}: DrawerDivProps) => (
-  <div
-    {...props}
-    {...stylex.props(styles.footer)}
-  />
+const DrawerFooter = ({ ...props }: DrawerDivProps) => (
+  <div {...props} {...stylex.props(styles.footer)} />
 )
 DrawerFooter.displayName = "DrawerFooter"
 
-const DrawerTitle = React.forwardRef<
-  HTMLHeadingElement,
-  DrawerHeadingProps
->(({ ...props }, ref) => (
-  <h2
-    ref={ref}
-    {...props}
-    {...stylex.props(styles.title)}
-  />
-))
+const DrawerTitle = React.forwardRef<HTMLHeadingElement, DrawerHeadingProps>(
+  ({ ...props }, ref) => (
+    <h2 ref={ref} {...props} {...stylex.props(styles.title)} />
+  )
+)
 DrawerTitle.displayName = "DrawerTitle"
 
 const DrawerDescription = React.forwardRef<
   HTMLParagraphElement,
   DrawerParagraphProps
 >(({ ...props }, ref) => (
-  <p
-    ref={ref}
-    {...props}
-    {...stylex.props(styles.description)}
-  />
+  <p ref={ref} {...props} {...stylex.props(styles.description)} />
 ))
 DrawerDescription.displayName = "DrawerDescription"
 
 export {
   Drawer,
-  DrawerPortal,
-  DrawerOverlay,
+  DrawerLayout,
   DrawerTrigger,
   DrawerClose,
   DrawerContent,

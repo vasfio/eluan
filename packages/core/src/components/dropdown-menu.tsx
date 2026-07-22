@@ -160,59 +160,80 @@ const styles = stylex.create({
       backgroundColor: "var(--interactive-bg-hover)",
     },
   },
+  // Presentational mirror of the `Checkbox` component's recipe. We cannot nest
+  // the interactive Radix checkbox inside a menu item, so this replicates its
+  // exact visual (box, border, skeuo shadows, checked fill) driven by the menu
+  // item's own checked state.
   checkBox: {
     alignItems: "center",
+    backgroundColor: "transparent",
     borderColor: "var(--interactive-border-alt)",
-    borderRadius: "var(--curves-xxs)",
+    borderRadius: "var(--curves-xs)",
     borderStyle: "solid",
     borderWidth: 1,
+    boxShadow: "var(--skeuo-recessed)",
+    boxSizing: "border-box",
     display: "flex",
     flexShrink: 0,
     height: "var(--size-xxs)",
     justifyContent: "center",
-    marginLeft: "auto",
-    paddingLeft: "var(--spacing-md)",
     transitionDuration: "150ms",
-    transitionProperty: "background-color, border-color",
+    transitionProperty: "color, background-color, border-color, box-shadow",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
     width: "var(--size-xxs)",
   },
   checkBoxChecked: {
-    backgroundColor: "var(--interactive-bg-active)",
-    borderColor: "var(--interactive-bg-active)",
+    backgroundColor: "var(--interactive-bg-selected)",
+    backgroundImage: "var(--skeuo-surface-pressed)",
+    borderColor: "var(--interactive-bg-selected)",
+    boxShadow: "var(--skeuo-pressed)",
+    color: "var(--interactive-fg-selected)",
   },
   checkIcon: {
-    color: "var(--interactive-fg-active)",
-    height: "calc(var(--size-xxs) - var(--spacing-xxs))",
-    width: "calc(var(--size-xxs) - var(--spacing-xxs))",
+    color: "var(--interactive-fg-selected)",
+    height: "var(--spacing-md)",
+    width: "var(--spacing-md)",
   },
+  // Presentational mirror of the `RadioGroup` item recipe: an unchecked ring
+  // (border + recessed shadow) with a filled, pressed circle + inner dot shown
+  // only when selected.
   radioBox: {
     alignItems: "center",
+    backgroundColor: "transparent",
     borderColor: "var(--interactive-border-alt)",
     borderRadius: "var(--radius-radius-full)",
     borderStyle: "solid",
     borderWidth: 1,
+    boxShadow: "var(--skeuo-recessed)",
+    boxSizing: "border-box",
     display: "flex",
     flexShrink: 0,
     height: "var(--size-xxs)",
     justifyContent: "center",
-    marginLeft: "var(--spacing-sm)",
     position: "relative",
     width: "var(--size-xxs)",
   },
   radioIndicator: {
     alignItems: "center",
-    backgroundColor: "var(--interactive-bg-active)",
-    borderColor: "var(--interactive-bg-active)",
+    backgroundColor: "var(--interactive-bg-selected)",
+    backgroundImage: "var(--skeuo-surface-pressed)",
+    borderColor: "var(--interactive-bg-selected)",
     borderRadius: "var(--radius-radius-full)",
     borderStyle: "solid",
     borderWidth: 1,
+    boxShadow: "var(--skeuo-pressed)",
+    boxSizing: "border-box",
     display: "flex",
-    inset: 0,
+    height: "var(--size-xxs)",
     justifyContent: "center",
+    left: "50%",
     position: "absolute",
+    top: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "var(--size-xxs)",
   },
   radioDot: {
-    backgroundColor: "var(--interactive-fg-active)",
+    backgroundColor: "var(--interactive-bg)",
     borderRadius: "var(--radius-radius-full)",
     height: "calc(var(--spacing-xs) + var(--spacing-xxs))",
     width: "calc(var(--spacing-xs) + var(--spacing-xxs))",
@@ -313,8 +334,16 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     {...stylex.props(styles.itemBase, styles.checkboxItem)}
   >
     {children}
-    <span {...stylex.props(styles.checkBox, checked && styles.checkBoxChecked)}>
-      {checked && <Check {...stylex.props(styles.checkIcon)} />}
+    <span
+      aria-hidden
+      {...stylex.props(
+        styles.checkBox,
+        checked === true && styles.checkBoxChecked
+      )}
+    >
+      {checked === true && (
+        <Check {...stylex.props(styles.checkIcon)} strokeWidth={3} />
+      )}
     </span>
   </DropdownMenuPrimitive.CheckboxItem>
 ))
@@ -331,7 +360,7 @@ const DropdownMenuRadioItem = React.forwardRef<
     {...stylex.props(styles.itemBase, styles.radioItem)}
   >
     {children}
-    <span {...stylex.props(styles.radioBox)}>
+    <span aria-hidden {...stylex.props(styles.radioBox)}>
       <DropdownMenuPrimitive.ItemIndicator>
         <span {...stylex.props(styles.radioIndicator)}>
           <span {...stylex.props(styles.radioDot)} />

@@ -1,6 +1,8 @@
 import React from "react"
 import type { Meta, StoryObj } from "@storybook/react"
 import { FileInput, ImageInput, DocumentInput } from "./file-input"
+import { Progress } from "./progress"
+import { Button } from "./button"
 
 const meta: Meta<typeof FileInput> = {
   title: "Components/File Input",
@@ -44,7 +46,7 @@ export const Default: Story = {
     },
   },
   render: () => (
-    <div className="w-[300px]">
+    <div style={{ maxWidth: 420 }}>
       <FileInput onChange={(files) => console.log("Files:", files)} />
     </div>
   ),
@@ -59,7 +61,7 @@ export const Dropzone: Story = {
     },
   },
   render: () => (
-    <div className="w-[400px]">
+    <div style={{ maxWidth: 420 }}>
       <FileInput variant="dropzone" onChange={(files) => console.log("Files:", files)} />
     </div>
   ),
@@ -79,7 +81,7 @@ export const WithUploadedFiles: Story = {
       new File(["content"], "photo.jpg", { type: "image/jpeg" }),
     ])
     return (
-      <div className="w-[400px]">
+      <div style={{ maxWidth: 420 }}>
         <FileInput variant="dropzone" value={files} onChange={setFiles} maxFiles={5} />
       </div>
     )
@@ -123,7 +125,14 @@ export const WithProgress: Story = {
     }, [])
 
     return (
-      <div className="w-[400px] space-y-4">
+      <div
+        style={{
+          maxWidth: 420,
+          display: "flex",
+          flexDirection: "column",
+          gap: "var(--spacing-md)",
+        }}
+      >
         <FileInput
           variant="dropzone"
           value={files}
@@ -135,29 +144,42 @@ export const WithProgress: Story = {
           maxFiles={3}
         />
         {files.length > 0 && (
-          <div className="space-y-3">
-            <div className="space-y-1">
-              <div className="flex items-center justify-between text-[length:var(--font-size-sm)]">
-                <span className="text-[color:var(--interactive-fg)]">
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "var(--spacing-sm)",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "var(--spacing-xs)",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  fontSize: "var(--font-size-xs)",
+                  color: "var(--container-fg-alt)",
+                }}
+              >
+                <span>
                   {uploading ? "Uploading..." : progress === 100 ? "Upload complete" : "Ready to upload"}
                 </span>
-                <span className="text-[color:var(--interactive-fg-alt)]">{progress}%</span>
+                <span>{progress}%</span>
               </div>
-              <div className="h-2 w-full rounded-full bg-[var(--container-bg-alt)] overflow-hidden">
-                <div
-                  className="h-full rounded-full bg-[var(--action-primary-bg)] transition-all duration-150"
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
+              <Progress value={progress} />
             </div>
-            <button
-              type="button"
-              className="flex h-[var(--size-lg)] items-center gap-2 rounded-md bg-[var(--action-primary-bg)] px-4 py-2 text-[length:var(--font-size-sm)] text-[color:var(--action-primary-fg)] disabled:opacity-50 disabled:cursor-not-allowed"
+            <Button
               onClick={startUpload}
               disabled={uploading || progress === 100}
             >
               {uploading ? "Uploading..." : progress === 100 ? "Uploaded" : "Start Upload"}
-            </button>
+            </Button>
           </div>
         )}
       </div>
@@ -174,7 +196,7 @@ export const MultipleFiles: Story = {
     },
   },
   render: () => (
-    <div className="w-[400px]">
+    <div style={{ maxWidth: 420 }}>
       <FileInput variant="dropzone" maxFiles={5} onChange={(files) => console.log("Files:", files)} />
     </div>
   ),
@@ -189,7 +211,7 @@ export const WithMaxSize: Story = {
     },
   },
   render: () => (
-    <div className="w-[400px]">
+    <div style={{ maxWidth: 420 }}>
       <FileInput
         variant="dropzone"
         maxSize={5 * 1024 * 1024}
@@ -208,7 +230,7 @@ export const ImageOnly: Story = {
     },
   },
   render: () => (
-    <div className="w-[400px]">
+    <div style={{ maxWidth: 420 }}>
       <ImageInput variant="dropzone" maxFiles={3} onChange={(files) => console.log("Images:", files)} />
     </div>
   ),
@@ -223,7 +245,7 @@ export const DocumentOnly: Story = {
     },
   },
   render: () => (
-    <div className="w-[400px]">
+    <div style={{ maxWidth: 420 }}>
       <DocumentInput variant="dropzone" onChange={(files) => console.log("Documents:", files)} />
     </div>
   ),
@@ -238,7 +260,7 @@ export const Disabled: Story = {
     },
   },
   render: () => (
-    <div className="w-[400px]">
+    <div style={{ maxWidth: 420 }}>
       <FileInput variant="dropzone" disabled />
     </div>
   ),

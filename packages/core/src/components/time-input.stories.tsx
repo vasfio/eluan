@@ -84,9 +84,9 @@ export const Controlled: Story = {
   render: () => {
     const [value, setValue] = useState("09:30 AM")
     return (
-      <div className="space-y-2">
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
         <TimeInput value={value} onChange={setValue} format="12" />
-        <p className="text-sm text-muted-foreground">
+        <p style={{ margin: 0, fontSize: "var(--font-size-xs)", color: "var(--container-fg-alt)" }}>
           Current value: <code>{value}</code>
         </p>
       </div>

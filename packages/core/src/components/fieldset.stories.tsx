@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Fieldset, FieldsetLegend } from "./fieldset"
 import { Input } from "./input"
-import { Checkbox } from "./checkbox"
 
 const meta: Meta<typeof Fieldset> = {
   title: "Components/Fieldset",
@@ -46,43 +45,14 @@ export const Default: Story = {
   render: () => (
     <Fieldset>
       <FieldsetLegend>Personal Information</FieldsetLegend>
-      <div className="space-y-4">
-        <div>
-          <label className="text-sm font-medium">Name</label>
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-md)" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-xs)" }}>
+          <label style={{ fontSize: "var(--font-size-sm)", fontWeight: 500 }}>Name</label>
           <Input placeholder="Enter your name" />
         </div>
-        <div>
-          <label className="text-sm font-medium">Email</label>
+        <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-xs)" }}>
+          <label style={{ fontSize: "var(--font-size-sm)", fontWeight: 500 }}>Email</label>
           <Input type="email" placeholder="Enter your email" />
-        </div>
-      </div>
-    </Fieldset>
-  ),
-}
-
-export const WithCheckboxes: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: "Fieldset containing a group of checkbox controls for notification preferences.",
-      },
-    },
-  },
-  render: () => (
-    <Fieldset>
-      <FieldsetLegend>Notification Preferences</FieldsetLegend>
-      <div className="space-y-3">
-        <div className="flex items-center space-x-2">
-          <Checkbox id="email-notif" />
-          <label htmlFor="email-notif" className="text-sm">Email notifications</label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Checkbox id="sms-notif" />
-          <label htmlFor="sms-notif" className="text-sm">SMS notifications</label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Checkbox id="push-notif" />
-          <label htmlFor="push-notif" className="text-sm">Push notifications</label>
         </div>
       </div>
     </Fieldset>
@@ -98,12 +68,14 @@ export const Disabled: Story = {
     },
   },
   render: () => (
-    <Fieldset className="opacity-50 pointer-events-none">
-      <FieldsetLegend>Disabled Fieldset</FieldsetLegend>
-      <div className="space-y-4">
-        <Input placeholder="This input is disabled" />
-        <Input placeholder="This one too" />
-      </div>
-    </Fieldset>
+    <div style={{ opacity: 0.5, pointerEvents: "none" }}>
+      <Fieldset>
+        <FieldsetLegend>Disabled Fieldset</FieldsetLegend>
+        <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-md)" }}>
+          <Input placeholder="This input is disabled" disabled />
+          <Input placeholder="This one too" disabled />
+        </div>
+      </Fieldset>
+    </div>
   ),
 }

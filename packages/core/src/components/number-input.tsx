@@ -36,10 +36,14 @@ const styles = stylex.create({
     ":hover": {
       backgroundColor: "var(--interactive-bg-hover)",
     },
+    // Disabled steppers behave like disabled ghost buttons: transparent
+    // surface, disabled foreground, and no hover — pointerEvents:none keeps
+    // the :hover rule above from ever matching a disabled stepper.
     ":disabled": {
-      backgroundColor: "var(--interactive-bg)",
+      backgroundColor: "transparent",
+      color: "var(--interactive-fg-disabled)",
       cursor: "not-allowed",
-      opacity: 0.5,
+      pointerEvents: "none",
     },
   },
   decrementButton: {
