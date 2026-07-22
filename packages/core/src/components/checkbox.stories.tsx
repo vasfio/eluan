@@ -60,12 +60,9 @@ export const WithLabel: Story = {
     },
   },
   render: () => (
-    <div className="flex items-center space-x-2">
+    <div style={{ display: "flex", alignItems: "center", gap: "var(--spacing-sm)" }}>
       <Checkbox id="terms" />
-      <label
-        htmlFor="terms"
-        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-      >
+      <label htmlFor="terms" style={{ fontSize: "var(--font-size-sm)", fontWeight: 500 }}>
         Accept terms and conditions
       </label>
     </div>
@@ -81,11 +78,11 @@ export const Disabled: Story = {
     },
   },
   render: () => (
-    <div className="flex items-center space-x-2">
+    <div style={{ display: "flex", alignItems: "center", gap: "var(--spacing-sm)" }}>
       <Checkbox id="disabled" disabled />
       <label
         htmlFor="disabled"
-        className="text-sm font-medium leading-none opacity-70"
+        style={{ fontSize: "var(--font-size-sm)", fontWeight: 500, opacity: 0.7 }}
       >
         Disabled checkbox
       </label>
@@ -102,40 +99,11 @@ export const CheckedByDefault: Story = {
     },
   },
   render: () => (
-    <div className="flex items-center space-x-2">
+    <div style={{ display: "flex", alignItems: "center", gap: "var(--spacing-sm)" }}>
       <Checkbox id="checked" defaultChecked />
-      <label
-        htmlFor="checked"
-        className="text-sm font-medium leading-none"
-      >
+      <label htmlFor="checked" style={{ fontSize: "var(--font-size-sm)", fontWeight: 500 }}>
         Checked by default
       </label>
-    </div>
-  ),
-}
-
-export const MultipleCheckboxes: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story: "A group of checkboxes for selecting multiple options from a list.",
-      },
-    },
-  },
-  render: () => (
-    <div className="flex flex-col gap-3">
-      <div className="flex items-center space-x-2">
-        <Checkbox id="option1" />
-        <label htmlFor="option1" className="text-sm font-medium">Option 1</label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <Checkbox id="option2" />
-        <label htmlFor="option2" className="text-sm font-medium">Option 2</label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <Checkbox id="option3" />
-        <label htmlFor="option3" className="text-sm font-medium">Option 3</label>
-      </div>
     </div>
   ),
 }

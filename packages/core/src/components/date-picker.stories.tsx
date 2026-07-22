@@ -58,7 +58,11 @@ export const Default: Story = {
   },
   render: () => {
     const [date, setDate] = React.useState<Date | undefined>()
-    return <DatePicker value={date} onChange={setDate} />
+    return (
+      <div style={{ maxWidth: 288 }}>
+        <DatePicker value={date} onChange={setDate} />
+      </div>
+    )
   },
 }
 
@@ -73,7 +77,11 @@ export const WithPreselected: Story = {
   },
   render: () => {
     const [date, setDate] = React.useState<Date | undefined>(new Date())
-    return <DatePicker value={date} onChange={setDate} />
+    return (
+      <div style={{ maxWidth: 288 }}>
+        <DatePicker value={date} onChange={setDate} />
+      </div>
+    )
   },
 }
 
@@ -88,7 +96,11 @@ export const WithPlaceholder: Story = {
   },
   render: () => {
     const [date, setDate] = React.useState<Date | undefined>()
-    return <DatePicker value={date} onChange={setDate} placeholder="Select a date..." />
+    return (
+      <div style={{ maxWidth: 288 }}>
+        <DatePicker value={date} onChange={setDate} placeholder="Select a date..." />
+      </div>
+    )
   },
 }
 
@@ -103,6 +115,10 @@ export const Disabled: Story = {
   },
   render: () => {
     const [date, setDate] = React.useState<Date | undefined>()
-    return <DatePicker value={date} onChange={setDate} disabled />
+    return (
+      <div style={{ maxWidth: 288 }}>
+        <DatePicker value={date} onChange={setDate} disabled />
+      </div>
+    )
   },
 }

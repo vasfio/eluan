@@ -90,7 +90,7 @@ const DateRangePicker = React.forwardRef<HTMLButtonElement, DateRangePickerProps
         <PopoverTrigger asChild>
           <Button
             ref={ref}
-            variant={value?.from ? "outline" : "inputMuted"}
+            variant={value?.from ? "input" : "inputMuted"}
             fullWidth
             align="start"
             textAlign="left"

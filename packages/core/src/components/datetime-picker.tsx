@@ -124,7 +124,7 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent layout="calendar" align="start">
+        <PopoverContent layout="calendarSingle" align="start">
           <Calendar
             mode="single"
             selected={selectedDate}

@@ -1,6 +1,6 @@
+import * as React from "react"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Avatar, AvatarImage, AvatarFallback, AvatarWithStatus, AvatarBadge, AvatarStatus } from "./avatar"
-import { Badge } from "./badge"
 
 const meta: Meta<typeof Avatar> = {
   title: "Components/Avatar",
@@ -76,21 +76,28 @@ export const Sizes: Story = {
     },
   },
   render: () => (
-    <div className="flex items-center gap-[var(--spacing-md)]">
-      <Avatar className="h-8 w-8">
-        <AvatarFallback className="text-[length:var(--font-size-xs)]">SM</AvatarFallback>
-      </Avatar>
+    <div style={{ display: "flex", alignItems: "center", gap: "var(--spacing-md)" }}>
+      {/* Avatar sizes track --size-lg; override it per wrapper to scale */}
+      <div style={{ "--size-lg": "2rem" } as React.CSSProperties}>
+        <Avatar>
+          <AvatarFallback>SM</AvatarFallback>
+        </Avatar>
+      </div>
       <Avatar>
         <AvatarFallback>MD</AvatarFallback>
       </Avatar>
-      <Avatar className="h-14 w-14">
-        <AvatarImage src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=112&h=112&fit=crop&crop=face" alt="Sarah" />
-        <AvatarFallback>LG</AvatarFallback>
-      </Avatar>
-      <Avatar className="h-20 w-20">
-        <AvatarImage src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=160&h=160&fit=crop&crop=face" alt="Marcus" />
-        <AvatarFallback>XL</AvatarFallback>
-      </Avatar>
+      <div style={{ "--size-lg": "3.5rem" } as React.CSSProperties}>
+        <Avatar>
+          <AvatarImage src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=112&h=112&fit=crop&crop=face" alt="Sarah" />
+          <AvatarFallback>LG</AvatarFallback>
+        </Avatar>
+      </div>
+      <div style={{ "--size-lg": "5rem" } as React.CSSProperties}>
+        <Avatar>
+          <AvatarImage src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=160&h=160&fit=crop&crop=face" alt="Marcus" />
+          <AvatarFallback>XL</AvatarFallback>
+        </Avatar>
+      </div>
     </div>
   ),
 }
@@ -103,25 +110,41 @@ export const Group: Story = {
       },
     },
   },
-  render: () => (
-    <div className="flex -space-x-4">
-      <Avatar className="border-2 border-[var(--backgrounds-primary)]">
-        <AvatarImage src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=80&h=80&fit=crop&crop=face" alt="Alex" />
-        <AvatarFallback>A</AvatarFallback>
-      </Avatar>
-      <Avatar className="border-2 border-[var(--backgrounds-primary)]">
-        <AvatarImage src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face" alt="Sarah" />
-        <AvatarFallback>B</AvatarFallback>
-      </Avatar>
-      <Avatar className="border-2 border-[var(--backgrounds-primary)]">
-        <AvatarImage src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt="Marcus" />
-        <AvatarFallback>C</AvatarFallback>
-      </Avatar>
-      <Avatar className="border-2 border-[var(--backgrounds-primary)]">
-        <AvatarFallback>+3</AvatarFallback>
-      </Avatar>
-    </div>
-  ),
+  render: () => {
+    const ring: React.CSSProperties = {
+      display: "inline-flex",
+      borderRadius: "var(--radius-radius-full)",
+      boxShadow: "0 0 0 2px var(--backgrounds-primary)",
+    }
+    const overlap: React.CSSProperties = { ...ring, marginLeft: "calc(var(--spacing-md) * -1)" }
+    return (
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <span style={ring}>
+          <Avatar>
+            <AvatarImage src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=80&h=80&fit=crop&crop=face" alt="Alex" />
+            <AvatarFallback>A</AvatarFallback>
+          </Avatar>
+        </span>
+        <span style={overlap}>
+          <Avatar>
+            <AvatarImage src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face" alt="Sarah" />
+            <AvatarFallback>B</AvatarFallback>
+          </Avatar>
+        </span>
+        <span style={overlap}>
+          <Avatar>
+            <AvatarImage src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt="Marcus" />
+            <AvatarFallback>C</AvatarFallback>
+          </Avatar>
+        </span>
+        <span style={overlap}>
+          <Avatar>
+            <AvatarFallback>+3</AvatarFallback>
+          </Avatar>
+        </span>
+      </div>
+    )
+  },
 }
 
 export const WithNotificationBadge: Story = {
@@ -133,18 +156,14 @@ export const WithNotificationBadge: Story = {
     },
   },
   render: () => (
-    <div className="flex items-center gap-[var(--spacing-xl)]">
+    <div style={{ display: "flex", alignItems: "center", gap: "var(--spacing-xl)" }}>
       {/* Notification dot */}
       <AvatarWithStatus>
         <Avatar>
           <AvatarImage src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=80&h=80&fit=crop&crop=face" alt="Alex Morgan" />
           <AvatarFallback>AM</AvatarFallback>
         </Avatar>
-        <Badge
-          size="microdot"
-          variant="destructive"
-          className="absolute -top-0.5 -right-0.5"
-        />
+        <AvatarBadge position="top-right" />
       </AvatarWithStatus>
 
       {/* Live indicator */}
@@ -153,11 +172,7 @@ export const WithNotificationBadge: Story = {
           <AvatarImage src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face" alt="Sarah Chen" />
           <AvatarFallback>SC</AvatarFallback>
         </Avatar>
-        <Badge
-          size="microdot"
-          variant="positive"
-          className="absolute -bottom-0.5 -right-0.5"
-        />
+        <AvatarStatus status="online" />
       </AvatarWithStatus>
 
       {/* Both badges */}
@@ -166,16 +181,8 @@ export const WithNotificationBadge: Story = {
           <AvatarImage src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt="Marcus Lee" />
           <AvatarFallback>ML</AvatarFallback>
         </Avatar>
-        <Badge
-          size="microdot"
-          variant="destructive"
-          className="absolute -top-0.5 -right-0.5"
-        />
-        <Badge
-          size="microdot"
-          variant="positive"
-          className="absolute -bottom-0.5 -right-0.5"
-        />
+        <AvatarBadge position="top-right" />
+        <AvatarStatus status="online" />
       </AvatarWithStatus>
     </div>
   ),
@@ -190,7 +197,7 @@ export const WithStatusIndicator: Story = {
     },
   },
   render: () => (
-    <div className="flex items-center gap-[var(--spacing-xl)]">
+    <div style={{ display: "flex", alignItems: "center", gap: "var(--spacing-xl)" }}>
       <AvatarWithStatus>
         <Avatar>
           <AvatarImage src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=80&h=80&fit=crop&crop=face" alt="Alex" />
@@ -234,7 +241,7 @@ export const WithCountBadge: Story = {
     },
   },
   render: () => (
-    <div className="flex items-center gap-[var(--spacing-xl)]">
+    <div style={{ display: "flex", alignItems: "center", gap: "var(--spacing-xl)" }}>
       <AvatarWithStatus>
         <Avatar>
           <AvatarImage src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=80&h=80&fit=crop&crop=face" alt="Alex" />

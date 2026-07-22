@@ -45,7 +45,7 @@ export const Outline: Story = {
 
 export const AllVariants: Story = {
   render: () => (
-    <div className="flex gap-2">
+    <div style={{ display: "flex", alignItems: "center", gap: "var(--spacing-sm)" }}>
       <Badge>Default</Badge>
       <Badge variant="secondary">Secondary</Badge>
       <Badge variant="destructive">Destructive</Badge>

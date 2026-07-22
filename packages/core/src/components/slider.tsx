@@ -43,9 +43,8 @@ const styles = stylex.create({
     backgroundRepeat: "repeat, repeat, no-repeat",
     backgroundSize: "var(--skeuo-dimple-size, auto), var(--skeuo-dimple-size, auto), auto",
     borderColor: "var(--interactive-bg-selected)",
-    /* 50% renders a circle on the square minimal thumb and an ellipse on
-       the wider industrial-retro fader cap */
-    borderRadius: "50%",
+    /* Rounded-rect fader cap; tracks the curves axis in both themes */
+    borderRadius: "var(--curves-md)",
     borderStyle: "solid",
     borderWidth: 1,
     boxShadow: "var(--skeuo-raised)",

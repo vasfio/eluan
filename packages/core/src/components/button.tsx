@@ -212,10 +212,16 @@ const styles = stylex.create({
     backgroundColor: "transparent",
     borderColor: "var(--interactive-border-alt)",
     borderWidth: 1,
-    color: "var(--action-secondary-fg)",
+    color: "var(--interactive-fg)",
     fontWeight: 400,
     ":hover": {
       backgroundColor: "var(--backgrounds-tertiary)",
+    },
+    ":disabled": {
+      backgroundColor: "var(--interactive-bg-disabled)",
+      borderColor: "var(--interactive-border-disabled)",
+      color: "var(--interactive-fg-disabled)",
+      opacity: 1,
     },
   },
   variantInputMuted: {
@@ -226,6 +232,12 @@ const styles = stylex.create({
     fontWeight: 400,
     ":hover": {
       backgroundColor: "var(--backgrounds-tertiary)",
+    },
+    ":disabled": {
+      backgroundColor: "var(--interactive-bg-disabled)",
+      borderColor: "var(--interactive-border-disabled)",
+      color: "var(--interactive-fg-disabled)",
+      opacity: 1,
     },
   },
   variantLink: {

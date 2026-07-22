@@ -61,7 +61,11 @@ export const Default: Story = {
   },
   render: () => {
     const [dateTime, setDateTime] = React.useState<Date | undefined>()
-    return <DateTimePicker value={dateTime} onChange={setDateTime} />
+    return (
+      <div style={{ maxWidth: 288 }}>
+        <DateTimePicker value={dateTime} onChange={setDateTime} />
+      </div>
+    )
   },
 }
 
@@ -76,7 +80,11 @@ export const WithPreselected: Story = {
   },
   render: () => {
     const [dateTime, setDateTime] = React.useState<Date | undefined>(new Date())
-    return <DateTimePicker value={dateTime} onChange={setDateTime} />
+    return (
+      <div style={{ maxWidth: 288 }}>
+        <DateTimePicker value={dateTime} onChange={setDateTime} />
+      </div>
+    )
   },
 }
 
@@ -92,8 +100,8 @@ export const WithLabel: Story = {
   render: () => {
     const [dateTime, setDateTime] = React.useState<Date | undefined>()
     return (
-      <div className="space-y-2">
-        <label className="text-sm font-medium">Event Date & Time</label>
+      <div style={{ maxWidth: 288, display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
+        <label style={{ fontSize: "var(--font-size-sm)", fontWeight: 500 }}>Event Date & Time</label>
         <DateTimePicker value={dateTime} onChange={setDateTime} />
       </div>
     )

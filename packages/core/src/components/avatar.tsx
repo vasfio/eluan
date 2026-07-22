@@ -2,6 +2,8 @@ import * as React from "react"
 import * as AvatarPrimitive from "@radix-ui/react-avatar"
 import * as stylex from "@stylexjs/stylex"
 
+import { Badge } from "./badge"
+
 type AvatarProps = Omit<
   React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>,
   "className" | "style"
@@ -75,13 +77,11 @@ const AvatarBadge = React.forwardRef<HTMLSpanElement, AvatarBadgeProps>(
       <span
         ref={ref}
         {...props}
-        {...stylex.props(
-          styles.badge,
-          hasCount ? styles.badgeCount : styles.badgeDot,
-          badgePositionStyles[position]
-        )}
+        {...stylex.props(styles.badge, badgePositionStyles[position])}
       >
-        {displayCount}
+        <Badge variant="destructive" size={hasCount ? "default" : "microdot"}>
+          {displayCount}
+        </Badge>
       </span>
     )
   }
@@ -140,39 +140,24 @@ const styles = stylex.create({
     justifyContent: "center",
     width: "100%",
   },
+  /* Positioned inside the avatar's box so the badge overlaps the image
+     edge rather than hanging outside the container. */
   badge: {
-    alignItems: "center",
-    backgroundColor: "var(--destructive-fg)",
-    borderRadius: "var(--radius-radius-full)",
-    boxShadow: "0 0 0 2px var(--container-border)",
-    color: "var(--destructive-bg)",
-    display: "flex",
-    justifyContent: "center",
+    display: "inline-flex",
     position: "absolute",
-  },
-  badgeCount: {
-    fontSize: "var(--font-size-xs)",
-    fontWeight: 700,
-    height: "var(--size-xxs)",
-    lineHeight: 1,
-    minWidth: "var(--size-xxs)",
-    paddingInline: "var(--spacing-xs)",
-  },
-  badgeDot: {
-    height: "var(--spacing-md)",
-    width: "var(--spacing-md)",
+    zIndex: 1,
   },
   badgeTop: {
-    top: "calc(var(--spacing-xxs) * -1)",
+    top: 0,
   },
   badgeBottom: {
-    bottom: "calc(var(--spacing-xxs) * -1)",
+    bottom: 0,
   },
   badgeRight: {
-    right: "calc(var(--spacing-xxs) * -1)",
+    right: 0,
   },
   badgeLeft: {
-    left: "calc(var(--spacing-xxs) * -1)",
+    left: 0,
   },
   status: {
     borderRadius: "var(--radius-radius-full)",

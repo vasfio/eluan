@@ -147,18 +147,29 @@ Carousel.displayName = "Carousel"
 
 const CarouselContent = React.forwardRef<
   HTMLDivElement,
-  Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style">
->((props, ref) => {
+  Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style"> & {
+    /** Fixed viewport size along the scroll axis — required for vertical
+     * carousels, where Embla needs a bounded height. */
+    viewportHeight?: number | string
+  }
+>(({ viewportHeight, ...props }, ref) => {
   const { carouselRef, orientation } = useCarousel()
 
   return (
-    <div ref={carouselRef} {...stylex.props(styles.viewport)}>
+    <div
+      ref={carouselRef}
+      {...stylex.props(
+        styles.viewport,
+        viewportHeight !== undefined && dynamicStyles.height(viewportHeight)
+      )}
+    >
       <div
         ref={ref}
         {...props}
         {...stylex.props(
           styles.content,
-          orientation === "horizontal" ? styles.contentHorizontal : styles.contentVertical
+          orientation === "horizontal" ? styles.contentHorizontal : styles.contentVertical,
+          viewportHeight !== undefined && dynamicStyles.height("100%")
         )}
       />
     </div>
@@ -166,10 +177,15 @@ const CarouselContent = React.forwardRef<
 })
 CarouselContent.displayName = "CarouselContent"
 
+export type CarouselItemBasis = "full" | "half" | "third"
+
 const CarouselItem = React.forwardRef<
   HTMLDivElement,
-  Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style">
->((props, ref) => {
+  Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style"> & {
+    /** Fraction of the viewport each slide occupies. Default "full". */
+    basis?: CarouselItemBasis
+  }
+>(({ basis = "full", ...props }, ref) => {
   const { orientation } = useCarousel()
 
   return (
@@ -180,6 +196,7 @@ const CarouselItem = React.forwardRef<
       {...props}
       {...stylex.props(
         styles.item,
+        basisStyles[basis],
         orientation === "horizontal" ? styles.itemHorizontal : styles.itemVertical
       )}
     />
@@ -260,6 +277,12 @@ const styles = stylex.create({
     flexShrink: 0,
     minWidth: 0,
   },
+  itemBasisHalf: {
+    flexBasis: "50%",
+  },
+  itemBasisThird: {
+    flexBasis: "33.3333%",
+  },
   itemHorizontal: {
     paddingLeft: "var(--spacing-md)",
   },
@@ -333,6 +356,17 @@ const styles = stylex.create({
     width: 1,
   },
 })
+
+const dynamicStyles = stylex.create({
+  height: (height: number | string) => ({ height }),
+})
+
+const basisStyles = {
+  full: null,
+  half: styles.itemBasisHalf,
+  third: styles.itemBasisThird,
+} satisfies Record<CarouselItemBasis, stylex.StyleXStyles | null>
+
 
 export {
   type CarouselApi,

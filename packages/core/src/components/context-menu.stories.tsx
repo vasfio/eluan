@@ -13,6 +13,7 @@ import {
   ContextMenuRadioItem,
   ContextMenuLabel,
 } from "./context-menu"
+import { Button } from "./button"
 
 const meta: Meta<typeof ContextMenu> = {
   title: "Components/Context Menu",
@@ -74,16 +75,16 @@ export const Default: Story = {
   },
   render: () => (
     <ContextMenu>
-      <ContextMenuTrigger className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">
-        Right click here
+      <ContextMenuTrigger asChild>
+        <Button variant="ghost">Right click here</Button>
       </ContextMenuTrigger>
-      <ContextMenuContent className="w-64">
+      <ContextMenuContent>
         <ContextMenuItem>Back</ContextMenuItem>
         <ContextMenuItem disabled>Forward</ContextMenuItem>
         <ContextMenuItem>Reload</ContextMenuItem>
         <ContextMenuSub>
           <ContextMenuSubTrigger>More Tools</ContextMenuSubTrigger>
-          <ContextMenuSubContent className="w-48">
+          <ContextMenuSubContent>
             <ContextMenuItem>Save Page As...</ContextMenuItem>
             <ContextMenuItem>Create Shortcut...</ContextMenuItem>
             <ContextMenuItem>Name Window...</ContextMenuItem>
@@ -95,10 +96,10 @@ export const Default: Story = {
         <ContextMenuCheckboxItem checked>Show Bookmarks Bar</ContextMenuCheckboxItem>
         <ContextMenuCheckboxItem>Show Full URLs</ContextMenuCheckboxItem>
         <ContextMenuSeparator />
-        <ContextMenuRadioGroup value="pedro">
-          <ContextMenuLabel>People</ContextMenuLabel>
-          <ContextMenuRadioItem value="pedro">Pedro</ContextMenuRadioItem>
-          <ContextMenuRadioItem value="colm">Colm</ContextMenuRadioItem>
+        <ContextMenuRadioGroup value="alex">
+          <ContextMenuLabel>Assignee</ContextMenuLabel>
+          <ContextMenuRadioItem value="alex">Alex Morgan</ContextMenuRadioItem>
+          <ContextMenuRadioItem value="sarah">Sarah Chen</ContextMenuRadioItem>
         </ContextMenuRadioGroup>
       </ContextMenuContent>
     </ContextMenu>
@@ -115,8 +116,8 @@ export const Simple: Story = {
   },
   render: () => (
     <ContextMenu>
-      <ContextMenuTrigger className="flex h-[100px] w-[200px] items-center justify-center rounded-md border text-sm">
-        Right click me
+      <ContextMenuTrigger asChild>
+        <Button variant="ghost">Right click me</Button>
       </ContextMenuTrigger>
       <ContextMenuContent>
         <ContextMenuItem>Cut</ContextMenuItem>

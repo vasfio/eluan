@@ -67,25 +67,46 @@ export const Default: Story = {
       <DialogTrigger asChild>
         <Button variant="outline">Open Dialog</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
           <DialogDescription>
             Make changes to your profile here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <label htmlFor="name" className="text-right text-sm">
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "var(--spacing-lg)",
+            paddingBlock: "var(--spacing-lg)",
+          }}
+        >
+          <div
+            style={{
+              alignItems: "center",
+              display: "grid",
+              gap: "var(--spacing-lg)",
+              gridTemplateColumns: "1fr 3fr",
+            }}
+          >
+            <label htmlFor="name" style={{ fontSize: "var(--font-size-sm)", textAlign: "right" }}>
               Name
             </label>
-            <Input id="name" defaultValue="John Doe" className="col-span-3" />
+            <Input id="name" defaultValue="John Doe" />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <label htmlFor="username" className="text-right text-sm">
+          <div
+            style={{
+              alignItems: "center",
+              display: "grid",
+              gap: "var(--spacing-lg)",
+              gridTemplateColumns: "1fr 3fr",
+            }}
+          >
+            <label htmlFor="username" style={{ fontSize: "var(--font-size-sm)", textAlign: "right" }}>
               Username
             </label>
-            <Input id="username" defaultValue="@johndoe" className="col-span-3" />
+            <Input id="username" defaultValue="@johndoe" />
           </div>
         </div>
         <DialogFooter>

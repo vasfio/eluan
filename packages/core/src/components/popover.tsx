@@ -32,8 +32,11 @@ const styles = stylex.create({
     padding: 0,
     width: "auto",
   },
+  /* Fill the trigger's width (e.g. a max-width DatePicker field) but never
+     shrink below the calendar's intrinsic size. */
   calendarSingle: {
-    minWidth: "17.5rem",
+    minWidth: "fit-content",
+    width: "var(--radix-popover-trigger-width)",
   },
   matchTrigger: {
     padding: 0,

@@ -53,8 +53,13 @@ const styles = stylex.create({
     display: "grid",
     gap: "var(--spacing-xxs)",
   },
+  /* Center the label against the checkbox's height so the pair shares a
+     horizontal centerline even when a description flows below. */
   labelWrap: {
+    alignItems: "center",
     cursor: "pointer",
+    display: "flex",
+    minHeight: "var(--size-xxs)",
   },
   disabledLabel: {
     color: "var(--interactive-fg-disabled)",

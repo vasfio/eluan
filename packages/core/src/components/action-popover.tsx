@@ -35,7 +35,11 @@ const styles = stylex.create({
     width: "var(--size-xxs)",
   },
   itemIcon: {
+    alignItems: "center",
+    display: "flex",
     flexShrink: 0,
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
   },
 })
 
@@ -70,7 +74,14 @@ const ActionPopover = React.forwardRef<HTMLButtonElement, ActionPopoverProps>(
               tone={item.destructive ? "destructive" : "default"}
             >
               {item.icon && (
-                <span {...stylex.props(styles.itemIcon)}>{item.icon}</span>
+                <span {...stylex.props(styles.itemIcon)}>
+                  {React.isValidElement(item.icon)
+                    ? React.cloneElement(
+                        item.icon as React.ReactElement<{ width?: string; height?: string }>,
+                        { width: "100%", height: "100%" }
+                      )
+                    : item.icon}
+                </span>
               )}
               {item.label}
             </DropdownMenuItem>

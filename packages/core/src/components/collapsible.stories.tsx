@@ -36,6 +36,59 @@ import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@eluan/core
 export default meta
 type Story = StoryObj<typeof meta>
 
+const panelStyle: React.CSSProperties = {
+  backgroundColor: "var(--container-bg)",
+  border: "1px solid var(--container-border-alt)",
+  borderRadius: "var(--curves-md)",
+}
+
+const triggerStyle: React.CSSProperties = {
+  alignItems: "center",
+  display: "flex",
+  gap: "var(--spacing-sm)",
+  justifyContent: "space-between",
+  padding: "var(--spacing-sm) var(--spacing-md)",
+  textAlign: "left",
+  width: "100%",
+}
+
+const titleStyle: React.CSSProperties = {
+  color: "var(--container-fg)",
+  fontSize: "var(--font-size-sm)",
+  fontWeight: 600,
+}
+
+const subtitleStyle: React.CSSProperties = {
+  color: "var(--container-fg-alt)",
+  fontSize: "var(--font-size-xs)",
+}
+
+const contentStyle: React.CSSProperties = {
+  borderTop: "1px solid var(--container-border-alt)",
+  display: "flex",
+  flexDirection: "column",
+  gap: "var(--spacing-sm)",
+  padding: "var(--spacing-sm) var(--spacing-md)",
+}
+
+const iconStyle: React.CSSProperties = {
+  color: "var(--container-fg-alt)",
+  flexShrink: 0,
+  height: 16,
+  width: 16,
+}
+
+const rowTextStyle: React.CSSProperties = {
+  color: "var(--container-fg)",
+  fontSize: "var(--font-size-sm)",
+}
+
+const checkRowStyle: React.CSSProperties = {
+  alignItems: "center",
+  display: "flex",
+  gap: "var(--spacing-sm)",
+}
+
 export const Default: Story = {
   parameters: {
     docs: {
@@ -47,60 +100,45 @@ export const Default: Story = {
   },
   render: () => {
     const [isOpen, setIsOpen] = React.useState(false)
+    const bullets: [string, string][] = [
+      ["var(--positive-fg)", "Added new Collapsible component with animation support"],
+      ["var(--informative-fg)", "Improved theme token coverage across all primitives"],
+      ["var(--cautionary-fg)", "Fixed checkbox border-radius in sweeping curve scale"],
+      ["var(--destructive-fg)", "Deprecated legacy color tokens (see migration guide)"],
+    ]
     return (
-      <Collapsible
-        open={isOpen}
-        onOpenChange={setIsOpen}
-        className="w-[400px] rounded-[var(--curves-md)] border border-[var(--container-border-alt)] bg-[var(--container-bg)]"
-      >
-        <CollapsibleTrigger asChild>
-          <button className="flex w-full items-center justify-between gap-[var(--spacing-sm)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-left">
-            <div className="flex flex-col gap-[var(--spacing-xxs)]">
-              <span className="text-[length:var(--font-size-sm)] font-semibold text-[var(--container-fg)]">
-                Release Notes
+      <div style={{ ...panelStyle, width: 400 }}>
+        <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+          <CollapsibleTrigger asChild>
+            <button style={triggerStyle}>
+              <span style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-xxs)" }}>
+                <span style={titleStyle}>Release Notes</span>
+                <span style={subtitleStyle}>v2.4.0 — April 2026</span>
               </span>
-              <span className="text-[length:var(--font-size-xs)] text-[var(--container-fg-alt)]">
-                v2.4.0 — April 2026
-              </span>
-            </div>
-            {isOpen ? (
-              <ChevronDown className="h-4 w-4 text-[var(--container-fg-alt)]" />
-            ) : (
-              <ChevronRight className="h-4 w-4 text-[var(--container-fg-alt)]" />
-            )}
-          </button>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <div className="border-t border-[var(--container-border-alt)] px-[var(--spacing-md)] py-[var(--spacing-sm)]">
-            <ul className="flex flex-col gap-[var(--spacing-xs)]">
-              <li className="flex items-start gap-[var(--spacing-xs)]">
-                <span className="mt-0.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--positive-bg)]" />
-                <span className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]">
-                  Added new Collapsible component with animation support
-                </span>
-              </li>
-              <li className="flex items-start gap-[var(--spacing-xs)]">
-                <span className="mt-0.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--informative-bg)]" />
-                <span className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]">
-                  Improved theme token coverage across all primitives
-                </span>
-              </li>
-              <li className="flex items-start gap-[var(--spacing-xs)]">
-                <span className="mt-0.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--cautionary-bg)]" />
-                <span className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]">
-                  Fixed checkbox border-radius in sweeping curve scale
-                </span>
-              </li>
-              <li className="flex items-start gap-[var(--spacing-xs)]">
-                <span className="mt-0.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--destructive-bg)]" />
-                <span className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]">
-                  Deprecated legacy color tokens (see migration guide)
-                </span>
-              </li>
+              {isOpen ? <ChevronDown style={iconStyle} /> : <ChevronRight style={iconStyle} />}
+            </button>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <ul style={{ ...contentStyle, gap: "var(--spacing-xs)", margin: 0 }}>
+              {bullets.map(([color, text]) => (
+                <li key={text} style={{ alignItems: "flex-start", display: "flex", gap: "var(--spacing-xs)" }}>
+                  <span
+                    style={{
+                      backgroundColor: color,
+                      borderRadius: "var(--radius-radius-full)",
+                      flexShrink: 0,
+                      height: 6,
+                      marginTop: 6,
+                      width: 6,
+                    }}
+                  />
+                  <span style={rowTextStyle}>{text}</span>
+                </li>
+              ))}
             </ul>
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
     )
   },
 }
@@ -117,50 +155,37 @@ export const FilterPanel: Story = {
   render: () => {
     const [isOpen, setIsOpen] = React.useState(true)
     return (
-      <Collapsible
-        open={isOpen}
-        onOpenChange={setIsOpen}
-        className="w-[280px] rounded-[var(--curves-md)] border border-[var(--container-border-alt)] bg-[var(--container-bg)]"
-      >
-        <CollapsibleTrigger asChild>
-          <button className="flex w-full items-center justify-between gap-[var(--spacing-sm)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-left">
-            <div className="flex items-center gap-[var(--spacing-xs)]">
-              <Filter className="h-4 w-4 text-[var(--container-fg-alt)]" />
-              <span className="text-[length:var(--font-size-sm)] font-semibold text-[var(--container-fg)]">
-                Filters
+      <div style={{ ...panelStyle, width: 280 }}>
+        <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+          <CollapsibleTrigger asChild>
+            <button style={triggerStyle}>
+              <span style={{ alignItems: "center", display: "flex", gap: "var(--spacing-xs)" }}>
+                <Filter style={iconStyle} />
+                <span style={titleStyle}>Filters</span>
               </span>
-            </div>
-            {isOpen ? (
-              <ChevronDown className="h-4 w-4 text-[var(--container-fg-alt)]" />
-            ) : (
-              <ChevronRight className="h-4 w-4 text-[var(--container-fg-alt)]" />
-            )}
-          </button>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <div className="flex flex-col gap-[var(--spacing-sm)] border-t border-[var(--container-border-alt)] px-[var(--spacing-md)] py-[var(--spacing-sm)]">
-            <p className="text-[length:var(--font-size-xs)] font-medium text-[var(--container-fg-alt)]">
-              Category
-            </p>
-            {["Components", "Hooks", "Utilities", "Tokens"].map((label) => (
-              <div key={label} className="flex items-center gap-[var(--spacing-xs)]">
-                <Checkbox id={`filter-${label}`} />
-                <label
-                  htmlFor={`filter-${label}`}
-                  className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]"
-                >
-                  {label}
-                </label>
+              {isOpen ? <ChevronDown style={iconStyle} /> : <ChevronRight style={iconStyle} />}
+            </button>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div style={contentStyle}>
+              <p style={{ ...subtitleStyle, fontWeight: 500, margin: 0 }}>Category</p>
+              {["Components", "Hooks", "Utilities", "Tokens"].map((label) => (
+                <div key={label} style={checkRowStyle}>
+                  <Checkbox id={`filter-${label}`} />
+                  <label htmlFor={`filter-${label}`} style={rowTextStyle}>
+                    {label}
+                  </label>
+                </div>
+              ))}
+              <div style={{ paddingTop: "var(--spacing-xs)" }}>
+                <Button variant="outline" size="sm" fullWidth>
+                  Apply Filters
+                </Button>
               </div>
-            ))}
-            <div className="pt-[var(--spacing-xs)]">
-              <Button variant="outline" size="sm" className="w-full">
-                Apply Filters
-              </Button>
             </div>
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
     )
   },
 }
@@ -194,112 +219,91 @@ export const Nested: Story = {
     }) => (
       <Collapsible open={open} onOpenChange={onOpenChange}>
         <CollapsibleTrigger asChild>
-          <button className="flex w-full items-center justify-between gap-[var(--spacing-sm)] px-[var(--spacing-md)] py-[var(--spacing-sm)] text-left hover:bg-[var(--container-bg-hover)] transition-colors">
-            <div className="flex items-center gap-[var(--spacing-sm)]">
-              <Settings className="h-4 w-4 text-[var(--container-fg-alt)]" />
-              <div className="flex flex-col">
-                <span className="text-[length:var(--font-size-sm)] font-medium text-[var(--container-fg)]">
-                  {title}
-                </span>
-                <span className="text-[length:var(--font-size-xs)] text-[var(--container-fg-alt)]">
-                  {description}
-                </span>
-              </div>
-            </div>
-            {open ? (
-              <ChevronDown className="h-4 w-4 text-[var(--container-fg-alt)]" />
-            ) : (
-              <ChevronRight className="h-4 w-4 text-[var(--container-fg-alt)]" />
-            )}
+          <button style={triggerStyle}>
+            <span style={{ alignItems: "center", display: "flex", gap: "var(--spacing-sm)" }}>
+              <Settings style={iconStyle} />
+              <span style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-xxs)" }}>
+                <span style={{ ...titleStyle, fontWeight: 500 }}>{title}</span>
+                <span style={subtitleStyle}>{description}</span>
+              </span>
+            </span>
+            {open ? <ChevronDown style={iconStyle} /> : <ChevronRight style={iconStyle} />}
           </button>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className="flex flex-col gap-[var(--spacing-xs)] border-t border-[var(--container-border-alt)] px-[var(--spacing-md)] py-[var(--spacing-sm)] ml-[var(--spacing-lg)]">
+          <div style={{ ...contentStyle, gap: "var(--spacing-xs)", marginLeft: "var(--spacing-lg)" }}>
             {children}
           </div>
         </CollapsibleContent>
       </Collapsible>
     )
 
+    const sections: {
+      title: string
+      description: string
+      open: boolean
+      onOpenChange: (open: boolean) => void
+      rows: [string, boolean][]
+    }[] = [
+      {
+        title: "General",
+        description: "Language, region, and defaults",
+        open: generalOpen,
+        onOpenChange: setGeneralOpen,
+        rows: [
+          ["Enable autosave", true],
+          ["Send usage analytics", false],
+        ],
+      },
+      {
+        title: "Appearance",
+        description: "Theme, density, and layout",
+        open: appearanceOpen,
+        onOpenChange: setAppearanceOpen,
+        rows: [
+          ["Enable animations", true],
+          ["Compact mode", false],
+        ],
+      },
+      {
+        title: "Notifications",
+        description: "Email, push, and alerts",
+        open: notificationsOpen,
+        onOpenChange: setNotificationsOpen,
+        rows: [
+          ["Email notifications", true],
+          ["Push notifications", true],
+        ],
+      },
+    ]
+
     return (
-      <div className="w-[380px] rounded-[var(--curves-md)] border border-[var(--container-border-alt)] bg-[var(--container-bg)] divide-y divide-[var(--container-border-alt)]">
-        <SettingsSection
-          title="General"
-          description="Language, region, and defaults"
-          open={generalOpen}
-          onOpenChange={setGeneralOpen}
-        >
-          <div className="flex items-center gap-[var(--spacing-xs)]">
-            <Checkbox id="settings-autosave" defaultChecked />
-            <label
-              htmlFor="settings-autosave"
-              className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]"
+      <div style={{ ...panelStyle, width: 380 }}>
+        {sections.map((section, i) => (
+          <div
+            key={section.title}
+            style={i > 0 ? { borderTop: "1px solid var(--container-border-alt)" } : undefined}
+          >
+            <SettingsSection
+              title={section.title}
+              description={section.description}
+              open={section.open}
+              onOpenChange={section.onOpenChange}
             >
-              Enable autosave
-            </label>
+              {section.rows.map(([label, checked]) => {
+                const id = `settings-${section.title}-${label}`.replace(/\s+/g, "-").toLowerCase()
+                return (
+                  <div key={id} style={checkRowStyle}>
+                    <Checkbox id={id} defaultChecked={checked || undefined} />
+                    <label htmlFor={id} style={rowTextStyle}>
+                      {label}
+                    </label>
+                  </div>
+                )
+              })}
+            </SettingsSection>
           </div>
-          <div className="flex items-center gap-[var(--spacing-xs)]">
-            <Checkbox id="settings-analytics" />
-            <label
-              htmlFor="settings-analytics"
-              className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]"
-            >
-              Send usage analytics
-            </label>
-          </div>
-        </SettingsSection>
-
-        <SettingsSection
-          title="Appearance"
-          description="Theme, density, and layout"
-          open={appearanceOpen}
-          onOpenChange={setAppearanceOpen}
-        >
-          <div className="flex items-center gap-[var(--spacing-xs)]">
-            <Checkbox id="settings-animations" defaultChecked />
-            <label
-              htmlFor="settings-animations"
-              className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]"
-            >
-              Enable animations
-            </label>
-          </div>
-          <div className="flex items-center gap-[var(--spacing-xs)]">
-            <Checkbox id="settings-compact" />
-            <label
-              htmlFor="settings-compact"
-              className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]"
-            >
-              Compact mode
-            </label>
-          </div>
-        </SettingsSection>
-
-        <SettingsSection
-          title="Notifications"
-          description="Email, push, and alerts"
-          open={notificationsOpen}
-          onOpenChange={setNotificationsOpen}
-        >
-          <div className="flex items-center gap-[var(--spacing-xs)]">
-            <Checkbox id="settings-email" defaultChecked />
-            <label
-              htmlFor="settings-email"
-              className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]"
-            >
-              Email notifications
-            </label>
-          </div>
-          <div className="flex items-center gap-[var(--spacing-xs)]">
-            <Checkbox id="settings-push" defaultChecked />
-            <label
-              htmlFor="settings-push"
-              className="text-[length:var(--font-size-sm)] text-[var(--container-fg)]"
-            >
-              Push notifications
-            </label>
-          </div>
-        </SettingsSection>
+        ))}
       </div>
     )
   },

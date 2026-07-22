@@ -135,7 +135,7 @@ export const AllVariants: Story = {
     },
   },
   render: () => (
-    <div className="space-y-2">
+    <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
       <Banner variant='default'>Default banner</Banner>
       <Banner variant="info">Info banner</Banner>
       <Banner variant="success">Success banner</Banner>

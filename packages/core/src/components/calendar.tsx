@@ -92,7 +92,7 @@ function Calendar({
           today: `${sx(styles.today)} eluan-calendar-today`,
           outside: `${sx(styles.outside)} day-outside`,
           disabled: sx(styles.dayDisabled),
-          range_middle: sx(styles.rangeMiddle),
+          range_middle: "eluan-calendar-range-middle",
           hidden: sx(styles.hidden),
         }}
         components={{
@@ -160,7 +160,7 @@ const styles = stylex.create({
   root: {
     alignItems: "center",
     display: "flex",
-    gap: "var(--spacing-xxs)",
+    gap: 0,
     paddingBlock: "var(--spacing-md)",
   },
   disabled: {
@@ -169,18 +169,19 @@ const styles = stylex.create({
   },
   previousButton: {
     flexShrink: 0,
-    marginLeft: "var(--spacing-xs)",
+    marginLeft: 0,
   },
   nextButton: {
     flexShrink: 0,
-    marginRight: "var(--spacing-xs)",
+    marginRight: 0,
   },
   navIcon: {
     height: "var(--size-xxs)",
     width: "var(--size-xxs)",
   },
   dayPicker: {
-    padding: 12,
+    paddingBlock: 12,
+    paddingInline: 4,
   },
   months: {
     display: "flex",
@@ -193,7 +194,7 @@ const styles = stylex.create({
   month: {
     display: "flex",
     flexDirection: "column",
-    gap: "var(--spacing-lg)",
+    gap: "var(--spacing-md)",
   },
   monthCaption: {
     alignItems: "center",
@@ -218,7 +219,7 @@ const styles = stylex.create({
     fontSize: "0.75rem",
     fontWeight: 300,
     textAlign: "center",
-    width: "var(--size-lg)",
+    width: "var(--size-md)",
   },
   week: {
     display: "flex",
@@ -227,11 +228,11 @@ const styles = stylex.create({
   },
   day: {
     fontSize: "var(--font-size-sm)",
-    height: "var(--size-lg)",
+    height: "var(--size-md)",
     padding: 0,
     position: "relative",
     textAlign: "center",
-    width: "var(--size-lg)",
+    width: "var(--size-md)",
   },
   dayButton: {
     alignItems: "center",
@@ -240,14 +241,14 @@ const styles = stylex.create({
     fontFamily: "var(--font-mono)",
     fontSize: "var(--font-size-sm)",
     fontWeight: 400,
-    height: "var(--size-lg)",
+    height: "var(--size-md)",
     justifyContent: "center",
     padding: 0,
     transitionDuration: "150ms",
     transitionProperty: "background-color, border-radius, color",
     transitionTimingFunction: "ease",
     whiteSpace: "nowrap",
-    width: "var(--size-lg)",
+    width: "var(--size-md)",
     ":hover": {
       backgroundColor: "var(--interactive-bg-hover)",
       borderRadius: "var(--curves-lg)",
@@ -280,9 +281,6 @@ const styles = stylex.create({
   dayDisabled: {
     color: "var(--interactive-fg-disabled)",
     cursor: "not-allowed",
-  },
-  rangeMiddle: {
-    borderRadius: 0,
   },
   hidden: {
     visibility: "hidden",
@@ -357,9 +355,18 @@ const calendarStyles = `
   background-color: var(--interactive-bg-alt2);
   color: var(--interactive-fg-selected);
 }
-.${sx(styles.rangeMiddle)}[aria-selected] {
+.eluan-calendar-range-middle[aria-selected] {
   background-color: var(--interactive-bg-alt2);
+  border-radius: 0;
   color: var(--interactive-fg-alt);
+}
+.eluan-calendar-range-middle > button,
+.eluan-calendar-range-middle > button:hover {
+  border-radius: 0;
+}
+.eluan-calendar-range-middle > button:hover {
+  background-color: var(--interactive-bg-hover);
+  color: var(--interactive-fg);
 }
 `
 
