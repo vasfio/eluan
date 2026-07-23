@@ -7,7 +7,6 @@ const fieldStackStyle: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
   gap: "var(--spacing-sm)",
-  maxWidth: 384,
   width: "100%",
 }
 
@@ -21,6 +20,13 @@ const meta: Meta<typeof Input> = {
   title: "Components/Input",
   component: Input,
   tags: ["autodocs"],
+  decorators: [
+    (Story) => (
+      <div style={{ maxWidth: 288 }}>
+        <Story />
+      </div>
+    ),
+  ],
   argTypes: {
     type: {
       control: "select",
@@ -85,8 +91,8 @@ export const WithLabel: Story = {
   },
   render: () => (
     <div style={fieldStackStyle}>
-      <Label htmlFor="email">Email</Label>
-      <Input type="email" id="email" placeholder="Email" />
+      <Label htmlFor="name">Name</Label>
+      <Input id="name" placeholder="Jane Cooper" />
     </div>
   ),
 }
@@ -101,9 +107,9 @@ export const WithHelperText: Story = {
   },
   render: () => (
     <div style={fieldStackStyle}>
-      <Label htmlFor="email-2">Email</Label>
-      <Input type="email" id="email-2" placeholder="Email" />
-      <p style={hintStyle}>Enter your email address.</p>
+      <Label htmlFor="name-2">Name</Label>
+      <Input id="name-2" placeholder="Jane Cooper" />
+      <p style={hintStyle}>Enter your full name.</p>
     </div>
   ),
 }

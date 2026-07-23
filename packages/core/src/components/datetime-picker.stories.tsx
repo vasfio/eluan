@@ -107,3 +107,43 @@ export const WithLabel: Story = {
     )
   },
 }
+
+export const WithSeconds: Story = {
+  args: {},
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "A datetime picker showing seconds. The time row is the shared TimeInput component (with its two-digit entry fix), extended with a seconds segment.",
+      },
+    },
+  },
+  render: () => {
+    const [dateTime, setDateTime] = React.useState<Date | undefined>(new Date())
+    return (
+      <div style={{ maxWidth: 288 }}>
+        <DateTimePicker value={dateTime} onChange={setDateTime} showSeconds use24Hour />
+      </div>
+    )
+  },
+}
+
+export const WideTrigger: Story = {
+  args: {},
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "The popover matches the trigger width, so a wider trigger stretches the fluid calendar grid and each day cell to fill it.",
+      },
+    },
+  },
+  render: () => {
+    const [dateTime, setDateTime] = React.useState<Date | undefined>()
+    return (
+      <div style={{ maxWidth: 440 }}>
+        <DateTimePicker value={dateTime} onChange={setDateTime} />
+      </div>
+    )
+  },
+}

@@ -6,6 +6,13 @@ const meta: Meta<typeof MultiSelect> = {
   title: "Components/MultiSelect",
   component: MultiSelect,
   tags: ["autodocs"],
+  decorators: [
+    (Story) => (
+      <div style={{ maxWidth: 288 }}>
+        <Story />
+      </div>
+    ),
+  ],
   parameters: {
     docs: {
       description: {

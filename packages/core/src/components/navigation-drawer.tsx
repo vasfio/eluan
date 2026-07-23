@@ -109,7 +109,9 @@ const NavigationDrawerHeader = React.forwardRef<
         collapsed && navigationDrawerStyles.headerCollapsed
       )}
     >
-      {children}
+      {/* Hide the brand/logomark when collapsed. The header keeps its fixed
+          height (no layout jump); only its contents drop out. */}
+      {!collapsed && children}
     </div>
   )
 })

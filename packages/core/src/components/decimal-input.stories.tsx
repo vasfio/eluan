@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { DecimalInput, CurrencyInput, PercentageInput, UnitInput } from "./decimal-input"
+import { Label } from "./form-label"
 
 const meta: Meta<typeof DecimalInput> = {
   title: "Components/Decimal Input",
@@ -137,17 +138,17 @@ export const CustomDecimals: Story = {
   },
   render: () => (
     <div style={{ maxWidth: 288, display: "flex", flexDirection: "column", gap: 16 }}>
-      <div>
-        <p style={{ fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)", marginBottom: 4 }}>2 decimals</p>
-        <DecimalInput decimals={2} placeholder="0.00" />
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-xs)" }}>
+        <Label htmlFor="decimals-2">2 decimals</Label>
+        <DecimalInput id="decimals-2" decimals={2} placeholder="0.00" />
       </div>
-      <div>
-        <p style={{ fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)", marginBottom: 4 }}>4 decimals</p>
-        <DecimalInput decimals={4} placeholder="0.0000" />
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-xs)" }}>
+        <Label htmlFor="decimals-4">4 decimals</Label>
+        <DecimalInput id="decimals-4" decimals={4} placeholder="0.0000" />
       </div>
-      <div>
-        <p style={{ fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)", marginBottom: 4 }}>No decimals</p>
-        <DecimalInput decimals={0} placeholder="0" />
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-xs)" }}>
+        <Label htmlFor="decimals-0">No decimals</Label>
+        <DecimalInput id="decimals-0" decimals={0} placeholder="0" />
       </div>
     </div>
   ),
@@ -162,9 +163,9 @@ export const WithMinMax: Story = {
     },
   },
   render: () => (
-    <div style={{ maxWidth: 288, display: "flex", flexDirection: "column", gap: 16 }}>
-      <p style={{ fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)" }}>Range: 0 to 1000</p>
-      <CurrencyInput currency="USD" min={0} max={1000} onChange={(value) => console.log("Value:", value)} />
+    <div style={{ maxWidth: 288, display: "flex", flexDirection: "column", gap: "var(--spacing-xs)" }}>
+      <Label htmlFor="decimal-range">Range: 0 to 1000</Label>
+      <CurrencyInput id="decimal-range" currency="USD" min={0} max={1000} onChange={(value) => console.log("Value:", value)} />
     </div>
   ),
 }
@@ -178,9 +179,9 @@ export const AllowNegative: Story = {
     },
   },
   render: () => (
-    <div style={{ maxWidth: 288, display: "flex", flexDirection: "column", gap: 16 }}>
-      <p style={{ fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)" }}>Allows negative values</p>
-      <CurrencyInput currency="USD" allowNegative onChange={(value) => console.log("Value:", value)} />
+    <div style={{ maxWidth: 288, display: "flex", flexDirection: "column", gap: "var(--spacing-xs)" }}>
+      <Label htmlFor="decimal-negative">Allows negative values</Label>
+      <CurrencyInput id="decimal-negative" currency="USD" allowNegative onChange={(value) => console.log("Value:", value)} />
     </div>
   ),
 }

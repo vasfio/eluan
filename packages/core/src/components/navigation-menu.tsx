@@ -109,9 +109,14 @@ const styles = stylex.create({
       width: "auto",
     },
   },
+  // Anchor the single shared viewport to the left edge of the menu bar (below
+  // the List) rather than centering it under the whole List — centering makes
+  // wide panels read as a detached "popover in the middle". Radix's
+  // single-viewport model exposes no per-trigger left offset, so left-aligning
+  // under the bar is the closest it can sit to the open trigger.
   viewportWrap: {
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     left: 0,
     position: "absolute",
     top: "100%",

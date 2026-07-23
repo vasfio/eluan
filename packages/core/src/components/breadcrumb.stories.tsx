@@ -90,37 +90,6 @@ export const Default: Story = {
   },
 }
 
-export const WithEllipsis: Story = {
-  render: () => (
-    <Breadcrumb>
-      <BreadcrumbList>
-        <BreadcrumbItem>
-          <BreadcrumbLink href="/">Home</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbEllipsis />
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbLink href="/docs/components">Components</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
-        </BreadcrumbItem>
-      </BreadcrumbList>
-    </Breadcrumb>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "A breadcrumb with a static ellipsis when no collapsed items are provided.",
-      },
-    },
-  },
-}
-
 export const WithCollapsedItems: Story = {
   render: () => (
     <Breadcrumb>

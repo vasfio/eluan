@@ -20,20 +20,29 @@ type TabsContentProps = Omit<
 >
 
 const styles = stylex.create({
+  // Theme-scoped via --tabs-* component tokens (see packages/tokens themes.css):
+  // industrial-retro renders the machined SegmentedControl look (recessed track,
+  // raised active cap); minimal keeps its original flat pill. All theme-varying
+  // properties resolve through those tokens so minimal is frozen unchanged.
   list: {
     alignItems: "center",
-    backgroundColor: "var(--interactive-bg-alt)",
-    borderRadius: "var(--curves-md)",
+    backgroundColor: "var(--tabs-list-bg)",
+    borderRadius: "var(--tabs-list-radius)",
+    boxShadow: "var(--tabs-list-shadow)",
     color: "var(--interactive-fg-alt)",
     display: "inline-flex",
+    gap: "var(--tabs-list-gap)",
     justifyContent: "center",
     minHeight: "var(--size-lg)",
-    padding: "var(--spacing-xs)",
+    padding: "var(--tabs-list-padding)",
   },
   trigger: {
     alignItems: "center",
+    backgroundColor: "transparent",
+    backgroundImage: "none",
     borderWidth: 0,
-    borderRadius: "var(--curves-sm)",
+    borderRadius: "var(--tabs-trigger-radius)",
+    color: "var(--tabs-trigger-fg)",
     display: "inline-flex",
     fontSize: "var(--font-size-sm)",
     fontWeight: 500,
@@ -41,9 +50,12 @@ const styles = stylex.create({
     paddingBlock: "var(--spacing-xs)",
     paddingInline: "var(--spacing-sm)",
     transitionDuration: "150ms",
-    transitionProperty: "all",
+    transitionProperty: "color, background-color, box-shadow",
     transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
     whiteSpace: "nowrap",
+    ":hover": {
+      color: "var(--tabs-trigger-hover-fg)",
+    },
     ":focus-visible": {
       outlineColor: "var(--interactive-border)",
       outlineOffset: "1px",
@@ -55,9 +67,10 @@ const styles = stylex.create({
       pointerEvents: "none",
     },
     "[data-state=active]": {
-      backgroundColor: "var(--container-bg)",
-      boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-      color: "var(--interactive-fg)",
+      backgroundColor: "var(--tabs-trigger-selected-bg)",
+      backgroundImage: "var(--tabs-trigger-selected-surface)",
+      boxShadow: "var(--tabs-trigger-selected-shadow)",
+      color: "var(--tabs-trigger-selected-fg)",
     },
   },
   content: {

@@ -51,6 +51,7 @@ const styles = stylex.create({
     borderColor: "var(--container-border)",
     borderStyle: "solid",
     borderWidth: 1,
+    borderRadius: "var(--curves-lg)",
     boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
     display: "grid",
     gap: "var(--spacing-md)",
@@ -61,11 +62,8 @@ const styles = stylex.create({
     top: "50%",
     transform: "translate(-50%, -50%)",
     transitionDuration: "200ms",
-    width: "100%",
+    width: "calc(100% - var(--spacing-2xl))",
     zIndex: 50,
-    "@media (min-width: 640px)": {
-      borderRadius: "var(--curves-lg)",
-    },
   },
   contentCommand: {
     overflow: "hidden",
@@ -177,10 +175,14 @@ const DialogContent = React.forwardRef<
       )}
     >
       {children}
-      <DialogPrimitive.Close {...stylex.props(styles.close)}>
-        <X {...stylex.props(styles.closeIcon)} />
-        <span {...stylex.props(styles.visuallyHidden)}>Close</span>
-      </DialogPrimitive.Close>
+      {/* Command palettes close via Escape/overlay; the X would overlap the
+          search input row. */}
+      {layout !== "command" && (
+        <DialogPrimitive.Close {...stylex.props(styles.close)}>
+          <X {...stylex.props(styles.closeIcon)} />
+          <span {...stylex.props(styles.visuallyHidden)}>Close</span>
+        </DialogPrimitive.Close>
+      )}
     </DialogPrimitive.Content>
   </DialogPortal>
 ))

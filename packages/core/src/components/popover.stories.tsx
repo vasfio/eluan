@@ -108,25 +108,25 @@ export const Positions: Story = {
     >
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="outline">Top</Button>
+          <Button variant="ghost">Top</Button>
         </PopoverTrigger>
         <PopoverContent side="top" avoidCollisions={false}>Popover on top</PopoverContent>
       </Popover>
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="outline">Right</Button>
+          <Button variant="ghost">Right</Button>
         </PopoverTrigger>
         <PopoverContent side="right" avoidCollisions={false}>Popover on right</PopoverContent>
       </Popover>
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="outline">Bottom</Button>
+          <Button variant="ghost">Bottom</Button>
         </PopoverTrigger>
         <PopoverContent side="bottom" avoidCollisions={false}>Popover on bottom</PopoverContent>
       </Popover>
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="outline">Left</Button>
+          <Button variant="ghost">Left</Button>
         </PopoverTrigger>
         <PopoverContent side="left" avoidCollisions={false}>Popover on left</PopoverContent>
       </Popover>

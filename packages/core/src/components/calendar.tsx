@@ -180,6 +180,8 @@ const styles = stylex.create({
     width: "var(--size-xxs)",
   },
   dayPicker: {
+    flexGrow: 1,
+    minWidth: 0,
     paddingBlock: 12,
     paddingInline: 4,
   },
@@ -190,10 +192,13 @@ const styles = stylex.create({
       "@media (min-width: 640px)": "row",
     },
     gap: "var(--spacing-lg)",
+    width: "100%",
   },
   month: {
     display: "flex",
+    flexBasis: 0,
     flexDirection: "column",
+    flexGrow: 1,
     gap: "var(--spacing-md)",
   },
   monthCaption: {
@@ -212,14 +217,18 @@ const styles = stylex.create({
   },
   weekdays: {
     display: "flex",
+    width: "100%",
   },
   weekday: {
     borderRadius: "var(--curves-lg)",
     color: "var(--interactive-fg-alt)",
+    flexBasis: "var(--size-md)",
+    flexGrow: 1,
+    flexShrink: 0,
     fontSize: "0.75rem",
     fontWeight: 300,
+    minWidth: 0,
     textAlign: "center",
-    width: "var(--size-md)",
   },
   week: {
     display: "flex",
@@ -227,12 +236,15 @@ const styles = stylex.create({
     width: "100%",
   },
   day: {
+    flexBasis: "var(--size-md)",
+    flexGrow: 1,
+    flexShrink: 0,
     fontSize: "var(--font-size-sm)",
     height: "var(--size-md)",
+    minWidth: 0,
     padding: 0,
     position: "relative",
     textAlign: "center",
-    width: "var(--size-md)",
   },
   dayButton: {
     alignItems: "center",
@@ -248,7 +260,7 @@ const styles = stylex.create({
     transitionProperty: "background-color, border-radius, color",
     transitionTimingFunction: "ease",
     whiteSpace: "nowrap",
-    width: "var(--size-md)",
+    width: "100%",
     ":hover": {
       backgroundColor: "var(--interactive-bg-hover)",
       borderRadius: "var(--curves-lg)",
@@ -346,11 +358,15 @@ const calendarStyles = `
 .eluan-calendar-today > button::after {
   background-color: currentColor;
   border-radius: var(--radius-radius-full);
-  bottom: 0.5rem;
   content: "";
   height: 0.125rem;
   left: 50%;
   position: absolute;
+  /* Anchor the keyline just below the digit's baseline rather than a fixed
+     offset from the cell's bottom edge. 0.6em scales with --font-size-sm
+     (which is density-driven), so the gap between number and keyline stays
+     consistent — and clear of the digit — in compact, standard, and wide. */
+  top: calc(50% + 0.6em);
   transform: translateX(-50%);
   width: 0.75rem;
 }

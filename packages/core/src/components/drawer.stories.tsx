@@ -52,7 +52,7 @@ import {
       </DrawerHeader>
       <DrawerFooter>
         <DrawerClose asChild>
-          <Button variant="outline">Close</Button>
+          <Button variant="ghost">Close</Button>
         </DrawerClose>
       </DrawerFooter>
     </DrawerContent>
@@ -212,7 +212,7 @@ export const Default: Story = {
             <DrawerFooter>
               <Button fullWidth>Save changes</Button>
               <DrawerClose asChild>
-                <Button variant="outline" fullWidth>
+                <Button variant="ghost" fullWidth>
                   Cancel
                 </Button>
               </DrawerClose>
@@ -317,7 +317,7 @@ export const FromLeft: Story = {
               </p>
               <div style={{ marginTop: "var(--spacing-md)" }}>
                 <DrawerTrigger asChild>
-                  <Button variant="outline">Toggle navigation</Button>
+                  <Button variant="ghost">Toggle navigation</Button>
                 </DrawerTrigger>
               </div>
             </main>

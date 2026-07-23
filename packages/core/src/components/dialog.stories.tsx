@@ -65,7 +65,7 @@ export const Default: Story = {
   render: () => (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Open Dialog</Button>
+        <Button variant="ghost">Open Dialog</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -138,7 +138,7 @@ export const SimpleDialog: Story = {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button variant="outline">Cancel</Button>
+          <Button variant="ghost">Cancel</Button>
           <Button variant="destructive">Delete</Button>
         </DialogFooter>
       </DialogContent>

@@ -26,7 +26,7 @@ const shadows = {
 const styles = stylex.create({
   root: {
     backgroundColor: "var(--container-bg)",
-    borderColor: "var(--container-border-alt)",
+    borderColor: "var(--interactive-border-alt)",
     borderRadius: "var(--curves-lg)",
     borderStyle: "solid",
     borderWidth: 1,

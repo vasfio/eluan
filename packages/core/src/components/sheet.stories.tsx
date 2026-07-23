@@ -62,69 +62,79 @@ export const Default: Story = {
   render: () => (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">Open Sheet</Button>
+        <Button variant="ghost">Open Sheet</Button>
       </SheetTrigger>
       <SheetContent>
-        <SheetHeader>
-          <SheetTitle>Edit profile</SheetTitle>
-          <SheetDescription>
-            Make changes to your profile here. Click save when you&apos;re done.
-          </SheetDescription>
-        </SheetHeader>
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "var(--spacing-md)",
+            height: "100%",
           }}
         >
+          <SheetHeader>
+            <SheetTitle>Edit profile</SheetTitle>
+            <SheetDescription>
+              Make changes to your profile here. Click save when you&apos;re done.
+            </SheetDescription>
+          </SheetHeader>
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "var(--spacing-xs)",
+              gap: "var(--spacing-md)",
+              marginTop: "var(--spacing-md)",
             }}
           >
-            <label
-              htmlFor="name"
+            <div
               style={{
-                fontSize: "var(--font-size-sm)",
-                fontWeight: 500,
-                color: "var(--interactive-fg)",
+                display: "flex",
+                flexDirection: "column",
+                gap: "var(--spacing-xs)",
               }}
             >
-              Name
-            </label>
-            <Input id="name" defaultValue="John Doe" />
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "var(--spacing-xs)",
-            }}
-          >
-            <label
-              htmlFor="username"
+              <label
+                htmlFor="name"
+                style={{
+                  fontSize: "var(--font-size-sm)",
+                  fontWeight: 500,
+                  color: "var(--interactive-fg)",
+                }}
+              >
+                Name
+              </label>
+              <Input id="name" defaultValue="John Doe" />
+            </div>
+            <div
               style={{
-                fontSize: "var(--font-size-sm)",
-                fontWeight: 500,
-                color: "var(--interactive-fg)",
+                display: "flex",
+                flexDirection: "column",
+                gap: "var(--spacing-xs)",
               }}
             >
-              Username
-            </label>
-            <Input id="username" defaultValue="@johndoe" />
+              <label
+                htmlFor="username"
+                style={{
+                  fontSize: "var(--font-size-sm)",
+                  fontWeight: 500,
+                  color: "var(--interactive-fg)",
+                }}
+              >
+                Username
+              </label>
+              <Input id="username" defaultValue="@johndoe" />
+            </div>
           </div>
+          <div style={{ flex: 1 }} />
+          <SheetFooter>
+            <SheetClose asChild>
+              <Button variant="ghost">Cancel</Button>
+            </SheetClose>
+            <SheetClose asChild>
+              <Button type="submit">Save changes</Button>
+            </SheetClose>
+          </SheetFooter>
         </div>
-        <SheetFooter>
-          <SheetClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </SheetClose>
-          <SheetClose asChild>
-            <Button type="submit">Save changes</Button>
-          </SheetClose>
-        </SheetFooter>
       </SheetContent>
     </Sheet>
   ),
@@ -141,7 +151,7 @@ export const Left: Story = {
   render: () => (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">Open Left</Button>
+        <Button variant="ghost">Open Left</Button>
       </SheetTrigger>
       <SheetContent side="left">
         <SheetHeader>
@@ -164,7 +174,7 @@ export const Top: Story = {
   render: () => (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">Open Top</Button>
+        <Button variant="ghost">Open Top</Button>
       </SheetTrigger>
       <SheetContent side="top">
         <SheetHeader>
@@ -187,7 +197,7 @@ export const Bottom: Story = {
   render: () => (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">Open Bottom</Button>
+        <Button variant="ghost">Open Bottom</Button>
       </SheetTrigger>
       <SheetContent side="bottom">
         <SheetHeader>

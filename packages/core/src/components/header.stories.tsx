@@ -128,26 +128,3 @@ export const WithActiveItem: Story = {
     />
   ),
 }
-
-export const Transparent: Story = {
-  parameters: { docs: { description: { story: "Transparent header over a colored background." } } },
-  render: () => (
-    <div
-      style={{
-        background: "linear-gradient(to right, var(--action-primary-bg), var(--action-primary-bg-hover))",
-        minHeight: 300,
-      }}
-    >
-      <Header
-        transparent
-        logo={
-          <span style={{ fontFamily: "var(--font-heading)", fontSize: "var(--font-size-lg)", fontWeight: 600, color: "var(--action-primary-fg)" }}>
-            Eluan
-          </span>
-        }
-        items={defaultItems}
-        actions={<Button variant="secondary">Get Started</Button>}
-      />
-    </div>
-  ),
-}

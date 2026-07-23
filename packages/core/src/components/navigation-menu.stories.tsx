@@ -121,10 +121,8 @@ const MegaColumn = ({
         color: "var(--container-fg-alt)",
         fontSize: "var(--font-size-xs)",
         fontWeight: 400,
-        letterSpacing: "0.04em",
         marginBottom: "var(--spacing-xxs)",
         padding: "0 var(--spacing-md)",
-        textTransform: "uppercase",
       }}
     >
       {heading}
@@ -135,14 +133,17 @@ const MegaColumn = ({
   </div>
 )
 
-/** Wrapper that gives each open panel room so it is never clipped. */
+/**
+ * Top-left wrapper so the menu bar sits at the top of the frame and its panels
+ * open anchored beneath it. The bottom room reserves space for the tallest open
+ * panel (the Clothing megamenu) so it is never clipped.
+ */
 const StoryFrame = ({ children }: { children: React.ReactNode }) => (
   <div
     style={{
-      display: "flex",
-      justifyContent: "center",
-      minHeight: 480,
-      padding: "var(--spacing-2xl)",
+      paddingTop: "var(--spacing-lg)",
+      paddingInline: "var(--spacing-lg)",
+      paddingBottom: 340,
     }}
   >
     {children}

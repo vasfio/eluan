@@ -99,6 +99,21 @@
   --slider-thumb-width: calc(var(--size-xxs) * 1.75);
   --slider-thumb-height: calc(var(--size-xxs) * 1.25);
 
+  /* Tabs — machined segmented-control look: recessed track, raised active cap
+     (matches the SegmentedControl component in this theme). */
+  --tabs-list-bg: var(--backgrounds-secondary);
+  --tabs-list-shadow: var(--skeuo-recessed);
+  --tabs-list-radius: var(--curves-md);
+  --tabs-list-padding: var(--spacing-xxs);
+  --tabs-list-gap: var(--spacing-xxs);
+  --tabs-trigger-radius: var(--curves-sm);
+  --tabs-trigger-fg: var(--interactive-fg-alt);
+  --tabs-trigger-hover-fg: var(--interactive-fg);
+  --tabs-trigger-selected-bg: var(--interactive-bg);
+  --tabs-trigger-selected-fg: var(--interactive-fg);
+  --tabs-trigger-selected-surface: var(--skeuo-surface-raised);
+  --tabs-trigger-selected-shadow: var(--skeuo-raised);
+
   --container-bg: var(--backgrounds-primary);
   --container-bg-alt: var(--backgrounds-secondary);
   --container-bg-inverse: var(--foregrounds-secondary);
@@ -276,6 +291,20 @@
   --skeuo-dimple-size: auto;
   --slider-thumb-width: var(--size-xxs);
   --slider-thumb-height: var(--size-xxs);
+  /* Tabs — frozen to the flat minimal look the component rendered before it
+     was tokenized (no skeuo; underlaid track, subtle raised active pill). */
+  --tabs-list-bg: var(--interactive-bg-alt);
+  --tabs-list-shadow: none;
+  --tabs-list-radius: var(--curves-md);
+  --tabs-list-padding: var(--spacing-xs);
+  --tabs-list-gap: 0;
+  --tabs-trigger-radius: var(--curves-sm);
+  --tabs-trigger-fg: var(--interactive-fg-alt);
+  --tabs-trigger-hover-fg: var(--interactive-fg-alt);
+  --tabs-trigger-selected-bg: var(--container-bg);
+  --tabs-trigger-selected-fg: var(--interactive-fg);
+  --tabs-trigger-selected-surface: none;
+  --tabs-trigger-selected-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --container-bg: var(--backgrounds-primary);
   --container-bg-alt: var(--backgrounds-secondary);
   --container-bg-inverse: var(--foregrounds-secondary);

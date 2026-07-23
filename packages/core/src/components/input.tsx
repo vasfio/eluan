@@ -142,7 +142,7 @@ const styles = stylex.create({
     paddingLeft: "var(--spacing-md)",
   },
   padTrailing: {
-    paddingRight: "calc(var(--spacing-md) + var(--size-xxs) + var(--spacing-sm))",
+    paddingRight: "calc(var(--spacing-md) + var(--size-sm) + var(--spacing-sm))",
   },
   padNoTrailing: {
     paddingRight: "var(--spacing-md)",
@@ -151,17 +151,21 @@ const styles = stylex.create({
     alignItems: "center",
     backgroundColor: "transparent",
     borderWidth: 0,
+    borderRadius: "var(--curves-sm)",
     color: "var(--interactive-fg-alt)",
     cursor: "pointer",
-    display: "flex",
+    display: "inline-flex",
+    height: "var(--size-sm)",
+    justifyContent: "center",
+    minWidth: "var(--size-sm)",
     padding: 0,
     position: "absolute",
     right: "var(--spacing-md)",
     transitionDuration: "150ms",
-    transitionProperty: "color",
+    transitionProperty: "background-color",
     transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
     ":hover": {
-      color: "var(--interactive-fg)",
+      backgroundColor: "var(--interactive-bg-hover)",
     },
   },
   trailingWrap: {

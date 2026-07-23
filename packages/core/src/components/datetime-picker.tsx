@@ -10,6 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "./popover"
+import { TimeInput } from "./time-input"
 
 export interface DateTimePickerProps {
   value?: Date
@@ -18,6 +19,49 @@ export interface DateTimePickerProps {
   disabled?: boolean
   showSeconds?: boolean
   use24Hour?: boolean
+}
+
+function pad(n: number) {
+  return String(n).padStart(2, "0")
+}
+
+/** Serialize the time portion of a Date into the string TimeInput expects. */
+function dateToTimeValue(
+  date: Date | undefined,
+  use24Hour: boolean,
+  showSeconds: boolean
+): string {
+  if (!date) return ""
+  const h = date.getHours()
+  const sec = showSeconds ? `:${pad(date.getSeconds())}` : ""
+  if (use24Hour) return `${pad(h)}:${pad(date.getMinutes())}${sec}`
+  const period = h >= 12 ? "PM" : "AM"
+  const h12 = h % 12 || 12
+  return `${pad(h12)}:${pad(date.getMinutes())}${sec} ${period}`
+}
+
+/** Apply a TimeInput value string onto a base date (or today when unset). */
+function applyTimeValue(base: Date | undefined, value: string): Date | undefined {
+  const m12 = value.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)$/i)
+  const m24 = value.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/)
+  let h: number
+  let m: number
+  let s: number
+  if (m12) {
+    h = parseInt(m12[1]) % 12
+    if (m12[4].toUpperCase() === "PM") h += 12
+    m = parseInt(m12[2])
+    s = m12[3] ? parseInt(m12[3]) : 0
+  } else if (m24) {
+    h = parseInt(m24[1])
+    m = parseInt(m24[2])
+    s = m24[3] ? parseInt(m24[3]) : 0
+  } else {
+    return base
+  }
+  const d = base ? new Date(base) : new Date()
+  d.setHours(h, m, s, 0)
+  return d
 }
 
 const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
@@ -39,8 +83,6 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
       setSelectedDate(value)
     }, [value])
 
-    // No longer need hour/minute/second arrays since we use input fields
-
     const handleDateSelect = (date: Date | undefined) => {
       if (date) {
         const newDate = new Date(date)
@@ -54,47 +96,12 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
       }
     }
 
-    const handleTimeChange = (
-      type: "hour" | "minute" | "second" | "ampm",
-      val: string
-    ) => {
-      const newDate = selectedDate ? new Date(selectedDate) : new Date()
-
-      if (type === "hour") {
-        let hour = parseInt(val)
-        if (!use24Hour) {
-          const isPM = newDate.getHours() >= 12
-          if (isPM && hour !== 12) hour += 12
-          if (!isPM && hour === 12) hour = 0
-        }
-        newDate.setHours(hour)
-      } else if (type === "minute") {
-        newDate.setMinutes(parseInt(val))
-      } else if (type === "second") {
-        newDate.setSeconds(parseInt(val))
-      } else if (type === "ampm") {
-        const currentHour = newDate.getHours()
-        if (val === "PM" && currentHour < 12) {
-          newDate.setHours(currentHour + 12)
-        } else if (val === "AM" && currentHour >= 12) {
-          newDate.setHours(currentHour - 12)
-        }
+    const handleTimeChange = (timeValue: string) => {
+      const newDate = applyTimeValue(selectedDate, timeValue)
+      if (newDate) {
+        setSelectedDate(newDate)
+        onChange?.(newDate)
       }
-
-      setSelectedDate(newDate)
-      onChange?.(newDate)
-    }
-
-    const getDisplayHour = () => {
-      if (!selectedDate) return ""
-      const hour = selectedDate.getHours()
-      if (use24Hour) return hour.toString()
-      return (hour % 12 || 12).toString()
-    }
-
-    const getAmPm = () => {
-      if (!selectedDate) return "AM"
-      return selectedDate.getHours() >= 12 ? "PM" : "AM"
     }
 
     const dateTimeFormat = showSeconds
@@ -132,79 +139,12 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
             initialFocus
           />
           <div {...stylex.props(styles.timeSection)}>
-            <div {...stylex.props(styles.timeRow)}>
-              <input
-                type="text"
-                inputMode="numeric"
-                maxLength={2}
-                value={getDisplayHour() ? getDisplayHour().padStart(2, "0") : ""}
-                placeholder="HH"
-                onChange={(e) => {
-                  const raw = e.target.value.replace(/\D/g, "").slice(0, 2)
-                  const max = use24Hour ? 23 : 12
-                  const min = use24Hour ? 0 : 1
-                  const num = parseInt(raw || "0")
-                  if (num >= min && num <= max) {
-                    handleTimeChange("hour", String(num))
-                  }
-                }}
-                {...stylex.props(styles.timeInput)}
-              />
-              <span {...stylex.props(styles.separator)}>:</span>
-              <input
-                type="text"
-                inputMode="numeric"
-                maxLength={2}
-                value={selectedDate ? selectedDate.getMinutes().toString().padStart(2, "0") : ""}
-                placeholder="MM"
-                onChange={(e) => {
-                  const raw = e.target.value.replace(/\D/g, "").slice(0, 2)
-                  const num = parseInt(raw || "0")
-                  if (num >= 0 && num <= 59) {
-                    handleTimeChange("minute", String(num))
-                  }
-                }}
-                {...stylex.props(styles.timeInput)}
-              />
-              {showSeconds && (
-                <>
-                  <span {...stylex.props(styles.separator)}>:</span>
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    maxLength={2}
-                    value={selectedDate ? selectedDate.getSeconds().toString().padStart(2, "0") : ""}
-                    placeholder="SS"
-                    onChange={(e) => {
-                      const raw = e.target.value.replace(/\D/g, "").slice(0, 2)
-                      const num = parseInt(raw || "0")
-                      if (num >= 0 && num <= 59) {
-                        handleTimeChange("second", String(num))
-                      }
-                    }}
-                    {...stylex.props(styles.timeInput)}
-                  />
-                </>
-              )}
-              {!use24Hour && (
-                <div {...stylex.props(styles.ampmGroup)}>
-                  <button
-                    type="button"
-                    onClick={() => handleTimeChange("ampm", "AM")}
-                    {...stylex.props(styles.ampmButton, getAmPm() === "AM" ? styles.ampmButtonActive : styles.ampmButtonInactive)}
-                  >
-                    AM
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleTimeChange("ampm", "PM")}
-                    {...stylex.props(styles.ampmButton, getAmPm() === "PM" ? styles.ampmButtonActive : styles.ampmButtonInactive)}
-                  >
-                    PM
-                  </button>
-                </div>
-              )}
-            </div>
+            <TimeInput
+              format={use24Hour ? "24" : "12"}
+              showSeconds={showSeconds}
+              value={dateToTimeValue(selectedDate, use24Hour, showSeconds)}
+              onChange={handleTimeChange}
+            />
           </div>
         </PopoverContent>
       </Popover>
@@ -224,63 +164,6 @@ const styles = stylex.create({
     borderTopStyle: "solid",
     borderTopWidth: 1,
     padding: "var(--spacing-md)",
-  },
-  timeRow: {
-    alignItems: "center",
-    display: "flex",
-    gap: "var(--spacing-sm)",
-  },
-  timeInput: {
-    backgroundColor: "var(--interactive-bg)",
-    borderColor: "var(--interactive-border-alt)",
-    borderRadius: "var(--curves-md)",
-    borderStyle: "solid",
-    borderWidth: 1,
-    color: "var(--interactive-fg)",
-    fontSize: "var(--font-size-sm)",
-    fontVariantNumeric: "tabular-nums",
-    paddingBlock: "var(--spacing-xs)",
-    paddingInline: "var(--spacing-sm)",
-    textAlign: "center",
-    width: 44,
-    ":focus": {
-      outline: "none",
-      boxShadow: "0 0 0 1px var(--interactive-border)",
-    },
-  },
-  separator: {
-    color: "var(--container-fg-alt)",
-    fontWeight: 500,
-  },
-  ampmGroup: {
-    borderColor: "var(--interactive-border-alt)",
-    borderRadius: "var(--curves-md)",
-    borderStyle: "solid",
-    borderWidth: 1,
-    display: "flex",
-    overflow: "hidden",
-  },
-  ampmButton: {
-    borderWidth: 0,
-    cursor: "pointer",
-    fontSize: "var(--font-size-xs)",
-    fontWeight: 500,
-    paddingBlock: "var(--spacing-xs)",
-    paddingInline: "var(--spacing-sm)",
-    transitionDuration: "150ms",
-    transitionProperty: "background-color, color",
-    transitionTimingFunction: "ease",
-  },
-  ampmButtonActive: {
-    backgroundColor: "var(--interactive-bg-selected)",
-    color: "var(--interactive-fg-selected)",
-  },
-  ampmButtonInactive: {
-    backgroundColor: "var(--interactive-bg)",
-    color: "var(--interactive-fg-alt)",
-    ":hover": {
-      color: "var(--interactive-fg)",
-    },
   },
 })
 

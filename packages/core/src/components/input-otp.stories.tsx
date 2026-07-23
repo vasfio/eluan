@@ -5,6 +5,7 @@ import {
   InputOTPSlot,
   InputOTPSeparator,
 } from "./input-otp"
+import { Label } from "./form-label"
 
 const meta: Meta<typeof InputOTP> = {
   title: "Components/Input OTP",
@@ -122,19 +123,27 @@ export const WithLabel: Story = {
     },
   },
   render: () => (
-    <div className="space-y-2">
-      <label className="text-sm font-medium">Enter verification code</label>
-      <InputOTP maxLength={6}>
-        <InputOTPGroup>
-          <InputOTPSlot index={0} />
-          <InputOTPSlot index={1} />
-          <InputOTPSlot index={2} />
-          <InputOTPSlot index={3} />
-          <InputOTPSlot index={4} />
-          <InputOTPSlot index={5} />
-        </InputOTPGroup>
-      </InputOTP>
-      <p className="text-sm text-muted-foreground">
+    <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-xs)" }}>
+        <Label>Enter verification code</Label>
+        <InputOTP maxLength={6}>
+          <InputOTPGroup>
+            <InputOTPSlot index={0} />
+            <InputOTPSlot index={1} />
+            <InputOTPSlot index={2} />
+            <InputOTPSlot index={3} />
+            <InputOTPSlot index={4} />
+            <InputOTPSlot index={5} />
+          </InputOTPGroup>
+        </InputOTP>
+      </div>
+      <p
+        style={{
+          color: "var(--container-fg-alt)",
+          fontSize: "var(--font-size-xs)",
+          margin: 0,
+        }}
+      >
         Enter the 6-digit code sent to your email.
       </p>
     </div>

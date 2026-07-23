@@ -7,12 +7,16 @@ import { TimeInput } from "../time-input";
 function Controlled({
   initial,
   format,
+  showSeconds,
 }: {
   initial: string;
   format: "12" | "24";
+  showSeconds?: boolean;
 }) {
   const [v, setV] = useState(initial);
-  return <TimeInput value={v} onChange={setV} format={format} />;
+  return (
+    <TimeInput value={v} onChange={setV} format={format} showSeconds={showSeconds} />
+  );
 }
 
 describe("TimeInput", () => {
@@ -90,5 +94,46 @@ describe("TimeInput", () => {
     await user.click(hours);
     await user.keyboard("{ArrowUp}");
     expect(onChange).toHaveBeenLastCalledWith("15:30");
+  });
+
+  it("renders a seconds segment and emits HH:MM:SS when showSeconds is set (24h)", async () => {
+    const onChange = vi.fn();
+    const user = userEvent.setup();
+    render(
+      <TimeInput value="14:30:45" format="24" showSeconds onChange={onChange} />
+    );
+    const seconds = screen.getByLabelText("Seconds") as HTMLInputElement;
+    expect(seconds.value).toBe("45");
+
+    await user.click(seconds);
+    await user.keyboard("0");
+    await user.keyboard("9");
+    expect(onChange).toHaveBeenLastCalledWith("14:30:09");
+  });
+
+  it("emits HH:MM:SS AM/PM with seconds in 12h format", () => {
+    render(<TimeInput value="09:08:07 PM" format="12" showSeconds />);
+    expect((screen.getByLabelText("Hours") as HTMLInputElement).value).toBe("09");
+    expect((screen.getByLabelText("Minutes") as HTMLInputElement).value).toBe("08");
+    expect((screen.getByLabelText("Seconds") as HTMLInputElement).value).toBe("07");
+  });
+
+  it("advances focus from minutes to seconds after a two-digit minute", async () => {
+    const user = userEvent.setup();
+    render(<Controlled initial="14:30:45" format="24" showSeconds />);
+    const minutes = screen.getByLabelText("Minutes") as HTMLInputElement;
+    const seconds = screen.getByLabelText("Seconds") as HTMLInputElement;
+
+    await user.click(minutes);
+    await user.keyboard("1");
+    expect(minutes.value).toBe("1");
+    await user.keyboard("5");
+    expect(minutes.value).toBe("15");
+    await waitFor(() => expect(seconds).toHaveFocus());
+  });
+
+  it("does not render a seconds segment by default", () => {
+    render(<TimeInput value="14:30" format="24" />);
+    expect(screen.queryByLabelText("Seconds")).toBeNull();
   });
 });

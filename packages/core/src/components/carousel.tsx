@@ -4,6 +4,7 @@ import useEmblaCarousel, {
 } from "embla-carousel-react"
 import * as stylex from "@stylexjs/stylex"
 import { ArrowLeft, ArrowRight } from "lucide-react"
+import { Button } from "./button"
 
 type CarouselApi = UseEmblaCarouselType[1]
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
@@ -211,19 +212,25 @@ const CarouselPrevious = React.forwardRef<
   const { orientation, scrollPrev, canScrollPrev } = useCarousel()
 
   return (
-    <button
-      ref={ref}
-      disabled={!canScrollPrev}
-      onClick={scrollPrev}
-      {...props}
+    <span
       {...stylex.props(
-        styles.control,
+        styles.controlWrap,
         orientation === "horizontal" ? styles.previousHorizontal : styles.previousVertical
       )}
     >
-      <ArrowLeft {...stylex.props(styles.controlIcon)} />
-      <span {...stylex.props(styles.srOnly)}>Previous slide</span>
-    </button>
+      <Button
+        ref={ref}
+        variant="ghost"
+        size="icon"
+        shape="round"
+        disabled={!canScrollPrev}
+        onClick={scrollPrev}
+        {...props}
+      >
+        <ArrowLeft {...stylex.props(styles.controlIcon)} />
+        <span {...stylex.props(styles.srOnly)}>Previous slide</span>
+      </Button>
+    </span>
   )
 })
 CarouselPrevious.displayName = "CarouselPrevious"
@@ -235,19 +242,25 @@ const CarouselNext = React.forwardRef<
   const { orientation, scrollNext, canScrollNext } = useCarousel()
 
   return (
-    <button
-      ref={ref}
-      disabled={!canScrollNext}
-      onClick={scrollNext}
-      {...props}
+    <span
       {...stylex.props(
-        styles.control,
+        styles.controlWrap,
         orientation === "horizontal" ? styles.nextHorizontal : styles.nextVertical
       )}
     >
-      <ArrowRight {...stylex.props(styles.controlIcon)} />
-      <span {...stylex.props(styles.srOnly)}>Next slide</span>
-    </button>
+      <Button
+        ref={ref}
+        variant="ghost"
+        size="icon"
+        shape="round"
+        disabled={!canScrollNext}
+        onClick={scrollNext}
+        {...props}
+      >
+        <ArrowRight {...stylex.props(styles.controlIcon)} />
+        <span {...stylex.props(styles.srOnly)}>Next slide</span>
+      </Button>
+    </span>
   )
 })
 CarouselNext.displayName = "CarouselNext"
@@ -289,36 +302,9 @@ const styles = stylex.create({
   itemVertical: {
     paddingTop: "var(--spacing-md)",
   },
-  control: {
-    alignItems: "center",
-    backgroundColor: "transparent",
-    borderWidth: 0,
-    borderRadius: "var(--radius-radius-full)",
-    color: "var(--action-tertiary-fg)",
+  controlWrap: {
     display: "inline-flex",
-    fontSize: "var(--font-size-sm)",
-    fontWeight: 400,
-    gap: "var(--spacing-xs)",
-    height: "var(--size-md)",
-    justifyContent: "center",
     position: "absolute",
-    transitionDuration: "150ms",
-    transitionProperty: "background-color, color, opacity",
-    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-    whiteSpace: "nowrap",
-    width: "var(--size-md)",
-    ":hover": {
-      backgroundColor: "var(--action-tertiary-bg-hover)",
-      color: "var(--action-tertiary-fg-active)",
-    },
-    ":focus-visible": {
-      boxShadow: "0 0 0 1px var(--interactive-border), 0 0 0 2px var(--container-bg)",
-      outlineStyle: "none",
-    },
-    ":disabled": {
-      opacity: 0.5,
-      pointerEvents: "none",
-    },
   },
   previousHorizontal: {
     left: controlOffset,

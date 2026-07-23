@@ -235,8 +235,10 @@ const styles = stylex.create({
   radioDot: {
     backgroundColor: "var(--interactive-bg)",
     borderRadius: "var(--radius-radius-full)",
-    height: "calc(var(--spacing-xs) + var(--spacing-xxs))",
-    width: "calc(var(--spacing-xs) + var(--spacing-xxs))",
+    // Keep in lockstep with RadioGroup's dot: proportional to the ring so
+    // it stays balanced across spacing densities.
+    height: "calc(var(--size-xxs) * 0.5)",
+    width: "calc(var(--size-xxs) * 0.5)",
   },
   label: {
     fontSize: "var(--font-size-sm)",

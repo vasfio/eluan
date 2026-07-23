@@ -14,7 +14,6 @@ import {
   FooterModernSocialLink,
   FooterStagger,
 } from "./footer"
-import { Button } from "@eluan/core"
 import { Twitter, Github, Linkedin } from "lucide-react"
 
 const meta: Meta<typeof Footer> = {
@@ -25,7 +24,7 @@ const meta: Meta<typeof Footer> = {
     docs: {
       description: {
         component: `
-A composable footer with link sections, social icons, copyright, and a modern dark variant with a full-bleed brand wordmark and staggered fade-in. Link items render as Button \`variant="link"\`.
+A composable footer with link sections, social icons, copyright, and a modern dark variant with a full-bleed brand wordmark and staggered fade-in. Link items render as plain underlined text; group headings are quiet sentence-case labels.
 
 **Import**
 \`\`\`tsx
@@ -131,7 +130,7 @@ export const Default: Story = {
 }
 
 export const Modern: Story = {
-  parameters: { docs: { description: { story: "Dark modern variant with a giant full-bleed brand wordmark clipped at the bottom edge, link-variant buttons, and a staggered fade-in." } } },
+  parameters: { docs: { description: { story: "Dark modern variant with a giant full-bleed brand wordmark clipped at the bottom edge, plain underlined links, and a staggered fade-in." } } },
   render: () => (
     <Footer variant="modern" size="lg" wordmark="Eluan">
       <FooterStagger delayMs={100}>
@@ -193,7 +192,7 @@ export const Modern: Story = {
 }
 
 export const Small: Story = {
-  parameters: { docs: { description: { story: "Compact footer with only copyright and inline link-variant buttons." } } },
+  parameters: { docs: { description: { story: "Compact footer with only copyright and inline plain underlined links." } } },
   render: () => (
     <Footer size="sm">
       <div
@@ -209,15 +208,36 @@ export const Small: Story = {
           © 2024 Eluan. All rights reserved.
         </FooterCopyright>
         <div style={{ display: "flex", gap: "var(--spacing-md)" }}>
-          <Button asChild variant="link">
-            <a href="#">Privacy</a>
-          </Button>
-          <Button asChild variant="link">
-            <a href="#">Terms</a>
-          </Button>
-          <Button asChild variant="link">
-            <a href="#">Contact</a>
-          </Button>
+          <a
+            href="#"
+            style={{
+              color: "inherit",
+              fontSize: "var(--font-size-sm)",
+              textDecorationLine: "underline",
+            }}
+          >
+            Privacy
+          </a>
+          <a
+            href="#"
+            style={{
+              color: "inherit",
+              fontSize: "var(--font-size-sm)",
+              textDecorationLine: "underline",
+            }}
+          >
+            Terms
+          </a>
+          <a
+            href="#"
+            style={{
+              color: "inherit",
+              fontSize: "var(--font-size-sm)",
+              textDecorationLine: "underline",
+            }}
+          >
+            Contact
+          </a>
         </div>
       </div>
     </Footer>

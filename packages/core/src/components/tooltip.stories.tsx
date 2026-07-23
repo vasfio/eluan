@@ -56,7 +56,7 @@ export const Default: Story = {
     >
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="outline">Hover me</Button>
+          <Button variant="ghost">Hover me</Button>
         </TooltipTrigger>
         <TooltipContent>
           <p>Add to library</p>

@@ -14,7 +14,11 @@ const timeInputVariants = () => ""
 
 export interface TimeInputProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style" | "onChange"> {
-  /** Time value in "HH:MM" (24h) or "HH:MM AM/PM" (12h) format */
+  /**
+   * Time value. When `showSeconds` is false: "HH:MM" (24h) or "HH:MM AM/PM"
+   * (12h). When `showSeconds` is true: "HH:MM:SS" (24h) or "HH:MM:SS AM/PM"
+   * (12h).
+   */
   value?: string
   /** Called when time changes */
   onChange?: (value: string) => void
@@ -24,6 +28,8 @@ export interface TimeInputProps
   disabled?: boolean
   /** Show clock icon */
   showIcon?: boolean
+  /** Show a seconds segment (adds `:SS` to the value) */
+  showSeconds?: boolean
   /** Placeholder text (shown when empty) */
   placeholder?: string
   /** Name attribute for form submission */
@@ -32,20 +38,28 @@ export interface TimeInputProps
 }
 
 function parseTimeValue(value: string, format: "12" | "24") {
-  if (!value) return { h: format === "12" ? 12 : 0, m: 0, period: "AM" as const }
-  const m12 = value.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i)
-  const m24 = value.match(/^(\d{1,2}):(\d{2})$/)
-  if (m12) return { h: parseInt(m12[1]), m: parseInt(m12[2]), period: m12[3].toUpperCase() as "AM" | "PM" }
+  if (!value) return { h: format === "12" ? 12 : 0, m: 0, s: 0, period: "AM" as const }
+  const m12 = value.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)$/i)
+  const m24 = value.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/)
+  if (m12) {
+    return {
+      h: parseInt(m12[1]),
+      m: parseInt(m12[2]),
+      s: m12[3] ? parseInt(m12[3]) : 0,
+      period: m12[4].toUpperCase() as "AM" | "PM",
+    }
+  }
   if (m24) {
     const h = parseInt(m24[1])
     const m = parseInt(m24[2])
+    const s = m24[3] ? parseInt(m24[3]) : 0
     if (format === "12") {
       const period = h >= 12 ? "PM" as const : "AM" as const
-      return { h: h === 0 ? 12 : h > 12 ? h - 12 : h, m, period }
+      return { h: h === 0 ? 12 : h > 12 ? h - 12 : h, m, s, period }
     }
-    return { h, m, period: "AM" as const }
+    return { h, m, s, period: "AM" as const }
   }
-  return { h: format === "12" ? 12 : 0, m: 0, period: "AM" as const }
+  return { h: format === "12" ? 12 : 0, m: 0, s: 0, period: "AM" as const }
 }
 
 const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
@@ -56,6 +70,7 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
       format = "24",
       disabled = false,
       showIcon = true,
+      showSeconds = false,
       placeholder: _placeholder,
       name,
       size: _size,
@@ -66,11 +81,14 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
     const parsed = parseTimeValue(value, format)
     const [hours, setHours] = React.useState(parsed.h)
     const [minutes, setMinutes] = React.useState(parsed.m)
+    const [seconds, setSeconds] = React.useState(parsed.s)
     const [period, setPeriod] = React.useState<"AM" | "PM">(parsed.period)
     const [editingH, setEditingH] = React.useState<string | null>(null)
     const [editingM, setEditingM] = React.useState<string | null>(null)
+    const [editingS, setEditingS] = React.useState<string | null>(null)
 
     const minuteRef = React.useRef<HTMLInputElement>(null)
+    const secondRef = React.useRef<HTMLInputElement>(null)
     // When a segment gains focus (or is reset via arrow keys) its display
     // shows the current padded value. The next digit typed should START a
     // fresh entry rather than append to the existing digits, so we track a
@@ -79,6 +97,7 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
     // pre-filled 2-digit value produced a stale value and auto-advanced.
     const hoursFreshRef = React.useRef(true)
     const minutesFreshRef = React.useRef(true)
+    const secondsFreshRef = React.useRef(true)
 
     const maxH = format === "12" ? 12 : 23
     const minH = format === "12" ? 1 : 0
@@ -87,18 +106,20 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
       const p = parseTimeValue(value, format)
       setHours(p.h)
       setMinutes(p.m)
+      setSeconds(p.s)
       setPeriod(p.period)
     }, [value, format])
 
     const emit = React.useCallback(
-      (h: number, m: number, p: "AM" | "PM") => {
+      (h: number, m: number, s: number, p: "AM" | "PM") => {
+        const sec = showSeconds ? `:${pad(s)}` : ""
         if (format === "24") {
-          onChange?.(`${pad(h)}:${pad(m)}`)
+          onChange?.(`${pad(h)}:${pad(m)}${sec}`)
         } else {
-          onChange?.(`${pad(h)}:${pad(m)} ${p}`)
+          onChange?.(`${pad(h)}:${pad(m)}${sec} ${p}`)
         }
       },
-      [format, onChange]
+      [format, onChange, showSeconds]
     )
 
     const handleHoursChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,7 +135,7 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
 
       if (n >= minH && n <= maxH) {
         setHours(n)
-        emit(n, minutes, period)
+        emit(n, minutes, seconds, period)
       }
 
       // Advance only once the value can no longer be extended: either two
@@ -142,7 +163,33 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
       const n = parseInt(raw)
       if (!isNaN(n) && n >= 0 && n <= 59) {
         setMinutes(n)
-        emit(hours, n, period)
+        emit(hours, n, seconds, period)
+      }
+
+      // When a seconds segment is present, advance to it once the minutes can
+      // no longer be extended (two digits entered, or a first digit >= 6 that
+      // can't be the tens place of a valid minute). Mirrors the hours logic.
+      if (showSeconds && !isNaN(n)) {
+        const isComplete = raw.length === 2 || n > 5
+        if (isComplete) {
+          requestAnimationFrame(() => {
+            secondRef.current?.focus()
+            secondRef.current?.select()
+          })
+        }
+      }
+    }
+
+    const handleSecondsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const digits = e.target.value.replace(/\D/g, "")
+      const raw = secondsFreshRef.current ? digits.slice(-1) : digits.slice(0, 2)
+      secondsFreshRef.current = false
+      setEditingS(raw)
+      if (raw === "") return
+      const n = parseInt(raw)
+      if (!isNaN(n) && n >= 0 && n <= 59) {
+        setSeconds(n)
+        emit(hours, minutes, n, period)
       }
     }
 
@@ -154,7 +201,7 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
         setHours(nh)
         setEditingH(null)
         hoursFreshRef.current = true
-        emit(nh, minutes, period)
+        emit(nh, minutes, seconds, period)
       }
       if (e.key === "ArrowDown") {
         e.preventDefault()
@@ -163,7 +210,7 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
         setHours(nh)
         setEditingH(null)
         hoursFreshRef.current = true
-        emit(nh, minutes, period)
+        emit(nh, minutes, seconds, period)
       }
       if (e.key === ":") {
         e.preventDefault()
@@ -180,7 +227,7 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
         setMinutes(nm)
         setEditingM(null)
         minutesFreshRef.current = true
-        emit(hours, nm, period)
+        emit(hours, nm, seconds, period)
       }
       if (e.key === "ArrowDown") {
         e.preventDefault()
@@ -189,13 +236,39 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
         setMinutes(nm)
         setEditingM(null)
         minutesFreshRef.current = true
-        emit(hours, nm, period)
+        emit(hours, nm, seconds, period)
+      }
+      if (e.key === ":" && showSeconds) {
+        e.preventDefault()
+        secondRef.current?.focus()
+        secondRef.current?.select()
+      }
+    }
+
+    const handleSecondsKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "ArrowUp") {
+        e.preventDefault()
+        let ns = seconds + 1
+        if (ns > 59) ns = 0
+        setSeconds(ns)
+        setEditingS(null)
+        secondsFreshRef.current = true
+        emit(hours, minutes, ns, period)
+      }
+      if (e.key === "ArrowDown") {
+        e.preventDefault()
+        let ns = seconds - 1
+        if (ns < 0) ns = 59
+        setSeconds(ns)
+        setEditingS(null)
+        secondsFreshRef.current = true
+        emit(hours, minutes, ns, period)
       }
     }
 
     const togglePeriod = (newPeriod: "AM" | "PM") => {
       setPeriod(newPeriod)
-      emit(hours, minutes, newPeriod)
+      emit(hours, minutes, seconds, newPeriod)
     }
 
     return (
@@ -212,8 +285,8 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
             name={name}
             value={
               format === "24"
-                ? `${pad(hours)}:${pad(minutes)}`
-                : `${pad(hours)}:${pad(minutes)} ${period}`
+                ? `${pad(hours)}:${pad(minutes)}${showSeconds ? `:${pad(seconds)}` : ""}`
+                : `${pad(hours)}:${pad(minutes)}${showSeconds ? `:${pad(seconds)}` : ""} ${period}`
             }
           />
         )}
@@ -231,11 +304,11 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
             const n = parseInt(editingH)
             if (!isNaN(n) && n >= minH && n <= maxH) {
               setHours(n)
-              emit(n, minutes, period)
+              emit(n, minutes, seconds, period)
             } else if (!isNaN(n)) {
               const clamped = Math.max(minH, Math.min(maxH, n))
               setHours(clamped)
-              emit(clamped, minutes, period)
+              emit(clamped, minutes, seconds, period)
             }
             setEditingH(null)
           }}
@@ -261,11 +334,11 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
             const n = parseInt(editingM)
             if (!isNaN(n) && n >= 0 && n <= 59) {
               setMinutes(n)
-              emit(hours, n, period)
+              emit(hours, n, seconds, period)
             } else if (!isNaN(n)) {
               const clamped = Math.max(0, Math.min(59, n))
               setMinutes(clamped)
-              emit(hours, clamped, period)
+              emit(hours, clamped, seconds, period)
             }
             setEditingM(null)
           }}
@@ -274,6 +347,39 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
           inputMode="numeric"
           aria-label="Minutes"
         />
+
+        {showSeconds && (
+          <>
+            <span {...stylex.props(styles.separator)}>:</span>
+            <input
+              ref={secondRef}
+              {...stylex.props(styles.segment)}
+              value={editingS !== null ? editingS : pad(seconds)}
+              onFocus={(e) => {
+                secondsFreshRef.current = true
+                requestAnimationFrame(() => e.target.select())
+              }}
+              onChange={handleSecondsChange}
+              onBlur={() => {
+                if (editingS === null) return
+                const n = parseInt(editingS)
+                if (!isNaN(n) && n >= 0 && n <= 59) {
+                  setSeconds(n)
+                  emit(hours, minutes, n, period)
+                } else if (!isNaN(n)) {
+                  const clamped = Math.max(0, Math.min(59, n))
+                  setSeconds(clamped)
+                  emit(hours, minutes, clamped, period)
+                }
+                setEditingS(null)
+              }}
+              onKeyDown={handleSecondsKeyDown}
+              disabled={disabled}
+              inputMode="numeric"
+              aria-label="Seconds"
+            />
+          </>
+        )}
 
         {format === "12" && (
           <div {...stylex.props(styles.periodToggle)}>

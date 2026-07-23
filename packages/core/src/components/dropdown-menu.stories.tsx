@@ -48,7 +48,7 @@ import {
 \`\`\`tsx
 <DropdownMenu>
   <DropdownMenuTrigger asChild>
-    <Button variant="outline">Open</Button>
+    <Button variant="ghost">Open</Button>
   </DropdownMenuTrigger>
   <DropdownMenuContent>
     <DropdownMenuItem>Profile</DropdownMenuItem>
@@ -76,7 +76,7 @@ export const Default: Story = {
   render: () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Open</Button>
+        <Button variant="ghost">Open</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -100,7 +100,7 @@ const CheckboxesDemo = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Options</Button>
+        <Button variant="ghost">Options</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>Appearance</DropdownMenuLabel>
@@ -148,7 +148,7 @@ const RadioItemsDemo = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Theme</Button>
+        <Button variant="ghost">Theme</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>Select Theme</DropdownMenuLabel>
@@ -200,7 +200,7 @@ export const WithSubmenu: Story = {
   render: () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">More</Button>
+        <Button variant="ghost">More</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem>New Tab</DropdownMenuItem>

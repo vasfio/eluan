@@ -2,6 +2,7 @@ import * as React from "react"
 import type { Meta, StoryObj } from "@storybook/react"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./hover-card"
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar"
+import { Button } from "./button"
 
 const meta: Meta<typeof HoverCard> = {
   title: "Components/Hover Card",
@@ -50,17 +51,7 @@ export const Default: Story = {
     <div style={storyWrapper}>
       <HoverCard>
         <HoverCardTrigger asChild>
-          <a
-            href="#"
-            style={{
-              fontSize: "var(--font-size-sm)",
-              fontWeight: 500,
-              textDecorationLine: "underline",
-              textUnderlineOffset: "4px",
-            }}
-          >
-            @nextjs
-          </a>
+          <Button variant="ghost">@nextjs</Button>
         </HoverCardTrigger>
         <HoverCardContent>
           <div style={{ display: "flex", gap: "var(--spacing-md)" }}>
@@ -86,11 +77,12 @@ export const Default: Story = {
   ),
 }
 
+// Top-left padded wrapper (no centering) so the card visibly hangs off its
+// trigger; the extra bottom room keeps the opened card from being clipped.
 const storyWrapper: React.CSSProperties = {
-  display: "flex",
-  justifyContent: "center",
-  minHeight: "20rem",
-  padding: "var(--spacing-2xl)",
+  paddingTop: "var(--spacing-lg)",
+  paddingInline: "var(--spacing-lg)",
+  paddingBottom: 200,
 }
 
 export const Simple: Story = {

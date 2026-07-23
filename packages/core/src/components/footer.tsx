@@ -95,11 +95,9 @@ export interface FooterLinkProps
 const FooterLink = React.forwardRef<HTMLAnchorElement, FooterLinkProps>(
   ({ children, ...props }, ref) => (
     <li {...stylex.props(styles.linkItem)}>
-      <Button asChild variant="link">
-        <a ref={ref} {...props}>
-          {children}
-        </a>
-      </Button>
+      <a ref={ref} {...props} {...stylex.props(styles.link)}>
+        {children}
+      </a>
     </li>
   )
 )
@@ -183,11 +181,9 @@ FooterBrand.displayName = "FooterBrand"
 const FooterModernLink = React.forwardRef<HTMLAnchorElement, FooterLinkProps>(
   ({ children, ...props }, ref) => (
     <li {...stylex.props(styles.linkItem)}>
-      <Button asChild variant="link">
-        <a ref={ref} {...props}>
-          {children}
-        </a>
-      </Button>
+      <a ref={ref} {...props} {...stylex.props(styles.link)}>
+        {children}
+      </a>
     </li>
   )
 )
@@ -197,7 +193,7 @@ const FooterModernSocialLink = React.forwardRef<
   HTMLAnchorElement,
   FooterSocialLinkProps
 >(({ label, children, ...props }, ref) => (
-  <Button asChild variant="outline" size="icon" shape="round">
+  <Button asChild variant="ghost" size="icon" shape="round">
     <a ref={ref} aria-label={label} {...props}>
       {children}
     </a>
@@ -270,12 +266,15 @@ const styles = stylex.create({
     width: "100%",
   },
   containerAbove: {
+    // Extra clearance below the content so the social row / copyright sit well
+    // clear of the full-bleed wordmark anchored to the bottom edge.
+    paddingBottom: "var(--spacing-2xl)",
     position: "relative",
     zIndex: 1,
   },
   wordmark: {
     bottom: 0,
-    color: "var(--container-border-alt)",
+    color: "var(--container-bg-alt)",
     fontFamily: "var(--font-heading)",
     fontSize: "clamp(4rem, 30vw, 22rem)",
     fontWeight: 600,
@@ -307,13 +306,30 @@ const styles = stylex.create({
     gap: "var(--spacing-md)",
   },
   title: {
-    color: "inherit",
+    color: "var(--container-fg-alt)",
     fontFamily: "var(--font-heading)",
     fontSize: "var(--font-size-sm)",
-    fontWeight: 600,
-    letterSpacing: "0.05em",
+    fontWeight: 400,
     marginBlock: 0,
-    textTransform: "uppercase",
+  },
+  link: {
+    color: "inherit",
+    cursor: "pointer",
+    fontSize: "var(--font-size-sm)",
+    opacity: 1,
+    textDecorationLine: "underline",
+    transitionDuration: "150ms",
+    transitionProperty: "opacity",
+    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    ":hover": {
+      opacity: 0.7,
+    },
+    ":focus-visible": {
+      outlineColor: "var(--interactive-border)",
+      outlineOffset: "2px",
+      outlineStyle: "solid",
+      outlineWidth: "1px",
+    },
   },
   links: {
     display: "flex",

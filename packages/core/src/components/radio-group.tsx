@@ -81,8 +81,11 @@ const styles = stylex.create({
   dot: {
     backgroundColor: "var(--interactive-bg)",
     borderRadius: "var(--radius-radius-full)",
-    height: "calc(var(--spacing-xs) + var(--spacing-xxs))",
-    width: "calc(var(--spacing-xs) + var(--spacing-xxs))",
+    // Sized proportionally to the ring (--size-xxs) so it stays balanced
+    // across compact/standard/wide. The old additive spacing math collapsed
+    // to ~2px in compact where --spacing-xxs is 0.
+    height: "calc(var(--size-xxs) * 0.5)",
+    width: "calc(var(--size-xxs) * 0.5)",
   },
 })
 

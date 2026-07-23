@@ -122,3 +122,23 @@ export const Disabled: Story = {
     )
   },
 }
+
+export const WideTrigger: Story = {
+  args: {},
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "The popover matches the trigger width, and the calendar is fluid — a wider trigger stretches the 7-column grid and each day cell to fill it.",
+      },
+    },
+  },
+  render: () => {
+    const [date, setDate] = React.useState<Date | undefined>()
+    return (
+      <div style={{ maxWidth: 440 }}>
+        <DatePicker value={date} onChange={setDate} />
+      </div>
+    )
+  },
+}
