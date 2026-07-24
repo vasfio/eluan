@@ -47,12 +47,13 @@ type Story = StoryObj<typeof meta>
 
 export const ImageDefault: Story = {
   render: () => (
-    <Image
-      src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
-      alt="Sample image"
-      ratio="video"
-      className="max-w-md"
-    />
+    <div style={{ maxWidth: "28rem" }}>
+      <Image
+        src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+        alt="Sample image"
+        ratio="video"
+      />
+    </div>
   ),
   parameters: {
     docs: {
@@ -65,13 +66,14 @@ export const ImageDefault: Story = {
 
 export const ImageRounded: Story = {
   render: () => (
-    <Image
-      src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
-      alt="Sample image"
-      ratio="square"
-      rounded="xl"
-      className="max-w-xs"
-    />
+    <div style={{ maxWidth: "20rem" }}>
+      <Image
+        src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+        alt="Sample image"
+        ratio="square"
+        rounded="xl"
+      />
+    </div>
   ),
   parameters: {
     docs: {
@@ -84,13 +86,18 @@ export const ImageRounded: Story = {
 
 export const ImageWithFallback: Story = {
   render: () => (
-    <Image
-      src="https://broken-url.invalid/image.jpg"
-      alt="Broken image"
-      ratio="video"
-      fallback={<span className="text-muted-foreground text-sm">Image unavailable</span>}
-      className="max-w-md"
-    />
+    <div style={{ maxWidth: "28rem" }}>
+      <Image
+        src="https://broken-url.invalid/image.jpg"
+        alt="Broken image"
+        ratio="video"
+        fallback={
+          <span style={{ color: "var(--container-fg-alt)", fontSize: "var(--font-size-sm)" }}>
+            Image unavailable
+          </span>
+        }
+      />
+    </div>
   ),
   parameters: {
     docs: {
@@ -103,11 +110,9 @@ export const ImageWithFallback: Story = {
 
 export const VideoDefault: Story = {
   render: () => (
-    <Video
-      src="https://www.w3schools.com/html/mov_bbb.mp4"
-      ratio="video"
-      className="max-w-md"
-    />
+    <div style={{ maxWidth: "28rem" }}>
+      <Video src="https://www.w3schools.com/html/mov_bbb.mp4" ratio="video" />
+    </div>
   ),
   parameters: {
     docs: {

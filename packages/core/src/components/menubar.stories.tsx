@@ -82,7 +82,14 @@ export const Default: Story = {
             New Window <MenubarShortcut>⌘N</MenubarShortcut>
           </MenubarItem>
           <MenubarSeparator />
-          <MenubarItem>Share</MenubarItem>
+          <MenubarSub>
+            <MenubarSubTrigger>Share</MenubarSubTrigger>
+            <MenubarSubContent>
+              <MenubarItem>Email link</MenubarItem>
+              <MenubarItem>Messages</MenubarItem>
+              <MenubarItem>Notes</MenubarItem>
+            </MenubarSubContent>
+          </MenubarSub>
           <MenubarSeparator />
           <MenubarItem>
             Print <MenubarShortcut>⌘P</MenubarShortcut>

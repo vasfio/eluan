@@ -42,7 +42,7 @@ import { AspectRatio } from "@eluan/core"
 **Usage**
 \`\`\`tsx
 <AspectRatio ratio={16 / 9}>
-  <img src="photo.jpg" alt="Photo" className="object-cover w-full h-full" />
+  <img src="photo.jpg" alt="Photo" style={{ objectFit: "cover", width: "100%", height: "100%" }} />
 </AspectRatio>
 \`\`\`
         `,
@@ -63,7 +63,7 @@ export const Default: Story = {
     },
   },
   render: () => (
-    <div className="w-[450px]">
+    <div style={{ width: 450 }}>
       <AspectRatio ratio={16 / 9}>
         <MeshGradient />
       </AspectRatio>
@@ -80,7 +80,7 @@ export const Square: Story = {
     },
   },
   render: () => (
-    <div className="w-[300px]">
+    <div style={{ width: 300 }}>
       <AspectRatio ratio={1}>
         <MeshGradient />
       </AspectRatio>
@@ -97,7 +97,7 @@ export const Portrait: Story = {
     },
   },
   render: () => (
-    <div className="w-[200px]">
+    <div style={{ width: 200 }}>
       <AspectRatio ratio={3 / 4}>
         <MeshGradient />
       </AspectRatio>
@@ -114,21 +114,21 @@ export const Ratios: Story = {
     },
   },
   render: () => (
-    <div className="flex gap-[var(--spacing-md)]">
-      <div className="w-[200px]">
-        <p className="text-[length:var(--font-size-sm)] mb-[var(--spacing-xs)]">16:9</p>
+    <div style={{ display: "flex", gap: "var(--spacing-md)" }}>
+      <div style={{ width: 200 }}>
+        <p style={{ fontSize: "var(--font-size-sm)", marginBottom: "var(--spacing-xs)" }}>16:9</p>
         <AspectRatio ratio={16 / 9}>
           <MeshGradient />
         </AspectRatio>
       </div>
-      <div className="w-[200px]">
-        <p className="text-[length:var(--font-size-sm)] mb-[var(--spacing-xs)]">4:3</p>
+      <div style={{ width: 200 }}>
+        <p style={{ fontSize: "var(--font-size-sm)", marginBottom: "var(--spacing-xs)" }}>4:3</p>
         <AspectRatio ratio={4 / 3}>
           <MeshGradient />
         </AspectRatio>
       </div>
-      <div className="w-[200px]">
-        <p className="text-[length:var(--font-size-sm)] mb-[var(--spacing-xs)]">1:1</p>
+      <div style={{ width: 200 }}>
+        <p style={{ fontSize: "var(--font-size-sm)", marginBottom: "var(--spacing-xs)" }}>1:1</p>
         <AspectRatio ratio={1}>
           <MeshGradient />
         </AspectRatio>

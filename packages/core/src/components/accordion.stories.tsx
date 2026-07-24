@@ -49,7 +49,7 @@ export const Default: Story = {
     },
   },
   render: () => (
-    <Accordion type="single" collapsible className="w-full">
+    <Accordion type="single" collapsible style={{ width: "100%" }}>
       <AccordionItem value="item-1">
         <AccordionTrigger>Is it accessible?</AccordionTrigger>
         <AccordionContent>
@@ -82,7 +82,7 @@ export const Multiple: Story = {
     },
   },
   render: () => (
-    <Accordion type="multiple" className="w-full">
+    <Accordion type="multiple" style={{ width: "100%" }}>
       <AccordionItem value="item-1">
         <AccordionTrigger>Can I open multiple items?</AccordionTrigger>
         <AccordionContent>

@@ -37,7 +37,11 @@ export const Default: Story = {
       },
     },
   },
-  render: () => <Slider defaultValue={[50]} max={100} step={1} className="w-[60%]" />,
+  render: () => (
+    <div style={{ width: "60%" }}>
+      <Slider defaultValue={[50]} max={100} step={1} />
+    </div>
+  ),
 }
 
 export const Range: Story = {
@@ -48,7 +52,11 @@ export const Range: Story = {
       },
     },
   },
-  render: () => <Slider defaultValue={[25, 75]} max={100} step={1} className="w-[60%]" />,
+  render: () => (
+    <div style={{ width: "60%" }}>
+      <Slider defaultValue={[25, 75]} max={100} step={1} />
+    </div>
+  ),
 }
 
 export const WithSteps: Story = {
@@ -59,7 +67,11 @@ export const WithSteps: Story = {
       },
     },
   },
-  render: () => <Slider defaultValue={[50]} max={100} step={10} className="w-[60%]" />,
+  render: () => (
+    <div style={{ width: "60%" }}>
+      <Slider defaultValue={[50]} max={100} step={10} />
+    </div>
+  ),
 }
 
 export const Disabled: Story = {
@@ -70,5 +82,9 @@ export const Disabled: Story = {
       },
     },
   },
-  render: () => <Slider defaultValue={[50]} max={100} step={1} disabled className="w-[60%]" />,
+  render: () => (
+    <div style={{ width: "60%" }}>
+      <Slider defaultValue={[50]} max={100} step={1} disabled />
+    </div>
+  ),
 }

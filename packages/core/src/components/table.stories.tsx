@@ -75,26 +75,34 @@ export const Default: Story = {
       <TableCaption>A list of your recent invoices.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Invoice</TableHead>
+          <TableHead>
+            <div style={{ width: "100px" }}>Invoice</div>
+          </TableHead>
           <TableHead>Status</TableHead>
           <TableHead>Method</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
+          <TableHead>
+            <div style={{ textAlign: "right" }}>Amount</div>
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {invoices.map((invoice) => (
           <TableRow key={invoice.invoice}>
-            <TableCell className="font-medium">{invoice.invoice}</TableCell>
+            <TableCell weight="medium">{invoice.invoice}</TableCell>
             <TableCell>{invoice.status}</TableCell>
             <TableCell>{invoice.method}</TableCell>
-            <TableCell className="text-right">{invoice.amount}</TableCell>
+            <TableCell>
+              <div style={{ textAlign: "right" }}>{invoice.amount}</div>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
       <TableFooter>
         <TableRow>
           <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">$1,750.00</TableCell>
+          <TableCell>
+            <div style={{ textAlign: "right" }}>$1,750.00</div>
+          </TableCell>
         </TableRow>
       </TableFooter>
     </Table>

@@ -103,9 +103,9 @@ export function Counter({ initial = 0 }) {
   const [count, setCount] = useState(initial);
 
   return (
-    <div className="flex items-center gap-4">
+    <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
       <button onClick={() => setCount((c) => c - 1)}>-</button>
-      <span className="text-lg font-bold">{count}</span>
+      <span style={{ fontSize: "1.125rem", fontWeight: 700 }}>{count}</span>
       <button onClick={() => setCount((c) => c + 1)}>+</button>
     </div>
   );

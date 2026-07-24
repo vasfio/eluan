@@ -7,7 +7,6 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "./navigation-menu"
 import { Button } from "./button"
 
@@ -45,9 +44,8 @@ import {
       </NavigationMenuContent>
     </NavigationMenuItem>
     <NavigationMenuItem>
-      <NavigationMenuLink className={navigationMenuTriggerStyle()} href="#">
-        Sale
-      </NavigationMenuLink>
+      {/* a standalone link, styled like a trigger via navigationMenuTriggerStyle() */}
+      <NavigationMenuLink href="#">Sale</NavigationMenuLink>
     </NavigationMenuItem>
   </NavigationMenuList>
 </NavigationMenu>
@@ -93,6 +91,55 @@ const MegaLink = ({
           transitionDuration: "150ms",
           transitionProperty: "background-color, color",
           transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+        }}
+      >
+        {children}
+      </a>
+    </NavigationMenuLink>
+  )
+}
+
+/**
+ * A top-level nav-bar link styled like a NavigationMenuTrigger (the look the
+ * `navigationMenuTriggerStyle()` helper produces). Hover/focus state is handled
+ * in JS because inline styles cannot express `:hover`; all values are pulled
+ * from design tokens.
+ */
+const NavBarLink = ({
+  children,
+  href = "#",
+}: {
+  children: React.ReactNode
+  href?: string
+}) => {
+  const [active, setActive] = React.useState(false)
+  return (
+    <NavigationMenuLink asChild>
+      <a
+        href={href}
+        onMouseEnter={() => setActive(true)}
+        onMouseLeave={() => setActive(false)}
+        onFocus={() => setActive(true)}
+        onBlur={() => setActive(false)}
+        style={{
+          alignItems: "center",
+          backgroundColor: active
+            ? "var(--interactive-bg-hover)"
+            : "var(--container-bg)",
+          borderRadius: "var(--curves-md)",
+          color: active ? "var(--interactive-fg)" : "var(--container-fg)",
+          display: "inline-flex",
+          fontSize: "var(--font-size-sm)",
+          fontWeight: 500,
+          height: "var(--size-lg)",
+          justifyContent: "center",
+          paddingBlock: "var(--spacing-sm)",
+          paddingInline: "var(--spacing-md)",
+          textDecoration: "none",
+          transitionDuration: "150ms",
+          transitionProperty: "background-color, color",
+          transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+          width: "max-content",
         }}
       >
         {children}
@@ -290,12 +337,7 @@ export const Default: Story = {
           </NavigationMenuItem>
 
           <NavigationMenuItem>
-            <NavigationMenuLink
-              className={navigationMenuTriggerStyle()}
-              href="#"
-            >
-              Sale
-            </NavigationMenuLink>
+            <NavBarLink href="#">Sale</NavBarLink>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
@@ -317,36 +359,16 @@ export const Simple: Story = {
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuLink
-              className={navigationMenuTriggerStyle()}
-              href="#"
-            >
-              Home
-            </NavigationMenuLink>
+            <NavBarLink href="#">Home</NavBarLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink
-              className={navigationMenuTriggerStyle()}
-              href="#"
-            >
-              Shop
-            </NavigationMenuLink>
+            <NavBarLink href="#">Shop</NavBarLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink
-              className={navigationMenuTriggerStyle()}
-              href="#"
-            >
-              Sale
-            </NavigationMenuLink>
+            <NavBarLink href="#">Sale</NavBarLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink
-              className={navigationMenuTriggerStyle()}
-              href="#"
-            >
-              Contact
-            </NavigationMenuLink>
+            <NavBarLink href="#">Contact</NavBarLink>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>

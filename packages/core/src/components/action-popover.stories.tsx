@@ -151,7 +151,7 @@ export const WithDisabledItems: Story = {
 
 export const AlignStart: Story = {
   render: () => (
-    <div className="flex justify-center">
+    <div style={{ display: "flex", justifyContent: "center" }}>
       <ActionPopover
         align="start"
         items={[
@@ -185,7 +185,7 @@ export const AlignStart: Story = {
 
 export const SideRight: Story = {
   render: () => (
-    <div className="flex justify-center">
+    <div style={{ display: "flex", justifyContent: "center" }}>
       <ActionPopover
         side="right"
         items={[

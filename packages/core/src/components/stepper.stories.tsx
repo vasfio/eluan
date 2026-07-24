@@ -71,16 +71,32 @@ export const Default: Story = {
   render: () => {
     const [current, setCurrent] = useState(1)
     return (
-      <div className="w-full space-y-4">
-        <Stepper
-          steps={steps}
-          currentStep={current}
-          onStepClick={setCurrent}
-          className="w-full"
-        />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "var(--spacing-lg)",
+          width: "100%",
+        }}
+      >
+        <div style={{ width: "100%" }}>
+          <Stepper
+            steps={steps}
+            currentStep={current}
+            onStepClick={setCurrent}
+          />
+        </div>
         {steps.map((step, i) => (
           <StepperContent key={step.id} step={i} currentStep={current}>
-            <p className="text-sm text-muted-foreground">Content for {step.title}</p>
+            <p
+              style={{
+                color: "var(--container-fg-alt)",
+                fontSize: "var(--font-size-sm)",
+                margin: 0,
+              }}
+            >
+              Content for {step.title}
+            </p>
           </StepperContent>
         ))}
       </div>
@@ -99,13 +115,14 @@ export const Vertical: Story = {
   render: () => {
     const [current, setCurrent] = useState(0)
     return (
-      <Stepper
-        steps={steps}
-        currentStep={current}
-        orientation="vertical"
-        onStepClick={setCurrent}
-        className="w-64"
-      />
+      <div style={{ width: "16rem" }}>
+        <Stepper
+          steps={steps}
+          currentStep={current}
+          orientation="vertical"
+          onStepClick={setCurrent}
+        />
+      </div>
     )
   },
 }
@@ -119,10 +136,8 @@ export const NoInteraction: Story = {
     },
   },
   render: () => (
-    <Stepper
-      steps={steps}
-      currentStep={1}
-      className="w-full"
-    />
+    <div style={{ width: "100%" }}>
+      <Stepper steps={steps} currentStep={1} />
+    </div>
   ),
 }

@@ -62,7 +62,9 @@ export const Indeterminate: Story = {
     },
   },
   render: () => (
-    <Progress className="w-[60%]" />
+    <div style={{ width: "60%" }}>
+      <Progress />
+    </div>
   ),
 }
 
@@ -74,28 +76,44 @@ export const AllValues: Story = {
       },
     },
   },
-  render: () => (
-    <div className="flex flex-col gap-4">
-      <div className="space-y-1">
-        <p className="text-sm text-muted-foreground">0%</p>
-        <Progress value={0} />
+  render: () => {
+    const rows: { label: string; value: number }[] = [
+      { label: "0%", value: 0 },
+      { label: "25%", value: 25 },
+      { label: "50%", value: 50 },
+      { label: "75%", value: 75 },
+      { label: "100%", value: 100 },
+    ]
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "var(--spacing-lg)",
+        }}
+      >
+        {rows.map((row) => (
+          <div
+            key={row.label}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "var(--spacing-xs)",
+            }}
+          >
+            <p
+              style={{
+                color: "var(--container-fg-alt)",
+                fontSize: "var(--font-size-sm)",
+                margin: 0,
+              }}
+            >
+              {row.label}
+            </p>
+            <Progress value={row.value} />
+          </div>
+        ))}
       </div>
-      <div className="space-y-1">
-        <p className="text-sm text-muted-foreground">25%</p>
-        <Progress value={25} />
-      </div>
-      <div className="space-y-1">
-        <p className="text-sm text-muted-foreground">50%</p>
-        <Progress value={50} />
-      </div>
-      <div className="space-y-1">
-        <p className="text-sm text-muted-foreground">75%</p>
-        <Progress value={75} />
-      </div>
-      <div className="space-y-1">
-        <p className="text-sm text-muted-foreground">100%</p>
-        <Progress value={100} />
-      </div>
-    </div>
-  ),
+    )
+  },
 }

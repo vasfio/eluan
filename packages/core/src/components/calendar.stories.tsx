@@ -20,12 +20,9 @@ import { Calendar } from "@eluan/core"
 
 **Usage**
 \`\`\`tsx
-<Calendar
-  mode="single"
-  selected={date}
-  onSelect={setDate}
-  className="w-fit rounded-md border"
-/>
+<div style={{ width: "fit-content", borderRadius: "var(--curves-md)", border: "1px solid var(--container-border)" }}>
+  <Calendar mode="single" selected={date} onSelect={setDate} />
+</div>
 \`\`\`
         `,
       },
@@ -48,12 +45,15 @@ export const Default: Story = {
   render: () => {
     const [date, setDate] = React.useState<Date | undefined>(new Date())
     return (
-      <Calendar
-        mode="single"
-        selected={date}
-        onSelect={setDate}
-        className="w-fit rounded-md border"
-      />
+      <div
+        style={{
+          width: "fit-content",
+          borderRadius: "var(--curves-md)",
+          border: "1px solid var(--container-border)",
+        }}
+      >
+        <Calendar mode="single" selected={date} onSelect={setDate} />
+      </div>
     )
   },
 }
@@ -70,12 +70,15 @@ export const Multiple: Story = {
   render: () => {
     const [dates, setDates] = React.useState<Date[] | undefined>([])
     return (
-      <Calendar
-        mode="multiple"
-        selected={dates}
-        onSelect={setDates}
-        className="w-fit rounded-md border"
-      />
+      <div
+        style={{
+          width: "fit-content",
+          borderRadius: "var(--curves-md)",
+          border: "1px solid var(--container-border)",
+        }}
+      >
+        <Calendar mode="multiple" selected={dates} onSelect={setDates} />
+      </div>
     )
   },
 }
@@ -92,13 +95,20 @@ export const Range: Story = {
   render: () => {
     const [range, setRange] = React.useState<DateRange | undefined>()
     return (
-      <Calendar
-        mode="range"
-        selected={range}
-        onSelect={setRange}
-        className="w-fit rounded-md border"
-        numberOfMonths={2}
-      />
+      <div
+        style={{
+          width: "fit-content",
+          borderRadius: "var(--curves-md)",
+          border: "1px solid var(--container-border)",
+        }}
+      >
+        <Calendar
+          mode="range"
+          selected={range}
+          onSelect={setRange}
+          numberOfMonths={2}
+        />
+      </div>
     )
   },
 }
