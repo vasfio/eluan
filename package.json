@@ -3,11 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
-    "dev": "pnpm --filter @eluan/core dev & pnpm --filter @eluan/web dev",
+    "dev": "pnpm --parallel --filter @eluan/core --filter @eluan/web dev",
     "build": "pnpm run build:publish",
     "build:publish": "pnpm --filter @eluan/tokens build && pnpm --filter @eluan/core build && pnpm --filter @eluan/web build",
     "build:tokens": "pnpm --filter @eluan/tokens build",

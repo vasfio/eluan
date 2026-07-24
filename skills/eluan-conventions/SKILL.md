@@ -21,20 +21,20 @@ Use CSS custom properties exclusively:
 - Container: `var(--container-bg)`, `var(--container-fg)`, `var(--container-border)`, `var(--container-border-alt)`
 
 ## Component patterns
-- Use `cn()` from `@/lib/utils` for className merging
-- Use `cva()` for variant-based styling
+- Style with StyleX: `const styles = stylex.create({ ... })` applied via `{...stylex.props(...)}` — no `cn()`, no `cva()`, no `@/lib/utils`
+- Model variants as named `stylex.create` entries plus a `Record<Variant, stylex.StyleXStyles>` lookup map (see `button.tsx`)
 - Use `React.forwardRef` for all leaf components
 - Set `.displayName` on every component
-- Export both component and variants (e.g., `export { Badge, badgeVariants }`)
-- Use `@/lib/utils` not `../../lib/utils`
+- Do not accept or forward `className`/`style` — omit them from public props (`Omit<..., "className" | "style">`); consumers theme via tokens
+- Export the component (and its `*Props`/variant *types*), e.g. `export { Button }` with `export type ButtonVariant = ...`
 
 ## Style guidelines
-- No hardcoded hex/rgb colours — tokens only
-- Font weight: prefer `font-medium` or `font-normal`, avoid `font-bold` except headings
-- Headings use `font-heading` class → `var(--font-heading)`
-- Focus rings: `focus-visible:ring-1 focus-visible:ring-[var(--interactive-fg)]`
-- Borders: `border-[var(--container-border)]` or `border-[var(--interactive-border)]`
-- Transitions: `transition-colors` for colour changes, `transition-all` sparingly
+- No hardcoded hex/rgb colours or raw pixel values — reference tokens as `var(--...)` string values in StyleX
+- Font weight: use `fontWeight: 400`/`500`, avoid heavy weights except headings
+- Headings use `fontFamily: "var(--font-heading)"`
+- Focus rings: a `":focus-visible"` block with `outlineColor: "var(--interactive-border)"`, `outlineWidth: "1px"`, `outlineStyle: "solid"`, `outlineOffset: "1px"`
+- Borders: `borderColor: "var(--container-border)"` or `"var(--interactive-border)"` (with `borderWidth`/`borderStyle`)
+- Transitions: prefer a scoped `transitionProperty` list; use `"all"` sparingly
 
 ## Build & publish workflow
 1. `cd packages/core && npm run build` — verify clean build before committing

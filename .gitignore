@@ -6,6 +6,7 @@ dist
 dist-ssr
 storybook-static
 storybook-dist
+test-output/
 
 # IDE
 .idea
@@ -31,3 +32,6 @@ npm-debug.log*
 
 # Testing
 coverage
+
+# Local agent worktrees
+.claude/worktrees/

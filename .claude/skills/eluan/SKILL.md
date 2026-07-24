@@ -5,7 +5,7 @@ description: Use when building, theming, or extending UI in apps that depend on 
 
 # Eluan Design System
 
-Eluan is a React design system distributed as a pnpm-workspace monorepo. Consumers install `@eluan/core` (components) and `@eluan/tokens` (tokens/CSS); web-only and native-only components live in `@eluan/web` and `@eluan/native`.
+Eluan is a React design system distributed as a pnpm-workspace monorepo. Consumers install `@eluan/core` (UI and marketing components) and `@eluan/tokens` (tokens/CSS). `@eluan/web` is a compatibility facade for `Header` and `Footer`, and native-only components live in `@eluan/native`.
 
 This skill is the source of truth for: component inventory, the token architecture, the consumer setup pattern (`EluanProvider`), how to define a custom theme (`createTheme`), and the conventions to follow when modifying or extending the library.
 

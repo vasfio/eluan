@@ -15,7 +15,6 @@ const external = [
   'react',
   'react-dom',
   'react/jsx-runtime',
-  'three',
   '@stylexjs/stylex',
   '@eluan/tokens',
   /^@radix-ui\//,

@@ -22,7 +22,6 @@ export default defineConfig({
         'react-dom',
         'react/jsx-runtime',
         /^@eluan\/core(\/.*)?$/,
-        'three',
       ],
       output: {
         banner: '"use client";',

@@ -53,13 +53,7 @@
   },
   "peerDependencies": {
     "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "three": ">=0.150.0"
-  },
-  "peerDependenciesMeta": {
-    "three": {
-      "optional": true
-    }
+    "react-dom": "^18.0.0"
   },
   "dependencies": {
     "@eluan/core": "workspace:^",
