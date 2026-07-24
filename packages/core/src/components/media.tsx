@@ -54,8 +54,8 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
     return (
       <div {...stylex.props(styles.frame, ratioStyles[mediaRatio], roundedStyles[mediaRounded])}>
         {loading && (
-          <div {...stylex.props(styles.loadingOverlay)}>
-            <Loader2 {...stylex.props(styles.spinner)} />
+          <div {...stylex.props(styles.loadingOverlay)} role="status" aria-label="Loading image">
+            <Loader2 aria-hidden="true" {...stylex.props(styles.spinner)} />
           </div>
         )}
         <img
@@ -174,32 +174,35 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
               <button
                 type="button"
                 onClick={togglePlay}
+                aria-label={isPlaying ? "Pause" : "Play"}
                 {...stylex.props(styles.controlButton)}
               >
                 {isPlaying ? (
-                  <Pause {...stylex.props(styles.controlIcon)} />
+                  <Pause aria-hidden="true" {...stylex.props(styles.controlIcon)} />
                 ) : (
-                  <Play {...stylex.props(styles.controlIcon)} />
+                  <Play aria-hidden="true" {...stylex.props(styles.controlIcon)} />
                 )}
               </button>
               <button
                 type="button"
                 onClick={toggleMute}
+                aria-label={isMuted ? "Unmute" : "Mute"}
                 {...stylex.props(styles.controlButton)}
               >
                 {isMuted ? (
-                  <VolumeX {...stylex.props(styles.controlIcon)} />
+                  <VolumeX aria-hidden="true" {...stylex.props(styles.controlIcon)} />
                 ) : (
-                  <Volume2 {...stylex.props(styles.controlIcon)} />
+                  <Volume2 aria-hidden="true" {...stylex.props(styles.controlIcon)} />
                 )}
               </button>
               <div {...stylex.props(styles.spacer)} />
               <button
                 type="button"
                 onClick={handleFullscreen}
+                aria-label="Toggle fullscreen"
                 {...stylex.props(styles.controlButton)}
               >
-                <Maximize {...stylex.props(styles.controlIcon)} />
+                <Maximize aria-hidden="true" {...stylex.props(styles.controlIcon)} />
               </button>
             </div>
           </div>
@@ -272,8 +275,14 @@ const styles = stylex.create({
     top: 0,
   },
   spinner: {
-    animationDuration: "1s",
-    animationIterationCount: "infinite",
+    animationDuration: {
+      default: "1s",
+      "@media (prefers-reduced-motion: reduce)": "0.01ms",
+    },
+    animationIterationCount: {
+      default: "infinite",
+      "@media (prefers-reduced-motion: reduce)": 1,
+    },
     animationName: spin,
     animationTimingFunction: "linear",
     color: "var(--container-fg-alt)",

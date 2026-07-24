@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
-import { SearchInput } from "../search-input";
+import { SearchInput, AutocompleteSearch } from "../search-input";
 
 describe("SearchInput", () => {
   it("renders a search input", () => {
@@ -25,5 +25,34 @@ describe("SearchInput", () => {
     render(<SearchInput onChange={onChange} />);
     await userEvent.type(screen.getByRole("searchbox"), "x");
     expect(onChange).toHaveBeenCalled();
+  });
+});
+
+describe("AutocompleteSearch", () => {
+  const options = [
+    { value: "a", label: "Apple" },
+    { value: "b", label: "Banana" },
+  ];
+
+  it("exposes the dropdown as a listbox of options", async () => {
+    render(<AutocompleteSearch options={options} />);
+    await userEvent.click(screen.getByRole("combobox"));
+
+    expect(screen.getByRole("listbox")).toBeInTheDocument();
+    expect(screen.getAllByRole("option")).toHaveLength(2);
+  });
+
+  it("wires aria-activedescendant to the highlighted option", async () => {
+    render(<AutocompleteSearch options={options} />);
+    const input = screen.getByRole("combobox");
+    await userEvent.click(input);
+
+    // No active option until the user navigates.
+    expect(input).not.toHaveAttribute("aria-activedescendant");
+
+    await userEvent.keyboard("{ArrowDown}");
+    const first = screen.getByRole("option", { name: /Apple/ });
+    expect(first).toHaveAttribute("aria-selected", "true");
+    expect(input).toHaveAttribute("aria-activedescendant", first.id);
   });
 });

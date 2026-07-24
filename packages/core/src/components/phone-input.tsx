@@ -98,9 +98,12 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
           onValueChange={handleCountryChange}
           disabled={disabled}
         >
-          <SelectTrigger variant="countryCode">
+          <SelectTrigger
+            variant="countryCode"
+            aria-label={`Country calling code, currently ${selectedCountry.name} ${selectedCountry.dialCode}`}
+          >
             <span {...stylex.props(styles.triggerContent)}>
-              <span>{selectedCountry.flag}</span>
+              <span aria-hidden="true">{selectedCountry.flag}</span>
               <span {...stylex.props(styles.dialCode)}>{selectedCountry.dialCode}</span>
             </span>
           </SelectTrigger>
@@ -123,6 +126,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
         <Input
           type="tel"
           icon={null}
+          aria-label="Phone number"
           ref={ref}
           attachment="start"
           value={phoneNumber}

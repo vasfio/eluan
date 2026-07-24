@@ -4,7 +4,7 @@ import * as stylex from "@stylexjs/stylex"
 import { ChevronLeft, ChevronRight, Menu } from "lucide-react"
 
 import { Button } from "./button"
-import { Sheet, SheetContent, SheetTrigger } from "./sheet"
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./sheet"
 
 const NavigationDrawerContext = React.createContext<{
   collapsed: boolean
@@ -66,12 +66,18 @@ const NavigationDrawer = React.forwardRef<
         <div {...stylex.props(navigationDrawerStyles.mobileTrigger)}>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon">
-              <Menu {...stylex.props(navigationDrawerStyles.menuIcon)} />
+              <Menu aria-hidden="true" {...stylex.props(navigationDrawerStyles.menuIcon)} />
               <span {...stylex.props(navigationDrawerStyles.srOnly)}>Open navigation</span>
             </Button>
           </SheetTrigger>
         </div>
         <SheetContent side="left" layout="navigationDrawer">
+          {/* The Radix Sheet (Dialog) needs an accessible name; keep it
+              visually hidden since the drawer's own content supplies the
+              visible branding. */}
+          <div {...stylex.props(navigationDrawerStyles.srOnly)}>
+            <SheetTitle>Navigation menu</SheetTitle>
+          </div>
           <nav {...stylex.props(navigationDrawerStyles.mobileNav)}>{children}</nav>
         </SheetContent>
       </Sheet>
@@ -162,9 +168,9 @@ const NavigationDrawerToggle = React.forwardRef<
       {...props}
     >
       {collapsed ? (
-        <ChevronRight {...stylex.props(navigationDrawerStyles.icon)} />
+        <ChevronRight aria-hidden="true" {...stylex.props(navigationDrawerStyles.icon)} />
       ) : (
-        <ChevronLeft {...stylex.props(navigationDrawerStyles.icon)} />
+        <ChevronLeft aria-hidden="true" {...stylex.props(navigationDrawerStyles.icon)} />
       )}
     </Button>
   )

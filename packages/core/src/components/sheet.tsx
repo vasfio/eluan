@@ -253,7 +253,7 @@ const SheetContent = React.forwardRef<
       )}
     >
       <SheetPrimitive.Close {...stylex.props(styles.close)}>
-        <X {...stylex.props(styles.closeIcon)} />
+        <X aria-hidden="true" {...stylex.props(styles.closeIcon)} />
         <span {...stylex.props(styles.visuallyHidden)}>Close</span>
       </SheetPrimitive.Close>
       {children}

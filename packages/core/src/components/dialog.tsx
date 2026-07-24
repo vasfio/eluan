@@ -179,7 +179,7 @@ const DialogContent = React.forwardRef<
           search input row. */}
       {layout !== "command" && (
         <DialogPrimitive.Close {...stylex.props(styles.close)}>
-          <X {...stylex.props(styles.closeIcon)} />
+          <X aria-hidden="true" {...stylex.props(styles.closeIcon)} />
           <span {...stylex.props(styles.visuallyHidden)}>Close</span>
         </DialogPrimitive.Close>
       )}

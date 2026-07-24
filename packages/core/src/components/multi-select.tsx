@@ -233,7 +233,7 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
                           aria-label={`Remove ${option.label}`}
                           {...stylex.props(styles.chipRemove)}
                         >
-                          <X {...stylex.props(styles.removeIcon)} />
+                          <X aria-hidden="true" {...stylex.props(styles.removeIcon)} />
                         </button>
                       </span>
                     </Badge>
@@ -258,7 +258,7 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
                   <Delete {...stylex.props(styles.clearIcon)} />
                 </button>
               )}
-              <ChevronDown {...stylex.props(styles.chevron, open && styles.chevronOpen)} />
+              <ChevronDown aria-hidden="true" {...stylex.props(styles.chevron, open && styles.chevronOpen)} />
             </div>
           </button>
         </PopoverTrigger>

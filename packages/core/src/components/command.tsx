@@ -264,6 +264,7 @@ const CommandInput = React.forwardRef<
   return (
     <div {...stylex.props(styles.inputWrapper)} cmdk-input-wrapper="">
       <Search
+        aria-hidden="true"
         {...stylex.props(
           styles.searchIcon,
           scale === "dialog" && styles.searchIconDialog

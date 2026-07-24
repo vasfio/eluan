@@ -247,7 +247,7 @@ const MenubarSubTrigger = React.forwardRef<
     )}
   >
     {children}
-    <ChevronRight {...stylex.props(styles.chevron)} />
+    <ChevronRight aria-hidden="true" {...stylex.props(styles.chevron)} />
   </MenubarPrimitive.SubTrigger>
 ))
 MenubarSubTrigger.displayName = MenubarPrimitive.SubTrigger.displayName
@@ -314,7 +314,7 @@ const MenubarCheckboxItem = React.forwardRef<
   >
     <span {...stylex.props(styles.indicatorSlot)}>
       <MenubarPrimitive.ItemIndicator>
-        <Check {...stylex.props(styles.checkIcon)} />
+        <Check aria-hidden="true" {...stylex.props(styles.checkIcon)} />
       </MenubarPrimitive.ItemIndicator>
     </span>
     {children}
@@ -333,7 +333,7 @@ const MenubarRadioItem = React.forwardRef<
   >
     <span {...stylex.props(styles.indicatorSlot)}>
       <MenubarPrimitive.ItemIndicator>
-        <Circle {...stylex.props(styles.radioIcon)} />
+        <Circle aria-hidden="true" {...stylex.props(styles.radioIcon)} />
       </MenubarPrimitive.ItemIndicator>
     </span>
     {children}

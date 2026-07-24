@@ -108,7 +108,7 @@ const Header = React.forwardRef<HTMLElement, HeaderProps>(
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
-                  <Menu {...stylex.props(styles.menuIcon)} />
+                  <Menu aria-hidden="true" {...stylex.props(styles.menuIcon)} />
                   <span {...stylex.props(styles.srOnly)}>Toggle menu</span>
                 </Button>
               </SheetTrigger>

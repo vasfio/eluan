@@ -100,15 +100,16 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     const showClear = showClearButton && internalValue && !loading
 
     const trailingEl = loading ? (
-      <Loader2 {...stylex.props(styles.loadingIcon)} />
+      <Loader2 aria-hidden="true" {...stylex.props(styles.loadingIcon)} />
     ) : showClear ? (
       <button
         type="button"
         onClick={handleClear}
         tabIndex={-1}
+        aria-label="Clear search"
         {...stylex.props(styles.clearButton)}
       >
-        <Delete {...stylex.props(styles.trailingIcon)} />
+        <Delete aria-hidden="true" {...stylex.props(styles.trailingIcon)} />
       </button>
     ) : undefined
 
@@ -227,6 +228,8 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
     const containerRef = React.useRef<HTMLDivElement>(null)
     const inputRef = React.useRef<HTMLInputElement | null>(null)
     const listRef = React.useRef<HTMLDivElement>(null)
+    const listboxId = React.useId()
+    const optionId = (index: number) => `${listboxId}-option-${index}`
 
     React.useEffect(() => {
       if (value !== undefined) {
@@ -363,6 +366,10 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
         key={option.value}
         type="button"
         data-option
+        id={optionId(index)}
+        role="option"
+        aria-selected={highlightedIndex === index}
+        aria-disabled={option.disabled || undefined}
         onClick={() => handleSelect(option)}
         onMouseEnter={() => !option.disabled && setHighlightedIndex(index)}
         disabled={option.disabled}
@@ -374,7 +381,7 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
         )}
       >
         {option.icon && (
-          <span {...stylex.props(styles.optionIcon)}>
+          <span aria-hidden="true" {...stylex.props(styles.optionIcon)}>
             {React.isValidElement(option.icon)
               ? React.cloneElement(
                   option.icon as React.ReactElement<{ width?: string; height?: string }>,
@@ -397,28 +404,41 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
     const showDropdown = isOpen && (filteredOptions.length > 0 || loading || internalValue.length >= minChars)
 
     const trailingEl = loading ? (
-      <Loader2 {...stylex.props(styles.loadingIconStrong)} />
+      <Loader2 aria-hidden="true" {...stylex.props(styles.loadingIconStrong)} />
     ) : internalValue ? (
       <button
         type="button"
         onClick={handleClear}
         tabIndex={-1}
+        aria-label="Clear search"
         {...stylex.props(styles.clearButton)}
       >
-        <Delete {...stylex.props(styles.trailingIconStrong)} />
+        <Delete aria-hidden="true" {...stylex.props(styles.trailingIconStrong)} />
       </button>
     ) : undefined
+
+    const activeDescendant =
+      isOpen && highlightedIndex >= 0 ? optionId(highlightedIndex) : undefined
+
+    const statusMessage = !isOpen
+      ? ""
+      : loading
+        ? "Loading results"
+        : filteredOptions.length === 0
+          ? emptyMessage
+          : `${filteredOptions.length} result${filteredOptions.length === 1 ? "" : "s"} available`
 
     return (
       <div ref={containerRef} {...stylex.props(styles.autocompleteRoot)}>
         <Input
           type="text"
-          icon={<Search {...stylex.props(styles.searchIcon)} />}
+          icon={<Search aria-hidden="true" {...stylex.props(styles.searchIcon)} />}
           trailing={trailingEl}
           role="combobox"
           aria-expanded={isOpen}
           aria-autocomplete="list"
-          aria-controls="autocomplete-list"
+          aria-controls={listboxId}
+          aria-activedescendant={activeDescendant}
           autoComplete="off"
           ref={combinedRef}
           value={internalValue}
@@ -430,15 +450,21 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
           {...props}
         />
 
+        <span role="status" aria-live="polite" {...stylex.props(styles.srOnly)}>
+          {statusMessage}
+        </span>
+
         {showDropdown && (
           <div
-            id="autocomplete-list"
+            id={listboxId}
+            role="listbox"
+            aria-label="Suggestions"
             ref={listRef}
             {...stylex.props(styles.dropdown)}
           >
             {loading ? (
               <div {...stylex.props(styles.dropdownLoading)}>
-                <Loader2 {...stylex.props(styles.dropdownLoader)} />
+                <Loader2 aria-hidden="true" {...stylex.props(styles.dropdownLoader)} />
               </div>
             ) : filteredOptions.length === 0 ? (
               <div {...stylex.props(styles.emptyMessage)}>{emptyMessage}</div>
@@ -477,9 +503,26 @@ const spin = stylex.keyframes({
 })
 
 const styles = stylex.create({
+  srOnly: {
+    borderWidth: 0,
+    clip: "rect(0, 0, 0, 0)",
+    height: 1,
+    margin: -1,
+    overflow: "hidden",
+    padding: 0,
+    position: "absolute",
+    whiteSpace: "nowrap",
+    width: 1,
+  },
   loadingIcon: {
-    animationDuration: "1s",
-    animationIterationCount: "infinite",
+    animationDuration: {
+      default: "1s",
+      "@media (prefers-reduced-motion: reduce)": "0.01ms",
+    },
+    animationIterationCount: {
+      default: "infinite",
+      "@media (prefers-reduced-motion: reduce)": 1,
+    },
     animationName: spin,
     animationTimingFunction: "linear",
     color: "var(--interactive-fg-alt)",
@@ -487,8 +530,14 @@ const styles = stylex.create({
     width: "var(--size-xxs)",
   },
   loadingIconStrong: {
-    animationDuration: "1s",
-    animationIterationCount: "infinite",
+    animationDuration: {
+      default: "1s",
+      "@media (prefers-reduced-motion: reduce)": "0.01ms",
+    },
+    animationIterationCount: {
+      default: "infinite",
+      "@media (prefers-reduced-motion: reduce)": 1,
+    },
     animationName: spin,
     animationTimingFunction: "linear",
     color: "var(--interactive-fg)",
@@ -572,8 +621,14 @@ const styles = stylex.create({
     paddingBlock: "var(--spacing-md)",
   },
   dropdownLoader: {
-    animationDuration: "1s",
-    animationIterationCount: "infinite",
+    animationDuration: {
+      default: "1s",
+      "@media (prefers-reduced-motion: reduce)": "0.01ms",
+    },
+    animationIterationCount: {
+      default: "infinite",
+      "@media (prefers-reduced-motion: reduce)": 1,
+    },
     animationName: spin,
     animationTimingFunction: "linear",
     color: "var(--interactive-fg)",

@@ -274,7 +274,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
     )}
   >
     {children}
-    <ChevronRight {...stylex.props(styles.chevron)} />
+    <ChevronRight aria-hidden="true" {...stylex.props(styles.chevron)} />
   </DropdownMenuPrimitive.SubTrigger>
 ))
 DropdownMenuSubTrigger.displayName =
@@ -344,7 +344,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
       )}
     >
       {checked === true && (
-        <Check {...stylex.props(styles.checkIcon)} strokeWidth={3} />
+        <Check aria-hidden="true" {...stylex.props(styles.checkIcon)} strokeWidth={3} />
       )}
     </span>
   </DropdownMenuPrimitive.CheckboxItem>

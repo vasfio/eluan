@@ -227,7 +227,7 @@ const CarouselPrevious = React.forwardRef<
         onClick={scrollPrev}
         {...props}
       >
-        <ArrowLeft {...stylex.props(styles.controlIcon)} />
+        <ArrowLeft aria-hidden="true" {...stylex.props(styles.controlIcon)} />
         <span {...stylex.props(styles.srOnly)}>Previous slide</span>
       </Button>
     </span>
@@ -257,7 +257,7 @@ const CarouselNext = React.forwardRef<
         onClick={scrollNext}
         {...props}
       >
-        <ArrowRight {...stylex.props(styles.controlIcon)} />
+        <ArrowRight aria-hidden="true" {...stylex.props(styles.controlIcon)} />
         <span {...stylex.props(styles.srOnly)}>Next slide</span>
       </Button>
     </span>

@@ -53,8 +53,8 @@ const EmailInput = React.forwardRef<HTMLInputElement, EmailInputProps>(
     const showStatus = showValidation && isTouched && isValid !== null
     const statusIcon = showStatus
       ? isValid
-        ? <CheckCircle2 {...stylex.props(styles.icon, styles.positive)} />
-        : <AlertCircle {...stylex.props(styles.icon, styles.destructive)} />
+        ? <CheckCircle2 aria-hidden="true" {...stylex.props(styles.icon, styles.positive)} />
+        : <AlertCircle aria-hidden="true" {...stylex.props(styles.icon, styles.destructive)} />
       : undefined
 
     return (

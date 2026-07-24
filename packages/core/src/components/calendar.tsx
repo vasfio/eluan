@@ -63,8 +63,9 @@ function Calendar({
           size="xsIcon"
           onClick={goToPreviousMonth}
           disabled={disabled}
+          aria-label="Go to previous month"
         >
-          <ChevronLeft {...stylex.props(styles.navIcon)} />
+          <ChevronLeft aria-hidden="true" {...stylex.props(styles.navIcon)} />
         </Button>
       </span>
       <DayPicker
@@ -143,8 +144,9 @@ function Calendar({
           size="xsIcon"
           onClick={goToNextMonth}
           disabled={disabled}
+          aria-label="Go to next month"
         >
-          <ChevronRight {...stylex.props(styles.navIcon)} />
+          <ChevronRight aria-hidden="true" {...stylex.props(styles.navIcon)} />
         </Button>
       </span>
     </div>

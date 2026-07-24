@@ -277,7 +277,7 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
         {...props}
         {...stylex.props(styles.root, disabled && styles.disabled)}
       >
-        {showIcon && <Clock {...stylex.props(styles.icon)} />}
+        {showIcon && <Clock aria-hidden="true" {...stylex.props(styles.icon)} />}
 
         {name && (
           <input
@@ -388,7 +388,7 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
               onPressedChange={() => togglePeriod("AM")}
               disabled={disabled}
               size="sm"
-              tabIndex={-1}
+              aria-label="AM"
             >
               AM
             </Toggle>
@@ -397,7 +397,7 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
               onPressedChange={() => togglePeriod("PM")}
               disabled={disabled}
               size="sm"
-              tabIndex={-1}
+              aria-label="PM"
             >
               PM
             </Toggle>

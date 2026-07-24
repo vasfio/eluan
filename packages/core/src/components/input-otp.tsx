@@ -125,8 +125,14 @@ const styles = stylex.create({
     position: "absolute",
   },
   caret: {
-    animationDuration: "1000ms",
-    animationIterationCount: "infinite",
+    animationDuration: {
+      default: "1000ms",
+      "@media (prefers-reduced-motion: reduce)": "0.01ms",
+    },
+    animationIterationCount: {
+      default: "infinite",
+      "@media (prefers-reduced-motion: reduce)": 1,
+    },
     animationName: caretBlink,
     animationTimingFunction: "linear",
     backgroundColor: "var(--interactive-fg-alt)",
@@ -151,7 +157,7 @@ const InputOTP = React.forwardRef<HTMLDivElement, InputOTPProps>(
       onChange,
       onComplete,
       mask = false,
-      autoFocus = true,
+      autoFocus = false,
       disabled,
       ...props
     },
@@ -254,6 +260,8 @@ const InputOTP = React.forwardRef<HTMLDivElement, InputOTPProps>(
     return (
       <div
         ref={ref}
+        role="group"
+        aria-label="One-time passcode"
         {...stylex.props(styles.root)}
         {...props}
       >
@@ -266,6 +274,7 @@ const InputOTP = React.forwardRef<HTMLDivElement, InputOTPProps>(
               type={mask ? "password" : "text"}
               inputMode="numeric"
               autoComplete="one-time-code"
+              aria-label={`Digit ${index + 1} of ${length}`}
               pattern="\d{1}"
               maxLength={1}
               value={value}
@@ -330,7 +339,7 @@ const InputOTPSeparator = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement>
 >(({ ...props }, ref) => (
   <div ref={ref} role="separator" {...props}>
-    <Dot {...stylex.props(styles.separatorIcon)} />
+    <Dot aria-hidden="true" {...stylex.props(styles.separatorIcon)} />
   </div>
 ))
 InputOTPSeparator.displayName = "InputOTPSeparator"

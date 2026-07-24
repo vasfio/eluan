@@ -102,6 +102,17 @@ const styles = stylex.create({
   muted: {
     color: "var(--interactive-fg-alt)",
   },
+  srOnly: {
+    borderWidth: 0,
+    clip: "rect(0, 0, 0, 0)",
+    height: 1,
+    margin: -1,
+    overflow: "hidden",
+    padding: 0,
+    position: "absolute",
+    whiteSpace: "nowrap",
+    width: 1,
+  },
 })
 
 const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
@@ -165,18 +176,26 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
     }) => (
       <li {...stylex.props(styles.item)}>
         {passed ? (
-          <Check {...stylex.props(styles.icon, styles.positive)} />
+          <Check aria-hidden="true" {...stylex.props(styles.icon, styles.positive)} />
         ) : (
-          <X {...stylex.props(styles.icon, styles.muted)} />
+          <X aria-hidden="true" {...stylex.props(styles.icon, styles.muted)} />
         )}
         <span {...stylex.props(passed ? styles.positive : styles.muted)}>
           {children}
+          <span {...stylex.props(styles.srOnly)}>
+            {passed ? " (met)" : " (not met)"}
+          </span>
         </span>
       </li>
     )
 
     return (
       <div {...stylex.props(styles.root)}>
+        <div role="status" aria-live="polite" {...stylex.props(styles.srOnly)}>
+          {showStrengthIndicator && strength
+            ? `Password strength: ${getStrengthLabel()}`
+            : ""}
+        </div>
         <Input
           type="password"
           ref={ref}

@@ -74,12 +74,14 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
           <button
             key={node.id}
             type="button"
+            role="treeitem"
+            aria-selected={isSelected}
             onClick={() => onSelect?.(node)}
             {...stylex.props(styles.node, isSelected && styles.nodeSelected)}
             style={{ paddingLeft: `${depth * indentSize + 8}px` }}
           >
             {showIcons && (
-              <span {...stylex.props(styles.iconWrap, isSelected && styles.iconSelected)}>
+              <span aria-hidden="true" {...stylex.props(styles.iconWrap, isSelected && styles.iconSelected)}>
                 {node.icon ? (
                   renderIcon(node.icon)
                 ) : (
@@ -101,11 +103,14 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
           <CollapsiblePrimitive.Trigger asChild>
             <button
               type="button"
+              role="treeitem"
+              aria-selected={isSelected}
               onClick={() => onSelect?.(node)}
               {...stylex.props(styles.node, isSelected && styles.nodeSelected)}
               style={{ paddingLeft: `${depth * indentSize + 8}px` }}
             >
               <ChevronRight
+                aria-hidden="true"
                 {...stylex.props(
                   styles.chevron,
                   isExpanded && styles.chevronExpanded,
@@ -113,7 +118,7 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
                 )}
               />
               {showIcons && (
-                <span {...stylex.props(styles.iconWrap, isSelected && styles.iconSelected)}>
+                <span aria-hidden="true" {...stylex.props(styles.iconWrap, isSelected && styles.iconSelected)}>
                   {node.icon ? (
                     renderIcon(node.icon)
                   ) : isExpanded ? (
@@ -126,7 +131,7 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
               <span {...stylex.props(styles.label)}>{node.name}</span>
             </button>
           </CollapsiblePrimitive.Trigger>
-          <CollapsiblePrimitive.Content {...stylex.props(styles.content)}>
+          <CollapsiblePrimitive.Content role="group" {...stylex.props(styles.content)}>
             {node.children?.map((child) => renderNode(child, depth + 1))}
           </CollapsiblePrimitive.Content>
         </CollapsiblePrimitive.Root>
@@ -134,7 +139,7 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
     }
 
     return (
-      <div ref={ref} {...props} {...stylex.props(styles.root)}>
+      <div ref={ref} role="tree" {...props} {...stylex.props(styles.root)}>
         {data.map((node) => renderNode(node))}
       </div>
     )
@@ -233,12 +238,18 @@ const styles = stylex.create({
   content: {
     overflow: "hidden",
     "[data-state=open]": {
-      animationDuration: "200ms",
+      animationDuration: {
+        default: "200ms",
+        "@media (prefers-reduced-motion: reduce)": "0.01ms",
+      },
       animationName: accordionDown,
       animationTimingFunction: "ease-out",
     },
     "[data-state=closed]": {
-      animationDuration: "200ms",
+      animationDuration: {
+        default: "200ms",
+        "@media (prefers-reduced-motion: reduce)": "0.01ms",
+      },
       animationName: accordionUp,
       animationTimingFunction: "ease-out",
     },

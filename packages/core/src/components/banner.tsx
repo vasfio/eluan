@@ -171,7 +171,7 @@ const Banner = React.forwardRef<HTMLDivElement, BannerProps>(
           aria-label="Dismiss"
           {...stylex.props(styles.dismissButton)}
         >
-          <X {...stylex.props(styles.dismissIcon)} />
+          <X aria-hidden="true" {...stylex.props(styles.dismissIcon)} />
         </button>
       )}
     </div>

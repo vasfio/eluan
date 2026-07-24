@@ -203,7 +203,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const resolvedType = isPassword ? (showPassword ? "text" : "password") : type
 
     const AutoIcon = type ? typeIcons[type] : undefined
-    const leadingIcon = icon ?? (AutoIcon ? <AutoIcon {...stylex.props(styles.icon)} /> : null)
+    const leadingIcon = icon ?? (AutoIcon ? <AutoIcon aria-hidden="true" {...stylex.props(styles.icon)} /> : null)
     const hasLeading = !!leadingIcon
     const hasTrailing = !!trailing || isPassword
 
@@ -232,15 +232,15 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {isPassword && (
           <button
             type="button"
-            tabIndex={-1}
             onClick={() => setShowPassword((v) => !v)}
             aria-label={showPassword ? "Hide password" : "Show password"}
+            aria-pressed={showPassword}
             {...stylex.props(styles.trailingButton)}
           >
             {showPassword ? (
-              <EyeOff {...stylex.props(styles.icon)} />
+              <EyeOff aria-hidden="true" {...stylex.props(styles.icon)} />
             ) : (
-              <Eye {...stylex.props(styles.icon)} />
+              <Eye aria-hidden="true" {...stylex.props(styles.icon)} />
             )}
           </button>
         )}

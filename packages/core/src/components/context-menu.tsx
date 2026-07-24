@@ -183,7 +183,7 @@ const ContextMenuSubTrigger = React.forwardRef<
     )}
   >
     {children}
-    <ChevronRight {...stylex.props(styles.chevron)} />
+    <ChevronRight aria-hidden="true" {...stylex.props(styles.chevron)} />
   </ContextMenuPrimitive.SubTrigger>
 ))
 ContextMenuSubTrigger.displayName = ContextMenuPrimitive.SubTrigger.displayName
@@ -242,7 +242,7 @@ const ContextMenuCheckboxItem = React.forwardRef<
   >
     <span {...stylex.props(styles.indicatorSlot)}>
       <ContextMenuPrimitive.ItemIndicator>
-        <Check {...stylex.props(styles.checkIcon)} />
+        <Check aria-hidden="true" {...stylex.props(styles.checkIcon)} />
       </ContextMenuPrimitive.ItemIndicator>
     </span>
     {children}
@@ -262,7 +262,7 @@ const ContextMenuRadioItem = React.forwardRef<
   >
     <span {...stylex.props(styles.indicatorSlot)}>
       <ContextMenuPrimitive.ItemIndicator>
-        <Circle {...stylex.props(styles.radioIcon)} />
+        <Circle aria-hidden="true" {...stylex.props(styles.radioIcon)} />
       </ContextMenuPrimitive.ItemIndicator>
     </span>
     {children}

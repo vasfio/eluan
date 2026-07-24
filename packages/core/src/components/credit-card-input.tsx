@@ -188,6 +188,17 @@ const styles = stylex.create({
     color: "var(--interactive-fg-alt)",
     display: "inline-flex",
   },
+  srOnly: {
+    borderWidth: 0,
+    clip: "rect(0, 0, 0, 0)",
+    height: 1,
+    margin: -1,
+    overflow: "hidden",
+    padding: 0,
+    position: "absolute",
+    whiteSpace: "nowrap",
+    width: 1,
+  },
   iconXxs: {
     height: "var(--size-xxs)",
     width: "var(--size-xxs)",
@@ -214,7 +225,7 @@ const CardIcon = ({ type }: { type: CardType }) => {
   })()
 
   return (
-    <span {...stylex.props(styles.cardIcon)}>
+    <span aria-hidden="true" {...stylex.props(styles.cardIcon)}>
       {logo}
     </span>
   )
@@ -271,7 +282,8 @@ const CreditCardNumberInput = React.forwardRef<HTMLInputElement, CreditCardNumbe
         type="text"
         inputMode="numeric"
         autoComplete="cc-number"
-        icon={<CreditCard {...stylex.props(styles.iconXxs)} />}
+        aria-label="Card number"
+        icon={<CreditCard aria-hidden="true" {...stylex.props(styles.iconXxs)} />}
         trailing={<CardIcon type={cardType} />}
         textStyle="mono"
         ref={ref}
@@ -303,7 +315,8 @@ const CreditCardExpiryInput = React.forwardRef<HTMLInputElement, CreditCardExpir
         type="text"
         inputMode="numeric"
         autoComplete="cc-exp"
-        icon={<Calendar {...stylex.props(styles.iconXxs)} />}
+        aria-label="Expiration date (MM/YY)"
+        icon={<Calendar aria-hidden="true" {...stylex.props(styles.iconXxs)} />}
         textStyle="mono"
         ref={ref}
         value={value}
@@ -334,7 +347,8 @@ const CreditCardCVVInput = React.forwardRef<HTMLInputElement, CreditCardCVVInput
         type="text"
         inputMode="numeric"
         autoComplete="cc-csc"
-        icon={<Lock {...stylex.props(styles.iconXxs)} />}
+        aria-label="Security code (CVV)"
+        icon={<Lock aria-hidden="true" {...stylex.props(styles.iconXxs)} />}
         textStyle="mono"
         ref={ref}
         value={value}
@@ -354,15 +368,31 @@ const CreditCardInput = React.forwardRef<HTMLDivElement, CreditCardInputProps>(
     const [expiry, setExpiry] = React.useState("")
     const [cvv, setCvv] = React.useState("")
     const [cardType, setCardType] = React.useState<CardType>("unknown")
+    const [touched, setTouched] = React.useState({
+      number: false,
+      expiry: false,
+      cvv: false,
+    })
+
+    const detected = detectCardType(number)
+    const isNumberValid = detected
+      ? detected.lengths.includes(number.length)
+      : number.length >= 13 && number.length <= 19
+    const isExpiryValid = expiry.length === 4
+    const isCvvValid = cardType === "amex" ? cvv.length === 4 : cvv.length === 3
+
+    // Only flag a field once it has been left (blurred) with content that fails
+    // its own validity check — never mid-typing.
+    const numberInvalid = touched.number && number.length > 0 && !isNumberValid
+    const expiryInvalid = touched.expiry && expiry.length > 0 && !isExpiryValid
+    const cvvInvalid = touched.cvv && cvv.length > 0 && !isCvvValid
+
+    const errorIdBase = React.useId()
+    const numberErrorId = `${errorIdBase}-number-error`
+    const expiryErrorId = `${errorIdBase}-expiry-error`
+    const cvvErrorId = `${errorIdBase}-cvv-error`
 
     React.useEffect(() => {
-      const detected = detectCardType(number)
-      const isNumberValid = detected
-        ? detected.lengths.includes(number.length)
-        : number.length >= 13 && number.length <= 19
-      const isExpiryValid = expiry.length === 4
-      const isCvvValid = cardType === "amex" ? cvv.length === 4 : cvv.length === 3
-
       onCardChange?.({
         number,
         expiry,
@@ -370,27 +400,63 @@ const CreditCardInput = React.forwardRef<HTMLDivElement, CreditCardInputProps>(
         cardType,
         isValid: isNumberValid && isExpiryValid && isCvvValid,
       })
-    }, [number, expiry, cvv, cardType, onCardChange])
+    }, [
+      number,
+      expiry,
+      cvv,
+      cardType,
+      isNumberValid,
+      isExpiryValid,
+      isCvvValid,
+      onCardChange,
+    ])
 
     return (
-      <div ref={ref} {...stylex.props(styles.root)}>
+      <div
+        ref={ref}
+        role="group"
+        aria-label="Credit card details"
+        {...stylex.props(styles.root)}
+      >
         <CreditCardNumberInput
           onChange={(value, type) => {
             setNumber(value)
             setCardType(type)
           }}
+          onBlur={() => setTouched((t) => ({ ...t, number: true }))}
+          aria-invalid={numberInvalid || undefined}
+          aria-describedby={numberInvalid ? numberErrorId : undefined}
           disabled={disabled}
         />
+        <span id={numberErrorId} role="alert" {...stylex.props(styles.srOnly)}>
+          {numberInvalid ? "Enter a valid card number" : ""}
+        </span>
         <div {...stylex.props(styles.grid)}>
-          <CreditCardExpiryInput
-            onChange={setExpiry}
-            disabled={disabled}
-          />
-          <CreditCardCVVInput
-            cardType={cardType}
-            onChange={setCvv}
-            disabled={disabled}
-          />
+          <div>
+            <CreditCardExpiryInput
+              onChange={setExpiry}
+              onBlur={() => setTouched((t) => ({ ...t, expiry: true }))}
+              aria-invalid={expiryInvalid || undefined}
+              aria-describedby={expiryInvalid ? expiryErrorId : undefined}
+              disabled={disabled}
+            />
+            <span id={expiryErrorId} role="alert" {...stylex.props(styles.srOnly)}>
+              {expiryInvalid ? "Enter a valid expiration date" : ""}
+            </span>
+          </div>
+          <div>
+            <CreditCardCVVInput
+              cardType={cardType}
+              onChange={setCvv}
+              onBlur={() => setTouched((t) => ({ ...t, cvv: true }))}
+              aria-invalid={cvvInvalid || undefined}
+              aria-describedby={cvvInvalid ? cvvErrorId : undefined}
+              disabled={disabled}
+            />
+            <span id={cvvErrorId} role="alert" {...stylex.props(styles.srOnly)}>
+              {cvvInvalid ? "Enter a valid security code" : ""}
+            </span>
+          </div>
         </div>
       </div>
     )

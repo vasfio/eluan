@@ -4,6 +4,8 @@ import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
 import {
   Drawer,
+  DrawerClose,
+  DrawerLayout,
   DrawerTrigger,
   DrawerContent,
   DrawerHeader,
@@ -91,5 +93,28 @@ describe("Drawer", () => {
       "data-state",
       "open"
     );
+  });
+
+  it("restores focus to the opener when the panel closes with focus inside", async () => {
+    render(
+      <Drawer>
+        <DrawerLayout>
+          <DrawerTrigger>Open Drawer</DrawerTrigger>
+          <DrawerContent>
+            <DrawerClose>Close</DrawerClose>
+          </DrawerContent>
+        </DrawerLayout>
+      </Drawer>
+    );
+
+    const trigger = screen.getByText("Open Drawer");
+    await userEvent.click(trigger);
+
+    // Move focus inside the panel, then close from there.
+    const close = screen.getByText("Close");
+    await userEvent.click(close);
+
+    // Focus must not be stranded on the now-hidden close button.
+    expect(trigger).toHaveFocus();
   });
 });

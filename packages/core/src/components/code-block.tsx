@@ -130,12 +130,12 @@ const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
               >
                 {copied ? (
                   <>
-                    <Check {...stylex.props(styles.buttonIcon)} />
+                    <Check aria-hidden="true" {...stylex.props(styles.buttonIcon)} />
                     Copied
                   </>
                 ) : (
                   <>
-                    <Copy {...stylex.props(styles.buttonIcon)} />
+                    <Copy aria-hidden="true" {...stylex.props(styles.buttonIcon)} />
                     Copy
                   </>
                 )}

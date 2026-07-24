@@ -43,7 +43,7 @@ const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
             textAlign="left"
             disabled={disabled}
           >
-            <CalendarIcon {...stylex.props(styles.triggerIcon)} />
+            <CalendarIcon aria-hidden="true" {...stylex.props(styles.triggerIcon)} />
             {value ? format(value, dateFormat) : <span>{placeholder}</span>}
           </Button>
         </PopoverTrigger>
@@ -96,7 +96,7 @@ const DateRangePicker = React.forwardRef<HTMLButtonElement, DateRangePickerProps
             textAlign="left"
             disabled={disabled}
           >
-            <CalendarIcon {...stylex.props(styles.triggerIcon)} />
+            <CalendarIcon aria-hidden="true" {...stylex.props(styles.triggerIcon)} />
             {value?.from ? (
               value.to ? (
                 <>

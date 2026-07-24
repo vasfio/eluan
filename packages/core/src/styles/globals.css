@@ -270,3 +270,24 @@ code[class*="language-"] .token.italic {
     font-weight: 500;
   }
 }
+
+/* ============================================
+ * Reduced Motion
+ * Honor `prefers-reduced-motion: reduce` globally: collapse keyframe
+ * animations and transitions to a near-zero duration (rather than removing
+ * them) so end states are preserved and no motion is perceived. Left
+ * unlayered and `!important` so it also overrides StyleX's atomic rules;
+ * StyleX-defined animations are additionally gated at their definition sites.
+ * ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}

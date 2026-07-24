@@ -66,17 +66,17 @@ function formatFileSize(bytes: number): string {
 const FileIcon = ({ type }: { type: FileType }) => {
   switch (type) {
     case "image":
-      return <ImageIcon {...stylex.props(styles.fileTypeIcon)} />
+      return <ImageIcon aria-hidden="true" {...stylex.props(styles.fileTypeIcon)} />
     case "document":
-      return <FileText {...stylex.props(styles.fileTypeIcon)} />
+      return <FileText aria-hidden="true" {...stylex.props(styles.fileTypeIcon)} />
     case "video":
-      return <Film {...stylex.props(styles.fileTypeIcon)} />
+      return <Film aria-hidden="true" {...stylex.props(styles.fileTypeIcon)} />
     case "audio":
-      return <Music {...stylex.props(styles.fileTypeIcon)} />
+      return <Music aria-hidden="true" {...stylex.props(styles.fileTypeIcon)} />
     case "archive":
-      return <Archive {...stylex.props(styles.fileTypeIcon)} />
+      return <Archive aria-hidden="true" {...stylex.props(styles.fileTypeIcon)} />
     default:
-      return <File {...stylex.props(styles.fileTypeIcon)} />
+      return <File aria-hidden="true" {...stylex.props(styles.fileTypeIcon)} />
   }
 }
 
@@ -205,10 +205,21 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
       return (
         <div {...stylex.props(styles.root)}>
           <div
+            role="button"
+            tabIndex={disabled ? -1 : 0}
+            aria-label={dragInactiveText}
+            aria-disabled={disabled || undefined}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
             onClick={() => !disabled && inputRef.current?.click()}
+            onKeyDown={(e) => {
+              if (disabled) return
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault()
+                inputRef.current?.click()
+              }
+            }}
             {...stylex.props(
               styles.dropzone,
               isDragging ? styles.dropzoneDragging : styles.dropzoneIdle,
@@ -216,7 +227,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
             )}
           >
             {input}
-            <Upload {...stylex.props(styles.dropzoneIcon, isDragging && styles.dropzoneIconActive)} />
+            <Upload aria-hidden="true" {...stylex.props(styles.dropzoneIcon, isDragging && styles.dropzoneIconActive)} />
             <p {...stylex.props(styles.dropzoneText)}>
               {isDragging ? dragActiveText : dragInactiveText}
             </p>
@@ -232,7 +243,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
             )}
           </div>
 
-          {error && <p {...stylex.props(styles.error)}>{error}</p>}
+          {error && <p role="alert" {...stylex.props(styles.error)}>{error}</p>}
 
           {showPreview && files.length > 0 && (
             <div {...stylex.props(styles.previewListVertical)}>
@@ -247,13 +258,14 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
                   </div>
                   <button
                     type="button"
+                    aria-label={`Remove ${fileInfo.file.name}`}
                     onClick={(e) => {
                       e.stopPropagation()
                       removeFile(index)
                     }}
                     {...stylex.props(styles.removeButton)}
                   >
-                    <X {...stylex.props(styles.removeIcon)} />
+                    <X aria-hidden="true" {...stylex.props(styles.removeIcon)} />
                   </button>
                 </div>
               ))}
@@ -273,7 +285,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
             disabled={disabled}
             {...stylex.props(styles.chooseButton, disabled && styles.disabled)}
           >
-            <Upload {...stylex.props(styles.chooseIcon)} />
+            <Upload aria-hidden="true" {...stylex.props(styles.chooseIcon)} />
             Choose {maxFiles > 1 ? "files" : "file"}
           </button>
           {files.length > 0 && !showPreview && (
@@ -283,20 +295,21 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
           )}
         </div>
 
-        {error && <p {...stylex.props(styles.error)}>{error}</p>}
+        {error && <p role="alert" {...stylex.props(styles.error)}>{error}</p>}
 
         {showPreview && files.length > 0 && (
           <div {...stylex.props(styles.previewListInline)}>
             {files.map((fileInfo, index) => (
               <div key={index} {...stylex.props(styles.previewChip)}>
-                <File {...stylex.props(styles.chipIcon)} />
+                <File aria-hidden="true" {...stylex.props(styles.chipIcon)} />
                 <span {...stylex.props(styles.chipName)}>{fileInfo.file.name}</span>
                 <button
                   type="button"
+                  aria-label={`Remove ${fileInfo.file.name}`}
                   onClick={() => removeFile(index)}
                   {...stylex.props(styles.removeChipButton)}
                 >
-                  <X {...stylex.props(styles.removeChipIcon)} />
+                  <X aria-hidden="true" {...stylex.props(styles.removeChipIcon)} />
                 </button>
               </div>
             ))}

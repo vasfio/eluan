@@ -79,7 +79,7 @@ const Checkbox = React.forwardRef<
 >((props, ref) => (
   <CheckboxPrimitive.Root ref={ref} {...props} {...stylex.props(styles.root)}>
     <CheckboxPrimitive.Indicator forceMount {...stylex.props(styles.indicator)}>
-      <Check {...stylex.props(styles.icon)} strokeWidth={3} />
+      <Check aria-hidden="true" {...stylex.props(styles.icon)} strokeWidth={3} />
     </CheckboxPrimitive.Indicator>
   </CheckboxPrimitive.Root>
 ))

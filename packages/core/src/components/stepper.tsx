@@ -61,6 +61,10 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
                 <button
                   type="button"
                   disabled={!isClickable}
+                  aria-current={isCurrent ? "step" : undefined}
+                  aria-label={`${step.title}${
+                    isCompleted ? " (completed)" : isCurrent ? " (current step)" : ""
+                  }`}
                   onClick={() => isClickable && onStepClick?.(index)}
                   {...stylex.props(
                     styles.button,
@@ -72,7 +76,7 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
                   )}
                 >
                   {isCompleted ? (
-                    <Check {...stylex.props(styles.checkIcon)} />
+                    <Check aria-hidden="true" {...stylex.props(styles.checkIcon)} />
                   ) : (
                     step.icon ?? index + 1
                   )}

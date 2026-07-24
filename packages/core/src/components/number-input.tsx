@@ -183,12 +183,13 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       <div {...stylex.props(styles.controls)}>
         <button
           type="button"
+          aria-label="Decrease"
           {...stylex.props(styles.controlButton, styles.decrementButton)}
           onClick={decrement}
           disabled={!canDecrement() || disabled}
           tabIndex={-1}
         >
-          <Minus {...stylex.props(styles.icon)} />
+          <Minus aria-hidden="true" {...stylex.props(styles.icon)} />
         </button>
         <Input
           type="text"
@@ -206,12 +207,13 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
         />
         <button
           type="button"
+          aria-label="Increase"
           {...stylex.props(styles.controlButton, styles.incrementButton)}
           onClick={increment}
           disabled={!canIncrement() || disabled}
           tabIndex={-1}
         >
-          <Plus {...stylex.props(styles.icon)} />
+          <Plus aria-hidden="true" {...stylex.props(styles.icon)} />
         </button>
       </div>
     )

@@ -62,7 +62,7 @@ const ActionPopover = React.forwardRef<HTMLButtonElement, ActionPopoverProps>(
             size="icon"
             aria-label={ariaLabel}
           >
-            <MoreHorizontal {...stylex.props(styles.triggerIcon)} />
+            <MoreHorizontal aria-hidden="true" {...stylex.props(styles.triggerIcon)} />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align={align} side={side}>

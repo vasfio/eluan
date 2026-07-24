@@ -99,7 +99,7 @@ const AccordionTrigger = React.forwardRef<
       {...stylex.props(styles.trigger)}
     >
       {children}
-      <ChevronDown {...stylex.props(styles.icon)} />
+      <ChevronDown aria-hidden="true" {...stylex.props(styles.icon)} />
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ))

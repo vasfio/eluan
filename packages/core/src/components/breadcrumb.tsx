@@ -182,7 +182,7 @@ const BreadcrumbEllipsis = ({
           size="xsIcon"
           aria-label="Show more breadcrumbs"
         >
-          <MoreHorizontal {...stylex.props(styles.icon)} />
+          <MoreHorizontal aria-hidden="true" {...stylex.props(styles.icon)} />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">

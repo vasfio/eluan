@@ -33,8 +33,14 @@ const spin = stylex.keyframes({
 
 const styles = stylex.create({
   root: {
-    animationDuration: "1s",
-    animationIterationCount: "infinite",
+    animationDuration: {
+      default: "1s",
+      "@media (prefers-reduced-motion: reduce)": "0.01ms",
+    },
+    animationIterationCount: {
+      default: "infinite",
+      "@media (prefers-reduced-motion: reduce)": 1,
+    },
     animationName: spin,
     animationTimingFunction: "linear",
     borderColor: "currentColor",

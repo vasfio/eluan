@@ -396,7 +396,10 @@ const styles = stylex.create({
     },
   },
   fadeItem: {
-    animationDuration: "0.5s",
+    animationDuration: {
+      default: "0.5s",
+      "@media (prefers-reduced-motion: reduce)": "0.01ms",
+    },
     animationFillMode: "both",
     animationName: footerFadeIn,
     animationTimingFunction: "ease",

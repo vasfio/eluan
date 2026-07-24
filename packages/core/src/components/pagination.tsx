@@ -86,7 +86,7 @@ const PaginationPrevious = (
     size="default"
     {...props}
   >
-    <ChevronLeft {...stylex.props(paginationStyles.icon)} />
+    <ChevronLeft aria-hidden="true" {...stylex.props(paginationStyles.icon)} />
     <span>Previous</span>
   </PaginationLink>
 )
@@ -100,7 +100,7 @@ const PaginationNext = (props: React.ComponentProps<typeof PaginationLink>) => (
     {...props}
   >
     <span>Next</span>
-    <ChevronRight {...stylex.props(paginationStyles.icon)} />
+    <ChevronRight aria-hidden="true" {...stylex.props(paginationStyles.icon)} />
   </PaginationLink>
 )
 PaginationNext.displayName = "PaginationNext"
@@ -132,7 +132,7 @@ const PaginationEllipsis = ({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" aria-label="Show more pages">
-          <MoreHorizontal {...stylex.props(paginationStyles.icon)} />
+          <MoreHorizontal aria-hidden="true" {...stylex.props(paginationStyles.icon)} />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="center">

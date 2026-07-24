@@ -165,7 +165,7 @@ function Badge({
           aria-label="Remove"
           {...stylex.props(styles.removeButton)}
         >
-          <X {...stylex.props(styles.removeIcon)} />
+          <X aria-hidden="true" {...stylex.props(styles.removeIcon)} />
         </button>
       )}
     </span>

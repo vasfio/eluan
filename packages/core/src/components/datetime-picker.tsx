@@ -123,7 +123,7 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
             textAlign="left"
             disabled={disabled}
           >
-            <CalendarIcon {...stylex.props(styles.triggerIcon)} />
+            <CalendarIcon aria-hidden="true" {...stylex.props(styles.triggerIcon)} />
             {selectedDate ? (
               format(selectedDate, dateTimeFormat)
             ) : (

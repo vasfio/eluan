@@ -250,6 +250,44 @@ const DrawerContent = React.forwardRef<HTMLDivElement, DrawerContentProps>(
     const { open, onOpenChange } = useDrawer()
     const resolvedWidth = resolveWidth(width)
 
+    // Merge the forwarded ref with a local one so the effect below can test
+    // whether focus currently lives inside the collapsing panel.
+    const panelRef = React.useRef<HTMLDivElement | null>(null)
+    const setRefs = React.useCallback(
+      (node: HTMLDivElement | null) => {
+        panelRef.current = node
+        if (typeof ref === "function") ref(node)
+        else if (ref) ref.current = node
+      },
+      [ref]
+    )
+
+    // Remember what had focus before opening; restore it when the panel closes
+    // if focus was left inside the panel. Without this, focus would be stranded
+    // on the now `aria-hidden`, visually-hidden close button (the panel is
+    // inline and collapses rather than unmounting).
+    const previouslyFocused = React.useRef<HTMLElement | null>(null)
+    const wasOpen = React.useRef(open)
+
+    React.useEffect(() => {
+      if (open && !wasOpen.current) {
+        previouslyFocused.current =
+          document.activeElement instanceof HTMLElement
+            ? document.activeElement
+            : null
+      } else if (!open && wasOpen.current) {
+        const active = document.activeElement
+        if (
+          panelRef.current &&
+          active instanceof Node &&
+          panelRef.current.contains(active)
+        ) {
+          previouslyFocused.current?.focus?.()
+        }
+      }
+      wasOpen.current = open
+    }, [open])
+
     React.useEffect(() => {
       if (!open) return
       const handleEscape = (e: KeyboardEvent) => {
@@ -261,7 +299,7 @@ const DrawerContent = React.forwardRef<HTMLDivElement, DrawerContentProps>(
 
     return (
       <div
-        ref={ref}
+        ref={setRefs}
         data-state={open ? "open" : "closed"}
         aria-hidden={!open}
         {...props}
