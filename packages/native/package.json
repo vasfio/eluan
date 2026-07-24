@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
+  "author": "Frolda",
   "homepage": "https://github.com/vasfio/eluan#readme",
   "repository": {
     "type": "git",
@@ -21,6 +22,9 @@
     "eluan"
   ],
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "sideEffects": false,
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -50,7 +54,7 @@
     "test:coverage": "vitest run --coverage"
   },
   "peerDependencies": {
-    "react": "^18.0.0",
+    "react": "^18.0.0 || ^19.0.0",
     "react-native": ">=0.70.0 <0.80.0"
   },
   "dependencies": {

@@ -3,6 +3,7 @@
   "description": "CLI tool that generates accessible, light + dark mode Eluan theme token sets from accent colors",
   "version": "0.1.0",
   "license": "MIT",
+  "author": "Frolda",
   "homepage": "https://github.com/vasfio/eluan#readme",
   "repository": {
     "type": "git",
@@ -20,6 +21,9 @@
     "color"
   ],
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
@@ -40,6 +44,7 @@
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "dev": "tsc --watch",
+    "lint": "eslint src --report-unused-disable-directives",
     "test": "vitest run",
     "test:watch": "vitest"
   },

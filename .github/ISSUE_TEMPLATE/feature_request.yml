@@ -1,0 +1,43 @@
+name: Feature request
+description: Suggest a new component, token, or improvement for Eluan
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the idea! Please search existing issues first to avoid duplicates.
+  - type: dropdown
+    id: package
+    attributes:
+      label: Package
+      description: Which package would this affect?
+      options:
+        - "@eluan/core"
+        - "@eluan/tokens"
+        - "@eluan/theme-generator"
+        - "@eluan/web"
+        - "@eluan/native"
+        - New package / not sure
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: What are you trying to do, and what's missing or awkward today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the API, component, or token you'd like. Sketches or examples welcome.
+    validations:
+      required: false
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any workarounds you've tried or other approaches you've weighed.
+    validations:
+      required: false

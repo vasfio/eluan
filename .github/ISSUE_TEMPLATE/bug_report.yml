@@ -1,0 +1,55 @@
+name: Bug report
+description: Report something in Eluan that isn't working as expected
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug. Please search existing issues first to avoid duplicates.
+  - type: dropdown
+    id: package
+    attributes:
+      label: Package
+      description: Which package is affected?
+      options:
+        - "@eluan/core"
+        - "@eluan/tokens"
+        - "@eluan/theme-generator"
+        - "@eluan/web"
+        - "@eluan/native"
+        - Not sure / other
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      description: The version of the package where you saw the bug (e.g. 0.1.0).
+      placeholder: "0.1.0"
+    validations:
+      required: false
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: A clear description of the bug and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Steps, and ideally a minimal reproduction (StackBlitz, CodeSandbox, or a small repo).
+      placeholder: |
+        1. Import `<Component>` from `@eluan/core`
+        2. Render it with `...`
+        3. See ...
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: React version, bundler, browser/RN version, OS — whatever is relevant.
+    validations:
+      required: false

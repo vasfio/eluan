@@ -1,9 +1,11 @@
 import { StyleSheet, ViewStyle, TextStyle, ImageStyle } from "react-native"
 import { primitiveColors, radius, spacing, fontSizes, fontWeights } from "@eluan/tokens"
 
-// Alias tokens to the names expected by createThemedStyles
+// Alias tokens to the names expected by createThemedStyles.
+// Primitives are mode-agnostic — there is no separate dark primitive palette,
+// so light/dark differentiation happens via the `scheme` argument (and
+// getSemanticColors), not by swapping this object.
 const colors = primitiveColors
-const darkColors = primitiveColors
 const radii = radius
 
 type NamedStyles<T> = { [P in keyof T]: ViewStyle | TextStyle | ImageStyle }
@@ -204,7 +206,7 @@ export function getSemanticTokens(scheme: ColorScheme) {
 export function createThemedStyles<T extends NamedStyles<T>>(
   styleCreator: (
     tokens: {
-      colors: typeof colors | typeof darkColors
+      colors: typeof colors
       spacing: typeof spacing
       radii: typeof radii
       fontSizes: typeof fontSizes
@@ -223,7 +225,7 @@ export function createThemedStyles<T extends NamedStyles<T>>(
 
   const darkStyles = StyleSheet.create(
     styleCreator(
-      { colors: darkColors, spacing, radii, fontSizes, fontWeights },
+      { colors, spacing, radii, fontSizes, fontWeights },
       "dark"
     )
   )

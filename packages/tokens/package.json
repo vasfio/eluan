@@ -3,6 +3,7 @@
   "description": "Design tokens, CSS variables, themes, and fonts for the Eluan design system",
   "version": "0.1.0",
   "license": "MIT",
+  "author": "Frolda",
   "homepage": "https://github.com/vasfio/eluan#readme",
   "repository": {
     "type": "git",
@@ -22,6 +23,9 @@
     "**/*.css"
   ],
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -44,7 +48,8 @@
   },
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.build.json && cp src/tokens.css src/primitives.css src/modes.css src/themes.css src/spacing.css src/curves.css src/fonts.css src/fonts-base.css src/fonts-industrial-retro.css src/fonts-minimal.css dist/",
-    "dev": "tsc --watch"
+    "dev": "tsc --watch",
+    "lint": "eslint src --report-unused-disable-directives --max-warnings 0"
   },
   "devDependencies": {
     "typescript": "^5.4.5"

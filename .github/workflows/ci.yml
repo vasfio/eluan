@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  build-publishable:
+  ci:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,5 +29,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build publishable packages
-        run: pnpm build:publish
+      - name: Build
+        run: pnpm -r build
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Test
+        run: pnpm -r test
