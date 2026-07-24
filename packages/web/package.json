@@ -1,6 +1,6 @@
 {
   "name": "@eluan/web",
-  "description": "Marketing and web-specific components for React — hero, pricing, footer, and more",
+  "description": "Compatibility facade re-exporting Header, HeaderNavigation, and Footer from @eluan/core",
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
@@ -16,8 +16,9 @@
   "keywords": [
     "react",
     "ui",
-    "marketing",
-    "landing-page",
+    "components",
+    "header",
+    "footer",
     "eluan"
   ],
   "type": "module",

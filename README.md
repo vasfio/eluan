@@ -1,15 +1,24 @@
 # Eluan Design System
 
-A multi-package design system monorepo built with React, StyleX, and Radix UI primitives. Eluan provides a complete three-layer token architecture, core UI components, marketing patterns, and React Native components.
+[![CI](https://github.com/vasfio/eluan/actions/workflows/ci.yml/badge.svg)](https://github.com/vasfio/eluan/actions/workflows/ci.yml)
+[![@eluan/core](https://img.shields.io/npm/v/@eluan/core?label=%40eluan%2Fcore)](https://www.npmjs.com/package/@eluan/core)
+[![@eluan/tokens](https://img.shields.io/npm/v/@eluan/tokens?label=%40eluan%2Ftokens)](https://www.npmjs.com/package/@eluan/tokens)
+[![@eluan/theme-generator](https://img.shields.io/npm/v/@eluan/theme-generator?label=%40eluan%2Ftheme-generator)](https://www.npmjs.com/package/@eluan/theme-generator)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+
+A multi-package design system monorepo built with React, StyleX, and Radix UI primitives. Eluan provides a complete three-layer token architecture, core UI components, layout patterns, and React Native components.
+
+**Documentation:** [Theming guide](./docs/theming.md) · [Contributing](./CONTRIBUTING.md)
 
 ## Packages
 
 | Package | Description | Version |
 |---------|-------------|---------|
-| [`@eluan/tokens`](#eluantokens) | Design tokens (colors, spacing, themes, fonts) | 0.1.2 |
-| [`@eluan/core`](#eluancore) | UI components and marketing patterns | 0.1.13 |
-| [`@eluan/web`](#eluanweb) | Compatibility exports for Header, HeaderNavigation, and Footer | 0.1.1 |
-| [`@eluan/native`](#eluannative) | React Native components | 0.1.1 |
+| [`@eluan/tokens`](#eluantokens) | Design tokens (colors, spacing, themes, fonts) | [![npm](https://img.shields.io/npm/v/@eluan/tokens?label=)](https://www.npmjs.com/package/@eluan/tokens) |
+| [`@eluan/core`](#eluancore) | UI components and layout patterns | [![npm](https://img.shields.io/npm/v/@eluan/core?label=)](https://www.npmjs.com/package/@eluan/core) |
+| [`@eluan/theme-generator`](#eluantheme-generator) | CLI that generates accessible theme token sets from accent colors | [![npm](https://img.shields.io/npm/v/@eluan/theme-generator?label=)](https://www.npmjs.com/package/@eluan/theme-generator) |
+| [`@eluan/web`](#eluanweb) | Compatibility facade re-exporting `Header`, `HeaderNavigation`, `Footer` from core | _not yet published_ |
+| [`@eluan/native`](#eluannative) | React Native components | _not yet published_ |
 
 ## Quick Start
 
@@ -21,8 +30,10 @@ bun add @eluan/core @eluan/tokens
 ```
 
 ```tsx
+// One import — core's styles.css bundles every token layer (primitives, modes,
+// themes, spacing, curves). A separate @eluan/tokens/css import is not needed.
 import "@eluan/core/styles.css"
-import "@eluan/tokens/css"
+import "@eluan/tokens/fonts/industrial-retro" // theme fonts (optional)
 
 import {
   Button,
@@ -105,7 +116,7 @@ eluan/
 
 ## `@eluan/tokens`
 
-The token foundation of the design system. Provides CSS variables, TypeScript constants, self-hosted fonts, and a Tailwind CSS preset.
+The token foundation of the design system. Provides CSS variables, self-hosted fonts, and a fully typed TypeScript API for the raw token values.
 
 ### Installation
 
@@ -317,8 +328,8 @@ import "@eluan/tokens/fonts/industrial-retro"
 
 ```json
 {
-  "react": "^18.0.0",
-  "react-dom": "^18.0.0"
+  "react": "^18.0.0 || ^19.0.0",
+  "react-dom": "^18.0.0 || ^19.0.0"
 }
 ```
 
@@ -347,7 +358,6 @@ import {
   Tabs,
   Tooltip,
   TreeView,
-  cn,
 } from "@eluan/core"
 ```
 
@@ -377,16 +387,19 @@ Components reference design tokens directly through CSS variables. Use plain CSS
 
 ### Key Dependencies
 
+Components are authored with **StyleX** — atomic, type-safe styles compiled at build time. There is no Tailwind, no CVA, and no runtime `className` merging (`cn`).
+
 | Dependency | Purpose |
 |-----------|---------|
+| StyleX (`@stylexjs/stylex`) | Component styling (compile-time, type-safe) |
 | Radix UI | Headless accessible primitives (accordion, dialog, popover, select, etc.) |
-| CVA (class-variance-authority) | Component variant definitions |
 | Lucide React | Icon library |
 | react-day-picker v9 | Calendar component |
 | cmdk | Command palette |
 | embla-carousel-react | Carousel |
 | Tiptap | Rich text editor |
 | Sonner | Toast notifications |
+| Prism (`prismjs`) | Code block syntax highlighting |
 | date-fns | Date utilities |
 
 ### Storybook
@@ -405,22 +418,14 @@ The Storybook toolbar lets you switch between all modes, themes, spacing scales,
 
 ## `@eluan/web`
 
-Compatibility package for web layout components. Marketing sections, media, visual effects, and other web patterns now live in `@eluan/core`.
+Compatibility facade for web layout components. It re-exports `Header`, `HeaderNavigation`, and `Footer` — the components themselves now live in `@eluan/core`.
 
-### Installation
-
-```bash
-npm install @eluan/web @eluan/core @eluan/tokens
-yarn add @eluan/web @eluan/core @eluan/tokens
-pnpm add @eluan/web @eluan/core @eluan/tokens
-bun add @eluan/web @eluan/core @eluan/tokens
-```
+> **Not yet published.** `@eluan/web` is currently private (`private: true`) and is not on npm. Import these components directly from `@eluan/core` (see below). This section documents the facade for when it ships.
 
 ### Use
 
 ```tsx
-import "@eluan/core/styles.css"
-import "@eluan/tokens/css"
+import "@eluan/core/styles.css" // bundles all design tokens
 import "@eluan/web/styles.css"
 
 import { Header, HeaderNavigation, Footer } from "@eluan/web"
@@ -440,20 +445,13 @@ import { Footer } from "@eluan/core/footer"
 
 React Native components that share the same token system as the web packages.
 
-### Installation
-
-```bash
-npm install @eluan/native @eluan/tokens
-yarn add @eluan/native @eluan/tokens
-pnpm add @eluan/native @eluan/tokens
-bun add @eluan/native @eluan/tokens
-```
+> **Not yet published.** `@eluan/native` is currently private (`private: true`) and is not on npm. This section documents its API for when it ships.
 
 ### Peer Dependencies
 
 ```json
 {
-  "react": "^18.0.0",
+  "react": "^18.0.0 || ^19.0.0",
   "react-native": ">=0.70.0 <0.80.0"
 }
 ```
@@ -549,6 +547,38 @@ function MyComponent() {
 
 ---
 
+## `@eluan/theme-generator`
+
+A published CLI (and programmatic API) that generates a complete, accessibility-checked Eluan theme — primitive scales plus a semantic light/dark token map — from one to three accent colors. Contrast is validated (and auto-corrected) against a configurable minimum ratio.
+
+### Install
+
+```bash
+npm install -D @eluan/theme-generator
+```
+
+### CLI
+
+```bash
+# Generate from an accent color
+npx eluan-theme generate --accent "#FF4A2C" --name ocean --out ./tokens
+
+# Interactive mode (prompts for accents, name, output)
+npx eluan-theme generate
+```
+
+Flags: `--accent <hex>` (1–3, repeat the flag for multiple), `--name`, `--out`, `--min-contrast` (default `4.5`), `--neutral-tint`, `--config <path>`. A `eluan-theme.config.json` in the project root is picked up automatically; CLI flags override it.
+
+### Programmatic
+
+```ts
+import { generateTheme } from "@eluan/theme-generator"
+
+const theme = generateTheme({ name: "ocean", accents: ["#FF4A2C"] })
+```
+
+---
+
 ## Token Reference
 
 ### Modes
@@ -589,7 +619,6 @@ Control border radius. Set via `data-curves` on the root element.
 | `sharp` | All square corners | 0 everywhere |
 | `slight` | Subtle rounding | 1px - 16px |
 | `sweeping` | Moderate rounding | 4px - 40px |
-| `rounded` | Pill-shaped, soft | 16px - full |
 
 ### Color Palettes (Layer 1)
 
@@ -619,7 +648,7 @@ These are the semantic token groups that each theme maps to its own color palett
 
 ## Publishing
 
-Packages are published to npm under the `@eluan` scope.
+Three of the five packages — `@eluan/tokens`, `@eluan/core`, and `@eluan/theme-generator` — are published to npm under the `@eluan` scope. `@eluan/web` and `@eluan/native` are currently private (`private: true`) and are not published.
 
 ```bash
 # Version packages (via changesets)
@@ -640,22 +669,50 @@ Ensure you build before publishing: `pnpm build` (handles correct build order).
 1. Create `packages/core/src/components/my-component.tsx`
 2. Export from `packages/core/src/index.ts`: `export * from "./components/my-component"`
 3. Create stories: `packages/core/src/components/my-component.stories.tsx`
-4. Use `cn()` for class merging, CSS variables for all token references
-5. Pattern: Radix UI primitive + CVA variants + Tailwind classes with `var()` tokens
+4. Style with StyleX (`stylex.create` / `stylex.props`), referencing design tokens as `var(--token)` values
+5. Pattern: Radix UI primitive (where behavior is needed) + a `stylex.create` style map + `React.forwardRef`
+
+Reference implementation: [`packages/core/src/components/button.tsx`](./packages/core/src/components/button.tsx).
+
+```tsx
+import * as React from "react"
+import * as stylex from "@stylexjs/stylex"
+
+const styles = stylex.create({
+  base: {
+    backgroundColor: "var(--container-bg)",
+    color: "var(--container-fg)",
+    borderRadius: "var(--curves-md)",
+    padding: "var(--spacing-md)",
+  },
+})
+
+export interface MyComponentProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style"> {}
+
+const MyComponent = React.forwardRef<HTMLDivElement, MyComponentProps>(
+  (props, ref) => (
+    <div ref={ref} {...props} {...stylex.props(styles.base)} />
+  )
+)
+MyComponent.displayName = "MyComponent"
+
+export { MyComponent }
+```
 
 ### Token Variable Rules
 
 Always check `packages/tokens/src/themes.css` for actual variable names. Never assume a variable exists.
 
 ```tsx
-// CORRECT: use the actual variable name from themes.css
-className="text-[var(--interactive-fg-alt)]"
-className="bg-[var(--container-bg)]"
-className="border-[color:var(--container-border-alt)]"  // use color: hint for borders
+// CORRECT: use the actual variable name from themes.css inside stylex.create
+color: "var(--interactive-fg-alt)"
+backgroundColor: "var(--container-bg)"
+borderColor: "var(--container-border-alt)"
 
 // WRONG: guessing variable names
-className="text-[var(--interactive-text)]"        // doesn't exist
-className="bg-[var(--container-background)]"      // it's --container-bg
+color: "var(--interactive-text)"          // doesn't exist
+backgroundColor: "var(--container-background)"  // it's --container-bg
 ```
 
 ---

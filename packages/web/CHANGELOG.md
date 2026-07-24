@@ -1,31 +1,14 @@
 # @eluan/web
 
-## 2.0.0
+## 0.1.0
 
-### Major Changes
+### Minor Changes
 
-- updated fonts and styling
+- Initial release of the `@eluan/web` compatibility facade, re-exporting `Header`, `HeaderNavigation`, and `Footer` from `@eluan/core`. This package is currently private (`private: true`) and is not published to npm.
 
-### Patch Changes
+---
 
-- Updated dependencies
-  - @eluan/core@2.0.0
-  - @eluan/tokens@2.0.0
-
-## 1.0.2
-
-### Patch Changes
-
-- Fix workspace protocol in published packages
-- Updated dependencies
-  - @eluan/tokens@1.0.2
-  - @eluan/core@1.0.2
-
-## 1.0.1
-
-### Patch Changes
-
-- c15992c: Initial public release setup for the Eluan design system packages under the `@frolda` scope.
-- Updated dependencies [c15992c]
-  - @eluan/tokens@1.0.1
-  - @eluan/core@1.0.1
+_Earlier `1.0.x`–`2.0.0` entries in this file's history were published under the
+former `@frolda` scope, before the rebrand to `@eluan`. They belong to a
+different versioning line and have been removed to avoid confusion — the
+`@eluan/web` line starts at `0.1.0`._

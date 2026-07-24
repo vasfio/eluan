@@ -6,20 +6,9 @@
 
 - f9fd64d: Initial public release of the Eluan design system under the `@eluan` npm scope.
 
-## 2.0.0
+---
 
-### Major Changes
-
-- updated fonts and styling
-
-## 1.0.2
-
-### Patch Changes
-
-- Fix workspace protocol in published packages
-
-## 1.0.1
-
-### Patch Changes
-
-- c15992c: Initial public release setup for the Eluan design system packages under the `@frolda` scope.
+_Earlier `1.0.x`–`2.0.0` entries in this file's history were published under the
+former `@frolda` scope, before the rebrand to `@eluan`. They belong to a
+different, now-unpublished versioning line and have been removed to avoid
+confusion — the `@eluan/tokens` line starts at `0.1.0`._

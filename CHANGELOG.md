@@ -3,24 +3,30 @@
 Per-package changelogs:
 - [`packages/tokens/CHANGELOG.md`](./packages/tokens/CHANGELOG.md)
 - [`packages/core/CHANGELOG.md`](./packages/core/CHANGELOG.md)
+- [`packages/theme-generator/CHANGELOG.md`](./packages/theme-generator/CHANGELOG.md)
 - [`packages/web/CHANGELOG.md`](./packages/web/CHANGELOG.md)
 - [`packages/native/CHANGELOG.md`](./packages/native/CHANGELOG.md)
 
 ---
 
-## [0.1.x] — April 2026
+## [0.1.0] — Initial public release
 
-### Packages published
+First release of the Eluan design system under the `@eluan` npm scope.
 
-- `@eluan/tokens` `0.1.1` — Three-layer token system, 6 visual themes, 3 spacing scales, 4 curve scales, self-hosted fonts, Tailwind v3 preset and TypeScript API.
-- `@eluan/core` `0.1.5` — 60+ UI components on Radix UI + Tailwind CSS v4 + CVA. Includes AI component suite.
-- `@eluan/web` `0.1.1` — 29 marketing/web components (hero, pricing, footer, blog card, shaders, etc.).
-- `@eluan/native` `0.1.1` — React Native component library sharing the same token foundation.
+### Published to npm
+
+- `@eluan/tokens` `0.1.0` — Three-layer token architecture (primitives → modes → themes), 2 visual themes (`industrial-retro`, `minimal`), 3 modes (`light`, `dim`, `dark`), 3 spacing scales, 3 curve scales, self-hosted fonts, and a typed TypeScript API.
+- `@eluan/core` `0.1.0` — 60+ accessible UI components built on Radix UI primitives and styled with StyleX. Includes `EluanProvider`, `useEluanTheme`, and `createTheme` for runtime theming.
+- `@eluan/theme-generator` `0.1.0` — CLI (and programmatic API) that generates accessibility-checked light/dark theme token sets from one to three accent colors.
+
+### Private (not yet published)
+
+- `@eluan/web` — Compatibility facade re-exporting `Header`, `HeaderNavigation`, and `Footer` from core.
+- `@eluan/native` — React Native component library sharing the same token foundation.
 
 ### Infrastructure
 
 - pnpm workspace monorepo with Changesets
 - Storybook for core (port 6006) and web (port 6007)
-- Vitest across core, web, and native
-- GitHub Actions CI/CD with automated release workflow
-- Vercel deployment for combined Storybook docs site
+- Vitest across core, theme-generator, web, and native
+- GitHub Actions CI and an automated release workflow (npm trusted publishing via OIDC)

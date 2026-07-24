@@ -23,8 +23,9 @@ In your app entry point, import the token CSS once and wrap your app in `EluanPr
 
 ```tsx
 // app.tsx
+// core's styles.css bundles every token layer, so a separate
+// @eluan/tokens/css import is not required when you use @eluan/core.
 import "@eluan/core/styles.css"
-import "@eluan/tokens/css"
 
 import { EluanProvider } from "@eluan/core"
 

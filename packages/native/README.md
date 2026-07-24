@@ -2,6 +2,8 @@
 
 > React Native UI components sharing the [Eluan](https://github.com/vasfio/eluan) design system's token architecture.
 
+> **Not yet published.** This package is currently private (`private: true`) and is not on npm. The install command below documents how it will be consumed once published.
+
 ## Install
 
 ```bash

@@ -1,17 +1,25 @@
 # Third-Party Notices
 
-Eluan is built on, and redistributes portions of, the open-source projects
-listed below. Each project is provided under its own license, and the relevant
-copyright and permission notices are reproduced here in satisfaction of those
-licenses.
+Eluan is built on, and in places adapts source from, the open-source projects
+listed below. Each project is provided under its own license.
+
+This file is split into two parts:
+
+1. **Adapted source** — projects whose code Eluan derives from or is directly
+   built on. Their copyright and permission notices are reproduced in full below.
+2. **Acknowledgements** — third-party libraries Eluan depends on but consumes
+   **unmodified** as npm packages. Their complete license texts ship inside each
+   package's own `node_modules` distribution; they are acknowledged here for
+   attribution.
 
 This file does not alter the license of Eluan itself, which is stated in the
-root `LICENSE` file. It exists solely to give proper attribution to upstream
-work that Eluan incorporates or derives from.
+root `LICENSE` file.
 
 ---
 
-## shadcn/ui
+## Adapted source
+
+### shadcn/ui
 
 Component patterns and source in Eluan are derived from shadcn/ui.
 
@@ -45,9 +53,10 @@ SOFTWARE.
 
 ---
 
-## Radix UI Primitives
+### Radix UI Primitives
 
-Eluan's component behavior layer is built on Radix UI Primitives.
+Eluan's component behavior layer is built on Radix UI Primitives, which are also
+redistributed as runtime dependencies of `@eluan/core`.
 
 - **Project:** Radix Primitives — <https://github.com/radix-ui/primitives>
 - **License:** MIT
@@ -79,40 +88,27 @@ SOFTWARE.
 
 ---
 
-## class-variance-authority (CVA)
+## Acknowledgements
 
-Eluan uses class-variance-authority for component variant management.
+The following libraries are used as unmodified dependencies. Their full license
+texts are distributed with each package inside `node_modules`.
 
-- **Project:** class-variance-authority — <https://github.com/joe-bell/cva>
-- **License:** Apache License 2.0
-- **Copyright:** Copyright (c) Joe Bell
-
-This product includes software developed by Joe Bell, distributed under the
-Apache License, Version 2.0. You may obtain a copy of the License at:
-
-<http://www.apache.org/licenses/LICENSE-2.0>
-
-```
-Copyright (c) Joe Bell
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-```
-
-The full text of the Apache License 2.0 is available at the URL above. No
-modifications have been made to class-variance-authority itself; it is consumed
-as an unmodified dependency.
+| Library | Used for | License |
+|---------|----------|---------|
+| [`@stylexjs/stylex`](https://github.com/facebook/stylex) | Component styling engine (compile-time, type-safe) | MIT |
+| [`lucide-react`](https://github.com/lucide-icons/lucide) | Icon set | ISC |
+| [`sonner`](https://github.com/emilkowalski/sonner) | Toast notifications | MIT |
+| [`cmdk`](https://github.com/pacocoursey/cmdk) | Command palette | MIT |
+| [`embla-carousel-react`](https://github.com/davidjerleke/embla-carousel) | Carousel | MIT |
+| [`@tiptap/*`](https://github.com/ueberdosis/tiptap) | Rich text editor | MIT |
+| [`react-day-picker`](https://github.com/gpbl/react-day-picker) | Calendar / date picking | MIT |
+| [`date-fns`](https://github.com/date-fns/date-fns) | Date utilities | MIT |
+| [`prismjs`](https://github.com/PrismJS/prism) | Code block syntax highlighting | MIT |
+| [`countries-list`](https://github.com/annexare/Countries) | Country/phone data for inputs | MIT |
+| [`culori`](https://github.com/Evercoder/culori) | Color math in `@eluan/theme-generator` | MIT |
 
 ---
 
-*Last reviewed: May 2026. If a dependency is added, removed, or upgraded across
-a major version, review this file to confirm the notices remain accurate.*
+*Last reviewed: July 2026. If a dependency is added, removed, or begins to have
+its source adapted (rather than merely consumed), update this file to keep the
+notices accurate.*

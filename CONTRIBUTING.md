@@ -8,7 +8,7 @@ Thanks for taking an interest in contributing. This document covers how to work 
 
 - **Node.js** 20+
 - **pnpm** 10.32+ (`npm install -g pnpm`)
-- A working knowledge of React, TypeScript, and Tailwind CSS v4
+- A working knowledge of React, TypeScript, and [StyleX](https://stylexjs.com)
 
 ---
 
@@ -41,8 +41,8 @@ pnpm storybook:web      # web/marketing components — port 6007
 eluan/
   packages/
     tokens/    @eluan/tokens   Design tokens, CSS variables, fonts
-    core/      @eluan/core     60+ UI components (Radix + Tailwind v4)
-    web/       @eluan/web      Marketing & web components
+    core/      @eluan/core     60+ UI components (Radix + StyleX)
+    web/       @eluan/web      Compatibility facade (Header/HeaderNavigation/Footer)
     native/    @eluan/native   React Native components
   apps/
     storybook-native/                Native Storybook (Expo)
@@ -66,32 +66,47 @@ Build order always matters: `tokens` → `core` → `web`. Native only depends o
 
 1. Create `packages/core/src/components/my-component.tsx`
 
-   Follow the standard pattern:
+   Follow the standard pattern — StyleX styles + `React.forwardRef`, with variants
+   modeled as a lookup of `stylex.create` styles keyed by a typed union. See
+   [`packages/core/src/components/button.tsx`](./packages/core/src/components/button.tsx)
+   for the reference implementation.
 
    ```tsx
    import * as React from "react"
-   import { cva, type VariantProps } from "class-variance-authority"
-   import { cn } from "@/lib/utils"
+   import * as stylex from "@stylexjs/stylex"
 
-   const myComponentVariants = cva("/* base classes */", {
-     variants: {
-       variant: { default: "/* ... */" },
+   export type MyComponentVariant = "default" | "muted"
+
+   const styles = stylex.create({
+     base: {
+       backgroundColor: "var(--container-bg)",
+       color: "var(--container-fg)",
+       borderRadius: "var(--curves-md)",
+       padding: "var(--spacing-md)",
      },
-     defaultVariants: { variant: "default" },
+     muted: {
+       color: "var(--container-fg-alt)",
+     },
    })
 
+   const variantStyles = {
+     default: null,
+     muted: styles.muted,
+   } satisfies Record<MyComponentVariant, stylex.StyleXStyles | null>
+
    export interface MyComponentProps
-     extends React.HTMLAttributes<HTMLDivElement>,
-       VariantProps<typeof myComponentVariants> {}
+     extends Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style"> {
+     variant?: MyComponentVariant
+   }
 
    const MyComponent = React.forwardRef<HTMLDivElement, MyComponentProps>(
-     ({ className, variant, ...props }, ref) => (
-       <div ref={ref} className={cn(myComponentVariants({ variant }), className)} {...props} />
+     ({ variant = "default", ...props }, ref) => (
+       <div ref={ref} {...props} {...stylex.props(styles.base, variantStyles[variant])} />
      )
    )
    MyComponent.displayName = "MyComponent"
 
-   export { MyComponent, myComponentVariants }
+   export { MyComponent }
    ```
 
 2. Export from `packages/core/src/index.ts`
@@ -103,23 +118,30 @@ Same pattern in `packages/web/src/components/`. Can import from `@eluan/core`.
 
 ### Adding a new component to `@eluan/native`
 
-Use React Native primitives and `createThemedStyles` / `getSemanticColors` from `../utils/styles` instead of Tailwind.
+Use React Native primitives and `createThemedStyles` / `getSemanticColors` from `../utils/styles` (React Native has no CSS variables, so tokens are consumed as JS values).
 
 ---
 
 ## Token Usage Rules
 
-Always use CSS variable tokens. Never hardcode colours or spacing.
+Always reference CSS variable tokens inside `stylex.create`. Never hardcode colours or spacing.
 
 ```tsx
 // ✅ Correct
-className="bg-[var(--container-bg)] text-[var(--container-fg)]"
-className="p-[var(--spacing-md)] rounded-[var(--curves-md)]"
-className="border border-[color:var(--container-border)]"
+const styles = stylex.create({
+  card: {
+    backgroundColor: "var(--container-bg)",
+    color: "var(--container-fg)",
+    padding: "var(--spacing-md)",
+    borderRadius: "var(--curves-md)",
+    borderColor: "var(--container-border)",
+  },
+})
 
 // ❌ Wrong
-className="bg-white text-gray-900"
-style={{ color: "#333" }}
+const styles = stylex.create({
+  card: { backgroundColor: "#fff", color: "#333", padding: 12 },
+})
 ```
 
 Check `packages/tokens/src/themes.css` for actual variable names before using them.
@@ -130,8 +152,8 @@ Check `packages/tokens/src/themes.css` for actual variable names before using th
 
 - TypeScript strict — no `any`
 - `React.forwardRef` for all DOM-rendering components
-- Export both component and variants (e.g. `Button` and `buttonVariants`)
-- `cn()` from `@/lib/utils` for all className merging
+- Export the component and its `*Props`/variant type unions (e.g. `Button`, `ButtonProps`, `ButtonVariant`)
+- Style with StyleX (`stylex.create` / `stylex.props`); reference tokens as `var(--token)` values
 - File names: `kebab-case.tsx`, stories: `kebab-case.stories.tsx`
 - Run `pnpm lint` before opening a PR
 
