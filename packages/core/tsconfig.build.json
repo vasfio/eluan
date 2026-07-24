@@ -5,6 +5,7 @@
     "node_modules",
     "dist",
     "stories",
+    "src/test/**",
     "src/**/*.test.ts",
     "src/**/*.test.tsx",
     "src/**/__tests__/**",

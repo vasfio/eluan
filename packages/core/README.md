@@ -47,6 +47,14 @@ Components span layout (`Card`, `Sheet`, `Drawer`), forms (`Input`, `Select`, `C
 
 Full component list: see [Storybook](https://github.com/vasfio/eluan) or the source under `src/components/`.
 
+## Security
+
+`RichText` emits raw, unsanitized HTML through its `onChange` callback
+(`editor.getHTML()`). Before persisting that HTML or rendering it back into the
+DOM (for example via `dangerouslySetInnerHTML`), sanitize it with a library such
+as [DOMPurify](https://github.com/cure53/DOMPurify). Only pass trusted/sanitized
+HTML into the `value` prop.
+
 ## License
 
 MIT

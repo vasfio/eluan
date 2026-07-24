@@ -70,9 +70,16 @@ const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
     React.useEffect(() => {
       if (activeLanguage !== "text") {
         const grammar = Prism.languages[activeLanguage]
-        setHighlightedCode(grammar ? Prism.highlight(activeCode, grammar, activeLanguage) : activeCode)
+        // Prism.highlight escapes the source before tokenizing, so its output is
+        // safe to inject. The fallbacks (plain "text", or a missing grammar) pass
+        // the raw code straight to dangerouslySetInnerHTML below, so escape them.
+        setHighlightedCode(
+          grammar
+            ? Prism.highlight(activeCode, grammar, activeLanguage)
+            : escapeHtml(activeCode)
+        )
       } else {
-        setHighlightedCode(activeCode)
+        setHighlightedCode(escapeHtml(activeCode))
       }
     }, [activeCode, activeLanguage])
 
@@ -166,6 +173,17 @@ CodeBlock.displayName = "CodeBlock"
 
 function sx(...stylesToApply: stylex.StyleXStyles[]) {
   return stylex.props(...stylesToApply).className ?? ""
+}
+
+/** Escape HTML special characters so raw (unhighlighted) code cannot inject
+ *  markup when it reaches `dangerouslySetInnerHTML`. */
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;")
 }
 
 const styles = stylex.create({

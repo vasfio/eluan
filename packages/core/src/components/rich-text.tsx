@@ -216,8 +216,21 @@ const RichTextToolbar = ({ editor, disabled = false }: RichTextToolbarProps) => 
   )
 }
 
+/**
+ * Rich text editor.
+ *
+ * ⚠️ Security: `onChange` emits the editor's raw HTML string (`editor.getHTML()`).
+ * This HTML is NOT sanitized. Before persisting it or rendering it back into the
+ * DOM (e.g. via `dangerouslySetInnerHTML`), sanitize it with a library such as
+ * DOMPurify. Likewise, only pass trusted/sanitized HTML into `value`.
+ */
 export interface RichTextProps {
+  /** Controlled HTML value. Pass only trusted/sanitized HTML. */
   value?: string
+  /**
+   * Fires with the editor's raw, unsanitized HTML. Sanitize (e.g. DOMPurify)
+   * before storing or rendering it.
+   */
   onChange?: (value: string) => void
   placeholder?: string
   disabled?: boolean

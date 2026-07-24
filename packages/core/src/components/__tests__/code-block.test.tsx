@@ -20,4 +20,24 @@ describe("CodeBlock", () => {
     );
     expect(container.querySelector(".custom")).toBeNull();
   });
+
+  it("escapes raw code in the default (text) branch instead of injecting markup", () => {
+    // Regression: the "text" language and missing-grammar fallbacks route the
+    // raw `code` prop into dangerouslySetInnerHTML. It must be HTML-escaped so a
+    // payload cannot inject live elements. See code-block.tsx escapeHtml().
+    const payload = '<img src=x onerror=alert(1)>';
+    const { container } = render(<CodeBlock code={payload} />);
+
+    // No element was injected from the payload...
+    expect(container.querySelector("img")).toBeNull();
+    // ...but the literal text is still shown to the reader.
+    expect(container.querySelector("code")?.textContent).toContain(payload);
+  });
+
+  it("does not inject a script element from malicious code", () => {
+    const { container } = render(
+      <CodeBlock code={'</code><script>alert(document.cookie)</script>'} />
+    );
+    expect(container.querySelector("script")).toBeNull();
+  });
 });
