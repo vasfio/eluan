@@ -164,8 +164,13 @@ export function createEluanReactViteStorybookConfig({
             resolve: {
               alias: {
                 "@": join(packageRoot, "src"),
-                "@eluan/core": join(coreRoot, "src/index.ts"),
-                "@eluan/core/": `${join(coreRoot, "src")}/`,
+                // Point at the src *directory* (not src/index.ts) so that both
+                // the bare specifier (`@eluan/core` -> src/index.ts via
+                // directory-index resolution) and subpath specifiers
+                // (`@eluan/core/header` -> src/header.ts) resolve. The web
+                // facade re-exports from `@eluan/core/header` / `.../footer`,
+                // which a file-targeted alias could not resolve.
+                "@eluan/core": join(coreRoot, "src"),
                 ...aliases,
               },
             },

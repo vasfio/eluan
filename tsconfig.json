@@ -7,11 +7,5 @@
     "skipLibCheck": true,
     "esModuleInterop": true
   },
-  "references": [
-    { "path": "./packages/tokens" },
-    { "path": "./packages/core" },
-    { "path": "./packages/web" },
-    { "path": "./packages/native" }
-  ],
   "files": []
 }

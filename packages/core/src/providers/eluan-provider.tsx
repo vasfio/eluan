@@ -265,9 +265,11 @@ export function EluanProvider({
   const setTheme = React.useCallback(
     (t: ThemeName) => {
       if (!isValidThemeName(t)) {
-        console.warn(
-          `EluanProvider: setTheme("${t}") — unknown theme name. Did you forget to pass it via customThemes?`
-        )
+        if (process.env.NODE_ENV !== "production") {
+          console.warn(
+            `EluanProvider: setTheme("${t}") — unknown theme name. Did you forget to pass it via customThemes?`
+          )
+        }
         return
       }
       setThemeState(t)
