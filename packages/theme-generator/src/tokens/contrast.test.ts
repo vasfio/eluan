@@ -3,7 +3,7 @@ import { checkContrast, autoCorrect } from './contrast.js';
 import { buildSemanticMap } from './semanticMap.js';
 import { buildPrimitives } from './primitives.js';
 import { validateAccents } from '../input/validate.js';
-import type { GeneratorConfig, SemanticMap, PrimitiveTokens } from '../types.js';
+import type { GeneratorConfig, PrimitiveTokens } from '../types.js';
 
 describe('checkContrast', () => {
   it('returns 21 for black on white', () => {

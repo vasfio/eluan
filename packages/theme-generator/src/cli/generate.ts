@@ -155,7 +155,7 @@ function parseCliArgs(): (GeneratorConfig & { outDir: string }) | null {
       help: { type: 'boolean', default: false },
     },
     allowPositionals: true,
-    strict: false,
+    strict: true,
   });
 
   if (values.help) {
@@ -258,4 +258,8 @@ async function main() {
   generate(opts);
 }
 
-main();
+main().catch((err) => {
+  const message = err instanceof Error ? err.message : String(err);
+  console.error(`\nError: ${message}`);
+  process.exit(1);
+});

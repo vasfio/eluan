@@ -8,7 +8,15 @@ function resolveHex(ref: TokenRef, primitives: PrimitiveTokens): string {
   if (ref === 'black') return '#000000';
   const [scaleName, stepStr] = ref.split('.') as [ScaleName, string];
   const step = Number(stepStr) as ScaleStepValue;
-  return primitives[scaleName]![step].hex;
+  const scale = primitives[scaleName];
+  if (!scale) {
+    throw new Error(`Invalid token reference "${ref}": unknown scale "${scaleName}".`);
+  }
+  const entry = scale[step];
+  if (!entry) {
+    throw new Error(`Invalid token reference "${ref}": scale "${scaleName}" has no step ${stepStr}.`);
+  }
+  return entry.hex;
 }
 
 function textColor(hex: string): string {

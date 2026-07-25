@@ -6,7 +6,6 @@ import type {
   ScaleStepValue,
   SemanticMap,
   TokenRef,
-  SCALE_STEPS,
 } from '../types.js';
 
 const ORDERED_STEPS: ScaleStepValue[] = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
@@ -17,8 +16,7 @@ export function checkContrast(fgHex: string, bgHex: string): number {
 
 function resolveTokenRef(
   ref: TokenRef,
-  primitives: PrimitiveTokens,
-  neutralScale?: PrimitiveTokens['neutral']
+  primitives: PrimitiveTokens
 ): string | null {
   if (ref === 'white') return '#ffffff';
   if (ref === 'black') return '#000000';

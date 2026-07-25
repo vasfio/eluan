@@ -4,21 +4,17 @@ import type {
   GeneratorConfig,
   GeneratorResult,
   PrimitiveTokens,
-  SemanticMap,
 } from './types.js';
 import { validateAccents, type ValidationWarning } from './input/validate.js';
 import { buildPrimitives } from './tokens/primitives.js';
 import { buildSemanticMap } from './tokens/semanticMap.js';
-import { autoCorrect, checkContrast } from './tokens/contrast.js';
+import { autoCorrect } from './tokens/contrast.js';
 import {
-  compilePrimitivesJSON,
-  compileSemanticJSON,
   compilePrimitivesCSS,
   compileModeCSS,
   compileThemeCSS,
   compileCreateThemeTokens,
 } from './compile/css.js';
-import { generateSmokeHTML } from './preview/smoke.js';
 
 export function computeInputHash(config: GeneratorConfig): string {
   const input = JSON.stringify({

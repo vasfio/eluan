@@ -1,4 +1,4 @@
-import { converter, formatHex } from 'culori';
+import { converter } from 'culori';
 import type { AccentClassification, ValidatedAccent, Oklch } from '../types.js';
 
 const toOklch = converter('oklch');

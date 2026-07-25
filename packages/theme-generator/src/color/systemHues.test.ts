@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { generateSystemScales, DEFAULT_SYSTEM_HUES } from './systemHues.js';
+import { generateSystemScales } from './systemHues.js';
 import { DEFAULT_CURVE } from './curves.js';
 import { SCALE_STEPS } from '../types.js';
 
