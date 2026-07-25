@@ -17,10 +17,11 @@ description: Build, modify, or audit components in the Eluan monorepo. Use for t
 
 - Use `React.forwardRef` for every public component that renders an element.
 - Set `displayName` for every public component.
-- Style with StyleX: `import * as stylex from "@stylexjs/stylex"`, declare a
-  `const styles = stylex.create({ ... })` object, and apply it via
+- Style with StyleX only: `import * as stylex from "@stylexjs/stylex"`, declare a
+  `const styles = stylex.create({ ... })` object, and apply it by spreading
   `{...stylex.props(styles.base, condition && styles.variant)}`. There is no
-  `cn()`, no `cva()`, and no `@/lib/utils` in this repo.
+  className-composition helper and no variant-factory helper in this repo — styling
+  is entirely StyleX + semantic tokens.
 - Do not accept or forward `className`/`style`. Public props omit them
   (`Omit<React.ButtonHTMLAttributes<...>, "className" | "style">`); consumers
   theme via tokens, not overrides. Tests assert overrides are dropped.

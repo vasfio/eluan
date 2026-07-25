@@ -21,7 +21,7 @@ Use CSS custom properties exclusively:
 - Container: `var(--container-bg)`, `var(--container-fg)`, `var(--container-border)`, `var(--container-border-alt)`
 
 ## Component patterns
-- Style with StyleX: `const styles = stylex.create({ ... })` applied via `{...stylex.props(...)}` — no `cn()`, no `cva()`, no `@/lib/utils`
+- Style with StyleX only: `const styles = stylex.create({ ... })` applied by spreading `{...stylex.props(...)}` — no className-composition or variant-factory helpers; styling is entirely StyleX + semantic tokens
 - Model variants as named `stylex.create` entries plus a `Record<Variant, stylex.StyleXStyles>` lookup map (see `button.tsx`)
 - Use `React.forwardRef` for all leaf components
 - Set `.displayName` on every component
