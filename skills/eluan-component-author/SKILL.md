@@ -1,6 +1,6 @@
 ---
 name: eluan-component-author
-description: Build, modify, or audit components in the Eluan monorepo. Use for tasks in packages/core/src/components, packages/web/src/components, or packages/native/src/components; when adding component APIs, variants, stories, tests, Radix wrappers, forwardRef/displayName patterns, StyleX variant maps, accessibility behavior, or wiring components to Eluan semantic tokens.
+description: Build, modify, or audit components in the Eluan monorepo. Use for tasks in packages/core/src/components or packages/native/src/components; when adding component APIs, variants, stories, tests, Radix wrappers, forwardRef/displayName patterns, StyleX variant maps, accessibility behavior, or wiring components to Eluan semantic tokens.
 ---
 
 # Eluan Component Author
@@ -63,8 +63,6 @@ Use package-scoped commands:
 ```bash
 pnpm --filter @eluan/core lint
 pnpm --filter @eluan/core test
-pnpm --filter @eluan/web lint
-pnpm --filter @eluan/web test
 pnpm --filter @eluan/native lint
 pnpm --filter @eluan/native test
 ```

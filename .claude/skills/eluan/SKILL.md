@@ -1,11 +1,11 @@
 ---
 name: eluan
-description: Use when building, theming, or extending UI in apps that depend on @eluan/core, @eluan/tokens, @eluan/web, or @eluan/native. Covers component imports, theming via EluanProvider/createTheme, the three-layer token architecture (CSS variables scoped to data-theme/data-mode/data-spacing/data-curves), StyleX authoring, TypeScript types, and the conventions consumers should follow when adding new components or tokens. Trigger when the user mentions Eluan, @eluan, EluanProvider, useEluanTheme, createTheme, design tokens with --container-bg / --interactive-bg-selected / --action-primary-bg etc., the data-theme="industrial-retro|minimal" attribute, or any of the components listed below.
+description: Use when building, theming, or extending UI in apps that depend on @eluan/core, @eluan/tokens, or @eluan/native. Covers component imports, theming via EluanProvider/createTheme, the three-layer token architecture (CSS variables scoped to data-theme/data-mode/data-spacing/data-curves), StyleX authoring, TypeScript types, and the conventions consumers should follow when adding new components or tokens. Trigger when the user mentions Eluan, @eluan, EluanProvider, useEluanTheme, createTheme, design tokens with --container-bg / --interactive-bg-selected / --action-primary-bg etc., the data-theme="industrial-retro|minimal" attribute, or any of the components listed below.
 ---
 
 # Eluan Design System
 
-Eluan is a React design system distributed as a pnpm-workspace monorepo. Consumers install `@eluan/core` (UI and marketing components) and `@eluan/tokens` (tokens/CSS). `@eluan/web` is a not-yet-published compatibility facade re-exporting `Header`/`HeaderNavigation`/`Footer` from core; native-only components live in `@eluan/native`. Components are styled with **StyleX** and consume semantic **CSS custom properties** — there is no utility-class framework in this repo.
+Eluan is a React design system distributed as a pnpm-workspace monorepo. Consumers install `@eluan/core` (UI and marketing components) and `@eluan/tokens` (tokens/CSS). `Header`, `HeaderNavigation`, and `Footer` are `@eluan/core` components; native-only components live in `@eluan/native`. Components are styled with **StyleX** and consume semantic **CSS custom properties** — there is no utility-class framework in this repo.
 
 This skill is the source of truth for: the component inventory, the token architecture, the StyleX authoring pattern, the consumer setup pattern (`EluanProvider`), how to define a custom theme (`createTheme`), and the conventions to follow when modifying or extending the library.
 

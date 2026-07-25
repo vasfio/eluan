@@ -7,5 +7,5 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["@eluan/native", "@eluan/web"]
+  "ignore": ["@eluan/native"]
 }

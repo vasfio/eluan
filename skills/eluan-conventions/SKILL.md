@@ -6,8 +6,7 @@ description: Eluan design system coding conventions for building, editing, or au
 # Eluan Conventions
 
 ## Repo structure
-- `packages/core/src/components/` — UI and marketing components
-- `packages/web/src/components/` — compatibility wrappers for Header, HeaderNavigation, and Footer
+- `packages/core/src/components/` — UI and marketing components (including Header, HeaderNavigation, and Footer)
 - `packages/native/src/components/` — React Native components
 - Each component has a `.tsx` and a `.stories.tsx` file
 

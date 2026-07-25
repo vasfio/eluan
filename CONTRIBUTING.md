@@ -30,7 +30,6 @@ Then start Storybook for the package you're working on:
 
 ```bash
 pnpm storybook          # core components — port 6006
-pnpm storybook:web      # web/marketing components — port 6007
 ```
 
 ---
@@ -42,13 +41,12 @@ eluan/
   packages/
     tokens/    @eluan/tokens   Design tokens, CSS variables, fonts
     core/      @eluan/core     60+ UI components (Radix + StyleX)
-    web/       @eluan/web      Compatibility facade (Header/HeaderNavigation/Footer)
     native/    @eluan/native   React Native components
   apps/
     storybook-native/                Native Storybook (Expo)
 ```
 
-Build order always matters: `tokens` → `core` → `web`. Native only depends on `tokens`.
+Build order always matters: `tokens` → `core`. Native only depends on `tokens`.
 
 ---
 
@@ -56,7 +54,7 @@ Build order always matters: `tokens` → `core` → `web`. Native only depends o
 
 ### Modifying an existing component
 
-1. Find the component in `packages/core/src/components/` (or `web` / `native`)
+1. Find the component in `packages/core/src/components/` (or `native`)
 2. Make your changes
 3. Update or add stories in the same directory (`my-component.stories.tsx`)
 4. Run tests: `pnpm test`
@@ -111,10 +109,6 @@ Build order always matters: `tokens` → `core` → `web`. Native only depends o
 
 2. Export from `packages/core/src/index.ts`
 3. Create stories with `tags: ["autodocs"]`
-
-### Adding a new component to `@eluan/web`
-
-Same pattern in `packages/web/src/components/`. Can import from `@eluan/core`.
 
 ### Adding a new component to `@eluan/native`
 

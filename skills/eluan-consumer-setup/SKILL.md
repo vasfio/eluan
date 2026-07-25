@@ -1,6 +1,6 @@
 ---
 name: eluan-consumer-setup
-description: Set up or debug consumer applications that use @eluan/core, @eluan/tokens, @eluan/web, or EluanProvider. Use when wiring Eluan into React, Vite, Next.js, or Storybook apps; adding global CSS imports; configuring SSR-safe theme attributes; using useEluanTheme; creating custom themes; or fixing flash-of-wrong-theme, missing token styles, missing fonts, or invalid data-theme/data-mode/data-spacing/data-curves setup.
+description: Set up or debug consumer applications that use @eluan/core, @eluan/tokens, or EluanProvider. Use when wiring Eluan into React, Vite, Next.js, or Storybook apps; adding global CSS imports; configuring SSR-safe theme attributes; using useEluanTheme; creating custom themes; or fixing flash-of-wrong-theme, missing token styles, missing fonts, or invalid data-theme/data-mode/data-spacing/data-curves setup.
 ---
 
 # Eluan Consumer Setup
@@ -16,14 +16,7 @@ pnpm add @eluan/core @eluan/tokens
 bun add @eluan/core @eluan/tokens
 ```
 
-For legacy web layout compatibility exports:
-
-```bash
-npm install @eluan/web @eluan/core @eluan/tokens
-yarn add @eluan/web @eluan/core @eluan/tokens
-pnpm add @eluan/web @eluan/core @eluan/tokens
-bun add @eluan/web @eluan/core @eluan/tokens
-```
+`Header`, `HeaderNavigation`, and `Footer` are `@eluan/core` components — no separate package to install.
 
 Do not imply that consumer apps must use pnpm. The Eluan monorepo uses pnpm internally, but published packages should install through npm, yarn, pnpm, or bun.
 
@@ -51,7 +44,7 @@ export function App() {
 }
 ```
 
-Use `@eluan/web/styles.css` only when the app intentionally imports the legacy `@eluan/web` Header/Footer compatibility exports. For new code, prefer `@eluan/core` subpath imports such as `@eluan/core/header`.
+Import `Header`, `HeaderNavigation`, and `Footer` from `@eluan/core` — either the barrel (`@eluan/core`) or subpaths such as `@eluan/core/header`. Their styles are already covered by `@eluan/core/styles.css`.
 
 ## Valid Values
 

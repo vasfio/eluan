@@ -15,7 +15,6 @@ body:
         - "@eluan/core"
         - "@eluan/tokens"
         - "@eluan/theme-generator"
-        - "@eluan/web"
         - "@eluan/native"
         - Not sure / other
     validations:

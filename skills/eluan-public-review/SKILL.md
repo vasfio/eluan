@@ -44,9 +44,8 @@ For consumer package-manager compatibility, inspect packed package metadata:
 
 ```bash
 pnpm --filter @eluan/core pack --pack-destination /private/tmp
-pnpm --filter @eluan/web pack --pack-destination /private/tmp
 pnpm --filter @eluan/tokens pack --pack-destination /private/tmp
-tar -xOf /private/tmp/eluan-web-*.tgz package/package.json
+tar -xOf /private/tmp/eluan-core-*.tgz package/package.json
 ```
 
 The packed `package.json` should contain normal semver dependencies, not `workspace:` specifiers. Consumer docs should show npm/yarn/pnpm/bun install commands where appropriate.

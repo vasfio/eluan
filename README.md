@@ -17,7 +17,6 @@ A multi-package design system monorepo built with React, StyleX, and Radix UI pr
 | [`@eluan/tokens`](#eluantokens) | Design tokens (colors, spacing, themes, fonts) | [![npm](https://img.shields.io/npm/v/@eluan/tokens?label=)](https://www.npmjs.com/package/@eluan/tokens) |
 | [`@eluan/core`](#eluancore) | UI components and layout patterns | [![npm](https://img.shields.io/npm/v/@eluan/core?label=)](https://www.npmjs.com/package/@eluan/core) |
 | [`@eluan/theme-generator`](#eluantheme-generator) | CLI that generates accessible theme token sets from accent colors | [![npm](https://img.shields.io/npm/v/@eluan/theme-generator?label=)](https://www.npmjs.com/package/@eluan/theme-generator) |
-| [`@eluan/web`](#eluanweb) | Compatibility facade re-exporting `Header`, `HeaderNavigation`, `Footer` from core | _not yet published_ |
 | [`@eluan/native`](#eluannative) | React Native components | _not yet published_ |
 
 ## Quick Start
@@ -70,14 +69,11 @@ function App() {
 # Install all dependencies
 pnpm install
 
-# Build all packages (tokens -> core -> web)
+# Build all packages (tokens -> core)
 pnpm build
 
 # Run core Storybook (port 6006)
 pnpm storybook
-
-# Run web Storybook (port 6007)
-pnpm storybook:web
 
 # Run all tests
 pnpm test
@@ -92,13 +88,11 @@ pnpm lint
 @eluan/tokens          (foundational - no internal deps)
     |
     +---> @eluan/core   (depends on tokens)
-    |         |
-    |         +---> @eluan/web  (compatibility facade)
     |
     +---> @eluan/native (depends on tokens)
 ```
 
-Build order matters: always build `tokens` first, then `core`, then compatibility packages such as `web`.
+Build order matters: always build `tokens` first, then `core`.
 
 ### Project Structure
 
@@ -107,7 +101,6 @@ eluan/
   packages/
     tokens/      @eluan/tokens   Design tokens, CSS variables, fonts
     core/        @eluan/core     UI and marketing components
-    web/         @eluan/web      Header/Footer compatibility facade
     native/      @eluan/native   22 React Native component categories
   package.json   Root workspace config, scripts
 ```
@@ -416,34 +409,9 @@ The Storybook toolbar lets you switch between all modes, themes, spacing scales,
 
 ---
 
-## `@eluan/web`
-
-Compatibility facade for web layout components. It re-exports `Header`, `HeaderNavigation`, and `Footer` — the components themselves now live in `@eluan/core`.
-
-> **Not yet published.** `@eluan/web` is currently private (`private: true`) and is not on npm. Import these components directly from `@eluan/core` (see below). This section documents the facade for when it ships.
-
-### Use
-
-```tsx
-import "@eluan/core/styles.css" // bundles all design tokens
-import "@eluan/web/styles.css"
-
-import { Header, HeaderNavigation, Footer } from "@eluan/web"
-```
-
-For new code, prefer importing these directly from core:
-
-```tsx
-import { Header } from "@eluan/core/header"
-import { HeaderNavigation } from "@eluan/core/header-navigation"
-import { Footer } from "@eluan/core/footer"
-```
-
----
-
 ## `@eluan/native`
 
-React Native components that share the same token system as the web packages.
+React Native components that share the same token system as `@eluan/core`.
 
 > **Not yet published.** `@eluan/native` is currently private (`private: true`) and is not on npm. This section documents its API for when it ships.
 
@@ -648,7 +616,7 @@ These are the semantic token groups that each theme maps to its own color palett
 
 ## Publishing
 
-Three of the five packages — `@eluan/tokens`, `@eluan/core`, and `@eluan/theme-generator` — are published to npm under the `@eluan` scope. `@eluan/web` and `@eluan/native` are currently private (`private: true`) and are not published.
+Three of the four packages — `@eluan/tokens`, `@eluan/core`, and `@eluan/theme-generator` — are published to npm under the `@eluan` scope. `@eluan/native` is currently private (`private: true`) and is not published.
 
 ```bash
 # Version packages (via changesets)
