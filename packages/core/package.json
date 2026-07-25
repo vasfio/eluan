@@ -1,7 +1,7 @@
 {
   "name": "@eluan/core",
   "description": "Accessible UI components for React — built on Radix UI, StyleX, and Eluan tokens",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "author": "Frolda",
   "homepage": "https://github.com/vasfio/eluan#readme",
