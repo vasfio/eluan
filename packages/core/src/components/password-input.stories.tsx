@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { action } from "@storybook/addon-actions"
 import { PasswordInput } from "./password-input"
 
 const meta: Meta<typeof PasswordInput> = {
@@ -61,7 +62,7 @@ export const WithStrengthIndicator: Story = {
       <PasswordInput
         placeholder="Create a strong password"
         showStrengthIndicator
-        onStrengthChange={(strength) => console.log("Strength:", strength)}
+        onStrengthChange={action("onStrengthChange")}
       />
     </div>
   ),

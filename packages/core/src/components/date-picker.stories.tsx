@@ -56,7 +56,7 @@ export const Default: Story = {
       },
     },
   },
-  render: () => {
+  render: function DefaultStory() {
     const [date, setDate] = React.useState<Date | undefined>()
     return (
       <div style={{ maxWidth: 288 }}>
@@ -75,7 +75,7 @@ export const WithPreselected: Story = {
       },
     },
   },
-  render: () => {
+  render: function WithPreselectedStory() {
     const [date, setDate] = React.useState<Date | undefined>(new Date())
     return (
       <div style={{ maxWidth: 288 }}>
@@ -94,7 +94,7 @@ export const WithPlaceholder: Story = {
       },
     },
   },
-  render: () => {
+  render: function WithPlaceholderStory() {
     const [date, setDate] = React.useState<Date | undefined>()
     return (
       <div style={{ maxWidth: 288 }}>
@@ -113,7 +113,7 @@ export const Disabled: Story = {
       },
     },
   },
-  render: () => {
+  render: function DisabledStory() {
     const [date, setDate] = React.useState<Date | undefined>()
     return (
       <div style={{ maxWidth: 288 }}>
@@ -133,7 +133,7 @@ export const WideTrigger: Story = {
       },
     },
   },
-  render: () => {
+  render: function WideTriggerStory() {
     const [date, setDate] = React.useState<Date | undefined>()
     return (
       <div style={{ maxWidth: 440 }}>

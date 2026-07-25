@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { action } from "@storybook/addon-actions"
 import { EmailInput } from "./email-input"
 
 const meta: Meta<typeof EmailInput> = {
@@ -61,7 +62,7 @@ export const WithValidation: Story = {
       <EmailInput
         placeholder="Enter your email"
         showValidation
-        onValidationChange={(isValid) => console.log("Valid:", isValid)}
+        onValidationChange={action("onValidationChange")}
       />
       <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)" }}>
         Type an email and click outside to see validation

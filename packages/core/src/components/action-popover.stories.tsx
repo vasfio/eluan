@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { action } from "@storybook/addon-actions"
 import { Edit, Trash2, Copy, Share, Download, Archive } from "lucide-react"
 import { ActionPopover } from "./action-popover"
 
@@ -52,9 +53,9 @@ export const Default: Story = {
   render: () => (
     <ActionPopover
       items={[
-        { label: "Edit", onClick: () => console.log("Edit") },
-        { label: "Duplicate", onClick: () => console.log("Duplicate") },
-        { label: "Share", onClick: () => console.log("Share") },
+        { label: "Edit", onClick: action("Edit") },
+        { label: "Duplicate", onClick: action("Duplicate") },
+        { label: "Share", onClick: action("Share") },
       ]}
     />
   ),
@@ -71,22 +72,22 @@ export const WithIcons: Story = {
   render: () => (
     <ActionPopover
       items={[
-        { label: "Edit", icon: <Edit />, onClick: () => console.log("Edit") },
-        { label: "Copy", icon: <Copy />, onClick: () => console.log("Copy") },
+        { label: "Edit", icon: <Edit />, onClick: action("Edit") },
+        { label: "Copy", icon: <Copy />, onClick: action("Copy") },
         {
           label: "Share",
           icon: <Share />,
-          onClick: () => console.log("Share"),
+          onClick: action("Share"),
         },
         {
           label: "Download",
           icon: <Download />,
-          onClick: () => console.log("Download"),
+          onClick: action("Download"),
         },
         {
           label: "Archive",
           icon: <Archive />,
-          onClick: () => console.log("Archive"),
+          onClick: action("Archive"),
         },
       ]}
     />
@@ -104,13 +105,13 @@ export const WithDestructiveItem: Story = {
   render: () => (
     <ActionPopover
       items={[
-        { label: "Edit", icon: <Edit />, onClick: () => console.log("Edit") },
-        { label: "Copy", icon: <Copy />, onClick: () => console.log("Copy") },
+        { label: "Edit", icon: <Edit />, onClick: action("Edit") },
+        { label: "Copy", icon: <Copy />, onClick: action("Copy") },
         {
           label: "Delete",
           icon: <Trash2 />,
           destructive: true,
-          onClick: () => console.log("Delete"),
+          onClick: action("Delete"),
         },
       ]}
     />
@@ -129,7 +130,7 @@ export const WithDisabledItems: Story = {
   render: () => (
     <ActionPopover
       items={[
-        { label: "Edit", icon: <Edit />, onClick: () => console.log("Edit") },
+        { label: "Edit", icon: <Edit />, onClick: action("Edit") },
         { label: "Copy", icon: <Copy />, disabled: true },
         {
           label: "Delete",
@@ -158,17 +159,17 @@ export const AlignStart: Story = {
           {
             label: "Edit",
             icon: <Edit />,
-            onClick: () => console.log("Edit"),
+            onClick: action("Edit"),
           },
           {
             label: "Copy",
             icon: <Copy />,
-            onClick: () => console.log("Copy"),
+            onClick: action("Copy"),
           },
           {
             label: "Share",
             icon: <Share />,
-            onClick: () => console.log("Share"),
+            onClick: action("Share"),
           },
         ]}
       />
@@ -192,12 +193,12 @@ export const SideRight: Story = {
           {
             label: "Edit",
             icon: <Edit />,
-            onClick: () => console.log("Edit"),
+            onClick: action("Edit"),
           },
           {
             label: "Copy",
             icon: <Copy />,
-            onClick: () => console.log("Copy"),
+            onClick: action("Copy"),
           },
         ]}
       />

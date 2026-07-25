@@ -59,7 +59,7 @@ export const Default: Story = {
       },
     },
   },
-  render: () => {
+  render: function DefaultStory() {
     const [dateTime, setDateTime] = React.useState<Date | undefined>()
     return (
       <div style={{ maxWidth: 288 }}>
@@ -78,7 +78,7 @@ export const WithPreselected: Story = {
       },
     },
   },
-  render: () => {
+  render: function WithPreselectedStory() {
     const [dateTime, setDateTime] = React.useState<Date | undefined>(new Date())
     return (
       <div style={{ maxWidth: 288 }}>
@@ -97,7 +97,7 @@ export const WithLabel: Story = {
       },
     },
   },
-  render: () => {
+  render: function WithLabelStory() {
     const [dateTime, setDateTime] = React.useState<Date | undefined>()
     return (
       <div style={{ maxWidth: 288, display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
@@ -118,7 +118,7 @@ export const WithSeconds: Story = {
       },
     },
   },
-  render: () => {
+  render: function WithSecondsStory() {
     const [dateTime, setDateTime] = React.useState<Date | undefined>(new Date())
     return (
       <div style={{ maxWidth: 288 }}>
@@ -138,7 +138,7 @@ export const WideTrigger: Story = {
       },
     },
   },
-  render: () => {
+  render: function WideTriggerStory() {
     const [dateTime, setDateTime] = React.useState<Date | undefined>()
     return (
       <div style={{ maxWidth: 440 }}>

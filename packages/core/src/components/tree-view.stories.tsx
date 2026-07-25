@@ -114,7 +114,7 @@ export const Default: Story = {
       },
     },
   },
-  render: () => {
+  render: function DefaultStory() {
     const [selectedId, setSelectedId] = React.useState<string>()
     return (
       <div
@@ -182,7 +182,7 @@ export const WithCustomIcons: Story = {
       },
     },
   },
-  render: () => {
+  render: function WithCustomIconsStory() {
     const [selectedId, setSelectedId] = React.useState<string>()
     return (
       <div
@@ -211,7 +211,7 @@ export const WithoutIcons: Story = {
       },
     },
   },
-  render: () => {
+  render: function WithoutIconsStory() {
     const [selectedId, setSelectedId] = React.useState<string>()
     return (
       <div
@@ -241,7 +241,7 @@ export const ControlledExpansion: Story = {
       },
     },
   },
-  render: () => {
+  render: function ControlledExpansionStory() {
     const [selectedId, setSelectedId] = React.useState<string>()
     const [expandedIds, setExpandedIds] = React.useState<string[]>(["1"])
     return (

@@ -68,7 +68,7 @@ export const Default: Story = {
       },
     },
   },
-  render: () => {
+  render: function DefaultStory() {
     const [current, setCurrent] = useState(1)
     return (
       <div
@@ -112,7 +112,7 @@ export const Vertical: Story = {
       },
     },
   },
-  render: () => {
+  render: function VerticalStory() {
     const [current, setCurrent] = useState(0)
     return (
       <div style={{ width: "16rem" }}>

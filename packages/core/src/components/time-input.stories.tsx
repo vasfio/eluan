@@ -81,7 +81,7 @@ export const Controlled: Story = {
       },
     },
   },
-  render: () => {
+  render: function ControlledStory() {
     const [value, setValue] = useState("09:30 AM")
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>

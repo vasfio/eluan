@@ -89,7 +89,7 @@ export const Default: Story = {
       },
     },
   },
-  render: () => {
+  render: function DefaultStory() {
     const [selected, setSelected] = React.useState<string[]>([])
     return (
       <MultiSelect
@@ -110,7 +110,7 @@ export const WithPreselected: Story = {
       },
     },
   },
-  render: () => {
+  render: function WithPreselectedStory() {
     const [selected, setSelected] = React.useState<string[]>(["react", "next"])
     return (
       <MultiSelect
@@ -131,7 +131,7 @@ export const Searchable: Story = {
       },
     },
   },
-  render: () => {
+  render: function SearchableStory() {
     const [selected, setSelected] = React.useState<string[]>([])
     return (
       <MultiSelect
@@ -152,7 +152,7 @@ export const MaxSelections: Story = {
       },
     },
   },
-  render: () => {
+  render: function MaxSelectionsStory() {
     const [selected, setSelected] = React.useState<string[]>([])
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>

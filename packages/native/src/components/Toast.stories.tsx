@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import React from "react"
 import { View, Text } from "react-native"
-import { Toast, ToastProvider } from "./Toast"
+import { Toast } from "./Toast"
 import { Button } from "./Button"
 
 const meta: Meta<typeof Toast> = {

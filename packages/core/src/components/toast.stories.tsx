@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { action } from "@storybook/addon-actions"
 import { toast } from "sonner"
 import { Toast } from "./toast"
 import { Button } from "./button"
@@ -154,7 +155,7 @@ export const WithAction: Story = {
           description: "Friday, February 10, 2025 at 5:57 PM",
           action: {
             label: "Undo",
-            onClick: () => console.log("Undo clicked"),
+            onClick: action("Undo clicked"),
           },
         })
       }

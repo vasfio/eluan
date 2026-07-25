@@ -42,7 +42,7 @@ export const Default: Story = {
       },
     },
   },
-  render: () => {
+  render: function DefaultStory() {
     const [date, setDate] = React.useState<Date | undefined>(new Date())
     return (
       <div
@@ -67,7 +67,7 @@ export const Multiple: Story = {
       },
     },
   },
-  render: () => {
+  render: function MultipleStory() {
     const [dates, setDates] = React.useState<Date[] | undefined>([])
     return (
       <div
@@ -92,7 +92,7 @@ export const Range: Story = {
       },
     },
   },
-  render: () => {
+  render: function RangeStory() {
     const [range, setRange] = React.useState<DateRange | undefined>()
     return (
       <div

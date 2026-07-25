@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { action } from "@storybook/addon-actions"
 import {
   Pagination,
   PaginationContent,
@@ -125,7 +126,7 @@ export const ManyPages: Story = {
         <PaginationItem>
           <PaginationEllipsis
             pages={[2, 3]}
-            onPageClick={(page) => console.log("Go to page", page)}
+            onPageClick={action("onPageClick")}
           />
         </PaginationItem>
         <PaginationItem>
@@ -140,7 +141,7 @@ export const ManyPages: Story = {
         <PaginationItem>
           <PaginationEllipsis
             pages={[7, 8, 9]}
-            onPageClick={(page) => console.log("Go to page", page)}
+            onPageClick={action("onPageClick")}
           />
         </PaginationItem>
         <PaginationItem>
@@ -174,7 +175,7 @@ export const WithPageDropdown: Story = {
         <PaginationItem>
           <PaginationEllipsis
             pages={[2, 3, 4]}
-            onPageClick={(page) => console.log(`Navigate to page ${page}`)}
+            onPageClick={action("onPageClick")}
           />
         </PaginationItem>
         <PaginationItem>
@@ -183,7 +184,7 @@ export const WithPageDropdown: Story = {
         <PaginationItem>
           <PaginationEllipsis
             pages={[6, 7, 8, 9]}
-            onPageClick={(page) => console.log(`Navigate to page ${page}`)}
+            onPageClick={action("onPageClick")}
           />
         </PaginationItem>
         <PaginationItem>

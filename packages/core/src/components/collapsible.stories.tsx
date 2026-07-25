@@ -98,7 +98,7 @@ export const Default: Story = {
       },
     },
   },
-  render: () => {
+  render: function DefaultStory() {
     const [isOpen, setIsOpen] = React.useState(false)
     const bullets: [string, string][] = [
       ["var(--positive-fg)", "Added new Collapsible component with animation support"],
@@ -152,7 +152,7 @@ export const FilterPanel: Story = {
       },
     },
   },
-  render: () => {
+  render: function FilterPanelStory() {
     const [isOpen, setIsOpen] = React.useState(true)
     return (
       <div style={{ ...panelStyle, width: 280 }}>
@@ -199,7 +199,7 @@ export const Nested: Story = {
       },
     },
   },
-  render: () => {
+  render: function NestedStory() {
     const [generalOpen, setGeneralOpen] = React.useState(true)
     const [appearanceOpen, setAppearanceOpen] = React.useState(false)
     const [notificationsOpen, setNotificationsOpen] = React.useState(false)

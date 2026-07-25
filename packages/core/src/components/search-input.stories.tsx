@@ -1,4 +1,5 @@
 import React from "react"
+import { action } from "@storybook/addon-actions"
 import type { Meta, StoryObj } from "@storybook/react"
 import { SearchInput, CommandSearch, AutocompleteSearch } from "./search-input"
 import { Code, FileText, Image, Music, Video } from "lucide-react"
@@ -65,8 +66,8 @@ export const Default: Story = {
   render: () => (
     <SearchInput
       placeholder="Search..."
-      onValueChange={(value) => console.log("Value:", value)}
-      onSearch={(value) => console.log("Search:", value)}
+      onValueChange={action("onValueChange")}
+      onSearch={action("onSearch")}
     />
   ),
 }
@@ -84,7 +85,7 @@ export const WithDebounce: Story = {
       <SearchInput
         placeholder="Type to search (300ms debounce)"
         debounceMs={300}
-        onSearch={(value) => console.log("Debounced search:", value)}
+        onSearch={action("onSearch")}
       />
       <p style={hintStyle}>Check console for debounced output</p>
     </div>
@@ -159,7 +160,7 @@ export const Autocomplete: Story = {
     <AutocompleteSearch
       placeholder="Search frameworks..."
       options={autocompleteOptions}
-      onSelect={(option) => console.log("Selected:", option)}
+      onSelect={action("onSelect")}
     />
   ),
 }
@@ -182,7 +183,7 @@ export const AutocompleteWithIcons: Story = {
         { value: "mus1", label: "Song.mp3", description: "Audio file", icon: <Music /> },
         { value: "code1", label: "App.tsx", description: "TypeScript React", icon: <Code /> },
       ]}
-      onSelect={(option) => console.log("Selected:", option)}
+      onSelect={action("onSelect")}
     />
   ),
 }
@@ -211,7 +212,7 @@ export const AutocompleteGrouped: Story = {
         if (option.value.startsWith("vue") || option.value === "vuex") return "Vue Ecosystem"
         return "Angular Ecosystem"
       }}
-      onSelect={(option) => console.log("Selected:", option)}
+      onSelect={action("onSelect")}
     />
   ),
 }
@@ -231,7 +232,7 @@ export const AutocompleteMinChars: Story = {
         options={autocompleteOptions}
         minChars={2}
         showAllOnFocus={false}
-        onSelect={(option) => console.log("Selected:", option)}
+        onSelect={action("onSelect")}
       />
       <p style={hintStyle}>Dropdown appears after typing 2+ characters</p>
     </div>
@@ -271,7 +272,7 @@ export const AutocompleteLoading: Story = {
           minChars={2}
           showAllOnFocus={false}
           onValueChange={handleChange}
-          onSelect={(option) => console.log("Selected:", option)}
+          onSelect={action("onSelect")}
         />
         <p style={hintStyle}>Simulates async search with 500ms delay</p>
       </div>
@@ -296,7 +297,7 @@ export const AutocompleteDisabledOptions: Story = {
         { value: "angular", label: "Angular", description: "Available" },
         { value: "svelte", label: "Svelte", description: "Coming soon", disabled: true },
       ]}
-      onSelect={(option) => console.log("Selected:", option)}
+      onSelect={action("onSelect")}
     />
   ),
 }

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { action } from "@storybook/addon-actions"
 import { PhoneInput } from "./phone-input"
 
 const meta: Meta<typeof PhoneInput> = {
@@ -75,13 +76,8 @@ export const WithCallback: Story = {
     <div style={{ maxWidth: 288 }}>
       <PhoneInput
         placeholder="Phone number"
-        onValueChange={(value, country) => {
-          console.log("Phone:", value)
-          console.log("Country:", country)
-        }}
-        onCountryChange={(country) => {
-          console.log("Country changed:", country)
-        }}
+        onValueChange={action("onValueChange")}
+        onCountryChange={action("onCountryChange")}
       />
     </div>
   ),

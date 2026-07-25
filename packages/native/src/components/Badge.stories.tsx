@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react"
 import React from "react"
 import { View, Text } from "react-native"
 import { Badge, NotificationBadge } from "./Badge"
-import { Button } from "./Button"
 
 const meta: Meta<typeof Badge> = {
   title: "Components/Badge",

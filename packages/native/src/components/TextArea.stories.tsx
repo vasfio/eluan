@@ -120,7 +120,7 @@ export const Disabled: Story = {
 
 export const ContactForm: Story = {
   render: function ContactFormStory() {
-    const [name, setName] = useState("")
+    const [name] = useState("")
     const [message, setMessage] = useState("")
 
     return (

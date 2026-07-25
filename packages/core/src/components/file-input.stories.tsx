@@ -1,4 +1,5 @@
 import React from "react"
+import { action } from "@storybook/addon-actions"
 import type { Meta, StoryObj } from "@storybook/react"
 import { FileInput, ImageInput, DocumentInput } from "./file-input"
 import { Progress } from "./progress"
@@ -47,7 +48,7 @@ export const Default: Story = {
   },
   render: () => (
     <div style={{ maxWidth: 420 }}>
-      <FileInput onValueChange={(files) => console.log("Files:", files)} />
+      <FileInput onValueChange={action("onValueChange")} />
     </div>
   ),
 }
@@ -62,7 +63,7 @@ export const Dropzone: Story = {
   },
   render: () => (
     <div style={{ maxWidth: 420 }}>
-      <FileInput variant="dropzone" onValueChange={(files) => console.log("Files:", files)} />
+      <FileInput variant="dropzone" onValueChange={action("onValueChange")} />
     </div>
   ),
 }
@@ -75,7 +76,7 @@ export const WithUploadedFiles: Story = {
       },
     },
   },
-  render: () => {
+  render: function WithUploadedFilesStory() {
     const [files, setFiles] = React.useState<File[]>(() => [
       new File(["content"], "report-q4.pdf", { type: "application/pdf" }),
       new File(["content"], "photo.jpg", { type: "image/jpeg" }),
@@ -96,7 +97,7 @@ export const WithProgress: Story = {
       },
     },
   },
-  render: () => {
+  render: function WithProgressStory() {
     const [files, setFiles] = React.useState<File[]>([])
     const [progress, setProgress] = React.useState(0)
     const [uploading, setUploading] = React.useState(false)
@@ -197,7 +198,7 @@ export const MultipleFiles: Story = {
   },
   render: () => (
     <div style={{ maxWidth: 420 }}>
-      <FileInput variant="dropzone" maxFiles={5} onValueChange={(files) => console.log("Files:", files)} />
+      <FileInput variant="dropzone" maxFiles={5} onValueChange={action("onValueChange")} />
     </div>
   ),
 }
@@ -215,7 +216,7 @@ export const WithMaxSize: Story = {
       <FileInput
         variant="dropzone"
         maxSize={5 * 1024 * 1024}
-        onValueChange={(files) => console.log("Files:", files)}
+        onValueChange={action("onValueChange")}
       />
     </div>
   ),
@@ -231,7 +232,7 @@ export const ImageOnly: Story = {
   },
   render: () => (
     <div style={{ maxWidth: 420 }}>
-      <ImageInput variant="dropzone" maxFiles={3} onValueChange={(files) => console.log("Images:", files)} />
+      <ImageInput variant="dropzone" maxFiles={3} onValueChange={action("onValueChange")} />
     </div>
   ),
 }
@@ -246,7 +247,7 @@ export const DocumentOnly: Story = {
   },
   render: () => (
     <div style={{ maxWidth: 420 }}>
-      <DocumentInput variant="dropzone" onValueChange={(files) => console.log("Documents:", files)} />
+      <DocumentInput variant="dropzone" onValueChange={action("onValueChange")} />
     </div>
   ),
 }

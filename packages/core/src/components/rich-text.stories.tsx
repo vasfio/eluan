@@ -43,7 +43,7 @@ export const Default: Story = {
       },
     },
   },
-  render: () => {
+  render: function DefaultStory() {
     const [value, setValue] = React.useState("")
     return (
       <div style={{ maxWidth: "42rem" }}>
@@ -65,7 +65,7 @@ export const WithInitialContent: Story = {
       },
     },
   },
-  render: () => {
+  render: function WithInitialContentStory() {
     const [value, setValue] = React.useState(
       "<h2>Welcome to Rich Text Editor</h2><p>This is a <strong>rich text editor</strong> with support for:</p><ul><li>Bold and italic text</li><li>Headings</li><li>Lists</li><li>And more!</li></ul>"
     )
@@ -89,7 +89,7 @@ export const CustomMinHeight: Story = {
       },
     },
   },
-  render: () => {
+  render: function CustomMinHeightStory() {
     const [value, setValue] = React.useState("")
     return (
       <div style={{ maxWidth: "42rem" }}>

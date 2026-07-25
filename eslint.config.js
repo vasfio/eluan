@@ -18,13 +18,6 @@ export default [
       "**/coverage/**",
       "**/.storybook/**",
       "**/storybook-static/**",
-      // Stories and tests are excluded for now: linting them surfaces ~40
-      // react-hooks/rules-of-hooks errors in story render functions (hooks
-      // called inline in decorators/render). Deferred until the stories
-      // cleanup pass — re-include these globs once that lands.
-      "**/*.stories.tsx",
-      "**/__tests__/**",
-      "**/test/**",
       "**/node_modules/**",
       "**/*.config.{js,ts,mjs,cjs}",
       "**/vite.config.ts",

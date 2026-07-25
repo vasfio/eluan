@@ -23,7 +23,7 @@ import {
 
 **Usage**
 \`\`\`tsx
-<CreditCardInput onCardChange={(data) => console.log(data)} />
+<CreditCardInput onCardChange={handleCardChange} />
 \`\`\`
         `,
       },
@@ -50,9 +50,12 @@ export const Default: Story = {
       },
     },
   },
+  // Note: `onCardChange` receives the full card payload (number, CVV). Stories
+  // deliberately do NOT wire it to any logger/action to avoid modeling the
+  // logging of sensitive card data.
   render: () => (
     <div style={{ maxWidth: 420 }}>
-      <CreditCardInput onCardChange={(data) => console.log("Card data:", data)} />
+      <CreditCardInput />
     </div>
   ),
 }

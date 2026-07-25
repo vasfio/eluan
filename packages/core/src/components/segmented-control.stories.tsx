@@ -73,7 +73,7 @@ export const Controlled: Story = {
       },
     },
   },
-  render: () => {
+  render: function ControlledDemo() {
     const [value, setValue] = React.useState("list")
     return (
       <div style={column}>
