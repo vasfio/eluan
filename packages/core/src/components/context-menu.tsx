@@ -17,53 +17,53 @@ const ContextMenuSub = ContextMenuPrimitive.Sub
 
 const ContextMenuRadioGroup = ContextMenuPrimitive.RadioGroup
 
-type ContextMenuSubTriggerProps = Omit<
+export type ContextMenuSubTriggerProps = Omit<
   React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.SubTrigger>,
   "className" | "style"
 > & {
   inset?: boolean
 }
 
-type ContextMenuSubContentProps = Omit<
+export type ContextMenuSubContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.SubContent>,
   "className" | "style"
 >
 
-type ContextMenuContentProps = Omit<
+export type ContextMenuContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Content>,
   "className" | "style"
 >
 
-type ContextMenuItemProps = Omit<
+export type ContextMenuItemProps = Omit<
   React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Item>,
   "className" | "style"
 > & {
   inset?: boolean
 }
 
-type ContextMenuCheckboxItemProps = Omit<
+export type ContextMenuCheckboxItemProps = Omit<
   React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.CheckboxItem>,
   "className" | "style"
 >
 
-type ContextMenuRadioItemProps = Omit<
+export type ContextMenuRadioItemProps = Omit<
   React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.RadioItem>,
   "className" | "style"
 >
 
-type ContextMenuLabelProps = Omit<
+export type ContextMenuLabelProps = Omit<
   React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Label>,
   "className" | "style"
 > & {
   inset?: boolean
 }
 
-type ContextMenuSeparatorProps = Omit<
+export type ContextMenuSeparatorProps = Omit<
   React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Separator>,
   "className" | "style"
 >
 
-type ContextMenuShortcutProps = Omit<
+export type ContextMenuShortcutProps = Omit<
   React.HTMLAttributes<HTMLSpanElement>,
   "className" | "style"
 >
@@ -323,3 +323,5 @@ export {
   ContextMenuSubTrigger,
   ContextMenuRadioGroup,
 }
+
+export type ContextMenuProps = React.ComponentProps<typeof ContextMenu>

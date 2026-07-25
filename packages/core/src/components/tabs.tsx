@@ -4,17 +4,17 @@ import * as stylex from "@stylexjs/stylex"
 
 const Tabs = TabsPrimitive.Root
 
-type TabsListProps = Omit<
+export type TabsListProps = Omit<
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>,
   "className" | "style"
 >
 
-type TabsTriggerProps = Omit<
+export type TabsTriggerProps = Omit<
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>,
   "className" | "style"
 >
 
-type TabsContentProps = Omit<
+export type TabsContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>,
   "className" | "style"
 >

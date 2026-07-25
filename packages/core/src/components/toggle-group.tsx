@@ -18,7 +18,7 @@ const ToggleGroupContext = React.createContext<ToggleGroupVariantContext>({
   variant: "default",
 })
 
-interface ToggleGroupProps
+export interface ToggleGroupProps
   extends Omit<
     React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root>,
     "className" | "style"
@@ -27,7 +27,7 @@ interface ToggleGroupProps
   variant?: ToggleGroupVariant
 }
 
-interface ToggleGroupItemProps
+export interface ToggleGroupItemProps
   extends Omit<
     React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Item>,
     "className" | "style"

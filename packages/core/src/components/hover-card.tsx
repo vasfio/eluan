@@ -8,7 +8,7 @@ const HoverCard = HoverCardPrimitive.Root
 
 const HoverCardTrigger = HoverCardPrimitive.Trigger
 
-type HoverCardContentProps = Omit<
+export type HoverCardContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof HoverCardPrimitive.Content>,
   "className" | "style"
 >
@@ -45,3 +45,5 @@ const HoverCardContent = React.forwardRef<
 HoverCardContent.displayName = HoverCardPrimitive.Content.displayName
 
 export { HoverCard, HoverCardTrigger, HoverCardContent }
+
+export type HoverCardProps = React.ComponentProps<typeof HoverCard>

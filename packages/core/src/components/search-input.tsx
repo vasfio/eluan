@@ -3,14 +3,7 @@ import * as stylex from "@stylexjs/stylex"
 import { Delete, Loader2, Search } from "lucide-react"
 
 import { Input } from "./input"
-
-function assignRef<T>(ref: React.ForwardedRef<T>, value: T | null) {
-  if (typeof ref === "function") {
-    ref(value)
-  } else if (ref) {
-    ;(ref as React.MutableRefObject<T | null>).current = value
-  }
-}
+import { composeRefs } from "../utils"
 
 export interface SearchInputProps
   extends Omit<
@@ -150,10 +143,7 @@ const CommandSearch = React.forwardRef<HTMLInputElement, CommandSearchProps>(
       return () => document.removeEventListener("keydown", handleKeyDown)
     }, [shortcutKey])
 
-    const combinedRef = (node: HTMLInputElement) => {
-      inputRef.current = node
-      assignRef(ref, node)
-    }
+    const combinedRef = composeRefs(inputRef, ref)
 
     const shortcutEl = showShortcut ? (
       <kbd {...stylex.props(styles.shortcut)}>
@@ -356,10 +346,7 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
       inputRef.current?.focus()
     }
 
-    const combinedRef = (node: HTMLInputElement) => {
-      inputRef.current = node
-      assignRef(ref, node)
-    }
+    const combinedRef = composeRefs(inputRef, ref)
 
     const renderOption = (option: AutocompleteOption, index: number) => (
       <button

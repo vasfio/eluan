@@ -1,12 +1,12 @@
 import * as React from "react"
 import * as stylex from "@stylexjs/stylex"
 
-type FieldsetProps = Omit<
+export type FieldsetProps = Omit<
   React.HTMLAttributes<HTMLDivElement>,
   "className" | "style"
 >
 
-type FieldsetDescriptionProps = Omit<
+export type FieldsetDescriptionProps = Omit<
   React.HTMLAttributes<HTMLParagraphElement>,
   "className" | "style"
 >

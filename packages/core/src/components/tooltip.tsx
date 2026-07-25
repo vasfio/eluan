@@ -10,7 +10,7 @@ const Tooltip = TooltipPrimitive.Root
 
 const TooltipTrigger = TooltipPrimitive.Trigger
 
-type TooltipContentProps = Omit<
+export type TooltipContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>,
   "className" | "style"
 >
@@ -46,3 +46,5 @@ const TooltipContent = React.forwardRef<
 TooltipContent.displayName = TooltipPrimitive.Content.displayName
 
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }
+
+export type TooltipProps = React.ComponentProps<typeof Tooltip>

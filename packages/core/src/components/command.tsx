@@ -14,48 +14,48 @@ import { Separator } from "./separator"
 
 type CommandScale = "default" | "dialog"
 
-type CommandProps = Omit<
+export type CommandProps = Omit<
   React.ComponentPropsWithoutRef<typeof CommandPrimitive>,
   "className" | "style"
 >
 
-type CommandDialogProps = DialogProps & {
+export type CommandDialogProps = DialogProps & {
   title?: string
   description?: string
 }
 
-type CommandInputProps = Omit<
+export type CommandInputProps = Omit<
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>,
   "className" | "size" | "style"
 > & {
   density?: "default" | "compact"
 }
 
-type CommandListProps = Omit<
+export type CommandListProps = Omit<
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.List>,
   "className" | "style"
 >
 
-type CommandEmptyProps = Omit<
+export type CommandEmptyProps = Omit<
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>,
   "className" | "style"
 > & {
   tone?: "default" | "muted"
 }
 
-type CommandGroupProps = Omit<
+export type CommandGroupProps = Omit<
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Group>,
   "className" | "style"
 >
 
-type CommandItemProps = Omit<
+export type CommandItemProps = Omit<
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item>,
   "className" | "style"
 > & {
   selected?: boolean
 }
 
-type CommandShortcutProps = Omit<
+export type CommandShortcutProps = Omit<
   React.HTMLAttributes<HTMLSpanElement>,
   "className" | "style"
 >

@@ -1,6 +1,6 @@
 import { Toaster as SonnerPrimitive } from "sonner"
 
-type ToastProps = React.ComponentProps<typeof SonnerPrimitive>
+export type ToastProps = React.ComponentProps<typeof SonnerPrimitive>
 
 // Sonner ships with opinionated CSS for font, spacing, and sizing. The global
 // stylesheet owns these class hooks so toasts inherit Eluan tokens.

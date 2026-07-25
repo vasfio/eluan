@@ -63,6 +63,14 @@ const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
     const [copied, setCopied] = React.useState(false)
     const [highlightedCode, setHighlightedCode] = React.useState("")
     const [activeLangIndex, setActiveLangIndex] = React.useState(0)
+    const copyTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null)
+
+    React.useEffect(
+      () => () => {
+        if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current)
+      },
+      []
+    )
 
     const activeCode = languages ? languages[activeLangIndex].code : codeProp
     const activeLanguage = languages ? languages[activeLangIndex].language : languageProp
@@ -86,7 +94,8 @@ const CodeBlock = React.forwardRef<HTMLDivElement, CodeBlockProps>(
     const handleCopy = async () => {
       await navigator.clipboard.writeText(activeCode)
       setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current)
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 2000)
     }
 
     const lines = highlightedCode.split("\n")

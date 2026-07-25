@@ -4,12 +4,12 @@ import * as React from "react"
 import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area"
 import * as stylex from "@stylexjs/stylex"
 
-type ScrollAreaProps = Omit<
+export type ScrollAreaProps = Omit<
   React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>,
   "className" | "style"
 >
 
-type ScrollBarProps = Omit<
+export type ScrollBarProps = Omit<
   React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>,
   "className" | "style"
 >

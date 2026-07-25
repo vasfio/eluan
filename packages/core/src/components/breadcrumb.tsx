@@ -153,7 +153,7 @@ const BreadcrumbSeparator = ({
 )
 BreadcrumbSeparator.displayName = "BreadcrumbSeparator"
 
-interface BreadcrumbEllipsisProps {
+export interface BreadcrumbEllipsisProps {
   /** Pass collapsed breadcrumb items to show in the dropdown */
   items?: { label: string; href?: string; onClick?: () => void }[]
 }

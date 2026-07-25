@@ -21,6 +21,7 @@ import {
 
 import { Toggle } from "./toggle"
 import { Separator } from "./separator"
+import { ensureStyleSheet } from "../utils"
 
 interface ToolbarButtonProps {
   pressed: boolean
@@ -278,12 +279,17 @@ const RichText = React.forwardRef<HTMLDivElement, RichTextProps>(
       }
     }, [disabled, editor])
 
+    // Inject the ProseMirror content CSS once per document instead of once per
+    // mounted editor.
+    React.useInsertionEffect(() => {
+      ensureStyleSheet("eluan-rich-text-styles", proseMirrorStyles)
+    }, [])
+
     return (
       <div
         ref={ref}
         {...stylex.props(styles.root, disabled && styles.rootDisabled)}
       >
-        <style>{proseMirrorStyles}</style>
         <RichTextToolbar editor={editor} disabled={disabled} />
         <EditorContent
           editor={editor}

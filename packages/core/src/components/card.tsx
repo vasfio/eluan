@@ -3,7 +3,7 @@ import * as stylex from "@stylexjs/stylex"
 
 export type CardElevation = "none" | "sm" | "md" | "lg"
 
-interface CardProps
+export interface CardProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style"> {
   /** Makes the card interactive — adds hover elevation + cursor pointer */
   clickable?: boolean
@@ -11,7 +11,7 @@ interface CardProps
   elevation?: CardElevation
 }
 
-type CardSectionProps = Omit<
+export type CardSectionProps = Omit<
   React.HTMLAttributes<HTMLDivElement>,
   "className" | "style"
 >

@@ -102,6 +102,27 @@ function formatExpiry(value: string): string {
   return cleaned
 }
 
+/** Per-field and overall validity for a card snapshot. */
+function computeValidity(
+  number: string,
+  expiry: string,
+  cvv: string,
+  cardType: CardType
+) {
+  const detected = detectCardType(number)
+  const isNumberValid = detected
+    ? detected.lengths.includes(number.length)
+    : number.length >= 13 && number.length <= 19
+  const isExpiryValid = expiry.length === 4
+  const isCvvValid = cardType === "amex" ? cvv.length === 4 : cvv.length === 3
+  return {
+    isNumberValid,
+    isExpiryValid,
+    isCvvValid,
+    isValid: isNumberValid && isExpiryValid && isCvvValid,
+  }
+}
+
 // SVG logos for card processors — inline to avoid external image deps.
 // `currentColor` on the main fill means the logo inherits from the parent's text color
 // (matching the leading icon). `fillRule="evenodd"` makes any internal compound-path
@@ -286,11 +307,11 @@ const CreditCardNumberInput = React.forwardRef<HTMLInputElement, CreditCardNumbe
         icon={<CreditCard aria-hidden="true" {...stylex.props(styles.iconXxs)} />}
         trailing={<CardIcon type={cardType} />}
         textStyle="mono"
+        placeholder="1234 5678 9012 3456"
         ref={ref}
+        {...props}
         value={value}
         onChange={handleChange}
-        placeholder="1234 5678 9012 3456"
-        {...props}
       />
     )
   }
@@ -318,11 +339,11 @@ const CreditCardExpiryInput = React.forwardRef<HTMLInputElement, CreditCardExpir
         aria-label="Expiration date (MM/YY)"
         icon={<Calendar aria-hidden="true" {...stylex.props(styles.iconXxs)} />}
         textStyle="mono"
+        placeholder="MM/YY"
         ref={ref}
+        {...props}
         value={value}
         onChange={handleChange}
-        placeholder="MM/YY"
-        {...props}
       />
     )
   }
@@ -350,12 +371,12 @@ const CreditCardCVVInput = React.forwardRef<HTMLInputElement, CreditCardCVVInput
         aria-label="Security code (CVV)"
         icon={<Lock aria-hidden="true" {...stylex.props(styles.iconXxs)} />}
         textStyle="mono"
-        ref={ref}
-        value={value}
-        onChange={handleChange}
         placeholder={cardType === "amex" ? "1234" : "123"}
         maxLength={maxLength}
+        ref={ref}
         {...props}
+        value={value}
+        onChange={handleChange}
       />
     )
   }
@@ -374,12 +395,12 @@ const CreditCardInput = React.forwardRef<HTMLDivElement, CreditCardInputProps>(
       cvv: false,
     })
 
-    const detected = detectCardType(number)
-    const isNumberValid = detected
-      ? detected.lengths.includes(number.length)
-      : number.length >= 13 && number.length <= 19
-    const isExpiryValid = expiry.length === 4
-    const isCvvValid = cardType === "amex" ? cvv.length === 4 : cvv.length === 3
+    const { isNumberValid, isExpiryValid, isCvvValid } = computeValidity(
+      number,
+      expiry,
+      cvv,
+      cardType
+    )
 
     // Only flag a field once it has been left (blurred) with content that fails
     // its own validity check — never mid-typing.
@@ -392,24 +413,28 @@ const CreditCardInput = React.forwardRef<HTMLDivElement, CreditCardInputProps>(
     const expiryErrorId = `${errorIdBase}-expiry-error`
     const cvvErrorId = `${errorIdBase}-cvv-error`
 
-    React.useEffect(() => {
-      onCardChange?.({
-        number,
-        expiry,
-        cvv,
-        cardType,
-        isValid: isNumberValid && isExpiryValid && isCvvValid,
+    // Report card state from the edit handlers rather than an effect. Firing in
+    // an effect re-ran on mount (reporting an empty card) and on every unrelated
+    // re-render; reporting from the handlers ties each callback to a real edit.
+    const reportChange = (next: {
+      number?: string
+      expiry?: string
+      cvv?: string
+      cardType?: CardType
+    }) => {
+      if (!onCardChange) return
+      const n = next.number ?? number
+      const e = next.expiry ?? expiry
+      const c = next.cvv ?? cvv
+      const t = next.cardType ?? cardType
+      onCardChange({
+        number: n,
+        expiry: e,
+        cvv: c,
+        cardType: t,
+        isValid: computeValidity(n, e, c, t).isValid,
       })
-    }, [
-      number,
-      expiry,
-      cvv,
-      cardType,
-      isNumberValid,
-      isExpiryValid,
-      isCvvValid,
-      onCardChange,
-    ])
+    }
 
     return (
       <div
@@ -422,6 +447,7 @@ const CreditCardInput = React.forwardRef<HTMLDivElement, CreditCardInputProps>(
           onChange={(value, type) => {
             setNumber(value)
             setCardType(type)
+            reportChange({ number: value, cardType: type })
           }}
           onBlur={() => setTouched((t) => ({ ...t, number: true }))}
           aria-invalid={numberInvalid || undefined}
@@ -434,7 +460,10 @@ const CreditCardInput = React.forwardRef<HTMLDivElement, CreditCardInputProps>(
         <div {...stylex.props(styles.grid)}>
           <div>
             <CreditCardExpiryInput
-              onChange={setExpiry}
+              onChange={(value) => {
+                setExpiry(value)
+                reportChange({ expiry: value })
+              }}
               onBlur={() => setTouched((t) => ({ ...t, expiry: true }))}
               aria-invalid={expiryInvalid || undefined}
               aria-describedby={expiryInvalid ? expiryErrorId : undefined}
@@ -447,7 +476,10 @@ const CreditCardInput = React.forwardRef<HTMLDivElement, CreditCardInputProps>(
           <div>
             <CreditCardCVVInput
               cardType={cardType}
-              onChange={setCvv}
+              onChange={(value) => {
+                setCvv(value)
+                reportChange({ cvv: value })
+              }}
               onBlur={() => setTouched((t) => ({ ...t, cvv: true }))}
               aria-invalid={cvvInvalid || undefined}
               aria-describedby={cvvInvalid ? cvvErrorId : undefined}

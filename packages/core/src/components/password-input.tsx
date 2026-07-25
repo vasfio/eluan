@@ -115,6 +115,33 @@ const styles = stylex.create({
   },
 })
 
+/**
+ * A single strength requirement row. Hoisted to module scope so it keeps a
+ * stable component identity — declaring it inside `PasswordInput` remounted the
+ * whole requirements list on every keystroke.
+ */
+const Requirement = ({
+  passed,
+  children,
+}: {
+  passed: boolean
+  children: React.ReactNode
+}) => (
+  <li {...stylex.props(styles.item)}>
+    {passed ? (
+      <Check aria-hidden="true" {...stylex.props(styles.icon, styles.positive)} />
+    ) : (
+      <X aria-hidden="true" {...stylex.props(styles.icon, styles.muted)} />
+    )}
+    <span {...stylex.props(passed ? styles.positive : styles.muted)}>
+      {children}
+      <span {...stylex.props(styles.srOnly)}>
+        {passed ? " (met)" : " (not met)"}
+      </span>
+    </span>
+  </li>
+)
+
 const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
   (
     {
@@ -166,28 +193,6 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
       if (strength.score < 0.8) return "Medium"
       return "Strong"
     }
-
-    const Requirement = ({
-      passed,
-      children,
-    }: {
-      passed: boolean
-      children: React.ReactNode
-    }) => (
-      <li {...stylex.props(styles.item)}>
-        {passed ? (
-          <Check aria-hidden="true" {...stylex.props(styles.icon, styles.positive)} />
-        ) : (
-          <X aria-hidden="true" {...stylex.props(styles.icon, styles.muted)} />
-        )}
-        <span {...stylex.props(passed ? styles.positive : styles.muted)}>
-          {children}
-          <span {...stylex.props(styles.srOnly)}>
-            {passed ? " (met)" : " (not met)"}
-          </span>
-        </span>
-      </li>
-    )
 
     return (
       <div {...stylex.props(styles.root)}>

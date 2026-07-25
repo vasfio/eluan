@@ -11,14 +11,14 @@ const SheetClose = SheetPrimitive.Close
 
 const SheetPortal = SheetPrimitive.Portal
 
-type SheetOverlayProps = Omit<
+export type SheetOverlayProps = Omit<
   React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay>,
   "className" | "style"
 >
 
 type SheetSide = "top" | "bottom" | "left" | "right"
 
-type SheetContentProps = Omit<
+export type SheetContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
   "className" | "style"
 > & {
@@ -26,17 +26,17 @@ type SheetContentProps = Omit<
   side?: SheetSide
 }
 
-type SheetDivProps = Omit<
+export type SheetDivProps = Omit<
   React.HTMLAttributes<HTMLDivElement>,
   "className" | "style"
 >
 
-type SheetTitleProps = Omit<
+export type SheetTitleProps = Omit<
   React.ComponentPropsWithoutRef<typeof SheetPrimitive.Title>,
   "className" | "style"
 >
 
-type SheetDescriptionProps = Omit<
+export type SheetDescriptionProps = Omit<
   React.ComponentPropsWithoutRef<typeof SheetPrimitive.Description>,
   "className" | "style"
 >
@@ -318,3 +318,5 @@ export {
   SheetTitle,
   SheetDescription,
 }
+
+export type SheetProps = React.ComponentProps<typeof Sheet>

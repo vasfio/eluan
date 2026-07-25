@@ -45,10 +45,13 @@ const NavigationDrawerProvider = ({
     return () => window.removeEventListener("resize", checkMobile)
   }, [])
 
+  const value = React.useMemo(
+    () => ({ collapsed, setCollapsed, isMobile }),
+    [collapsed, isMobile]
+  )
+
   return (
-    <NavigationDrawerContext.Provider
-      value={{ collapsed, setCollapsed, isMobile }}
-    >
+    <NavigationDrawerContext.Provider value={value}>
       {children}
     </NavigationDrawerContext.Provider>
   )

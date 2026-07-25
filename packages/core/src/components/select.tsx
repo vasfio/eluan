@@ -9,38 +9,38 @@ const SelectGroup = SelectPrimitive.Group
 
 const SelectValue = SelectPrimitive.Value
 
-type SelectTriggerProps = Omit<
+export type SelectTriggerProps = Omit<
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>,
   "className" | "style"
 > & {
   variant?: "default" | "calendarCaption" | "countryCode"
 }
 
-type SelectContentProps = Omit<
+export type SelectContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>,
   "className" | "style"
 > & {
   layout?: "default" | "auto" | "country"
 }
 
-type SelectLabelProps = Omit<
+export type SelectLabelProps = Omit<
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>,
   "className" | "style"
 >
 
-type SelectItemProps = Omit<
+export type SelectItemProps = Omit<
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>,
   "className" | "style"
 > & {
   size?: "default" | "compact"
 }
 
-type SelectSeparatorProps = Omit<
+export type SelectSeparatorProps = Omit<
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>,
   "className" | "style"
 >
 
-type SelectScrollButtonProps = Omit<
+export type SelectScrollButtonProps = Omit<
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>,
   "className" | "style"
 >
@@ -349,3 +349,5 @@ export {
   SelectScrollUpButton,
   SelectScrollDownButton,
 }
+
+export type SelectProps = React.ComponentProps<typeof Select>

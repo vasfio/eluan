@@ -2,12 +2,12 @@ import * as React from "react"
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group"
 import * as stylex from "@stylexjs/stylex"
 
-type RadioGroupProps = Omit<
+export type RadioGroupProps = Omit<
   React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>,
   "className" | "style"
 >
 
-type RadioGroupItemProps = Omit<
+export type RadioGroupItemProps = Omit<
   React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item>,
   "className" | "style"
 >

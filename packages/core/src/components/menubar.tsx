@@ -15,63 +15,63 @@ const MenubarSub: typeof MenubarPrimitive.Sub = MenubarPrimitive.Sub
 
 const MenubarRadioGroup: typeof MenubarPrimitive.RadioGroup = MenubarPrimitive.RadioGroup
 
-type MenubarRootProps = Omit<
+export type MenubarRootProps = Omit<
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Root>,
   "className" | "style"
 >
 
-type MenubarTriggerProps = Omit<
+export type MenubarTriggerProps = Omit<
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Trigger>,
   "className" | "style"
 >
 
-type MenubarSubTriggerProps = Omit<
+export type MenubarSubTriggerProps = Omit<
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.SubTrigger>,
   "className" | "style"
 > & {
   inset?: boolean
 }
 
-type MenubarContentProps = Omit<
+export type MenubarContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Content>,
   "className" | "style"
 >
 
-type MenubarSubContentProps = Omit<
+export type MenubarSubContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.SubContent>,
   "className" | "style"
 >
 
-type MenubarItemProps = Omit<
+export type MenubarItemProps = Omit<
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Item>,
   "className" | "style"
 > & {
   inset?: boolean
 }
 
-type MenubarCheckboxItemProps = Omit<
+export type MenubarCheckboxItemProps = Omit<
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.CheckboxItem>,
   "className" | "style"
 >
 
-type MenubarRadioItemProps = Omit<
+export type MenubarRadioItemProps = Omit<
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.RadioItem>,
   "className" | "style"
 >
 
-type MenubarLabelProps = Omit<
+export type MenubarLabelProps = Omit<
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Label>,
   "className" | "style"
 > & {
   inset?: boolean
 }
 
-type MenubarSeparatorProps = Omit<
+export type MenubarSeparatorProps = Omit<
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Separator>,
   "className" | "style"
 >
 
-type MenubarShortcutProps = Omit<
+export type MenubarShortcutProps = Omit<
   React.HTMLAttributes<HTMLSpanElement>,
   "className" | "style"
 >
@@ -395,3 +395,5 @@ export {
   MenubarSub,
   MenubarShortcut,
 }
+
+export type MenubarProps = React.ComponentPropsWithoutRef<typeof Menubar>

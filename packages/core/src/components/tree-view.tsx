@@ -3,6 +3,8 @@ import * as CollapsiblePrimitive from "@radix-ui/react-collapsible"
 import * as stylex from "@stylexjs/stylex"
 import { ChevronRight, File, Folder, FolderOpen } from "lucide-react"
 
+import { useControllableState } from "../utils"
+
 export interface TreeNode {
   id: string
   name: string
@@ -46,22 +48,17 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
     },
     ref
   ) => {
-    const [internalExpandedIds, setInternalExpandedIds] = React.useState<
-      string[]
-    >([])
-
-    const expandedIds = controlledExpandedIds ?? internalExpandedIds
+    const [expandedIds, setExpandedIds] = useControllableState<string[]>({
+      value: controlledExpandedIds,
+      defaultValue: [],
+      onChange: onExpandChange,
+    })
 
     const handleExpand = (id: string) => {
       const newIds = expandedIds.includes(id)
         ? expandedIds.filter((i) => i !== id)
         : [...expandedIds, id]
-
-      if (onExpandChange) {
-        onExpandChange(newIds)
-      } else {
-        setInternalExpandedIds(newIds)
-      }
+      setExpandedIds(newIds)
     }
 
     const renderNode = (node: TreeNode, depth: number = 0) => {

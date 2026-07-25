@@ -1,22 +1,22 @@
 import * as React from "react"
 import * as stylex from "@stylexjs/stylex"
 
-type TableProps = Omit<
+export type TableProps = Omit<
   React.HTMLAttributes<HTMLTableElement>,
   "className" | "style"
 >
 
-type TableSectionProps = Omit<
+export type TableSectionProps = Omit<
   React.HTMLAttributes<HTMLTableSectionElement>,
   "className" | "style"
 >
 
-type TableRowProps = Omit<
+export type TableRowProps = Omit<
   React.HTMLAttributes<HTMLTableRowElement>,
   "className" | "style"
 >
 
-type TableHeadProps = Omit<
+export type TableHeadProps = Omit<
   React.ThHTMLAttributes<HTMLTableCellElement>,
   "className" | "style"
 > & {
@@ -25,7 +25,7 @@ type TableHeadProps = Omit<
   width?: "auto" | "feature"
 }
 
-type TableCellProps = Omit<
+export type TableCellProps = Omit<
   React.TdHTMLAttributes<HTMLTableCellElement>,
   "className" | "style"
 > & {
@@ -34,7 +34,7 @@ type TableCellProps = Omit<
   weight?: "normal" | "medium"
 }
 
-type TableCaptionProps = Omit<
+export type TableCaptionProps = Omit<
   React.HTMLAttributes<HTMLTableCaptionElement>,
   "className" | "style"
 >

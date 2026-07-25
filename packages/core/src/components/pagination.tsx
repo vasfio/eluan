@@ -10,12 +10,12 @@ import {
   DropdownMenuItem,
 } from "./dropdown-menu"
 
-type PaginationProps = Omit<React.ComponentProps<"nav">, "className" | "style">
-type PaginationContentProps = Omit<
+export type PaginationProps = Omit<React.ComponentProps<"nav">, "className" | "style">
+export type PaginationContentProps = Omit<
   React.ComponentProps<"ul">,
   "className" | "style"
 >
-type PaginationItemProps = Omit<
+export type PaginationItemProps = Omit<
   React.ComponentProps<"li">,
   "className" | "style"
 >
@@ -52,7 +52,7 @@ PaginationItem.displayName = "PaginationItem"
 
 type PaginationLinkSize = Extract<ButtonSize, "default" | "sm" | "lg" | "icon">
 
-type PaginationLinkProps = {
+export type PaginationLinkProps = {
   edge?: boolean
   isActive?: boolean
   size?: PaginationLinkSize
@@ -105,7 +105,7 @@ const PaginationNext = (props: React.ComponentProps<typeof PaginationLink>) => (
 )
 PaginationNext.displayName = "PaginationNext"
 
-interface PaginationEllipsisProps {
+export interface PaginationEllipsisProps {
   /** Array of hidden page numbers to show in the dropdown */
   pages?: number[]
   /** Callback when a page number is clicked in the dropdown */

@@ -163,10 +163,25 @@ const InputOTP = React.forwardRef<HTMLDivElement, InputOTPProps>(
     },
     ref
   ) => {
-    const [values, setValues] = React.useState<string[]>(
+    const [values, setValues] = React.useState<string[]>(() =>
       Array(length).fill("")
     )
     const inputRefs = React.useRef<(HTMLInputElement | null)[]>([])
+
+    // Re-derive the slots when `length` changes: keep already-entered digits
+    // when it grows, and truncate the tail when it shrinks. (Adjusting state
+    // during render is the React-recommended way to sync state to a prop.)
+    const [prevLength, setPrevLength] = React.useState(length)
+    if (prevLength !== length) {
+      setPrevLength(length)
+      setValues((prev) => {
+        const next = Array(length).fill("")
+        for (let i = 0; i < Math.min(prev.length, length); i++) {
+          next[i] = prev[i]
+        }
+        return next
+      })
+    }
 
     const focusInput = (index: number) => {
       if (index >= 0 && index < length) {

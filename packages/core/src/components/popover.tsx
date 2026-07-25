@@ -6,7 +6,7 @@ const Popover = PopoverPrimitive.Root
 
 const PopoverTrigger = PopoverPrimitive.Trigger
 
-type PopoverContentProps = Omit<
+export type PopoverContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>,
   "className" | "style"
 > & {
@@ -67,3 +67,5 @@ const PopoverContent = React.forwardRef<
 PopoverContent.displayName = PopoverPrimitive.Content.displayName
 
 export { Popover, PopoverTrigger, PopoverContent }
+
+export type PopoverProps = React.ComponentProps<typeof Popover>

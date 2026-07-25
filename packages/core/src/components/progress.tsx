@@ -2,7 +2,7 @@ import * as React from "react"
 import * as ProgressPrimitive from "@radix-ui/react-progress"
 import * as stylex from "@stylexjs/stylex"
 
-type ProgressProps = Omit<
+export type ProgressProps = Omit<
   React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root>,
   "className" | "style"
 > & {

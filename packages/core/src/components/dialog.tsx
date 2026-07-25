@@ -11,29 +11,29 @@ const DialogPortal = DialogPrimitive.Portal
 
 const DialogClose = DialogPrimitive.Close
 
-type DialogOverlayProps = Omit<
+export type DialogOverlayProps = Omit<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>,
   "className" | "style"
 >
 
-type DialogContentProps = Omit<
+export type DialogContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>,
   "className" | "style"
 > & {
   layout?: "default" | "command"
 }
 
-type DialogDivProps = Omit<
+export type DialogDivProps = Omit<
   React.HTMLAttributes<HTMLDivElement>,
   "className" | "style"
 >
 
-type DialogTitleProps = Omit<
+export type DialogTitleProps = Omit<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>,
   "className" | "style"
 >
 
-type DialogDescriptionProps = Omit<
+export type DialogDescriptionProps = Omit<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>,
   "className" | "style"
 >
@@ -244,3 +244,5 @@ export {
   DialogTitle,
   DialogDescription,
 }
+
+export type DialogProps = React.ComponentProps<typeof Dialog>

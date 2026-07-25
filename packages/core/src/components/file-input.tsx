@@ -11,15 +11,17 @@ import {
   X,
 } from "lucide-react"
 
-function assignRef<T>(ref: React.ForwardedRef<T>, value: T | null) {
-  if (typeof ref === "function") {
-    ref(value)
-  } else if (ref) {
-    ;(ref as React.MutableRefObject<T | null>).current = value
-  }
-}
+import { composeRefs } from "../utils"
 
 type FileType = "image" | "document" | "video" | "audio" | "archive" | "other"
+
+/**
+ * A stable key derived from file identity. Files can legitimately share a name,
+ * so name alone is not enough — size and lastModified disambiguate them.
+ */
+function fileKey(file: File): string {
+  return `${file.name}-${file.size}-${file.lastModified}`
+}
 
 interface FileInfo {
   file: File
@@ -183,10 +185,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
       onChange?.(newFiles)
     }
 
-    const combinedRef = (node: HTMLInputElement) => {
-      inputRef.current = node
-      assignRef(ref, node)
-    }
+    const combinedRef = composeRefs(inputRef, ref)
 
     const input = (
       <input
@@ -248,7 +247,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
           {showPreview && files.length > 0 && (
             <div {...stylex.props(styles.previewListVertical)}>
               {files.map((fileInfo, index) => (
-                <div key={index} {...stylex.props(styles.previewRow)}>
+                <div key={fileKey(fileInfo.file)} {...stylex.props(styles.previewRow)}>
                   <FileIcon type={fileInfo.type} />
                   <div {...stylex.props(styles.fileMeta)}>
                     <p {...stylex.props(styles.fileName)}>{fileInfo.file.name}</p>
@@ -300,7 +299,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
         {showPreview && files.length > 0 && (
           <div {...stylex.props(styles.previewListInline)}>
             {files.map((fileInfo, index) => (
-              <div key={index} {...stylex.props(styles.previewChip)}>
+              <div key={fileKey(fileInfo.file)} {...stylex.props(styles.previewChip)}>
                 <File aria-hidden="true" {...stylex.props(styles.chipIcon)} />
                 <span {...stylex.props(styles.chipName)}>{fileInfo.file.name}</span>
                 <button

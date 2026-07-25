@@ -15,24 +15,24 @@ const DropdownMenuSub = DropdownMenuPrimitive.Sub
 
 const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup
 
-type DropdownMenuSubTriggerProps = Omit<
+export type DropdownMenuSubTriggerProps = Omit<
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger>,
   "className" | "style"
 > & {
   inset?: boolean
 }
 
-type DropdownMenuSubContentProps = Omit<
+export type DropdownMenuSubContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>,
   "className" | "style"
 >
 
-type DropdownMenuContentProps = Omit<
+export type DropdownMenuContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>,
   "className" | "style"
 >
 
-type DropdownMenuItemProps = Omit<
+export type DropdownMenuItemProps = Omit<
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item>,
   "className" | "style"
 > & {
@@ -40,29 +40,29 @@ type DropdownMenuItemProps = Omit<
   tone?: "default" | "destructive"
 }
 
-type DropdownMenuCheckboxItemProps = Omit<
+export type DropdownMenuCheckboxItemProps = Omit<
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>,
   "className" | "style"
 >
 
-type DropdownMenuRadioItemProps = Omit<
+export type DropdownMenuRadioItemProps = Omit<
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem>,
   "className" | "style"
 >
 
-type DropdownMenuLabelProps = Omit<
+export type DropdownMenuLabelProps = Omit<
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label>,
   "className" | "style"
 > & {
   inset?: boolean
 }
 
-type DropdownMenuSeparatorProps = Omit<
+export type DropdownMenuSeparatorProps = Omit<
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>,
   "className" | "style"
 >
 
-type DropdownMenuShortcutProps = Omit<
+export type DropdownMenuShortcutProps = Omit<
   React.HTMLAttributes<HTMLSpanElement>,
   "className" | "style"
 >
@@ -426,3 +426,5 @@ export {
   DropdownMenuSubTrigger,
   DropdownMenuRadioGroup,
 }
+
+export type DropdownMenuProps = React.ComponentProps<typeof DropdownMenu>

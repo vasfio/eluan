@@ -1,7 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import {
   Carousel,
+  type CarouselApi,
   CarouselContent,
   CarouselItem,
   CarouselNext,
@@ -32,5 +33,27 @@ describe("Carousel", () => {
     render(<TestCarousel />);
     const buttons = screen.getAllByRole("button");
     expect(buttons.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it("removes its embla listeners on unmount (no leak)", () => {
+    let api: CarouselApi | undefined;
+    const { unmount } = render(
+      <Carousel setApi={(a) => (api = a)}>
+        <CarouselContent>
+          <CarouselItem>Slide 1</CarouselItem>
+        </CarouselContent>
+      </Carousel>
+    );
+
+    // Embla initialises synchronously enough in jsdom to hand back an api.
+    expect(api).toBeTruthy();
+    const offSpy = vi.spyOn(api!, "off");
+
+    unmount();
+
+    // Both listeners added in the effect must be torn down — the `reInit`
+    // listener was previously leaked.
+    expect(offSpy).toHaveBeenCalledWith("reInit", expect.any(Function));
+    expect(offSpy).toHaveBeenCalledWith("select", expect.any(Function));
   });
 });

@@ -4,6 +4,8 @@ import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import * as stylex from "@stylexjs/stylex"
 
+import { useControllableState } from "../utils"
+
 // ---------------------------------------------------------------------------
 // Context
 // ---------------------------------------------------------------------------
@@ -29,38 +31,38 @@ function useDrawer() {
 // Types
 // ---------------------------------------------------------------------------
 
-interface DrawerProps {
+export interface DrawerProps {
   children: React.ReactNode
   open?: boolean
   defaultOpen?: boolean
   onOpenChange?: (open: boolean) => void
 }
 
-type DrawerButtonProps = Omit<
+export type DrawerButtonProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   "className" | "style"
 > & {
   asChild?: boolean
 }
 
-type DrawerDivProps = Omit<
+export type DrawerDivProps = Omit<
   React.HTMLAttributes<HTMLDivElement>,
   "className" | "style"
 >
 
-type DrawerHeadingProps = Omit<
+export type DrawerHeadingProps = Omit<
   React.HTMLAttributes<HTMLHeadingElement>,
   "className" | "style"
 >
 
-type DrawerParagraphProps = Omit<
+export type DrawerParagraphProps = Omit<
   React.HTMLAttributes<HTMLParagraphElement>,
   "className" | "style"
 >
 
 type DrawerSide = "left" | "right"
 
-type DrawerContentProps = DrawerDivProps & {
+export type DrawerContentProps = DrawerDivProps & {
   side?: DrawerSide
   /** Panel width when open. Number is treated as px. Defaults to 320px. */
   width?: number | string
@@ -157,17 +159,11 @@ function Drawer({
   defaultOpen = false,
   onOpenChange,
 }: DrawerProps) {
-  const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen)
-  const isControlled = controlledOpen !== undefined
-  const open = isControlled ? controlledOpen : uncontrolledOpen
-
-  const setOpen = React.useCallback(
-    (next: boolean) => {
-      if (!isControlled) setUncontrolledOpen(next)
-      onOpenChange?.(next)
-    },
-    [isControlled, onOpenChange]
-  )
+  const [open, setOpen] = useControllableState<boolean>({
+    value: controlledOpen,
+    defaultValue: defaultOpen,
+    onChange: onOpenChange,
+  })
 
   const value = React.useMemo(
     () => ({ open, onOpenChange: setOpen }),

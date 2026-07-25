@@ -4,7 +4,7 @@ import * as stylex from "@stylexjs/stylex"
 
 import { Badge } from "./badge"
 
-type AvatarProps = Omit<
+export type AvatarProps = Omit<
   React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>,
   "className" | "style"
 >
@@ -20,7 +20,7 @@ const Avatar = React.forwardRef<React.ElementRef<typeof AvatarPrimitive.Root>, A
 )
 Avatar.displayName = AvatarPrimitive.Root.displayName
 
-type AvatarImageProps = Omit<
+export type AvatarImageProps = Omit<
   React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>,
   "className" | "style"
 >
@@ -36,7 +36,7 @@ const AvatarImage = React.forwardRef<React.ElementRef<typeof AvatarPrimitive.Ima
 )
 AvatarImage.displayName = AvatarPrimitive.Image.displayName
 
-type AvatarFallbackProps = Omit<
+export type AvatarFallbackProps = Omit<
   React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>,
   "className" | "style"
 >
@@ -56,7 +56,7 @@ AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName
 // --- Notification badge overlay ---
 type AvatarPosition = "top-right" | "bottom-right" | "top-left" | "bottom-left"
 
-type AvatarBadgeProps = Omit<React.HTMLAttributes<HTMLSpanElement>, "className" | "style"> & {
+export type AvatarBadgeProps = Omit<React.HTMLAttributes<HTMLSpanElement>, "className" | "style"> & {
   position?: "top-right" | "bottom-right" | "top-left" | "bottom-left"
   /** Display a numeric count inside the badge. When provided, the badge enlarges to fit the number. */
   count?: number
@@ -89,7 +89,7 @@ const AvatarBadge = React.forwardRef<HTMLSpanElement, AvatarBadgeProps>(
 AvatarBadge.displayName = "AvatarBadge"
 
 // --- Live / status indicator ---
-type AvatarStatusProps = {
+export type AvatarStatusProps = {
   status: "online" | "offline" | "busy" | "away"
   position?: AvatarPosition
 }

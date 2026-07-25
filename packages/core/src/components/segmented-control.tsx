@@ -17,7 +17,7 @@ const SegmentedControlContext =
     disabled: false,
   })
 
-interface SegmentedControlProps
+export interface SegmentedControlProps
   extends Omit<
     React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root>,
     "className" | "style" | "orientation" | "asChild"
@@ -27,7 +27,7 @@ interface SegmentedControlProps
   disabled?: boolean
 }
 
-type SegmentedControlItemProps = Omit<
+export type SegmentedControlItemProps = Omit<
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>,
   "className" | "style" | "asChild"
 >

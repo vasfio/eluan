@@ -3,29 +3,107 @@
 import * as React from "react"
 import * as stylex from "@stylexjs/stylex"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { DayPicker } from "react-day-picker"
+import { DayPicker, type MonthCaptionProps } from "react-day-picker"
 
 import { Button } from "./button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select"
+import { ensureStyleSheet, useControllableState } from "../utils"
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>
+
+const MONTH_NAMES = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+]
+
+// Year range centred on the current year. Computed once at module load.
+const YEAR_OPTIONS = Array.from(
+  { length: 10 },
+  (_, i) => new Date().getFullYear() - 5 + i
+)
+
+const CalendarMonthContext = React.createContext<{
+  setMonth: (date: Date) => void
+} | null>(null)
+
+/**
+ * Month/year dropdowns rendered in place of react-day-picker's caption.
+ * Hoisted to module scope so it is a stable component type — defining it inline
+ * in the `components` prop gave it a fresh identity every render, remounting the
+ * entire caption (and its two Selects) on each keystroke/navigation. It reads
+ * the displayed month from `calendarMonth.date` and reports changes through
+ * {@link CalendarMonthContext}.
+ */
+function MonthCaption({ calendarMonth }: MonthCaptionProps) {
+  const setMonth = React.useContext(CalendarMonthContext)?.setMonth
+  const current = calendarMonth.date
+
+  return (
+    <div {...stylex.props(styles.captionControls)}>
+      <Select
+        value={String(current.getMonth())}
+        onValueChange={(v) => {
+          const d = new Date(current)
+          d.setMonth(Number(v))
+          setMonth?.(d)
+        }}
+      >
+        <SelectTrigger variant="calendarCaption">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent layout="auto">
+          {MONTH_NAMES.map((m, i) => (
+            <SelectItem key={i} value={String(i)} size="compact">{m}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      <Select
+        value={String(current.getFullYear())}
+        onValueChange={(v) => {
+          const d = new Date(current)
+          d.setFullYear(Number(v))
+          setMonth?.(d)
+        }}
+      >
+        <SelectTrigger variant="calendarCaption">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent layout="auto">
+          {YEAR_OPTIONS.map((y) => (
+            <SelectItem key={y} value={String(y)} size="compact">{y}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
+  )
+}
 
 function Calendar({
   showOutsideDays = true,
   disabled,
   components,
+  month: monthProp,
+  defaultMonth,
+  onMonthChange,
   ...props
 }: CalendarProps & { disabled?: boolean }) {
-  const [month, setMonth] = React.useState<Date>(
-    props.defaultMonth ?? (props.month as Date) ?? new Date()
-  )
+  // Controlled/uncontrolled displayed month. Passing `month` (with
+  // `onMonthChange`) drives it from the outside; otherwise it manages itself.
+  // Because these props are pulled out of `props`, the later `{...props}` spread
+  // can no longer fight the controlled `month`/`onMonthChange` we pass below.
+  const [month, setMonth] = useControllableState<Date>({
+    value: monthProp,
+    defaultValue: defaultMonth ?? new Date(),
+    onChange: onMonthChange,
+  })
 
-  const months = [
-    "January","February","March","April","May","June",
-    "July","August","September","October","November","December"
-  ]
+  // Inject the calendar's `:has()`/keyline CSS once for the whole app instead
+  // of one <style> tag per mounted calendar.
+  React.useInsertionEffect(() => {
+    ensureStyleSheet("eluan-calendar-styles", calendarStyles)
+  }, [])
 
-  const years = Array.from({ length: 10 }, (_, i) => new Date().getFullYear() - 5 + i)
+  const monthContext = React.useMemo(() => ({ setMonth }), [setMonth])
 
   const goToPreviousMonth = () => {
     const d = new Date(month)
@@ -51,12 +129,12 @@ function Calendar({
   )
 
   return (
+    <CalendarMonthContext.Provider value={monthContext}>
     <div
       {...stylex.props(styles.root, disabled && styles.disabled)}
       aria-disabled={disabled || undefined}
       data-range-complete={hasCompleteRange ? "" : undefined}
     >
-      <style>{calendarStyles}</style>
       <span {...stylex.props(styles.previousButton)}>
         <Button
           variant="ghost"
@@ -98,44 +176,7 @@ function Calendar({
         }}
         components={{
           ...components,
-          MonthCaption: ({ calendarMonth }) => (
-            <div {...stylex.props(styles.captionControls)}>
-              <Select
-                value={String(calendarMonth.date.getMonth())}
-                onValueChange={(v) => {
-                  const d = new Date(month)
-                  d.setMonth(Number(v))
-                  setMonth(d)
-                }}
-              >
-                <SelectTrigger variant="calendarCaption">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent layout="auto">
-                  {months.map((m, i) => (
-                    <SelectItem key={i} value={String(i)} size="compact">{m}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Select
-                value={String(calendarMonth.date.getFullYear())}
-                onValueChange={(v) => {
-                  const d = new Date(month)
-                  d.setFullYear(Number(v))
-                  setMonth(d)
-                }}
-              >
-                <SelectTrigger variant="calendarCaption">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent layout="auto">
-                  {years.map((y) => (
-                    <SelectItem key={y} value={String(y)} size="compact">{y}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          ),
+          MonthCaption,
         }}
       />
       <span {...stylex.props(styles.nextButton)}>
@@ -150,6 +191,7 @@ function Calendar({
         </Button>
       </span>
     </div>
+    </CalendarMonthContext.Provider>
   )
 }
 Calendar.displayName = "Calendar"

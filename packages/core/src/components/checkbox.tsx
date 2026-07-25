@@ -3,7 +3,7 @@ import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
 import * as stylex from "@stylexjs/stylex"
 import { Check } from "lucide-react"
 
-type CheckboxProps = Omit<
+export type CheckboxProps = Omit<
   React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>,
   "className" | "style"
 >

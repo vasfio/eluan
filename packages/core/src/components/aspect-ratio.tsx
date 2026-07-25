@@ -3,7 +3,7 @@
 import * as React from "react"
 import * as AspectRatioPrimitive from "@radix-ui/react-aspect-ratio"
 
-type AspectRatioProps = Omit<
+export type AspectRatioProps = Omit<
   React.ComponentPropsWithoutRef<typeof AspectRatioPrimitive.Root>,
   "className" | "style"
 >

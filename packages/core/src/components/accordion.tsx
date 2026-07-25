@@ -5,17 +5,17 @@ import { ChevronDown } from "lucide-react"
 
 const Accordion = AccordionPrimitive.Root
 
-type AccordionItemProps = Omit<
+export type AccordionItemProps = Omit<
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>,
   "className" | "style"
 >
 
-type AccordionTriggerProps = Omit<
+export type AccordionTriggerProps = Omit<
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>,
   "className" | "style"
 >
 
-type AccordionContentProps = Omit<
+export type AccordionContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>,
   "className" | "style"
 >
@@ -120,3 +120,5 @@ const AccordionContent = React.forwardRef<
 AccordionContent.displayName = AccordionPrimitive.Content.displayName
 
 export { Accordion, AccordionItem, AccordionTrigger, AccordionContent }
+
+export type AccordionProps = React.ComponentProps<typeof Accordion>

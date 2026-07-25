@@ -2,7 +2,7 @@ import * as React from "react"
 import * as SeparatorPrimitive from "@radix-ui/react-separator"
 import * as stylex from "@stylexjs/stylex"
 
-type SeparatorProps = Omit<
+export type SeparatorProps = Omit<
   React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>,
   "className" | "style"
 > & {

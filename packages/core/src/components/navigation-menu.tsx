@@ -5,32 +5,32 @@ import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu"
 import * as stylex from "@stylexjs/stylex"
 import { ChevronDown } from "lucide-react"
 
-type NavigationMenuRootProps = Omit<
+export type NavigationMenuRootProps = Omit<
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root>,
   "className" | "style"
 >
 
-type NavigationMenuListProps = Omit<
+export type NavigationMenuListProps = Omit<
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.List>,
   "className" | "style"
 >
 
-type NavigationMenuTriggerProps = Omit<
+export type NavigationMenuTriggerProps = Omit<
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Trigger>,
   "className" | "style"
 >
 
-type NavigationMenuContentProps = Omit<
+export type NavigationMenuContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Content>,
   "className" | "style"
 >
 
-type NavigationMenuViewportProps = Omit<
+export type NavigationMenuViewportProps = Omit<
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Viewport>,
   "className" | "style"
 >
 
-type NavigationMenuIndicatorProps = Omit<
+export type NavigationMenuIndicatorProps = Omit<
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Indicator>,
   "className" | "style"
 >
@@ -279,3 +279,5 @@ export {
   NavigationMenuIndicator,
   NavigationMenuViewport,
 }
+
+export type NavigationMenuProps = React.ComponentPropsWithoutRef<typeof NavigationMenu>

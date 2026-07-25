@@ -2,7 +2,7 @@ import * as React from "react"
 import * as SwitchPrimitives from "@radix-ui/react-switch"
 import * as stylex from "@stylexjs/stylex"
 
-type SwitchProps = Omit<
+export type SwitchProps = Omit<
   React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>,
   "className" | "style"
 >

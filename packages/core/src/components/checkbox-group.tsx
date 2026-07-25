@@ -3,6 +3,7 @@ import * as stylex from "@stylexjs/stylex"
 
 import { Checkbox } from "./checkbox"
 import { Label } from "./form-label"
+import { useControllableState } from "../utils"
 
 interface CheckboxGroupContextValue {
   disabled?: boolean
@@ -88,25 +89,29 @@ const CheckboxGroup = React.forwardRef<HTMLDivElement, CheckboxGroupProps>(
     },
     ref
   ) => {
-    const [internalValue, setInternalValue] = React.useState<string[]>(defaultValue)
-    const value = controlledValue !== undefined ? controlledValue : internalValue
+    const [value, setValue] = useControllableState<string[]>({
+      value: controlledValue,
+      defaultValue,
+      onChange: onValueChange,
+    })
 
     const onItemChange = React.useCallback(
       (itemValue: string, checked: boolean) => {
         const next = checked
           ? [...value, itemValue]
           : value.filter((v) => v !== itemValue)
-
-        if (controlledValue === undefined) {
-          setInternalValue(next)
-        }
-        onValueChange?.(next)
+        setValue(next)
       },
-      [value, controlledValue, onValueChange]
+      [value, setValue]
+    )
+
+    const contextValue = React.useMemo(
+      () => ({ value, onItemChange, disabled }),
+      [value, onItemChange, disabled]
     )
 
     return (
-      <CheckboxGroupContext.Provider value={{ value, onItemChange, disabled }}>
+      <CheckboxGroupContext.Provider value={contextValue}>
         <div
           ref={ref}
           role="group"
