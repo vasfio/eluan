@@ -32,7 +32,7 @@ import { MultiSelect } from "@eluan/core"
     { value: "vue", label: "Vue" },
   ]}
   value={selected}
-  onChange={setSelected}
+  onValueChange={setSelected}
   placeholder="Select frameworks..."
 />
 \`\`\`
@@ -47,7 +47,7 @@ import { MultiSelect } from "@eluan/core"
     value: {
       description: "Array of currently selected option values.",
     },
-    onChange: {
+    onValueChange: {
       description: "Callback fired with the updated array of selected values when selection changes.",
     },
     placeholder: {
@@ -95,7 +95,7 @@ export const Default: Story = {
       <MultiSelect
         options={options}
         value={selected}
-        onChange={setSelected}
+        onValueChange={setSelected}
         placeholder="Select frameworks..."
       />
     )
@@ -116,7 +116,7 @@ export const WithPreselected: Story = {
       <MultiSelect
         options={options}
         value={selected}
-        onChange={setSelected}
+        onValueChange={setSelected}
         placeholder="Select frameworks..."
       />
     )
@@ -137,7 +137,7 @@ export const Searchable: Story = {
       <MultiSelect
         options={options}
         value={selected}
-        onChange={setSelected}
+        onValueChange={setSelected}
         placeholder="Search and select..."
       />
     )
@@ -159,7 +159,7 @@ export const MaxSelections: Story = {
         <MultiSelect
           options={options}
           value={selected}
-          onChange={setSelected}
+          onValueChange={setSelected}
           placeholder="Select up to 3..."
         />
         <p

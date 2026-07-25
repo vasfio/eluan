@@ -8,7 +8,7 @@ export type BadgeVariant =
   | "destructive"
   | "outline"
   | "positive"
-  | "cautionary"
+  | "caution"
   | "informative"
   | "important"
 
@@ -69,7 +69,7 @@ const styles = stylex.create({
     borderColor: "transparent",
     color: "var(--positive-fg)",
   },
-  variantCautionary: {
+  variantCaution: {
     backgroundColor: "var(--cautionary-bg)",
     borderColor: "transparent",
     color: "var(--cautionary-fg)",
@@ -131,7 +131,7 @@ const variantStyles = {
   destructive: styles.variantDestructive,
   outline: styles.variantOutline,
   positive: styles.variantPositive,
-  cautionary: styles.variantCautionary,
+  caution: styles.variantCaution,
   informative: styles.variantInformative,
   important: styles.variantImportant,
 } satisfies Record<BadgeVariant, stylex.StyleXStyles>

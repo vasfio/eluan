@@ -23,7 +23,7 @@ import { NumberInput } from "@eluan/core"
   max={100}
   step={5}
   value={50}
-  onChange={(value) => console.log(value)}
+  onValueChange={(value) => console.log(value)}
 />
 \`\`\`
         `,
@@ -45,7 +45,7 @@ export const Default: Story = {
   },
   render: () => (
     <div style={{ maxWidth: 200 }}>
-      <NumberInput placeholder="Enter number" onChange={(value) => console.log("Value:", value)} />
+      <NumberInput placeholder="Enter number" onValueChange={(value) => console.log("Value:", value)} />
     </div>
   ),
 }
@@ -61,7 +61,7 @@ export const WithMinMax: Story = {
   render: () => (
     <div style={{ maxWidth: 200, display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
       <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)" }}>Range: 0 to 100</p>
-      <NumberInput min={0} max={100} value={50} onChange={(value) => console.log("Value:", value)} />
+      <NumberInput min={0} max={100} value={50} onValueChange={(value) => console.log("Value:", value)} />
     </div>
   ),
 }
@@ -77,7 +77,7 @@ export const WithStep: Story = {
   render: () => (
     <div style={{ maxWidth: 200, display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
       <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)" }}>Step: 5</p>
-      <NumberInput step={5} value={0} onChange={(value) => console.log("Value:", value)} />
+      <NumberInput step={5} value={0} onValueChange={(value) => console.log("Value:", value)} />
     </div>
   ),
 }
@@ -95,7 +95,7 @@ export const WithoutControls: Story = {
       <NumberInput
         showControls={false}
         placeholder="Enter number"
-        onChange={(value) => console.log("Value:", value)}
+        onValueChange={(value) => console.log("Value:", value)}
       />
     </div>
   ),
@@ -112,7 +112,7 @@ export const PositiveOnly: Story = {
   render: () => (
     <div style={{ maxWidth: 200, display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
       <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)" }}>Positive numbers only</p>
-      <NumberInput allowNegative={false} min={0} onChange={(value) => console.log("Value:", value)} />
+      <NumberInput allowNegative={false} min={0} onValueChange={(value) => console.log("Value:", value)} />
     </div>
   ),
 }
@@ -128,7 +128,7 @@ export const Quantity: Story = {
   render: () => (
     <div style={{ maxWidth: 200, display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
       <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: "var(--container-fg-alt)" }}>Quantity selector</p>
-      <NumberInput min={1} max={99} value={1} onChange={(value) => console.log("Quantity:", value)} />
+      <NumberInput min={1} max={99} value={1} onValueChange={(value) => console.log("Quantity:", value)} />
     </div>
   ),
 }

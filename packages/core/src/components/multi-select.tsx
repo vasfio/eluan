@@ -18,6 +18,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "./popover"
+import { useControllableState } from "../utils"
 
 export interface MultiSelectOption {
   disabled?: boolean
@@ -26,10 +27,12 @@ export interface MultiSelectOption {
 }
 
 export interface MultiSelectProps {
+  /** Seeds the selection in uncontrolled mode (when `value` is omitted). */
+  defaultValue?: string[]
   disabled?: boolean
   emptyMessage?: string
   maxDisplayedItems?: number
-  onChange?: (value: string[]) => void
+  onValueChange?: (value: string[]) => void
   options: MultiSelectOption[]
   placeholder?: string
   searchPlaceholder?: string
@@ -168,8 +171,9 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
   (
     {
       options,
-      value = [],
-      onChange,
+      value: valueProp,
+      defaultValue,
+      onValueChange,
       placeholder = "Select items…",
       searchPlaceholder = "Search…",
       emptyMessage = "No items found.",
@@ -179,22 +183,27 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
     ref
   ) => {
     const [open, setOpen] = React.useState(false)
+    const [value, setValue] = useControllableState({
+      value: valueProp,
+      defaultValue: defaultValue ?? [],
+      onChange: onValueChange,
+    })
 
     const handleSelect = (optionValue: string) => {
       const next = value.includes(optionValue)
         ? value.filter((v) => v !== optionValue)
         : [...value, optionValue]
-      onChange?.(next)
+      setValue(next)
     }
 
     const handleRemove = (optionValue: string, e: React.MouseEvent) => {
       e.stopPropagation()
-      onChange?.(value.filter((v) => v !== optionValue))
+      setValue(value.filter((v) => v !== optionValue))
     }
 
     const handleClearAll = (e: React.MouseEvent) => {
       e.stopPropagation()
-      onChange?.([])
+      setValue([])
     }
 
     const selectedOptions = options.filter((opt) => value.includes(opt.value))

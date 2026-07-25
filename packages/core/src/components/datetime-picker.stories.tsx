@@ -10,7 +10,7 @@ const meta: Meta<typeof DateTimePicker> = {
     value: {
       description: "The currently selected date and time.",
     },
-    onChange: {
+    onValueChange: {
       description: "Callback fired when the date or time changes.",
     },
     placeholder: {
@@ -39,7 +39,7 @@ import { DateTimePicker } from "@eluan/core"
 
 **Usage**
 \`\`\`tsx
-<DateTimePicker value={dateTime} onChange={setDateTime} />
+<DateTimePicker value={dateTime} onValueChange={setDateTime} />
 \`\`\`
         `,
       },
@@ -63,7 +63,7 @@ export const Default: Story = {
     const [dateTime, setDateTime] = React.useState<Date | undefined>()
     return (
       <div style={{ maxWidth: 288 }}>
-        <DateTimePicker value={dateTime} onChange={setDateTime} />
+        <DateTimePicker value={dateTime} onValueChange={setDateTime} />
       </div>
     )
   },
@@ -82,7 +82,7 @@ export const WithPreselected: Story = {
     const [dateTime, setDateTime] = React.useState<Date | undefined>(new Date())
     return (
       <div style={{ maxWidth: 288 }}>
-        <DateTimePicker value={dateTime} onChange={setDateTime} />
+        <DateTimePicker value={dateTime} onValueChange={setDateTime} />
       </div>
     )
   },
@@ -102,7 +102,7 @@ export const WithLabel: Story = {
     return (
       <div style={{ maxWidth: 288, display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
         <label style={{ fontSize: "var(--font-size-sm)", fontWeight: 500 }}>Event Date & Time</label>
-        <DateTimePicker value={dateTime} onChange={setDateTime} />
+        <DateTimePicker value={dateTime} onValueChange={setDateTime} />
       </div>
     )
   },
@@ -122,7 +122,7 @@ export const WithSeconds: Story = {
     const [dateTime, setDateTime] = React.useState<Date | undefined>(new Date())
     return (
       <div style={{ maxWidth: 288 }}>
-        <DateTimePicker value={dateTime} onChange={setDateTime} showSeconds use24Hour />
+        <DateTimePicker value={dateTime} onValueChange={setDateTime} showSeconds use24Hour />
       </div>
     )
   },
@@ -142,7 +142,7 @@ export const WideTrigger: Story = {
     const [dateTime, setDateTime] = React.useState<Date | undefined>()
     return (
       <div style={{ maxWidth: 440 }}>
-        <DateTimePicker value={dateTime} onChange={setDateTime} />
+        <DateTimePicker value={dateTime} onValueChange={setDateTime} />
       </div>
     )
   },

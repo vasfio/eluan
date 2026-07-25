@@ -11,7 +11,7 @@ export interface SearchInputProps
     "className" | "size" | "style" | "type" | "onChange"
   > {
   value?: string
-  onChange?: (value: string) => void
+  onValueChange?: (value: string) => void
   onSearch?: (value: string) => void
   onClear?: () => void
   loading?: boolean
@@ -24,7 +24,7 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
   (
     {
       value,
-      onChange,
+      onValueChange,
       onSearch,
       onClear,
       loading = false,
@@ -47,17 +47,17 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
 
     const handleClear = React.useCallback(() => {
       setInternalValue("")
-      onChange?.("")
+      onValueChange?.("")
       onClear?.()
       if (debounceRef.current) {
         clearTimeout(debounceRef.current)
       }
-    }, [onChange, onClear])
+    }, [onValueChange, onClear])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const newValue = e.target.value
       setInternalValue(newValue)
-      onChange?.(newValue)
+      onValueChange?.(newValue)
 
       if (debounceMs && onSearch) {
         if (debounceRef.current) {
@@ -128,7 +128,7 @@ export interface CommandSearchProps extends SearchInputProps {
 }
 
 const CommandSearch = React.forwardRef<HTMLInputElement, CommandSearchProps>(
-  ({ shortcutKey = "K", showShortcut = true, onChange: _onChange, ...props }, ref) => {
+  ({ shortcutKey = "K", showShortcut = true, onValueChange: _onChange, ...props }, ref) => {
     const inputRef = React.useRef<HTMLInputElement | null>(null)
 
     React.useEffect(() => {
@@ -171,7 +171,7 @@ export interface AutocompleteSearchProps
     "className" | "size" | "style" | "type" | "onChange" | "onSelect"
   > {
   value?: string
-  onChange?: (value: string) => void
+  onValueChange?: (value: string) => void
   options: AutocompleteOption[]
   onSelect?: (option: AutocompleteOption) => void
   loading?: boolean
@@ -196,7 +196,7 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
   (
     {
       value,
-      onChange,
+      onValueChange,
       options,
       onSelect,
       loading = false,
@@ -278,7 +278,7 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const newValue = e.target.value
       setInternalValue(newValue)
-      onChange?.(newValue)
+      onValueChange?.(newValue)
       setIsOpen(true)
       setHighlightedIndex(-1)
     }
@@ -292,7 +292,7 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
     const handleSelect = (option: AutocompleteOption) => {
       if (option.disabled) return
       setInternalValue(option.label)
-      onChange?.(option.label)
+      onValueChange?.(option.label)
       onSelect?.(option)
       setIsOpen(false)
       setHighlightedIndex(-1)
@@ -341,7 +341,7 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
 
     const handleClear = () => {
       setInternalValue("")
-      onChange?.("")
+      onValueChange?.("")
       setIsOpen(false)
       inputRef.current?.focus()
     }

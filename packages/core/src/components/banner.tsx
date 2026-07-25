@@ -5,9 +5,9 @@ import { X } from "lucide-react"
 export type BannerVariant =
   | "default"
   | "destructive"
-  | "warning"
-  | "success"
-  | "info"
+  | "caution"
+  | "positive"
+  | "informative"
   | "neutral"
 
 export type BannerPosition = "top" | "bottom" | "inline"
@@ -45,21 +45,21 @@ const styles = stylex.create({
     borderWidth: 1,
     color: "var(--destructive-fg)",
   },
-  variantWarning: {
+  variantCaution: {
     backgroundColor: "var(--cautionary-bg-alt, var(--cautionary-bg))",
     borderColor: "var(--cautionary-border)",
     borderStyle: "solid",
     borderWidth: 1,
     color: "var(--cautionary-fg)",
   },
-  variantSuccess: {
+  variantPositive: {
     backgroundColor: "var(--positive-bg-alt, var(--positive-bg))",
     borderColor: "var(--positive-border)",
     borderStyle: "solid",
     borderWidth: 1,
     color: "var(--positive-fg)",
   },
-  variantInfo: {
+  variantInformative: {
     backgroundColor: "var(--informative-bg-alt, var(--informative-bg))",
     borderColor: "var(--informative-border)",
     borderStyle: "solid",
@@ -129,9 +129,9 @@ const styles = stylex.create({
 const variantStyles = {
   default: styles.variantDefault,
   destructive: styles.variantDestructive,
-  warning: styles.variantWarning,
-  success: styles.variantSuccess,
-  info: styles.variantInfo,
+  caution: styles.variantCaution,
+  positive: styles.variantPositive,
+  informative: styles.variantInformative,
   neutral: styles.variantNeutral,
 } satisfies Record<BannerVariant, stylex.StyleXStyles>
 
@@ -144,7 +144,7 @@ const positionStyles = {
 const Banner = React.forwardRef<HTMLDivElement, BannerProps>(
   (
     {
-      variant = "info",
+      variant = "informative",
       position = "inline",
       icon,
       action,

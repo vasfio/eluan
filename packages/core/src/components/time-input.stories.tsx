@@ -19,7 +19,7 @@ import { TimeInput } from "@eluan/core"
 
 **Usage**
 \`\`\`tsx
-<TimeInput value="14:30" onChange={setValue} format="24" />
+<TimeInput value="14:30" onValueChange={setValue} format="24" />
 \`\`\`
         `,
       },
@@ -85,7 +85,7 @@ export const Controlled: Story = {
     const [value, setValue] = useState("09:30 AM")
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
-        <TimeInput value={value} onChange={setValue} format="12" />
+        <TimeInput value={value} onValueChange={setValue} format="12" />
         <p style={{ margin: 0, fontSize: "var(--font-size-xs)", color: "var(--container-fg-alt)" }}>
           Current value: <code>{value}</code>
         </p>

@@ -179,7 +179,7 @@ const BreadcrumbEllipsis = ({
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          size="xsIcon"
+          size="iconXs"
           aria-label="Show more breadcrumbs"
         >
           <MoreHorizontal aria-hidden="true" {...stylex.props(styles.icon)} />

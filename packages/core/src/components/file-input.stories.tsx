@@ -25,7 +25,7 @@ import { FileInput, ImageInput, DocumentInput } from "@eluan/core"
   variant="dropzone"
   maxFiles={5}
   maxSize={5 * 1024 * 1024}
-  onChange={(files) => console.log(files)}
+  onValueChange={(files) => console.log(files)}
 />
 \`\`\`
         `,
@@ -47,7 +47,7 @@ export const Default: Story = {
   },
   render: () => (
     <div style={{ maxWidth: 420 }}>
-      <FileInput onChange={(files) => console.log("Files:", files)} />
+      <FileInput onValueChange={(files) => console.log("Files:", files)} />
     </div>
   ),
 }
@@ -62,7 +62,7 @@ export const Dropzone: Story = {
   },
   render: () => (
     <div style={{ maxWidth: 420 }}>
-      <FileInput variant="dropzone" onChange={(files) => console.log("Files:", files)} />
+      <FileInput variant="dropzone" onValueChange={(files) => console.log("Files:", files)} />
     </div>
   ),
 }
@@ -82,7 +82,7 @@ export const WithUploadedFiles: Story = {
     ])
     return (
       <div style={{ maxWidth: 420 }}>
-        <FileInput variant="dropzone" value={files} onChange={setFiles} maxFiles={5} />
+        <FileInput variant="dropzone" value={files} onValueChange={setFiles} maxFiles={5} />
       </div>
     )
   },
@@ -136,7 +136,7 @@ export const WithProgress: Story = {
         <FileInput
           variant="dropzone"
           value={files}
-          onChange={(newFiles) => {
+          onValueChange={(newFiles) => {
             setFiles(newFiles)
             setProgress(0)
             setUploading(false)
@@ -197,7 +197,7 @@ export const MultipleFiles: Story = {
   },
   render: () => (
     <div style={{ maxWidth: 420 }}>
-      <FileInput variant="dropzone" maxFiles={5} onChange={(files) => console.log("Files:", files)} />
+      <FileInput variant="dropzone" maxFiles={5} onValueChange={(files) => console.log("Files:", files)} />
     </div>
   ),
 }
@@ -215,7 +215,7 @@ export const WithMaxSize: Story = {
       <FileInput
         variant="dropzone"
         maxSize={5 * 1024 * 1024}
-        onChange={(files) => console.log("Files:", files)}
+        onValueChange={(files) => console.log("Files:", files)}
       />
     </div>
   ),
@@ -231,7 +231,7 @@ export const ImageOnly: Story = {
   },
   render: () => (
     <div style={{ maxWidth: 420 }}>
-      <ImageInput variant="dropzone" maxFiles={3} onChange={(files) => console.log("Images:", files)} />
+      <ImageInput variant="dropzone" maxFiles={3} onValueChange={(files) => console.log("Images:", files)} />
     </div>
   ),
 }
@@ -246,7 +246,7 @@ export const DocumentOnly: Story = {
   },
   render: () => (
     <div style={{ maxWidth: 420 }}>
-      <DocumentInput variant="dropzone" onChange={(files) => console.log("Documents:", files)} />
+      <DocumentInput variant="dropzone" onValueChange={(files) => console.log("Documents:", files)} />
     </div>
   ),
 }

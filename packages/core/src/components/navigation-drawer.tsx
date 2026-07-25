@@ -162,7 +162,7 @@ const NavigationDrawerToggle = React.forwardRef<
     <Button
       ref={ref}
       variant="ghost"
-      size="compactIcon"
+      size="iconSm"
       aria-label={collapsed ? "Expand navigation" : "Collapse navigation"}
       onClick={(event) => {
         setCollapsed(!collapsed)

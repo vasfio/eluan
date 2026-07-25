@@ -58,14 +58,14 @@ export const Default: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Basic search input with onChange and onSearch callbacks and a clear button.",
+        story: "Basic search input with onValueChange and onSearch callbacks and a clear button.",
       },
     },
   },
   render: () => (
     <SearchInput
       placeholder="Search..."
-      onChange={(value) => console.log("Value:", value)}
+      onValueChange={(value) => console.log("Value:", value)}
       onSearch={(value) => console.log("Search:", value)}
     />
   ),
@@ -270,7 +270,7 @@ export const AutocompleteLoading: Story = {
           loading={loading}
           minChars={2}
           showAllOnFocus={false}
-          onChange={handleChange}
+          onValueChange={handleChange}
           onSelect={(option) => console.log("Selected:", option)}
         />
         <p style={hintStyle}>Simulates async search with 500ms delay</p>

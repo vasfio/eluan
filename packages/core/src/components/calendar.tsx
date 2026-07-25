@@ -53,7 +53,7 @@ function MonthCaption({ calendarMonth }: MonthCaptionProps) {
         </SelectTrigger>
         <SelectContent layout="auto">
           {MONTH_NAMES.map((m, i) => (
-            <SelectItem key={i} value={String(i)} size="compact">{m}</SelectItem>
+            <SelectItem key={i} value={String(i)} size="sm">{m}</SelectItem>
           ))}
         </SelectContent>
       </Select>
@@ -70,7 +70,7 @@ function MonthCaption({ calendarMonth }: MonthCaptionProps) {
         </SelectTrigger>
         <SelectContent layout="auto">
           {YEAR_OPTIONS.map((y) => (
-            <SelectItem key={y} value={String(y)} size="compact">{y}</SelectItem>
+            <SelectItem key={y} value={String(y)} size="sm">{y}</SelectItem>
           ))}
         </SelectContent>
       </Select>
@@ -138,7 +138,7 @@ function Calendar({
       <span {...stylex.props(styles.previousButton)}>
         <Button
           variant="ghost"
-          size="xsIcon"
+          size="iconXs"
           onClick={goToPreviousMonth}
           disabled={disabled}
           aria-label="Go to previous month"
@@ -182,7 +182,7 @@ function Calendar({
       <span {...stylex.props(styles.nextButton)}>
         <Button
           variant="ghost"
-          size="xsIcon"
+          size="iconXs"
           onClick={goToNextMonth}
           disabled={disabled}
           aria-label="Go to next month"

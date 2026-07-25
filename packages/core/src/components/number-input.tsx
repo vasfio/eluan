@@ -6,7 +6,7 @@ import { Input } from "./input"
 export interface NumberInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "className" | "size" | "style" | "type" | "value" | "onChange"> {
   value?: number
-  onChange?: (value: number | undefined) => void
+  onValueChange?: (value: number | undefined) => void
   min?: number
   max?: number
   step?: number
@@ -66,7 +66,7 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
   (
     {
       value,
-      onChange,
+      onValueChange,
       min,
       max,
       step = 1,
@@ -116,7 +116,7 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
 
       setInternalValue(newValue)
       const parsed = parseValue(newValue)
-      onChange?.(parsed)
+      onValueChange?.(parsed)
     }
 
     const handleBlur = () => {
@@ -124,7 +124,7 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       if (parsed !== undefined && clampOnBlur) {
         const clamped = clamp(parsed)
         setInternalValue(clamped.toString())
-        onChange?.(clamped)
+        onValueChange?.(clamped)
       }
     }
 
@@ -132,14 +132,14 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       const current = parseValue(internalValue) ?? 0
       const newValue = clamp(current + step)
       setInternalValue(newValue.toString())
-      onChange?.(newValue)
+      onValueChange?.(newValue)
     }
 
     const decrement = () => {
       const current = parseValue(internalValue) ?? 0
       const newValue = clamp(current - step)
       setInternalValue(newValue.toString())
-      onChange?.(newValue)
+      onValueChange?.(newValue)
     }
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

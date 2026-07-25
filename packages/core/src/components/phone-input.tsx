@@ -26,7 +26,7 @@ export interface PhoneInputProps
   countries?: Country[]
   defaultCountry?: string
   value?: string
-  onChange?: (value: string, country: Country) => void
+  onValueChange?: (value: string, country: Country) => void
   onCountryChange?: (country: Country) => void
 }
 
@@ -58,7 +58,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
       countries = defaultCountries,
       defaultCountry = "US",
       value,
-      onChange,
+      onValueChange,
       onCountryChange,
       disabled,
       ...props
@@ -81,14 +81,14 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
       if (country) {
         setSelectedCountry(country)
         onCountryChange?.(country)
-        onChange?.(phoneNumber, country)
+        onValueChange?.(phoneNumber, country)
       }
     }
 
     const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const newValue = e.target.value.replace(/[^\d\s\-()]/g, "")
       setPhoneNumber(newValue)
-      onChange?.(newValue, selectedCountry)
+      onValueChange?.(newValue, selectedCountry)
     }
 
     return (

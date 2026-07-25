@@ -9,7 +9,7 @@ export interface InputOTPProps
   /** Number of OTP slots */
   length?: number
   /** Called when OTP value changes */
-  onChange?: (value: string) => void
+  onValueChange?: (value: string) => void
   /** Called when all slots are filled */
   onComplete?: (value: string) => void
   /** Render as password/hidden */
@@ -154,7 +154,7 @@ const InputOTP = React.forwardRef<HTMLDivElement, InputOTPProps>(
   (
     {
       length = 6,
-      onChange,
+      onValueChange,
       onComplete,
       mask = false,
       autoFocus = false,
@@ -199,7 +199,7 @@ const InputOTP = React.forwardRef<HTMLDivElement, InputOTPProps>(
       setValues(newValues)
 
       const otpValue = newValues.join("")
-      onChange?.(otpValue)
+      onValueChange?.(otpValue)
 
       if (digit && index < length - 1) {
         focusInput(index + 1)
@@ -221,11 +221,11 @@ const InputOTP = React.forwardRef<HTMLDivElement, InputOTPProps>(
         if (values[index]) {
           newValues[index] = ""
           setValues(newValues)
-          onChange?.(newValues.join(""))
+          onValueChange?.(newValues.join(""))
         } else if (index > 0) {
           newValues[index - 1] = ""
           setValues(newValues)
-          onChange?.(newValues.join(""))
+          onValueChange?.(newValues.join(""))
           focusInput(index - 1)
         }
       } else if (e.key === "ArrowLeft") {
@@ -251,7 +251,7 @@ const InputOTP = React.forwardRef<HTMLDivElement, InputOTPProps>(
         }
       })
       setValues(newValues)
-      onChange?.(newValues.join(""))
+      onValueChange?.(newValues.join(""))
 
       // Focus last filled or next empty input
       const focusIndex = Math.min(digits.length, length - 1)

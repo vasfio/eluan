@@ -20,11 +20,11 @@ describe("SearchInput", () => {
     expect(screen.getByPlaceholderText("Search...")).toBeInTheDocument();
   });
 
-  it("fires onChange", async () => {
-    const onChange = vi.fn();
-    render(<SearchInput onChange={onChange} />);
+  it("fires onValueChange", async () => {
+    const onValueChange = vi.fn();
+    render(<SearchInput onValueChange={onValueChange} />);
     await userEvent.type(screen.getByRole("searchbox"), "x");
-    expect(onChange).toHaveBeenCalled();
+    expect(onValueChange).toHaveBeenCalled();
   });
 });
 

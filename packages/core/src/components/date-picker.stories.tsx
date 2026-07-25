@@ -10,7 +10,7 @@ const meta: Meta<typeof DatePicker> = {
     value: {
       description: "The currently selected date.",
     },
-    onChange: {
+    onValueChange: {
       description: "Callback fired when a date is selected or cleared.",
     },
     placeholder: {
@@ -36,7 +36,7 @@ import { DatePicker } from "@eluan/core"
 
 **Usage**
 \`\`\`tsx
-<DatePicker value={date} onChange={setDate} />
+<DatePicker value={date} onValueChange={setDate} />
 \`\`\`
         `,
       },
@@ -60,7 +60,7 @@ export const Default: Story = {
     const [date, setDate] = React.useState<Date | undefined>()
     return (
       <div style={{ maxWidth: 288 }}>
-        <DatePicker value={date} onChange={setDate} />
+        <DatePicker value={date} onValueChange={setDate} />
       </div>
     )
   },
@@ -79,7 +79,7 @@ export const WithPreselected: Story = {
     const [date, setDate] = React.useState<Date | undefined>(new Date())
     return (
       <div style={{ maxWidth: 288 }}>
-        <DatePicker value={date} onChange={setDate} />
+        <DatePicker value={date} onValueChange={setDate} />
       </div>
     )
   },
@@ -98,7 +98,7 @@ export const WithPlaceholder: Story = {
     const [date, setDate] = React.useState<Date | undefined>()
     return (
       <div style={{ maxWidth: 288 }}>
-        <DatePicker value={date} onChange={setDate} placeholder="Select a date..." />
+        <DatePicker value={date} onValueChange={setDate} placeholder="Select a date..." />
       </div>
     )
   },
@@ -117,7 +117,7 @@ export const Disabled: Story = {
     const [date, setDate] = React.useState<Date | undefined>()
     return (
       <div style={{ maxWidth: 288 }}>
-        <DatePicker value={date} onChange={setDate} disabled />
+        <DatePicker value={date} onValueChange={setDate} disabled />
       </div>
     )
   },
@@ -137,7 +137,7 @@ export const WideTrigger: Story = {
     const [date, setDate] = React.useState<Date | undefined>()
     return (
       <div style={{ maxWidth: 440 }}>
-        <DatePicker value={date} onChange={setDate} />
+        <DatePicker value={date} onValueChange={setDate} />
       </div>
     )
   },

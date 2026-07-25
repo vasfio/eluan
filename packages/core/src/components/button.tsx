@@ -23,9 +23,9 @@ export type ButtonSize =
   | "sm"
   | "lg"
   | "icon"
-  | "compactIcon"
-  | "xsIcon"
-  | "inlineIcon"
+  | "iconSm"
+  | "iconXs"
+  | "iconInline"
 
 export type ButtonAlign = "center" | "start"
 export type ButtonAttachment = "none" | "start" | "end"
@@ -272,16 +272,16 @@ const styles = stylex.create({
     height: "var(--size-lg)",
     width: "var(--size-lg)",
   },
-  sizeCompactIcon: {
+  sizeIconSm: {
     height: "var(--size-md)",
     width: "var(--size-md)",
   },
-  sizeXsIcon: {
+  sizeIconXs: {
     height: "calc(var(--size-md) - var(--spacing-xs))",
     padding: 0,
     width: "calc(var(--size-md) - var(--spacing-xs))",
   },
-  sizeInlineIcon: {
+  sizeIconInline: {
     height: "auto",
     padding: "var(--spacing-xxs)",
     width: "auto",
@@ -334,9 +334,9 @@ const sizeStyles = {
   sm: styles.sizeSm,
   lg: styles.sizeLg,
   icon: styles.sizeIcon,
-  compactIcon: styles.sizeCompactIcon,
-  xsIcon: styles.sizeXsIcon,
-  inlineIcon: styles.sizeInlineIcon,
+  iconSm: styles.sizeIconSm,
+  iconXs: styles.sizeIconXs,
+  iconInline: styles.sizeIconInline,
 } satisfies Record<ButtonSize, stylex.StyleXStyles>
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(

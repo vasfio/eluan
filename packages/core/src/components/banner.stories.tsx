@@ -18,7 +18,7 @@ import { Banner } from "@eluan/core"
 
 **Usage**
 \`\`\`tsx
-<Banner variant="info" dismissible onDismiss={() => setVisible(false)}>
+<Banner variant="informative" dismissible onDismiss={() => setVisible(false)}>
   New version available. Please refresh.
 </Banner>
 \`\`\`
@@ -28,7 +28,7 @@ import { Banner } from "@eluan/core"
   },
   argTypes: {
     variant: {
-      description: "Visual style of the banner. Accepts `\"default\"`, `\"info\"`, `\"success\"`, `\"warning\"`, `\"destructive\"`, or `\"neutral\"`. Defaults to `\"info\"`.",
+      description: "Visual style of the banner. Accepts `\"default\"`, `\"informative\"`, `\"positive\"`, `\"caution\"`, `\"destructive\"`, or `\"neutral\"`. Defaults to `\"informative\"`.",
     },
     position: {
       description: "Positioning strategy. Accepts `\"top\"`, `\"bottom\"` (fixed to viewport edges), or `\"inline\"` (relative). Defaults to `\"inline\"`.",
@@ -70,12 +70,12 @@ export const Info: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Informational banner using the info variant.",
+        story: "Informational banner using the informative variant.",
       },
     },
   },
   render: () => (
-    <Banner variant="info">
+    <Banner variant="informative">
       This is an informational banner.
     </Banner>
   ),
@@ -90,7 +90,7 @@ export const Success: Story = {
     },
   },
   render: () => (
-    <Banner variant="success">
+    <Banner variant="positive">
       Operation completed successfully!
     </Banner>
   ),
@@ -105,7 +105,7 @@ export const Warning: Story = {
     },
   },
   render: () => (
-    <Banner variant="warning">
+    <Banner variant="caution">
       Please be aware of this warning.
     </Banner>
   ),
@@ -137,9 +137,9 @@ export const AllVariants: Story = {
   render: () => (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
       <Banner variant='default'>Default banner</Banner>
-      <Banner variant="info">Info banner</Banner>
-      <Banner variant="success">Success banner</Banner>
-      <Banner variant="warning">Warning banner</Banner>
+      <Banner variant="informative">Info banner</Banner>
+      <Banner variant="positive">Success banner</Banner>
+      <Banner variant="caution">Warning banner</Banner>
       <Banner variant="destructive">Destructive banner</Banner>
     </div>
   ),

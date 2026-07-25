@@ -13,7 +13,7 @@ describe("Banner", () => {
     const { rerender, container } = render(<Banner variant="destructive">Error</Banner>);
     expect(container.firstChild).toBeInTheDocument();
 
-    rerender(<Banner variant="warning">Warning</Banner>);
+    rerender(<Banner variant="caution">Warning</Banner>);
     expect(container.firstChild).toBeInTheDocument();
   });
 

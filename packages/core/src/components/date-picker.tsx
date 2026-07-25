@@ -13,7 +13,7 @@ import {
 
 export interface DatePickerProps {
   value?: Date
-  onChange?: (date: Date | undefined) => void
+  onValueChange?: (date: Date | undefined) => void
   placeholder?: string
   disabled?: boolean
   dateFormat?: string
@@ -23,7 +23,7 @@ const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
   (
     {
       value,
-      onChange,
+      onValueChange,
       placeholder = "Pick a date",
       disabled = false,
       dateFormat = "PPP",
@@ -52,7 +52,7 @@ const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
             mode="single"
             selected={value}
             onSelect={(date) => {
-              onChange?.(date)
+              onValueChange?.(date)
               setOpen(false)
             }}
             initialFocus
@@ -66,7 +66,7 @@ DatePicker.displayName = "DatePicker"
 
 export interface DateRangePickerProps {
   value?: { from: Date | undefined; to: Date | undefined }
-  onChange?: (range: { from: Date | undefined; to: Date | undefined }) => void
+  onValueChange?: (range: { from: Date | undefined; to: Date | undefined }) => void
   placeholder?: string
   disabled?: boolean
   dateFormat?: string
@@ -76,7 +76,7 @@ const DateRangePicker = React.forwardRef<HTMLButtonElement, DateRangePickerProps
   (
     {
       value,
-      onChange,
+      onValueChange,
       placeholder = "Pick a date range",
       disabled = false,
       dateFormat = "LLL dd, y",
@@ -117,7 +117,7 @@ const DateRangePicker = React.forwardRef<HTMLButtonElement, DateRangePickerProps
             defaultMonth={value?.from}
             selected={value}
             onSelect={(range) => {
-              onChange?.(range as { from: Date | undefined; to: Date | undefined })
+              onValueChange?.(range as { from: Date | undefined; to: Date | undefined })
             }}
             numberOfMonths={2}
             initialFocus

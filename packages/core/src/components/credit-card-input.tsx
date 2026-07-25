@@ -265,22 +265,22 @@ export interface CreditCardInputProps {
 
 export interface CreditCardNumberInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "className" | "size" | "style" | "type" | "onChange"> {
-  onChange?: (value: string, cardType: CardType) => void
+  onValueChange?: (value: string, cardType: CardType) => void
 }
 
 export interface CreditCardExpiryInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "className" | "size" | "style" | "type" | "onChange"> {
-  onChange?: (value: string) => void
+  onValueChange?: (value: string) => void
 }
 
 export interface CreditCardCVVInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "className" | "size" | "style" | "type" | "onChange"> {
   cardType?: CardType
-  onChange?: (value: string) => void
+  onValueChange?: (value: string) => void
 }
 
 const CreditCardNumberInput = React.forwardRef<HTMLInputElement, CreditCardNumberInputProps>(
-  ({ onChange, ...props }, ref) => {
+  ({ onValueChange, ...props }, ref) => {
     const [value, setValue] = React.useState("")
     const [cardType, setCardType] = React.useState<CardType>("unknown")
 
@@ -294,7 +294,7 @@ const CreditCardNumberInput = React.forwardRef<HTMLInputElement, CreditCardNumbe
         setValue(formatted)
         const newType = detected?.type || "unknown"
         setCardType(newType)
-        onChange?.(rawValue, newType)
+        onValueChange?.(rawValue, newType)
       }
     }
 
@@ -319,7 +319,7 @@ const CreditCardNumberInput = React.forwardRef<HTMLInputElement, CreditCardNumbe
 CreditCardNumberInput.displayName = "CreditCardNumberInput"
 
 const CreditCardExpiryInput = React.forwardRef<HTMLInputElement, CreditCardExpiryInputProps>(
-  ({ onChange, ...props }, ref) => {
+  ({ onValueChange, ...props }, ref) => {
     const [value, setValue] = React.useState("")
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -327,7 +327,7 @@ const CreditCardExpiryInput = React.forwardRef<HTMLInputElement, CreditCardExpir
       if (rawValue.length <= 4) {
         const formatted = formatExpiry(rawValue)
         setValue(formatted)
-        onChange?.(rawValue)
+        onValueChange?.(rawValue)
       }
     }
 
@@ -351,7 +351,7 @@ const CreditCardExpiryInput = React.forwardRef<HTMLInputElement, CreditCardExpir
 CreditCardExpiryInput.displayName = "CreditCardExpiryInput"
 
 const CreditCardCVVInput = React.forwardRef<HTMLInputElement, CreditCardCVVInputProps>(
-  ({ cardType = "unknown", onChange, ...props }, ref) => {
+  ({ cardType = "unknown", onValueChange, ...props }, ref) => {
     const [value, setValue] = React.useState("")
     const maxLength = cardType === "amex" ? 4 : 3
 
@@ -359,7 +359,7 @@ const CreditCardCVVInput = React.forwardRef<HTMLInputElement, CreditCardCVVInput
       const rawValue = e.target.value.replace(/\D/g, "")
       if (rawValue.length <= maxLength) {
         setValue(rawValue)
-        onChange?.(rawValue)
+        onValueChange?.(rawValue)
       }
     }
 
@@ -444,7 +444,7 @@ const CreditCardInput = React.forwardRef<HTMLDivElement, CreditCardInputProps>(
         {...stylex.props(styles.root)}
       >
         <CreditCardNumberInput
-          onChange={(value, type) => {
+          onValueChange={(value, type) => {
             setNumber(value)
             setCardType(type)
             reportChange({ number: value, cardType: type })
@@ -460,7 +460,7 @@ const CreditCardInput = React.forwardRef<HTMLDivElement, CreditCardInputProps>(
         <div {...stylex.props(styles.grid)}>
           <div>
             <CreditCardExpiryInput
-              onChange={(value) => {
+              onValueChange={(value) => {
                 setExpiry(value)
                 reportChange({ expiry: value })
               }}
@@ -476,7 +476,7 @@ const CreditCardInput = React.forwardRef<HTMLDivElement, CreditCardInputProps>(
           <div>
             <CreditCardCVVInput
               cardType={cardType}
-              onChange={(value) => {
+              onValueChange={(value) => {
                 setCvv(value)
                 reportChange({ cvv: value })
               }}

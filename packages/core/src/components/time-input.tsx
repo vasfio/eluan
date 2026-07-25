@@ -21,7 +21,7 @@ export interface TimeInputProps
    */
   value?: string
   /** Called when time changes */
-  onChange?: (value: string) => void
+  onValueChange?: (value: string) => void
   /** 12-hour or 24-hour format */
   format?: "12" | "24"
   /** Disabled state */
@@ -66,7 +66,7 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
   (
     {
       value = "",
-      onChange,
+      onValueChange,
       format = "24",
       disabled = false,
       showIcon = true,
@@ -114,12 +114,12 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
       (h: number, m: number, s: number, p: "AM" | "PM") => {
         const sec = showSeconds ? `:${pad(s)}` : ""
         if (format === "24") {
-          onChange?.(`${pad(h)}:${pad(m)}${sec}`)
+          onValueChange?.(`${pad(h)}:${pad(m)}${sec}`)
         } else {
-          onChange?.(`${pad(h)}:${pad(m)}${sec} ${p}`)
+          onValueChange?.(`${pad(h)}:${pad(m)}${sec} ${p}`)
         }
       },
-      [format, onChange, showSeconds]
+      [format, onValueChange, showSeconds]
     )
 
     const handleHoursChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -32,7 +32,7 @@ export type SelectItemProps = Omit<
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>,
   "className" | "style"
 > & {
-  size?: "default" | "compact"
+  size?: "default" | "sm"
 }
 
 export type SelectSeparatorProps = Omit<
@@ -194,7 +194,7 @@ const styles = stylex.create({
       pointerEvents: "none",
     },
   },
-  itemCompact: {
+  itemSm: {
     fontSize: "var(--font-size-xs)",
   },
   itemIndicator: {
@@ -312,7 +312,7 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     {...props}
-    {...stylex.props(styles.item, size === "compact" && styles.itemCompact)}
+    {...stylex.props(styles.item, size === "sm" && styles.itemSm)}
   >
     <span {...stylex.props(styles.itemIndicator)}>
       <SelectPrimitive.ItemIndicator>

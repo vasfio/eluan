@@ -21,7 +21,7 @@ import { PhoneInput } from "@eluan/core"
 <PhoneInput
   placeholder="Phone number"
   defaultCountry="US"
-  onChange={(value, country) => console.log(value, country)}
+  onValueChange={(value, country) => console.log(value, country)}
 />
 \`\`\`
         `,
@@ -67,7 +67,7 @@ export const WithCallback: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Demonstrates the onChange and onCountryChange callback handlers.",
+        story: "Demonstrates the onValueChange and onCountryChange callback handlers.",
       },
     },
   },
@@ -75,7 +75,7 @@ export const WithCallback: Story = {
     <div style={{ maxWidth: 288 }}>
       <PhoneInput
         placeholder="Phone number"
-        onChange={(value, country) => {
+        onValueChange={(value, country) => {
           console.log("Phone:", value)
           console.log("Country:", country)
         }}

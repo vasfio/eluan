@@ -15,7 +15,7 @@ function Controlled({
 }) {
   const [v, setV] = useState(initial);
   return (
-    <TimeInput value={v} onChange={setV} format={format} showSeconds={showSeconds} />
+    <TimeInput value={v} onValueChange={setV} format={format} showSeconds={showSeconds} />
   );
 }
 
@@ -73,34 +73,34 @@ describe("TimeInput", () => {
     expect(hours.value).toBe("03");
   });
 
-  it("emits the entered time via onChange", async () => {
-    const onChange = vi.fn();
+  it("emits the entered time via onValueChange", async () => {
+    const onValueChange = vi.fn();
     const user = userEvent.setup();
-    render(<TimeInput value="14:30" format="24" onChange={onChange} />);
+    render(<TimeInput value="14:30" format="24" onValueChange={onValueChange} />);
     const hours = screen.getByLabelText("Hours") as HTMLInputElement;
 
     await user.click(hours);
     await user.keyboard("0");
     await user.keyboard("9");
-    expect(onChange).toHaveBeenLastCalledWith("09:30");
+    expect(onValueChange).toHaveBeenLastCalledWith("09:30");
   });
 
   it("increments the hour with ArrowUp", async () => {
-    const onChange = vi.fn();
+    const onValueChange = vi.fn();
     const user = userEvent.setup();
-    render(<TimeInput value="14:30" format="24" onChange={onChange} />);
+    render(<TimeInput value="14:30" format="24" onValueChange={onValueChange} />);
     const hours = screen.getByLabelText("Hours") as HTMLInputElement;
 
     await user.click(hours);
     await user.keyboard("{ArrowUp}");
-    expect(onChange).toHaveBeenLastCalledWith("15:30");
+    expect(onValueChange).toHaveBeenLastCalledWith("15:30");
   });
 
   it("renders a seconds segment and emits HH:MM:SS when showSeconds is set (24h)", async () => {
-    const onChange = vi.fn();
+    const onValueChange = vi.fn();
     const user = userEvent.setup();
     render(
-      <TimeInput value="14:30:45" format="24" showSeconds onChange={onChange} />
+      <TimeInput value="14:30:45" format="24" showSeconds onValueChange={onValueChange} />
     );
     const seconds = screen.getByLabelText("Seconds") as HTMLInputElement;
     expect(seconds.value).toBe("45");
@@ -108,7 +108,7 @@ describe("TimeInput", () => {
     await user.click(seconds);
     await user.keyboard("0");
     await user.keyboard("9");
-    expect(onChange).toHaveBeenLastCalledWith("14:30:09");
+    expect(onValueChange).toHaveBeenLastCalledWith("14:30:09");
   });
 
   it("emits HH:MM:SS AM/PM with seconds in 12h format", () => {

@@ -90,7 +90,7 @@ const styles = stylex.create({
     minWidth: 0,
     paddingInline: "var(--spacing-xs)",
   },
-  sizeIconMd: {
+  sizeIconSm: {
     height: "var(--size-md)",
     padding: 0,
     width: "var(--size-md)",
@@ -104,7 +104,7 @@ const variantStyles = {
 const sizeStyles = {
   default: styles.sizeDefault,
   sm: styles.sizeSm,
-  iconMd: styles.sizeIconMd,
+  iconSm: styles.sizeIconSm,
 } satisfies Record<ToggleSize, stylex.StyleXStyles>
 
 const ToggleGroup = React.forwardRef<

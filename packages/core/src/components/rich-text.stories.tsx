@@ -21,7 +21,7 @@ import { RichText } from "@eluan/core"
 \`\`\`tsx
 <RichText
   value={value}
-  onChange={setValue}
+  onValueChange={setValue}
   placeholder="Start typing..."
   minHeight="150px"
 />
@@ -49,7 +49,7 @@ export const Default: Story = {
       <div style={{ maxWidth: "42rem" }}>
         <RichText
           value={value}
-          onChange={setValue}
+          onValueChange={setValue}
           placeholder="Start typing..."
         />
       </div>
@@ -73,7 +73,7 @@ export const WithInitialContent: Story = {
       <div style={{ maxWidth: "42rem" }}>
         <RichText
           value={value}
-          onChange={setValue}
+          onValueChange={setValue}
           placeholder="Start typing..."
         />
       </div>
@@ -95,7 +95,7 @@ export const CustomMinHeight: Story = {
       <div style={{ maxWidth: "42rem" }}>
         <RichText
           value={value}
-          onChange={setValue}
+          onValueChange={setValue}
           placeholder="Write your blog post..."
           minHeight="300px"
         />

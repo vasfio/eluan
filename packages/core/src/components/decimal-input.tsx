@@ -27,7 +27,7 @@ const currencies: Record<CurrencyCode, CurrencyInfo> = {
 export interface DecimalInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "className" | "size" | "style" | "type" | "value" | "onChange"> {
   value?: number
-  onChange?: (value: number | undefined) => void
+  onValueChange?: (value: number | undefined) => void
   decimals?: number
   min?: number
   max?: number
@@ -129,7 +129,7 @@ const DecimalInput = React.forwardRef<HTMLInputElement, DecimalInputProps>(
   (
     {
       value,
-      onChange,
+      onValueChange,
       decimals = 2,
       min,
       max,
@@ -195,9 +195,9 @@ const DecimalInput = React.forwardRef<HTMLInputElement, DecimalInputProps>(
         let clamped = parsed
         if (min !== undefined && clamped < min) clamped = min
         if (max !== undefined && clamped > max) clamped = max
-        onChange?.(clamped)
+        onValueChange?.(clamped)
       } else {
-        onChange?.(undefined)
+        onValueChange?.(undefined)
       }
     }
 

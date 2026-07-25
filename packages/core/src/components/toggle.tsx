@@ -3,7 +3,7 @@ import * as TogglePrimitive from "@radix-ui/react-toggle"
 import * as stylex from "@stylexjs/stylex"
 
 export type ToggleVariant = "default" | "outline"
-export type ToggleSize = "default" | "sm" | "iconMd"
+export type ToggleSize = "default" | "sm" | "iconSm"
 
 export interface ToggleProps
   extends Omit<
@@ -67,7 +67,7 @@ const styles = stylex.create({
     minWidth: 0,
     paddingInline: "var(--spacing-xs)",
   },
-  sizeIconMd: {
+  sizeIconSm: {
     height: "var(--size-md)",
     padding: 0,
     width: "var(--size-md)",
@@ -82,7 +82,7 @@ const variantStyles = {
 const sizeStyles = {
   default: styles.sizeDefault,
   sm: styles.sizeSm,
-  iconMd: styles.sizeIconMd,
+  iconSm: styles.sizeIconSm,
 } satisfies Record<ToggleSize, stylex.StyleXStyles>
 
 const Toggle = React.forwardRef<

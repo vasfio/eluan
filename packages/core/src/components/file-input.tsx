@@ -88,7 +88,7 @@ export interface FileInputProps
     "className" | "style" | "type" | "value" | "onChange"
   > {
   value?: File[]
-  onChange?: (files: File[]) => void
+  onValueChange?: (files: File[]) => void
   maxFiles?: number
   maxSize?: number
   showPreview?: boolean
@@ -101,7 +101,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
   (
     {
       value = EMPTY_FILES,
-      onChange,
+      onValueChange,
       maxFiles = 1,
       maxSize,
       accept,
@@ -152,7 +152,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
       const combined = maxFiles === 1
         ? validFiles.slice(0, 1)
         : [...value, ...validFiles].slice(0, maxFiles)
-      onChange?.(combined)
+      onValueChange?.(combined)
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -182,7 +182,7 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>(
     const removeFile = (index: number) => {
       const newFiles = [...value]
       newFiles.splice(index, 1)
-      onChange?.(newFiles)
+      onValueChange?.(newFiles)
     }
 
     const combinedRef = composeRefs(inputRef, ref)

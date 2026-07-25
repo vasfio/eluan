@@ -49,7 +49,7 @@ Full component list: see [Storybook](https://github.com/vasfio/eluan) or the sou
 
 ## Security
 
-`RichText` emits raw, unsanitized HTML through its `onChange` callback
+`RichText` emits raw, unsanitized HTML through its `onValueChange` callback
 (`editor.getHTML()`). Before persisting that HTML or rendering it back into the
 DOM (for example via `dangerouslySetInnerHTML`), sanitize it with a library such
 as [DOMPurify](https://github.com/cure53/DOMPurify). Only pass trusted/sanitized

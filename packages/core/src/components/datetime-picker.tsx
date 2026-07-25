@@ -14,7 +14,7 @@ import { TimeInput } from "./time-input"
 
 export interface DateTimePickerProps {
   value?: Date
-  onChange?: (date: Date | undefined) => void
+  onValueChange?: (date: Date | undefined) => void
   placeholder?: string
   disabled?: boolean
   showSeconds?: boolean
@@ -68,7 +68,7 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
   (
     {
       value,
-      onChange,
+      onValueChange,
       placeholder = "Pick date and time",
       disabled = false,
       showSeconds = false,
@@ -92,7 +92,7 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
           newDate.setSeconds(selectedDate.getSeconds())
         }
         setSelectedDate(newDate)
-        onChange?.(newDate)
+        onValueChange?.(newDate)
       }
     }
 
@@ -100,7 +100,7 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
       const newDate = applyTimeValue(selectedDate, timeValue)
       if (newDate) {
         setSelectedDate(newDate)
-        onChange?.(newDate)
+        onValueChange?.(newDate)
       }
     }
 
@@ -143,7 +143,7 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
               format={use24Hour ? "24" : "12"}
               showSeconds={showSeconds}
               value={dateToTimeValue(selectedDate, use24Hour, showSeconds)}
-              onChange={handleTimeChange}
+              onValueChange={handleTimeChange}
             />
           </div>
         </PopoverContent>

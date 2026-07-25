@@ -10,7 +10,7 @@ const meta: Meta<typeof DecimalInput> = {
     value: {
       description: "The controlled numeric value.",
     },
-    onChange: {
+    onValueChange: {
       description: "Callback fired when the numeric value changes.",
     },
     decimals: {
@@ -48,7 +48,7 @@ import { DecimalInput, CurrencyInput, PercentageInput, UnitInput } from "@eluan/
 
 **Usage**
 \`\`\`tsx
-<DecimalInput placeholder="0.00" onChange={(value) => console.log(value)} />
+<DecimalInput placeholder="0.00" onValueChange={(value) => console.log(value)} />
 <CurrencyInput currency="USD" placeholder="0.00" />
 <PercentageInput placeholder="0.0" />
 <UnitInput unit="kg" placeholder="0.00" />
@@ -72,7 +72,7 @@ export const Default: Story = {
   },
   render: () => (
     <div style={{ maxWidth: 288 }}>
-      <DecimalInput placeholder="0.00" onChange={(value) => console.log("Value:", value)} />
+      <DecimalInput placeholder="0.00" onValueChange={(value) => console.log("Value:", value)} />
     </div>
   ),
 }
@@ -87,10 +87,10 @@ export const Currency: Story = {
   },
   render: () => (
     <div style={{ maxWidth: 288, display: "flex", flexDirection: "column", gap: 16 }}>
-      <CurrencyInput currency="USD" placeholder="0.00" onChange={(value) => console.log("USD:", value)} />
-      <CurrencyInput currency="EUR" placeholder="0.00" onChange={(value) => console.log("EUR:", value)} />
-      <CurrencyInput currency="GBP" placeholder="0.00" onChange={(value) => console.log("GBP:", value)} />
-      <CurrencyInput currency="JPY" placeholder="0" onChange={(value) => console.log("JPY:", value)} />
+      <CurrencyInput currency="USD" placeholder="0.00" onValueChange={(value) => console.log("USD:", value)} />
+      <CurrencyInput currency="EUR" placeholder="0.00" onValueChange={(value) => console.log("EUR:", value)} />
+      <CurrencyInput currency="GBP" placeholder="0.00" onValueChange={(value) => console.log("GBP:", value)} />
+      <CurrencyInput currency="JPY" placeholder="0" onValueChange={(value) => console.log("JPY:", value)} />
     </div>
   ),
 }
@@ -105,8 +105,8 @@ export const Percentage: Story = {
   },
   render: () => (
     <div style={{ maxWidth: 288, display: "flex", flexDirection: "column", gap: 16 }}>
-      <PercentageInput placeholder="0.0" onChange={(value) => console.log("Percentage:", value)} />
-      <PercentageInput value={75.5} onChange={(value) => console.log("Percentage:", value)} />
+      <PercentageInput placeholder="0.0" onValueChange={(value) => console.log("Percentage:", value)} />
+      <PercentageInput value={75.5} onValueChange={(value) => console.log("Percentage:", value)} />
     </div>
   ),
 }
@@ -121,9 +121,9 @@ export const Units: Story = {
   },
   render: () => (
     <div style={{ maxWidth: 288, display: "flex", flexDirection: "column", gap: 16 }}>
-      <UnitInput unit="kg" placeholder="0.00" onChange={(value) => console.log("Weight:", value)} />
-      <UnitInput unit="cm" placeholder="0.00" onChange={(value) => console.log("Length:", value)} />
-      <UnitInput unit="$" unitPosition="prefix" placeholder="0.00" onChange={(value) => console.log("Price:", value)} />
+      <UnitInput unit="kg" placeholder="0.00" onValueChange={(value) => console.log("Weight:", value)} />
+      <UnitInput unit="cm" placeholder="0.00" onValueChange={(value) => console.log("Length:", value)} />
+      <UnitInput unit="$" unitPosition="prefix" placeholder="0.00" onValueChange={(value) => console.log("Price:", value)} />
     </div>
   ),
 }
@@ -165,7 +165,7 @@ export const WithMinMax: Story = {
   render: () => (
     <div style={{ maxWidth: 288, display: "flex", flexDirection: "column", gap: "var(--spacing-xs)" }}>
       <Label htmlFor="decimal-range">Range: 0 to 1000</Label>
-      <CurrencyInput id="decimal-range" currency="USD" min={0} max={1000} onChange={(value) => console.log("Value:", value)} />
+      <CurrencyInput id="decimal-range" currency="USD" min={0} max={1000} onValueChange={(value) => console.log("Value:", value)} />
     </div>
   ),
 }
@@ -181,7 +181,7 @@ export const AllowNegative: Story = {
   render: () => (
     <div style={{ maxWidth: 288, display: "flex", flexDirection: "column", gap: "var(--spacing-xs)" }}>
       <Label htmlFor="decimal-negative">Allows negative values</Label>
-      <CurrencyInput id="decimal-negative" currency="USD" allowNegative onChange={(value) => console.log("Value:", value)} />
+      <CurrencyInput id="decimal-negative" currency="USD" allowNegative onValueChange={(value) => console.log("Value:", value)} />
     </div>
   ),
 }
