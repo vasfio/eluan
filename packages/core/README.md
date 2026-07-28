@@ -24,7 +24,7 @@ import { Button, EluanProvider } from "@eluan/core"
 
 export default function App() {
   return (
-    <EluanProvider defaultTheme="industrial-retro">
+    <EluanProvider defaultTheme="minimal">
       <Button>Hello</Button>
     </EluanProvider>
   )

@@ -1,6 +1,6 @@
 # Theming Eluan in your app
 
-Eluan ships with two built-in themes (`industrial-retro`, `minimal`) and a CSS-variable architecture you can extend without forking the package. This guide covers:
+Eluan ships with **one** built-in theme — `minimal`, a neutral typographic baseline — plus a CSS-variable architecture you can extend without forking the package. Themeability is the point: your brand's look is a custom theme you define, not one Eluan picked for you. This guide covers:
 
 1. [Setup — drop-in provider](#setup)
 2. [Switching themes at runtime](#switching-themes-at-runtime)
@@ -32,7 +32,7 @@ import { EluanProvider } from "@eluan/core"
 export default function App() {
   return (
     <EluanProvider
-      defaultTheme="industrial-retro"
+      defaultTheme="minimal"
       defaultMode="light"
       defaultSpacing="standard"
       defaultCurves="slight"
@@ -49,7 +49,7 @@ The provider writes `data-theme`, `data-mode`, `data-spacing`, and `data-curves`
 
 ## Switching themes at runtime
 
-Use the `useEluanTheme()` hook from anywhere inside the tree:
+Use the `useEluanTheme()` hook from anywhere inside the tree. `setTheme()` accepts `"minimal"` or the name of any custom theme registered on the provider — anything else is ignored with a dev-mode warning.
 
 ```tsx
 import { useEluanTheme } from "@eluan/core"
@@ -60,6 +60,7 @@ function ThemeSwitcher() {
   return (
     <>
       <button onClick={() => setTheme("minimal")}>Minimal</button>
+      <button onClick={() => setTheme("acme")}>Acme</button>
       <button onClick={() => setMode(mode === "light" ? "dark" : "light")}>
         Toggle mode
       </button>
@@ -68,13 +69,15 @@ function ThemeSwitcher() {
 }
 ```
 
-The hook returns `{ theme, mode, spacing, curves, setTheme, setMode, setSpacing, setCurves }`.
+The hook returns `{ theme, mode, spacing, curves, setTheme, setMode, setSpacing, setCurves }`. The mode (`light` / `dim` / `dark`), spacing, and curve axes are independent of the theme and always available.
 
 ---
 
 ## Creating a custom theme
 
-Use `createTheme()` to define your own theme by overriding only the tokens you care about. Everything else is inherited from a built-in `extends` theme — you don't need to redeclare 150+ variables.
+Use `createTheme()` to define your own theme by overriding only the tokens you care about. Everything else is inherited from the `extends` theme (`minimal` by default) — you don't need to redeclare 150+ variables.
+
+> Starting from brand colors rather than individual tokens? [`@eluan/theme-generator`](../packages/theme-generator) turns one to three accent colors into a full, contrast-checked light + dark token set you can drop straight into `createTheme()`.
 
 ```tsx
 // theme/acme.ts
@@ -82,7 +85,7 @@ import { createTheme } from "@eluan/core"
 
 export const acmeTheme = createTheme({
   name: "acme",
-  extends: "industrial-retro", // optional, defaults to "industrial-retro"
+  extends: "minimal", // optional — "minimal" is the only built-in and the default
   tokens: {
     "--font-heading": '"Acme Display", serif',
     "--font-body": '"Acme Sans", sans-serif',
@@ -111,17 +114,17 @@ export default function App() {
 }
 ```
 
-`setTheme("acme")` from `useEluanTheme()` works the same way as for built-in themes.
+`setTheme("acme")` from `useEluanTheme()` works the same way as it does for `minimal`.
 
 ### How inheritance works
 
 CSS doesn't support selector-level inheritance, so a custom theme can't simply extend another theme by name. Behind the scenes the provider sets **two** attributes on the target element when a custom theme is active:
 
 ```html
-<html data-theme="industrial-retro" data-theme-custom="acme">
+<html data-theme="minimal" data-theme-custom="acme">
 ```
 
-- `data-theme="industrial-retro"` activates the **base** theme's full token set (~150 variables).
+- `data-theme="minimal"` activates the **base** theme's full token set (~150 variables).
 - `data-theme-custom="acme"` activates **only your overrides** on top.
 
 Both selectors have equal CSS specificity, but the custom theme's `<style>` element is appended after the base CSS, so your overrides win on equal-specificity ties.
@@ -225,5 +228,5 @@ For Next.js you can render this via `next/script` with `strategy="beforeInteract
 | `useEluanTheme()` | Hook returning the active theme + setters |
 | `createTheme({ name, extends, tokens })` | Define a custom theme |
 | `loadThemeFonts(name)` | Manually preload a built-in theme's fonts |
-| `themes` | Array of built-in theme names |
+| `themes` | Array of built-in theme names (`["minimal"]`) |
 | `Theme`, `Mode`, `SpacingScale`, `CurveScale` | TS types |

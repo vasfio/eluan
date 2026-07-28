@@ -33,7 +33,7 @@ import { EluanProvider } from "@eluan/core"
 export function App() {
   return (
     <EluanProvider
-      defaultTheme="industrial-retro"
+      defaultTheme="minimal"
       defaultMode="light"
       defaultSpacing="standard"
       defaultCurves="slight"
@@ -48,12 +48,12 @@ Import `Header`, `HeaderNavigation`, and `Footer` from `@eluan/core` — either 
 
 ## Valid Values
 
-- `defaultTheme`: `industrial-retro`, `minimal`, or a custom theme name
+- `defaultTheme`: `minimal` (the only built-in) or a custom theme name
 - `defaultMode`: `light`, `dim`, `dark`
 - `defaultSpacing`: `compact`, `standard`, `wide`
 - `defaultCurves`: `sharp`, `slight`, `sweeping`
 
-Do not suggest removed themes: `lime`, `bold`, `beige`, `funky`.
+Do not suggest removed themes: `industrial-retro`, `lime`, `bold`, `beige`, `funky`.
 
 ## Theme Hook
 
@@ -101,7 +101,7 @@ import { createTheme, EluanProvider } from "@eluan/core"
 
 const acme = createTheme({
   name: "acme",
-  extends: "industrial-retro",
+  extends: "minimal", // optional — the only built-in, and the default
   tokens: {
     "--action-primary-bg": "#4f46e5",
     "--action-primary-bg-hover": "#4338ca",
@@ -111,12 +111,12 @@ const acme = createTheme({
 <EluanProvider customThemes={[acme]} defaultTheme="acme" />
 ```
 
-Always provide `extends` unless there is a deliberate reason to own every token.
+`extends` defaults to `"minimal"`; only set it explicitly for clarity. Overriding every token by hand is almost never the right call — reach for `@eluan/theme-generator` when you want a full brand palette.
 
 ## Troubleshooting
 
 - Missing styles: confirm CSS imports are in the app root and package CSS is bundled.
 - White-on-white UI: confirm `data-theme`, `data-mode`, and token CSS are present.
 - Fonts not changing: confirm `EluanProvider` is mounted and not blocked from accessing `document`.
-- Invalid theme: check `themes` export and custom theme name. Built-ins are only `industrial-retro` and `minimal`.
+- Invalid theme: check the `themes` export and the custom theme name. `minimal` is the only built-in; every other name must be registered via `customThemes`.
 - Consuming tokens in your own app CSS: reference them as plain CSS custom properties, e.g. `color: var(--container-fg);` and `font-size: var(--font-size-sm);`. Tokens are available anywhere below the element carrying the `data-theme`/`data-mode` attributes.

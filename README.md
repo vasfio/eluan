@@ -34,7 +34,7 @@ bun add @eluan/core @eluan/tokens
 // One import — core's styles.css bundles every token layer (primitives, modes,
 // themes, spacing, curves). A separate @eluan/tokens/css import is not needed.
 import "@eluan/core/styles.css"
-import "@eluan/tokens/fonts/industrial-retro" // theme fonts (optional)
+import "@eluan/tokens/fonts/minimal" // theme fonts (optional)
 
 import {
   Button,
@@ -47,7 +47,7 @@ import {
 
 function App() {
   return (
-    <EluanProvider defaultTheme="industrial-retro" defaultMode="light">
+    <EluanProvider defaultTheme="minimal" defaultMode="light">
       <Card>
         <CardHeader>
           <CardTitle>Hello Eluan</CardTitle>
@@ -135,7 +135,7 @@ Activated via HTML data attributes:
 ```html
 <html
   data-mode="light"           <!-- light | dim | dark -->
-  data-theme="industrial-retro"  <!-- industrial-retro | minimal | custom theme name -->
+  data-theme="minimal"        <!-- minimal | custom theme name -->
   data-spacing="standard"     <!-- compact | standard | wide -->
   data-curves="slight"        <!-- sharp | slight | sweeping -->
 >
@@ -199,8 +199,7 @@ Fonts are split per theme so you only ship the fonts your app actually uses. Onl
 
 ```css
 /* Static import: pick the one matching your theme */
-@import "@eluan/tokens/fonts/industrial-retro";   /* Geist (heading + body) */
-@import "@eluan/tokens/fonts/minimal";   /* Inter (heading + body) */
+@import "@eluan/tokens/fonts/minimal";         /* Inter (heading + body) */
 
 /* Special imports */
 @import "@eluan/tokens/fonts/base";            /* Geist Mono only (already in /css) */
@@ -211,8 +210,9 @@ Fonts are split per theme so you only ship the fonts your app actually uses. Onl
 
 | Theme | Heading Font | Body Font | Mono Font |
 |-------|-------------|-----------|-----------|
-| `industrial-retro` | Geist | Geist | Geist Mono |
 | `minimal` | Inter | Inter | Geist Mono |
+
+Custom themes inherit these unless they override `--font-heading` / `--font-body` / `--font-mono`; load those faces yourself.
 
 All fonts are self-hosted via `@fontsource` -- no CDN dependency.
 
@@ -239,7 +239,7 @@ The default export provides all tokens as typed JavaScript constants, useful for
 import {
   // -- Enums & Types --
   modes,                // ["light", "dim", "dark"] as const
-  themes,               // ["industrial-retro", "minimal"] as const
+  themes,               // ["minimal"] as const
   spacingScales,        // ["compact", "standard", "wide"] as const
   curveScales,          // ["sharp", "slight", "sweeping"] as const
   colorPalettes,        // ["blazeorange", "bluechill", ...20 total] as const
@@ -313,10 +313,10 @@ bun add @eluan/core @eluan/tokens
 import "@eluan/core/styles.css"
 
 // 2. Import fonts for your theme
-import "@eluan/tokens/fonts/industrial-retro"
+import "@eluan/tokens/fonts/minimal"
 
 // 3. Set data attributes on your root element
-// <html data-mode="light" data-theme="industrial-retro" data-spacing="standard" data-curves="slight">
+// <html data-mode="light" data-theme="minimal" data-spacing="standard" data-curves="slight">
 ```
 
 ### Peer Dependencies
@@ -567,8 +567,9 @@ Control the visual identity. Set via `data-theme` on the root element.
 
 | Theme | Character | Heading Font | Body Font |
 |-------|-----------|-------------|-----------|
-| `industrial-retro` | Clean, modern | Geist | Geist |
 | `minimal` | Minimal, typographic | Inter | Inter |
+
+`minimal` is the only built-in theme. Everything else is yours: `createTheme()` from `@eluan/core` overrides tokens on top of it, and [`@eluan/theme-generator`](packages/theme-generator) builds a whole accessible token set from your accent colors.
 
 ### Spacing Scales
 

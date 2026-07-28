@@ -17,18 +17,18 @@ Components should consume semantic tokens, not primitives, modes, or hex colors.
 
 ## Built-In Axes
 
-- Themes: `industrial-retro`, `minimal`
+- Themes: `minimal` (the only built-in — everything else is a consumer theme via `createTheme()` / `@eluan/theme-generator`)
 - Modes: `light`, `dim`, `dark`
 - Spacing: `compact`, `standard`, `wide`
 - Curves: `sharp`, `slight`, `sweeping`
 
-Do not reintroduce removed built-in themes such as `lime`, `bold`, `beige`, or `funky`.
+Do not reintroduce removed built-in themes such as `industrial-retro`, `lime`, `bold`, `beige`, or `funky`, and do not add new ones — consumer themeability is the design goal.
 
 ## Editing Tokens
 
 When adding or renaming tokens:
 
-1. Add complete definitions for every built-in theme/mode/axis that should support the token.
+1. Add a complete definition in the `minimal` theme block plus every mode/axis that should support the token — custom themes inherit from `minimal`, so a gap there is a gap everywhere.
 2. Update TypeScript exports in `packages/tokens/src/index.ts` when the public API changes.
 3. Update docs and examples that mention the changed token or axis.
 4. Search for the old name across `packages`, `docs`, and `README.md`.
@@ -52,7 +52,6 @@ Token CSS exports:
 
 - `@eluan/tokens/css`
 - `@eluan/tokens/fonts/base`
-- `@eluan/tokens/fonts/industrial-retro`
 - `@eluan/tokens/fonts/minimal`
 - `@eluan/tokens/fonts/all`
 

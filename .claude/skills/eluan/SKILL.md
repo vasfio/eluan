@@ -1,6 +1,6 @@
 ---
 name: eluan
-description: Use when building, theming, or extending UI in apps that depend on @eluan/core, @eluan/tokens, or @eluan/native. Covers component imports, theming via EluanProvider/createTheme, the three-layer token architecture (CSS variables scoped to data-theme/data-mode/data-spacing/data-curves), StyleX authoring, TypeScript types, and the conventions consumers should follow when adding new components or tokens. Trigger when the user mentions Eluan, @eluan, EluanProvider, useEluanTheme, createTheme, design tokens with --container-bg / --interactive-bg-selected / --action-primary-bg etc., the data-theme="industrial-retro|minimal" attribute, or any of the components listed below.
+description: Use when building, theming, or extending UI in apps that depend on @eluan/core, @eluan/tokens, or @eluan/native. Covers component imports, theming via EluanProvider/createTheme, the three-layer token architecture (CSS variables scoped to data-theme/data-mode/data-spacing/data-curves), StyleX authoring, TypeScript types, and the conventions consumers should follow when adding new components or tokens. Trigger when the user mentions Eluan, @eluan, EluanProvider, useEluanTheme, createTheme, design tokens with --container-bg / --interactive-bg-selected / --action-primary-bg etc., the data-theme="minimal" attribute, or any of the components listed below.
 ---
 
 # Eluan Design System
@@ -16,7 +16,7 @@ Trigger on any of:
 - Mentions of `EluanProvider`, `useEluanTheme`, `createTheme`, `loadThemeFonts`
 - Component names from the inventory below (e.g. "the Calendar component", "the Toast toaster", "Tree View")
 - CSS-variable names like `--container-bg`, `--interactive-fg-selected`, `--action-primary-bg-hover`, etc.
-- The `data-theme="industrial-retro" | "minimal"` attribute or `data-mode`, `data-spacing`, `data-curves`
+- The `data-theme="minimal"` (or custom theme) attribute or `data-mode`, `data-spacing`, `data-curves`
 - Authoring or editing a StyleX component (`stylex.create`, `stylex.props`, `stylex.keyframes`) that references Eluan tokens
 
 ## When this skill does NOT apply
@@ -42,7 +42,7 @@ Active scope is set via attribute selectors — components don't have to know ab
 
 ```html
 <html
-  data-theme="industrial-retro"   <!-- "industrial-retro" | "minimal" | <custom> -->
+  data-theme="minimal"            <!-- "minimal" | <custom theme name> -->
   data-mode="light"               <!-- "light" | "dim" | "dark" -->
   data-spacing="standard"         <!-- "compact" | "standard" | "wide" -->
   data-curves="slight"            <!-- "sharp" | "slight" | "sweeping" -->
@@ -51,7 +51,7 @@ Active scope is set via attribute selectors — components don't have to know ab
 
 Spacing density adjusts every `--size-*` and `--spacing-*` token. Curves adjusts every `--curves-*`.
 
-There are **only two built-in themes**: `industrial-retro` and `minimal`. The previous `lime`, `bold`, `beige`, `funky` themes were removed. Don't reference them.
+There is **exactly one built-in theme**: `minimal`. Everything else is a consumer theme defined with `createTheme()` (or generated with `@eluan/theme-generator`) — that consumer themeability is the point of the system, so never propose adding a second built-in theme to the library. The previously shipped `industrial-retro`, `lime`, `bold`, `beige`, and `funky` themes were removed. Don't reference them.
 
 ---
 
@@ -68,7 +68,7 @@ import { EluanProvider } from "@eluan/core"
 export default function App() {
   return (
     <EluanProvider
-      defaultTheme="industrial-retro"
+      defaultTheme="minimal"
       defaultMode="light"
       defaultSpacing="standard"
       defaultCurves="slight"
@@ -124,7 +124,7 @@ import { createTheme, EluanProvider } from "@eluan/core"
 
 const acme = createTheme({
   name: "acme",                  // must start with a letter; letters, digits, hyphens
-  extends: "industrial-retro",   // optional, default
+  extends: "minimal",            // optional — the only built-in, and the default
   tokens: {
     "--font-heading": '"Acme Display", serif',
     "--font-body":    '"Acme Sans", sans-serif',
@@ -140,7 +140,7 @@ const acme = createTheme({
 
 Behind the scenes: `createTheme` returns `{ name, extends, css }` where `css` is a `[data-theme-custom="<name>"] { ... }` block. The Provider injects all custom themes' CSS into a single `<style id="eluan-custom-themes">` element appended to `<head>`.
 
-`setTheme("acme")` then works exactly like a built-in theme.
+`setTheme("acme")` then works exactly like `setTheme("minimal")`.
 
 ---
 
@@ -460,11 +460,11 @@ There is one test suite per component (67 suites under `packages/core/src/compon
 - **Re-introducing removed themes** (`lime`, `bold`, `beige`, `funky`) or removed components (`AlertDialog`, `Timeline`, `Resizable`) — they were intentionally removed.
 - **Hardcoding hex/rgb colors or raw px in components** — should be tokens.
 - **Accepting/forwarding `className` or `style`** on a component — the system is styling-closed; restyle via tokens/themes.
-- **Adding a new token without defining it for both built-in themes** — it'll break for whichever theme is missing it.
+- **Adding a new token without defining it in the `minimal` theme block** — custom themes inherit from `minimal`, so a token missing there is unresolved everywhere.
 - **Bypassing `EluanProvider`** by setting `data-*` attributes manually inside React effects — works but loses persistence + font lazy-loading + system-mode sync.
 - **Importing `@radix-ui/*` primitives directly in app code** when a wrapped Eluan component exists, or importing from `@eluan/tokens` directly when `@eluan/core` re-exports the same thing.
-- **Custom themes without `extends`** — you'll inherit nothing and end up with unresolved tokens.
-- **Custom theme names that collide with built-ins** (`industrial-retro`, `minimal`) — the Provider throws at mount.
+- **Redeclaring all ~150 tokens in a custom theme** — `extends` defaults to `"minimal"`, so override only what changes; use `@eluan/theme-generator` for a full brand palette.
+- **Custom theme names that collide with the built-in** (`minimal`) — the Provider throws at mount.
 
 ---
 
@@ -473,14 +473,14 @@ There is one test suite per component (67 suites under `packages/core/src/compon
 ```tsx
 // Provider
 <EluanProvider
-  defaultTheme?:     "industrial-retro" | "minimal" | string  // default "industrial-retro"
-  defaultMode?:      "light" | "dim" | "dark"                 // default OS preference (light/dark)
-  defaultSpacing?:   "compact" | "standard" | "wide"          // default "standard"
-  defaultCurves?:    "sharp" | "slight" | "sweeping"          // default "slight"
-  customThemes?:     CustomTheme[]                            // from createTheme()
-  persist?:          boolean                                  // default true
-  followSystemMode?: boolean                                  // default true
-  target?:           "html" | "body" | HTMLElement | null     // default "html"
+  defaultTheme?:     "minimal" | string                   // default "minimal"
+  defaultMode?:      "light" | "dim" | "dark"             // default OS preference (light/dark)
+  defaultSpacing?:   "compact" | "standard" | "wide"      // default "standard"
+  defaultCurves?:    "sharp" | "slight" | "sweeping"      // default "slight"
+  customThemes?:     CustomTheme[]                        // from createTheme()
+  persist?:          boolean                              // default true
+  followSystemMode?: boolean                              // default true
+  target?:           "html" | "body" | HTMLElement | null // default "html"
 />
 
 // Hook
@@ -492,7 +492,7 @@ const {
 // Custom theme factory
 createTheme({
   name:     "acme",                         // starts with a letter; letters, digits, hyphens
-  extends?: "industrial-retro" | "minimal", // default "industrial-retro"
+  extends?: "minimal",                      // the only built-in; default "minimal"
   tokens:   { "--container-bg": "…", … },   // partial map of token overrides
 }): CustomTheme   // → { name, extends, css }
 
