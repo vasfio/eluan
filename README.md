@@ -18,7 +18,7 @@ A multi-package design system monorepo built with React, StyleX, and Radix UI pr
 |---------|-------------|---------|
 | [`@eluan/tokens`](#eluantokens) | Design tokens (colors, spacing, themes, fonts) | [![npm](https://img.shields.io/npm/v/@eluan/tokens?label=)](https://www.npmjs.com/package/@eluan/tokens) |
 | [`@eluan/core`](#eluancore) | UI components and layout patterns | [![npm](https://img.shields.io/npm/v/@eluan/core?label=)](https://www.npmjs.com/package/@eluan/core) |
-| [`@eluan/theme-generator`](#eluantheme-generator) | CLI that generates accessible theme token sets from accent colors | [![npm](https://img.shields.io/npm/v/@eluan/theme-generator?label=)](https://www.npmjs.com/package/@eluan/theme-generator) |
+| [`@eluan/theme-generator`](#eluantheme-generator) | CLI + browser-safe library that generates accessible theme token sets from accent colors | [![npm](https://img.shields.io/npm/v/@eluan/theme-generator?label=)](https://www.npmjs.com/package/@eluan/theme-generator) |
 | [`@eluan/native`](#eluannative) | React Native components | _not yet published_ |
 
 ## Quick Start
@@ -544,8 +544,44 @@ Flags: `--accent <hex>` (1–3, repeat the flag for multiple), `--name`, `--out`
 ```ts
 import { generateTheme } from "@eluan/theme-generator"
 
-const theme = generateTheme({ name: "ocean", accents: ["#FF4A2C"] })
+const result = generateTheme({
+  accents: ["#FF4A2C"],
+  themeName: "ocean",
+  minContrast: 4.5,
+  neutralTintRatio: 0.04,
+})
+
+result.css.theme          // drop-in CSS for both modes
+result.createThemeTokens  // light-mode token map for createTheme()
 ```
+
+### In the browser
+
+The programmatic entry imports nothing from Node, so it works in a client component — accents in, theme out, live. (A `check:browser` script bundles the built entry for the browser platform in CI to keep it that way.)
+
+```tsx
+"use client"
+
+import { generateTheme, compileCreateThemeTokens } from "@eluan/theme-generator"
+
+const result = generateTheme({
+  accents: [userPickedHex],
+  themeName: "live",
+  minContrast: 4.5,
+  neutralTintRatio: 0.04,
+})
+
+// Inject the compiled CSS…
+const style = document.createElement("style")
+style.textContent = result.css.theme
+document.head.append(style)
+document.documentElement.dataset.theme = "live"
+
+// …or take the token maps straight to createTheme()
+const dark = compileCreateThemeTokens(result.semanticMap, result.primitives, "dark")
+```
+
+Generation is synchronous and takes a couple of milliseconds; debounce it if you drive it from a live color input. Only the `eluan-theme` CLI touches the filesystem.
 
 ---
 
