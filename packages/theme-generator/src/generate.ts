@@ -1,4 +1,3 @@
-import { createHash } from 'node:crypto';
 import type {
   ContrastCorrection,
   GeneratorConfig,
@@ -16,6 +15,43 @@ import {
   compileCreateThemeTokens,
 } from './compile/css.js';
 
+/*
+ * FNV-1a (64-bit) constants.
+ *
+ * This is a *fingerprint*, not a cryptographic digest. It exists so a generated
+ * theme carries a short, stable marker of the inputs it came from — enough to
+ * cache-bust and to tell "regenerated from the same config" apart from
+ * "regenerated from a different config" at a glance. It is NOT collision
+ * resistant and must never be used for integrity, authentication, or any other
+ * security purpose.
+ *
+ * FNV-1a is used here instead of a `node:crypto` SHA-256 digest so that the
+ * programmatic entry point of this package stays free of Node built-ins and can
+ * run unchanged in the browser.
+ */
+const FNV_OFFSET_BASIS_64 = 0xcbf29ce484222325n;
+const FNV_PRIME_64 = 0x100000001b3n;
+const U64_MASK = 0xffffffffffffffffn;
+
+function fnv1a64(input: string): bigint {
+  let hash = FNV_OFFSET_BASIS_64;
+  for (let i = 0; i < input.length; i++) {
+    // Hash UTF-16 code units. Inputs here are hex colors and numbers, so this is
+    // effectively ASCII, but code-unit iteration keeps the result deterministic
+    // for any string.
+    hash ^= BigInt(input.charCodeAt(i));
+    hash = (hash * FNV_PRIME_64) & U64_MASK;
+  }
+  return hash;
+}
+
+/**
+ * Short, deterministic fingerprint of the inputs that shape a generated theme.
+ *
+ * Same config in, same 12-character lowercase hex string out. Used to stamp
+ * generated CSS and the generation report. Not a security primitive — see the
+ * note on the FNV-1a constants above.
+ */
 export function computeInputHash(config: GeneratorConfig): string {
   const input = JSON.stringify({
     accents: config.accents,
@@ -24,7 +60,9 @@ export function computeInputHash(config: GeneratorConfig): string {
     systemHues: config.systemHues,
     curve: config.curve,
   });
-  return createHash('sha256').update(input).digest('hex').slice(0, 12);
+  // Take the high 48 bits: FNV-1a mixes upward through the multiply, so the high
+  // nibbles are the better-distributed end of the digest.
+  return fnv1a64(input).toString(16).padStart(16, '0').slice(0, 12);
 }
 
 function buildReport(

@@ -28,6 +28,23 @@ describe('computeInputHash', () => {
     const hash2 = computeInputHash(DUAL_CONFIG);
     expect(hash1).not.toBe(hash2);
   });
+
+  it('is a 12-character lowercase hex fingerprint', () => {
+    expect(computeInputHash(ORANGE_CONFIG)).toMatch(/^[0-9a-f]{12}$/);
+  });
+
+  it('ignores the theme name', () => {
+    const renamed = { ...ORANGE_CONFIG, themeName: 'something-else' };
+    expect(computeInputHash(renamed)).toBe(computeInputHash(ORANGE_CONFIG));
+  });
+
+  // Golden vectors: the fingerprint is part of generated output, so an
+  // unintended change to the hashing algorithm should fail loudly rather than
+  // silently churn every generated theme.
+  it('matches known fingerprints', () => {
+    expect(computeInputHash(ORANGE_CONFIG)).toBe('3fb5aafa8cc9');
+    expect(computeInputHash(DUAL_CONFIG)).toBe('d63881b946f3');
+  });
 });
 
 describe('generateTheme', () => {

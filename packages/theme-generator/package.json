@@ -1,6 +1,6 @@
 {
   "name": "@eluan/theme-generator",
-  "description": "CLI tool that generates accessible, light + dark mode Eluan theme token sets from accent colors",
+  "description": "CLI and browser-safe library that generates accessible, light + dark mode Eluan theme token sets from accent colors",
   "version": "0.1.0",
   "license": "MIT",
   "author": "Frolda",
@@ -18,9 +18,15 @@
     "theme",
     "cli",
     "eluan",
-    "color"
+    "color",
+    "oklch",
+    "accessibility",
+    "browser"
   ],
   "type": "module",
+  "sideEffects": [
+    "./dist/cli/*.js"
+  ],
   "engines": {
     "node": ">=20"
   },
@@ -45,6 +51,7 @@
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "dev": "tsc --watch",
     "lint": "eslint src --report-unused-disable-directives --max-warnings 0",
+    "check:browser": "pnpm run build && esbuild dist/index.js --bundle --platform=browser --outfile=/dev/null --log-level=warning",
     "test": "vitest run",
     "test:watch": "vitest"
   },
@@ -54,6 +61,7 @@
   },
   "devDependencies": {
     "@types/prompts": "^2.4.9",
+    "esbuild": "^0.27.7",
     "typescript": "^5.4.5",
     "vitest": "^2.0.0"
   }
