@@ -4,7 +4,6 @@ import {
   curveScales,
   modes,
   spacingScales,
-  themes,
   type CurveScale,
   type Mode,
   type SpacingScale,
@@ -16,11 +15,14 @@ if (import.meta.env.DEV) {
   void import("virtual:stylex:runtime")
 }
 
+// `minimal` is the only built-in theme, so there is no theme toolbar —
+// stories always render on it. Consumer themes come from createTheme().
+const ELUAN_THEME: Theme = "minimal"
+
 type EluanGlobals = {
   curves: CurveScale
   mode: Mode
   spacing: SpacingScale
-  theme: Theme
 }
 
 type EluanPreviewOptions = {
@@ -40,7 +42,6 @@ const initialGlobals = {
   eluanCurves: "slight",
   eluanMode: "light",
   eluanSpacing: "standard",
-  eluanTheme: "industrial-retro",
 } satisfies Preview["initialGlobals"]
 
 const globalTypes = {
@@ -52,21 +53,6 @@ const globalTypes = {
       items: modes.map((value) => ({
         value,
         title: value[0].toUpperCase() + value.slice(1),
-      })),
-      dynamicTitle: true,
-    },
-  },
-  eluanTheme: {
-    name: "Theme",
-    description: "Eluan visual theme",
-    toolbar: {
-      icon: "paintbrush",
-      items: themes.map((value) => ({
-        value,
-        title: value
-          .split("-")
-          .map((part) => part[0].toUpperCase() + part.slice(1))
-          .join(" "),
       })),
       dynamicTitle: true,
     },
@@ -119,7 +105,6 @@ function readGlobals(globals: Record<string, unknown>): EluanGlobals {
     curves: oneOf(globals.eluanCurves ?? globals.curves, curveScales, "slight"),
     mode: oneOf(globals.eluanMode ?? globals.mode, modes, "light"),
     spacing: oneOf(globals.eluanSpacing ?? globals.spacing, spacingScales, "standard"),
-    theme: oneOf(globals.eluanTheme ?? globals.theme, themes, "industrial-retro"),
   }
 }
 
@@ -127,12 +112,12 @@ function applyThemeAttributes(element: HTMLElement, globals: EluanGlobals) {
   element.setAttribute("data-curves", globals.curves)
   element.setAttribute("data-mode", globals.mode)
   element.setAttribute("data-spacing", globals.spacing)
-  element.setAttribute("data-theme", globals.theme)
+  element.setAttribute("data-theme", ELUAN_THEME)
 }
 
 function EluanStorybookFrame({ Story, context, padded }: EluanStorybookFrameProps) {
   const globals = readGlobals(context.globals)
-  const providerKey = `${globals.theme}:${globals.mode}:${globals.spacing}:${globals.curves}`
+  const providerKey = `${globals.mode}:${globals.spacing}:${globals.curves}`
 
   useLayoutEffect(() => {
     applyThemeAttributes(document.documentElement, globals)
@@ -140,7 +125,7 @@ function EluanStorybookFrame({ Story, context, padded }: EluanStorybookFrameProp
     document.documentElement.style.colorScheme = globals.mode === "dark" ? "dark" : "light"
     document.body.style.backgroundColor = "var(--container-bg)"
     document.body.style.color = "var(--container-fg)"
-  }, [globals.curves, globals.mode, globals.spacing, globals.theme])
+  }, [globals.curves, globals.mode, globals.spacing])
 
   return (
     <EluanProvider
@@ -148,7 +133,7 @@ function EluanStorybookFrame({ Story, context, padded }: EluanStorybookFrameProp
       defaultCurves={globals.curves}
       defaultMode={globals.mode}
       defaultSpacing={globals.spacing}
-      defaultTheme={globals.theme}
+      defaultTheme={ELUAN_THEME}
       followSystemMode={false}
       persist={false}
       target="html"
