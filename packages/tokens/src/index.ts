@@ -13,10 +13,9 @@ export type Mode = (typeof modes)[number]
 // Available Themes
 // ============================================
 
-export const themes = [
-  "industrial-retro",
-  "minimal",
-] as const
+// `minimal` is the only built-in theme. Everything else is a consumer theme
+// built with createTheme() from @eluan/core or @eluan/theme-generator.
+export const themes = ["minimal"] as const
 export type Theme = (typeof themes)[number]
 
 // ============================================
@@ -515,10 +514,6 @@ export const themeFonts: Record<
   Theme,
   { heading: string; body: string }
 > = {
-  "industrial-retro": {
-    heading: "Geist",
-    body: "Geist",
-  },
   "minimal": {
     heading: "Inter",
     body: "Inter",
@@ -533,7 +528,6 @@ export const themeFonts: Record<
 // this to resolve mode backgrounds/foregrounds per theme.
 
 export const themeNeutrals: Record<Theme, ColorPalette> = {
-  "industrial-retro": "concrete",
   "minimal": "mono",
 }
 
@@ -547,7 +541,7 @@ export const themeNeutrals: Record<Theme, ColorPalette> = {
 //   useEffect(() => { loadThemeFonts(theme) }, [theme])
 //
 // Usage (vanilla):
-//   loadThemeFonts('bold')
+//   loadThemeFonts('minimal')
 
 const _loadedFonts = new Set<Theme>()
 
@@ -564,10 +558,6 @@ export async function loadThemeFonts(theme: Theme): Promise<void> {
   if (_loadedFonts.has(theme)) return
 
   switch (theme) {
-    case "industrial-retro":
-      await import("@fontsource/geist/400.css")
-      await import("@fontsource/geist/500.css")
-      break
     case "minimal":
       await import("@fontsource/inter/400.css")
       await import("@fontsource/inter/500.css")

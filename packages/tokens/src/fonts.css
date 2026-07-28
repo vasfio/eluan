@@ -4,10 +4,6 @@
   Only medium weight loaded (max weight across all themes = 500).
 */
 
-/* Geist — industrial-retro heading + body */
-@import "@fontsource/geist/400.css";
-@import "@fontsource/geist/500.css";
-
 /* Geist Mono — all themes mono */
 @import "@fontsource/geist-mono/400.css";
 @import "@fontsource/geist-mono/500.css";

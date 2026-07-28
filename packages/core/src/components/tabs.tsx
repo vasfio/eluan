@@ -21,9 +21,9 @@ export type TabsContentProps = Omit<
 
 const styles = stylex.create({
   // Theme-scoped via --tabs-* component tokens (see packages/tokens themes.css):
-  // industrial-retro renders the machined SegmentedControl look (recessed track,
-  // raised active cap); minimal keeps its original flat pill. All theme-varying
-  // properties resolve through those tokens so minimal is frozen unchanged.
+  // minimal renders a flat pill (underlaid track, subtle raised active pill).
+  // Every theme-varying property resolves through those tokens, so a custom
+  // theme can restyle the track and active cap without touching this file.
   list: {
     alignItems: "center",
     backgroundColor: "var(--tabs-list-bg)",

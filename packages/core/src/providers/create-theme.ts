@@ -8,13 +8,13 @@ import type { Theme } from "@eluan/tokens"
 //
 // CSS doesn't have selector inheritance, so we can't simply emit
 // `[data-theme="acme"] { …a few tokens… }` and expect the rest to fall
-// through from `industrial-retro`. Instead, the Provider sets two attributes
+// through from `minimal`. Instead, the Provider sets two attributes
 // on the target element when a custom theme is active:
 //
-//   <html data-theme="industrial-retro" data-theme-custom="acme">
+//   <html data-theme="minimal" data-theme-custom="acme">
 //
 // `data-theme` carries the BASE theme so all 150 base tokens activate via
-// Eluan's existing `[data-theme="industrial-retro"]` rule. Then a separate
+// Eluan's existing `[data-theme="minimal"]` rule. Then a separate
 // `[data-theme-custom="acme"]` rule (emitted by `createTheme`) overrides
 // just the tokens listed in `tokens`. The custom rule loads after the base
 // (via the Provider's injected `<style>`) so equal-specificity overrides win.
@@ -35,7 +35,8 @@ export interface CreateThemeOptions {
   name: string
   /**
    * Built-in theme this custom theme inherits from. Tokens not overridden
-   * fall through to this theme. Defaults to `"industrial-retro"`.
+   * fall through to this theme. `"minimal"` is the only built-in theme and
+   * the default, so this rarely needs to be set.
    */
   extends?: Theme
   /** CSS variables to override. Everything else is inherited from `extends`. */
@@ -62,7 +63,6 @@ export interface CustomTheme {
  * @example
  * const acme = createTheme({
  *   name: "acme",
- *   extends: "industrial-retro",
  *   tokens: {
  *     "--action-primary-bg": "#4f46e5",
  *     "--action-primary-bg-hover": "#4338ca",
@@ -71,7 +71,7 @@ export interface CustomTheme {
  * })
  */
 export function createTheme(options: CreateThemeOptions): CustomTheme {
-  const { name, extends: base = "industrial-retro", tokens } = options
+  const { name, extends: base = "minimal", tokens } = options
 
   if (!/^[a-z][a-z0-9-]*$/i.test(name)) {
     throw new Error(

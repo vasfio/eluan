@@ -394,9 +394,6 @@ importers:
 
   packages/tokens:
     dependencies:
-      '@fontsource/geist':
-        specifier: ^5.2.8
-        version: 5.2.8
       '@fontsource/geist-mono':
         specifier: ^5.2.7
         version: 5.2.7
@@ -2166,9 +2163,6 @@ packages:
 
   '@fontsource/geist-mono@5.2.7':
     resolution: {integrity: sha512-xVPVFISJg/K0VVd+aQN0Y7X/sw9hUcJPyDWFJ5GpyU3bHELhoRsJkPSRSHXW32mOi0xZCUQDOaPj1sqIFJ1FGg==}
-
-  '@fontsource/geist@5.2.8':
-    resolution: {integrity: sha512-pI54klK6vz8fVpAVyV+iODGLEzw73cs1XJqV9PIXgW8MYMmBcwK6lKKaWqJrNHwEx8ppz9cuhussb6arXQ/PVQ==}
 
   '@fontsource/inter@5.2.8':
     resolution: {integrity: sha512-P6r5WnJoKiNVV+zvW2xM13gNdFhAEpQ9dQJHt3naLvfg+LkF2ldgSLiF4T41lf1SQCM9QmkqPTn4TH568IRagg==}
@@ -9969,8 +9963,6 @@ snapshots:
   '@floating-ui/utils@0.2.11': {}
 
   '@fontsource/geist-mono@5.2.7': {}
-
-  '@fontsource/geist@5.2.8': {}
 
   '@fontsource/inter@5.2.8': {}
 

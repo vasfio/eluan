@@ -1,7 +1,9 @@
 /* ============================================
  * LAYER 3: Themes
- * Component-level tokens that define the visual identity
- * Each theme uses different accent colors from the primitive palette
+ * Component-level tokens that define the visual identity.
+ * `minimal` is the only built-in theme; define your own with
+ * createTheme() from @eluan/core (or @eluan/theme-generator) — a custom
+ * theme inherits this token set and overrides only what it names.
  * Categories: action, container, interactive, destructive,
  *             cautionary, important, informative, positive, dataviz
  * ============================================ */
@@ -12,254 +14,23 @@
  * monochrome identity; modes.css derives backgrounds/foregrounds from it,
  * so mode step logic stays shared while the ramp swaps per brand.
  * Custom themes can remap the ramp via createTheme token overrides.
- * The :root default mirrors industrial-retro for unthemed scopes and must
- * precede the theme blocks so the attribute selectors win the cascade.
+ * The :root default mirrors `minimal` (the sole built-in theme) so unthemed
+ * scopes still resolve, and must precede the theme blocks so the attribute
+ * selectors win the cascade.
  * ---------------------------------------- */
 :root {
-  --color-neutral-0: var(--color-concrete-0);
-  --color-neutral-50: var(--color-concrete-50);
-  --color-neutral-100: var(--color-concrete-100);
-  --color-neutral-200: var(--color-concrete-200);
-  --color-neutral-300: var(--color-concrete-300);
-  --color-neutral-400: var(--color-concrete-400);
-  --color-neutral-500: var(--color-concrete-500);
-  --color-neutral-600: var(--color-concrete-600);
-  --color-neutral-700: var(--color-concrete-700);
-  --color-neutral-800: var(--color-concrete-800);
-  --color-neutral-900: var(--color-concrete-900);
-  --color-neutral-950: var(--color-concrete-950);
-}
-
-/* ----------------------------------------
- * Theme: Classic Retro
- * Based on Blaze Orange
- * ---------------------------------------- */
- [data-theme="industrial-retro"] {
-  /* Neutral ramp — concrete (Remlo's warm mineral grey) */
-  --color-neutral-0: var(--color-concrete-0);
-  --color-neutral-50: var(--color-concrete-50);
-  --color-neutral-100: var(--color-concrete-100);
-  --color-neutral-200: var(--color-concrete-200);
-  --color-neutral-300: var(--color-concrete-300);
-  --color-neutral-400: var(--color-concrete-400);
-  --color-neutral-500: var(--color-concrete-500);
-  --color-neutral-600: var(--color-concrete-600);
-  --color-neutral-700: var(--color-concrete-700);
-  --color-neutral-800: var(--color-concrete-800);
-  --color-neutral-900: var(--color-concrete-900);
-  --color-neutral-950: var(--color-concrete-950);
-
-  --font-heading: "Geist", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Geist", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-
-  /* Skeuomorphism — machined control faces after Rams-era Braun hardware
-     (light from the top-left, 127deg): raised caps carry a top-left rim
-     highlight, a bottom-right rim shade, and a graduated diagonal shadow
-     stack that lengthens on hover; pressed is the latched-in state; wells
-     are soft single-inset recesses; bezel is a micro-emboss for label
-     plates. Pair shadows with the --skeuo-surface-* gradients from the
-     mode layer for the convex/concave face itself. */
-  --skeuo-raised:
-    inset 0.5px 0.5px 0 var(--skeuo-highlight),
-    inset -0.5px -0.5px 0 var(--skeuo-shade),
-    0 0 0 1px var(--skeuo-shade),
-    0 1px 1.5px -0.5px var(--skeuo-shade),
-    0.5px 2px 6px -1px var(--skeuo-shadow),
-    1px 5px 14px -3px var(--skeuo-shadow);
-  --skeuo-raised-hover:
-    inset 0.5px 0.5px 0 var(--skeuo-highlight),
-    inset -0.5px -0.5px 0 var(--skeuo-shade),
-    0 0 0 1px var(--skeuo-shade),
-    0 1.5px 2px -0.5px var(--skeuo-shade),
-    1px 4px 10px -2px var(--skeuo-shadow),
-    2px 9px 22px -4px var(--skeuo-shadow);
-  --skeuo-pressed:
-    inset 0.5px 0.5px 1.5px var(--skeuo-shade),
-    inset 1.5px 1.5px 3px var(--skeuo-shadow),
-    inset -0.5px -0.5px 0 var(--skeuo-highlight),
-    0 0 0 1px var(--skeuo-shade);
-  --skeuo-recessed:
-    inset 0 1px 2px var(--skeuo-shade),
-    0 0.5px 0 var(--skeuo-highlight);
-  --skeuo-bezel:
-    inset 0.5px 0.5px 0 var(--skeuo-highlight),
-    inset -0.5px -0.5px 0 var(--skeuo-shade),
-    0.5px 0.5px 1px var(--skeuo-shadow);
-  /* Machined dimple grid (knurled grip on knobs/thumbs): one concave dot
-     per tile under the same top-left light — dark pit up-left over a light
-     lip down-right. Always exactly two image layers: consumers tile them
-     via background-size/-repeat lists using --skeuo-dimple-size. */
-  --skeuo-dimple:
-    radial-gradient(circle at 44% 44%, var(--skeuo-shade) 0%, var(--skeuo-shade) 16%, transparent 28%),
-    radial-gradient(circle at 58% 58%, var(--skeuo-highlight) 0%, var(--skeuo-highlight) 16%, transparent 28%);
-  --skeuo-dimple-size: 5px 5px;
-
-  /* Slider — fader-cap thumb: a wide ellipse with the knurled grip */
-  --slider-thumb-width: calc(var(--size-xxs) * 1.75);
-  --slider-thumb-height: calc(var(--size-xxs) * 1.25);
-
-  /* Tabs — machined segmented-control look: recessed track, raised active cap
-     (matches the SegmentedControl component in this theme). */
-  --tabs-list-bg: var(--backgrounds-secondary);
-  --tabs-list-shadow: var(--skeuo-recessed);
-  --tabs-list-radius: var(--curves-md);
-  --tabs-list-padding: var(--spacing-xxs);
-  --tabs-list-gap: var(--spacing-xxs);
-  --tabs-trigger-radius: var(--curves-sm);
-  --tabs-trigger-fg: var(--interactive-fg-alt);
-  --tabs-trigger-hover-fg: var(--interactive-fg);
-  --tabs-trigger-selected-bg: var(--interactive-bg);
-  --tabs-trigger-selected-fg: var(--interactive-fg);
-  --tabs-trigger-selected-surface: var(--skeuo-surface-raised);
-  --tabs-trigger-selected-shadow: var(--skeuo-raised);
-
-  --container-bg: var(--backgrounds-primary);
-  --container-bg-alt: var(--backgrounds-secondary);
-  --container-bg-inverse: var(--foregrounds-secondary);
-  --container-border: var(--backgrounds-tertiary);
-  --container-border-alt: var(--backgrounds-quaternary);
-  --container-border-inverse: var(--foregrounds-tertiary);
-  --container-fg: var(--foregrounds-primary);
-  --container-fg-alt: var(--foregrounds-secondary);
-  --container-fg-inverse: var(--backgrounds-primary);
-  --interactive-bg: var(--backgrounds-primary);
-  --interactive-bg-alt: var(--backgrounds-secondary);
-  --interactive-bg-alt2: var(--blazeorange-background);
-  --interactive-bg-disabled: var(--backgrounds-tertiary);
-  --interactive-bg-hover: var(--backgrounds-tertiary);
-  --interactive-bg-active: var(--blazeorange-shade);
-  --interactive-bg-selected: var(--blazeorange-shade);
-  --interactive-bg-inverse: var(--foregrounds-primary);
-  --interactive-border: var(--backgrounds-tertiary);
-  --interactive-border-alt: var(--backgrounds-quaternary);
-  --interactive-border-disabled: var(--backgrounds-quaternary);
-  --interactive-fg: var(--foregrounds-primary);
-  --interactive-fg-alt: var(--foregrounds-tertiary);
-  --interactive-fg-readonly: var(--foregrounds-secondary);
-  --interactive-fg-disabled: var(--foregrounds-quinary);
-  --interactive-fg-active: var(--blazeorange-tint);
-  --interactive-fg-selected: var(--blazeorange-tint);
-  --interactive-fg-inverse: var(--backgrounds-primary);
-  --action-primary-bg: var(--blazeorange-main);
-  --action-primary-bg-hover: var(--blazeorange-shade);
-  --action-primary-bg-active: var(--blazeorange-shade);
-  --action-primary-bg-selected: var(--blazeorange-shade);
-  --action-primary-bg-disabled: var(--blazeorange-tint);
-  --action-primary-bg-inverse: var(--blazeorange-background);
-  --action-primary-fg: var(--backgrounds-primary);
-  --action-primary-fg-disabled: var(--foregrounds-quinary);
-  --action-primary-fg-active: var(--backgrounds-primary);
-  --action-primary-fg-selected: var(--backgrounds-primary);
-  --action-primary-fg-inverse: var(--blazeorange-foreground);
-  --action-secondary-bg-hover: var(--blazeorange-tint);
-  --action-secondary-bg-active: var(--blazeorange-main);
-  --action-secondary-bg-selected: var(--blazeorange-main);
-  --action-secondary-bg-disabled: var(--backgrounds-tertiary);
-  --action-secondary-border: var(--blazeorange-main);
-  --action-secondary-border-alt: var(--blazeorange-shade);
-  --action-secondary-border-disabled: var(--blazeorange-tint);
-  --action-secondary-border-inverse: var(--blazeorange-background);
-  --action-secondary-fg: var(--blazeorange-main);
-  --action-secondary-fg-alt: var(--foregrounds-primary);
-  --action-secondary-fg-disabled: var(--foregrounds-quinary);
-  --action-secondary-fg-active: var(--backgrounds-primary);
-  --action-secondary-fg-selected: var(--backgrounds-primary);
-  --action-secondary-fg-inverse: var(--foregrounds-primary);
-  --action-tertiary-bg: var(--backgrounds-primary);
-  --action-tertiary-bg-alt: var(--backgrounds-secondary);
-  --action-tertiary-bg-hover: var(--blazeorange-background);
-  --action-tertiary-bg-active: var(--blazeorange-tint);
-  --action-tertiary-bg-selected: var(--blazeorange-tint);
-  --action-tertiary-bg-disabled: var(--backgrounds-primary);
-  --action-tertiary-bg-inverse: var(--backgrounds-primary);
-  --action-tertiary-border: var(--blazeorange-main);
-  --action-tertiary-border-alt: var(--blazeorange-shade);
-  --action-tertiary-border-disabled: var(--backgrounds-quaternary);
-  --action-tertiary-border-inverse: var(--blazeorange-tint);
-  --action-tertiary-fg: var(--blazeorange-main);
-  --action-tertiary-fg-alt: var(--foregrounds-primary);
-  --action-tertiary-fg-disabled: var(--foregrounds-quinary);
-  --action-tertiary-fg-active: var(--blazeorange-foreground);
-  --action-tertiary-fg-selected: var(--blazeorange-foreground);
-  --action-tertiary-fg-inverse: var(--backgrounds-primary);
-  --destructive-bg: var(--torchred-background);
-  --destructive-bg-alt: var(--torchred-tint);
-  --destructive-bg-hover: var(--torchred-tint);
-  --destructive-bg-active: var(--torchred-shade);
-  --destructive-bg-selected: var(--torchred-shade);
-  --destructive-bg-disabled: var(--backgrounds-tertiary);
-  --destructive-bg-inverse: var(--torchred-shade);
-  --destructive-border: var(--torchred-main);
-  --destructive-border-alt: var(--torchred-shade);
-  --destructive-border-disabled: var(--torchred-tint);
-  --destructive-border-inverse: var(--torchred-background);
-  --destructive-fg: var(--torchred-foreground);
-  --destructive-fg-alt: var(--foregrounds-primary);
-  --destructive-fg-disabled: var(--foregrounds-quinary);
-  --destructive-fg-active: var(--backgrounds-primary);
-  --destructive-fg-selected: var(--backgrounds-primary);
-  --destructive-fg-inverse: var(--torchred-background);
-  --positive-bg: var(--seagreen-background);
-  --positive-bg-alt: var(--seagreen-tint);
-  --positive-bg-inverse: var(--seagreen-shade);
-  --positive-border: var(--seagreen-main);
-  --positive-border-alt: var(--seagreen-shade);
-  --positive-border-inverse: var(--seagreen-background);
-  --positive-fg: var(--seagreen-foreground);
-  --positive-fg-alt: var(--foregrounds-primary);
-  --positive-fg-inverse: var(--seagreen-background);
-  --cautionary-bg: var(--maitai-background);
-  --cautionary-bg-alt: var(--maitai-tint);
-  --cautionary-bg-inverse: var(--maitai-shade);
-  --cautionary-border: var(--maitai-main);
-  --cautionary-border-alt: var(--maitai-shade);
-  --cautionary-border-inverse: var(--maitai-background);
-  --cautionary-fg: var(--maitai-foreground);
-  --cautionary-fg-alt: var(--foregrounds-primary);
-  --cautionary-fg-inverse: var(--maitai-background);
-  --informative-bg: var(--blueribbon-background);
-  --informative-bg-alt: var(--blueribbon-tint);
-  --informative-bg-inverse: var(--blueribbon-shade);
-  --informative-border: var(--blueribbon-main);
-  --informative-border-alt: var(--blueribbon-shade);
-  --informative-border-inverse: var(--blueribbon-background);
-  --informative-fg: var(--blueribbon-foreground);
-  --informative-fg-alt: var(--foregrounds-primary);
-  --informative-fg-inverse: var(--blueribbon-background);
-  --important-bg: var(--electricviolet-background);
-  --important-bg-alt: var(--electricviolet-tint);
-  --important-bg-inverse: var(--electricviolet-shade);
-  --important-border: var(--electricviolet-main);
-  --important-border-alt: var(--electricviolet-shade);
-  --important-border-inverse: var(--electricviolet-background);
-  --important-fg: var(--electricviolet-foreground);
-  --important-fg-alt: var(--foregrounds-primary);
-  --important-fg-inverse: var(--electricviolet-background);
-  --dataviz-1-main: var(--blazeorange-main);
-  --dataviz-1-tint: var(--blazeorange-tint);
-  --dataviz-1-shade: var(--blazeorange-shade);
-  --dataviz-2-main: var(--blueribbon-main);
-  --dataviz-2-tint: var(--blueribbon-tint);
-  --dataviz-2-shade: var(--blueribbon-shade);
-  --dataviz-3-main: var(--seagreen-main);
-  --dataviz-3-tint: var(--seagreen-tint);
-  --dataviz-3-shade: var(--seagreen-shade);
-  --dataviz-4-main: var(--electricviolet-main);
-  --dataviz-4-tint: var(--electricviolet-tint);
-  --dataviz-4-shade: var(--electricviolet-shade);
-  --dataviz-5-main: var(--maitai-main);
-  --dataviz-5-tint: var(--maitai-tint);
-  --dataviz-5-shade: var(--maitai-shade);
-  --dataviz-6-main: var(--cerise-main);
-  --dataviz-6-tint: var(--cerise-tint);
-  --dataviz-6-shade: var(--cerise-shade);
-  --dataviz-7-main: var(--electriclime-main);
-  --dataviz-7-tint: var(--electriclime-tint);
-  --dataviz-7-shade: var(--electriclime-shade);
-  --dataviz-8-main: var(--lochmara-main);
-  --dataviz-8-tint: var(--lochmara-tint);
-  --dataviz-8-shade: var(--lochmara-shade);
+  --color-neutral-0: var(--color-mono-0);
+  --color-neutral-50: var(--color-mono-50);
+  --color-neutral-100: var(--color-mono-100);
+  --color-neutral-200: var(--color-mono-200);
+  --color-neutral-300: var(--color-mono-300);
+  --color-neutral-400: var(--color-mono-400);
+  --color-neutral-500: var(--color-mono-500);
+  --color-neutral-600: var(--color-mono-600);
+  --color-neutral-700: var(--color-mono-700);
+  --color-neutral-800: var(--color-mono-800);
+  --color-neutral-900: var(--color-mono-900);
+  --color-neutral-950: var(--color-mono-950);
 }
 
 [data-theme="minimal"] {

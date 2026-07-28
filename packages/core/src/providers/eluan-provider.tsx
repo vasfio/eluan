@@ -26,14 +26,14 @@ import type { CustomTheme } from "./create-theme"
 //
 //   export default function App() {
 //     return (
-//       <EluanProvider defaultTheme="industrial-retro" defaultMode="light">
+//       <EluanProvider defaultTheme="minimal" defaultMode="light">
 //         <YourApp />
 //       </EluanProvider>
 //     )
 //   }
 //
 // Custom themes (via `createTheme`):
-//   const acme = createTheme({ name: "acme", extends: "industrial-retro", tokens: {...} })
+//   const acme = createTheme({ name: "acme", tokens: {...} })
 //   <EluanProvider customThemes={[acme]} defaultTheme="acme">…
 //
 // To read or change values from anywhere inside the tree:
@@ -66,8 +66,8 @@ const STYLE_ELEMENT_ID = "eluan-custom-themes"
 
 export interface EluanProviderProps {
   /**
-   * Initial theme — built-in name (e.g. "industrial-retro", "minimal") or
-   * a custom theme name registered via `customThemes`. Default: `"industrial-retro"`.
+   * Initial theme — the built-in name `"minimal"`, or a custom theme name
+   * registered via `customThemes`. Default: `"minimal"`.
    */
   defaultTheme?: ThemeName
   /** Initial mode ("light" | "dark"). Default: "light". */
@@ -135,7 +135,7 @@ function isBuiltInTheme(name: string): name is Theme {
 }
 
 export function EluanProvider({
-  defaultTheme = "industrial-retro",
+  defaultTheme = "minimal",
   defaultMode,
   defaultSpacing = "standard",
   defaultCurves = "slight",
