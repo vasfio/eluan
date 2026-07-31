@@ -26,7 +26,9 @@ export function buildSemanticMap(): SemanticMap {
     'interactive-border-alt':   { light: 'neutral.300',  dark: 'neutral.600',  role: 'border' },
     'interactive-border-disabled': { light: 'neutral.300', dark: 'neutral.600', role: 'border' },
     'interactive-fg':           { light: 'neutral.950',  dark: 'neutral.50',   role: 'fg', contrastAgainst: 'interactive-bg', minContrast: 4.5 },
-    'interactive-fg-alt':       { light: 'neutral.600',  dark: 'neutral.300',  role: 'fg', contrastAgainst: 'interactive-bg', minContrast: 3.0 },
+    // Secondary text targets the WCAG 3:1 large-text/UI tier; allowBelowDefault
+    // keeps it there even when the config asks for a stricter floor (e.g. AAA).
+    'interactive-fg-alt':       { light: 'neutral.600',  dark: 'neutral.300',  role: 'fg', contrastAgainst: 'interactive-bg', minContrast: 3.0, allowBelowDefault: true },
     'interactive-fg-readonly':  { light: 'neutral.800',  dark: 'neutral.100',  role: 'fg', contrastAgainst: 'interactive-bg', minContrast: 4.5 },
     'interactive-fg-disabled':  { light: 'neutral.400',  dark: 'neutral.500',  role: 'fg' },
     'interactive-fg-active':    { light: 'primary.100',  dark: 'primary.900',  role: 'fg', contrastAgainst: 'interactive-bg-active', minContrast: 4.5 },
