@@ -71,6 +71,7 @@ export function compileSemanticJSON(
       role: entry.role,
       ...(entry.contrastAgainst ? { contrastAgainst: entry.contrastAgainst } : {}),
       ...(entry.minContrast ? { minContrast: entry.minContrast } : {}),
+      ...(entry.allowBelowDefault ? { allowBelowDefault: true } : {}),
     };
   }
   return JSON.stringify(doc, null, 2);

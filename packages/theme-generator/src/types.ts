@@ -36,6 +36,13 @@ export type SemanticEntry = {
   dark: TokenRef;
   contrastAgainst?: string;
   minContrast?: number;
+  /**
+   * Honor `minContrast` as-is even when it is below the config-wide minimum.
+   * For entries that deliberately target a lower WCAG tier (e.g. the 3:1
+   * large-text/UI tier for secondary text) and must not be raised by a
+   * stricter `GeneratorConfig.minContrast`.
+   */
+  allowBelowDefault?: boolean;
   role: SemanticRole;
 };
 
@@ -44,6 +51,11 @@ export type SemanticMap = Record<string, SemanticEntry>;
 export type GeneratorConfig = {
   accents: string[];
   themeName: string;
+  /**
+   * Contrast floor for every checked fg/border pairing (4.5 = WCAG AA,
+   * 7 = AAA). Per-entry `minContrast` values can raise the floor for a token
+   * but never lower it, unless the entry sets `allowBelowDefault`.
+   */
   minContrast: number;
   neutralTintRatio: number;
   curve?: ScaleStep[];

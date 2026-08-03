@@ -124,7 +124,11 @@ export function autoCorrect(
     const fgHex = resolveTokenRef(fgRef, primitives);
     if (!bgHex || !fgHex) continue;
 
-    const minContrast = entry.minContrast ?? defaultMinContrast;
+    // The config-wide minimum is a floor: per-entry values can raise it but
+    // not lower it, except for entries that opt into a lower WCAG tier.
+    const minContrast = entry.allowBelowDefault && entry.minContrast !== undefined
+      ? entry.minContrast
+      : Math.max(entry.minContrast ?? 0, defaultMinContrast);
     const ratio = checkContrast(fgHex, bgHex);
 
     if (ratio >= minContrast) continue;
