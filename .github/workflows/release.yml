@@ -35,11 +35,13 @@ jobs:
 
       # Trusted publishing (OIDC) needs npm >= 11.5.1 AND Node >= 22.14.0 — both
       # halves are enforced registry-side, and a too-old Node fails as a
-      # misleading ENEEDAUTH rather than a version error. Node 24 ships npm 11.x
-      # already; upgrading to latest keeps us ahead of the moving floor.
+      # misleading ENEEDAUTH rather than a version error. Pinned to 11.x because
+      # npm 12 changed `npm info --json` output (always an array), which breaks
+      # @changesets/cli <2.31.1's published-version detection — causing it to
+      # re-attempt publishing already-published packages instead of skipping them.
       - name: Upgrade npm
         run: |
-          npm install -g npm@latest
+          npm install -g npm@11
           node --version && npm --version
 
       - name: Install dependencies
