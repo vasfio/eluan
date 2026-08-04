@@ -39,7 +39,7 @@ Then activate a theme by setting attributes on `<html>` (or use `<EluanProvider>
 | Font-size aliases | `--font-size-xs` … `--font-size-5xl` | `data-spacing` picks a typeset step |
 | Fonts | `--font-heading`, `--font-body`, `--font-mono` | `data-theme` |
 
-The typeset is a fluid 12-step scale: each step interpolates between anchors at 480px, 748px, and 1024px viewport widths, so type resizes without media queries. `data-typeset="small" \| "medium" \| "large"` pins the whole scale (or any subtree) to one column; omit the attribute for fluid behaviour. Spacing density shifts the `--font-size-*` aliases one step up or down. Full details in the [theming guide](https://github.com/vasfio/eluan/blob/main/docs/theming.md#the-typeset-axis).
+The typeset is a fluid 10-step scale: each step interpolates between anchors at 480px, 748px, and 1024px viewport widths, so type resizes without media queries. `data-typeset="small" \| "medium" \| "large"` pins the whole scale (or any subtree) to one column; omit the attribute for fluid behaviour. Spacing density shifts the `--font-size-*` aliases one step up or down. Full details in the [theming guide](https://github.com/vasfio/eluan/blob/main/docs/theming.md#the-typeset-axis).
 
 ## Fonts
 

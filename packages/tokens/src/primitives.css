@@ -366,7 +366,7 @@
   /* ----------------------------------------
    * Font Size Primitives
    * ----------------------------------------
-   * Removed. Type is no longer a set of static rungs — the fluid 12-step
+   * Removed. Type is no longer a set of static rungs — the fluid 10-step
    * typeset in typeset.css (--font-size-step-6 … --font-size-step-neg3) is
    * the sole source of sizes, and spacing.css points the density-scaled
    * --font-size-* aliases at those steps.

@@ -1,7 +1,7 @@
 /* ============================================
  * Typeset — Fluid Type Scale
  *
- * A 12-step scale (step-6 … step-0 … step-neg3) where every step is
+ * A 10-step scale (step-6 … step-0 … step-neg3) where every step is
  * viewport-fluid. Each step interpolates linearly between three anchors:
  *
  *   small   480px  = 30rem     → --viewports-screen-s   (primitives.css)

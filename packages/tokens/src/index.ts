@@ -474,7 +474,7 @@ export const viewports = {
 // ============================================
 // Typeset — Fluid Type Scale
 // ============================================
-// The 12-step scale that replaced the static font-size primitives. Each step
+// The 10-step scale that replaced the static font-size primitives. Each step
 // has three anchor values; on the web they are interpolated by the two-segment
 // clamp()s in typeset.css, on other platforms by resolveTypesetSize() below.
 //

@@ -158,7 +158,7 @@ Tokens you don't override fall through to the `extends` theme.
 
 ## The typeset axis
 
-Type sizes are not static. Eluan ships a **12-step fluid typeset** (`--font-size-step-6` down to `--font-size-step-neg3`) where every step interpolates with the viewport, so a page reads well on a phone and on a desktop without a single media query in your app.
+Type sizes are not static. Eluan ships a **10-step fluid typeset** (`--font-size-step-6` down to `--font-size-step-neg3`) where every step interpolates with the viewport, so a page reads well on a phone and on a desktop without a single media query in your app.
 
 Each step is anchored at three viewport widths, matching the `s` / `m` / `l` viewport primitives:
 

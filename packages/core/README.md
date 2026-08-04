@@ -51,7 +51,7 @@ const { mode, setMode, typeset: pin, setTypeset } = useEluanTheme()
 
 ## Typography
 
-Type sizes come from a fluid 12-step scale that resizes with the viewport. `Typography` applies a step's size, line height, and letter spacing together:
+Type sizes come from a fluid 10-step scale that resizes with the viewport. `Typography` applies a step's size, line height, and letter spacing together:
 
 ```tsx
 import { Typography } from "@eluan/core"
