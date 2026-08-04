@@ -1,7 +1,16 @@
 /*
   Eluan Design System — Base fonts (shared across all themes)
-  Geist Mono is used by every theme for monospace.
+  Paper Mono is used by every theme for monospace.
+
+  Self-hosted variable font (wght 100–800), vendored as WOFF2 next to this
+  file. Paper Mono is licensed under the SIL Open Font License 1.1 — see
+  THIRD_PARTY_NOTICES.md at the repo root.
 */
 
-@import "@fontsource/geist-mono/400.css";
-@import "@fontsource/geist-mono/500.css";
+@font-face {
+  font-family: "Paper Mono";
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url("./files/paper-mono-variable.woff2") format("woff2");
+}

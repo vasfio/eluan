@@ -30,7 +30,6 @@ const styles = stylex.create({
     borderRadius: "var(--radius-radius-full)",
     borderStyle: "solid",
     borderWidth: 1,
-    boxShadow: "var(--skeuo-recessed)",
     boxSizing: "border-box",
     flexShrink: 0,
     height: "var(--size-xxs)",
@@ -57,9 +56,7 @@ const styles = stylex.create({
     },
     "[data-state=checked]": {
       backgroundColor: "var(--interactive-bg-selected)",
-      backgroundImage: "var(--skeuo-surface-pressed)",
       borderColor: "var(--interactive-bg-selected)",
-      boxShadow: "var(--skeuo-pressed)",
     },
   },
   indicator: {

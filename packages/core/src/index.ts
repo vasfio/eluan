@@ -72,6 +72,7 @@ export * from "./components/toggle"
 export * from "./components/toggle-group"
 export * from "./components/tooltip"
 export * from "./components/tree-view"
+export * from "./components/typography"
 
 // Provider for client-app theme setup
 export * from "./providers/eluan-provider"
@@ -85,8 +86,16 @@ export {
   curveScales,
   themeFonts,
   loadThemeFonts,
+  typeset,
+  typesetAnchors,
+  typesetSteps,
+  lineHeightSteps,
+  letterSpacingSteps,
+  resolveTypesetSize,
   type Theme,
   type Mode,
   type SpacingScale,
   type CurveScale,
+  type TypesetStep,
+  type TypesetViewport,
 } from "@eluan/tokens"

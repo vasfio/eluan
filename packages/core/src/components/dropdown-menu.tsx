@@ -162,8 +162,8 @@ const styles = stylex.create({
   },
   // Presentational mirror of the `Checkbox` component's recipe. We cannot nest
   // the interactive Radix checkbox inside a menu item, so this replicates its
-  // exact visual (box, border, skeuo shadows, checked fill) driven by the menu
-  // item's own checked state.
+  // exact visual (box, border, checked fill) driven by the menu item's own
+  // checked state.
   checkBox: {
     alignItems: "center",
     backgroundColor: "transparent",
@@ -171,7 +171,6 @@ const styles = stylex.create({
     borderRadius: "var(--curves-xs)",
     borderStyle: "solid",
     borderWidth: 1,
-    boxShadow: "var(--skeuo-recessed)",
     boxSizing: "border-box",
     display: "flex",
     flexShrink: 0,
@@ -184,9 +183,7 @@ const styles = stylex.create({
   },
   checkBoxChecked: {
     backgroundColor: "var(--interactive-bg-selected)",
-    backgroundImage: "var(--skeuo-surface-pressed)",
     borderColor: "var(--interactive-bg-selected)",
-    boxShadow: "var(--skeuo-pressed)",
     color: "var(--interactive-fg-selected)",
   },
   checkIcon: {
@@ -195,8 +192,7 @@ const styles = stylex.create({
     width: "var(--spacing-md)",
   },
   // Presentational mirror of the `RadioGroup` item recipe: an unchecked ring
-  // (border + recessed shadow) with a filled, pressed circle + inner dot shown
-  // only when selected.
+  // (border only) with a filled circle + inner dot shown only when selected.
   radioBox: {
     alignItems: "center",
     backgroundColor: "transparent",
@@ -204,7 +200,6 @@ const styles = stylex.create({
     borderRadius: "var(--radius-radius-full)",
     borderStyle: "solid",
     borderWidth: 1,
-    boxShadow: "var(--skeuo-recessed)",
     boxSizing: "border-box",
     display: "flex",
     flexShrink: 0,
@@ -216,12 +211,10 @@ const styles = stylex.create({
   radioIndicator: {
     alignItems: "center",
     backgroundColor: "var(--interactive-bg-selected)",
-    backgroundImage: "var(--skeuo-surface-pressed)",
     borderColor: "var(--interactive-bg-selected)",
     borderRadius: "var(--radius-radius-full)",
     borderStyle: "solid",
     borderWidth: 1,
-    boxShadow: "var(--skeuo-pressed)",
     boxSizing: "border-box",
     display: "flex",
     height: "var(--size-xxs)",

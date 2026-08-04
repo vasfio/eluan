@@ -4,6 +4,7 @@
  * `minimal` is the only built-in theme; define your own with
  * createTheme() from @eluan/core (or @eluan/theme-generator) — a custom
  * theme inherits this token set and overrides only what it names.
+
  * Categories: action, container, interactive, destructive,
  *             cautionary, important, informative, positive, dataviz
  * ============================================ */
@@ -49,33 +50,7 @@
   --color-neutral-950: var(--color-mono-950);
   --font-heading: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  /* Skeuomorphism tokens — flat by design in minimal */
-  --skeuo-raised: none;
-  --skeuo-raised-hover: none;
-  --skeuo-pressed: none;
-  --skeuo-recessed: none;
-  --skeuo-bezel: none;
-  --skeuo-surface-raised: none;
-  --skeuo-surface-pressed: none;
-  --skeuo-dimple: none;
-  --skeuo-dimple-size: auto;
-  --slider-thumb-width: var(--size-xxs);
-  --slider-thumb-height: var(--size-xxs);
-  /* Tabs — frozen to the flat minimal look the component rendered before it
-     was tokenized (no skeuo; underlaid track, subtle raised active pill). */
-  --tabs-list-bg: var(--interactive-bg-alt);
-  --tabs-list-shadow: none;
-  --tabs-list-radius: var(--curves-md);
-  --tabs-list-padding: var(--spacing-xs);
-  --tabs-list-gap: 0;
-  --tabs-trigger-radius: var(--curves-sm);
-  --tabs-trigger-fg: var(--interactive-fg-alt);
-  --tabs-trigger-hover-fg: var(--interactive-fg-alt);
-  --tabs-trigger-selected-bg: var(--container-bg);
-  --tabs-trigger-selected-fg: var(--interactive-fg);
-  --tabs-trigger-selected-surface: none;
-  --tabs-trigger-selected-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --font-mono: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --container-bg: var(--backgrounds-primary);
   --container-bg-alt: var(--backgrounds-secondary);
   --container-bg-inverse: var(--foregrounds-secondary);

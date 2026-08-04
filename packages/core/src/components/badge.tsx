@@ -28,7 +28,6 @@ const styles = stylex.create({
     alignItems: "center",
     borderStyle: "solid",
     borderWidth: 1,
-    boxShadow: "var(--skeuo-bezel)",
     display: "inline-flex",
     fontWeight: 400,
     transitionDuration: "150ms",

@@ -1,7 +1,21 @@
 /* ============================================
  * Spacing Scales
  * Semantic spacing tokens that adapt to Compact, Standard, and Wide
- * These reference primitive spacing tokens from Layer 1
+ *
+ * --spacing-* and --size-* reference primitive rungs from Layer 1, and each
+ * density shifts the whole ladder by one rung.
+ *
+ * --font-size-* works the same way, but the rungs it picks are typeset steps
+ * (typeset.css), not static primitives: each density selects a step and the
+ * step's value is itself viewport-fluid. So `--font-size-base` is one step
+ * lower in compact and one step higher in wide, and whichever step is chosen
+ * still interpolates between its small/medium/large anchors as the viewport
+ * changes. Wide saturates at the top of the ladder (4xl and 5xl both land on
+ * step-6), mirroring compact, where xs and sm have always shared a rung.
+ *
+ * Per-step line-height and letter-spacing live alongside the sizes as
+ * --line-height-step-* / --letter-spacing-step-*; components that opt into a
+ * step (see the Typography component) should take all three together.
  * ============================================ */
 
 [data-spacing="compact"] {
@@ -15,25 +29,26 @@
   --spacing-3xl: var(--spacing-space-24);
   --spacing-4xl: var(--spacing-space-32);
 
-  --size-xxs: var(--spacing-space-12);
-  --size-xs: var(--spacing-space-16);
-  --size-sm: var(--spacing-space-20);
-  --size-md: var(--spacing-space-24);
-  --size-lg: var(--spacing-space-32);
-  --size-xl: var(--spacing-space-40);
-  --size-2xl: var(--spacing-space-48);
-  --size-3xl: var(--spacing-space-64);
-  --size-4xl: var(--spacing-space-96);
+  --size-xxs: var(--sizing-size-12);
+  --size-xs: var(--sizing-size-16);
+  --size-sm: var(--sizing-size-20);
+  --size-md: var(--sizing-size-24);
+  --size-lg: var(--sizing-size-32);
+  --size-xl: var(--sizing-size-40);
+  --size-2xl: var(--sizing-size-48);
+  --size-3xl: var(--sizing-size-64);
+  --size-4xl: var(--sizing-size-96);
 
-  --font-size-xs: var(--font-size-12);
-  --font-size-sm: var(--font-size-12);
-  --font-size-base: var(--font-size-14);
-  --font-size-lg: var(--font-size-16);
-  --font-size-xl: var(--font-size-18);
-  --font-size-2xl: var(--font-size-20);
-  --font-size-3xl: var(--font-size-24);
-  --font-size-4xl: var(--font-size-30);
-  --font-size-5xl: var(--font-size-36);
+  /* One typeset step down from standard */
+  --font-size-xs: var(--font-size-step-neg3);
+  --font-size-sm: var(--font-size-step-neg2);
+  --font-size-base: var(--font-size-step-neg1);
+  --font-size-lg: var(--font-size-step-0);
+  --font-size-xl: var(--font-size-step-1);
+  --font-size-2xl: var(--font-size-step-2);
+  --font-size-3xl: var(--font-size-step-3);
+  --font-size-4xl: var(--font-size-step-4);
+  --font-size-5xl: var(--font-size-step-5);
 }
 
 [data-spacing="standard"] {
@@ -47,25 +62,26 @@
   --spacing-3xl: var(--spacing-space-40);
   --spacing-4xl: var(--spacing-space-80);
 
-  --size-xxs: var(--spacing-space-16);
-  --size-xs: var(--spacing-space-20);
-  --size-sm: var(--spacing-space-24);
-  --size-md: var(--spacing-space-32);
-  --size-lg: var(--spacing-space-40);
-  --size-xl: var(--spacing-space-48);
-  --size-2xl: var(--spacing-space-64);
-  --size-3xl: var(--spacing-space-96);
-  --size-4xl: var(--spacing-space-160);
+  --size-xxs: var(--sizing-size-16);
+  --size-xs: var(--sizing-size-20);
+  --size-sm: var(--sizing-size-24);
+  --size-md: var(--sizing-size-32);
+  --size-lg: var(--sizing-size-40);
+  --size-xl: var(--sizing-size-48);
+  --size-2xl: var(--sizing-size-64);
+  --size-3xl: var(--sizing-size-96);
+  --size-4xl: var(--sizing-size-160);
 
-  --font-size-xs: var(--font-size-12);
-  --font-size-sm: var(--font-size-14);
-  --font-size-base: var(--font-size-16);
-  --font-size-lg: var(--font-size-18);
-  --font-size-xl: var(--font-size-20);
-  --font-size-2xl: var(--font-size-24);
-  --font-size-3xl: var(--font-size-30);
-  --font-size-4xl: var(--font-size-36);
-  --font-size-5xl: var(--font-size-48);
+  /* The reference mapping — base sits on step-0 */
+  --font-size-xs: var(--font-size-step-neg2);
+  --font-size-sm: var(--font-size-step-neg1);
+  --font-size-base: var(--font-size-step-0);
+  --font-size-lg: var(--font-size-step-1);
+  --font-size-xl: var(--font-size-step-2);
+  --font-size-2xl: var(--font-size-step-3);
+  --font-size-3xl: var(--font-size-step-4);
+  --font-size-4xl: var(--font-size-step-5);
+  --font-size-5xl: var(--font-size-step-6);
 }
 
 [data-spacing="wide"] {
@@ -79,23 +95,24 @@
   --spacing-3xl: var(--spacing-space-80);
   --spacing-4xl: var(--spacing-space-160);
 
-  --size-xxs: var(--spacing-space-20);
-  --size-xs: var(--spacing-space-24);
-  --size-sm: var(--spacing-space-32);
-  --size-md: var(--spacing-space-40);
-  --size-lg: var(--spacing-space-48);
-  --size-xl: var(--spacing-space-56);
-  --size-2xl: var(--spacing-space-80);
-  --size-3xl: var(--spacing-space-120);
-  --size-4xl: var(--spacing-space-240);
+  --size-xxs: var(--sizing-size-20);
+  --size-xs: var(--sizing-size-24);
+  --size-sm: var(--sizing-size-32);
+  --size-md: var(--sizing-size-40);
+  --size-lg: var(--sizing-size-48);
+  --size-xl: var(--sizing-size-56);
+  --size-2xl: var(--sizing-size-80);
+  --size-3xl: var(--sizing-size-120);
+  --size-4xl: var(--sizing-size-240);
 
-  --font-size-xs: var(--font-size-14);
-  --font-size-sm: var(--font-size-16);
-  --font-size-base: var(--font-size-18);
-  --font-size-lg: var(--font-size-20);
-  --font-size-xl: var(--font-size-24);
-  --font-size-2xl: var(--font-size-30);
-  --font-size-3xl: var(--font-size-36);
-  --font-size-4xl: var(--font-size-48);
-  --font-size-5xl: var(--font-size-60);
+  /* One typeset step up from standard; 4xl/5xl saturate at the ladder top */
+  --font-size-xs: var(--font-size-step-neg1);
+  --font-size-sm: var(--font-size-step-0);
+  --font-size-base: var(--font-size-step-1);
+  --font-size-lg: var(--font-size-step-2);
+  --font-size-xl: var(--font-size-step-3);
+  --font-size-2xl: var(--font-size-step-4);
+  --font-size-3xl: var(--font-size-step-5);
+  --font-size-4xl: var(--font-size-step-6);
+  --font-size-5xl: var(--font-size-step-6);
 }

@@ -19,7 +19,6 @@ const styles = stylex.create({
   track: {
     backgroundColor: "var(--interactive-bg-alt)",
     borderRadius: "var(--radius-radius-full)",
-    boxShadow: "var(--skeuo-recessed)",
     flexGrow: 1,
     height: "calc(var(--spacing-xs) + var(--spacing-xxs))",
     overflow: "hidden",
@@ -36,24 +35,17 @@ const styles = stylex.create({
   },
   thumb: {
     backgroundColor: "var(--interactive-bg)",
-    /* Three layers: two tiled dimple-grid layers (--skeuo-dimple) over the
-       convex face — the size/repeat/position lists below map onto them. */
-    backgroundImage: "var(--skeuo-dimple), var(--skeuo-surface-raised)",
-    backgroundPosition: "center, center, center",
-    backgroundRepeat: "repeat, repeat, no-repeat",
-    backgroundSize: "var(--skeuo-dimple-size, auto), var(--skeuo-dimple-size, auto), auto",
     borderColor: "var(--interactive-bg-selected)",
     /* Rounded-rect fader cap; tracks the curves axis in both themes */
     borderRadius: "var(--curves-md)",
     borderStyle: "solid",
     borderWidth: 1,
-    boxShadow: "var(--skeuo-raised)",
     display: "block",
-    height: "var(--slider-thumb-height, var(--size-xxs))",
+    height: "var(--size-xxs)",
     transitionDuration: "150ms",
     transitionProperty: "color, background-color, border-color",
     transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-    width: "var(--slider-thumb-width, var(--size-xxs))",
+    width: "var(--size-xxs)",
     ":focus-visible": {
       outlineColor: "var(--interactive-border)",
       outlineOffset: "1px",
