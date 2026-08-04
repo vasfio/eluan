@@ -30,13 +30,17 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
-          node-version: 20
+          node-version: 24
           cache: pnpm
 
-      # Trusted publishing (OIDC) requires npm >= 11.5.1; Node 20 ships npm 10.x,
-      # so pin a specific compatible npm rather than tracking the moving latest.
+      # Trusted publishing (OIDC) needs npm >= 11.5.1 AND Node >= 22.14.0 — both
+      # halves are enforced registry-side, and a too-old Node fails as a
+      # misleading ENEEDAUTH rather than a version error. Node 24 ships npm 11.x
+      # already; upgrading to latest keeps us ahead of the moving floor.
       - name: Upgrade npm
-        run: npm install -g npm@11.5.1
+        run: |
+          npm install -g npm@latest
+          node --version && npm --version
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -53,5 +57,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # @changesets/cli 2.31 does not forward --provenance to npm; this env var
           # is what actually turns on provenance generation during `npm publish`.
-          # OIDC trusted publishing supplies auth — no NPM_TOKEN anywhere.
+          # OIDC trusted publishing supplies auth — no NPM_TOKEN anywhere. It
+          # requires npm >= 11.5.1 on Node >= 22.14.0 (see the runner setup above).
           NPM_CONFIG_PROVENANCE: true
