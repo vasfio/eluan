@@ -128,6 +128,6 @@
     "unplugin": "^2.3.11",
     "vite": "^6.4.3",
     "vite-plugin-dts": "^3.9.1",
-    "vitest": "4.0.18"
+    "vitest": "3.2.6"
   }
 }
