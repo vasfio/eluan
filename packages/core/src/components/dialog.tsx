@@ -3,6 +3,8 @@ import * as DialogPrimitive from "@radix-ui/react-dialog"
 import * as stylex from "@stylexjs/stylex"
 import { X } from "lucide-react"
 
+import { usePortalContainer } from "../providers/portal-container"
+
 const Dialog = DialogPrimitive.Root
 
 const DialogTrigger = DialogPrimitive.Trigger
@@ -21,6 +23,11 @@ export type DialogContentProps = Omit<
   "className" | "style"
 > & {
   layout?: "default" | "command"
+  /**
+   * Element to portal into, overriding `PortalContainerProvider`.
+   * Defaults to the nearest provider's container, then `document.body`.
+   */
+  container?: HTMLElement | null
 }
 
 export type DialogDivProps = Omit<
@@ -163,29 +170,32 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   DialogContentProps
->(({ children, layout = "default", ...props }, ref) => (
-  <DialogPortal>
-    <DialogOverlay />
-    <DialogPrimitive.Content
-      ref={ref}
-      {...props}
-      {...stylex.props(
-        styles.content,
-        layout === "command" && styles.contentCommand
-      )}
-    >
-      {children}
-      {/* Command palettes close via Escape/overlay; the X would overlap the
-          search input row. */}
-      {layout !== "command" && (
-        <DialogPrimitive.Close {...stylex.props(styles.close)}>
-          <X aria-hidden="true" {...stylex.props(styles.closeIcon)} />
-          <span {...stylex.props(styles.visuallyHidden)}>Close</span>
-        </DialogPrimitive.Close>
-      )}
-    </DialogPrimitive.Content>
-  </DialogPortal>
-))
+>(({ children, container, layout = "default", ...props }, ref) => {
+  const portalContainer = usePortalContainer()
+  return (
+    <DialogPortal container={container ?? portalContainer}>
+      <DialogOverlay />
+      <DialogPrimitive.Content
+        ref={ref}
+        {...props}
+        {...stylex.props(
+          styles.content,
+          layout === "command" && styles.contentCommand
+        )}
+      >
+        {children}
+        {/* Command palettes close via Escape/overlay; the X would overlap the
+            search input row. */}
+        {layout !== "command" && (
+          <DialogPrimitive.Close {...stylex.props(styles.close)}>
+            <X aria-hidden="true" {...stylex.props(styles.closeIcon)} />
+            <span {...stylex.props(styles.visuallyHidden)}>Close</span>
+          </DialogPrimitive.Close>
+        )}
+      </DialogPrimitive.Content>
+    </DialogPortal>
+  )
+})
 DialogContent.displayName = DialogPrimitive.Content.displayName
 
 const DialogHeader = ({

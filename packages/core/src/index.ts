@@ -77,6 +77,7 @@ export * from "./components/typography"
 // Provider for client-app theme setup
 export * from "./providers/eluan-provider"
 export * from "./providers/create-theme"
+export * from "./providers/portal-container"
 
 // Re-export token types/helpers so consumers don't need a separate import
 export {

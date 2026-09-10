@@ -5,6 +5,8 @@ import * as ContextMenuPrimitive from "@radix-ui/react-context-menu"
 import * as stylex from "@stylexjs/stylex"
 import { Check, ChevronRight, Circle } from "lucide-react"
 
+import { usePortalContainer } from "../providers/portal-container"
+
 const ContextMenu = ContextMenuPrimitive.Root
 
 const ContextMenuTrigger = ContextMenuPrimitive.Trigger
@@ -32,7 +34,13 @@ export type ContextMenuSubContentProps = Omit<
 export type ContextMenuContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Content>,
   "className" | "style"
->
+> & {
+  /**
+   * Element to portal into, overriding `PortalContainerProvider`.
+   * Defaults to the nearest provider's container, then `document.body`.
+   */
+  container?: HTMLElement | null
+}
 
 export type ContextMenuItemProps = Omit<
   React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Item>,
@@ -203,15 +211,18 @@ ContextMenuSubContent.displayName = ContextMenuPrimitive.SubContent.displayName
 const ContextMenuContent = React.forwardRef<
   React.ElementRef<typeof ContextMenuPrimitive.Content>,
   ContextMenuContentProps
->(({ ...props }, ref) => (
-  <ContextMenuPrimitive.Portal>
-    <ContextMenuPrimitive.Content
-      ref={ref}
-      {...props}
-      {...stylex.props(styles.content)}
-    />
-  </ContextMenuPrimitive.Portal>
-))
+>(({ container, ...props }, ref) => {
+  const portalContainer = usePortalContainer()
+  return (
+    <ContextMenuPrimitive.Portal container={container ?? portalContainer}>
+      <ContextMenuPrimitive.Content
+        ref={ref}
+        {...props}
+        {...stylex.props(styles.content)}
+      />
+    </ContextMenuPrimitive.Portal>
+  )
+})
 ContextMenuContent.displayName = ContextMenuPrimitive.Content.displayName
 
 const ContextMenuItem = React.forwardRef<

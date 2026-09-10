@@ -2,6 +2,8 @@ import * as React from "react"
 import * as PopoverPrimitive from "@radix-ui/react-popover"
 import * as stylex from "@stylexjs/stylex"
 
+import { usePortalContainer } from "../providers/portal-container"
+
 const Popover = PopoverPrimitive.Root
 
 const PopoverTrigger = PopoverPrimitive.Trigger
@@ -11,6 +13,11 @@ export type PopoverContentProps = Omit<
   "className" | "style"
 > & {
   layout?: "default" | "calendar" | "calendarSingle" | "matchTrigger"
+  /**
+   * Element to portal into, overriding `PortalContainerProvider`.
+   * Defaults to the nearest provider's container, then `document.body`.
+   */
+  container?: HTMLElement | null
 }
 
 const styles = stylex.create({
@@ -47,23 +54,26 @@ const styles = stylex.create({
 const PopoverContent = React.forwardRef<
   React.ElementRef<typeof PopoverPrimitive.Content>,
   PopoverContentProps
->(({ align = "center", layout = "default", sideOffset = 4, ...props }, ref) => (
-  <PopoverPrimitive.Portal>
-    <PopoverPrimitive.Content
-      ref={ref}
-      align={align}
-      sideOffset={sideOffset}
-      {...props}
-      {...stylex.props(
-        styles.content,
-        layout === "calendar" && styles.calendar,
-        layout === "calendarSingle" && styles.calendar,
-        layout === "calendarSingle" && styles.calendarSingle,
-        layout === "matchTrigger" && styles.matchTrigger
-      )}
-    />
-  </PopoverPrimitive.Portal>
-))
+>(({ align = "center", container, layout = "default", sideOffset = 4, ...props }, ref) => {
+  const portalContainer = usePortalContainer()
+  return (
+    <PopoverPrimitive.Portal container={container ?? portalContainer}>
+      <PopoverPrimitive.Content
+        ref={ref}
+        align={align}
+        sideOffset={sideOffset}
+        {...props}
+        {...stylex.props(
+          styles.content,
+          layout === "calendar" && styles.calendar,
+          layout === "calendarSingle" && styles.calendar,
+          layout === "calendarSingle" && styles.calendarSingle,
+          layout === "matchTrigger" && styles.matchTrigger
+        )}
+      />
+    </PopoverPrimitive.Portal>
+  )
+})
 PopoverContent.displayName = PopoverPrimitive.Content.displayName
 
 export { Popover, PopoverTrigger, PopoverContent }

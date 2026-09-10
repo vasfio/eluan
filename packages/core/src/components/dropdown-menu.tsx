@@ -3,6 +3,8 @@ import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
 import * as stylex from "@stylexjs/stylex"
 import { Check, ChevronRight } from "lucide-react"
 
+import { usePortalContainer } from "../providers/portal-container"
+
 const DropdownMenu = DropdownMenuPrimitive.Root
 
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger
@@ -30,7 +32,13 @@ export type DropdownMenuSubContentProps = Omit<
 export type DropdownMenuContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>,
   "className" | "style"
->
+> & {
+  /**
+   * Element to portal into, overriding `PortalContainerProvider`.
+   * Defaults to the nearest provider's container, then `document.body`.
+   */
+  container?: HTMLElement | null
+}
 
 export type DropdownMenuItemProps = Omit<
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item>,
@@ -289,16 +297,19 @@ DropdownMenuSubContent.displayName =
 const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
   DropdownMenuContentProps
->(({ sideOffset = 4, ...props }, ref) => (
-  <DropdownMenuPrimitive.Portal>
-    <DropdownMenuPrimitive.Content
-      ref={ref}
-      sideOffset={sideOffset}
-      {...props}
-      {...stylex.props(styles.content)}
-    />
-  </DropdownMenuPrimitive.Portal>
-))
+>(({ container, sideOffset = 4, ...props }, ref) => {
+  const portalContainer = usePortalContainer()
+  return (
+    <DropdownMenuPrimitive.Portal container={container ?? portalContainer}>
+      <DropdownMenuPrimitive.Content
+        ref={ref}
+        sideOffset={sideOffset}
+        {...props}
+        {...stylex.props(styles.content)}
+      />
+    </DropdownMenuPrimitive.Portal>
+  )
+})
 DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName
 
 const DropdownMenuItem = React.forwardRef<

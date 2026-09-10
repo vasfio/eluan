@@ -3,6 +3,8 @@ import * as SelectPrimitive from "@radix-ui/react-select"
 import * as stylex from "@stylexjs/stylex"
 import { Check, ChevronDown, ChevronUp } from "lucide-react"
 
+import { usePortalContainer } from "../providers/portal-container"
+
 const Select = SelectPrimitive.Root
 
 const SelectGroup = SelectPrimitive.Group
@@ -21,6 +23,11 @@ export type SelectContentProps = Omit<
   "className" | "style"
 > & {
   layout?: "default" | "auto" | "country"
+  /**
+   * Element to portal into, overriding `PortalContainerProvider`.
+   * Defaults to the nearest provider's container, then `document.body`.
+   */
+  container?: HTMLElement | null
 }
 
 export type SelectLabelProps = Omit<
@@ -267,29 +274,32 @@ SelectScrollDownButton.displayName =
 const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,
   SelectContentProps
->(({ children, layout = "default", position = "popper", ...props }, ref) => (
-  <SelectPrimitive.Portal>
-    <SelectPrimitive.Content
-      ref={ref}
-      position={position}
-      {...props}
-      {...stylex.props(
-        styles.content,
-        position === "popper" && styles.contentPopper,
-        layout === "auto" && styles.contentAuto,
-        layout === "country" && styles.contentCountry
-      )}
-    >
-      <SelectScrollUpButton />
-      <SelectPrimitive.Viewport
-        {...stylex.props(styles.viewport, position === "popper" && styles.viewportPopper)}
+>(({ children, container, layout = "default", position = "popper", ...props }, ref) => {
+  const portalContainer = usePortalContainer()
+  return (
+    <SelectPrimitive.Portal container={container ?? portalContainer}>
+      <SelectPrimitive.Content
+        ref={ref}
+        position={position}
+        {...props}
+        {...stylex.props(
+          styles.content,
+          position === "popper" && styles.contentPopper,
+          layout === "auto" && styles.contentAuto,
+          layout === "country" && styles.contentCountry
+        )}
       >
-        {children}
-      </SelectPrimitive.Viewport>
-      <SelectScrollDownButton />
-    </SelectPrimitive.Content>
-  </SelectPrimitive.Portal>
-))
+        <SelectScrollUpButton />
+        <SelectPrimitive.Viewport
+          {...stylex.props(styles.viewport, position === "popper" && styles.viewportPopper)}
+        >
+          {children}
+        </SelectPrimitive.Viewport>
+        <SelectScrollDownButton />
+      </SelectPrimitive.Content>
+    </SelectPrimitive.Portal>
+  )
+})
 SelectContent.displayName = SelectPrimitive.Content.displayName
 
 const SelectLabel = React.forwardRef<

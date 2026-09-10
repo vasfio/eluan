@@ -12,6 +12,10 @@ import {
 } from "@eluan/tokens"
 
 import type { CustomTheme } from "./create-theme"
+import {
+  PortalContainerProvider,
+  type PortalContainerValue,
+} from "./portal-container"
 
 // ============================================
 // Eluan theme provider
@@ -124,6 +128,14 @@ export interface EluanProviderProps {
    * Pass `"body"` to target `<body>`, or any element ref.
    */
   target?: "html" | "body" | HTMLElement | null
+  /**
+   * Element that Eluan overlays (DropdownMenu, Popover, Select, ContextMenu,
+   * Dialog, Sheet, Menubar) portal into. Set this to the same element as
+   * `target` when scoping a theme to a subtree, so overlays inherit the scope
+   * instead of escaping to `document.body`. See `PortalContainerProvider` for
+   * the containing-block caveat.
+   */
+  portalContainer?: PortalContainerValue
   children: React.ReactNode
 }
 
@@ -180,6 +192,7 @@ export function EluanProvider({
   persist = true,
   followSystemMode = true,
   target = "html",
+  portalContainer,
   children,
 }: EluanProviderProps) {
   // Build a name → custom theme lookup. Validates that all names are unique
@@ -392,7 +405,11 @@ export function EluanProvider({
   )
 
   return (
-    <EluanThemeContext.Provider value={value}>{children}</EluanThemeContext.Provider>
+    <EluanThemeContext.Provider value={value}>
+      <PortalContainerProvider container={portalContainer}>
+        {children}
+      </PortalContainerProvider>
+    </EluanThemeContext.Provider>
   )
 }
 

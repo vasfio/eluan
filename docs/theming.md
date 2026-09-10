@@ -293,6 +293,48 @@ For a simpler sub-tree override of a single token, set the CSS variable inline:
 
 ---
 
+## Overlays in a scoped theme
+
+Overlay content (DropdownMenu, Popover, Select, ContextMenu, Dialog, Sheet, Menubar) is portalled. By default it mounts into `document.body`, which is **outside** any element carrying scoped `data-theme` / `data-mode` / `data-spacing` / `data-curves` / `data-typeset` attributes — so a scoped region shows a correctly themed trigger but a default-themed popover.
+
+Point the overlays back at the scope. With `EluanProvider`, pass the same element to `portalContainer`:
+
+```tsx
+const [scope, setScope] = useState<HTMLElement | null>(null)
+
+<div ref={setScope}>
+  {scope && (
+    <EluanProvider target={scope} portalContainer={scope} defaultMode="dark">
+      <DropdownMenu>…</DropdownMenu>
+    </EluanProvider>
+  )}
+</div>
+```
+
+Without `EluanProvider` (e.g. you set the attributes yourself, or you render a preview frame), wrap the region in `PortalContainerProvider`:
+
+```tsx
+import { PortalContainerProvider } from "@eluan/core"
+
+const [scope, setScope] = useState<HTMLElement | null>(null)
+
+<div ref={setScope} data-theme="minimal" data-mode="dark" data-spacing="compact">
+  <PortalContainerProvider container={scope}>
+    <DropdownMenu>…</DropdownMenu>
+  </PortalContainerProvider>
+</div>
+```
+
+`container` also accepts a ref object. A single overlay can opt out or redirect with an explicit `container` prop on its Content:
+
+```tsx
+<PopoverContent container={someOtherElement}>…</PopoverContent>
+```
+
+**Containing-block caveat.** Radix positions popovers with `position: fixed`, so a container anywhere in normal flow is fine. But if the container *or any ancestor* has `transform`, `filter`, `perspective`, `backdrop-filter`, `contain: paint | layout | strict | content`, or a `will-change` naming one of those, that element becomes the containing block for fixed positioning — the overlay is then offset relative to it (and clipped by `contain`). Pick a container without those properties, or move the transform onto an inner wrapper.
+
+---
+
 ## SSR, persistence, and OS preference
 
 `<EluanProvider>` defaults to:
@@ -338,6 +380,8 @@ For Next.js you can render this via `next/script` with `strategy="beforeInteract
 | `useEluanTheme()` | Hook returning the active theme + setters |
 | `createTheme({ name, extends, tokens })` | Define a custom theme |
 | `loadThemeFonts(name)` | Manually preload a built-in theme's fonts |
+| `<PortalContainerProvider container>` | Scope where overlays portal to, so they inherit a scoped theme |
+| `usePortalContainer()` | Hook returning the active portal container (or `undefined`) |
 | `themes` | Array of built-in theme names (`["minimal"]`) |
 | `Typography` | Component that applies a typeset step's size + line height + tracking |
 | `typeset`, `resolveTypesetSize()` | Fluid type scale data and its interpolation, for non-CSS consumers |
