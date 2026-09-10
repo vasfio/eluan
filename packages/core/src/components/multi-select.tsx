@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import * as stylex from "@stylexjs/stylex"
-import { ChevronDown, Delete, X } from "lucide-react"
+import { Check, ChevronDown, Delete, X } from "lucide-react"
 
 import { Badge } from "./badge"
 import {
@@ -78,7 +78,7 @@ const styles = stylex.create({
     display: "flex",
     flex: 1,
     flexWrap: "wrap",
-    gap: "var(--spacing-xxs)",
+    gap: "var(--spacing-xs)",
     minHeight: "var(--size-sm)",
   },
   placeholder: {
@@ -87,9 +87,9 @@ const styles = stylex.create({
   chipContent: {
     alignItems: "center",
     display: "inline-flex",
-    fontSize: "calc(var(--font-size-xs) - 0.0625rem)",
+    fontSize: "var(--font-size-xs)",
     fontWeight: 400,
-    gap: "var(--spacing-xxs)",
+    gap: "var(--spacing-xs)",
     lineHeight: 1.25,
   },
   chipRemove: {
@@ -111,8 +111,8 @@ const styles = stylex.create({
     },
   },
   removeIcon: {
-    height: "calc(var(--spacing-sm) + var(--spacing-xxs))",
-    width: "calc(var(--spacing-sm) + var(--spacing-xxs))",
+    height: "var(--font-size-xs)",
+    width: "var(--font-size-xs)",
   },
   controls: {
     alignItems: "center",
@@ -145,8 +145,8 @@ const styles = stylex.create({
   },
   clearIcon: {
     color: "var(--interactive-fg-alt)",
-    height: "calc(var(--spacing-md) + var(--spacing-xxs))",
-    width: "calc(var(--spacing-md) + var(--spacing-xxs))",
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
   },
   chevron: {
     height: "var(--size-xxs)",
@@ -162,8 +162,9 @@ const styles = stylex.create({
   selectedIcon: {
     color: "var(--interactive-fg-alt)",
     flexShrink: 0,
-    height: "calc(var(--spacing-md) + var(--spacing-xxs))",
-    width: "calc(var(--spacing-md) + var(--spacing-xxs))",
+    height: "var(--size-xxs)",
+    marginLeft: "auto",
+    width: "var(--size-xxs)",
   },
 })
 
@@ -294,10 +295,7 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
                     >
                       <span>{option.label}</span>
                       {isSelected && (
-                        <X
-                          {...stylex.props(styles.selectedIcon)}
-                          onClick={(e) => { e.stopPropagation(); handleSelect(option.value) }}
-                        />
+                        <Check aria-hidden="true" {...stylex.props(styles.selectedIcon)} />
                       )}
                     </CommandItem>
                   )

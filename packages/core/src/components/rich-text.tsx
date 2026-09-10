@@ -324,7 +324,7 @@ const styles = stylex.create({
     display: "flex",
     flexWrap: "wrap",
     gap: "var(--spacing-xs)",
-    padding: 4,
+    padding: "var(--spacing-xs)",
   },
   icon: {
     height: "var(--size-xxs)",
@@ -347,19 +347,19 @@ const proseMirrorStyles = `
 .eluan-rich-text-content .ProseMirror h1 {
   font-size: var(--font-size-3xl);
   font-weight: 700;
-  line-height: 1.25;
+  line-height: var(--line-height-step-4);
   margin-block: var(--spacing-lg) var(--spacing-md);
 }
 .eluan-rich-text-content .ProseMirror h2 {
   font-size: var(--font-size-2xl);
   font-weight: 600;
-  line-height: 1.375;
+  line-height: var(--line-height-step-3);
   margin-block: var(--spacing-md) var(--spacing-sm);
 }
 .eluan-rich-text-content .ProseMirror h3 {
   font-size: var(--font-size-xl);
   font-weight: 600;
-  line-height: 1.375;
+  line-height: var(--line-height-step-2);
   margin-block: var(--spacing-md) var(--spacing-sm);
 }
 .eluan-rich-text-content .ProseMirror ul {
@@ -379,7 +379,7 @@ const proseMirrorStyles = `
   margin-block: 0;
 }
 .eluan-rich-text-content .ProseMirror blockquote {
-  border-left: 4px solid var(--container-border-alt);
+  border-left: var(--spacing-xs) solid var(--container-border-alt);
   color: var(--interactive-fg-alt);
   font-style: italic;
   margin-block: var(--spacing-sm);
@@ -390,7 +390,7 @@ const proseMirrorStyles = `
   border-radius: var(--curves-xs);
   font-family: var(--font-mono);
   font-size: var(--font-size-xs);
-  padding: 0.125rem var(--spacing-xxs);
+  padding: var(--spacing-xxs) var(--spacing-xs);
 }
 .eluan-rich-text-content .ProseMirror hr {
   border: 0;

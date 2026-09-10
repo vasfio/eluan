@@ -3,6 +3,8 @@ import * as SheetPrimitive from "@radix-ui/react-dialog"
 import * as stylex from "@stylexjs/stylex"
 import { X } from "lucide-react"
 
+import { usePortalContainer } from "../providers/portal-container"
+
 const Sheet = SheetPrimitive.Root
 
 const SheetTrigger = SheetPrimitive.Trigger
@@ -24,6 +26,11 @@ export type SheetContentProps = Omit<
 > & {
   layout?: "default" | "headerNavigation" | "navigationDrawer"
   side?: SheetSide
+  /**
+   * Element to portal into, overriding `PortalContainerProvider`.
+   * Defaults to the nearest provider's container, then `document.body`.
+   */
+  container?: HTMLElement | null
 }
 
 export type SheetDivProps = Omit<
@@ -41,15 +48,81 @@ export type SheetDescriptionProps = Omit<
   "className" | "style"
 >
 
+const fadeIn = stylex.keyframes({
+  from: { opacity: 0 },
+  to: { opacity: 0.8 },
+})
+
+const fadeOut = stylex.keyframes({
+  from: { opacity: 0.8 },
+  to: { opacity: 0 },
+})
+
+const slideInTop = stylex.keyframes({
+  from: { opacity: 0, transform: "translateY(-100%)" },
+  to: { opacity: 1, transform: "translateY(0)" },
+})
+
+const slideInBottom = stylex.keyframes({
+  from: { opacity: 0, transform: "translateY(100%)" },
+  to: { opacity: 1, transform: "translateY(0)" },
+})
+
+const slideInLeft = stylex.keyframes({
+  from: { opacity: 0, transform: "translateX(-100%)" },
+  to: { opacity: 1, transform: "translateX(0)" },
+})
+
+const slideInRight = stylex.keyframes({
+  from: { opacity: 0, transform: "translateX(100%)" },
+  to: { opacity: 1, transform: "translateX(0)" },
+})
+
+const slideOutTop = stylex.keyframes({
+  from: { opacity: 1, transform: "translateY(0)" },
+  to: { opacity: 0, transform: "translateY(-100%)" },
+})
+
+const slideOutBottom = stylex.keyframes({
+  from: { opacity: 1, transform: "translateY(0)" },
+  to: { opacity: 0, transform: "translateY(100%)" },
+})
+
+const slideOutLeft = stylex.keyframes({
+  from: { opacity: 1, transform: "translateX(0)" },
+  to: { opacity: 0, transform: "translateX(-100%)" },
+})
+
+const slideOutRight = stylex.keyframes({
+  from: { opacity: 1, transform: "translateX(0)" },
+  to: { opacity: 0, transform: "translateX(100%)" },
+})
+
+// Radix mounts the content already in the open state, so the reveal has to be
+// an animation — a transition between `[data-state]` values never runs.
 const styles = stylex.create({
   overlay: {
+    animationDuration: {
+      default: "300ms",
+      "@media (prefers-reduced-motion: reduce)": "0.01ms",
+    },
+    animationFillMode: "both",
+    animationTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
     backgroundColor: "var(--container-fg)",
     inset: 0,
     opacity: 0.8,
     position: "fixed",
     zIndex: 50,
+    "[data-state=closed]": { animationName: fadeOut },
+    "[data-state=open]": { animationName: fadeIn },
   },
   content: {
+    animationDuration: {
+      default: "300ms",
+      "@media (prefers-reduced-motion: reduce)": "0.01ms",
+    },
+    animationFillMode: "both",
+    animationTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
     backgroundColor: "var(--container-bg)",
     borderColor: "var(--container-border)",
     borderStyle: "solid",
@@ -58,9 +131,6 @@ const styles = stylex.create({
     gap: "var(--spacing-md)",
     padding: "var(--spacing-lg)",
     position: "fixed",
-    transitionDuration: "300ms",
-    transitionProperty: "transform",
-    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
     zIndex: 50,
   },
   contentTop: {
@@ -72,10 +142,10 @@ const styles = stylex.create({
     right: 0,
     top: 0,
     "[data-state=closed]": {
-      transform: "translateY(-100%)",
+      animationName: slideOutTop,
     },
     "[data-state=open]": {
-      transform: "translateY(0)",
+      animationName: slideInTop,
     },
   },
   contentBottom: {
@@ -87,10 +157,10 @@ const styles = stylex.create({
     left: 0,
     right: 0,
     "[data-state=closed]": {
-      transform: "translateY(100%)",
+      animationName: slideOutBottom,
     },
     "[data-state=open]": {
-      transform: "translateY(0)",
+      animationName: slideInBottom,
     },
   },
   contentLeft: {
@@ -104,10 +174,10 @@ const styles = stylex.create({
     top: 0,
     width: "75%",
     "[data-state=closed]": {
-      transform: "translateX(-100%)",
+      animationName: slideOutLeft,
     },
     "[data-state=open]": {
-      transform: "translateX(0)",
+      animationName: slideInLeft,
     },
     "@media (min-width: 640px)": {
       maxWidth: "24rem",
@@ -124,10 +194,10 @@ const styles = stylex.create({
     top: 0,
     width: "75%",
     "[data-state=closed]": {
-      transform: "translateX(100%)",
+      animationName: slideOutRight,
     },
     "[data-state=open]": {
-      transform: "translateX(0)",
+      animationName: slideInRight,
     },
     "@media (min-width: 640px)": {
       maxWidth: "24rem",
@@ -236,30 +306,33 @@ SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
   SheetContentProps
->(({ layout = "default", side = "right", children, ...props }, ref) => (
-  <SheetPortal>
-    <SheetOverlay />
-    <SheetPrimitive.Content
-      ref={ref}
-      {...props}
-      {...stylex.props(
-        styles.content,
-        side === "top" && styles.contentTop,
-        side === "bottom" && styles.contentBottom,
-        side === "left" && styles.contentLeft,
-        side === "right" && styles.contentRight,
-        layout === "headerNavigation" && styles.contentHeaderNavigation,
-        layout === "navigationDrawer" && styles.contentNavigationDrawer
-      )}
-    >
-      <SheetPrimitive.Close {...stylex.props(styles.close)}>
-        <X aria-hidden="true" {...stylex.props(styles.closeIcon)} />
-        <span {...stylex.props(styles.visuallyHidden)}>Close</span>
-      </SheetPrimitive.Close>
-      {children}
-    </SheetPrimitive.Content>
-  </SheetPortal>
-))
+>(({ container, layout = "default", side = "right", children, ...props }, ref) => {
+  const portalContainer = usePortalContainer()
+  return (
+    <SheetPortal container={container ?? portalContainer}>
+      <SheetOverlay />
+      <SheetPrimitive.Content
+        ref={ref}
+        {...props}
+        {...stylex.props(
+          styles.content,
+          side === "top" && styles.contentTop,
+          side === "bottom" && styles.contentBottom,
+          side === "left" && styles.contentLeft,
+          side === "right" && styles.contentRight,
+          layout === "headerNavigation" && styles.contentHeaderNavigation,
+          layout === "navigationDrawer" && styles.contentNavigationDrawer
+        )}
+      >
+        <SheetPrimitive.Close {...stylex.props(styles.close)}>
+          <X aria-hidden="true" {...stylex.props(styles.closeIcon)} />
+          <span {...stylex.props(styles.visuallyHidden)}>Close</span>
+        </SheetPrimitive.Close>
+        {children}
+      </SheetPrimitive.Content>
+    </SheetPortal>
+  )
+})
 SheetContent.displayName = SheetPrimitive.Content.displayName
 
 const SheetHeader = ({
