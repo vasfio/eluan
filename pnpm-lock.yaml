@@ -404,9 +404,9 @@ importers:
 
   packages/tokens:
     dependencies:
-      '@fontsource/inter':
-        specifier: ^5.2.8
-        version: 5.2.8
+      '@fontsource-variable/inter':
+        specifier: ^5.3.0
+        version: 5.3.0
     devDependencies:
       typescript:
         specifier: ^5.4.5
@@ -2047,8 +2047,8 @@ packages:
   '@floating-ui/utils@0.2.11':
     resolution: {integrity: sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg==}
 
-  '@fontsource/inter@5.2.8':
-    resolution: {integrity: sha512-P6r5WnJoKiNVV+zvW2xM13gNdFhAEpQ9dQJHt3naLvfg+LkF2ldgSLiF4T41lf1SQCM9QmkqPTn4TH568IRagg==}
+  '@fontsource-variable/inter@5.3.0':
+    resolution: {integrity: sha512-OupL48va4JNofb97w6NYeF9S7W/kHNKM0Er8Dem5nqi4jeOLrVJDoE8tZEpnMJmtkvNbB1EIPPwHcdkF6b1oUA==}
 
   '@gorhom/bottom-sheet@5.2.14':
     resolution: {integrity: sha512-uLQFlDjp9z+jrOFcMSEldPqL5JdaXL3vXOh+juhwoNvXgTsEorJLjHTugXu+YccAG/0KJnShzKCrb71MHBsvJg==}
@@ -9715,7 +9715,7 @@ snapshots:
 
   '@floating-ui/utils@0.2.11': {}
 
-  '@fontsource/inter@5.2.8': {}
+  '@fontsource-variable/inter@5.3.0': {}
 
   '@gorhom/bottom-sheet@5.2.14(@types/react-native@0.72.8(react-native@0.76.6(@babel/core@7.29.7)(@babel/preset-env@7.29.5(@babel/core@7.29.7))(@types/react@18.3.28)(react@18.3.1)))(@types/react@18.3.28)(react-native-gesture-handler@2.20.2(react-native@0.76.6(@babel/core@7.29.7)(@babel/preset-env@7.29.5(@babel/core@7.29.7))(@types/react@18.3.28)(react@18.3.1))(react@18.3.1))(react-native-reanimated@3.16.7(@babel/core@7.29.7)(react-native@0.76.6(@babel/core@7.29.7)(@babel/preset-env@7.29.5(@babel/core@7.29.7))(@types/react@18.3.28)(react@18.3.1))(react@18.3.1))(react-native@0.76.6(@babel/core@7.29.7)(@babel/preset-env@7.29.5(@babel/core@7.29.7))(@types/react@18.3.28)(react@18.3.1))(react@18.3.1)':
     dependencies:

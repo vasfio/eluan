@@ -3,15 +3,13 @@
   Self-hosted, no CDN dependency.
 
   Paper Mono ships inside this package as a variable WOFF2 (wght 100–800) and
-  is declared in fonts-base.css. Inter comes from Google Fonts via @fontsource;
-  only the weights the system actually uses are loaded (max weight across all
-  themes = 500), which is why there is no 600+ import — components cap their
-  `weight` prop at medium rather than faux-bolding.
+  is declared in fonts-base.css. Inter comes from Google Fonts via @fontsource
+  as a variable font (wght 100–900), so every weight a component asks for is a
+  real face — nothing is faux-bolded.
 */
 
 /* Paper Mono — all themes mono */
 @import "./fonts-base.css";
 
-/* Inter — minimal heading + body */
-@import "@fontsource/inter/400.css";
-@import "@fontsource/inter/500.css";
+/* Inter Variable — minimal heading + body */
+@import "@fontsource-variable/inter/wght.css";

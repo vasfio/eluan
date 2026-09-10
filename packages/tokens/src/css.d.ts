@@ -3,12 +3,7 @@ declare module "*.css" {
   export default content
 }
 
-declare module "@fontsource/*/400.css" {
-  const content: string
-  export default content
-}
-
-declare module "@fontsource/*/500.css" {
+declare module "@fontsource-variable/*/wght.css" {
   const content: string
   export default content
 }

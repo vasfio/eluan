@@ -117,27 +117,36 @@ describe("Typography", () => {
     expect(screen.getByText("Tone")).toBeInTheDocument();
   });
 
-  it("renders each weight and family", () => {
-    const { rerender } = render(
-      <Typography weight="normal" family="body">
-        Weighted
-      </Typography>,
-    );
-    expect(screen.getByText("Weighted")).toBeInTheDocument();
+  it("renders every weight on the Inter Variable axis", () => {
+    const weights = [
+      "thin",
+      "extralight",
+      "light",
+      "normal",
+      "medium",
+      "semibold",
+      "bold",
+      "extrabold",
+      "black",
+    ] as const;
 
-    rerender(
-      <Typography weight="medium" family="mono">
-        Weighted
-      </Typography>,
-    );
-    expect(screen.getByText("Weighted")).toBeInTheDocument();
+    const { rerender } = render(<Typography>Weighted</Typography>);
 
-    rerender(
-      <Typography weight="medium" family="heading">
-        Weighted
-      </Typography>,
-    );
-    expect(screen.getByText("Weighted")).toBeInTheDocument();
+    for (const weight of weights) {
+      rerender(<Typography weight={weight}>Weighted</Typography>);
+      expect(screen.getByText("Weighted")).toBeInTheDocument();
+    }
+  });
+
+  it("renders each family", () => {
+    const { rerender } = render(<Typography family="body">Family</Typography>);
+    expect(screen.getByText("Family")).toBeInTheDocument();
+
+    rerender(<Typography family="mono">Family</Typography>);
+    expect(screen.getByText("Family")).toBeInTheDocument();
+
+    rerender(<Typography family="heading">Family</Typography>);
+    expect(screen.getByText("Family")).toBeInTheDocument();
   });
 
   it("renders each alignment and truncates", () => {

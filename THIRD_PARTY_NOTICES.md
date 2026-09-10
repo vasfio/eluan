@@ -221,7 +221,7 @@ texts are distributed with each package inside `node_modules`.
 | [`prismjs`](https://github.com/PrismJS/prism) | Code block syntax highlighting | MIT |
 | [`countries-list`](https://github.com/annexare/Countries) | Country/phone data for inputs | MIT |
 | [`culori`](https://github.com/Evercoder/culori) | Color math in `@eluan/theme-generator` | MIT |
-| [`@fontsource/inter`](https://github.com/fontsource/font-files) | Inter — heading + body face for the `minimal` theme | OFL-1.1 |
+| [`@fontsource-variable/inter`](https://github.com/fontsource/font-files) | Inter Variable — heading + body face for the `minimal` theme | OFL-1.1 |
 
 ---
 

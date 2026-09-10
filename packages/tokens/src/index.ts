@@ -706,8 +706,7 @@ export async function loadThemeFonts(theme: Theme): Promise<void> {
 
   switch (theme) {
     case "minimal":
-      await import("@fontsource/inter/400.css")
-      await import("@fontsource/inter/500.css")
+      await import("@fontsource-variable/inter/wght.css")
       break
   }
 

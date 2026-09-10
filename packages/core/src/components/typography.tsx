@@ -41,8 +41,17 @@ export type TypographyElement =
   | "blockquote"
   | "figcaption"
 
-/** Only up to medium — no face above 500 is loaded, so bolder would faux-bold. */
-export type TypographyWeight = "normal" | "medium"
+/** The full Inter Variable weight axis — every step is a real face. */
+export type TypographyWeight =
+  | "thin"
+  | "extralight"
+  | "light"
+  | "normal"
+  | "medium"
+  | "semibold"
+  | "bold"
+  | "extrabold"
+  | "black"
 
 export type TypographyFamily = "heading" | "body" | "mono"
 
@@ -139,9 +148,16 @@ const styles = stylex.create({
   familyBody: { fontFamily: "var(--font-body)" },
   familyMono: { fontFamily: "var(--font-mono)" },
 
-  /* Weights — capped at medium; nothing heavier is loaded. */
+  /* Weights */
+  weightThin: { fontWeight: 100 },
+  weightExtralight: { fontWeight: 200 },
+  weightLight: { fontWeight: 300 },
   weightNormal: { fontWeight: 400 },
   weightMedium: { fontWeight: 500 },
+  weightSemibold: { fontWeight: 600 },
+  weightBold: { fontWeight: 700 },
+  weightExtrabold: { fontWeight: 800 },
+  weightBlack: { fontWeight: 900 },
 
   /* Tones */
   toneDefault: { color: "var(--container-fg)" },
@@ -180,8 +196,15 @@ const familyStyles = {
 } satisfies Record<TypographyFamily, stylex.StyleXStyles>
 
 const weightStyles = {
+  thin: styles.weightThin,
+  extralight: styles.weightExtralight,
+  light: styles.weightLight,
   normal: styles.weightNormal,
   medium: styles.weightMedium,
+  semibold: styles.weightSemibold,
+  bold: styles.weightBold,
+  extrabold: styles.weightExtrabold,
+  black: styles.weightBlack,
 } satisfies Record<TypographyWeight, stylex.StyleXStyles>
 
 const toneStyles = {

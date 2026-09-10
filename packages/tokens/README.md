@@ -46,7 +46,7 @@ The typeset is a fluid 10-step scale: each step interpolates between anchors at 
 Two faces ship with the package:
 
 - **Paper Mono** — the monospace face for every theme. A variable font (weight axis 100–800) vendored as WOFF2 inside the package, so it works offline with no CDN or extra dependency. Licensed under the SIL Open Font License 1.1.
-- **Inter** — the `minimal` theme's heading and body face, self-hosted via `@fontsource/inter` (weights 400 and 500 only).
+- **Inter Variable** — the `minimal` theme's heading and body face, self-hosted via `@fontsource-variable/inter` (weight axis 100–900, so every weight is a real face).
 
 ## Subpath exports
 

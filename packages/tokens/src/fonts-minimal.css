@@ -1,3 +1,2 @@
-/* minimal theme — Inter (heading + body) */
-@import "@fontsource/inter/400.css";
-@import "@fontsource/inter/500.css";
+/* minimal theme — Inter Variable, wght 100–900 (heading + body) */
+@import "@fontsource-variable/inter/wght.css";

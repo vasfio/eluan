@@ -223,7 +223,7 @@ Fonts are split per theme so you only ship the fonts your app actually uses. Onl
 
 Custom themes inherit these unless they override `--font-heading` / `--font-body` / `--font-mono`; load those faces yourself.
 
-All fonts are self-hosted -- no CDN dependency. Inter comes from `@fontsource`; Paper Mono (SIL Open Font License 1.1) is vendored inside `@eluan/tokens` as a variable WOFF2 with a 100-800 weight axis.
+All fonts are self-hosted -- no CDN dependency. Inter comes from `@fontsource-variable` as a variable font with a 100-900 weight axis; Paper Mono (SIL Open Font License 1.1) is vendored inside `@eluan/tokens` as a variable WOFF2 with a 100-800 weight axis.
 
 #### Dynamic Font Loading (JavaScript)
 

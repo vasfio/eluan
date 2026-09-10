@@ -164,7 +164,7 @@ There are **68 component modules** in `packages/core/src/components`. Every modu
 `Table` · `Card` · `Badge` (`microdot` size variant for status dots) · `Avatar` (with `AvatarBadge`, `AvatarStatus`, `AvatarWithStatus`) · `Progress` · `Skeleton` · `Spinner` · `Kbd` · `Banner` · `CodeBlock` · `Media` (with `Image`)
 
 **Typography**
-`Typography` — the front door to the fluid typeset. `variant` (`display|title|heading|subheading|lead|body|label|caption`) picks a step plus a family/weight and a default element (`h1`–`h4`, `p`, `span`); `step` re-sizes any variant to any of the 10 rungs; also `as`, `asChild`, `weight` (`normal|medium` only — nothing heavier is loaded), `family`, `tone`, `align`, `truncate`. Every variant sets `font-size`, `line-height` and `letter-spacing` from the same step, so heading tracking always matches the size.
+`Typography` — the front door to the fluid typeset. `variant` (`display|title|heading|subheading|lead|body|label|caption`) picks a step plus a family/weight and a default element (`h1`–`h4`, `p`, `span`); `step` re-sizes any variant to any of the 10 rungs; also `as`, `asChild`, `weight` (`thin|extralight|light|normal|medium|semibold|bold|extrabold|black` — Inter is loaded as a variable font, so every weight is a real face), `family`, `tone`, `align`, `truncate`. Every variant sets `font-size`, `line-height` and `letter-spacing` from the same step, so heading tracking always matches the size.
 
 **Navigation / structure**
 `Accordion` · `Breadcrumb` · `Carousel` · `Pagination` · `Tabs` · `NavigationMenu` (Radix navigation-menu wrapper) · `NavigationDrawer` (requires `NavigationDrawerProvider`; `NavigationDrawerLayout` gives a sidebar+content shell) · `Stepper` · `TreeView` · `Menubar`
@@ -490,6 +490,7 @@ There is one test suite per component (68 suites under `packages/core/src/compon
   persist?:          boolean                              // default true
   followSystemMode?: boolean                              // default true
   target?:           "html" | "body" | HTMLElement | null // default "html"
+  portalContainer?:  HTMLElement | null | RefObject<HTMLElement | null> // overlays portal here, so a scoped theme reaches them
 />
 
 // Hook

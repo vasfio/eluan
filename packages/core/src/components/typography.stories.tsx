@@ -40,7 +40,20 @@ const meta: Meta<typeof Typography> = {
       ],
     },
     family: { control: "inline-radio", options: ["heading", "body", "mono"] },
-    weight: { control: "inline-radio", options: ["normal", "medium"] },
+    weight: {
+      control: "select",
+      options: [
+        "thin",
+        "extralight",
+        "light",
+        "normal",
+        "medium",
+        "semibold",
+        "bold",
+        "extrabold",
+        "black",
+      ],
+    },
     tone: { control: "inline-radio", options: ["default", "muted", "inverse"] },
     align: { control: "inline-radio", options: ["start", "center", "end"] },
     truncate: { control: "boolean" },
@@ -139,6 +152,42 @@ export const Tones: Story = {
       >
         <Typography tone="inverse">Inverse — var(--container-fg-inverse)</Typography>
       </div>
+    </div>
+  ),
+}
+
+/**
+ * The whole Inter Variable weight axis (100–900). Every step is a real face —
+ * nothing here is synthesized by the browser.
+ */
+export const Weights: Story = {
+  render: () => (
+    <div style={stack}>
+      {(
+        [
+          ["thin", 100],
+          ["extralight", 200],
+          ["light", 300],
+          ["normal", 400],
+          ["medium", 500],
+          ["semibold", 600],
+          ["bold", 700],
+          ["extrabold", 800],
+          ["black", 900],
+        ] as const
+      ).map(([weight, value]) => (
+        <div
+          key={weight}
+          style={{ display: "flex", alignItems: "baseline", gap: "var(--spacing-md)" }}
+        >
+          <Typography variant="caption" family="mono" tone="muted" as="span">
+            {value}
+          </Typography>
+          <Typography step="2" as="span" weight={weight}>
+            {weight} — Grumpy wizards make toxic brew
+          </Typography>
+        </div>
+      ))}
     </div>
   ),
 }
