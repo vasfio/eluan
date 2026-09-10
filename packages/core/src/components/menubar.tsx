@@ -86,20 +86,19 @@ export type MenubarShortcutProps = Omit<
 
 const styles = stylex.create({
   root: {
-    alignItems: "center",
+    alignItems: "stretch",
     backgroundColor: "var(--container-bg)",
     borderColor: "var(--container-border)",
     borderRadius: "var(--curves-md)",
     borderStyle: "solid",
     borderWidth: 1,
     display: "flex",
-    gap: "var(--spacing-xxs)",
-    minHeight: "var(--size-lg)",
-    padding: "var(--spacing-xxs)",
+    gap: "var(--spacing-xs)",
+    padding: "var(--spacing-xs)",
   },
   trigger: {
     alignItems: "center",
-    borderRadius: "var(--curves-sm)",
+    borderRadius: "calc(var(--curves-md) - var(--spacing-xs))",
     cursor: "default",
     display: "flex",
     fontSize: "var(--font-size-sm)",
@@ -119,7 +118,7 @@ const styles = stylex.create({
   },
   itemBase: {
     alignItems: "center",
-    borderRadius: "var(--curves-sm)",
+    borderRadius: "calc(var(--curves-md) - var(--spacing-xs))",
     cursor: "default",
     display: "flex",
     fontSize: "var(--font-size-sm)",
@@ -169,7 +168,7 @@ const styles = stylex.create({
     color: "var(--container-fg)",
     minWidth: "12rem",
     overflow: "hidden",
-    padding: "var(--spacing-xxs)",
+    padding: "var(--spacing-xs)",
     zIndex: 50,
   },
   contentShadow: {
@@ -206,7 +205,7 @@ const styles = stylex.create({
     backgroundColor: "var(--container-bg-alt)",
     height: 1,
     marginBlock: "var(--spacing-xxs)",
-    marginInline: "calc(-1 * var(--spacing-xxs))",
+    marginInline: "calc(-1 * var(--spacing-xs))",
   },
   shortcut: {
     color: "var(--container-fg-alt)",

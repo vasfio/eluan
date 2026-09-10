@@ -25,7 +25,7 @@ const styles = stylex.create({
   // track and a subtly raised active cap. Custom themes restyle it by moving
   // those semantic tokens, which is the same lever every other component uses.
   list: {
-    alignItems: "center",
+    alignItems: "stretch",
     backgroundColor: "var(--interactive-bg-alt)",
     borderRadius: "var(--curves-md)",
     boxShadow: "none",
@@ -33,7 +33,6 @@ const styles = stylex.create({
     display: "inline-flex",
     gap: 0,
     justifyContent: "center",
-    minHeight: "var(--size-lg)",
     padding: "var(--spacing-xs)",
   },
   trigger: {
@@ -41,7 +40,7 @@ const styles = stylex.create({
     backgroundColor: "transparent",
     backgroundImage: "none",
     borderWidth: 0,
-    borderRadius: "var(--curves-sm)",
+    borderRadius: "calc(var(--curves-md) - var(--spacing-xs))",
     color: "var(--interactive-fg-alt)",
     display: "inline-flex",
     fontSize: "var(--font-size-sm)",

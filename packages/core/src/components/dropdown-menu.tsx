@@ -78,7 +78,7 @@ export type DropdownMenuShortcutProps = Omit<
 const styles = stylex.create({
   itemBase: {
     alignItems: "center",
-    borderRadius: "var(--curves-sm)",
+    borderRadius: "calc(var(--curves-md) - var(--spacing-xs))",
     cursor: "default",
     display: "flex",
     fontSize: "var(--font-size-sm)",
@@ -131,7 +131,7 @@ const styles = stylex.create({
     color: "var(--container-fg)",
     minWidth: "8rem",
     overflow: "hidden",
-    padding: "var(--spacing-xxs)",
+    padding: "var(--spacing-xs)",
     transformOrigin: "var(--radix-dropdown-menu-content-transform-origin)",
     zIndex: 50,
     "[data-side=bottom]": {
@@ -251,7 +251,7 @@ const styles = stylex.create({
     backgroundColor: "var(--container-bg-alt)",
     height: 1,
     marginBlock: "var(--spacing-xxs)",
-    marginInline: "calc(-1 * var(--spacing-xxs))",
+    marginInline: "calc(-1 * var(--spacing-xs))",
   },
   shortcut: {
     fontSize: "var(--font-size-xs)",

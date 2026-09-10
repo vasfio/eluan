@@ -45,7 +45,7 @@ const styles = stylex.create({
     letterSpacing: "0.1em",
     textAlign: "center",
     transitionDuration: "150ms",
-    transitionProperty: "all",
+    transitionProperty: "color, background-color, border-color",
     transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
     width: "var(--size-lg)",
     ":focus-visible": {
@@ -89,7 +89,7 @@ const styles = stylex.create({
     justifyContent: "center",
     position: "relative",
     transitionDuration: "150ms",
-    transitionProperty: "all",
+    transitionProperty: "color, background-color, border-color",
     transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
     width: "var(--size-lg)",
     ":first-child": {
