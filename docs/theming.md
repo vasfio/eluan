@@ -295,7 +295,7 @@ For a simpler sub-tree override of a single token, set the CSS variable inline:
 
 ## Overlays in a scoped theme
 
-Overlay content (DropdownMenu, Popover, Select, ContextMenu, Dialog, Sheet, Menubar) is portalled. By default it mounts into `document.body`, which is **outside** any element carrying scoped `data-theme` / `data-mode` / `data-spacing` / `data-curves` / `data-typeset` attributes — so a scoped region shows a correctly themed trigger but a default-themed popover.
+Overlay content (DropdownMenu, Popover, Select, ContextMenu, Dialog, Sheet, Menubar, Tooltip, HoverCard) is portalled. By default it mounts into `document.body`, which is **outside** any element carrying scoped `data-theme` / `data-mode` / `data-spacing` / `data-curves` / `data-typeset` attributes — so a scoped region shows a correctly themed trigger but a default-themed popover.
 
 Point the overlays back at the scope. With `EluanProvider`, pass the same element to `portalContainer`:
 

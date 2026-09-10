@@ -130,7 +130,8 @@ export interface EluanProviderProps {
   target?: "html" | "body" | HTMLElement | null
   /**
    * Element that Eluan overlays (DropdownMenu, Popover, Select, ContextMenu,
-   * Dialog, Sheet, Menubar) portal into. Set this to the same element as
+   * Tooltip, HoverCard, Dialog, Sheet, Menubar) portal into. Set this to the
+   * same element as
    * `target` when scoping a theme to a subtree, so overlays inherit the scope
    * instead of escaping to `document.body`. See `PortalContainerProvider` for
    * the containing-block caveat.

@@ -4,6 +4,8 @@ import * as React from "react"
 import * as HoverCardPrimitive from "@radix-ui/react-hover-card"
 import * as stylex from "@stylexjs/stylex"
 
+import { usePortalContainer } from "../providers/portal-container"
+
 const HoverCard = HoverCardPrimitive.Root
 
 const HoverCardTrigger = HoverCardPrimitive.Trigger
@@ -11,7 +13,13 @@ const HoverCardTrigger = HoverCardPrimitive.Trigger
 export type HoverCardContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof HoverCardPrimitive.Content>,
   "className" | "style"
->
+> & {
+  /**
+   * Element to portal into, overriding `PortalContainerProvider`.
+   * Defaults to the nearest provider's container, then `document.body`.
+   */
+  container?: HTMLElement | null
+}
 
 const styles = stylex.create({
   content: {
@@ -32,16 +40,21 @@ const styles = stylex.create({
 const HoverCardContent = React.forwardRef<
   React.ElementRef<typeof HoverCardPrimitive.Content>,
   HoverCardContentProps
->(({ align = "center", sideOffset = 4, collisionPadding = 8, ...props }, ref) => (
-  <HoverCardPrimitive.Content
-    ref={ref}
-    align={align}
-    sideOffset={sideOffset}
-    collisionPadding={collisionPadding}
-    {...props}
-    {...stylex.props(styles.content)}
-  />
-))
+>(({ align = "center", container, sideOffset = 4, collisionPadding = 8, ...props }, ref) => {
+  const portalContainer = usePortalContainer()
+  return (
+    <HoverCardPrimitive.Portal container={container ?? portalContainer}>
+      <HoverCardPrimitive.Content
+        ref={ref}
+        align={align}
+        sideOffset={sideOffset}
+        collisionPadding={collisionPadding}
+        {...props}
+        {...stylex.props(styles.content)}
+      />
+    </HoverCardPrimitive.Portal>
+  )
+})
 HoverCardContent.displayName = HoverCardPrimitive.Content.displayName
 
 export { HoverCard, HoverCardTrigger, HoverCardContent }

@@ -4,6 +4,17 @@ import userEvent from "@testing-library/user-event";
 import { describe, it, expect } from "vitest";
 
 import { Popover, PopoverTrigger, PopoverContent } from "../../components/popover";
+import {
+  HoverCard,
+  HoverCardTrigger,
+  HoverCardContent,
+} from "../../components/hover-card";
+import {
+  Tooltip,
+  TooltipProvider,
+  TooltipTrigger,
+  TooltipContent,
+} from "../../components/tooltip";
 import { PortalContainerProvider } from "../portal-container";
 
 describe("PortalContainerProvider", () => {
@@ -89,5 +100,47 @@ describe("PortalContainerProvider", () => {
     render(<Override />);
     expect(override).toContainElement(screen.getByText("Popover content"));
     override.remove();
+  });
+
+  it("mounts tooltip content inside the provided container", () => {
+    const Harness = () => {
+      const [scope, setScope] = React.useState<HTMLElement | null>(null);
+      return (
+        <div ref={setScope} data-testid="scope">
+          <PortalContainerProvider container={scope}>
+            <TooltipProvider>
+              <Tooltip open>
+                <TooltipTrigger>Hover me</TooltipTrigger>
+                <TooltipContent>Tooltip content</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </PortalContainerProvider>
+        </div>
+      );
+    };
+    render(<Harness />);
+    expect(screen.getByTestId("scope")).toContainElement(
+      screen.getAllByText("Tooltip content")[0]
+    );
+  });
+
+  it("mounts hover card content inside the provided container", () => {
+    const Harness = () => {
+      const [scope, setScope] = React.useState<HTMLElement | null>(null);
+      return (
+        <div ref={setScope} data-testid="scope">
+          <PortalContainerProvider container={scope}>
+            <HoverCard open>
+              <HoverCardTrigger>@eluan</HoverCardTrigger>
+              <HoverCardContent>Hover card content</HoverCardContent>
+            </HoverCard>
+          </PortalContainerProvider>
+        </div>
+      );
+    };
+    render(<Harness />);
+    expect(screen.getByTestId("scope")).toContainElement(
+      screen.getByText("Hover card content")
+    );
   });
 });

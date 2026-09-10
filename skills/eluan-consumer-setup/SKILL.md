@@ -115,7 +115,7 @@ const acme = createTheme({
 
 ## Scoped Themes and Overlays
 
-When the theme attributes are scoped to a subtree (`EluanProvider target={el}`, or hand-written `data-*` on a wrapper), portalled overlays — DropdownMenu, Popover, Select, ContextMenu, Dialog, Sheet, Menubar — still mount into `document.body` and therefore render with the page-level theme, not the scope.
+When the theme attributes are scoped to a subtree (`EluanProvider target={el}`, or hand-written `data-*` on a wrapper), portalled overlays — DropdownMenu, Popover, Select, ContextMenu, Dialog, Sheet, Menubar, Tooltip, HoverCard — still mount into `document.body` and therefore render with the page-level theme, not the scope.
 
 Give the overlays a portal target inside the scope:
 

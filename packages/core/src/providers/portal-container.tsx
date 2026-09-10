@@ -72,7 +72,7 @@ function resolveContainer(value: PortalContainerValue): HTMLElement | undefined 
 
 /**
  * Scopes the portal target for every Eluan overlay below it (DropdownMenu,
- * Popover, Select, ContextMenu, Dialog, Sheet, Menubar).
+ * Popover, Select, ContextMenu, Dialog, Sheet, Menubar, Tooltip, HoverCard).
  *
  * See the containing-block caveat above: a `transform`, `filter`, `contain` or
  * `perspective` on the container or one of its ancestors re-anchors the

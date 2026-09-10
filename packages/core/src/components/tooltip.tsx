@@ -2,6 +2,8 @@ import * as React from "react"
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 import * as stylex from "@stylexjs/stylex"
 
+import { usePortalContainer } from "../providers/portal-container"
+
 const TooltipProvider = ({ delayDuration = 200, ...props }: React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Provider>) => (
   <TooltipPrimitive.Provider delayDuration={delayDuration} {...props} />
 )
@@ -13,7 +15,13 @@ const TooltipTrigger = TooltipPrimitive.Trigger
 export type TooltipContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>,
   "className" | "style"
->
+> & {
+  /**
+   * Element to portal into, overriding `PortalContainerProvider`.
+   * Defaults to the nearest provider's container, then `document.body`.
+   */
+  container?: HTMLElement | null
+}
 
 const styles = stylex.create({
   content: {
@@ -35,14 +43,19 @@ const styles = stylex.create({
 const TooltipContent = React.forwardRef<
   React.ElementRef<typeof TooltipPrimitive.Content>,
   TooltipContentProps
->(({ sideOffset = 4, ...props }, ref) => (
-  <TooltipPrimitive.Content
-    ref={ref}
-    sideOffset={sideOffset}
-    {...props}
-    {...stylex.props(styles.content)}
-  />
-))
+>(({ container, sideOffset = 4, ...props }, ref) => {
+  const portalContainer = usePortalContainer()
+  return (
+    <TooltipPrimitive.Portal container={container ?? portalContainer}>
+      <TooltipPrimitive.Content
+        ref={ref}
+        sideOffset={sideOffset}
+        {...props}
+        {...stylex.props(styles.content)}
+      />
+    </TooltipPrimitive.Portal>
+  )
+})
 TooltipContent.displayName = TooltipPrimitive.Content.displayName
 
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }

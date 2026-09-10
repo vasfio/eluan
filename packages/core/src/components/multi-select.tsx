@@ -47,6 +47,7 @@ const styles = stylex.create({
     borderRadius: "var(--curves-md)",
     borderStyle: "solid",
     borderWidth: 1,
+    cursor: "default",
     display: "flex",
     fontSize: "var(--font-size-sm)",
     justifyContent: "space-between",
@@ -56,12 +57,8 @@ const styles = stylex.create({
     transitionDuration: "150ms",
     transitionProperty: "color, background-color, border-color",
     transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    userSelect: "none",
     width: "100%",
-    ":disabled": {
-      backgroundColor: "var(--interactive-bg-disabled)",
-      color: "var(--interactive-fg-disabled)",
-      cursor: "not-allowed",
-    },
     ":focus": {
       outlineStyle: "none",
     },
@@ -72,6 +69,11 @@ const styles = stylex.create({
       outlineStyle: "solid",
       outlineWidth: "1px",
     },
+  },
+  triggerDisabled: {
+    backgroundColor: "var(--interactive-bg-disabled)",
+    color: "var(--interactive-fg-disabled)",
+    cursor: "not-allowed",
   },
   selectedWrap: {
     alignItems: "center",
@@ -168,7 +170,7 @@ const styles = stylex.create({
   },
 })
 
-const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
+const MultiSelect = React.forwardRef<HTMLDivElement, MultiSelectProps>(
   (
     {
       options,
@@ -218,14 +220,35 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
 
     return (
       <Popover open={open} onOpenChange={setOpen}>
+        {/* The trigger holds nested interactive controls (chip remove, clear
+            all), so it cannot be a <button> — interactive content inside a
+            button is invalid HTML and breaks hydration in SSR apps. Like
+            FileInput's dropzone, it's a div with an ARIA role and manual
+            keyboard handling. */}
         <PopoverTrigger asChild>
-          <button
+          <div
             ref={ref}
-            type="button"
             role="combobox"
+            tabIndex={disabled ? -1 : 0}
             aria-expanded={open}
-            disabled={disabled}
-            {...stylex.props(styles.trigger)}
+            aria-disabled={disabled || undefined}
+            onClick={(e) => {
+              // Radix skips its open/close toggle when default is prevented.
+              if (disabled) e.preventDefault()
+            }}
+            onKeyDown={(e) => {
+              if (disabled) return
+              // Ignore keys bubbling from the chip remove / clear buttons.
+              if (e.target !== e.currentTarget) return
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault()
+                setOpen(!open)
+              } else if (e.key === "ArrowDown") {
+                e.preventDefault()
+                setOpen(true)
+              }
+            }}
+            {...stylex.props(styles.trigger, disabled && styles.triggerDisabled)}
           >
             <div {...stylex.props(styles.selectedWrap)}>
               {selectedOptions.length === 0 ? (
@@ -238,6 +261,7 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
                         {option.label}
                         <button
                           type="button"
+                          disabled={disabled}
                           onMouseDown={(e) => e.preventDefault()}
                           onClick={(e) => handleRemove(option.value, e)}
                           aria-label={`Remove ${option.label}`}
@@ -260,6 +284,7 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
               {selectedOptions.length > 0 && (
                 <button
                   type="button"
+                  disabled={disabled}
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={handleClearAll}
                   aria-label="Clear all selections"
@@ -270,7 +295,7 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
               )}
               <ChevronDown aria-hidden="true" {...stylex.props(styles.chevron, open && styles.chevronOpen)} />
             </div>
-          </button>
+          </div>
         </PopoverTrigger>
         <PopoverContent
           layout="matchTrigger"
