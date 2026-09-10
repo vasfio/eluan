@@ -31,6 +31,11 @@ export interface TreeViewProps
   expandedIds?: string[]
   onExpandChange?: (ids: string[]) => void
   showIcons?: boolean
+  /**
+   * Indent per depth level, in px. Overrides the token-based default
+   * (one chevron slot plus the row gap), which keeps a child's icon aligned
+   * under its parent's label across every spacing density.
+   */
   indentSize?: number
 }
 
@@ -43,7 +48,7 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
       expandedIds: controlledExpandedIds,
       onExpandChange,
       showIcons = true,
-      indentSize = 20,
+      indentSize,
       ...props
     },
     ref
@@ -61,6 +66,14 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
       setExpandedIds(newIds)
     }
 
+    // Each level indents by one chevron slot plus the row gap, so a child's
+    // icon starts where its parent's label does. An explicit `indentSize`
+    // opts out of the token scale and uses raw px.
+    const paddingLeft = (depth: number) =>
+      indentSize === undefined
+        ? `calc(var(--spacing-sm) + ${depth} * (var(--size-xxs) + var(--spacing-sm)))`
+        : `${depth * indentSize + 8}px`
+
     const renderNode = (node: TreeNode, depth: number = 0) => {
       const hasChildren = node.children && node.children.length > 0
       const isExpanded = expandedIds.includes(node.id)
@@ -75,8 +88,9 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
             aria-selected={isSelected}
             onClick={() => onSelect?.(node)}
             {...stylex.props(styles.node, isSelected && styles.nodeSelected)}
-            style={{ paddingLeft: `${depth * indentSize + 8}px` }}
+            style={{ paddingLeft: paddingLeft(depth) }}
           >
+            <span aria-hidden="true" {...stylex.props(styles.chevronSpacer)} />
             {showIcons && (
               <span aria-hidden="true" {...stylex.props(styles.iconWrap, isSelected && styles.iconSelected)}>
                 {node.icon ? (
@@ -104,7 +118,7 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeViewProps>(
               aria-selected={isSelected}
               onClick={() => onSelect?.(node)}
               {...stylex.props(styles.node, isSelected && styles.nodeSelected)}
-              style={{ paddingLeft: `${depth * indentSize + 8}px` }}
+              style={{ paddingLeft: paddingLeft(depth) }}
             >
               <ChevronRight
                 aria-hidden="true"
@@ -226,6 +240,12 @@ const styles = stylex.create({
   },
   chevronExpanded: {
     transform: "rotate(90deg)",
+  },
+  // Reserves the chevron column on leaf rows so icons line up with siblings.
+  chevronSpacer: {
+    flexShrink: 0,
+    height: "var(--size-xxs)",
+    width: "var(--size-xxs)",
   },
   label: {
     overflow: "hidden",

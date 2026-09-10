@@ -24,10 +24,10 @@ const styles = stylex.create({
   },
   legend: {
     color: "var(--container-fg)",
-    fontSize: "var(--font-size-sm)",
+    fontSize: "var(--font-size-base)",
     fontWeight: 500,
     lineHeight: 1,
-    marginBlockEnd: "var(--spacing-lg)",
+    marginBlockEnd: "var(--spacing-xs)",
   },
   description: {
     color: "var(--container-fg-alt)",

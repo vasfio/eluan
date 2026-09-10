@@ -21,6 +21,12 @@
   --foregrounds-tertiary: var(--color-neutral-600);
   --foregrounds-quaternary: var(--color-neutral-500);
   --foregrounds-quinary: var(--color-neutral-400);
+  /* Tooltip surface — mode-aware because the tooltip loses its border in dark
+   * mode, where the background and --container-border are the same value.
+   * Declared here rather than in themes.css: theme tokens are mode-agnostic
+   * aliases, and modes.css is imported first, so a theme-layer declaration
+   * would win the cascade over any mode override. */
+  --tooltip-bg: var(--backgrounds-primary);
   --maitai-main: var(--color-maitai-500);
   --maitai-background: var(--color-maitai-50);
   --maitai-tint: var(--color-maitai-100);
@@ -128,6 +134,7 @@
   --foregrounds-tertiary: var(--color-teak-800);
   --foregrounds-quaternary: var(--color-teak-700);
   --foregrounds-quinary: var(--color-teak-600);
+  --tooltip-bg: var(--backgrounds-primary);
   --maitai-main: var(--color-maitai-600);
   --maitai-background: var(--color-maitai-100);
   --maitai-tint: var(--color-maitai-200);
@@ -235,6 +242,8 @@
   --foregrounds-tertiary: var(--color-neutral-200);
   --foregrounds-quaternary: var(--color-neutral-300);
   --foregrounds-quinary: var(--color-neutral-400);
+  /* Same value as --container-border, so the tooltip border disappears. */
+  --tooltip-bg: var(--backgrounds-tertiary);
   --maitai-main: var(--color-maitai-500);
   --maitai-background: var(--color-maitai-950);
   --maitai-tint: var(--color-maitai-900);

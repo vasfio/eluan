@@ -48,11 +48,12 @@ const styles = stylex.create({
     transitionProperty: "all",
     transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
     width: "var(--size-lg)",
-    ":focus": {
-      outlineStyle: "none",
-    },
     ":focus-visible": {
-      boxShadow: "0 0 0 1px var(--interactive-border), 0 0 0 2px var(--interactive-border)",
+      borderColor: "var(--interactive-border)",
+      outlineColor: "var(--interactive-border)",
+      outlineOffset: "1px",
+      outlineStyle: "solid",
+      outlineWidth: "1px",
     },
     ":disabled": {
       backgroundColor: "var(--interactive-bg-disabled)",
@@ -103,7 +104,11 @@ const styles = stylex.create({
     },
   },
   slotActive: {
-    boxShadow: "0 0 0 1px var(--interactive-border-alt)",
+    borderColor: "var(--interactive-border)",
+    outlineColor: "var(--interactive-border)",
+    outlineOffset: "1px",
+    outlineStyle: "solid",
+    outlineWidth: "1px",
     zIndex: 10,
   },
   slotInput: {

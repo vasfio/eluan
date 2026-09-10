@@ -17,7 +17,7 @@ export type TooltipContentProps = Omit<
 
 const styles = stylex.create({
   content: {
-    backgroundColor: "var(--container-bg)",
+    backgroundColor: "var(--tooltip-bg)",
     borderColor: "var(--container-border)",
     borderRadius: "var(--curves-md)",
     borderStyle: "solid",

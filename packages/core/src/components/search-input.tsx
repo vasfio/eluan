@@ -459,7 +459,14 @@ const AutocompleteSearch = React.forwardRef<HTMLInputElement, AutocompleteSearch
               <div {...stylex.props(styles.optionList)}>
                 {Object.entries(groupedOptions).map(([groupName, groupOptions], groupIndex, groups) => (
                   <div key={groupName}>
-                    <div {...stylex.props(styles.groupHeading)}>{groupName}</div>
+                    <div
+                      {...stylex.props(
+                        styles.groupHeading,
+                        groupIndex > 0 && styles.groupHeadingSpaced
+                      )}
+                    >
+                      {groupName}
+                    </div>
                     {groupOptions.map((opt) => {
                       const globalIndex = filteredOptions.indexOf(opt)
                       return renderOption(opt, globalIndex)
@@ -635,10 +642,13 @@ const styles = stylex.create({
     color: "var(--container-fg-alt)",
     fontSize: "var(--font-size-xs)",
     fontWeight: 400,
-    letterSpacing: "0.04em",
     paddingBlock: "var(--spacing-xs)",
     paddingInline: "var(--spacing-md)",
-    textTransform: "uppercase",
+  },
+  // Every group but the first sits below a separator; the extra top margin
+  // keeps the heading closer to its own options than to the group above.
+  groupHeadingSpaced: {
+    marginBlockStart: "var(--spacing-xs)",
   },
   groupSeparator: {
     borderBottomColor: "var(--container-border)",

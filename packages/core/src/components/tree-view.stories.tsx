@@ -35,7 +35,8 @@ const meta: Meta<typeof TreeView> = {
       description: "Whether to show file/folder icons next to node names (default true).",
     },
     indentSize: {
-      description: "The pixel indentation per nesting level (default 20).",
+      description:
+        "Pixel indentation per nesting level. Overrides the token-based default, which is one chevron slot plus the row gap.",
     },
   },
   parameters: {

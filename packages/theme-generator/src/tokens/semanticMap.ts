@@ -12,6 +12,9 @@ export function buildSemanticMap(): SemanticMap {
     'container-fg':             { light: 'neutral.950',  dark: 'neutral.50',   role: 'fg', contrastAgainst: 'container-bg', minContrast: 4.5 },
     'container-fg-alt':         { light: 'neutral.800',  dark: 'neutral.100',  role: 'fg', contrastAgainst: 'container-bg', minContrast: 4.5 },
     'container-fg-inverse':     { light: 'neutral.50',   dark: 'neutral.950',  role: 'fg', contrastAgainst: 'container-bg-inverse', minContrast: 4.5 },
+    // Tooltip surface — matches container-bg in light and container-border in
+    // dark, so the tooltip's border disappears against its own background.
+    'tooltip-bg':               { light: 'neutral.50',   dark: 'neutral.700',  role: 'bg' },
 
     // ── Interactive ────────────────────────────────────────────
     'interactive-bg':           { light: 'neutral.50',   dark: 'neutral.800',  role: 'bg' },
