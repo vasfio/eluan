@@ -1,5 +1,146 @@
 # @eluan/core
 
+## 0.5.0
+
+### Minor Changes
+
+- 4422c92: Add `PortalContainerProvider` / `usePortalContainer()` so portalled overlays stay inside a scoped theme.
+
+  Radix `*Primitive.Portal` mounts into `document.body`, which puts overlay content outside any element carrying scoped `data-theme` / `data-mode` / `data-spacing` / `data-curves` / `data-typeset` attributes — a scoped region got a themed trigger but a default-themed popover.
+
+  - New `PortalContainerProvider` (accepts an element or a ref object) and `usePortalContainer()`, both exported from the package root.
+  - `EluanProvider` gains an optional `portalContainer` prop that forwards to it, so `target={el} portalContainer={el}` scopes a theme and its overlays in one step.
+  - `PopoverContent`, `DropdownMenuContent`, `SelectContent`, `ContextMenuContent`, `DialogContent`, `SheetContent`, and `MenubarContent` read the context and accept an explicit `container` prop that overrides it.
+
+  Behaviour is unchanged without a provider: overlays still portal to `document.body`.
+
+- 1391285: Real font weights across the whole range.
+
+  `@eluan/tokens` now loads Inter as a variable font (`@fontsource-variable/inter`,
+  wght 100–900) instead of the two static 400/500 faces, and the `minimal` theme's
+  `--font-heading` / `--font-body` stacks lead with `"Inter Variable"`. Because the
+  axis is continuous, the latin subset costs roughly the same as the two static
+  faces it replaces.
+
+  `Typography` exposes the full range: `weight` now accepts `thin` (100),
+  `extralight` (200), `light` (300), `normal` (400), `medium` (500), `semibold`
+  (600), `bold` (700), `extrabold` (800) and `black` (900) — every one a real face
+  rather than a browser-synthesized fake. Per-variant defaults are unchanged, so
+  existing type keeps rendering exactly as before.
+
+### Patch Changes
+
+- 7a43216: Composite component fixes: MultiSelect density, RichText tokens, Sheet motion.
+
+  - **MultiSelect**: the chips broke at `data-spacing="compact"`, where
+    `--spacing-xxs` resolves to `0`. The gap between tags and the gap between a
+    tag's label and its remove button move to `--spacing-xs`, the remove icon
+    sizes off `--font-size-xs` so it tracks the chip text, and the clear/backspace
+    icon moves to `--size-xxs` so it matches the chevron beside it. The chip's
+    hard-coded `calc(var(--font-size-xs) - 0.0625rem)` is now plain
+    `--font-size-xs`.
+  - **MultiSelect**: selected rows in the dropdown show a `Check` at the right
+    edge of the option instead of an `X` with its own click handler — clicking
+    anywhere on the row already toggles the selection.
+  - **RichText**: the toolbar padding, the blockquote rule, and the inline `code`
+    padding were raw `4px` / `0.125rem` values that ignored spacing density; they
+    now read `--spacing-xs` / `--spacing-xxs`. Heading leading comes from
+    `--line-height-step-*` instead of literals, so it stays paired with the
+    typeset step each heading size lands on.
+  - **Sheet**: opening and closing now animate. The styles transitioned
+    `transform` between `[data-state]` values, but Radix mounts the content
+    already in the open state, so nothing ever ran. `stylex.keyframes` per side
+    slide the panel in from its anchored edge while fading in, and reverse on
+    close; the overlay fades with it. Both are gated on
+    `prefers-reduced-motion: reduce`.
+
+- 95dbf92: Form and overlay polish.
+
+  - **Fieldset**: `FieldsetLegend` now sits one typeset step above `Label`
+    (`--font-size-base` instead of `--font-size-sm`), and its trailing margin drops
+    from `--spacing-lg` to `--spacing-xs` so a `FieldsetDescription` follows the
+    legend instead of floating between it and the field group.
+  - **InputOTP**: focus now matches `Input` — a 1px `--interactive-border` outline
+    at `1px` offset plus a matching border colour, replacing the doubled
+    box-shadow ring. `InputOTPSlot`'s active state uses the same treatment, so both
+    the default and slot variants read as a focused `Input`.
+  - **Tooltip**: new mode-aware `--tooltip-bg` token. Light and dim resolve to
+    `--backgrounds-primary` (unchanged); dark resolves to `--backgrounds-tertiary`,
+    the same value `--container-border` carries, so the tooltip's border disappears
+    against its own background instead of ringing it. `@eluan/theme-generator`
+    emits the token for generated themes.
+  - **TreeView**: leaf rows render an aria-hidden spacer the width of the chevron,
+    so icons at the same depth share a column. Indentation is token-based —
+    `calc(var(--size-xxs) + var(--spacing-sm))` per level over a `--spacing-sm`
+    base — which keeps a child's icon under its parent's label at every spacing
+    density. `indentSize` still overrides it with raw px when passed explicitly.
+  - **SearchInput**: grouped autocomplete headings are no longer uppercase and drop
+    the tracking that went with the caps; groups after the first gain a
+    `--spacing-xs` top margin to separate them from the group above.
+
+- cad0fbf: Give nested "pill in a track" components an even inset on every density.
+
+  `Tabs`, `SegmentedControl`, `Menubar` and `DropdownMenu` now follow one rule: the
+  track's padding is the inset, uniform on all four sides; the inner element fills
+  the track's inner box; and the inner radius is derived as
+  `calc(var(--curves-md) - var(--spacing-xs))` so the corners nest on every
+  curves × spacing combination.
+
+  The track padding moved from `--spacing-xxs` (which collapses to `0` in compact,
+  letting active segments and menu items sit flush against the track border) to
+  `--spacing-xs`. `TabsList` and the `Menubar` root also drop their `minHeight` and
+  stretch their children, so the trigger's own padding — not a fixed `--size-lg` —
+  defines the height; previously a 32px track held a 22.6px trigger, giving a 4.7px
+  vertical inset against a 2px horizontal one.
+
+  Also fixes `InputOTP`: the digit input flashed a black outline on click because
+  `transition-property: all` animated the outline from the browser's default focus
+  ring to the 1px token ring. It now transitions the same explicit list `Input`
+  uses, `color, background-color, border-color`.
+
+- 3d92455: Re-cut the `standard` spacing/sizing scale onto half-step rungs.
+
+  `standard` was built from the same coarse primitive rungs as `compact` and
+  `wide`, one notch up from compact — close enough that the two densities read
+  almost alike. Both families gain the intermediate rungs the scale was missing,
+  and `standard` moves onto them so it now lands visibly between the other two
+  densities instead of hugging compact.
+
+  **New primitives** (`primitives.css`, inserted in numeric order):
+
+  - Spacing: `--spacing-space-6` (0.375rem), `-10` (0.625rem), `-14` (0.875rem),
+    `-18` (1.125rem).
+  - Sizing: `--sizing-size-14` (0.875rem), `-18` (1.125rem), `-22` (1.375rem),
+    `-28` (1.75rem), `-36` (2.25rem), `-44` (2.75rem).
+
+  **New `standard` values** (`compact` and `wide` are unchanged, as are the
+  `--font-size-*` typeset-step mappings in every density):
+
+  | Token           | before | after |     | Token        | before | after |
+  | --------------- | ------ | ----- | --- | ------------ | ------ | ----- |
+  | `--spacing-xxs` | 2      | 2     |     | `--size-xxs` | 16     | 14    |
+  | `--spacing-xs`  | 4      | 4     |     | `--size-xs`  | 20     | 18    |
+  | `--spacing-sm`  | 8      | 6     |     | `--size-sm`  | 24     | 22    |
+  | `--spacing-md`  | 12     | 10    |     | `--size-md`  | 32     | 28    |
+  | `--spacing-lg`  | 16     | 14    |     | `--size-lg`  | 40     | 36    |
+  | `--spacing-xl`  | 20     | 18    |     | `--size-xl`  | 48     | 44    |
+  | `--spacing-2xl` | 24     | 20    |     | `--size-2xl` | 64     | 56    |
+  | `--spacing-3xl` | 40     | 32    |     | `--size-3xl` | 96     | 80    |
+  | `--spacing-4xl` | 80     | 64    |     | `--size-4xl` | 160    | 120   |
+
+  **Menubar and Tabs**: both had wider inline padding than block padding around
+  their items, which read as a squashed pill at every density (2px by 4px in
+  compact). The Menubar trigger, item, indicator item and label, and the Tabs
+  trigger, now pad equally on both axes from `--spacing-sm`; the indicator and
+  inset items keep their extra left offset for the check/radio slot. The Menubar
+  root's fixed `height: var(--size-lg)` becomes `minHeight` — with even padding
+  the trigger is taller than the fixed track in `wide`, and was being clipped.
+
+- Updated dependencies [95dbf92]
+- Updated dependencies [3d92455]
+- Updated dependencies [1391285]
+  - @eluan/tokens@0.4.0
+
 ## 0.4.1
 
 ### Patch Changes
