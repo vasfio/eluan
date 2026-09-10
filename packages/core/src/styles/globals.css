@@ -122,7 +122,11 @@
 
 /* ============================================
  * Code Block — Prism.js Syntax Highlighting
- * Hardcoded colors (to be replaced with tokens later)
+ * Hardcoded colors (to be replaced with tokens later).
+ * The unscoped rules are One Dark — the base palette, serving dim and
+ * dark. A light palette follows, scoped off the data-mode axis like the
+ * token layers: One Light's roles darkened until every token type clears
+ * ≥3.9:1 on the CodeBlock card (--container-bg-alt, near-white in light).
  * ============================================ */
 
 /* --- Base token color --- */
@@ -251,6 +255,145 @@ code[class*="language-"] .token.bold {
 
 code[class*="language-"] .token.italic {
   font-style: italic;
+}
+
+/* --- Light mode overrides --- */
+
+/* Base token color. NOTE: at (0,3,1) this ties with the unscoped
+ * `.token.comment` rule and wins on source order, so the comment color is
+ * re-asserted below even though it is unchanged between palettes. */
+[data-mode="Light"] code[class*="language-"] .token,
+[data-mode="light"] code[class*="language-"] .token {
+  color: #4b5059;
+}
+
+[data-mode="Light"] code[class*="language-"] .token.comment,
+[data-mode="light"] code[class*="language-"] .token.comment,
+[data-mode="Light"] code[class*="language-"] .token.prolog,
+[data-mode="light"] code[class*="language-"] .token.prolog,
+[data-mode="Light"] code[class*="language-"] .token.doctype,
+[data-mode="light"] code[class*="language-"] .token.doctype,
+[data-mode="Light"] code[class*="language-"] .token.cdata,
+[data-mode="light"] code[class*="language-"] .token.cdata {
+  color: #5c6370;
+}
+
+[data-mode="Light"] code[class*="language-"] .token.keyword,
+[data-mode="light"] code[class*="language-"] .token.keyword,
+[data-mode="Light"] code[class*="language-"] .token.atrule,
+[data-mode="light"] code[class*="language-"] .token.atrule,
+[data-mode="Light"] code[class*="language-"] .token.important,
+[data-mode="light"] code[class*="language-"] .token.important {
+  color: #8f2a91;
+}
+
+[data-mode="Light"] code[class*="language-"] .token.string,
+[data-mode="light"] code[class*="language-"] .token.string,
+[data-mode="Light"] code[class*="language-"] .token.char,
+[data-mode="light"] code[class*="language-"] .token.char,
+[data-mode="Light"] code[class*="language-"] .token.attr-value,
+[data-mode="light"] code[class*="language-"] .token.attr-value,
+[data-mode="Light"] code[class*="language-"] .token.regex,
+[data-mode="light"] code[class*="language-"] .token.regex,
+[data-mode="Light"] code[class*="language-"] .token.template-string,
+[data-mode="light"] code[class*="language-"] .token.template-string {
+  color: #3f7d33;
+}
+
+[data-mode="Light"] code[class*="language-"] .token.number,
+[data-mode="light"] code[class*="language-"] .token.number,
+[data-mode="Light"] code[class*="language-"] .token.boolean,
+[data-mode="light"] code[class*="language-"] .token.boolean {
+  color: #8a5a10;
+}
+
+[data-mode="Light"] code[class*="language-"] .token.function,
+[data-mode="light"] code[class*="language-"] .token.function,
+[data-mode="Light"] code[class*="language-"] .token.method,
+[data-mode="light"] code[class*="language-"] .token.method {
+  color: #2b62c8;
+}
+
+[data-mode="Light"] code[class*="language-"] .token.class-name,
+[data-mode="light"] code[class*="language-"] .token.class-name,
+[data-mode="Light"] code[class*="language-"] .token.maybe-class-name,
+[data-mode="light"] code[class*="language-"] .token.maybe-class-name,
+[data-mode="Light"] code[class*="language-"] .token.builtin,
+[data-mode="light"] code[class*="language-"] .token.builtin {
+  color: #7d5c07;
+}
+
+[data-mode="Light"] code[class*="language-"] .token.operator,
+[data-mode="light"] code[class*="language-"] .token.operator,
+[data-mode="Light"] code[class*="language-"] .token.arrow,
+[data-mode="light"] code[class*="language-"] .token.arrow {
+  color: #0a6b87;
+}
+
+[data-mode="Light"] code[class*="language-"] .token.punctuation,
+[data-mode="light"] code[class*="language-"] .token.punctuation {
+  color: #4b5059;
+}
+
+[data-mode="Light"] code[class*="language-"] .token.property,
+[data-mode="light"] code[class*="language-"] .token.property,
+[data-mode="Light"] code[class*="language-"] .token.attr-name,
+[data-mode="light"] code[class*="language-"] .token.attr-name {
+  color: #7d5c07;
+}
+
+[data-mode="Light"] code[class*="language-"] .token.tag,
+[data-mode="light"] code[class*="language-"] .token.tag {
+  color: #b03a2a;
+}
+
+[data-mode="Light"] code[class*="language-"] .token.tag .token.punctuation,
+[data-mode="light"] code[class*="language-"] .token.tag .token.punctuation {
+  color: #4b5059;
+}
+
+[data-mode="Light"] code[class*="language-"] .token.tag .token.attr-name,
+[data-mode="light"] code[class*="language-"] .token.tag .token.attr-name {
+  color: #8a5a10;
+}
+
+[data-mode="Light"] code[class*="language-"] .token.tag .token.attr-value,
+[data-mode="light"] code[class*="language-"] .token.tag .token.attr-value {
+  color: #3f7d33;
+}
+
+[data-mode="Light"] code[class*="language-"] .token.selector,
+[data-mode="light"] code[class*="language-"] .token.selector {
+  color: #8f2a91;
+}
+
+[data-mode="Light"] code[class*="language-"] .token.unit,
+[data-mode="light"] code[class*="language-"] .token.unit,
+[data-mode="Light"] code[class*="language-"] .token.url,
+[data-mode="light"] code[class*="language-"] .token.url {
+  color: #8a5a10;
+}
+
+[data-mode="Light"] code[class*="language-"] .token.variable,
+[data-mode="light"] code[class*="language-"] .token.variable,
+[data-mode="Light"] code[class*="language-"] .token.symbol,
+[data-mode="light"] code[class*="language-"] .token.symbol {
+  color: #b03a2a;
+}
+
+[data-mode="Light"] code[class*="language-"] .token.inserted,
+[data-mode="light"] code[class*="language-"] .token.inserted {
+  color: #3f7d33;
+}
+
+[data-mode="Light"] code[class*="language-"] .token.deleted,
+[data-mode="light"] code[class*="language-"] .token.deleted {
+  color: #b03a2a;
+}
+
+[data-mode="Light"] code[class*="language-"] .token.constant,
+[data-mode="light"] code[class*="language-"] .token.constant {
+  color: #8a5a10;
 }
 
 /* ============================================
