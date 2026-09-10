@@ -1,5 +1,21 @@
 # @eluan/core
 
+## 0.5.1
+
+### Patch Changes
+
+- fce59c3: Fix invalid nested-button markup in MultiSelect. The trigger rendered chip
+  remove and clear-all `<button>`s inside a `<button>` trigger — invalid HTML
+  that broke React hydration in SSR apps. The trigger is now a
+  `div[role="combobox"]` with keyboard handling (Enter/Space toggles,
+  ArrowDown opens), matching FileInput's dropzone pattern. The forwarded ref
+  type changed from `HTMLButtonElement` to `HTMLDivElement`.
+- fce59c3: Portal `TooltipContent` and `HoverCardContent`, so they honour
+  `PortalContainerProvider` / `EluanProvider portalContainer` like every other
+  Eluan overlay. Both now accept an optional `container` prop to override the
+  portal target per instance. Previously a scoped theme reached the trigger but
+  not the tooltip or hover card.
+
 ## 0.5.0
 
 ### Minor Changes
