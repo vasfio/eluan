@@ -47,7 +47,7 @@ const styles = stylex.create({
     fontSize: "var(--font-size-sm)",
     fontWeight: 500,
     justifyContent: "center",
-    paddingBlock: "var(--spacing-xs)",
+    paddingBlock: "var(--spacing-sm)",
     paddingInline: "var(--spacing-sm)",
     transitionDuration: "150ms",
     transitionProperty: "color, background-color, box-shadow",

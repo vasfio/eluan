@@ -5,6 +5,8 @@ import * as MenubarPrimitive from "@radix-ui/react-menubar"
 import * as stylex from "@stylexjs/stylex"
 import { Check, ChevronRight, Circle } from "lucide-react"
 
+import { usePortalContainer } from "../providers/portal-container"
+
 const MenubarMenu: typeof MenubarPrimitive.Menu = MenubarPrimitive.Menu
 
 const MenubarGroup: typeof MenubarPrimitive.Group = MenubarPrimitive.Group
@@ -35,7 +37,13 @@ export type MenubarSubTriggerProps = Omit<
 export type MenubarContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Content>,
   "className" | "style"
->
+> & {
+  /**
+   * Element to portal into, overriding `PortalContainerProvider`.
+   * Defaults to the nearest provider's container, then `document.body`.
+   */
+  container?: HTMLElement | null
+}
 
 export type MenubarSubContentProps = Omit<
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.SubContent>,
@@ -86,7 +94,7 @@ const styles = stylex.create({
     borderWidth: 1,
     display: "flex",
     gap: "var(--spacing-xxs)",
-    height: "var(--size-lg)",
+    minHeight: "var(--size-lg)",
     padding: "var(--spacing-xxs)",
   },
   trigger: {
@@ -97,8 +105,8 @@ const styles = stylex.create({
     fontSize: "var(--font-size-sm)",
     fontWeight: 500,
     outlineStyle: "none",
-    paddingBlock: "var(--spacing-xs)",
-    paddingInline: "var(--spacing-md)",
+    paddingBlock: "var(--spacing-sm)",
+    paddingInline: "var(--spacing-sm)",
     userSelect: "none",
     ":focus": {
       backgroundColor: "var(--interactive-bg-hover)",
@@ -129,14 +137,14 @@ const styles = stylex.create({
     },
   },
   standardItem: {
-    paddingBlock: "var(--spacing-xs)",
+    paddingBlock: "var(--spacing-sm)",
     paddingInline: "var(--spacing-sm)",
   },
   indicatorItem: {
-    paddingBottom: "var(--spacing-xs)",
+    paddingBottom: "var(--spacing-sm)",
     paddingLeft: "calc(var(--spacing-lg) + var(--spacing-md))",
     paddingRight: "var(--spacing-sm)",
-    paddingTop: "var(--spacing-xs)",
+    paddingTop: "var(--spacing-sm)",
   },
   subTrigger: {
     "[data-state=open]": {
@@ -191,7 +199,7 @@ const styles = stylex.create({
   label: {
     fontSize: "var(--font-size-sm)",
     fontWeight: 600,
-    paddingBlock: "var(--spacing-xs)",
+    paddingBlock: "var(--spacing-sm)",
     paddingInline: "var(--spacing-sm)",
   },
   separator: {
@@ -269,20 +277,23 @@ const MenubarContent = React.forwardRef<
   MenubarContentProps
 >(
   (
-    { align = "start", alignOffset = -4, sideOffset = 8, ...props },
+    { align = "start", alignOffset = -4, container, sideOffset = 8, ...props },
     ref
-  ) => (
-    <MenubarPrimitive.Portal>
-      <MenubarPrimitive.Content
-        ref={ref}
-        align={align}
-        alignOffset={alignOffset}
-        sideOffset={sideOffset}
-        {...props}
-        {...stylex.props(styles.content, styles.contentShadow)}
-      />
-    </MenubarPrimitive.Portal>
-  )
+  ) => {
+    const portalContainer = usePortalContainer()
+    return (
+      <MenubarPrimitive.Portal container={container ?? portalContainer}>
+        <MenubarPrimitive.Content
+          ref={ref}
+          align={align}
+          alignOffset={alignOffset}
+          sideOffset={sideOffset}
+          {...props}
+          {...stylex.props(styles.content, styles.contentShadow)}
+        />
+      </MenubarPrimitive.Portal>
+    )
+  }
 )
 MenubarContent.displayName = MenubarPrimitive.Content.displayName
 
