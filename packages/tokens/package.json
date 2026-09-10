@@ -1,7 +1,7 @@
 {
   "name": "@eluan/tokens",
   "description": "Design tokens, CSS variables, themes, and fonts for the Eluan design system",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "license": "MIT",
   "author": "Frolda",
   "homepage": "https://github.com/vasfio/eluan#readme",

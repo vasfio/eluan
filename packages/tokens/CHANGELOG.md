@@ -1,5 +1,87 @@
 # @eluan/tokens
 
+## 0.4.0
+
+### Minor Changes
+
+- 3d92455: Re-cut the `standard` spacing/sizing scale onto half-step rungs.
+
+  `standard` was built from the same coarse primitive rungs as `compact` and
+  `wide`, one notch up from compact — close enough that the two densities read
+  almost alike. Both families gain the intermediate rungs the scale was missing,
+  and `standard` moves onto them so it now lands visibly between the other two
+  densities instead of hugging compact.
+
+  **New primitives** (`primitives.css`, inserted in numeric order):
+
+  - Spacing: `--spacing-space-6` (0.375rem), `-10` (0.625rem), `-14` (0.875rem),
+    `-18` (1.125rem).
+  - Sizing: `--sizing-size-14` (0.875rem), `-18` (1.125rem), `-22` (1.375rem),
+    `-28` (1.75rem), `-36` (2.25rem), `-44` (2.75rem).
+
+  **New `standard` values** (`compact` and `wide` are unchanged, as are the
+  `--font-size-*` typeset-step mappings in every density):
+
+  | Token           | before | after |     | Token        | before | after |
+  | --------------- | ------ | ----- | --- | ------------ | ------ | ----- |
+  | `--spacing-xxs` | 2      | 2     |     | `--size-xxs` | 16     | 14    |
+  | `--spacing-xs`  | 4      | 4     |     | `--size-xs`  | 20     | 18    |
+  | `--spacing-sm`  | 8      | 6     |     | `--size-sm`  | 24     | 22    |
+  | `--spacing-md`  | 12     | 10    |     | `--size-md`  | 32     | 28    |
+  | `--spacing-lg`  | 16     | 14    |     | `--size-lg`  | 40     | 36    |
+  | `--spacing-xl`  | 20     | 18    |     | `--size-xl`  | 48     | 44    |
+  | `--spacing-2xl` | 24     | 20    |     | `--size-2xl` | 64     | 56    |
+  | `--spacing-3xl` | 40     | 32    |     | `--size-3xl` | 96     | 80    |
+  | `--spacing-4xl` | 80     | 64    |     | `--size-4xl` | 160    | 120   |
+
+  **Menubar and Tabs**: both had wider inline padding than block padding around
+  their items, which read as a squashed pill at every density (2px by 4px in
+  compact). The Menubar trigger, item, indicator item and label, and the Tabs
+  trigger, now pad equally on both axes from `--spacing-sm`; the indicator and
+  inset items keep their extra left offset for the check/radio slot. The Menubar
+  root's fixed `height: var(--size-lg)` becomes `minHeight` — with even padding
+  the trigger is taller than the fixed track in `wide`, and was being clipped.
+
+- 1391285: Real font weights across the whole range.
+
+  `@eluan/tokens` now loads Inter as a variable font (`@fontsource-variable/inter`,
+  wght 100–900) instead of the two static 400/500 faces, and the `minimal` theme's
+  `--font-heading` / `--font-body` stacks lead with `"Inter Variable"`. Because the
+  axis is continuous, the latin subset costs roughly the same as the two static
+  faces it replaces.
+
+  `Typography` exposes the full range: `weight` now accepts `thin` (100),
+  `extralight` (200), `light` (300), `normal` (400), `medium` (500), `semibold`
+  (600), `bold` (700), `extrabold` (800) and `black` (900) — every one a real face
+  rather than a browser-synthesized fake. Per-variant defaults are unchanged, so
+  existing type keeps rendering exactly as before.
+
+### Patch Changes
+
+- 95dbf92: Form and overlay polish.
+
+  - **Fieldset**: `FieldsetLegend` now sits one typeset step above `Label`
+    (`--font-size-base` instead of `--font-size-sm`), and its trailing margin drops
+    from `--spacing-lg` to `--spacing-xs` so a `FieldsetDescription` follows the
+    legend instead of floating between it and the field group.
+  - **InputOTP**: focus now matches `Input` — a 1px `--interactive-border` outline
+    at `1px` offset plus a matching border colour, replacing the doubled
+    box-shadow ring. `InputOTPSlot`'s active state uses the same treatment, so both
+    the default and slot variants read as a focused `Input`.
+  - **Tooltip**: new mode-aware `--tooltip-bg` token. Light and dim resolve to
+    `--backgrounds-primary` (unchanged); dark resolves to `--backgrounds-tertiary`,
+    the same value `--container-border` carries, so the tooltip's border disappears
+    against its own background instead of ringing it. `@eluan/theme-generator`
+    emits the token for generated themes.
+  - **TreeView**: leaf rows render an aria-hidden spacer the width of the chevron,
+    so icons at the same depth share a column. Indentation is token-based —
+    `calc(var(--size-xxs) + var(--spacing-sm))` per level over a `--spacing-sm`
+    base — which keeps a child's icon under its parent's label at every spacing
+    density. `indentSize` still overrides it with raw px when passed explicitly.
+  - **SearchInput**: grouped autocomplete headings are no longer uppercase and drop
+    the tracking that went with the caps; groups after the first gain a
+    `--spacing-xs` top margin to separate them from the group above.
+
 ## 0.3.0
 
 ### Minor Changes
