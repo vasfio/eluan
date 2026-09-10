@@ -17,9 +17,23 @@ function ThemeProbe() {
   );
 }
 
+function TypesetProbe() {
+  const { typeset, setTypeset } = useEluanTheme();
+
+  return (
+    <>
+      <span data-testid="typeset">{typeset}</span>
+      <button onClick={() => setTypeset("large")}>large</button>
+      <button onClick={() => setTypeset("auto")}>auto</button>
+    </>
+  );
+}
+
 afterEach(() => {
   document.documentElement.removeAttribute("data-theme");
   document.documentElement.removeAttribute("data-theme-custom");
+  document.documentElement.removeAttribute("data-typeset");
+  window.localStorage.clear();
 });
 
 describe("built-in themes", () => {
@@ -109,5 +123,74 @@ describe("EluanProvider", () => {
     ).toThrow(/collides with a built-in theme/);
 
     error.mockRestore();
+  });
+});
+
+describe("typeset axis", () => {
+  it("defaults to auto and sets no data-typeset attribute", () => {
+    render(
+      <EluanProvider persist={false}>
+        <TypesetProbe />
+      </EluanProvider>,
+    );
+
+    expect(screen.getByTestId("typeset")).toHaveTextContent("auto");
+    expect(document.documentElement).not.toHaveAttribute("data-typeset");
+    expect(window.localStorage.getItem("eluan:typeset")).toBeNull();
+  });
+
+  it("pins the attribute and persists an explicit typeset", async () => {
+    render(
+      <EluanProvider>
+        <TypesetProbe />
+      </EluanProvider>,
+    );
+
+    await userEvent.click(screen.getByRole("button", { name: "large" }));
+
+    expect(screen.getByTestId("typeset")).toHaveTextContent("large");
+    expect(document.documentElement).toHaveAttribute("data-typeset", "large");
+    expect(window.localStorage.getItem("eluan:typeset")).toBe("large");
+  });
+
+  it("clears both the attribute and storage when set back to auto", async () => {
+    render(
+      <EluanProvider>
+        <TypesetProbe />
+      </EluanProvider>,
+    );
+
+    await userEvent.click(screen.getByRole("button", { name: "large" }));
+    expect(document.documentElement).toHaveAttribute("data-typeset", "large");
+
+    await userEvent.click(screen.getByRole("button", { name: "auto" }));
+
+    expect(screen.getByTestId("typeset")).toHaveTextContent("auto");
+    expect(document.documentElement).not.toHaveAttribute("data-typeset");
+    expect(window.localStorage.getItem("eluan:typeset")).toBeNull();
+  });
+
+  it("honours defaultTypeset", () => {
+    render(
+      <EluanProvider defaultTypeset="small" persist={false}>
+        <TypesetProbe />
+      </EluanProvider>,
+    );
+
+    expect(screen.getByTestId("typeset")).toHaveTextContent("small");
+    expect(document.documentElement).toHaveAttribute("data-typeset", "small");
+  });
+
+  it("restores a persisted pin over defaultTypeset", () => {
+    window.localStorage.setItem("eluan:typeset", "medium");
+
+    render(
+      <EluanProvider defaultTypeset="auto">
+        <TypesetProbe />
+      </EluanProvider>,
+    );
+
+    expect(screen.getByTestId("typeset")).toHaveTextContent("medium");
+    expect(document.documentElement).toHaveAttribute("data-typeset", "medium");
   });
 });

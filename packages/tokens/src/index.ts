@@ -403,6 +403,27 @@ export const sizing = {
   xxxl: "10rem",
 } as const
 
+// Numeric sizing steps — the sizing counterpart of the `spacing` scale, and
+// the primitives the density-scaled --size-* tokens resolve to (spacing.css).
+// Exported alongside `sizing` (the t-shirt scale) for cross-platform parity;
+// the two are separate scales, not aliases of one another.
+export const sizingSteps = {
+  12: "0.75rem",
+  16: "1rem",
+  20: "1.25rem",
+  24: "1.5rem",
+  32: "2rem",
+  40: "2.5rem",
+  48: "3rem",
+  56: "3.5rem",
+  64: "4rem",
+  80: "5rem",
+  96: "6rem",
+  120: "7.5rem",
+  160: "10rem",
+  240: "15rem",
+} as const
+
 // ============================================
 // Spacing Tokens (Layer 1)
 // ============================================
@@ -451,9 +472,135 @@ export const viewports = {
 } as const
 
 // ============================================
+// Typeset — Fluid Type Scale
+// ============================================
+// The 10-step scale that replaced the static font-size primitives. Each step
+// has three anchor values; on the web they are interpolated by the two-segment
+// clamp()s in typeset.css, on other platforms by resolveTypesetSize() below.
+//
+//   small  = 14px x 1.2^step   at 480px viewport (--viewports-screen-s)
+//   large  = 18px x 1.25^step  at 1024px viewport (--viewports-screen-l)
+//   medium = small + 0.44 x (large - small) at 748px (--viewports-screen-m)
+//
+// Keys mirror the CSS token suffixes, so the token name for any step is
+// `--font-size-step-${step}` (likewise --line-height-step-*,
+// --letter-spacing-step-*).
+
+/** Viewport anchors the typeset interpolates between, in CSS px. */
+export const typesetAnchors = {
+  small: 480,
+  medium: 748,
+  large: 1024,
+} as const
+
+export type TypesetViewport = keyof typeof typesetAnchors
+
+/** Per-step anchor sizes in CSS px. */
+export const typeset = {
+  "6": { small: 41.81, medium: 53.62, large: 68.66 },
+  "5": { small: 34.84, medium: 43.68, large: 54.93 },
+  "4": { small: 29.03, medium: 35.59, large: 43.95 },
+  "3": { small: 24.19, medium: 29.02, large: 35.16 },
+  "2": { small: 20.16, medium: 23.66, large: 28.13 },
+  "1": { small: 16.8, medium: 19.31, large: 22.5 },
+  "0": { small: 14, medium: 15.76, large: 18 },
+  neg1: { small: 11.67, medium: 12.87, large: 14.4 },
+  neg2: { small: 9.72, medium: 10.51, large: 11.52 },
+  neg3: { small: 8.1, medium: 8.59, large: 9.22 },
+} as const satisfies Record<string, Record<TypesetViewport, number>>
+
+export type TypesetStep = keyof typeof typeset
+
+/** Every step, largest first — handy for iterating a scale showcase. */
+export const typesetSteps = [
+  "6",
+  "5",
+  "4",
+  "3",
+  "2",
+  "1",
+  "0",
+  "neg1",
+  "neg2",
+  "neg3",
+] as const satisfies readonly TypesetStep[]
+
+/**
+ * Unitless line height per step. Body copy stays generous; headings tighten
+ * as they grow. Viewport-independent — the same value at every anchor.
+ */
+export const lineHeightSteps = {
+  "6": 1.2,
+  "5": 1.2,
+  "4": 1.2,
+  "3": 1.2,
+  "2": 1.375,
+  "1": 1.375,
+  "0": 1.5,
+  neg1: 1.5,
+  neg2: 1.5,
+  neg3: 1.5,
+} as const satisfies Record<TypesetStep, number>
+
+/**
+ * Letter spacing per step, expressed as an **em multiplier** (the CSS tokens
+ * use `em` so tracking scales with the fluid size). Multiply by the resolved
+ * font size to get an absolute value:
+ *
+ *   const px = resolveTypesetSize("5", width) * letterSpacingSteps["5"]
+ *
+ * Progressive negative tracking above step-1 gives display text the tight
+ * optical fit a dedicated "Tight" cut would, without a second font payload.
+ */
+export const letterSpacingSteps = {
+  "6": -0.03,
+  "5": -0.025,
+  "4": -0.02,
+  "3": -0.015,
+  "2": -0.01,
+  "1": 0,
+  "0": 0,
+  neg1: 0,
+  neg2: 0,
+  neg3: 0,
+} as const satisfies Record<TypesetStep, number>
+
+/**
+ * Resolve a typeset step to a px size for a given viewport width, using the
+ * same two-segment linear interpolation as the CSS clamp()s in typeset.css:
+ *
+ *   <= 480px            pinned to the small anchor
+ *   480px .. 748px      small -> medium
+ *   748px .. 1024px     medium -> large
+ *   >= 1024px           pinned to the large anchor
+ *
+ * Lets @eluan/native (and any other non-CSS consumer) match web rendering.
+ */
+export function resolveTypesetSize(
+  step: TypesetStep,
+  viewportWidthPx: number
+): number {
+  const { small, medium, large } = typeset[step]
+  const { small: vS, medium: vM, large: vL } = typesetAnchors
+
+  if (viewportWidthPx <= vS) return small
+  if (viewportWidthPx >= vL) return large
+  if (viewportWidthPx <= vM) {
+    return small + ((medium - small) * (viewportWidthPx - vS)) / (vM - vS)
+  }
+  return medium + ((large - medium) * (viewportWidthPx - vM)) / (vL - vM)
+}
+
+// ============================================
 // Typography Tokens
 // ============================================
 
+/**
+ * @deprecated Static font sizes were replaced by the fluid typeset. Use
+ * `typeset` (with `resolveTypesetSize`) instead — its steps are what the
+ * `--font-size-step-*` CSS tokens and the density-scaled `--font-size-*`
+ * aliases resolve to. Kept only so existing consumers keep compiling.
+ */
 export const fontSizes = {
   xs: 12,
   sm: 14,
@@ -645,8 +792,10 @@ export const breakpoints = {
 export type PrimitiveColor = typeof primitiveColors
 export type RadiusToken = keyof typeof radius
 export type SizingToken = keyof typeof sizing
+export type SizingStepToken = keyof typeof sizingSteps
 export type SpacingToken = keyof typeof spacing
 export type ViewportToken = keyof typeof viewports
+/** @deprecated Use `TypesetStep` — see the `fontSizes` deprecation note. */
 export type FontSizeToken = keyof typeof fontSizes
 export type FontWeightToken = keyof typeof fontWeights
 export type ShadowToken = keyof typeof shadows

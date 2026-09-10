@@ -47,7 +47,7 @@ export interface ButtonProps
   size?: ButtonSize
 }
 
-/* Solid variants render as physical key caps (see --skeuo-* theme tokens) */
+/* Solid variants nudge down a hair when pressed (see `pressNudge`) */
 const RAISED_VARIANTS: ReadonlySet<ButtonVariant> = new Set([
   "default",
   "destructive",
@@ -95,23 +95,10 @@ const styles = stylex.create({
       backgroundColor: "var(--action-primary-bg-active)",
     },
   },
-  /* Raised key cap: convex face (top-left lit gradient) at rest, longer
-     shadow on hover, seats into the housing with a concave face when
-     pressed. Flattens when disabled. */
-  raisedCap: {
-    backgroundImage: "var(--skeuo-surface-raised)",
-    boxShadow: "var(--skeuo-raised)",
-    ":hover": {
-      boxShadow: "var(--skeuo-raised-hover)",
-    },
+  /* Solid variants settle a half-pixel into the page when pressed. */
+  pressNudge: {
     ":active": {
-      backgroundImage: "var(--skeuo-surface-pressed)",
-      boxShadow: "var(--skeuo-pressed)",
       transform: "translateY(0.5px)",
-    },
-    ":disabled": {
-      backgroundImage: "none",
-      boxShadow: "none",
     },
   },
   variantDestructive: {
@@ -364,7 +351,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           styles.base,
           sizeStyles[size],
           variantStyles[variant],
-          RAISED_VARIANTS.has(variant) && styles.raisedCap,
+          RAISED_VARIANTS.has(variant) && styles.pressNudge,
           align === "start" && styles.alignStart,
           fullWidth && styles.fullWidth,
           shape === "round" && styles.round,

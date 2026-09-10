@@ -125,7 +125,7 @@ bun add @eluan/tokens
 ### Three-Layer Token Architecture
 
 ```
-Layer 1: Primitives   Raw values (20 color palettes, spacing, radius, sizing, viewports)
+Layer 1: Primitives   Raw values (21 color palettes, spacing, radius, sizing, viewports)
 Layer 2: Modes        Semantic aliases that adapt to Light / Dim / Dark
 Layer 3: Themes       Component-level tokens for built-in and custom visual identities
 ```
@@ -138,6 +138,7 @@ Activated via HTML data attributes:
   data-theme="minimal"        <!-- minimal | custom theme name -->
   data-spacing="standard"     <!-- compact | standard | wide -->
   data-curves="slight"        <!-- sharp | slight | sweeping -->
+  data-typeset="large"        <!-- small | medium | large; omit for fluid type -->
 >
 ```
 
@@ -145,7 +146,7 @@ Activated via HTML data attributes:
 
 #### CSS Tokens (`@eluan/tokens/css`)
 
-The main CSS entry point. Imports all token layers (primitives, modes, themes, spacing, curves) and sets base styles. Only loads the shared Geist Mono font; theme-specific fonts are loaded separately.
+The main CSS entry point. Imports all token layers (primitives, modes, themes, spacing, typeset, curves) and sets base styles. Only loads the shared Paper Mono font; theme-specific fonts are loaded separately.
 
 ```css
 /* In your app's CSS or globals.css */
@@ -156,11 +157,11 @@ This provides all CSS variables across all three layers:
 
 ```css
 /* Layer 1: Primitives (always on :root) */
-var(--color-blazeorange-500)       /* 20 palettes x 11 shades (50-950) */
+var(--color-blazeorange-500)       /* 21 palettes x 11 shades (50-950) */
 var(--color-mono-0)                /* Mono has 12 shades (0-950) */
 var(--spacing-space-16)            /* 24 spacing values (0-320) */
 var(--radius-radius-8)             /* 13 radius values (none-full) */
-var(--sizing-size-m)               /* 9 sizing values (none-xxxl) */
+var(--sizing-size-m)               /* 9 t-shirt sizing values (none-xxxl) + 14 numeric steps (12-240) */
 var(--viewports-screen-l)          /* 9 viewport breakpoints (xxs-4xl) */
 
 /* Layer 2: Modes (adapt to data-mode) */
@@ -187,6 +188,14 @@ var(--spacing-xxs)                 /* 9 levels: xxs, xs, sm, md, lg, xl, 2xl, 3x
 /* Semantic curves (adapt to data-curves) */
 var(--curves-sm)                   /* 6 levels: xxs, xs, sm, md, lg, xl */
 
+/* Fluid typeset (follows the viewport, or pins to data-typeset) */
+var(--font-size-step-0)            /* 10 steps: step-6 ... step-0 ... step-neg3 */
+var(--line-height-step-0)          /* one per step */
+var(--letter-spacing-step-0)       /* one per step, in em */
+
+/* Font-size aliases (data-spacing picks which typeset step each one selects) */
+var(--font-size-base)              /* 9 levels: xs, sm, base, lg, xl, 2xl, 3xl, 4xl, 5xl */
+
 /* Fonts (set per theme) */
 var(--font-heading)
 var(--font-body)
@@ -195,14 +204,14 @@ var(--font-mono)
 
 #### Per-Theme Font CSS
 
-Fonts are split per theme so you only ship the fonts your app actually uses. Only Geist Mono (the universal monospace font) is included in the base CSS.
+Fonts are split per theme so you only ship the fonts your app actually uses. Only Paper Mono (the universal monospace font) is included in the base CSS.
 
 ```css
 /* Static import: pick the one matching your theme */
 @import "@eluan/tokens/fonts/minimal";         /* Inter (heading + body) */
 
 /* Special imports */
-@import "@eluan/tokens/fonts/base";            /* Geist Mono only (already in /css) */
+@import "@eluan/tokens/fonts/base";            /* Paper Mono only (already in /css) */
 @import "@eluan/tokens/fonts/all";             /* All fonts (for Storybook / development) */
 ```
 
@@ -210,11 +219,11 @@ Fonts are split per theme so you only ship the fonts your app actually uses. Onl
 
 | Theme | Heading Font | Body Font | Mono Font |
 |-------|-------------|-----------|-----------|
-| `minimal` | Inter | Inter | Geist Mono |
+| `minimal` | Inter | Inter | Paper Mono |
 
 Custom themes inherit these unless they override `--font-heading` / `--font-body` / `--font-mono`; load those faces yourself.
 
-All fonts are self-hosted via `@fontsource` -- no CDN dependency.
+All fonts are self-hosted -- no CDN dependency. Inter comes from `@fontsource`; Paper Mono (SIL Open Font License 1.1) is vendored inside `@eluan/tokens` as a variable WOFF2 with a 100-800 weight axis.
 
 #### Dynamic Font Loading (JavaScript)
 
@@ -242,7 +251,7 @@ import {
   themes,               // ["minimal"] as const
   spacingScales,        // ["compact", "standard", "wide"] as const
   curveScales,          // ["sharp", "slight", "sweeping"] as const
-  colorPalettes,        // ["blazeorange", "bluechill", ...20 total] as const
+  colorPalettes,        // ["blazeorange", "bluechill", ...21 total] as const
   colorShades,          // ["50", "100", "200", ... "950"] as const
   monoShades,           // ["0", "50", "100", ... "950"] as const
   type Mode,
@@ -254,15 +263,26 @@ import {
   type MonoShade,
 
   // -- Raw Values (cross-platform) --
-  primitiveColors,      // Record<palette, Record<shade, hex>>  -- all 20 palettes, 11+ shades each
+  primitiveColors,      // Record<palette, Record<shade, hex>>  -- all 21 palettes, 11+ shades each
   radius,               // { none: "0rem", 1: "0.0625rem", 2: "0.125rem", ..., full: "62.4375rem" }
   sizing,               // { none: "0rem", xxs: "0.5rem", xs: "1rem", ..., xxxl: "10rem" }
+  sizingSteps,          // { 12: "0.75rem", 16: "1rem", 20: "1.25rem", ..., 240: "15rem" }  -- what --size-* resolves to
   spacing,              // { 0: "0rem", 2: "0.125rem", 4: "0.25rem", ..., 320: "20rem" }
   viewports,            // { xxs: "20rem", xs: "25.875rem", ..., "4xl": "161.25rem" }
   breakpoints,          // { xxs: 320, xs: 414, s: 480, ..., "4xl": 2580 }  (px numbers)
 
+  // -- Typeset (the fluid type scale) --
+  typeset,              // { "6": { small, medium, large }, ..., neg3: {...} }  px per anchor
+  typesetAnchors,       // { small: 480, medium: 748, large: 1024 }  viewport px
+  typesetSteps,         // ["6", "5", ... "0", "neg1", "neg2", "neg3"] as const
+  lineHeightSteps,      // Record<TypesetStep, number>
+  letterSpacingSteps,   // Record<TypesetStep, number>  -- em multipliers
+  resolveTypesetSize,   // (step, viewportWidthPx) => px, matching the CSS clamp()
+  type TypesetStep,
+  type TypesetViewport,
+
   // -- Typography --
-  fontSizes,            // { xs: 12, sm: 14, base: 16, lg: 18, ..., "9xl": 128 }
+  fontSizes,            // @deprecated -- superseded by `typeset`
   fontWeights,          // { thin: "100", extralight: "200", ..., black: "900" }
   lineHeights,          // { none: 1, tight: 1.25, snug: 1.375, normal: 1.5, relaxed: 1.625, loose: 2 }
   letterSpacing,        // { tighter: -0.8, tight: -0.4, normal: 0, wide: 0.4, wider: 0.8, widest: 1.6 }
@@ -353,6 +373,7 @@ import {
   Tabs,
   Tooltip,
   TreeView,
+  Typography,
 } from "@eluan/core"
 ```
 
@@ -407,7 +428,7 @@ pnpm storybook
 pnpm storybook    # port 6006
 ```
 
-The Storybook toolbar lets you switch between all modes, themes, spacing scales, and curve scales in real time. Theme fonts are loaded on demand as you switch.
+The Storybook toolbar lets you switch between all modes, themes, spacing scales, and curve scales in real time. Theme fonts are loaded on demand as you switch. Type is viewport-fluid, so resizing the canvas is enough to see the whole scale move.
 
 ---
 
@@ -629,9 +650,9 @@ Control border radius. Set via `data-curves` on the root element.
 
 ### Color Palettes (Layer 1)
 
-20 primitive palettes, each with 11 shades (50-950). Mono has an additional `0` shade (pure white).
+21 primitive palettes, each with 11 shades (50-950). Mono and concrete have an additional `0` shade (pure white).
 
-`blazeorange` `bluechill` `blueribbon` `bostonblue` `cerise` `crimson` `electriclime` `electricviolet` `forestgreen` `gossamer` `lochmara` `maitai` `mono` `purpleheart` `redviolet` `rockspray` `seagreen` `teak` `torchred` `violeteggplant`
+`blazeorange` `bluechill` `blueribbon` `bostonblue` `cerise` `concrete` `crimson` `electriclime` `electricviolet` `forestgreen` `gossamer` `lochmara` `maitai` `mono` `purpleheart` `redviolet` `rockspray` `seagreen` `teak` `torchred` `violeteggplant`
 
 ### Component Token Categories (Layer 3)
 

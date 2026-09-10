@@ -1,7 +1,7 @@
 {
   "name": "@eluan/tokens",
   "description": "Design tokens, CSS variables, themes, and fonts for the Eluan design system",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "license": "MIT",
   "author": "Frolda",
   "homepage": "https://github.com/vasfio/eluan#readme",
@@ -46,7 +46,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rm -rf dist && tsc -p tsconfig.build.json && cp src/tokens.css src/primitives.css src/modes.css src/themes.css src/spacing.css src/curves.css src/fonts.css src/fonts-base.css src/fonts-minimal.css dist/",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && cp src/tokens.css src/primitives.css src/modes.css src/themes.css src/spacing.css src/typeset.css src/curves.css src/fonts.css src/fonts-base.css src/fonts-minimal.css dist/ && cp -R src/files dist/files",
     "dev": "tsc --watch",
     "lint": "eslint src --report-unused-disable-directives --max-warnings 0"
   },
@@ -54,7 +54,6 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@fontsource/geist-mono": "^5.2.7",
     "@fontsource/inter": "^5.2.8"
   }
 }

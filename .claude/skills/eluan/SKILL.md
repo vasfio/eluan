@@ -1,6 +1,6 @@
 ---
 name: eluan
-description: Use when building, theming, or extending UI in apps that depend on @eluan/core, @eluan/tokens, or @eluan/native. Covers component imports, theming via EluanProvider/createTheme, the three-layer token architecture (CSS variables scoped to data-theme/data-mode/data-spacing/data-curves), StyleX authoring, TypeScript types, and the conventions consumers should follow when adding new components or tokens. Trigger when the user mentions Eluan, @eluan, EluanProvider, useEluanTheme, createTheme, design tokens with --container-bg / --interactive-bg-selected / --action-primary-bg etc., the data-theme="minimal" attribute, or any of the components listed below.
+description: Use when building, theming, or extending UI in apps that depend on @eluan/core, @eluan/tokens, or @eluan/native. Covers component imports, theming via EluanProvider/createTheme, the three-layer token architecture (CSS variables scoped to data-theme/data-mode/data-spacing/data-curves/data-typeset), StyleX authoring, TypeScript types, and the conventions consumers should follow when adding new components or tokens. Trigger when the user mentions Eluan, @eluan, EluanProvider, useEluanTheme, createTheme, design tokens with --container-bg / --interactive-bg-selected / --action-primary-bg etc., the data-theme="minimal" attribute, or any of the components listed below.
 ---
 
 # Eluan Design System
@@ -16,7 +16,7 @@ Trigger on any of:
 - Mentions of `EluanProvider`, `useEluanTheme`, `createTheme`, `loadThemeFonts`
 - Component names from the inventory below (e.g. "the Calendar component", "the Toast toaster", "Tree View")
 - CSS-variable names like `--container-bg`, `--interactive-fg-selected`, `--action-primary-bg-hover`, etc.
-- The `data-theme="minimal"` (or custom theme) attribute or `data-mode`, `data-spacing`, `data-curves`
+- The `data-theme="minimal"` (or custom theme) attribute or `data-mode`, `data-spacing`, `data-curves`, `data-typeset`
 - Authoring or editing a StyleX component (`stylex.create`, `stylex.props`, `stylex.keyframes`) that references Eluan tokens
 
 ## When this skill does NOT apply
@@ -46,10 +46,13 @@ Active scope is set via attribute selectors — components don't have to know ab
   data-mode="light"               <!-- "light" | "dim" | "dark" -->
   data-spacing="standard"         <!-- "compact" | "standard" | "wide" -->
   data-curves="slight"            <!-- "sharp" | "slight" | "sweeping" -->
+  data-typeset="large"            <!-- "small" | "medium" | "large"; OMIT for fluid -->
 >
 ```
 
-Spacing density adjusts every `--size-*` and `--spacing-*` token. Curves adjusts every `--curves-*`.
+Spacing density adjusts every `--size-*` and `--spacing-*` token, and shifts which typeset step each `--font-size-*` alias selects. Curves adjusts every `--curves-*`.
+
+`data-typeset` is the odd one out: leave it **off** (the Provider's default `typeset="auto"`) and type sizes stay viewport-fluid via `clamp()`. Setting it pins the whole scale — or any subtree — to one static column.
 
 There is **exactly one built-in theme**: `minimal`. Everything else is a consumer theme defined with `createTheme()` (or generated with `@eluan/theme-generator`) — that consumer themeability is the point of the system, so never propose adding a second built-in theme to the library. The previously shipped `industrial-retro`, `lime`, `bold`, `beige`, and `funky` themes were removed. Don't reference them.
 
@@ -72,6 +75,7 @@ export default function App() {
       defaultMode="light"
       defaultSpacing="standard"
       defaultCurves="slight"
+      defaultTypeset="auto"
     >
       <Routes />
     </EluanProvider>
@@ -86,7 +90,7 @@ To read or change values from anywhere:
 ```tsx
 import { useEluanTheme } from "@eluan/core"
 
-const { theme, mode, spacing, curves, setTheme, setMode, setSpacing, setCurves } = useEluanTheme()
+const { theme, mode, spacing, curves, typeset, setTheme, setMode, setSpacing, setCurves, setTypeset } = useEluanTheme()
 ```
 
 ### Avoiding flash-of-wrong-theme on SSR
@@ -102,10 +106,12 @@ Inject this inline script in `<head>` before the app script so the data-attribut
     var m = localStorage.getItem("eluan:mode")
     var s = localStorage.getItem("eluan:spacing")
     var c = localStorage.getItem("eluan:curves")
+    var y = localStorage.getItem("eluan:typeset")
     if (t) html.setAttribute("data-theme", t)
     if (m) html.setAttribute("data-mode", m)
     if (s) html.setAttribute("data-spacing", s)
     if (c) html.setAttribute("data-curves", c)
+    if (y && y !== "auto") html.setAttribute("data-typeset", y)
   } catch (e) {}
 })()
 </script>
@@ -146,7 +152,7 @@ Behind the scenes: `createTheme` returns `{ name, extends, css }` where `css` is
 
 ## Component inventory (`@eluan/core`)
 
-There are **67 component modules** in `packages/core/src/components`. Every module exports its `*Props` type(s) alongside the component, so `React.ComponentProps<typeof X>` is rarely needed. Import any of these from `@eluan/core` (or via the `@eluan/core/<name>` subpath):
+There are **68 component modules** in `packages/core/src/components`. Every module exports its `*Props` type(s) alongside the component, so `React.ComponentProps<typeof X>` is rarely needed. Import any of these from `@eluan/core` (or via the `@eluan/core/<name>` subpath):
 
 **Forms / inputs**
 `Button` · `Input` (auto-icon by `type="search|email|password|tel|url"`, plus `icon` and `trailing` props for custom leading/trailing; `validationTone="none|positive|destructive"`) · `Textarea` · `Select` (Radix-based) · `MultiSelect` · `Command` (cmdk-based — the Combobox / command-palette primitive) · `Checkbox` · `CheckboxGroup` (with `CheckboxGroupItem`) · `RadioGroup` (with `RadioGroupItem`) · `Switch` · `Slider` · `Toggle` · `ToggleGroup` (with `ToggleGroupItem`) · `SegmentedControl` (with `SegmentedControlItem`) · `Fieldset` · `FormLabel` (also exports `Label`, `FormDescription`, `FormMessage`) · `EmailInput` · `PasswordInput` · `PhoneInput` (uses the `countries-list` package — full country list, common short names, dial codes) · `NumberInput` · `DecimalInput` · `SearchInput` (with `CommandSearch` and `AutocompleteSearch` variants) · `FileInput` · `CreditCardInput` (sub-components `CreditCardNumberInput`, `CreditCardExpiryInput`, `CreditCardCVVInput` — card logos use `fill="currentColor"` + `fillRule="evenodd"` for transparent internal cutouts) · `InputOTP` · `RichText` (TipTap v3 — `useEditorState` for a reactive toolbar)
@@ -156,6 +162,9 @@ There are **67 component modules** in `packages/core/src/components`. Every modu
 
 **Display / data**
 `Table` · `Card` · `Badge` (`microdot` size variant for status dots) · `Avatar` (with `AvatarBadge`, `AvatarStatus`, `AvatarWithStatus`) · `Progress` · `Skeleton` · `Spinner` · `Kbd` · `Banner` · `CodeBlock` · `Media` (with `Image`)
+
+**Typography**
+`Typography` — the front door to the fluid typeset. `variant` (`display|title|heading|subheading|lead|body|label|caption`) picks a step plus a family/weight and a default element (`h1`–`h4`, `p`, `span`); `step` re-sizes any variant to any of the 10 rungs; also `as`, `asChild`, `weight` (`normal|medium` only — nothing heavier is loaded), `family`, `tone`, `align`, `truncate`. Every variant sets `font-size`, `line-height` and `letter-spacing` from the same step, so heading tracking always matches the size.
 
 **Navigation / structure**
 `Accordion` · `Breadcrumb` · `Carousel` · `Pagination` · `Tabs` · `NavigationMenu` (Radix navigation-menu wrapper) · `NavigationDrawer` (requires `NavigationDrawerProvider`; `NavigationDrawerLayout` gives a sidebar+content shell) · `Stepper` · `TreeView` · `Menubar`
@@ -176,7 +185,7 @@ There are **67 component modules** in `packages/core/src/components`. Every modu
 
 ### Re-exported from `@eluan/tokens`
 
-`themes`, `modes`, `spacingScales`, `curveScales`, `themeFonts`, `loadThemeFonts`, and the types `Theme`, `Mode`, `SpacingScale`, `CurveScale`. Consumers should import these from `@eluan/core` to avoid a separate dep.
+`themes`, `modes`, `spacingScales`, `curveScales`, `themeFonts`, `loadThemeFonts`, `typeset`, `typesetAnchors`, `typesetSteps`, `lineHeightSteps`, `letterSpacingSteps`, `resolveTypesetSize`, and the types `Theme`, `Mode`, `SpacingScale`, `CurveScale`, `TypesetStep`, `TypesetViewport`. Consumers should import these from `@eluan/core` to avoid a separate dep.
 
 ---
 
@@ -352,15 +361,14 @@ const styles = stylex.create({
 ### Base semantic aliases (mode layer)
 `--backgrounds-primary|secondary|tertiary|quaternary|quinary` and `--foregrounds-primary|secondary|tertiary|quaternary|quinary` — used by neutral surfaces (e.g. `Button` `secondary`/`ghost`).
 
-### Skeuomorphic surface tokens
-`--skeuo-raised`, `--skeuo-raised-hover`, `--skeuo-pressed`, `--skeuo-recessed`, `--skeuo-bezel`, `--skeuo-surface-raised`, `--skeuo-surface-pressed`, `--skeuo-highlight`, `--skeuo-shadow`, `--skeuo-dimple` — give solid buttons/inputs their key-cap / recessed physicality (see the `raisedCap` style in `button.tsx`).
-
 ### Data-viz palette
 `--dataviz-1-main` · `--dataviz-1-tint` · `--dataviz-1-shade` (and `-2-` through `-8-`)
 
 ### Typography / spacing / sizing / curves
-- Fonts: `--font-heading`, `--font-body`, `--font-mono` (theme-driven)
-- Font sizes: `--font-size-xs|sm|base|lg|xl|2xl|3xl|4xl|5xl` (density-driven; numeric aliases like `--font-size-14` also exist)
+- Fonts: `--font-heading`, `--font-body`, `--font-mono` (theme-driven). Mono is **Paper Mono**, a variable font (wght 100–800) vendored inside `@eluan/tokens`; `minimal` uses Inter for heading + body.
+- Typeset (the fluid type scale): `--font-size-step-6` … `--font-size-step-0` … `--font-size-step-neg3`. Every step interpolates with the viewport via a two-segment `clamp()` anchored at 480px / 748px / 1024px, so type resizes with no media queries in app code. `data-typeset="small|medium|large"` pins the scale to one column; omitting the attribute keeps it fluid.
+- Per-step companions: `--line-height-step-*` (1.5 for neg3–0, 1.375 for 1–2, 1.2 for 3–6) and `--letter-spacing-step-*` (0 up to step 1, then tightening to `-0.03em` at step 6). Always apply all three tokens of a step together — that's what `Typography` does.
+- Font sizes: `--font-size-xs|sm|base|lg|xl|2xl|3xl|4xl|5xl`. These are **not** static values any more: each density selects a typeset *step* (compact = one step down, wide = one step up), and the step's value is itself viewport-fluid. The old numeric primitives (`--font-size-12` … `--font-size-60`) were removed.
 - Spacing: `--spacing-xxs|xs|sm|md|lg|xl|2xl|3xl|4xl` (density-driven)
 - Sizes (component heights / icon dimensions): `--size-xxs|xs|sm|md|lg|xl|2xl|3xl|4xl` (density-driven)
 - Curves (border-radius): `--curves-xxs|xs|sm|md|lg|xl` (curves-axis-driven); full pill via `--radius-radius-full`
@@ -415,7 +423,7 @@ These are the patterns the codebase already follows. Match them when extending E
 | `color: "var(--container-fg-alt)"` | hardcode a gray, or invent a `muted` alias |
 | `borderRadius: "var(--curves-md)"` | hardcode `"8px"` (breaks the curves axis) |
 | `height: "var(--size-lg)"` | hardcode `"40px"` (breaks density) |
-| `fontSize: "var(--font-size-sm)"` | hardcode `"14px"` (breaks density-scaled type) |
+| `fontSize: "var(--font-size-sm)"`, or a typeset step via `Typography` | hardcode `"14px"` (breaks density re-indexing and fluid sizing) |
 | Use `<EluanProvider>` + `useEluanTheme()` | Manually manage the `data-*` attributes |
 | `createTheme({ extends, tokens })` | Hand-write a full token CSS block |
 | `customThemes` prop on Provider | Inject a `<style>` tag yourself |
@@ -440,7 +448,7 @@ pnpm --filter @eluan/core lint    # eslint v9, flat config at repo root
 
 ### Common test patterns
 
-There is one test suite per component (67 suites under `packages/core/src/components/__tests__/`). Tests use `vitest` + `@testing-library/react` and assert on stable semantics, not styling:
+There is one test suite per component (68 suites under `packages/core/src/components/__tests__/`). Tests use `vitest` + `@testing-library/react` and assert on stable semantics, not styling:
 
 - **Don't assert on the generated StyleX class names** — they're hashed and change on refactor. Assert on text content, `role`, `data-state`, or attributes. (Because components strip `className`, several suites also assert an override class is *not* present.)
 - For Radix open/close: `expect(trigger).toHaveAttribute("data-state", "open")`. `toBeVisible()` doesn't reliably reflect Radix's animated transitions under happy-dom.
@@ -477,6 +485,7 @@ There is one test suite per component (67 suites under `packages/core/src/compon
   defaultMode?:      "light" | "dim" | "dark"             // default OS preference (light/dark)
   defaultSpacing?:   "compact" | "standard" | "wide"      // default "standard"
   defaultCurves?:    "sharp" | "slight" | "sweeping"      // default "slight"
+  defaultTypeset?:   "auto" | "small" | "medium" | "large" // default "auto" (no attribute → fluid)
   customThemes?:     CustomTheme[]                        // from createTheme()
   persist?:          boolean                              // default true
   followSystemMode?: boolean                              // default true
@@ -485,9 +494,11 @@ There is one test suite per component (67 suites under `packages/core/src/compon
 
 // Hook
 const {
-  theme, mode, spacing, curves,
-  setTheme, setMode, setSpacing, setCurves,
+  theme, mode, spacing, curves, typeset,
+  setTheme, setMode, setSpacing, setCurves, setTypeset,
 } = useEluanTheme()
+// setTypeset("large") pins + persists to "eluan:typeset";
+// setTypeset("auto") removes data-typeset and clears the key.
 
 // Custom theme factory
 createTheme({

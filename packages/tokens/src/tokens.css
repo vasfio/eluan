@@ -15,12 +15,13 @@
  * Import order matters - each layer can reference the previous one.
  */
 
-/* Only load shared base font (Geist Mono) — theme fonts loaded on demand */
+/* Only load shared base font (Paper Mono) — theme fonts loaded on demand */
 @import "./fonts-base.css";
 @import "./primitives.css";
 @import "./modes.css";
 @import "./themes.css";
 @import "./spacing.css";
+@import "./typeset.css";
 @import "./curves.css";
 
 /* ============================================

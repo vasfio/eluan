@@ -41,9 +41,31 @@ import { Button } from "@eluan/core/button"
 
 See the [theming guide](https://github.com/vasfio/eluan/blob/main/docs/theming.md) for `EluanProvider` setup, `useEluanTheme()`, and how to define a custom theme via `createTheme()`.
 
+The provider drives five independent axes — `theme`, `mode`, `spacing`, `curves`, and `typeset` — and re-exports the token helpers so you don't need a second import:
+
+```tsx
+import { useEluanTheme, typeset, resolveTypesetSize } from "@eluan/core"
+
+const { mode, setMode, typeset: pin, setTypeset } = useEluanTheme()
+```
+
+## Typography
+
+Type sizes come from a fluid 10-step scale that resizes with the viewport. `Typography` applies a step's size, line height, and letter spacing together:
+
+```tsx
+import { Typography } from "@eluan/core"
+
+<Typography variant="display">Ships fast</Typography>
+<Typography variant="body">Body copy, fluid between 480px and 1024px.</Typography>
+<Typography variant="caption" tone="muted">Footnote</Typography>
+```
+
+See [the typeset axis](https://github.com/vasfio/eluan/blob/main/docs/theming.md#the-typeset-axis) for the step table and the `data-typeset` pinning attribute.
+
 ## What's included
 
-Components span layout (`Card`, `Sheet`, `Drawer`), forms (`Input`, `Select`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`, etc.), data display (`Table`, `Tree View`, `Calendar`), navigation (`Tabs`, `Breadcrumb`, `Command`, `NavigationDrawer`), feedback (`Toast`, `Banner`, `Progress`), and overlays (`Dialog`, `Popover`, `Tooltip`, `ContextMenu`).
+Components span layout (`Card`, `Sheet`, `Drawer`), typography (`Typography`), forms (`Input`, `Select`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`, etc.), data display (`Table`, `Tree View`, `Calendar`), navigation (`Tabs`, `Breadcrumb`, `Command`, `NavigationDrawer`), feedback (`Toast`, `Banner`, `Progress`), and overlays (`Dialog`, `Popover`, `Tooltip`, `ContextMenu`).
 
 Full component list: see [Storybook](https://github.com/vasfio/eluan) or the source under `src/components/`.
 

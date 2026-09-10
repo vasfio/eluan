@@ -53,7 +53,6 @@ const styles = stylex.create({
     borderRadius: "var(--curves-md)",
     borderStyle: "solid",
     borderWidth: 1,
-    boxShadow: "var(--skeuo-recessed)",
     boxSizing: "border-box",
     color: "var(--interactive-fg)",
     display: "flex",

@@ -150,6 +150,31 @@ describe('generateTheme', () => {
   });
 });
 
+describe('minContrast floor semantics', () => {
+  it('step-shift corrections honor the raised config floor', () => {
+    const aaa = generateTheme({ ...ORANGE_CONFIG, minContrast: 7 });
+    for (const c of aaa.corrections) {
+      if (c.kind === 'step-shift') {
+        expect(c.correctedContrast).toBeGreaterThanOrEqual(7);
+      }
+    }
+  });
+
+  it('a lax config floor cannot lower per-entry minimums', () => {
+    const aa = generateTheme(ORANGE_CONFIG);
+    const lax = generateTheme({ ...ORANGE_CONFIG, minContrast: 1 });
+    expect(lax.corrections).toEqual(aa.corrections);
+  });
+
+  it('allowBelowDefault entries keep their own tier under a stricter floor', () => {
+    const aa = generateTheme(ORANGE_CONFIG);
+    const aaa = generateTheme({ ...ORANGE_CONFIG, minContrast: 7 });
+    expect(aaa.semanticMap['interactive-fg-alt'].allowBelowDefault).toBe(true);
+    expect(aaa.corrections.map((c) => c.token)).not.toContain('interactive-fg-alt');
+    expect(aaa.semanticMap['interactive-fg-alt']).toEqual(aa.semanticMap['interactive-fg-alt']);
+  });
+});
+
 describe('snapshot: orange theme', () => {
   const result = generateTheme(ORANGE_CONFIG);
 

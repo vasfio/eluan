@@ -1,0 +1,149 @@
+/* ============================================
+ * Typeset — Fluid Type Scale
+ *
+ * A 10-step scale (step-6 … step-0 … step-neg3) where every step is
+ * viewport-fluid. Each step interpolates linearly between three anchors:
+ *
+ *   small   480px  = 30rem     → --viewports-screen-s   (primitives.css)
+ *   medium  748px  = 46.75rem  → --viewports-screen-m
+ *   large  1024px  = 64rem     → --viewports-screen-l
+ *
+ * Derivation of the three columns:
+ *   small  = 14px × 1.2^step    (minor third — tighter ratio on small screens)
+ *   large  = 18px × 1.25^step   (major third — more contrast on large screens)
+ *   medium = small + 0.44 × (large − small)
+ *
+ * Two segments, so the curve bends at the medium anchor instead of running one
+ * straight line from small to large:
+ *   Segment 1 (:root)                       small → medium over  30rem → 46.75rem
+ *   Segment 2 (@media min-width: 46.75rem)  medium → large over 46.75rem → 64rem
+ * Each segment is a clamp(), so below 480px every step pins to its small value
+ * and above 1024px to its large value.
+ *
+ * Pinning: [data-typeset="small|medium|large"] freezes a whole page — or any
+ * subtree — to one column, exactly like the other axes (data-spacing,
+ * data-curves). These blocks come last on purpose: equal specificity means
+ * source order decides, so an explicit pin always beats the fluid :root
+ * declarations and the media-query segment. Removing the attribute hands
+ * control back to the media queries.
+ *
+ * Companion tokens: --line-height-step-* and --letter-spacing-step-* pair with
+ * each size. They don't vary by viewport, so they're declared once at :root.
+ * Letter-spacing tightens progressively from step-2 up — headings need optical
+ * correction at display sizes, and em units make the tracking scale with the
+ * (fluid) size automatically.
+ * ============================================ */
+
+:root {
+  /* ----------------------------------------
+   * Font Sizes — segment 1: small → medium
+   * 480px (30rem) → 748px (46.75rem)
+   * ---------------------------------------- */
+  --font-size-step-6: clamp(2.613125rem, 1.2911rem + 4.4067vw, 3.35125rem);
+  --font-size-step-5: clamp(2.1775rem, 1.1879rem + 3.2985vw, 2.73rem);
+  --font-size-step-4: clamp(1.814375rem, 1.08rem + 2.4478vw, 2.224375rem);
+  --font-size-step-3: clamp(1.511875rem, 0.9712rem + 1.8022vw, 1.81375rem);
+  --font-size-step-2: clamp(1.26rem, 0.8682rem + 1.306vw, 1.47875rem);
+  --font-size-step-1: clamp(1.05rem, 0.769rem + 0.9366vw, 1.206875rem);
+  --font-size-step-0: clamp(0.875rem, 0.678rem + 0.6567vw, 0.985rem);
+  --font-size-step-neg1: clamp(0.729375rem, 0.595rem + 0.4478vw, 0.804375rem);
+  --font-size-step-neg2: clamp(0.6075rem, 0.5191rem + 0.2948vw, 0.656875rem);
+  --font-size-step-neg3: clamp(0.50625rem, 0.4514rem + 0.1828vw, 0.536875rem);
+
+  /* ----------------------------------------
+   * Line Heights — one per step, viewport-independent
+   * Body copy stays generous (1.5); headings tighten as they grow.
+   * ---------------------------------------- */
+  --line-height-step-6: 1.2;
+  --line-height-step-5: 1.2;
+  --line-height-step-4: 1.2;
+  --line-height-step-3: 1.2;
+  --line-height-step-2: 1.375;
+  --line-height-step-1: 1.375;
+  --line-height-step-0: 1.5;
+  --line-height-step-neg1: 1.5;
+  --line-height-step-neg2: 1.5;
+  --line-height-step-neg3: 1.5;
+
+  /* ----------------------------------------
+   * Letter Spacing — one per step, viewport-independent
+   * em units so tracking tracks the fluid size. Progressive negative
+   * tracking above step-1 gives display text the tight optical fit a
+   * dedicated "Tight" cut would, without a second font payload.
+   * ---------------------------------------- */
+  --letter-spacing-step-6: -0.03em;
+  --letter-spacing-step-5: -0.025em;
+  --letter-spacing-step-4: -0.02em;
+  --letter-spacing-step-3: -0.015em;
+  --letter-spacing-step-2: -0.01em;
+  --letter-spacing-step-1: 0em;
+  --letter-spacing-step-0: 0em;
+  --letter-spacing-step-neg1: 0em;
+  --letter-spacing-step-neg2: 0em;
+  --letter-spacing-step-neg3: 0em;
+}
+
+/* ----------------------------------------
+ * Font Sizes — segment 2: medium → large
+ * 748px (46.75rem) → 1024px (64rem)
+ * ---------------------------------------- */
+
+@media (min-width: 46.75rem) {
+  :root {
+    --font-size-step-6: clamp(3.35125rem, 0.8037rem + 5.4493vw, 4.29125rem);
+    --font-size-step-5: clamp(2.73rem, 0.8244rem + 4.0761vw, 3.433125rem);
+    --font-size-step-4: clamp(2.224375rem, 0.8083rem + 3.029vw, 2.746875rem);
+    --font-size-step-3: clamp(1.81375rem, 0.7737rem + 2.2246vw, 2.1975rem);
+    --font-size-step-2: clamp(1.47875rem, 0.7216rem + 1.6196vw, 1.758125rem);
+    --font-size-step-1: clamp(1.206875rem, 0.6665rem + 1.1558vw, 1.40625rem);
+    --font-size-step-0: clamp(0.985rem, 0.6056rem + 0.8116vw, 1.125rem);
+    --font-size-step-neg1: clamp(0.804375rem, 0.5452rem + 0.5543vw, 0.9rem);
+    --font-size-step-neg2: clamp(0.656875rem, 0.4858rem + 0.3659vw, 0.72rem);
+    --font-size-step-neg3: clamp(0.536875rem, 0.4302rem + 0.2283vw, 0.57625rem);
+  }
+}
+
+/* ============================================
+ * Pinned Typesets
+ * <html data-typeset="small"> freezes the whole page; the attribute works on
+ * any element to pin a subtree. Must stay after the fluid declarations above.
+ * ============================================ */
+
+[data-typeset="small"] {
+  --font-size-step-6: 2.613125rem; /* 41.81px */
+  --font-size-step-5: 2.1775rem; /* 34.84px */
+  --font-size-step-4: 1.814375rem; /* 29.03px */
+  --font-size-step-3: 1.511875rem; /* 24.19px */
+  --font-size-step-2: 1.26rem; /* 20.16px */
+  --font-size-step-1: 1.05rem; /* 16.8px */
+  --font-size-step-0: 0.875rem; /* 14px */
+  --font-size-step-neg1: 0.729375rem; /* 11.67px */
+  --font-size-step-neg2: 0.6075rem; /* 9.72px */
+  --font-size-step-neg3: 0.50625rem; /* 8.1px */
+}
+
+[data-typeset="medium"] {
+  --font-size-step-6: 3.35125rem; /* 53.62px */
+  --font-size-step-5: 2.73rem; /* 43.68px */
+  --font-size-step-4: 2.224375rem; /* 35.59px */
+  --font-size-step-3: 1.81375rem; /* 29.02px */
+  --font-size-step-2: 1.47875rem; /* 23.66px */
+  --font-size-step-1: 1.206875rem; /* 19.31px */
+  --font-size-step-0: 0.985rem; /* 15.76px */
+  --font-size-step-neg1: 0.804375rem; /* 12.87px */
+  --font-size-step-neg2: 0.656875rem; /* 10.51px */
+  --font-size-step-neg3: 0.536875rem; /* 8.59px */
+}
+
+[data-typeset="large"] {
+  --font-size-step-6: 4.29125rem; /* 68.66px */
+  --font-size-step-5: 3.433125rem; /* 54.93px */
+  --font-size-step-4: 2.746875rem; /* 43.95px */
+  --font-size-step-3: 2.1975rem; /* 35.16px */
+  --font-size-step-2: 1.758125rem; /* 28.13px */
+  --font-size-step-1: 1.40625rem; /* 22.5px */
+  --font-size-step-0: 1.125rem; /* 18px */
+  --font-size-step-neg1: 0.9rem; /* 14.4px */
+  --font-size-step-neg2: 0.72rem; /* 11.52px */
+  --font-size-step-neg3: 0.57625rem; /* 9.22px */
+}

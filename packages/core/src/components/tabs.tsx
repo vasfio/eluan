@@ -20,29 +20,29 @@ export type TabsContentProps = Omit<
 >
 
 const styles = stylex.create({
-  // Theme-scoped via --tabs-* component tokens (see packages/tokens themes.css):
-  // minimal renders a flat pill (underlaid track, subtle raised active pill).
-  // Every theme-varying property resolves through those tokens, so a custom
-  // theme can restyle the track and active cap without touching this file.
+  // Styled from the generic semantic tokens (interactive / container / curves /
+  // spacing), not a private --tabs-* family: a flat pill with an underlaid
+  // track and a subtly raised active cap. Custom themes restyle it by moving
+  // those semantic tokens, which is the same lever every other component uses.
   list: {
     alignItems: "center",
-    backgroundColor: "var(--tabs-list-bg)",
-    borderRadius: "var(--tabs-list-radius)",
-    boxShadow: "var(--tabs-list-shadow)",
+    backgroundColor: "var(--interactive-bg-alt)",
+    borderRadius: "var(--curves-md)",
+    boxShadow: "none",
     color: "var(--interactive-fg-alt)",
     display: "inline-flex",
-    gap: "var(--tabs-list-gap)",
+    gap: 0,
     justifyContent: "center",
     minHeight: "var(--size-lg)",
-    padding: "var(--tabs-list-padding)",
+    padding: "var(--spacing-xs)",
   },
   trigger: {
     alignItems: "center",
     backgroundColor: "transparent",
     backgroundImage: "none",
     borderWidth: 0,
-    borderRadius: "var(--tabs-trigger-radius)",
-    color: "var(--tabs-trigger-fg)",
+    borderRadius: "var(--curves-sm)",
+    color: "var(--interactive-fg-alt)",
     display: "inline-flex",
     fontSize: "var(--font-size-sm)",
     fontWeight: 500,
@@ -54,7 +54,7 @@ const styles = stylex.create({
     transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
     whiteSpace: "nowrap",
     ":hover": {
-      color: "var(--tabs-trigger-hover-fg)",
+      color: "var(--interactive-fg-alt)",
     },
     ":focus-visible": {
       outlineColor: "var(--interactive-border)",
@@ -67,10 +67,10 @@ const styles = stylex.create({
       pointerEvents: "none",
     },
     "[data-state=active]": {
-      backgroundColor: "var(--tabs-trigger-selected-bg)",
-      backgroundImage: "var(--tabs-trigger-selected-surface)",
-      boxShadow: "var(--tabs-trigger-selected-shadow)",
-      color: "var(--tabs-trigger-selected-fg)",
+      backgroundColor: "var(--container-bg)",
+      backgroundImage: "none",
+      boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+      color: "var(--interactive-fg)",
     },
   },
   content: {

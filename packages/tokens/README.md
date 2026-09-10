@@ -2,7 +2,7 @@
 
 > Design tokens, CSS variables, themes, and fonts for the [Eluan](https://github.com/vasfio/eluan) design system.
 
-A three-layer token architecture (primitives → modes → themes) exposed as CSS custom properties scoped to `[data-theme]`, `[data-mode]`, `[data-spacing]`, and `[data-curves]` attributes.
+A three-layer token architecture (primitives → modes → themes) exposed as CSS custom properties scoped to `[data-theme]`, `[data-mode]`, `[data-spacing]`, `[data-curves]`, and `[data-typeset]` attributes.
 
 ## Install
 
@@ -27,6 +27,27 @@ Then activate a theme by setting attributes on `<html>` (or use `<EluanProvider>
 <html data-theme="minimal" data-mode="light" data-spacing="standard" data-curves="slight">
 ```
 
+## Token families
+
+| Family | Tokens | Driven by |
+|---|---|---|
+| Color | `--container-*`, `--interactive-*`, `--action-*-*`, `--positive-*`, `--cautionary-*`, `--destructive-*`, `--informative-*`, `--important-*`, `--dataviz-N-*` | `data-theme` + `data-mode` |
+| Spacing | `--spacing-xxs` … `--spacing-4xl` | `data-spacing` |
+| Sizing | `--size-xxs` … `--size-4xl` | `data-spacing` |
+| Curves | `--curves-xxs` … `--curves-xl` | `data-curves` |
+| Typeset | `--font-size-step-6` … `--font-size-step-neg3`, plus `--line-height-step-*` and `--letter-spacing-step-*` | viewport, or `data-typeset` |
+| Font-size aliases | `--font-size-xs` … `--font-size-5xl` | `data-spacing` picks a typeset step |
+| Fonts | `--font-heading`, `--font-body`, `--font-mono` | `data-theme` |
+
+The typeset is a fluid 10-step scale: each step interpolates between anchors at 480px, 748px, and 1024px viewport widths, so type resizes without media queries. `data-typeset="small" \| "medium" \| "large"` pins the whole scale (or any subtree) to one column; omit the attribute for fluid behaviour. Spacing density shifts the `--font-size-*` aliases one step up or down. Full details in the [theming guide](https://github.com/vasfio/eluan/blob/main/docs/theming.md#the-typeset-axis).
+
+## Fonts
+
+Two faces ship with the package:
+
+- **Paper Mono** — the monospace face for every theme. A variable font (weight axis 100–800) vendored as WOFF2 inside the package, so it works offline with no CDN or extra dependency. Licensed under the SIL Open Font License 1.1.
+- **Inter** — the `minimal` theme's heading and body face, self-hosted via `@fontsource/inter` (weights 400 and 500 only).
+
 ## Subpath exports
 
 ```ts
@@ -36,6 +57,24 @@ import "@eluan/tokens/fonts/base"                 // shared mono face only
 import "@eluan/tokens/fonts/minimal"              // a single theme's fonts
 import { themes, modes, type Theme } from "@eluan/tokens"
 ```
+
+## JS exports
+
+Alongside the CSS, the package exports the raw values for non-CSS consumers (React Native, canvas rendering, design-tool sync):
+
+```ts
+import {
+  primitiveColors, radius, sizing, sizingSteps, spacing, viewports,
+  typeset, typesetAnchors, typesetSteps, lineHeightSteps, letterSpacingSteps,
+  resolveTypesetSize,
+  fontWeights, fontFamilies, shadows, durations, easings, zIndices, breakpoints,
+  themes, modes, spacingScales, curveScales, themeFonts, loadThemeFonts,
+} from "@eluan/tokens"
+
+resolveTypesetSize("0", 900) // the fluid step-0 size at a 900px viewport
+```
+
+`fontSizes` is deprecated — it predates the fluid typeset. Use `typeset` with `resolveTypesetSize()`.
 
 ## Built-in themes
 

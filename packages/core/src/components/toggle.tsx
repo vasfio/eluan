@@ -47,8 +47,6 @@ const styles = stylex.create({
     },
     "[data-state=on]": {
       backgroundColor: "var(--interactive-bg-selected)",
-      backgroundImage: "var(--skeuo-surface-pressed)",
-      boxShadow: "var(--skeuo-pressed)",
       color: "var(--interactive-fg-selected)",
     },
   },

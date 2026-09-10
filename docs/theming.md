@@ -6,8 +6,9 @@ Eluan ships with **one** built-in theme — `minimal`, a neutral typographic bas
 2. [Switching themes at runtime](#switching-themes-at-runtime)
 3. [Creating a custom theme with `createTheme`](#creating-a-custom-theme)
 4. [What tokens can I override?](#what-tokens-can-i-override)
-5. [Targeting a sub-tree only](#targeting-a-sub-tree-only)
-6. [SSR, persistence, and OS preference](#ssr-persistence-and-os-preference)
+5. [The typeset axis](#the-typeset-axis)
+6. [Targeting a sub-tree only](#targeting-a-sub-tree-only)
+7. [SSR, persistence, and OS preference](#ssr-persistence-and-os-preference)
 
 ---
 
@@ -36,6 +37,7 @@ export default function App() {
       defaultMode="light"
       defaultSpacing="standard"
       defaultCurves="slight"
+      defaultTypeset="auto"
     >
       <YourApp />
     </EluanProvider>
@@ -44,6 +46,8 @@ export default function App() {
 ```
 
 The provider writes `data-theme`, `data-mode`, `data-spacing`, and `data-curves` to `<html>` (or any element you choose via the `target` prop). Every Eluan component reads from these tokens, so the theme is applied globally with no other configuration.
+
+`data-typeset` is the exception: its default `"auto"` deliberately leaves the attribute **off** so type stays viewport-fluid. See [The typeset axis](#the-typeset-axis).
 
 ---
 
@@ -69,7 +73,7 @@ function ThemeSwitcher() {
 }
 ```
 
-The hook returns `{ theme, mode, spacing, curves, setTheme, setMode, setSpacing, setCurves }`. The mode (`light` / `dim` / `dark`), spacing, and curve axes are independent of the theme and always available.
+The hook returns `{ theme, mode, spacing, curves, typeset, setTheme, setMode, setSpacing, setCurves, setTypeset }`. The mode (`light` / `dim` / `dark`), spacing, curve, and typeset axes are independent of the theme and always available.
 
 ---
 
@@ -139,7 +143,7 @@ The full list lives in `packages/tokens/src/themes.css`. The most commonly custo
 
 | Group | Examples |
 |---|---|
-| **Fonts** | `--font-heading`, `--font-body`, `--font-mono` |
+| **Fonts** | `--font-heading`, `--font-body`, `--font-mono` (monospace is Paper Mono, a variable font vendored with `@eluan/tokens`) |
 | **Containers** (cards, popovers, tables, etc.) | `--container-bg`, `--container-fg`, `--container-bg-alt`, `--container-border`, `--container-border-alt` |
 | **Interactive surfaces** (inputs, list rows) | `--interactive-bg`, `--interactive-bg-hover`, `--interactive-bg-selected`, `--interactive-fg`, `--interactive-fg-alt`, `--interactive-fg-selected`, `--interactive-border`, `--interactive-border-alt` |
 | **Action — primary** (CTA buttons) | `--action-primary-bg`, `--action-primary-bg-hover`, `--action-primary-bg-active`, `--action-primary-fg` |
@@ -149,6 +153,109 @@ The full list lives in `packages/tokens/src/themes.css`. The most commonly custo
 | **Data viz palette** | `--dataviz-1-main`/`-tint`/`-shade` … `--dataviz-8-main`/`-tint`/`-shade` |
 
 Tokens you don't override fall through to the `extends` theme.
+
+---
+
+## The typeset axis
+
+Type sizes are not static. Eluan ships a **10-step fluid typeset** (`--font-size-step-6` down to `--font-size-step-neg3`) where every step interpolates with the viewport, so a page reads well on a phone and on a desktop without a single media query in your app.
+
+Each step is anchored at three viewport widths, matching the `s` / `m` / `l` viewport primitives:
+
+| Step | 480px (`small`) | 748px (`medium`) | 1024px (`large`) |
+|---|---|---|---|
+| `step-6` | 41.81px | 53.62px | 68.66px |
+| `step-5` | 34.84px | 43.68px | 54.93px |
+| `step-4` | 29.03px | 35.59px | 43.95px |
+| `step-3` | 24.19px | 29.02px | 35.16px |
+| `step-2` | 20.16px | 23.66px | 28.13px |
+| `step-1` | 16.8px | 19.31px | 22.5px |
+| `step-0` | 14px | 15.76px | 18px |
+| `step-neg1` | 11.67px | 12.87px | 14.4px |
+| `step-neg2` | 9.72px | 10.51px | 11.52px |
+| `step-neg3` | 8.1px | 8.59px | 9.22px |
+
+The small column steps by a minor third (×1.2), the large column by a major third (×1.25) — bigger screens get more typographic contrast. Between the anchors the value is a two-segment `clamp()`: small→medium from 480px to 748px, medium→large from 748px to 1024px. Below 480px every step pins to its small value; above 1024px, to its large value.
+
+Two companion tokens travel with every size and should always be applied together:
+
+- `--line-height-step-*` — 1.5 for steps `neg3`–`0`, 1.375 for steps 1–2, 1.2 for steps 3–6.
+- `--letter-spacing-step-*` — `0em` up to step 1, then tightening: `-0.01em` at step 2 through `-0.03em` at step 6. Display type needs that optical correction; using `em` means the tracking scales with the fluid size automatically, so there's no second "Tight" font to download.
+
+### Pinning the scale
+
+Setting `data-typeset` freezes every step to one column:
+
+```html
+<html data-typeset="large">
+```
+
+| Value | Behaviour |
+|---|---|
+| `auto` *(default)* | No attribute is written; steps follow the viewport |
+| `small` / `medium` / `large` | Every step pinned to that column's static size |
+
+```tsx
+const { typeset, setTypeset } = useEluanTheme()
+
+setTypeset("large")  // sets data-typeset="large", persists to localStorage
+setTypeset("auto")   // removes the attribute and clears the stored key
+```
+
+Only explicit pins are persisted — `"auto"` is the absence of a preference, so it clears `eluan:typeset` rather than storing a value.
+
+The attribute works on any element, not just `<html>`, so you can pin a subtree (a compact sidebar, a print view) while the rest of the page stays fluid:
+
+```tsx
+<aside data-typeset="small">…</aside>
+```
+
+### Density re-indexes the scale
+
+The `--font-size-*` aliases (`xs` … `5xl`) select a *step*, and the spacing density shifts which one — exactly like `--size-*` and `--spacing-*` shift one primitive rung:
+
+| Alias | compact | standard | wide |
+|---|---|---|---|
+| `--font-size-xs` | `step-neg3` | `step-neg2` | `step-neg1` |
+| `--font-size-sm` | `step-neg2` | `step-neg1` | `step-0` |
+| `--font-size-base` | `step-neg1` | `step-0` | `step-1` |
+| `--font-size-lg` | `step-0` | `step-1` | `step-2` |
+| `--font-size-xl` | `step-1` | `step-2` | `step-3` |
+| `--font-size-2xl` | `step-2` | `step-3` | `step-4` |
+| `--font-size-3xl` | `step-3` | `step-4` | `step-5` |
+| `--font-size-4xl` | `step-4` | `step-5` | `step-6` |
+| `--font-size-5xl` | `step-5` | `step-6` | `step-6` |
+
+So density and typeset compose: density picks the rung, typeset (or the viewport) decides how big that rung is.
+
+### The `Typography` component
+
+`Typography` is the ergonomic front door to the scale — it always applies a step's size, line height, and letter spacing together:
+
+```tsx
+import { Typography } from "@eluan/core"
+
+<Typography variant="display">Ships fast</Typography>
+<Typography variant="body">Body copy on step-0.</Typography>
+<Typography variant="caption" tone="muted">Footnote</Typography>
+
+// Any variant can borrow another step without losing its font or weight:
+<Typography variant="label" step="2">Oversized label</Typography>
+```
+
+Variants map to steps as `display` → 5, `title` → 4, `heading` → 3, `subheading` → 2, `lead` → 1, `body` → 0, `label` → neg1, `caption` → neg2, and each picks a sensible default element (`h1`–`h4` for the headings, `p` for `lead`/`body`, `span` for `label`/`caption`) that `as` or `asChild` can override.
+
+### Outside React
+
+For non-CSS consumers, `@eluan/tokens` exports the same data and the same interpolation:
+
+```ts
+import { typeset, resolveTypesetSize, lineHeightSteps, letterSpacingSteps } from "@eluan/tokens"
+
+typeset["0"]                      // { small: 14, medium: 15.76, large: 18 }
+resolveTypesetSize("0", 900)      // 16.9…px — matches the CSS clamp exactly
+letterSpacingSteps["5"]           // -0.025 (an em multiplier)
+```
 
 ---
 
@@ -190,7 +297,7 @@ For a simpler sub-tree override of a single token, set the CSS variable inline:
 
 `<EluanProvider>` defaults to:
 
-- **`persist={true}`** — stores the user's theme/mode/spacing/curves choices in `localStorage` under keys `eluan:theme`, `eluan:mode`, etc., so they survive reloads. Set `persist={false}` for stateless behaviour.
+- **`persist={true}`** — stores the user's theme/mode/spacing/curves/typeset choices in `localStorage` under keys `eluan:theme`, `eluan:mode`, etc., so they survive reloads. Set `persist={false}` for stateless behaviour. (`eluan:typeset` is only written for an explicit pin; `"auto"` clears it.)
 - **`followSystemMode={true}`** — when `defaultMode` isn't set and no stored preference exists, the provider reads `prefers-color-scheme` and reacts to OS-level changes. Set `followSystemMode={false}` to opt out.
 
 ### Avoiding flash of wrong theme on SSR
@@ -207,10 +314,13 @@ Server-rendered apps will briefly render with the default theme before hydration
     var m = localStorage.getItem("eluan:mode")
     var s = localStorage.getItem("eluan:spacing")
     var c = localStorage.getItem("eluan:curves")
+    var y = localStorage.getItem("eluan:typeset")
     if (t) html.setAttribute("data-theme", t)
     if (m) html.setAttribute("data-mode", m)
     if (s) html.setAttribute("data-spacing", s)
     if (c) html.setAttribute("data-curves", c)
+    // Absent (or "auto") means fluid type — leave the attribute off.
+    if (y && y !== "auto") html.setAttribute("data-typeset", y)
   } catch (e) {}
 })()
 </script>
@@ -229,4 +339,7 @@ For Next.js you can render this via `next/script` with `strategy="beforeInteract
 | `createTheme({ name, extends, tokens })` | Define a custom theme |
 | `loadThemeFonts(name)` | Manually preload a built-in theme's fonts |
 | `themes` | Array of built-in theme names (`["minimal"]`) |
-| `Theme`, `Mode`, `SpacingScale`, `CurveScale` | TS types |
+| `Typography` | Component that applies a typeset step's size + line height + tracking |
+| `typeset`, `resolveTypesetSize()` | Fluid type scale data and its interpolation, for non-CSS consumers |
+| `lineHeightSteps`, `letterSpacingSteps` | Per-step companions to `typeset` |
+| `Theme`, `Mode`, `SpacingScale`, `CurveScale`, `TypesetStep`, `TypesetViewport` | TS types |

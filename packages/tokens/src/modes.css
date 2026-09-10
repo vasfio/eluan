@@ -8,18 +8,9 @@
  * Light Mode (Default)
  * ---------------------------------------- */
 
- 
+
 [data-mode="Light"],
 [data-mode="light"] {
-  /* Skeuomorphic light ingredients — light falls from the top-left along a
-     127deg diagonal. Shadows carry the active theme's neutral-950 tone; the
-     surface gradients are translucent overlays that model convex (raised)
-     and concave (pressed) faces over any base color. */
-  --skeuo-highlight: rgba(255, 255, 255, 0.4);
-  --skeuo-shade: color-mix(in srgb, var(--color-neutral-950) 10%, transparent);
-  --skeuo-shadow: color-mix(in srgb, var(--color-neutral-950) 7%, transparent);
-  --skeuo-surface-raised: linear-gradient(127deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 45%, color-mix(in srgb, var(--color-neutral-950) 5%, transparent) 100%);
-  --skeuo-surface-pressed: linear-gradient(127deg, color-mix(in srgb, var(--color-neutral-950) 5%, transparent) 0%, rgba(255, 255, 255, 0.01) 60%, rgba(255, 255, 255, 0.06) 100%);
   --backgrounds-primary: var(--color-neutral-0);
   --backgrounds-secondary: var(--color-neutral-100);
   --backgrounds-tertiary: var(--color-neutral-200);
@@ -126,13 +117,7 @@
   --blazeorange-shade: var(--color-blazeorange-800);
 }
 
-[data-mode="dim"] {
-  /* Skeuomorphic light ingredients (shadows carry the teak-950 tone) */
-  --skeuo-highlight: rgba(255, 255, 255, 0.35);
-  --skeuo-shade: rgba(51, 35, 25, 0.12);
-  --skeuo-shadow: rgba(51, 35, 25, 0.09);
-  --skeuo-surface-raised: linear-gradient(127deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 45%, rgba(51, 35, 25, 0.05) 100%);
-  --skeuo-surface-pressed: linear-gradient(127deg, rgba(51, 35, 25, 0.05) 0%, rgba(255, 255, 255, 0.01) 60%, rgba(255, 255, 255, 0.05) 100%);
+[data-mode="Dim"], [data-mode="dim"] {
   --backgrounds-primary: var(--color-teak-100);
   --backgrounds-secondary: var(--color-teak-200);
   --backgrounds-tertiary: var(--color-teak-300);
@@ -239,13 +224,7 @@
   --blazeorange-shade: var(--color-blazeorange-900);
 }
 
-[data-mode="dark"] {
-  /* Skeuomorphic light ingredients — highlights dim, shadows deepen in dark */
-  --skeuo-highlight: rgba(255, 255, 255, 0.07);
-  --skeuo-shade: rgba(0, 0, 0, 0.4);
-  --skeuo-shadow: rgba(0, 0, 0, 0.28);
-  --skeuo-surface-raised: linear-gradient(127deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.015) 45%, rgba(0, 0, 0, 0.15) 100%);
-  --skeuo-surface-pressed: linear-gradient(127deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.03) 60%, rgba(255, 255, 255, 0.03) 100%);
+[data-mode="Dark"], [data-mode="dark"] {
   --backgrounds-primary: var(--color-neutral-800);
   --backgrounds-secondary: var(--color-neutral-900);
   --backgrounds-tertiary: var(--color-neutral-950);
@@ -351,4 +330,3 @@
   --blazeorange-foreground: var(--color-blazeorange-50);
   --blazeorange-shade: var(--color-blazeorange-100);
 }
-

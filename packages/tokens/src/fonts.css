@@ -1,12 +1,16 @@
 /*
-  Eluan Design System — Google Fonts via @fontsource
+  Eluan Design System — every face the built-in themes use.
   Self-hosted, no CDN dependency.
-  Only medium weight loaded (max weight across all themes = 500).
+
+  Paper Mono ships inside this package as a variable WOFF2 (wght 100–800) and
+  is declared in fonts-base.css. Inter comes from Google Fonts via @fontsource;
+  only the weights the system actually uses are loaded (max weight across all
+  themes = 500), which is why there is no 600+ import — components cap their
+  `weight` prop at medium rather than faux-bolding.
 */
 
-/* Geist Mono — all themes mono */
-@import "@fontsource/geist-mono/400.css";
-@import "@fontsource/geist-mono/500.css";
+/* Paper Mono — all themes mono */
+@import "./fonts-base.css";
 
 /* Inter — minimal heading + body */
 @import "@fontsource/inter/400.css";

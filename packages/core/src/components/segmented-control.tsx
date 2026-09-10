@@ -45,7 +45,6 @@ const styles = stylex.create({
     alignItems: "center",
     backgroundColor: "var(--backgrounds-secondary)",
     borderRadius: "var(--curves-md)",
-    boxShadow: "var(--skeuo-recessed)",
     display: "inline-flex",
     gap: "var(--spacing-xxs)",
     padding: "var(--spacing-xxs)",
@@ -87,8 +86,6 @@ const styles = stylex.create({
     },
     "[data-state=active]": {
       backgroundColor: "var(--interactive-bg)",
-      backgroundImage: "var(--skeuo-surface-raised)",
-      boxShadow: "var(--skeuo-raised)",
       color: "var(--interactive-fg)",
     },
   },
