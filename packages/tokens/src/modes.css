@@ -27,6 +27,11 @@
    * aliases, and modes.css is imported first, so a theme-layer declaration
    * would win the cascade over any mode override. */
   --tooltip-bg: var(--backgrounds-primary);
+  /* Scrim behind Dialog and Sheet (applied at 0.8 opacity) — mode-aware for
+   * the same reason as --tooltip-bg. It must stay dark in every mode: the
+   * --container-fg it used to borrow is near-white in dark mode, which washed
+   * the page out behind a dark dialog. */
+  --overlay-bg: var(--foregrounds-primary);
   --maitai-main: var(--color-maitai-500);
   --maitai-background: var(--color-maitai-50);
   --maitai-tint: var(--color-maitai-100);
@@ -135,6 +140,7 @@
   --foregrounds-quaternary: var(--color-teak-700);
   --foregrounds-quinary: var(--color-teak-600);
   --tooltip-bg: var(--backgrounds-primary);
+  --overlay-bg: var(--foregrounds-primary);
   --maitai-main: var(--color-maitai-600);
   --maitai-background: var(--color-maitai-100);
   --maitai-tint: var(--color-maitai-200);
@@ -244,6 +250,9 @@
   --foregrounds-quinary: var(--color-neutral-400);
   /* Same value as --container-border, so the tooltip border disappears. */
   --tooltip-bg: var(--backgrounds-tertiary);
+  /* The darkest step of the ramp, so the scrim dims the page rather than
+   * lifting it. */
+  --overlay-bg: var(--backgrounds-tertiary);
   --maitai-main: var(--color-maitai-500);
   --maitai-background: var(--color-maitai-950);
   --maitai-tint: var(--color-maitai-900);
