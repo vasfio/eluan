@@ -1,8 +1,9 @@
 import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
+import { Slot, Slottable } from "@radix-ui/react-slot"
 import * as stylex from "@stylexjs/stylex"
 import { ChevronLeft, ChevronRight, Menu } from "lucide-react"
 
+import { useControllableState } from "../utils"
 import { Button } from "./button"
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./sheet"
 
@@ -10,10 +11,15 @@ const NavigationDrawerContext = React.createContext<{
   collapsed: boolean
   setCollapsed: (collapsed: boolean) => void
   isMobile: boolean
+  /** Whether the mobile (< 768px) sheet is open. Always `false` on desktop. */
+  mobileOpen: boolean
+  setMobileOpen: (open: boolean) => void
 }>({
   collapsed: false,
   setCollapsed: () => {},
   isMobile: false,
+  mobileOpen: false,
+  setMobileOpen: () => {},
 })
 
 const useNavigationDrawer = () => {
@@ -26,17 +32,38 @@ const useNavigationDrawer = () => {
   return context
 }
 
-interface NavigationDrawerProviderProps {
+export interface NavigationDrawerProviderProps {
   children: React.ReactNode
   defaultCollapsed?: boolean
+  /**
+   * Controlled open state of the mobile (< 768px) sheet. Leave it unset and
+   * the provider manages it: the menu button opens the sheet, and clicking a
+   * `NavigationDrawerItem` closes it.
+   */
+  mobileOpen?: boolean
+  /** Initial open state of the mobile sheet when uncontrolled. */
+  defaultMobileOpen?: boolean
+  /**
+   * Called whenever the mobile sheet opens or closes — from the menu button,
+   * Escape, an overlay click, or a `NavigationDrawerItem` click.
+   */
+  onMobileOpenChange?: (open: boolean) => void
 }
 
 const NavigationDrawerProvider = ({
   children,
   defaultCollapsed = false,
+  mobileOpen: mobileOpenProp,
+  defaultMobileOpen = false,
+  onMobileOpenChange,
 }: NavigationDrawerProviderProps) => {
   const [collapsed, setCollapsed] = React.useState(defaultCollapsed)
   const [isMobile, setIsMobile] = React.useState(false)
+  const [mobileOpen, setMobileOpen] = useControllableState({
+    value: mobileOpenProp,
+    defaultValue: defaultMobileOpen,
+    onChange: onMobileOpenChange,
+  })
 
   React.useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768)
@@ -46,8 +73,14 @@ const NavigationDrawerProvider = ({
   }, [])
 
   const value = React.useMemo(
-    () => ({ collapsed, setCollapsed, isMobile }),
-    [collapsed, isMobile]
+    () => ({
+      collapsed,
+      setCollapsed,
+      isMobile,
+      mobileOpen: isMobile && mobileOpen,
+      setMobileOpen,
+    }),
+    [collapsed, isMobile, mobileOpen, setMobileOpen]
   )
 
   return (
@@ -61,11 +94,11 @@ const NavigationDrawer = React.forwardRef<
   HTMLDivElement,
   Omit<React.HTMLAttributes<HTMLDivElement>, "className" | "style">
 >(({ children, ...props }, ref) => {
-  const { collapsed, isMobile } = useNavigationDrawer()
+  const { collapsed, isMobile, mobileOpen, setMobileOpen } = useNavigationDrawer()
 
   if (isMobile) {
     return (
-      <Sheet>
+      <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
         <div {...stylex.props(navigationDrawerStyles.mobileTrigger)}>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon">
@@ -376,6 +409,11 @@ const navigationDrawerStyles = stylex.create({
 export interface NavigationDrawerItemProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "className" | "style"> {
   icon?: React.ReactNode
+  /**
+   * Render the item as its single child element — typically a router link
+   * such as Next.js `<Link>` — instead of an `<a>`. The icon and the
+   * truncating label wrapper are placed inside that element.
+   */
   asChild?: boolean
   active?: boolean
 }
@@ -383,32 +421,61 @@ export interface NavigationDrawerItemProps
 const NavigationDrawerItem = React.forwardRef<
   HTMLAnchorElement,
   NavigationDrawerItemProps
->(({ icon, active, asChild, children, ...props }, ref) => {
-  const { collapsed } = useNavigationDrawer()
-  const Comp = asChild ? Slot : "a"
+>(({ icon, active, asChild, children, onClick, ...props }, ref) => {
+  const { collapsed, isMobile, setMobileOpen } = useNavigationDrawer()
+
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    onClick?.(event)
+    // Picking a destination on a phone should reveal the page it leads to.
+    // This deliberately ignores `defaultPrevented`: client-side routers
+    // (next/link, or an onClick that calls router.push) prevent the native
+    // navigation, but the user still navigated.
+    if (isMobile) setMobileOpen(false)
+  }
+
+  const renderLabel = (label: React.ReactNode) =>
+    collapsed ? null : (
+      <span {...stylex.props(navigationDrawerStyles.itemLabel)}>{label}</span>
+    )
+
+  const iconSlot = icon ? (
+    <span {...stylex.props(navigationDrawerStyles.itemIcon)}>
+      {React.isValidElement(icon)
+        ? React.cloneElement(
+            icon as React.ReactElement<{ width?: string; height?: string }>,
+            { width: "100%", height: "100%" }
+          )
+        : icon}
+    </span>
+  ) : null
+
+  const itemStyles = stylex.props(
+    navigationDrawerStyles.item,
+    active && navigationDrawerStyles.itemActive,
+    collapsed && navigationDrawerStyles.itemCollapsed
+  )
+
+  if (asChild) {
+    // Slottable marks which child is the element to render as, so the icon
+    // can sit beside it. The child's own content goes through the label
+    // wrapper, giving `<Link><icon/><span>label</span></Link>`.
+    const child = React.isValidElement<{ children?: React.ReactNode }>(children)
+      ? React.cloneElement(children, undefined, renderLabel(children.props.children))
+      : children
+
+    return (
+      <Slot ref={ref} {...itemStyles} {...props} onClick={handleClick}>
+        {iconSlot}
+        <Slottable>{child}</Slottable>
+      </Slot>
+    )
+  }
 
   return (
-    <Comp
-      ref={ref}
-      {...stylex.props(
-        navigationDrawerStyles.item,
-        active && navigationDrawerStyles.itemActive,
-        collapsed && navigationDrawerStyles.itemCollapsed
-      )}
-      {...props}
-    >
-      {icon && (
-        <span {...stylex.props(navigationDrawerStyles.itemIcon)}>
-          {React.isValidElement(icon)
-            ? React.cloneElement(
-                icon as React.ReactElement<{ width?: string; height?: string }>,
-                { width: "100%", height: "100%" }
-              )
-            : icon}
-        </span>
-      )}
-      {!collapsed && <span {...stylex.props(navigationDrawerStyles.itemLabel)}>{children}</span>}
-    </Comp>
+    <a ref={ref} {...itemStyles} {...props} onClick={handleClick}>
+      {iconSlot}
+      {renderLabel(children)}
+    </a>
   )
 })
 NavigationDrawerItem.displayName = "NavigationDrawerItem"
@@ -459,18 +526,18 @@ NavigationDrawerGroup.displayName = "NavigationDrawerGroup"
  * </NavigationDrawerLayout>
  * ```
  */
-interface NavigationDrawerLayoutProps {
+export interface NavigationDrawerLayoutProps
+  extends Omit<NavigationDrawerProviderProps, "children"> {
   children: React.ReactNode
   sidebar: React.ReactNode
-  defaultCollapsed?: boolean
 }
 
 const NavigationDrawerLayout = ({
   children,
   sidebar,
-  defaultCollapsed = false,
+  ...providerProps
 }: NavigationDrawerLayoutProps) => (
-  <NavigationDrawerProvider defaultCollapsed={defaultCollapsed}>
+  <NavigationDrawerProvider {...providerProps}>
     <div {...stylex.props(navigationDrawerStyles.layout)}>
       <NavigationDrawer>{sidebar}</NavigationDrawer>
       <div {...stylex.props(navigationDrawerStyles.layoutMain)}>
