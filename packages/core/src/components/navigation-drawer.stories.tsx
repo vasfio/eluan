@@ -1,5 +1,6 @@
 import React from "react"
 import type { Meta, StoryObj } from "@storybook/react"
+import { expect, userEvent, waitFor, within } from "@storybook/test"
 import {
   NavigationDrawer,
   NavigationDrawerLayout,
@@ -22,6 +23,14 @@ const meta: Meta<typeof NavigationDrawer> = {
 A collapsible sidebar navigation drawer with support for grouped items, active states, icons, and a mobile-responsive sheet variant.
 
 Use \`NavigationDrawerLayout\` to render the sidebar next to your page content. It manages the provider and places the collapse/expand toggle in a bar above the content — outside the sidebar — so it stays visible in both states. The sidebar fills the height of the layout's parent, so give that parent a bounded height.
+
+Below 768px the sidebar becomes a sheet behind a menu button. Clicking a \`NavigationDrawerItem\` closes it — including when the click is handled by a client-side router — and \`mobileOpen\` / \`onMobileOpenChange\` control it from outside. Pass a router link with \`asChild\`; the icon and label render inside it.
+
+\`\`\`tsx
+<NavigationDrawerItem asChild icon={<Home />} active={pathname === "/"}>
+  <Link href="/">Dashboard</Link>
+</NavigationDrawerItem>
+\`\`\`
 
 **Import**
 \`\`\`tsx
@@ -77,7 +86,13 @@ const brandStyle: React.CSSProperties = {
   color: "var(--container-fg)",
 }
 
-const PageContent = ({ title }: { title: string }) => (
+const PageContent = ({
+  title,
+  description = "Toggle the sidebar with the control above. It collapses to icons and expands back to full labels.",
+}: {
+  title: string
+  description?: string
+}) => (
   <div style={{ padding: "var(--spacing-lg)" }}>
     <h1
       style={{
@@ -89,10 +104,7 @@ const PageContent = ({ title }: { title: string }) => (
     >
       {title}
     </h1>
-    <p style={{ color: "var(--container-fg-alt)" }}>
-      Toggle the sidebar with the control above. It collapses to icons and
-      expands back to full labels.
-    </p>
+    <p style={{ color: "var(--container-fg-alt)" }}>{description}</p>
   </div>
 )
 
@@ -220,4 +232,78 @@ export const Collapsed: Story = {
       </NavigationDrawerLayout>
     </div>
   ),
+}
+
+const mobilePages = [
+  { label: "Dashboard", icon: <Home /> },
+  { label: "Users", icon: <Users /> },
+  { label: "Documents", icon: <FileText /> },
+  { label: "Settings", icon: <Settings /> },
+]
+
+// Stands in for a client-side router: each item prevents the native
+// navigation and swaps the page in state, the way next/link or
+// router.push() would.
+const MobileNavigationDemo = () => {
+  const [page, setPage] = React.useState("Dashboard")
+
+  return (
+    <div style={wrapperStyle}>
+      <NavigationDrawerLayout
+        sidebar={
+          <>
+            <NavigationDrawerHeader>
+              <span style={brandStyle}>My App</span>
+            </NavigationDrawerHeader>
+            <NavigationDrawerContent>
+              <NavigationDrawerGroup>
+                {mobilePages.map(({ label, icon }) => (
+                  <NavigationDrawerItem
+                    key={label}
+                    href={`#${label.toLowerCase()}`}
+                    icon={icon}
+                    active={page === label}
+                    onClick={(event) => {
+                      event.preventDefault()
+                      setPage(label)
+                    }}
+                  >
+                    {label}
+                  </NavigationDrawerItem>
+                ))}
+              </NavigationDrawerGroup>
+            </NavigationDrawerContent>
+          </>
+        }
+      >
+        <PageContent
+          title={page}
+          description="Open the menu and pick a page. The drawer closes as soon as you choose one."
+        />
+      </NavigationDrawerLayout>
+    </div>
+  )
+}
+
+export const Mobile: Story = {
+  parameters: {
+    viewport: { defaultViewport: "mobile1" },
+    docs: {
+      description: {
+        story:
+          "Below 768px the drawer becomes a sheet behind a menu button. Clicking an item closes the sheet, even though each item here prevents the native navigation and routes in state instead. View this story on its own (at a phone viewport) to see the mobile sheet; the interaction test opens it, picks Users, and checks that it closed.",
+      },
+    },
+  },
+  render: () => <MobileNavigationDemo />,
+  play: async ({ canvasElement }) => {
+    // The sheet portals to <body>, outside the story canvas.
+    const page = within(canvasElement.ownerDocument.body)
+
+    await userEvent.click(await page.findByRole("button", { name: "Open navigation" }))
+    await userEvent.click(await page.findByRole("link", { name: "Users" }))
+
+    await waitFor(() => expect(page.queryByRole("dialog")).not.toBeInTheDocument())
+    await expect(page.getByRole("heading", { name: "Users" })).toBeInTheDocument()
+  },
 }
