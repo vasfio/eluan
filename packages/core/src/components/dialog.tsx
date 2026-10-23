@@ -47,7 +47,7 @@ export type DialogDescriptionProps = Omit<
 
 const styles = stylex.create({
   overlay: {
-    backgroundColor: "var(--container-fg)",
+    backgroundColor: "var(--overlay-bg)",
     inset: 0,
     opacity: 0.8,
     position: "fixed",

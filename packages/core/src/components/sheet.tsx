@@ -108,7 +108,7 @@ const styles = stylex.create({
     },
     animationFillMode: "both",
     animationTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-    backgroundColor: "var(--container-fg)",
+    backgroundColor: "var(--overlay-bg)",
     inset: 0,
     opacity: 0.8,
     position: "fixed",

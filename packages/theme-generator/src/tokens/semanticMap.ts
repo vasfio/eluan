@@ -15,6 +15,9 @@ export function buildSemanticMap(): SemanticMap {
     // Tooltip surface — matches container-bg in light and container-border in
     // dark, so the tooltip's border disappears against its own background.
     'tooltip-bg':               { light: 'neutral.50',   dark: 'neutral.700',  role: 'bg' },
+    // Dialog/Sheet scrim, drawn at 0.8 opacity — the darkest step in both
+    // modes so it dims the page behind an overlay instead of washing it out.
+    'overlay-bg':               { light: 'neutral.950',  dark: 'neutral.950',  role: 'bg' },
 
     // ── Interactive ────────────────────────────────────────────
     'interactive-bg':           { light: 'neutral.50',   dark: 'neutral.800',  role: 'bg' },
