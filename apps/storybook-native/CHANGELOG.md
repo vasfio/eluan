@@ -1,5 +1,13 @@
 # @eluan/storybook-native
 
+## 1.0.4
+
+### Patch Changes
+
+- Updated dependencies [7e4814f]
+  - @eluan/tokens@0.4.1
+  - @eluan/native@0.1.0
+
 ## 1.0.3
 
 ### Patch Changes
