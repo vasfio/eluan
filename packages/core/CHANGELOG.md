@@ -1,5 +1,45 @@
 # @eluan/core
 
+## 0.6.0
+
+### Minor Changes
+
+- 0e10220: NavigationDrawer: the mobile sheet closes when an item is clicked, and `asChild` works with router links.
+
+  - **Mobile sheet state lives in the provider.** Below 768px the drawer was an
+    uncontrolled Radix Sheet, so an app had no way to close it after navigating —
+    `SheetClose` is skipped once a client-side router has called
+    `preventDefault()` on the click. `NavigationDrawerProvider` (and
+    `NavigationDrawerLayout`) now own the sheet's open state and accept
+    `mobileOpen`, `defaultMobileOpen` and `onMobileOpenChange` to control it.
+    `useNavigationDrawer()` exposes `mobileOpen` and `setMobileOpen`.
+  - **Clicking a `NavigationDrawerItem` on mobile closes the sheet**, whether or
+    not the click was default-prevented, so `next/link` and `router.push()`
+    handlers both work without workarounds such as dispatching an Escape keydown.
+  - **`asChild` works with an icon.** The item passed its icon and label as two
+    children to Radix `Slot`, which accepts only one, so
+    `<NavigationDrawerItem asChild icon={…}><Link /></NavigationDrawerItem>`
+    threw — and without an icon the item's styles landed on the label `<span>`
+    instead of the link. The child is now marked with `Slottable`: the link
+    receives the item styles, and the icon and truncating label render inside it.
+  - `NavigationDrawerProviderProps` and `NavigationDrawerLayoutProps` are now
+    exported types.
+
+### Patch Changes
+
+- 7e4814f: Dark scrim behind Dialog and Sheet in dark mode.
+
+  The Dialog and Sheet overlays painted `--container-fg` at 0.8 opacity. That
+  token is near-white in dark mode, so opening a dialog washed the page out light
+  behind a dark panel. Both overlays now read a new mode-aware `--overlay-bg`
+  token: light and dim keep `--foregrounds-primary` (unchanged), and dark resolves
+  to `--backgrounds-tertiary`, the darkest step of the neutral ramp.
+  `@eluan/theme-generator` emits the token for generated themes (`neutral.950` in
+  both modes).
+
+- Updated dependencies [7e4814f]
+  - @eluan/tokens@0.4.1
+
 ## 0.5.1
 
 ### Patch Changes
