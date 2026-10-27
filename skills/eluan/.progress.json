@@ -1,0 +1,45 @@
+{
+  "kit": "agent-skills-kit/PLAN.md",
+  "branch": "claude/eluan-agent-skills (local only, never pushed)",
+  "phases": {
+    "0": {
+      "status": "awaiting-confirmation",
+      "date": "2026-10-27",
+      "output": [
+        "skills/eluan/.inventory.json"
+      ],
+      "topFive": {
+        "planDefault": [
+          "Button",
+          "Input",
+          "Dialog",
+          "Card",
+          "Select"
+        ],
+        "recommended": [
+          "Button",
+          "Input",
+          "FormLabel",
+          "Select",
+          "Dialog"
+        ],
+        "why": "Files importing each component across the apps that use Eluan and the Eluan docs site (docs component pages excluded): Button 121, Label/FormLabel 63, Input 60, Badge 42, Checkbox 38, Switch 36, ToggleGroup 34, Banner 33, Card 32, Select 20, Dialog 8. FormLabel carries labels and FormMessage errors, which the Phase 2 forms pattern leans on. Dialog stays despite low usage because agents hand-roll modals (t02)."
+      }
+    },
+    "1": {
+      "status": "pending"
+    },
+    "2": {
+      "status": "pending"
+    },
+    "3": {
+      "status": "pending"
+    },
+    "4": {
+      "status": "pending"
+    },
+    "5": {
+      "status": "pending"
+    }
+  }
+}
