@@ -484,7 +484,8 @@
         "FormLabel",
         "FormDescription",
         "FormMessage"
-      ]
+      ],
+      "note": "FormLabel is a @deprecated alias of Label; guidelines import Label. File stays form-label.md to match the module and docs slug."
     },
     {
       "name": "Header",
@@ -1757,7 +1758,7 @@
     "theming": "Theme generator controls colour only (1-3 accents, neutral tint, min contrast). Curves, spacing density and typeset are EluanProvider axes. PLAN.md's theming.md brief says the generator controls 'colour, curves, spacing'; theming.md will describe the real split.",
     "toast": "toast() is not re-exported from @eluan/core. Toast is the Sonner <Toaster> mount; consumers import toast from 'sonner' and need it as a direct dependency under pnpm.",
     "docs": "Docs site is a separate repo (vasfio/eluan-docs), so eluan CI can't read it. 11 docs pages have no PropsTable: breadcrumb command dropdown-menu fieldset menubar navigation-drawer pagination scroll-area skeleton table toast. Phase 3 API generator should read component types, not docs tables.",
-    "naming": "DateTimePicker kebabs to date-time-picker.md (module and docs slug are datetime-picker). media.tsx has no Media export (Image, Video); proposed file media.md with name Media.",
+    "naming": "DateTimePicker kebabs to date-time-picker.md (module and docs slug are datetime-picker). media.tsx has no Media export (Image, Video); proposed file media.md with name Media. FormLabel is a deprecated alias of Label; form-label.md documents Label.",
     "knownSourceIssues": "Paper audit found unfixed component bugs (progress tone fills, checked+disabled checkbox/radio, navigation-menu active state, pagination undefined --interactive-fg-hover, command shortcut on highlight, etc.). Guidelines will route around them with REVIEW markers rather than document them as intended. See .claude/design-system-fix-plan.md in the main checkout.",
     "shipping": "skills/ is at the repo root; @eluan/core publishes files: [\"dist\"]. Phase 3 needs a copy step into packages/core (or a dedicated package) before adding skills to files.",
     "existingSkills": ".claude/skills/eluan/SKILL.md (name: eluan, 513 lines, consumer + contributor) overlaps the new router's name and scope. Left untouched; decide later whether the router supersedes it. skills/eluan-* are contributor/setup skills and don't overlap.",
