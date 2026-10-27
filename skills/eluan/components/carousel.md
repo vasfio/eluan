@@ -167,8 +167,8 @@ Carousel has no size prop. It fills its parent's width. CarouselItem `basis` set
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Scroll axis. |
-| `opts` | Embla options | | Passed to Embla: `loop`, `align`, `dragFree`, `startIndex`, `duration`. `axis` is overridden by `orientation`. |
-| `plugins` | Embla plugins | | Passed to Embla. |
+| `opts` | `CarouselOptions` | | Passed to Embla: `loop`, `align`, `dragFree`, `startIndex`, `duration`. `axis` is overridden by `orientation`. |
+| `plugins` | `CarouselPlugin` | | Passed to Embla. |
 | `setApi` | `(api: CarouselApi) => void` | | Receives the Embla API for counters and custom controls. |
 | `aria-label` | `string` | | Names the carousel region. |
 | `...props` | `HTMLAttributes<HTMLDivElement>` without `className`, `style` | | Native div attributes on the root. |

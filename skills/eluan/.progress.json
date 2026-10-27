@@ -47,8 +47,18 @@
       ]
     },
     "3": {
-      "status": "pending",
-      "partial": "generate-tokens and generate-index exist; generate-api, export-design-md, package scripts, CI, type-checking examples and shipping are not done"
+      "status": "done",
+      "date": "2026-10-27",
+      "output": [
+        "scripts/skills/generate-api.mjs (reconciles API tables with the TypeScript types; no unknown props found in 879 rows)",
+        "scripts/skills/export-design-md.mjs → skills/eluan/DESIGN.md (minimal theme; --accent for a generated brand theme)",
+        "scripts/skills/check-examples.mjs (type-checks the 80 complete examples, strict)",
+        "scripts/skills/lib/tokens.mjs (shared by generate-tokens and export-design-md)",
+        "scripts/skills/pack.mjs (@eluan/core prepack/postpack; strips REVIEW notes from the shipped copy)",
+        "package.json skills:build and skills:check; CI step 'Agent skill check'",
+        "@eluan/core files += skills; README sections; .changeset/agent-skill.md (minor)"
+      ],
+      "notes": "check-skills.mjs stays in agent-skills-kit/scripts (PLAN default). Do/Don't snippets without imports aren't type-checked."
     },
     "4": {
       "status": "pending"

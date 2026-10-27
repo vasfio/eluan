@@ -63,6 +63,24 @@ function App() {
 
 ---
 
+## Using Eluan with agents
+
+`@eluan/core` ships an agent skill in `skills/eluan`: guidance that tells coding agents which component to use for a task, the rules each one follows, and which tokens to use. Install it for Claude Code:
+
+```bash
+cp -r node_modules/@eluan/core/skills/eluan .claude/skills/eluan
+```
+
+For other agents, add one line to `AGENTS.md` (or `CLAUDE.md`):
+
+```md
+Before writing UI, read `.claude/skills/eluan/SKILL.md` and follow it.
+```
+
+The skill's source is [`skills/eluan`](skills/eluan). `pnpm skills:build` regenerates its token tables, component index, API tables and `DESIGN.md`; `pnpm skills:check` validates it and type-checks its examples (build the packages first).
+
+---
+
 ## Monorepo Setup
 
 **Package manager:** pnpm (v10.32+) with workspaces

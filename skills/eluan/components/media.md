@@ -169,8 +169,8 @@ Media has no size prop. Image and Video fill their container's width; height com
 | --- | --- | --- | --- |
 | `src` | `string` | | Image URL. |
 | `alt` | `string` | | Accessible name. Optional in the types; always pass it (`""` for decorative). |
-| `ratio` | `"auto" \| "square" \| "video" \| "portrait" \| "wide"` | `"auto"` | Frame aspect ratio. Presets crop with `object-fit: cover`. |
-| `rounded` | `"none" \| "sm" \| "md" \| "lg" \| "xl" \| "full"` | `"md"` | Corner radius from `--curves-*`. |
+| `ratio` | `"auto" \| "square" \| "video" \| "portrait" \| "wide" \| null` | `"auto"` | Frame aspect ratio. Presets crop with `object-fit: cover`. |
+| `rounded` | `"none" \| "sm" \| "md" \| "lg" \| "xl" \| "full" \| null` | `"md"` | Corner radius from `--curves-*`. |
 | `fallback` | `ReactNode` | | Shown in place of the image when it fails to load. |
 | `onLoad` | `ReactEventHandler<HTMLImageElement>` | | Called when the image loads; Image also clears its loading overlay. |
 | `onError` | `ReactEventHandler<HTMLImageElement>` | | Called when the image fails; Image also switches to `fallback` if you passed one. |
@@ -181,8 +181,8 @@ Media has no size prop. Image and Video fill their container's width; height com
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `src` | `string` | | Video URL, or use `<source>` children. |
-| `ratio` | `"auto" \| "square" \| "video" \| "portrait" \| "wide"` | `"video"` | Frame aspect ratio. |
-| `rounded` | `"none" \| "sm" \| "md" \| "lg" \| "xl" \| "full"` | `"md"` | Corner radius from `--curves-*`. |
+| `ratio` | `"auto" \| "square" \| "video" \| "portrait" \| "wide" \| null` | `"video"` | Frame aspect ratio. |
+| `rounded` | `"none" \| "sm" \| "md" \| "lg" \| "xl" \| "full" \| null` | `"md"` | Corner radius from `--curves-*`. |
 | `showControls` | `boolean` | `true` | Shows the play/pause, mute and fullscreen overlay. |
 | `poster` | `string` | | Frame shown before playback. |
 | `children` | `ReactNode` | | `<source>` and `<track>` elements. |

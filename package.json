@@ -16,6 +16,8 @@
     "test": "pnpm -r --filter './packages/core' --filter './packages/native' --filter './packages/theme-generator' run test",
     "test:coverage": "pnpm -r --filter './packages/core' --filter './packages/native' run test:coverage",
     "build:storybook": "pnpm --filter @eluan/tokens build && pnpm --filter @eluan/core build && pnpm --filter @eluan/core build-storybook && node scripts/assemble-storybook.mjs",
+    "skills:build": "node scripts/skills/generate-tokens.mjs && node scripts/skills/generate-index.mjs && node scripts/skills/generate-api.mjs && node scripts/skills/export-design-md.mjs",
+    "skills:check": "node agent-skills-kit/scripts/check-skills.mjs && node scripts/skills/generate-tokens.mjs --check && node scripts/skills/generate-index.mjs --check && node scripts/skills/generate-api.mjs --check && node scripts/skills/export-design-md.mjs --check && node scripts/skills/check-examples.mjs",
     "version-packages": "pnpm dlx @changesets/cli version",
     "release": "pnpm dlx @changesets/cli publish"
   },

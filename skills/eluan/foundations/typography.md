@@ -104,8 +104,14 @@ The `--font-size-xs` to `--font-size-5xl` aliases map onto steps and shift one s
 ```tsx
 import { Typography } from "@eluan/core";
 
-<Typography variant="title" as="h1">Account settings</Typography>
-<Typography variant="lead">Manage your profile, notifications and billing.</Typography>
+export function SettingsHeading() {
+  return (
+    <>
+      <Typography variant="title" as="h1">Account settings</Typography>
+      <Typography variant="lead">Manage your profile, notifications and billing.</Typography>
+    </>
+  );
+}
 ```
 
 **Don't:** size text by hand.

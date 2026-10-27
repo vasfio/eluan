@@ -20,7 +20,7 @@ Eluan has no elevation or shadow tokens yet. Depth comes from components: Card h
 <!-- tokens:start -->
 | Token | Value (default theme) | Use for |
 | --- | --- | --- |
-| _No tokens yet_ | | See the token plan below |
+| _No tokens yet_ | | Follow the rules above |
 <!-- tokens:end -->
 
 <!-- REVIEW: token plan, not yet implemented. Matches W8 (fix/shadow-tokens) in the main checkout's .claude/design-system-fix-plan.md.

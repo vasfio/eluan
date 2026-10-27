@@ -21,7 +21,7 @@ Eluan has no duration or easing tokens yet. Components own their motion: state t
 <!-- tokens:start -->
 | Token | Value (default theme) | Use for |
 | --- | --- | --- |
-| _No tokens yet_ | | See the token plan below |
+| _No tokens yet_ | | Follow the rules above |
 <!-- tokens:end -->
 
 <!-- REVIEW: token plan, not yet implemented.

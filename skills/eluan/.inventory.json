@@ -1760,7 +1760,7 @@
     "docs": "Docs site is a separate repo (vasfio/eluan-docs), so eluan CI can't read it. 11 docs pages have no PropsTable: breadcrumb command dropdown-menu fieldset menubar navigation-drawer pagination scroll-area skeleton table toast. Phase 3 API generator should read component types, not docs tables.",
     "naming": "DateTimePicker kebabs to date-time-picker.md (module and docs slug are datetime-picker). media.tsx has no Media export (Image, Video); proposed file media.md with name Media. FormLabel is a deprecated alias of Label; form-label.md documents Label.",
     "knownSourceIssues": "Paper audit found unfixed component bugs (progress tone fills, checked+disabled checkbox/radio, navigation-menu active state, pagination undefined --interactive-fg-hover, command shortcut on highlight, etc.). Guidelines will route around them with REVIEW markers rather than document them as intended. See .claude/design-system-fix-plan.md in the main checkout.",
-    "shipping": "skills/ is at the repo root; @eluan/core publishes files: [\"dist\"]. Phase 3 needs a copy step into packages/core (or a dedicated package) before adding skills to files.",
+    "shipping": "Resolved in Phase 3: scripts/skills/pack.mjs copies skills/eluan into packages/core/skills at prepack; files includes skills.",
     "existingSkills": ".claude/skills/eluan/SKILL.md (name: eluan, 513 lines, consumer + contributor) overlaps the new router's name and scope. Left untouched; decide later whether the router supersedes it. skills/eluan-* are contributor/setup skills and don't overlap.",
     "nativeExcluded": "@eluan/native is private (0.1.0) and excluded."
   }

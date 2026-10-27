@@ -63,6 +63,20 @@ import { Typography } from "@eluan/core"
 
 See [the typeset axis](https://github.com/vasfio/eluan/blob/main/docs/theming.md#the-typeset-axis) for the step table and the `data-typeset` pinning attribute.
 
+## Using Eluan with agents
+
+The package ships an agent skill in `skills/eluan`: guidance that tells coding agents which component to use for a task, the rules each one follows, and which tokens to use. Install it for Claude Code:
+
+```bash
+cp -r node_modules/@eluan/core/skills/eluan .claude/skills/eluan
+```
+
+For other agents, add one line to `AGENTS.md` (or `CLAUDE.md`):
+
+```md
+Before writing UI, read `.claude/skills/eluan/SKILL.md` and follow it.
+```
+
 ## What's included
 
 Components span layout (`Card`, `Sheet`, `Drawer`), typography (`Typography`), forms (`Input`, `Select`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`, etc.), data display (`Table`, `Tree View`, `Calendar`), navigation (`Tabs`, `Breadcrumb`, `Command`, `NavigationDrawer`), feedback (`Toast`, `Banner`, `Progress`), and overlays (`Dialog`, `Popover`, `Tooltip`, `ContextMenu`).

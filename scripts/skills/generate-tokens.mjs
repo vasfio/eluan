@@ -7,125 +7,16 @@
 // are kept; new tokens get a default description.
 // Usage: node scripts/skills/generate-tokens.mjs [--check]
 
-import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
+import {
+  alias, allNames, colourNames, curveNames, curvesValue, densityValue, fluidRange,
+  scaleSort, spacingNames, steps, themeNames, value, context,
+} from "./lib/tokens.mjs";
 
-const TOKENS = "packages/tokens/src";
 const SKILL = "skills/eluan";
 const CHECK = process.argv.includes("--check");
 
-// ---------- CSS parsing ----------
-
-// Returns [{ selector, decls: Map }] for top-level rules, plus rules inside @media.
-function parseCss(text) {
-  const src = text.replace(/\/\*[\s\S]*?\*\//g, "");
-  const rules = [];
-  const walk = (s, media) => {
-    let i = 0;
-    while (i < s.length) {
-      const open = s.indexOf("{", i);
-      if (open === -1) break;
-      const selector = s.slice(i, open).trim().replace(/^[;\s]+/, "");
-      let depth = 1;
-      let j = open + 1;
-      while (j < s.length && depth) {
-        if (s[j] === "{") depth++;
-        else if (s[j] === "}") depth--;
-        j++;
-      }
-      const body = s.slice(open + 1, j - 1);
-      if (selector.startsWith("@media")) walk(body, selector);
-      else if (!selector.startsWith("@")) {
-        const decls = new Map();
-        for (const m of body.matchAll(/(--[a-zA-Z0-9-]+)\s*:\s*([^;]+);/g)) decls.set(m[1], m[2].trim());
-        rules.push({ selector, media, decls });
-      }
-      i = j;
-    }
-  };
-  walk(src, null);
-  return rules;
-}
-
-const files = Object.fromEntries(
-  readdirSync(TOKENS)
-    .filter((f) => f.endsWith(".css"))
-    .map((f) => [f, parseCss(readFileSync(join(TOKENS, f), "utf8"))]),
-);
-
-const block = (file, selector, media = null) => {
-  const r = files[file]?.find((x) => x.selector.includes(selector) && x.media === media);
-  return r ? r.decls : new Map();
-};
-
-// Default context, in cascade order.
-function context({ mode = "light", spacing = "standard", curves = "slight", typeset = null } = {}) {
-  const ctx = new Map();
-  const add = (m) => m.forEach((v, k) => ctx.set(k, v));
-  add(block("primitives.css", ":root"));
-  add(block("modes.css", `[data-mode="${mode}"]`));
-  add(block("themes.css", ":root"));
-  add(block("themes.css", '[data-theme="minimal"]'));
-  add(block("spacing.css", `[data-spacing="${spacing}"]`));
-  add(block("curves.css", `[data-curves="${curves}"]`));
-  add(block("typeset.css", ":root"));
-  if (typeset) add(block("typeset.css", `[data-typeset="${typeset}"]`));
-  return ctx;
-}
-
-function resolve(ctx, value, seen = new Set()) {
-  return value.replace(/var\((--[a-zA-Z0-9-]+)(?:,\s*([^)]+))?\)/g, (_, name, fallback) => {
-    if (seen.has(name)) return name;
-    const v = ctx.get(name);
-    if (v === undefined) return fallback ?? name;
-    return resolve(ctx, v, new Set([...seen, name]));
-  });
-}
-
-const remToPx = (v) =>
-  v.replace(/(-?\d*\.?\d+)rem\b/g, (_, n) => `${+(parseFloat(n) * 16).toFixed(2)}px`);
-
-const DEFAULT = context();
-const alias = (name) => {
-  const raw = DEFAULT.get(`--${name}`);
-  const m = raw?.match(/^var\((--[a-zA-Z0-9-]+)\)$/);
-  return m ? m[1] : null;
-};
-const value = (name, ctx = DEFAULT) => remToPx(resolve(ctx, `var(--${name})`));
-
-// ---------- Groups per foundation file ----------
-
-const COLOUR_FAMILIES = [
-  "container", "interactive", "action-primary", "action-secondary", "action-tertiary",
-  "destructive", "cautionary", "positive", "informative", "important",
-];
-const STEP_ORDER = ["6", "5", "4", "3", "2", "1", "0", "neg1", "neg2", "neg3"];
-const SCALE_ORDER = ["xxs", "xs", "sm", "base", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl"];
-const scaleSort = (a, b, prefix) =>
-  SCALE_ORDER.indexOf(a.slice(prefix.length)) - SCALE_ORDER.indexOf(b.slice(prefix.length));
-
-const themeNames = [...block("themes.css", '[data-theme="minimal"]').keys()].map((k) => k.slice(2));
-const modeNames = [...block("modes.css", '[data-mode="light"]').keys()].map((k) => k.slice(2));
-const spacingNames = [...block("spacing.css", '[data-spacing="standard"]').keys()].map((k) => k.slice(2));
-const curveNames = [...block("curves.css", '[data-curves="slight"]').keys()].map((k) => k.slice(2));
-
-const densityValue = (name) => {
-  const std = value(name);
-  const c = value(name, context({ spacing: "compact" }));
-  const w = value(name, context({ spacing: "wide" }));
-  return `${std} (compact ${c}, wide ${w})`;
-};
-const curvesValue = (name) => {
-  const s = value(name);
-  const sharp = value(name, context({ curves: "sharp" }));
-  const sweep = value(name, context({ curves: "sweeping" }));
-  return `${s} (sharp ${sharp}, sweeping ${sweep})`;
-};
-const fluidValue = (name) => {
-  const small = value(name, context({ typeset: "small" }));
-  const large = value(name, context({ typeset: "large" }));
-  return `${small} → ${large}, fluid`;
-};
 const colourValue = (name) => {
   const a = alias(name);
   const light = value(name);
@@ -133,13 +24,13 @@ const colourValue = (name) => {
   const resolved = light === dark ? light : `${light} / dark ${dark}`;
   return a ? `\`${a}\` → ${resolved}` : resolved;
 };
+const fluidValue = (name) => {
+  const [small, large] = fluidRange(name);
+  return `${small} → ${large}, fluid`;
+};
 
 const GROUPS = {
-  "colour.md": () =>
-    COLOUR_FAMILIES.flatMap((f) => themeNames.filter((n) => n.startsWith(`${f}-`)))
-      .concat(modeNames.filter((n) => n === "overlay-bg" || n === "tooltip-bg"))
-      .concat(themeNames.filter((n) => n.startsWith("dataviz-")))
-      .map((n) => [n, colourValue(n)]),
+  "colour.md": () => colourNames().map((n) => [n, colourValue(n)]),
   "typography.md": () => [
     ...themeNames.filter((n) => n.startsWith("font-")).map((n) => [n, value(n).split(",")[0]]),
     ...spacingNames
@@ -147,7 +38,7 @@ const GROUPS = {
       .sort((a, b) => scaleSort(a, b, "font-size-"))
       .map((n) => [n, `\`${alias(n)}\` (density shifts one step)`]),
     ...["font-size-step-", "line-height-step-", "letter-spacing-step-"].flatMap((p) =>
-      STEP_ORDER.map((s) => `${p}${s}`).map((n) => [n, p === "font-size-step-" ? fluidValue(n) : value(n)]),
+      steps.map((s) => `${p}${s}`).map((n) => [n, p === "font-size-step-" ? fluidValue(n) : value(n)]),
     ),
   ],
   "spacing.md": () =>
@@ -231,7 +122,7 @@ function rewrite(file, rows) {
   for (const m of text.slice(s, e).matchAll(/^\| `--([a-z0-9-]+)` \| .*? \| (.*) \|$/gm)) existing.set(m[1], m[2]);
   const body = rows.length
     ? rows.map(([n, v]) => `| \`--${n}\` | ${v} | ${existing.get(n) || defaultUse(n)} |`).join("\n")
-    : "| _No tokens yet_ | | See the token plan below |";
+    : "| _No tokens yet_ | | Follow the rules above |";
   const next = `${text.slice(0, s)}${START}\n${HEADER}\n${body}\n${text.slice(e)}`;
   return next === text ? null : next;
 }
@@ -251,9 +142,7 @@ for (const [f, rowsFn] of Object.entries(GROUPS)) {
 const invPath = join(SKILL, ".inventory.json");
 if (existsSync(invPath)) {
   const inv = JSON.parse(readFileSync(invPath, "utf8"));
-  const names = new Set();
-  for (const rules of Object.values(files)) for (const r of rules) for (const k of r.decls.keys()) names.add(k.slice(2));
-  const sorted = [...names].sort();
+  const sorted = allNames();
   if (JSON.stringify(sorted) !== JSON.stringify(inv.tokens?.names)) {
     changed++;
     if (CHECK) console.error(`stale: ${invPath} tokens.names`);
