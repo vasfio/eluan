@@ -66,7 +66,8 @@ if (!existsSync(skillPath)) {
   for (const f of listMd(join(ROOT, "components"))) {
     if (!skill.includes(`components/${f}`)) errors.push(`SKILL.md: component index doesn't link components/${f}`);
   }
-  if (skill.includes("{")) warnings.push("SKILL.md: template placeholders { } still present");
+  const prose = skill.replace(/```[\s\S]*?```/g, "").replace(/`[^`\n]*`/g, "");
+  if (/\{[^}\n]*\}/.test(prose)) warnings.push("SKILL.md: template placeholders { } still present");
 }
 
 // Components
@@ -84,9 +85,13 @@ if (existsSync(invPath)) {
 
 const checkTokens = (file, text) => {
   if (!tokenPrefix || tokenNames.size === 0) return;
-  const re = new RegExp(`${tokenPrefix.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&")}([a-z0-9-]+)`, "g");
+  // Shell snippets carry CLI flags (--out, --accent), not tokens
+  text = text.replace(/```(?:bash|sh|shell)\n[\s\S]*?```/g, "");
+  const re = new RegExp(`${tokenPrefix.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&")}([a-z][a-z0-9-]*)(\\*)?`, "g");
   for (const m of text.matchAll(re)) {
-    if (!tokenNames.has(m[1])) errors.push(`${file}: unknown token ${tokenPrefix}${m[1]}`);
+    // `--family-*` is a family reference: at least one token must start with it
+    const known = m[2] ? [...tokenNames].some((t) => t.startsWith(m[1])) : tokenNames.has(m[1]);
+    if (!known) errors.push(`${file}: unknown token ${tokenPrefix}${m[1]}${m[2] ?? ""}`);
   }
 };
 
@@ -117,11 +122,14 @@ for (const f of listMd(join(ROOT, "components"))) {
   if (reviews) warnings.push(`${p}: ${reviews} REVIEW marker(s)`);
 }
 
-// Coverage
+// Coverage: missing component files are warnings until .progress.json marks Phase 5 done
+const progressPath = join(ROOT, ".progress.json");
+const phase5Done =
+  existsSync(progressPath) && JSON.parse(read(progressPath)).phases?.["5"]?.status === "done";
 if (inventory?.components) {
   for (const c of inventory.components) {
     const file = join(ROOT, "components", `${kebab(c.name)}.md`);
-    if (!existsSync(file)) errors.push(`No guideline file for ${c.name} (expected ${file})`);
+    if (!existsSync(file)) (phase5Done ? errors : warnings).push(`No guideline file for ${c.name} (expected ${file})`);
   }
 }
 
