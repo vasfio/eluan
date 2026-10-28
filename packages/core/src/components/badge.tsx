@@ -117,6 +117,14 @@ const styles = stylex.create({
     ":focus": {
       outlineStyle: "none",
     },
+    ":focus-visible": {
+      // Full opacity, as on :hover, so the focused button isn't faded
+      opacity: 1,
+      outlineColor: "var(--focus-ring)",
+      outlineOffset: "1px",
+      outlineStyle: "solid",
+      outlineWidth: "1px",
+    },
   },
   removeIcon: {
     height: "var(--spacing-md)",
