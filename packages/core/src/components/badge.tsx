@@ -37,7 +37,7 @@ const styles = stylex.create({
       outlineStyle: "none",
     },
     ":focus-visible": {
-      outlineColor: "color-mix(in srgb, var(--container-border) 50%, transparent)",
+      outlineColor: "var(--focus-ring)",
       outlineOffset: "1px",
       outlineStyle: "solid",
       outlineWidth: "1px",
