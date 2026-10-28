@@ -82,7 +82,7 @@ const styles = stylex.create({
       fontWeight: 500,
     },
     ":focus-visible": {
-      borderColor: "var(--interactive-border)",
+      borderColor: "var(--focus-ring)",
       outlineColor: "var(--focus-ring)",
       outlineOffset: "1px",
       outlineStyle: "solid",
