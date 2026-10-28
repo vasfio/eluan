@@ -171,7 +171,7 @@ const styles = stylex.create({
     transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
     width: "var(--size-lg)",
     ":focus-visible": {
-      boxShadow: "0 0 0 1px var(--interactive-border), 0 0 0 2px var(--container-bg)",
+      boxShadow: "0 0 0 1px var(--focus-ring), 0 0 0 2px var(--container-bg)",
       outlineStyle: "none",
     },
   },

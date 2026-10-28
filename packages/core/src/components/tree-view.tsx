@@ -202,7 +202,7 @@ const styles = stylex.create({
       outlineStyle: "none",
     },
     ":focus-visible": {
-      boxShadow: "0 0 0 1px var(--interactive-border)",
+      boxShadow: "0 0 0 1px var(--focus-ring)",
     },
   },
   nodeSelected: {

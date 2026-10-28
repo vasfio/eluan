@@ -114,7 +114,11 @@ const styles = stylex.create({
       outlineStyle: "none",
     },
     ":focus-visible": {
-      outlineColor: "var(--interactive-border-alt)",
+      // The button sits on the banner's own fill, not the page, so ring it in the
+      // banner's text colour: that pair is contrast-checked in every variant and
+      // mode, where --focus-ring drops below 3:1 on the inverse default banner.
+      opacity: 1,
+      outlineColor: "currentColor",
       outlineOffset: "1px",
       outlineStyle: "solid",
       outlineWidth: "1px",
