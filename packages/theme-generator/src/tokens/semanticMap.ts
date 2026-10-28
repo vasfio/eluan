@@ -18,6 +18,10 @@ export function buildSemanticMap(): SemanticMap {
     // Dialog/Sheet scrim, drawn at 0.8 opacity — the darkest step in both
     // modes so it dims the page behind an overlay instead of washing it out.
     'overlay-bg':               { light: 'neutral.950',  dark: 'neutral.950',  role: 'bg' },
+    // Keyboard focus outline — a non-text indicator, so it targets the WCAG
+    // 3:1 UI tier (1.4.11) against the page ground, like interactive-fg-alt.
+    // Mid-ramp rather than neutral.950/50 so focus never matches the pressed fill.
+    'focus-ring':               { light: 'neutral.500',  dark: 'neutral.400',  role: 'fg', contrastAgainst: 'container-bg', minContrast: 3.0, allowBelowDefault: true },
 
     // ── Interactive ────────────────────────────────────────────
     'interactive-bg':           { light: 'neutral.50',   dark: 'neutral.800',  role: 'bg' },

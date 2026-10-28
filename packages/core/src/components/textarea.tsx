@@ -34,7 +34,7 @@ const styles = stylex.create({
       color: "var(--interactive-fg-alt)",
     },
     ":focus-visible": {
-      outlineColor: "var(--interactive-border)",
+      outlineColor: "var(--focus-ring)",
       outlineOffset: 1,
       outlineStyle: "solid",
       outlineWidth: 1,

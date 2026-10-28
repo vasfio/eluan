@@ -50,7 +50,7 @@ const styles = stylex.create({
     width: "var(--size-lg)",
     ":focus-visible": {
       borderColor: "var(--interactive-border)",
-      outlineColor: "var(--interactive-border)",
+      outlineColor: "var(--focus-ring)",
       outlineOffset: "1px",
       outlineStyle: "solid",
       outlineWidth: "1px",
@@ -105,7 +105,7 @@ const styles = stylex.create({
   },
   slotActive: {
     borderColor: "var(--interactive-border)",
-    outlineColor: "var(--interactive-border)",
+    outlineColor: "var(--focus-ring)",
     outlineOffset: "1px",
     outlineStyle: "solid",
     outlineWidth: "1px",

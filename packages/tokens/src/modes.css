@@ -32,6 +32,11 @@
    * --container-fg it used to borrow is near-white in dark mode, which washed
    * the page out behind a dark dialog. */
   --overlay-bg: var(--foregrounds-primary);
+  /* Keyboard focus outline — mode-aware for the same reason as --tooltip-bg.
+   * The mid-ramp step that clears 3:1 (WCAG 1.4.11) on every page and panel
+   * ground while staying distinct from the near-black pressed fill
+   * (--interactive-bg-active), so focus never reads as pressed. */
+  --focus-ring: var(--foregrounds-quaternary);
   --maitai-main: var(--color-maitai-500);
   --maitai-background: var(--color-maitai-50);
   --maitai-tint: var(--color-maitai-100);
@@ -141,6 +146,7 @@
   --foregrounds-quinary: var(--color-teak-600);
   --tooltip-bg: var(--backgrounds-primary);
   --overlay-bg: var(--foregrounds-primary);
+  --focus-ring: var(--foregrounds-quaternary);
   --maitai-main: var(--color-maitai-600);
   --maitai-background: var(--color-maitai-100);
   --maitai-tint: var(--color-maitai-200);
@@ -253,6 +259,9 @@
   /* The darkest step of the ramp, so the scrim dims the page rather than
    * lifting it. */
   --overlay-bg: var(--backgrounds-tertiary);
+  /* One step lighter than in light mode: --foregrounds-quaternary is too
+   * close to the white pressed fill here, quinary still clears 3:1. */
+  --focus-ring: var(--foregrounds-quinary);
   --maitai-main: var(--color-maitai-500);
   --maitai-background: var(--color-maitai-950);
   --maitai-tint: var(--color-maitai-900);
