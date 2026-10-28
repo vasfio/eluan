@@ -146,6 +146,7 @@ The full list lives in `packages/tokens/src/themes.css`. The most commonly custo
 | **Fonts** | `--font-heading`, `--font-body`, `--font-mono` (monospace is Paper Mono, a variable font vendored with `@eluan/tokens`) |
 | **Containers** (cards, popovers, tables, etc.) | `--container-bg`, `--container-fg`, `--container-bg-alt`, `--container-border`, `--container-border-alt` |
 | **Interactive surfaces** (inputs, list rows) | `--interactive-bg`, `--interactive-bg-hover`, `--interactive-bg-selected`, `--interactive-fg`, `--interactive-fg-alt`, `--interactive-fg-selected`, `--interactive-border`, `--interactive-border-alt` |
+| **Focus** | `--focus-ring`: the keyboard focus outline on every control. It's mode-aware (set per mode in `modes.css`), so override it only if your theme's grounds change, and keep it at 3:1 or more against `--container-bg` and `--container-bg-alt` |
 | **Action — primary** (CTA buttons) | `--action-primary-bg`, `--action-primary-bg-hover`, `--action-primary-bg-active`, `--action-primary-fg` |
 | **Action — secondary** (outline buttons) | `--action-secondary-bg`, `--action-secondary-border`, `--action-secondary-fg` |
 | **Action — tertiary** (ghost buttons) | `--action-tertiary-bg`, `--action-tertiary-bg-hover`, `--action-tertiary-fg` |

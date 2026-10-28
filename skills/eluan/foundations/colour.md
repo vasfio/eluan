@@ -166,6 +166,7 @@ Values show the mode alias each token points to, then the resolved value in ligh
 | `--important-fg-inverse` | `--electricviolet-background` → oklch(0.9761 0.0139 304.14) / dark oklch(0.2898 0.1386 301.20) | Important status: text on an inverse surface |
 | `--tooltip-bg` | `--backgrounds-primary` → oklch(1.0000 0.0000 0.00) / dark oklch(0.1448 0.0000 0.00) | Tooltip background |
 | `--overlay-bg` | `--foregrounds-primary` → oklch(0.1448 0.0000 0.00) | Scrim behind modal overlays |
+| `--focus-ring` | `--foregrounds-quaternary` → oklch(0.5555 0.0000 0.00) / dark oklch(0.7090 0.0000 0.00) | Keyboard focus outline; components draw it, don't restyle it |
 | `--dataviz-1-main` | `--blazeorange-main` → oklch(0.6717 0.2205 37.86) | Charts only: series colour |
 | `--dataviz-1-tint` | `--blazeorange-tint` → oklch(0.9479 0.0381 69.88) / dark oklch(0.4063 0.1389 34.11) | Charts only: series colour |
 | `--dataviz-1-shade` | `--blazeorange-shade` → oklch(0.4663 0.1768 31.99) / dark oklch(0.9479 0.0381 69.88) | Charts only: series colour |

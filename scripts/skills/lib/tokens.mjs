@@ -106,7 +106,7 @@ export const curveNames = [...block("curves.css", '[data-curves="slight"]').keys
 // Semantic colour tokens in display order (families, scrim and tooltip, then dataviz).
 export const colourNames = () =>
   COLOUR_FAMILIES.flatMap((f) => themeNames.filter((n) => n.startsWith(`${f}-`)))
-    .concat(modeNames.filter((n) => n === "overlay-bg" || n === "tooltip-bg"))
+    .concat(modeNames.filter((n) => n === "focus-ring" || n === "overlay-bg" || n === "tooltip-bg"))
     .concat(themeNames.filter((n) => n.startsWith("dataviz-")));
 
 export const densityValue = (name) => {

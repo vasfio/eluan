@@ -83,6 +83,7 @@ const FAMILY = {
   informative: "Informative status", important: "Important status",
 };
 function defaultUse(name) {
+  if (name === "focus-ring") return "Keyboard focus outline; components draw it, don't restyle it";
   if (name === "overlay-bg") return "Scrim behind modal overlays";
   if (name === "tooltip-bg") return "Tooltip background";
   if (name.startsWith("dataviz-")) return "Charts only: series colour";
