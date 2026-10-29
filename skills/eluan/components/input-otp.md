@@ -44,7 +44,7 @@ InputOTP has no size prop. Slots are fixed at `--size-lg` by `--size-xl` and fol
 | State | Looks like | Notes |
 | --- | --- | --- |
 | Default | Each slot: `--interactive-bg` fill, 1px `--interactive-border-alt` border | |
-| Focus | 1px outline in `--interactive-border`, 1px offset; the border switches to `--interactive-border`; the slot's digit is selected | Never remove or restyle the focus ring. The border gets lighter on focus, not darker. <!-- REVIEW: W1 in the fix plan (rest→focus border swap goes fainter in input-otp.tsx). --> |
+| Focus | 1px outline in `--focus-ring`, 1px offset; the border switches to `--focus-ring`; the slot's digit is selected | Never remove or restyle the focus ring. |
 | Filled | The slot fills with `--interactive-bg-alt` | |
 | Masked | Dots instead of digits | Set `mask`. |
 | Disabled | `--interactive-bg-disabled` fill, `--interactive-fg-disabled` text, not-allowed cursor | `disabled` disables every slot. |
@@ -117,7 +117,7 @@ InputOTP has no size prop. Slots are fixed at `--size-lg` by `--size-xl` and fol
 - Keyboard: typing a digit fills the slot and moves to the next; other characters are ignored. Backspace clears the slot, or the previous one when the slot is empty, and moves back. Left and Right arrows move between slots. Tab and Shift+Tab also step through every slot.
 - Paste: pasting fills from the first slot, whichever slot has focus, ignoring non-digits, then focuses the slot after the last pasted digit (or the last slot when the code fills them all).
 - Focus: `autoFocus` focuses the first slot on mount. Focusing a slot selects its digit, so typing replaces it. Disabled slots use the native `disabled` attribute and are skipped.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per slot. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

@@ -120,7 +120,7 @@ CodeBlock has no size prop. Code uses `--font-size-sm`; it fills its parent's wi
 - Keyboard: Tab reaches the language buttons and the copy button; Enter and Space activate them. The code area scrolls horizontally but isn't focusable, so keyboard users can't scroll long lines. <!-- REVIEW: not in the fix plan; the scroller has overflow-x auto with no tabIndex. -->
 - State: the active language isn't exposed (no `aria-pressed` or tab roles), and the "Copied" change isn't announced (no live region). <!-- REVIEW: not in the fix plan; both are source gaps. -->
 - Line numbers: they're real text, so screen readers read a number before each line. Leave `showLineNumbers` off unless sighted users need them.
-- Focus: the buttons keep the browser's default ring; don't add your own until the system focus token lands. <!-- REVIEW: W1 (fix/focus-ring-token); like the file-input and number-input buttons, these declare no focus style. -->
+- Focus: the buttons keep the browser's default ring; don't add your own.
 - Contrast: surfaces come from the theme; syntax colours are tuned to at least 3.9:1 on the light-mode surface. Don't override them.
 
 ## 11. Behaviour

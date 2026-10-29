@@ -48,7 +48,7 @@ Checkbox has no `size` prop. The box is `--size-xxs` and follows density.
 | --- | --- | --- |
 | Unchecked | Transparent box, `--interactive-border-alt` border | |
 | Hover | `--interactive-bg-hover` fill | |
-| Focus | 1px outline in `--interactive-border`, 1px offset | Never remove or restyle the focus ring. |
+| Focus | 1px outline in `--focus-ring`, 1px offset | Never remove or restyle the focus ring. |
 | Checked | `--interactive-bg-selected` fill and border, white check | |
 | Indeterminate | `aria-checked="mixed"`. The box stays unfilled and shows the check icon in the surrounding text colour; there's no dash | Use it only for a select-all parent. <!-- REVIEW: checkbox.tsx styles only checked and unchecked, so indeterminate falls through to an outlined check. Not in the fix plan. --> |
 | Disabled | `--interactive-bg-disabled` fill, `--interactive-border-disabled` border, not-allowed cursor | Disable its Label too. |
@@ -120,7 +120,7 @@ Checkbox has no `size` prop. The box is `--size-xxs` and follows density.
 - Label: a Label with `htmlFor` matching the Checkbox `id`, or `aria-label`.
 - Keyboard: Space toggles. Enter does nothing (Radix blocks it, following WAI-ARIA). Tab moves between checkboxes.
 - Focus: visible outline on `:focus-visible`. Disabled checkboxes use the native `disabled` attribute and are skipped by Tab.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per checkbox. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

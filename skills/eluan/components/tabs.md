@@ -48,7 +48,7 @@ Tabs has no size prop. Triggers use `--font-size-sm` and `--spacing-sm` padding,
 | --- | --- | --- |
 | Default | Inactive trigger, `--interactive-fg-alt` text on the list | |
 | Hover | No visible change | The hover rule repeats the resting colour, so inactive tabs give no hover feedback. Don't add your own. <!-- REVIEW: W3 (fix/dead-rules): tabs.tsx trigger :hover sets the resting colour; needs a real hover treatment (design call). --> |
-| Focus | 1px outline in `--interactive-border`, 1px offset, on triggers and panels | Never remove or restyle the focus ring. |
+| Focus | 1px outline in `--focus-ring`, 1px offset, on triggers and panels | Never remove or restyle the focus ring. |
 | Active | `--container-bg` cap, `--interactive-fg` text, a faint shadow | Exactly one trigger is active. |
 | Disabled | `--interactive-fg-disabled` text, no pointer events | Arrow keys skip disabled triggers. |
 
@@ -151,7 +151,7 @@ Tabs has no size prop. Triggers use `--font-size-sm` and `--spacing-sm` padding,
 - Label: each tab is named by its text. Give the list an `aria-label` when the tabs need context ("Project sections").
 - Keyboard: Tab moves focus to the active tab, then into the panel. ArrowLeft and ArrowRight move between tabs and select them as focus moves (`activationMode="automatic"`); Home and End jump to the first and last tab. Use `activationMode="manual"` when a panel is slow to render, so Enter or Space selects instead.
 - Focus: panels are focusable (`tabIndex` 0) and show the focus outline, so keyboard users can reach panels with no focusable content.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per tab. <!-- REVIEW: system-wide focus-ring contrast issue, see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

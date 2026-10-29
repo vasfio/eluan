@@ -41,7 +41,7 @@ Textarea has no `size` prop. Width fills the container; the starting height come
 | State | Looks like | Notes |
 | --- | --- | --- |
 | Default | `--container-bg` fill, `--interactive-border-alt` border | Text colour isn't set, so it inherits from the parent. <!-- REVIEW: W5 latent drift; textarea.tsx restates Input's surface with --container-bg and no text colour. No visible difference in the default theme. Don't set color on a wrapper to compensate. --> |
-| Focus | 1px outline in `--interactive-border`, 1px offset; the border doesn't change | Never remove or restyle the focus ring. |
+| Focus | 1px outline in `--focus-ring`, 1px offset; the border doesn't change | Never remove or restyle the focus ring. |
 | Disabled | `--interactive-bg-disabled` fill, `--interactive-fg-disabled` text, not-allowed cursor | Set `disabled` on the Label too. |
 | Error | No error style: `aria-invalid` changes nothing visually | Set `aria-invalid={true}` for assistive tech and show a FormMessage under the field. <!-- REVIEW: unlike Input, textarea.tsx has no [aria-invalid] border; not in the fix plan. --> |
 
@@ -111,7 +111,7 @@ There's no hover style.
 - Label: a Label with `htmlFor` matching the Textarea `id`, or `aria-label`. Link helper text and errors with `aria-describedby`. <!-- REVIEW: wiring is drafted; no Eluan component connects them automatically. -->
 - Keyboard: native text editing. Enter inserts a new line; it doesn't submit the form. Tab leaves the field.
 - Focus: visible outline on `:focus-visible`. Disabled fields use the native `disabled` attribute and are skipped by Tab.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per field. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

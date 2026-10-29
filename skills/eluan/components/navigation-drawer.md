@@ -52,7 +52,7 @@ NavigationDrawer has no size prop. Expanded it is 16rem wide; collapsed it is on
 | --- | --- | --- |
 | Default | Item text `--interactive-fg-alt`, no fill | |
 | Hover | `--interactive-bg-hover` fill, `--interactive-fg` text | |
-| Focus | 1px ring drawn as a `box-shadow` in `--interactive-border-alt` | Never remove or restyle the focus ring. |
+| Focus | 1px ring drawn as a `box-shadow` in `--focus-ring` | Never remove or restyle the focus ring. |
 | Active | `--interactive-bg-active` fill, `--interactive-fg-active` text, unchanged on hover | `active` is visual only; also set `aria-current="page"` (Rule 3). |
 | Collapsed | A rail of square icon items; labels and header contents removed; group labels fade to transparent but keep their space | Item labels are removed from the DOM, so give items an `aria-label` (Rule 4). |
 | Phone | Menu button at the top-left; the drawer opens as a left Sheet | Picking an item closes the sheet, even when a client-side router prevents the native navigation. |
@@ -137,7 +137,7 @@ NavigationDrawer has no size prop. Expanded it is 16rem wide; collapsed it is on
 - Current page: add `aria-current="page"` yourself (Rule 3).
 - Group labels are `<h4>` elements; check they fit your page's heading outline.
 - Keyboard: Tab moves through items in order; Enter follows a link. On phones the Sheet traps focus, Escape closes it, and focus returns to the menu button.
-- Contrast: handled by the theme. Don't override colours. The item focus ring uses `--interactive-border-alt` at 1px and measures well below 3:1; don't patch it per item. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md; this item draws its ring with box-shadow rather than outline. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

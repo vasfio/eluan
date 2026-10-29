@@ -13,7 +13,8 @@ Tokens come in families, and each family has matching background, foreground and
 | Family | For |
 | --- | --- |
 | `--container-*` | surfaces: page, cards, panels, popovers, table rows |
-| `--interactive-*` | inputs, selectable rows, hoverable items, the focus outline |
+| `--interactive-*` | inputs, selectable rows, hoverable items |
+| `--focus-ring` | the keyboard focus outline; components draw it, so you rarely need it |
 | `--action-primary-*` | the main action (Button `default`) |
 | `--action-secondary-*` | outline actions (Button `outline`) |
 | `--action-tertiary-*` | ghost actions (Button `ghost`) |
@@ -241,7 +242,6 @@ Values show the mode alias each token points to, then the resolved value in ligh
 
 ## Known issues
 
-- `--interactive-border` doubles as the system focus outline colour and measures about 1.3:1 against the page in both modes, below the WCAG 3:1 minimum for focus indicators. Don't try to fix it per component. <!-- REVIEW: needs a dedicated focus-ring token in @eluan/tokens; W1 (fix/focus-ring-token) in the main checkout's .claude/design-system-fix-plan.md. -->
 - `--interactive-bg-selected` is near-black in `minimal`. It reads well on a checkbox but heavy across a whole table row. <!-- REVIEW: source finding from the Paper audit; no guidance in source on row selection colour. -->
 
 ## Common agent mistakes

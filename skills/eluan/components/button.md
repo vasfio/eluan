@@ -71,7 +71,7 @@ Button triggers an action. It renders a native `<button>` (or its child, with `a
 | --- | --- | --- |
 | Default | Variant colours | |
 | Hover | Variant `-hover` background | |
-| Focus | 1px outline in `--interactive-border`, 1px offset | Never remove or restyle the focus ring. |
+| Focus | 1px outline in `--focus-ring`, 1px offset | Never remove or restyle the focus ring. |
 | Active | Variant `-active` background; solid variants nudge down slightly | `destructive` and `dashed` lose label contrast while pressed. <!-- REVIEW: known source issue from the Paper audit; button.tsx sets a near-black :active background without a matching color. --> |
 | Disabled | 50% opacity, no pointer events | `input` variants switch to the disabled interactive tokens instead. |
 | Loading | No built-in loading state | Put a [Spinner](./spinner.md) before the label, keep the label, and set `disabled` and `aria-busy`. <!-- REVIEW: composition drafted; Button has no loading prop. --> |
@@ -157,7 +157,7 @@ Button triggers an action. It renders a native `<button>` (or its child, with `a
 - Label: the text content; `aria-label` for icon-only buttons.
 - Keyboard: Enter and Space activate. Tab moves focus in DOM order.
 - Focus: visible outline on `:focus-visible`. Disabled buttons use `pointer-events: none` and the native `disabled` attribute, so they're skipped by Tab.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per button. <!-- REVIEW: system-wide focus-ring contrast issue, see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

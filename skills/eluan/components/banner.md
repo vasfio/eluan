@@ -65,7 +65,7 @@ Banner has no size prop. Text is `--font-size-sm` at weight 500, with `--spacing
 | --- | --- | --- |
 | Default | Variant colours | |
 | Hover | Only the dismiss button changes: 60% to full opacity | |
-| Focus | Dismiss button: 1px outline in `--interactive-border-alt`, 1px offset | Never remove or restyle the focus ring. |
+| Focus | Dismiss button: 1px outline in the banner's text colour (`currentColor`), 1px offset, at full opacity | Never remove or restyle the focus ring. |
 | Dismissed | Nothing changes on its own | The dismiss button only calls `onDismiss`. Stop rendering the Banner in that handler. |
 
 ## 7. Content guidelines
@@ -142,7 +142,7 @@ toast.error("We couldn't create the project.");
 - Keyboard: Tab reaches the action and the dismiss button; Enter and Space activate them. Banner has no Escape handling.
 - Focus: Banner never moves focus. Render it when the event happens so the live region announces it. When the user dismisses it, the focused button unmounts; move focus to a sensible place, such as the form's first field or the page heading. <!-- REVIEW: focus-on-dismiss guidance drafted; source doesn't manage focus. -->
 - The dismiss button has no padding around its `--size-xxs` icon, so its hit target is small. <!-- REVIEW: source issue, not in the fix plan; same pattern as the Dialog close button in W3. -->
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per banner. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

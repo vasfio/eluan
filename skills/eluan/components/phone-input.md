@@ -44,7 +44,7 @@ No size prop. The trigger and field take their heights from Select and Input and
 | State | Looks like | Notes |
 | --- | --- | --- |
 | Default | Input surface with the trigger attached on the left | |
-| Focus | 1px outline in `--interactive-border` on whichever part has focus | Never remove or restyle the focus ring. |
+| Focus | 1px outline in `--focus-ring` on whichever part has focus | Never remove or restyle the focus ring. |
 | Open | Country list below the trigger | Select's own surface and item styles. |
 | Disabled | Trigger and field both disabled | `disabled` reaches both parts. |
 | Error (`aria-invalid`) | `--destructive-border` border on the number field | Set it on PhoneInput; it reaches the field. Pair with a FormMessage. |
@@ -121,7 +121,7 @@ const northAmerica = defaultCountries.filter((c) => ["US", "CA", "MX"].includes(
 - Keyboard: on the trigger, Enter, Space or ArrowDown opens the list; arrows move; typing jumps to a matching country name or dial code; Enter selects; Escape closes. Tab moves from the trigger to the field.
 - Focus: the list returns focus to the trigger when it closes.
 - The trigger's flag is hidden from assistive tech.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1, and focus swaps the field border to a lighter token than at rest; don't patch either per field. <!-- REVIEW: system-wide focus-ring issue, W1 in the fix plan; see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

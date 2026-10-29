@@ -64,7 +64,7 @@ Input has no `variant` prop. These props change its look:
 | State | Looks like | Notes |
 | --- | --- | --- |
 | Default | `--interactive-bg` fill, `--interactive-border-alt` border | |
-| Focus | Border switches to `--interactive-border`, plus a 1px outline in `--interactive-border`, 1px offset | Never remove or restyle the focus ring. |
+| Focus | Border switches to `--focus-ring`, plus a 1px outline in `--focus-ring`, 1px offset | Never remove or restyle the focus ring. |
 | Disabled | `--interactive-bg-disabled` fill, `--interactive-fg-disabled` text, not-allowed cursor | Set `disabled` on the Label too so it greys out. |
 | Read-only | No distinct style | `readOnly` passes through, but nothing marks it visually. <!-- REVIEW: no read-only styling in source. --> |
 | Error | `aria-invalid` gives a `--destructive-border` border. With the boolean `aria-invalid={true}`, the focus border and outline stay destructive too | Pass the boolean, not the string `"true"`: the focus style checks `=== true`. Show the message in a FormMessage. |
@@ -149,7 +149,7 @@ There's no hover style.
 - Description and errors: FormDescription and FormMessage are plain `<p>` elements with no wiring. Give them ids and list them in the Input's `aria-describedby`. <!-- REVIEW: wiring is drafted; no Eluan component connects them automatically. -->
 - Keyboard: native text editing. The password toggle is its own Tab stop: a button labelled "Show password" or "Hide password" with `aria-pressed`.
 - Focus: visible outline on `:focus-visible`. Disabled fields use the native `disabled` attribute and are skipped by Tab.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1, and on Input the border also gets lighter on focus; don't patch either per field. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

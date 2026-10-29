@@ -86,7 +86,7 @@ No size prop. `left` and `right` sheets are full height and 75% of the viewport 
 | Closed | Only the trigger renders | SheetContent is unmounted. |
 | Open | Scrim over the page; panel against its edge | The page behind is inert: hidden from screen readers, not clickable, not scrollable. |
 | Hover (close button) | Close icon goes from 70% to full opacity | No background change. <!-- REVIEW: W3; sheet.tsx puts a [data-state=open] rule on the close button, which Radix's Close never carries, so it never applies. --> |
-| Focus (close button) | 1px outline in `--interactive-border`, 1px offset | Never remove or restyle the focus ring. |
+| Focus (close button) | 1px outline in `--focus-ring`, 1px offset | Never remove or restyle the focus ring. |
 
 SheetTitle uses `--interactive-fg` and SheetDescription `--interactive-fg-alt`, where Drawer uses the `--container-*` pair and Dialog's title inherits. They match in the default theme; don't recolour them. <!-- REVIEW: W5, three title colours for one slot across dialog, sheet and drawer. -->
 
@@ -175,7 +175,7 @@ SheetTitle uses `--interactive-fg` and SheetDescription `--interactive-fg-alt`, 
 - Label: SheetTitle names the sheet (`aria-labelledby`); SheetDescription describes it (`aria-describedby`). The close button's name is "Close".
 - Keyboard: Escape closes. Tab and Shift+Tab cycle through the sheet's controls and wrap at the ends. Enter and Space activate buttons.
 - Focus: on open, focus moves to the first focusable element, which is the close button (it's first in the DOM). Focus is trapped while open and returns to SheetTrigger on close. Everything outside is hidden from assistive technology and blocked from pointer input.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per sheet. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 - The built-in close button is a `--size-xxs` icon with no padding, a small pointer target. Keep a Cancel or Close Button in SheetFooter. <!-- REVIEW: W3 records this hit target for dialog.tsx; sheet.tsx has the same close button styles. -->
 
 ## 11. Behaviour

@@ -62,7 +62,7 @@ No size prop. The trigger is a default-size Button (`--size-lg` tall) and always
 | Empty | Placeholder in `--interactive-fg-alt` next to the calendar icon | |
 | Filled | Formatted value in `--interactive-fg` | Range shows "from - to"; after the first click both ends are the same day. |
 | Hover | Trigger background fills | |
-| Focus | 1px outline in `--interactive-border`, 1px offset | Never remove or restyle the focus ring. |
+| Focus | 1px outline in `--focus-ring`, 1px offset | Never remove or restyle the focus ring. |
 | Open | Popover below the trigger; focus moves into the calendar | |
 | Disabled | `--interactive-bg-disabled` fill, `--interactive-fg-disabled` text; skipped by Tab | |
 | Error | No built-in error state | Put a FormMessage under the picker and reference it with `aria-describedby` on the group wrapper (see Rules). <!-- REVIEW: composition drafted; the pickers accept no aria-invalid or aria-describedby. --> |
@@ -130,7 +130,7 @@ No size prop. The trigger is a default-size Button (`--size-lg` tall) and always
 - Label: the trigger's name is its text, the formatted date or the placeholder. Name the field with a visible label and a `role="group"` wrapper (Rules 2).
 - Keyboard: Enter or Space opens the popover. Inside, the calendar's arrow, Page Up/Down and Home/End keys apply, and Enter or Space picks. Escape closes.
 - Focus: on open, focus moves to the selected day, or today. The popover doesn't trap focus. On close, focus returns to the trigger.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per picker. <!-- REVIEW: system-wide focus-ring contrast issue W1, see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

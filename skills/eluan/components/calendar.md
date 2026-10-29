@@ -55,7 +55,7 @@ Calendar has no size prop. Day cells are `--size-md` tall and the grid stretches
 | --- | --- | --- |
 | Default | Day numbers in `--font-mono`, `--font-size-sm` | |
 | Hover | Day fills with `--interactive-bg-hover` and rounds to `--curves-lg` | |
-| Focus | 1px outline in `--interactive-border`, 1px offset, on the focused day | Never remove or restyle the focus ring. |
+| Focus | 1px outline in `--focus-ring`, 1px offset, on the focused day | Never remove or restyle the focus ring. |
 | Selected | `--interactive-bg-selected` fill with `--interactive-fg-selected` text; hovering it uses `--action-primary-bg-hover` | |
 | Range | Start and end days take the selected fill with rounded outer corners; days between use `--interactive-bg-alt2` with `--interactive-fg-alt` text and square corners | The start day squares its inner corner once both ends are chosen. This is deliberate; don't restyle it. |
 | Today | Bold number with a short keyline under it | The keyline offset is in `em` on purpose so it tracks density. |
@@ -117,7 +117,7 @@ const [day, setDay] = React.useState<Date | undefined>();
 - Label: each day button is named with the full date ("Monday, October 27th, 2026"), with "Today, " before it and ", selected" after it where they apply. Name the calendar as a whole by wrapping it in `role="group"` with `aria-labelledby` pointing at your visible heading. The month and year Selects are named only by their current value ("October", "2026"). <!-- REVIEW: the caption SelectTriggers have no aria-label in calendar.tsx; not in the fix plan. -->
 - Keyboard: Arrow keys move one day or one week; Shift with Left or Right moves a month, with Up or Down a year. Page Up and Page Down move a month (with Shift, a year). Home and End go to the start and end of the week. Enter or Space selects the focused day. Tab moves through the previous button, the month and year Selects, the grid and the next button.
 - Focus: only one day is in the tab order at a time (roving focus); arrow keys move it, and the displayed month follows. Calendar doesn't trap focus.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per calendar. <!-- REVIEW: system-wide focus-ring contrast issue W1, see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 - Text size: the weekday row uses a fixed size that doesn't follow the fluid type scale or density. Don't compensate per calendar. <!-- REVIEW: known source issue W7 in the fix plan (calendar.tsx weekday fontSize is the only hardcoded font size in the library). -->
 
 ## 11. Behaviour

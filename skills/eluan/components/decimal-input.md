@@ -52,7 +52,7 @@ No size prop. The field is `--size-lg` tall and follows density.
 | State | Looks like | Notes |
 | --- | --- | --- |
 | Default | `--container-bg` surface, `--interactive-border-alt` border, affixes and placeholder in `--interactive-fg-alt` | DecimalInput draws its own field rather than using Input; the surface token differs from Input's `--interactive-bg` but looks the same in the default theme. <!-- REVIEW: latent token drift, W5 in the fix plan. --> |
-| Focus | Border and 1px outline in `--interactive-border`, 1px offset; value shown unformatted | Never remove or restyle the focus ring. |
+| Focus | Border and 1px outline in `--focus-ring`, 1px offset; value shown unformatted | Never remove or restyle the focus ring. |
 | Disabled | `--interactive-bg-disabled` surface, `--interactive-fg-disabled` text, not-allowed cursor | |
 | Error | No visual change | `aria-invalid` has no style here, unlike Input. Show a FormMessage and still set `aria-invalid` for assistive tech. <!-- REVIEW: follows from W5 (decimal-input.tsx re-implements Input); not listed as its own fix-plan item. --> |
 
@@ -117,7 +117,7 @@ No size prop. The field is `--size-lg` tall and follows density.
 - Label: a Label tied by `htmlFor`/`id`. Include the currency or unit in it; the prefix and suffix text isn't part of the name.
 - Keyboard: standard text input. There's no arrow-key stepping.
 - Focus: native focus. On focus the value switches to its raw form (for example `1234.5`) for editing.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1, and focus swaps the border to a lighter token than at rest; don't patch either per field. <!-- REVIEW: system-wide focus-ring issue, W1 in the fix plan; decimal-input.tsx is one of the six fields it lists. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

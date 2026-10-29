@@ -207,7 +207,7 @@ Separators currently use `--container-bg-alt`, which is barely visible on the pa
 - Keyboard: Enter, Space or ArrowDown on the trigger opens the menu. ArrowUp and ArrowDown move between items, Home and End jump to the ends, and typing a letter jumps to a matching item. Enter or Space selects. ArrowRight opens a submenu and ArrowLeft closes it. Escape closes the menu.
 - Focus: opening moves focus into the menu; closing returns it to the trigger. The menu is modal by default (`modal`), so outside pointer interaction is blocked while it is open.
 - Shortcut hints are text only. Register the key binding yourself, or leave the hint out.
-- Contrast: handled by the theme. Don't override colours. The trigger Button's focus outline currently measures below 3:1; don't patch it per menu. <!-- REVIEW: system-wide focus-ring contrast issue, see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

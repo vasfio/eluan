@@ -65,7 +65,7 @@ At `size="microdot"` the container is the whole badge: a filled circle. Children
 | --- | --- | --- |
 | Default | Variant colours | |
 | Hover | Only the remove button changes: 60% to full opacity | |
-| Focus | Remove button: no visible indicator | Never remove or restyle the focus ring. The remove button suppresses its outline with nothing in its place, and the badge's own ring (if you make it focusable) is a half-transparent grey at about 1.12:1. Don't add `tabIndex` to badges, and don't patch the ring per badge. <!-- REVIEW: W1 in the fix plan (badge.tsx removeButton :focus outline none; root :focus-visible uses color-mix of --container-border). --> |
+| Focus | Remove button: 1px outline in `--focus-ring`, 1px offset, at full opacity | Never remove or restyle the focus ring. Don't add `tabIndex` to badges. |
 | Microdot | Filled circle with a ring | `variant="outline"` at this size has no fill and no border, so nothing shows. Use a filled variant. <!-- REVIEW: W2 #7 in the fix plan. --> |
 
 ## 7. Content guidelines
@@ -133,7 +133,7 @@ At `size="microdot"` the container is the whole badge: a filled circle. Children
 - Remove button: a native `<button>` named "Remove". The name doesn't include the badge's text and can't be changed, so several removable badges all read as "Remove". Keep removable badges next to a heading or label that names the set, or use [MultiSelect](./multi-select.md) for a multi-value field. <!-- REVIEW: source issue, not in the fix plan; badge.tsx hardcodes aria-label="Remove" on the inner button and spreads props onto the span. -->
 - Keyboard: Tab reaches the remove button; Enter and Space activate it. Its click doesn't bubble to a parent row.
 - Focus: the remove button currently shows no focus indicator (see States).
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per badge. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

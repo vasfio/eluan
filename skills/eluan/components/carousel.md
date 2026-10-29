@@ -148,7 +148,7 @@ Carousel has no size prop. It fills its parent's width. CarouselItem `basis` set
 - Label: pass `aria-label` to Carousel and to each CarouselItem; neither has a default. The controls are named "Previous slide" and "Next slide" with visually hidden text.
 - Keyboard: Tab reaches the controls and any interactive slide content. While focus is anywhere inside the carousel, Arrow Left and Arrow Right move to the previous and next slide, in vertical carousels too. <!-- REVIEW: not in the fix plan; vertical carousels still use Left/Right, and the handler captures arrows from inputs inside slides. -->
 - Focus: stays where it is when slides move. Off-screen slides stay in the Tab order, so links in hidden slides can receive focus. <!-- REVIEW: not in the fix plan; nothing marks off-screen slides inert. -->
-- Focus ring: the controls use Button's outline, which currently measures below 3:1; don't patch it per carousel. <!-- REVIEW: system-wide focus-ring contrast issue W1, see foundations/colour.md. -->
+- Focus ring: the controls use Button's outline.
 - Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour

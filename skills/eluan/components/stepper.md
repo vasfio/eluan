@@ -59,7 +59,7 @@ Each step is in one of these states, set by its index against `currentStep`:
 | Current | Unfilled circle with a dark border, full-strength number and title | `aria-current="step"`. |
 | Completed | Filled dark circle with a check, dark title | The connector after it turns dark. |
 | Hover | Clickable steps only: completed switches to `--action-primary-bg-hover`, current fills with `--interactive-bg-hover`, upcoming gets a dark border | |
-| Focus | 1px ring in `--interactive-border` around the circle, edged with `--container-bg`, drawn with `box-shadow` | Never remove or restyle the focus ring. |
+| Focus | 1px ring in `--focus-ring` around the circle, edged with `--container-bg`, drawn with `box-shadow` | Never remove or restyle the focus ring. |
 | Disabled | No hover, default cursor | Steps that aren't clickable are disabled buttons: every step when there's no `onStepClick`. |
 
 Connectors are `--spacing-xxs` halved, which is 0 in compact density, so in compact the steps show as unconnected circles. Don't draw your own connectors; it's a source bug. <!-- REVIEW: W6 in the fix plan (stepper.tsx connector width and height use calc(var(--spacing-xxs) / 2)). -->
@@ -136,7 +136,7 @@ const [address, setAddress] = useState<Address | null>(null);
 - Label: each indicator is named from its title, plus "(completed)" or "(current step)"; upcoming steps get the title alone. Descriptions aren't part of the name. Wrap the Stepper in an element you own that names it, for example `<nav aria-label="Checkout steps">` when steps are clickable. <!-- REVIEW: wrapper drafted; source sets no name on the root. -->
 - Keyboard: Tab moves between clickable indicators; Enter and Space activate them. Disabled indicators are skipped.
 - Focus: Stepper doesn't move focus when `currentStep` changes. After the user advances, move focus to the new step's heading so keyboard and screen reader users land on the new content. <!-- REVIEW: drafted; source doesn't manage focus. -->
-- Contrast: handled by the theme. Don't override colours. The focus ring token currently measures below 3:1; don't patch it per step. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

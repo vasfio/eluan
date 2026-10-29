@@ -111,7 +111,7 @@ There's no error state. Show a FormMessage below the editor.
 - Labels: toolbar buttons are named "Bold", "Italic", "Strikethrough", "Code", "Heading 1" to "Heading 3", "Bullet List", "Ordered List", "Quote", "Horizontal Rule", "Undo" and "Redo". The editing area has no accessible name and RichText can't give it one (see Rules).
 - Keyboard: Tab moves through each toolbar button, then into the editor; the toolbar has no `toolbar` role or arrow-key navigation. Enter or Space runs a button, and focus moves into the editor. In the editor: ⌘/Ctrl+B bold, ⌘/Ctrl+I italic, ⌘/Ctrl+Shift+S strikethrough, ⌘/Ctrl+E inline code, ⌘/Ctrl+Shift+B quote, ⌘/Ctrl+Z undo, ⌘/Ctrl+Shift+Z or ⌘/Ctrl+Y redo. Inside a list, Tab and Shift+Tab indent and outdent instead of leaving the editor. <!-- REVIEW: editor shortcuts and list Tab handling are TipTap StarterKit defaults, not Eluan source. -->
 - Focus: every toolbar command returns focus to the editor. The editing area shows no focus indicator (see States).
-- Contrast: handled by the theme. Don't override colours. The toolbar's focus outline token currently measures below 3:1; don't patch it per button. <!-- REVIEW: system-wide focus-ring issue, W1 in the fix plan; see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

@@ -46,7 +46,7 @@ Slider has no size prop. It fills its container's width; the track and thumb siz
 | State | Looks like | Notes |
 | --- | --- | --- |
 | Default | Pale track, dark range, light thumb with a dark border | The thumb renders as a circle on the `slight` and `sweeping` corner styles and as a square on `sharp`. <!-- REVIEW: W6 in the fix plan; the source comment promises a rounded-rect fader cap that can't render at --size-xxs on any curves setting. --> |
-| Focus | 1px outline in `--interactive-border`, 1px offset, on the focused thumb | Never remove or restyle the focus ring. |
+| Focus | 1px outline in `--focus-ring`, 1px offset, on the focused thumb | Never remove or restyle the focus ring. |
 | Disabled | Range turns `--interactive-fg-disabled`; thumb fills with `--interactive-bg-disabled` and its border turns `--interactive-fg-disabled` | Set `disabled`. Thumbs get `data-disabled`, not the native attribute, and leave the Tab order. |
 
 ## 7. Content guidelines
@@ -110,7 +110,7 @@ Slider has no size prop. It fills its container's width; the track and thumb siz
 - Label: Slider passes `aria-label` and `aria-labelledby` to its root, which has no role, not to the thumbs it renders, and you can't pass props to the thumbs. A single-thumb Slider therefore has no accessible name; a two-thumb Slider's thumbs are named "Minimum" and "Maximum" by Radix. Screen readers announce the bare number, with no unit. Show a visible label and the value with its unit as text next to it. <!-- REVIEW: API gap found while writing, not in the fix plan; the thumb needs aria-label / aria-valuetext pass-through. -->
 - Keyboard: arrow keys move the focused thumb by `step`; Shift with an arrow, PageUp and PageDown move by 10 steps; Home and End jump to `min` and `max`. Tab moves between thumbs.
 - Focus: every enabled thumb is in the Tab order; disabled thumbs aren't.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per Slider. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

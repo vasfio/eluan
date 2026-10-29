@@ -31,7 +31,7 @@ Use CSS custom properties exclusively:
 - No hardcoded hex/rgb colours or raw pixel values — reference tokens as `var(--...)` string values in StyleX
 - Font weight: use `fontWeight: 400`/`500`, avoid heavy weights except headings
 - Headings use `fontFamily: "var(--font-heading)"`
-- Focus rings: a `":focus-visible"` block with `outlineColor: "var(--interactive-border)"`, `outlineWidth: "1px"`, `outlineStyle: "solid"`, `outlineOffset: "1px"`
+- Focus rings: a `":focus-visible"` block with `outlineColor: "var(--focus-ring)"`, `outlineWidth: "1px"`, `outlineStyle: "solid"`, `outlineOffset: "1px"`
 - Borders: `borderColor: "var(--container-border)"` or `"var(--interactive-border)"` (with `borderWidth`/`borderStyle`)
 - Transitions: prefer a scoped `transitionProperty` list; use `"all"` sparingly
 

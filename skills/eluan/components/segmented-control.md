@@ -50,7 +50,7 @@ SegmentedControl has no variants. `size` and `fullWidth` control its look.
 | --- | --- | --- |
 | Default | Muted labels on the recessed track | |
 | Hover | An unselected segment's text darkens to `--interactive-fg` | No fill change. |
-| Focus | 1px outline in `--interactive-border`, 1px offset, on the segment | Never remove or restyle the focus ring. |
+| Focus | 1px outline in `--focus-ring`, 1px offset, on the segment | Never remove or restyle the focus ring. |
 | Selected | Raised segment on `--interactive-bg`, `--interactive-fg` text | `data-state="active"`. |
 | Disabled | `--interactive-fg-disabled` text, no pointer events | `disabled` on the root disables every segment; `disabled` on an item disables one. |
 
@@ -118,7 +118,7 @@ SegmentedControl has no variants. `size` and `fullWidth` control its look.
 - Label: each segment is named by its text. `aria-label` on SegmentedControl lands on the root wrapper, not the tab list, so the list itself can't be named. Place a visible heading or label next to it. <!-- REVIEW: API gap found while writing; not in the fix plan. -->
 - Keyboard: Tab moves to the selected segment. Left and Right arrows move between segments and select as they go; Home and End jump to the first and last. Tab again leaves the control. With `activationMode="manual"`, arrows only move focus and Enter or Space selects.
 - Focus: visible outline on the focused segment. Disabled segments use the native `disabled` attribute and are skipped.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per segment. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

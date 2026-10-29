@@ -125,7 +125,7 @@ Avatar has no size prop; it is always `--size-lg`, which scales with density. To
 - Role: Avatar is a plain `<span>`; AvatarImage is an `<img>`.
 - Label: the image's `alt`, or the fallback text when the image isn't shown. AvatarStatus sets `aria-label` to the raw status ("online") on a span with no role, which most screen readers ignore; AvatarBadge has no label at all. Put presence and counts in the accessible name of the surrounding control or in visible text, for example `aria-label="Alex Morgan, 3 unread notifications"` on the trigger Button. <!-- REVIEW: not in the fix plan; aria-label on a generic span isn't reliably announced, and AvatarStatus accepts no other props. Label guidance drafted. -->
 - Keyboard: none. Avatar isn't focusable; a wrapping Button provides focus and activation.
-- Focus: the wrapping Button's outline. It currently measures below 3:1; don't patch it per avatar. <!-- REVIEW: system-wide focus-ring contrast issue W1, see foundations/colour.md. -->
+- Focus: the wrapping Button's outline.
 - Contrast: handled by the theme. Don't override colours. See the status note in States.
 
 ## 11. Behaviour

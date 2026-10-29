@@ -51,7 +51,7 @@ No size prop. The trigger is a default-size Button (`--size-lg` tall) and always
 | Empty | Placeholder in `--interactive-fg-alt` next to the calendar icon | |
 | Filled | Formatted date and time in `--interactive-fg` | |
 | Hover | Trigger background fills | |
-| Focus | 1px outline in `--interactive-border`, 1px offset | Never remove or restyle the focus ring. |
+| Focus | 1px outline in `--focus-ring`, 1px offset | Never remove or restyle the focus ring. |
 | Open | Popover with the calendar and time row; focus moves into the calendar | |
 | Disabled | `--interactive-bg-disabled` fill, `--interactive-fg-disabled` text; skipped by Tab | |
 | Error | No built-in error state | Put a FormMessage under the picker and reference it with `aria-describedby` on the group wrapper. <!-- REVIEW: composition drafted; the picker accepts no aria props. --> |
@@ -116,7 +116,7 @@ No size prop. The trigger is a default-size Button (`--size-lg` tall) and always
 - Label: the trigger's name is its text, the formatted value or the placeholder. Name the field with a visible label and a `role="group"` wrapper (Rules 2). The time segments are named "Hours", "Minutes" and "Seconds"; the period toggles "AM" and "PM".
 - Keyboard: Enter or Space opens. In the calendar, arrow keys, Page Up/Down and Home/End move and Enter picks. Tab moves on to the time segments, where digits type, Up and Down step, and `:` jumps to the next segment. Escape closes.
 - Focus: on open, focus moves to the selected day, or today. Picking a date keeps the popover open so the user can go on to the time. The popover doesn't trap focus. On close, focus returns to the trigger.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per picker. <!-- REVIEW: system-wide focus-ring contrast issue W1, see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

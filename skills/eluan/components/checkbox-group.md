@@ -53,7 +53,7 @@ CheckboxGroup has no `size` prop. Checkboxes are `--size-xxs` and spacing follow
 | State | Looks like | Notes |
 | --- | --- | --- |
 | Default, hover, checked | As [Checkbox](./checkbox.md) | |
-| Focus | Checkbox outline in `--interactive-border` | Never remove or restyle the focus ring. |
+| Focus | Checkbox outline in `--focus-ring` | Never remove or restyle the focus ring. |
 | Disabled | Checkbox disabled; label and description in `--interactive-fg-disabled`, not-allowed cursor | `disabled` on the group disables every item; on an item, only that one. |
 | Checked and disabled | Reads as unchecked: the box turns pale and the check disappears into it | A locked-on item looks off. Say it in the label or description ("Required for all admins"). <!-- REVIEW: known source bug W2 #4, at its worst here; checkbox.tsx :disabled overrides the checked fill. --> |
 | Error | No error style | Show a FormMessage under the group and point the group's `aria-describedby` at it. <!-- REVIEW: drafted; no error handling in source. --> |
@@ -134,7 +134,7 @@ CheckboxGroup has no `size` prop. Checkboxes are `--size-xxs` and spacing follow
 - Label: the group needs `aria-labelledby` or `aria-label`. Each checkbox is named by its `label`. The `description` has no id and isn't linked, so screen readers don't read it with the checkbox. <!-- REVIEW: source oddity, not in the fix plan. -->
 - Keyboard: every checkbox is its own Tab stop. Space toggles; Enter does nothing. There's no arrow-key navigation.
 - Focus: the Checkbox focus outline.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per item. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

@@ -65,7 +65,7 @@ Footer is a composable site footer. `Footer` renders a `<footer>` with a centred
 | --- | --- | --- |
 | Default | Underlined links in the inherited text colour | |
 | Hover | Links fade to 70% opacity; social links take the ghost Button hover | |
-| Focus | Links: 1px outline in `--interactive-border`, 2px offset. Social links: Button focus outline | Never remove or restyle the focus ring. |
+| Focus | Links: 1px outline in `--focus-ring`, 2px offset. Social links: Button focus outline | Never remove or restyle the focus ring. |
 
 ## 7. Content guidelines
 
@@ -139,7 +139,7 @@ Footer is a composable site footer. `Footer` renders a `<footer>` with a centred
 - Label: FooterLink takes its text. FooterSocialLink puts `label` on the anchor as `aria-label`.
 - Keyboard: Tab moves through the links in DOM order; Enter follows a link.
 - Focus: FooterLink shows an outline on `:focus-visible`; social links use the Button outline.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per link. <!-- REVIEW: system-wide focus-ring contrast issue, W1 in the fix plan; see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 - Modern variant: FooterTitle and FooterCopyright (`--container-fg-alt`) and the social icons (ghost Button colour) sit at about 1.3:1 on the `modern` background, in both light and dark mode. Use `default` until it's fixed. <!-- REVIEW: source bug, not in the fix plan. `modern` sets the background to --container-fg but these parts keep their own dark-on-light colours. -->
 
 ## 11. Behaviour

@@ -123,7 +123,7 @@ No size prop. Use the trigger Button's `size`.
 - Label: the trigger's text.
 - Keyboard: Enter and Space toggle the content. Tab moves focus in DOM order.
 - Focus: stays on the trigger when it toggles. Closed content is removed from the page, so nothing inside it can be focused.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per component. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

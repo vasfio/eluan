@@ -48,7 +48,7 @@ No size prop. The field and the square stepper buttons are `--size-lg` and follo
 | --- | --- | --- |
 | Default | `--interactive-bg` surface, `--interactive-border-alt` outline around the group | |
 | Hover (stepper) | `--interactive-bg-hover` on the button | |
-| Focus | Field: border and 1px outline in `--interactive-border`, 1px offset | Never remove or restyle the focus ring. The steppers are out of the Tab order and keep the browser's default focus ring; don't add a focus style to them. |
+| Focus | Field: border and 1px outline in `--focus-ring`, 1px offset | Never remove or restyle the focus ring. The steppers are out of the Tab order and keep the browser's default focus ring; don't add a focus style to them. |
 | At a limit | The stepper toward the limit is disabled | When the value reaches `min` or `max`. |
 | Disabled | Field in `--interactive-bg-disabled` and `--interactive-fg-disabled`; steppers go transparent with `--interactive-fg-disabled` and ignore hover | The transparent disabled steppers are deliberate; don't restyle them. |
 | Error (`aria-invalid`) | `--destructive-border` border on the field | Set it yourself, with a FormMessage. |
@@ -119,7 +119,7 @@ No size prop. The field and the square stepper buttons are `--size-lg` and follo
 - Label: a Label tied by `htmlFor`/`id`. The steppers are named "Decrease" and "Increase".
 - Keyboard: type digits; ArrowUp and ArrowDown step by `step`, clamped to `min` and `max`. Tab skips the stepper buttons (`tabIndex={-1}`).
 - Focus: stays on the field; stepping with the arrows doesn't move it.
-- Contrast: handled by the theme. Don't override colours. The field's focus outline token currently measures below 3:1, and focus swaps the border to a lighter token than at rest; don't patch either per field. The stepper buttons keep the browser's own ring, which currently has better contrast; leave them alone. <!-- REVIEW: system-wide focus-ring issue, W1 in the fix plan; the fix plan's "Worth keeping" says not to add :focus-visible to the steppers until W1 lands. -->
+- Contrast: handled by the theme. Don't override colours. The stepper buttons keep the browser's own focus ring; leave them alone.
 
 ## 11. Behaviour
 

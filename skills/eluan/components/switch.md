@@ -44,7 +44,7 @@ Switch has no `size` prop. The track is `--size-lg` by `--size-xs` and follows d
 | --- | --- | --- |
 | Off | Track and border in `--interactive-border-alt`, thumb at the start | |
 | On | Track and border in `--interactive-bg-selected`, thumb at the end | |
-| Focus | 1px outline in `--interactive-border`, 1px offset | Never remove or restyle the focus ring. |
+| Focus | 1px outline in `--focus-ring`, 1px offset | Never remove or restyle the focus ring. |
 | Disabled | Track fill switches to `--interactive-bg-disabled`, not-allowed cursor; the thumb stays on its side | Disable its Label too. <!-- REVIEW: the light thumb on the pale disabled track may read poorly, like W2 #4; not in the fix plan and not checked visually. --> |
 | Loading | No built-in loading state | While a save is in flight, keep the new position, set `disabled` and `aria-busy`, and revert if the save fails. <!-- REVIEW: composition drafted; Switch has no loading prop. --> |
 
@@ -114,7 +114,7 @@ There's no hover style.
 - Label: a Label with `htmlFor` matching the Switch `id`, or `aria-label`. Link a description with `aria-describedby`. <!-- REVIEW: description wiring drafted; the stories don't link it. -->
 - Keyboard: Space and Enter toggle (native button behaviour). Tab moves between switches.
 - Focus: visible outline on `:focus-visible`. Disabled switches use the native `disabled` attribute and are skipped by Tab.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per switch. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

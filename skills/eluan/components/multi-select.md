@@ -48,7 +48,7 @@ MultiSelect has no size prop. The trigger is at least `--size-lg` tall with `--f
 | --- | --- | --- |
 | Default | Field surface with the placeholder | |
 | Hover | Chip remove buttons go from 60% to full opacity; clear-all fills with `--interactive-bg-hover` | The trigger itself has no hover style. |
-| Focus | 1px outline in `--interactive-border`, 1px offset; the border also switches to `--interactive-border` | Never remove or restyle the focus ring. The border gets lighter on focus, not darker. <!-- REVIEW: W1 in the fix plan (rest→focus border swap goes fainter). --> |
+| Focus | 1px outline in `--focus-ring`, 1px offset; the border also switches to `--focus-ring` | Never remove or restyle the focus ring. |
 | Open | Chevron turned; panel below the trigger with the search field focused | The panel stays open while the user picks. |
 | Selected | Chips in the trigger; the same options at the top of the list, weight 500, with a check mark | |
 | Overflow | A "+N" chip after `maxDisplayedItems` chips | The hidden values stay selected and appear at the top of the list. |
@@ -137,8 +137,8 @@ MultiSelect has no size prop. The trigger is at least `--size-lg` tall with `--f
 - Label: MultiSelect accepts no `id`, `aria-label` or `aria-labelledby`, so its combobox has no accessible name. Put a visible label right above it and wrap both in an element with `role="group"` and `aria-labelledby` pointing at the label. <!-- REVIEW: API gap found while writing, not in the fix plan; the workaround names the group, not the combobox. -->
 - Selected state: chosen options show a check mark (hidden from assistive tech) and a heavier weight; `aria-selected` on an option marks the keyboard highlight, not the selection. Screen-reader users hear the selection through the chips' "Remove {label}" buttons. <!-- REVIEW: cmdk sets aria-selected for the highlighted item; MultiSelect adds no selected state. Not in the fix plan. -->
 - Keyboard: on the trigger, Enter or Space toggles the panel and ArrowDown opens it. Tab moves from the trigger to each chip's remove button, then to clear-all. In the panel, typing filters, ArrowUp and ArrowDown move, Enter toggles the highlighted option, and Escape closes.
-- Focus: opening moves focus into the panel's search field. The panel doesn't trap focus. Closing returns focus to the trigger. The chip remove and clear-all buttons turn off the focus outline and draw nothing in its place, so focus on them is invisible; don't add your own styles. <!-- REVIEW: W1 in the fix plan (multi-select.tsx `chipRemove` and `clear` suppress the ring with no :focus-visible). -->
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per component. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Focus: opening moves focus into the panel's search field. The panel doesn't trap focus. Closing returns focus to the trigger. The chip remove and clear-all buttons show the same focus outline, at full opacity.
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

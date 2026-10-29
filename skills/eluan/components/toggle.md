@@ -55,7 +55,7 @@ For an icon-only toggle at default height, use `default`: its minimum width equa
 | --- | --- | --- |
 | Default | Transparent; text and icon inherit the surrounding colour | |
 | Hover | `--interactive-bg-hover` fill, `--interactive-fg` text | |
-| Focus | 1px outline in `--interactive-border`, 1px offset | Never remove or restyle the focus ring. |
+| Focus | 1px outline in `--focus-ring`, 1px offset | Never remove or restyle the focus ring. |
 | Pressed | `--interactive-bg-selected` fill, `--interactive-fg-selected` text | `data-state="on"` and `aria-pressed="true"`. |
 | Disabled | `--interactive-bg-disabled` fill, `--interactive-fg-disabled` text, no pointer events | A disabled ToggleGroupItem keeps a transparent background and only dims its text, so a disabled Toggle next to a disabled ToggleGroupItem won't match. <!-- REVIEW: toggle.tsx and toggle-group.tsx style :disabled differently; not in the fix plan. Don't restyle either. --> |
 
@@ -123,7 +123,7 @@ For an icon-only toggle at default height, use `default`: its minimum width equa
 - Label: the text content; `aria-label` for icon-only toggles.
 - Keyboard: Enter and Space toggle. Tab moves focus in DOM order.
 - Focus: visible outline on `:focus-visible`. Disabled toggles use the native `disabled` attribute, so Tab skips them.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per Toggle. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

@@ -215,7 +215,7 @@ const styles = stylex.create({
     fontSize: "var(--font-size-sm)",
     gap: "var(--spacing-xs)",
     ":focus-visible": {
-      outlineColor: "var(--interactive-border)",
+      outlineColor: "var(--focus-ring)",
       outlineOffset: "1px",
       outlineStyle: "solid",
       outlineWidth: "1px",
@@ -347,7 +347,7 @@ const styles = stylex.create({
 `--container-bg` · `--container-bg-alt` (subtle alternate) · `--container-fg` · `--container-fg-alt` (muted text) · `--container-fg-inverse` · `--container-border` · `--container-border-alt`
 
 ### Interactive surfaces (inputs, selectable rows, hoverable items)
-`--interactive-bg` · `--interactive-bg-hover` · `--interactive-bg-active` · `--interactive-bg-selected` · `--interactive-bg-disabled` · `--interactive-bg-alt` · `--interactive-bg-alt2` · `--interactive-bg-inverse` · `--interactive-fg` · `--interactive-fg-hover` · `--interactive-fg-alt` (muted/icon color — also the leading-icon color in `Input`) · `--interactive-fg-active` · `--interactive-fg-selected` · `--interactive-fg-disabled` · `--interactive-fg-inverse` · `--interactive-border` (default focus color, see below) · `--interactive-border-alt` · `--interactive-border-disabled`
+`--interactive-bg` · `--interactive-bg-hover` · `--interactive-bg-active` · `--interactive-bg-selected` · `--interactive-bg-disabled` · `--interactive-bg-alt` · `--interactive-bg-alt2` · `--interactive-bg-inverse` · `--interactive-fg` · `--interactive-fg-hover` · `--interactive-fg-alt` (muted/icon color — also the leading-icon color in `Input`) · `--interactive-fg-active` · `--interactive-fg-selected` · `--interactive-fg-disabled` · `--interactive-fg-inverse` · `--interactive-border` · `--interactive-border-alt` · `--interactive-border-disabled`
 
 ### Action-primary (CTA buttons)
 `--action-primary-bg` · `-bg-hover` · `-bg-active` · `-bg-selected` · `-bg-disabled` · `-bg-inverse` · `--action-primary-fg` · `-fg-hover` · `-fg-active` · `-fg-selected` · `-fg-disabled` · `-fg-inverse`
@@ -374,18 +374,18 @@ const styles = stylex.create({
 - Curves (border-radius): `--curves-xxs|xs|sm|md|lg|xl` (curves-axis-driven); full pill via `--radius-radius-full`
 
 ### Focus color (the system-wide focus indicator)
-`var(--interactive-border)` is the standard focus color. The system uses an **outline** (not a ring), applied in a `":focus-visible"` block:
+`var(--focus-ring)` is the standard focus color: a mode-aware token (set per mode in `modes.css`) that clears 3:1 on every page and panel ground. The system uses an **outline** (not a ring), applied in a `":focus-visible"` block:
 
 ```tsx
 ":focus-visible": {
-  outlineColor: "var(--interactive-border)",
+  outlineColor: "var(--focus-ring)",
   outlineOffset: "1px",
   outlineStyle: "solid",
   outlineWidth: "1px",
 },
 ```
 
-It's theme- and mode-aware. Only deviate (e.g. validation states → `--destructive-border`) when there's a real semantic reason.
+Only deviate when there's a real semantic reason: validation states ring in their tone's foreground, and a control on a coloured surface (Banner's dismiss button) rings in `currentColor`. Never use `--interactive-border` for focus; it's a pale border token.
 
 ---
 

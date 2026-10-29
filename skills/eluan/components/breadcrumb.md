@@ -51,7 +51,7 @@ Breadcrumb has no size prop. Text is `--font-size-sm` and gaps come from `--spac
 | --- | --- | --- |
 | Default | Links in `--interactive-fg-alt`; the current page in `--interactive-fg` | Links set no text decoration, so they keep the browser underline unless your CSS reset removes it. |
 | Hover | Link text turns `--interactive-fg` | |
-| Focus | Links keep the browser's default focus ring; the ellipsis Button shows its 1px `--interactive-border` outline | Never remove or restyle the focus ring. |
+| Focus | Links keep the browser's default focus ring; the ellipsis Button shows its 1px `--focus-ring` outline | Never remove or restyle the focus ring. |
 | Current | `BreadcrumbPage`: `--interactive-fg`, not interactive | |
 | Disabled | Ellipsis entries without `href` or `onClick` are disabled in its dropdown | |
 
@@ -130,7 +130,7 @@ Breadcrumb has no size prop. Text is `--font-size-sm` and gaps come from `--spac
 - Current page: `BreadcrumbPage` carries `aria-current="page"`, `role="link"` and `aria-disabled="true"`.
 - Ellipsis: with `items`, it's a Button named "Show more breadcrumbs" that opens a menu. Without `items` it's hidden from assistive tech, so the hidden levels aren't announced.
 - Keyboard: Tab moves through the links; Enter follows one. The ellipsis menu uses DropdownMenu keys (arrows, Enter, Escape).
-- Contrast: handled by the theme. Don't override colours. Links keep the browser focus ring; don't add your own. The ellipsis Button's outline currently measures below 3:1; don't patch it here. <!-- REVIEW: system-wide focus-ring contrast issue, see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours. Links keep the browser focus ring; don't add your own.
 
 ## 11. Behaviour
 

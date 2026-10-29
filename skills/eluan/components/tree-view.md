@@ -48,7 +48,7 @@ TreeView has no size prop. Rows use `--font-size-sm` and `--spacing-xs` vertical
 | --- | --- | --- |
 | Default | Transparent row, `--interactive-fg` text, muted icons | |
 | Hover | `--interactive-bg-hover` row background | |
-| Focus | 1px ring in `--interactive-border`, drawn with a shadow | Never remove or restyle the focus ring. The ring currently measures below 3:1. <!-- REVIEW: W1 (fix/focus-ring-token). This ring is a box-shadow, not outlineColor, so W1's mechanical outlineColor swap will miss it. --> |
+| Focus | 1px ring in `--focus-ring`, drawn with a shadow | Never remove or restyle the focus ring. |
 | Selected | `--interactive-bg-selected` background, `--interactive-fg-selected` text and icons | A near-black row in the default theme. <!-- REVIEW: same row-scale question as the Table selected row in the fix plan's "Decide before coding". --> |
 | Expanded | Chevron points down; parent icon becomes an open folder; children slide open | |
 

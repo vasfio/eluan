@@ -70,7 +70,7 @@ SelectTrigger has no size prop. It is `--size-lg` tall with `--font-size-sm` tex
 | --- | --- | --- |
 | Default | `--interactive-bg` fill, 1px `--interactive-border-alt` border, chevron at 50% opacity | |
 | Placeholder | SelectValue's `placeholder` text | Renders in the same colour as a chosen value. <!-- REVIEW: select.tsx sets a `::placeholder` colour on the trigger, but a `<button>` has no placeholder pseudo-element, so the rule never applies. Not in the fix plan. --> |
-| Focus | 1px outline in `--interactive-border`, 1px offset; the border also switches to `--interactive-border` | Never remove or restyle the focus ring. The border gets lighter on focus, not darker. <!-- REVIEW: W1 in the fix plan (rest→focus border swap goes fainter); don't patch it per component. --> |
+| Focus | 1px outline in `--focus-ring`, 1px offset; the border also switches to `--focus-ring` | Never remove or restyle the focus ring. |
 | Open | Panel below the trigger; the item under the pointer or keyboard fills with `--interactive-bg-hover` | Page scroll is locked while open. |
 | Selected | Check mark on the trailing edge of the selected item; the trigger shows its text | |
 | Grouped | SelectSeparator draws a 1px line in `--container-bg-alt` | Close to invisible on `--container-bg` in the default theme. Separate groups with SelectGroup and SelectLabel, not the separator alone. <!-- REVIEW: W4 in the fix plan (divider convergence); the menu separators should move to the shared Separator. --> |
@@ -169,7 +169,7 @@ SelectTrigger has no size prop. It is `--size-lg` tall with `--font-size-sm` tex
 - Label: Label via `htmlFor`/`id` on SelectTrigger, or `aria-label` on SelectTrigger.
 - Keyboard: on the trigger, Space, Enter, ArrowDown and ArrowUp open the list, and typing jumps to a matching item. In the list, arrows move, Home and End jump to the ends, Enter or Space selects and closes, Escape closes, and typing jumps to a match.
 - Focus: focus moves into the list on open and is trapped there; the rest of the page is hidden from assistive tech and scroll is locked. Focus returns to the trigger on close. A disabled Select uses the native `disabled` attribute, so Tab skips it.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per Select. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

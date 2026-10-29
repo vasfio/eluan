@@ -64,7 +64,7 @@ No size prop. The field is `--size-lg` tall, from Input, and follows density.
 | State | Looks like | Notes |
 | --- | --- | --- |
 | Default | `--interactive-bg` surface, `--interactive-border-alt` border, icon and placeholder in `--interactive-fg-alt` | |
-| Focus | Border and 1px outline in `--interactive-border`, 1px offset | Never remove or restyle the focus ring. |
+| Focus | Border and 1px outline in `--focus-ring`, 1px offset | Never remove or restyle the focus ring. |
 | Filled | Clear button at the trailing edge; `--interactive-bg-hover` on hover | SearchInput hides it when `showClearButton={false}`. |
 | Loading | Spinner at the trailing edge | SearchInput also disables the field while `loading`, so typing stops and focus is lost. AutocompleteSearch stays editable and shows a spinner in the list too. |
 | Disabled | `--interactive-bg-disabled` surface, `--interactive-fg-disabled` text | |
@@ -147,7 +147,7 @@ No size prop. The field is `--size-lg` tall, from Input, and follows density.
 - AutocompleteSearch: the field is a `combobox` with `aria-expanded`, `aria-autocomplete="list"` and `aria-controls`; `aria-activedescendant` points at the highlighted option. The list is a `listbox` named "Suggestions" of `option`s with `aria-selected` on the highlighted one; disabled options carry `aria-disabled`. A polite `role="status"` region announces "N results available", "Loading results" or `emptyMessage`. Group headings are visual only.
 - AutocompleteSearch keyboard: ArrowDown or ArrowUp opens the list, then moves the highlight and wraps; Enter selects; Escape closes; Tab closes and moves on. Focus stays in the field throughout, and returns to it after a pointer selection.
 - Landmark: wrap a site-wide search in `<form role="search">`. <!-- REVIEW: drafted; source adds no landmark. -->
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1, and focus swaps the border to a lighter token than at rest; don't patch either per field. <!-- REVIEW: system-wide focus-ring issue, W1 in the fix plan; see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

@@ -50,7 +50,7 @@ Set `size` on the group; every item inherits it. An item's own `size` overrides 
 | --- | --- | --- |
 | Default | Transparent items; text and icons inherit the surrounding colour | |
 | Hover | `--interactive-bg-hover` fill, `--interactive-fg` text | |
-| Focus | 1px outline in `--interactive-border`, 1px offset | Never remove or restyle the focus ring. |
+| Focus | 1px outline in `--focus-ring`, 1px offset | Never remove or restyle the focus ring. |
 | Pressed | `--interactive-bg-selected` fill, `--interactive-fg-selected` text | `data-state="on"`. |
 | Disabled | `--interactive-fg-disabled` text on a transparent background, no pointer events | Set `disabled` on the group for all items or on one item. A standalone Toggle fills its disabled background with `--interactive-bg-disabled`, so the two won't match side by side. <!-- REVIEW: toggle.tsx and toggle-group.tsx style :disabled differently; not in the fix plan. Don't restyle either. --> |
 
@@ -132,7 +132,7 @@ Set `size` on the group; every item inherits it. An item's own `size` overrides 
 - Label: `aria-label` (or `aria-labelledby`) on the group; text content or `aria-label` on each item.
 - Keyboard: Tab moves into the group, onto the pressed item if there is one, and Tab again leaves it. Arrow keys move focus between items and wrap at the ends. Enter and Space press the focused item. Unlike RadioGroup, arrows only move focus; they don't change the value.
 - Focus: visible outline on the focused item. Disabled items use the native `disabled` attribute and are skipped.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per item. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

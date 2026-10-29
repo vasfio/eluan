@@ -123,7 +123,7 @@ No size prop. The panel fits its text.
 - Keyboard: focusing the trigger opens the tooltip; moving focus away or pressing Escape closes it.
 - Focus: stays on the trigger; the tooltip can't be focused.
 - Touch: touch input never opens a tooltip.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per component. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

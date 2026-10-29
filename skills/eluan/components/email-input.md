@@ -43,7 +43,7 @@ No size prop. The field is `--size-lg` tall, from Input, and follows density.
 | State | Looks like | Notes |
 | --- | --- | --- |
 | Default | `--interactive-bg` surface, `--interactive-border-alt` border, icon and placeholder in `--interactive-fg-alt` | |
-| Focus | Border and 1px outline in `--interactive-border`, 1px offset | Never remove or restyle the focus ring. |
+| Focus | Border and 1px outline in `--focus-ring`, 1px offset | Never remove or restyle the focus ring. |
 | Disabled | `--interactive-bg-disabled` surface, `--interactive-fg-disabled` text, not-allowed cursor | |
 | Valid (`showValidation`) | `--positive-fg` border, check icon | After the first blur; updates live as the user keeps typing. |
 | Invalid (`showValidation`) | `--destructive-fg` border, alert icon | Same timing. Visual only: the icon is `aria-hidden` and EmailInput doesn't set `aria-invalid`. |
@@ -121,7 +121,7 @@ No size prop. The field is `--size-lg` tall, from Input, and follows density.
 - Keyboard: standard text input. Tab moves focus in and out.
 - Focus: native focus; visible outline on `:focus-visible`.
 - Validation: the status icons are `aria-hidden`, and EmailInput sets no `aria-invalid` and has no live region, so assistive tech isn't told about format errors. Set `aria-invalid` and link a FormMessage yourself.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1, and focus swaps the border to a lighter token than at rest; don't patch either per field. <!-- REVIEW: system-wide focus-ring issue, W1 in the fix plan; see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

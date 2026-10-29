@@ -133,7 +133,7 @@ PopoverContent sets its text colour from `--interactive-fg`, where Tooltip and H
 - Label: none by default; see rule 2.
 - Keyboard: Enter or Space on the trigger toggles it. Escape closes it. Tab moves through the content and then out of it.
 - Focus: on open, focus moves to the first focusable element inside (or the panel itself). Focus isn't trapped. On close, focus returns to the trigger, unless the user closed it by clicking or tabbing to something outside, in which case focus stays there. With `modal`, focus is trapped and the rest of the page is hidden from assistive technology.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per component. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

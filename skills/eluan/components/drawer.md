@@ -149,7 +149,7 @@ DrawerTitle and DrawerDescription use the `--container-*` pair, where Sheet uses
 - Keyboard: Enter and Space on DrawerTrigger toggle the panel. Escape anywhere in the document closes an open drawer.
 - Focus: opening doesn't move focus; the user tabs into the panel. Focus isn't trapped. When the panel closes with focus inside it, focus returns to the element that had focus before it opened. A closed panel's contents can't receive focus.
 - Escape also closes the drawer when it was meant for something else: closing a Select, Popover or Dialog with Escape collapses an open drawer at the same time. <!-- REVIEW: source issue not in the fix plan; drawer.tsx's document keydown listener doesn't check whether another layer already handled Escape. -->
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per component. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

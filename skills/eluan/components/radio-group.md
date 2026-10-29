@@ -55,7 +55,7 @@ RadioGroup has no `size` prop. Items are `--size-xxs` and follow density.
 | --- | --- | --- |
 | Unchecked | Transparent circle, `--interactive-border-alt` border | |
 | Hover | `--interactive-bg-hover` fill | |
-| Focus | 1px outline in `--interactive-border`, 1px offset, on keyboard focus only | Never remove or restyle the focus ring. |
+| Focus | 1px outline in `--focus-ring`, 1px offset, on keyboard focus only | Never remove or restyle the focus ring. |
 | Checked | `--interactive-bg-selected` fill and border, `--interactive-bg` dot | |
 | Disabled | `--interactive-bg-disabled` fill, not-allowed cursor | `disabled` on RadioGroup disables every item; on an item, only that one. Disable its Label too. |
 | Checked and disabled | Reads as empty: the fill turns pale and the light dot disappears into it | Don't rely on it to show a fixed choice; say it in the label or show the value as text. <!-- REVIEW: known source bug W2 #4 (radio-group.tsx :disabled overrides the checked fill). --> |
@@ -133,7 +133,7 @@ RadioGroup has no `size` prop. Items are `--size-xxs` and follow density.
 - Label: each item through a Label with `htmlFor`, or `aria-label`; the group through `aria-labelledby` or `aria-label`.
 - Keyboard: Tab moves into the group, onto the checked item (or the first), and Tab again leaves it. Arrow keys move focus and select, wrapping at the ends; with `orientation` set, only that axis's arrows work. Space selects the focused item. Enter does nothing.
 - Focus: visible outline on `:focus-visible` only. Disabled items use the native `disabled` attribute and are skipped.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per item. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

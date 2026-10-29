@@ -117,7 +117,7 @@ No size prop. The panel is a fixed 16rem wide and as tall as its content. <!-- R
 - Keyboard: focusing the trigger opens the card and moving focus away closes it. Escape closes it.
 - Focus: stays on the trigger. Nothing inside the card is in the tab order.
 - Touch: touch input never opens the card.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per component. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

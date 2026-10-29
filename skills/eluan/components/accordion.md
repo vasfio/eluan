@@ -126,7 +126,7 @@ Accordion has no size prop. Text uses `--font-size-base` (trigger) and `--font-s
 - Heading level: always `h3`. AccordionTrigger doesn't expose the header part, so place the Accordion where an `h3` fits the outline, for example under an `h2` section heading. <!-- REVIEW: verified Radix renders Header as h3; Eluan wraps it inside AccordionTrigger with no way to change the level. -->
 - Label: the trigger's text content. The chevron is `aria-hidden`.
 - Keyboard: Enter and Space toggle the focused section. Tab and Shift+Tab move between triggers and into open content. Arrow Down and Arrow Up move focus between triggers; Home and End jump to the first and last.
-- Focus: stays on the trigger when a section opens or closes. The trigger shows the browser's default ring; don't add your own until the system focus token lands. <!-- REVIEW: W1 (fix/focus-ring-token); like the file-input and number-input buttons, this trigger keeps the browser ring by declaring none. -->
+- Focus: stays on the trigger when a section opens or closes. The trigger shows the browser's default ring; don't add your own.
 - Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour

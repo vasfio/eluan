@@ -42,7 +42,7 @@ objects (never hardcoded colors, sizes, or shadcn aliases):
 - Text color: `color: "var(--container-fg)"` / `"var(--container-fg-alt)"`
 - Font size: `fontSize: "var(--font-size-sm)"`
 - Border: `borderColor: "var(--container-border)"` / `"var(--interactive-border-alt)"` (pair with `borderWidth` + `borderStyle`)
-- Focus: a `":focus-visible"` block with `outlineColor: "var(--interactive-border)"`, `outlineWidth: "1px"`, `outlineStyle: "solid"`, `outlineOffset: "1px"`
+- Focus: a `":focus-visible"` block with `outlineColor: "var(--focus-ring)"`, `outlineWidth: "1px"`, `outlineStyle: "solid"`, `outlineOffset: "1px"`
 - Sizing: `height: "var(--size-lg)"`, `width: "var(--size-lg)"`
 - Spacing: `padding: "var(--spacing-md)"`, `gap: "var(--spacing-sm)"`
 - Curves: `borderRadius: "var(--curves-md)"`

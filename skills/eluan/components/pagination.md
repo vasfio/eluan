@@ -58,7 +58,7 @@ Pagination has no variants. `isActive` on a `PaginationLink` marks the current p
 | --- | --- | --- |
 | Default | No fill, `--interactive-fg` text | |
 | Hover | `--interactive-bg-hover` fill | The hover text colour points at an undefined token (`interactive-fg-hover`), so the text keeps its inherited colour. No action needed. <!-- REVIEW: W3 (fix/dead-rules): pagination.tsx hover color uses an undefined token; likely meant --interactive-fg. --> |
-| Focus | 1px outline in `--interactive-border`, 1px offset | Never remove or restyle the focus ring. |
+| Focus | 1px outline in `--focus-ring`, 1px offset | Never remove or restyle the focus ring. |
 | Active | `--interactive-bg-selected` fill and border, `--interactive-fg-selected` text | Sets `aria-current="page"`. |
 | Disabled | No disabled state | On the first page, leave out `PaginationPrevious`; on the last, leave out `PaginationNext`. <!-- REVIEW: drafted; source has no disabled styling and stories always render both. --> |
 
@@ -146,7 +146,7 @@ Pagination has no variants. `isActive` on a `PaginationLink` marks the current p
 - Label: page links are named by their number. Previous and Next are named "Go to previous page" and "Go to next page"; pass `aria-label` to localise them. Give page links an `aria-label` such as "Page 5" if your screen-reader testing calls for it. <!-- REVIEW: page-number labelling drafted; tests assert links named by the bare number. -->
 - Keyboard: Tab moves through the links; Enter follows one. The ellipsis menu, when it has `pages`, opens from a Button named "Show more pages" and uses DropdownMenu keys.
 - Focus: links show the focus outline.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per link. <!-- REVIEW: system-wide focus-ring contrast issue, see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

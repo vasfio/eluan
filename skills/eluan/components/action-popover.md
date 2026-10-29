@@ -47,7 +47,7 @@ No size prop. The trigger is always Button's `icon` size.
 | --- | --- | --- |
 | Default | Ghost icon button | |
 | Hover | Ghost hover background | From Button. |
-| Focus | 1px outline in `--interactive-border`, 1px offset | Never remove or restyle the focus ring. |
+| Focus | 1px outline in `--focus-ring`, 1px offset | Never remove or restyle the focus ring. |
 | Open | Menu below the trigger, aligned to its end | Trigger has `aria-expanded="true"`. |
 | Item highlighted | Item background in `--interactive-bg-hover` | On pointer hover or arrow-key focus. |
 | Item disabled | `--interactive-bg-disabled` background, `--interactive-fg-disabled` text | Set `disabled: true`; the item gets `data-disabled`, is skipped by arrow keys and can't be selected. |
@@ -132,7 +132,7 @@ No size prop. The trigger is always Button's `icon` size.
 - Label: the trigger's `aria-label` (default "Open actions menu"). Items are named by their `label`.
 - Keyboard: Enter, Space or Arrow Down on the trigger opens the menu. Arrow keys move between items, Home and End jump to the ends, typing a letter jumps to a matching item, Enter or Space activates, Escape closes.
 - Focus: moves into the menu on open and returns to the trigger on close. Disabled items are skipped.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per component. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

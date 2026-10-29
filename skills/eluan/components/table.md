@@ -148,7 +148,7 @@ Table has no size prop. Header cells are `--size-xl` tall and data cells pad `--
 - Keyboard: the table itself takes no focus. Tab moves through interactive content in cells (sort Buttons, checkboxes, menu triggers). Wide tables scroll inside the wrapper, which isn't focusable, so a keyboard user can only scroll it by tabbing to something inside. <!-- REVIEW: wrapper has overflow auto but no tabIndex or role; consider making it a focusable region. -->
 - Sorting: set `aria-sort="ascending"`, `"descending"` or `"none"` on the sortable TableHead, and keep the Button label as the column name.
 - Selection: `aria-selected` isn't valid on rows of a plain table. Use a Checkbox per row labelled with the row's name, plus a header Checkbox labelled "Select all". Cells holding a checkbox lose their end padding automatically.
-- Focus: interactive children keep their own focus rings. The Button focus outline currently measures below 3:1; don't patch it per cell. <!-- REVIEW: system-wide focus-ring contrast issue W1, see foundations/colour.md. -->
+- Focus: interactive children keep their own focus rings.
 - Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour

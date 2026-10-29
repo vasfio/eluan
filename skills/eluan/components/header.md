@@ -149,7 +149,7 @@ Header has no size prop. The bar height is 1.5 × `--size-xl`, so it follows den
 - Keyboard: Tab moves through the logo, links and actions in order. Enter follows a link; Enter or Space activates a button. In the mobile menu, Escape closes it.
 - Focus: the mobile menu is a modal Sheet: focus moves into it and is trapped while it's open, and returns to the menu button when it closes. The menu button carries `aria-expanded` from Radix Dialog.
 - Mobile menu name: the Sheet has no title, so the dialog has no accessible name and Radix warns in development. <!-- REVIEW: source gap, not in the fix plan; header.tsx renders SheetContent without a SheetTitle. -->
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per component. <!-- REVIEW: system-wide focus-ring contrast issue, W1 in the fix plan; see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

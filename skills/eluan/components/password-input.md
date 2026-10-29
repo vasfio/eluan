@@ -50,7 +50,7 @@ No size prop. The field is `--size-lg` tall, from Input, and follows density.
 | State | Looks like | Notes |
 | --- | --- | --- |
 | Default | `--interactive-bg` surface, `--interactive-border-alt` border, icon and placeholder in `--interactive-fg-alt` | |
-| Focus | Border and 1px outline in `--interactive-border`, 1px offset | Never remove or restyle the focus ring. The visibility toggle is a separate Tab stop. |
+| Focus | Border and 1px outline in `--focus-ring`, 1px offset | Never remove or restyle the focus ring. The visibility toggle is a separate Tab stop. |
 | Revealed | Text visible, eye-off icon, toggle `aria-pressed="true"` | Stays revealed until toggled back; blur and submit don't reset it. |
 | Disabled | `--interactive-bg-disabled` surface, `--interactive-fg-disabled` text | The visibility toggle stays enabled and clickable. <!-- REVIEW: source oddity, not in the fix plan; input.tsx renders the toggle without `disabled`. --> |
 | Weak / Medium / Strong | Label text, bar in `--destructive-fg`, `--cautionary-fg` or `--positive-fg` | The bar renders full-width at every strength, so its length means nothing. Rely on the label and checklist; don't restyle or replace the bar. <!-- REVIEW: known source bug, W2 #1 in the fix plan; progress.tsx spreads the tone onto the track as well as the indicator. Fixing Progress fixes this. --> |
@@ -122,7 +122,7 @@ const meetsPolicy = password.length >= 12 && /[0-9]/.test(password);
 - Keyboard: standard text input. Tab moves from the field to the toggle; Enter or Space toggles visibility.
 - Focus: focus stays on the toggle after toggling. The field and toggle both show the system outline on `:focus-visible`.
 - Strength: a `role="status"` polite live region announces "Password strength: Weak", "Medium" or "Strong" as it changes. Each checklist row carries hidden "(met)" or "(not met)" text. The strength block isn't linked to the field with `aria-describedby`.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1, and focus swaps the border to a lighter token than at rest; don't patch either per field. <!-- REVIEW: system-wide focus-ring issue, W1 in the fix plan; see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

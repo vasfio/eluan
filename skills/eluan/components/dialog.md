@@ -71,7 +71,7 @@ No size prop. The panel is the full viewport width minus `--spacing-2xl`, up to 
 | Closed | Only the trigger renders | DialogContent is unmounted. |
 | Open | Scrim over the page, panel centred | The page behind is inert: hidden from screen readers, not clickable, not scrollable. |
 | Hover (close button) | Close icon goes from 70% to full opacity | No background change. <!-- REVIEW: W3; dialog.tsx puts a [data-state=open] rule on the close button, which Radix's Close never carries, so it never applies. --> |
-| Focus (close button) | 1px outline in `--interactive-border`, 1px offset | Never remove or restyle the focus ring. |
+| Focus (close button) | 1px outline in `--focus-ring`, 1px offset | Never remove or restyle the focus ring. |
 
 The title declares no colour of its own and inherits; Sheet and Drawer titles each use a different token. It looks the same in the default theme; don't recolour titles to compensate. <!-- REVIEW: W5, three title colours for one slot across dialog, sheet and drawer. -->
 
@@ -169,7 +169,7 @@ const menuTriggerRef = React.useRef<HTMLButtonElement>(null);
 - Label: DialogTitle names the dialog (`aria-labelledby`); DialogDescription describes it (`aria-describedby`). The close button's name is "Close".
 - Keyboard: Escape closes. Tab and Shift+Tab cycle through the dialog's controls and wrap at the ends. Enter and Space activate buttons.
 - Focus: on open, focus moves to the first focusable element in your content (links are skipped). The close button comes last in the DOM, so it's only focused first when your content has no controls. Focus is trapped while open and returns to DialogTrigger on close. Everything outside the dialog is hidden from assistive technology and blocked from pointer input.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per dialog. <!-- REVIEW: system-wide focus-ring contrast issue (W1), see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 - The built-in close button is a `--size-xxs` icon with no padding, a small pointer target. Rule 7's footer button is the reliable way to dismiss. <!-- REVIEW: W3, dialog close button hit target. -->
 
 ## 11. Behaviour

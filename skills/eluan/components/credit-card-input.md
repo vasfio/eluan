@@ -52,7 +52,7 @@ No size prop. Each field is `--size-lg` tall, from Input, and follows density.
 | State | Looks like | Notes |
 | --- | --- | --- |
 | Default | Three Input fields with icons and placeholders | |
-| Focus | Border and 1px outline in `--interactive-border`, 1px offset | Never remove or restyle the focus ring. |
+| Focus | Border and 1px outline in `--focus-ring`, 1px offset | Never remove or restyle the focus ring. |
 | Brand detected | The trailing icon becomes the brand logo, drawn in `currentColor` | Visa, Mastercard, American Express, Discover, Diners Club, JCB, UnionPay. |
 | Invalid (composite) | `--destructive-border` border, `aria-invalid`, hidden message announced | Only after the user leaves a field that has content failing its length check. Sighted users see only the border colour. <!-- REVIEW: drafted observation; the composite has no visible error text, and the fix plan doesn't cover it. --> |
 | Disabled | All three fields disabled | `disabled` on the composite reaches every field. |
@@ -117,7 +117,7 @@ No size prop. Each field is `--size-lg` tall, from Input, and follows density.
 - Errors (composite): after blur, an invalid field gets `aria-invalid` and `aria-describedby` pointing at its message, which is announced through `role="alert"`.
 - Keyboard: standard text input; Tab moves number, expiry, security code.
 - Brand logos and field icons are `aria-hidden`.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1, and focus swaps the border to a lighter token than at rest; don't patch either per field. <!-- REVIEW: system-wide focus-ring issue, W1 in the fix plan; see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 

@@ -49,7 +49,7 @@ TimeInput has no `variant` prop. `timeInputVariants` is exported for compatibili
 | State | Looks like | Notes |
 | --- | --- | --- |
 | Default | `--interactive-border-alt` border, digits in `--interactive-fg` | |
-| Focus | The focused segment fills with `--interactive-bg-hover`; the field gets a 1px outline in `--interactive-border`, 1px offset | Never remove or restyle the focus ring. The field's border gets lighter on focus. <!-- REVIEW: known source issue W1 in the fix plan (rest border --interactive-border-alt swaps to the paler --interactive-border on focus); the segment fill keeps focus visible. --> |
+| Focus | The focused segment fills with `--interactive-bg-hover`; the field gets a 1px outline in `--focus-ring`, 1px offset | Never remove or restyle the focus ring. The field's border darkens to `--focus-ring` too. |
 | Empty | No empty state: an empty `value` shows 00:00 (24-hour) or 12:00 AM (12-hour) | `placeholder` is accepted and ignored. |
 | Period | The active period is a pressed Toggle | 12-hour only. |
 | Disabled | `--interactive-bg-disabled` fill, `--interactive-fg-disabled` text, no pointer events | Segments and toggles are disabled. |
@@ -112,7 +112,7 @@ const hasTime = value !== "00:00";
 - Label: `aria-labelledby` on the field pointing at a visible Label, or `aria-label` when the context already shows the meaning.
 - Keyboard: type digits; hours move on to minutes once two digits are typed, or one digit that can't start a two-digit hour. Up and Down step the focused segment and wrap. `:` jumps to the next segment. Tab moves through segments, then the AM and PM toggles; Enter or Space presses a toggle.
 - Focus: a segment selects its digits on focus, so typing replaces them. Out-of-range numbers are clamped when the segment loses focus.
-- Contrast: handled by the theme. Don't override colours. The focus outline token currently measures below 3:1; don't patch it per field. <!-- REVIEW: system-wide focus-ring contrast issue W1, see foundations/colour.md. -->
+- Contrast: handled by the theme. Don't override colours.
 
 ## 11. Behaviour
 
