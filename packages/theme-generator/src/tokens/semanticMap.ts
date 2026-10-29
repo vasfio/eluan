@@ -105,7 +105,9 @@ export function buildSemanticMap(): SemanticMap {
     'destructive-border-alt':   { light: 'error.800', dark: 'error.300', role: 'border' },
     'destructive-border-disabled': { light: 'error.100', dark: 'error.900', role: 'border' },
     'destructive-border-inverse':  { light: 'error.50',  dark: 'error.950', role: 'border' },
-    'destructive-fg':           { light: 'error.700', dark: 'error.200', role: 'fg', contrastAgainst: 'destructive-bg', minContrast: 4.5 },
+    // Checked against -bg-alt, the harder of the two grounds it sits on (Banner
+    // uses the tint; Button and Badge the lighter -bg).
+    'destructive-fg':           { light: 'error.700', dark: 'error.200', role: 'fg', contrastAgainst: 'destructive-bg-alt', minContrast: 4.5 },
     'destructive-fg-alt':       { light: 'neutral.950', dark: 'neutral.50', role: 'fg' },
     'destructive-fg-disabled':  { light: 'neutral.400', dark: 'neutral.500', role: 'fg' },
     'destructive-fg-active':    { light: 'neutral.50',  dark: 'neutral.950', role: 'fg', contrastAgainst: 'destructive-bg-active', minContrast: 4.5 },
@@ -119,7 +121,8 @@ export function buildSemanticMap(): SemanticMap {
     'positive-border':         { light: 'success.500', dark: 'success.400', role: 'border' },
     'positive-border-alt':     { light: 'success.800', dark: 'success.300', role: 'border' },
     'positive-border-inverse': { light: 'success.50',  dark: 'success.950', role: 'border' },
-    'positive-fg':             { light: 'success.700', dark: 'success.200', role: 'fg', contrastAgainst: 'positive-bg', minContrast: 4.5 },
+    // Same as destructive-fg: checked against the tint Banner draws it on.
+    'positive-fg':             { light: 'success.700', dark: 'success.200', role: 'fg', contrastAgainst: 'positive-bg-alt', minContrast: 4.5 },
     'positive-fg-alt':         { light: 'neutral.950', dark: 'neutral.50',  role: 'fg' },
     'positive-fg-inverse':     { light: 'success.50',  dark: 'success.950', role: 'fg', contrastAgainst: 'positive-bg-inverse', minContrast: 4.5 },
 

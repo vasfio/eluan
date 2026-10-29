@@ -105,7 +105,7 @@
   --seagreen-main: var(--color-seagreen-400);
   --seagreen-background: var(--color-seagreen-50);
   --seagreen-tint: var(--color-seagreen-100);
-  --seagreen-foreground: var(--color-seagreen-600);
+  --seagreen-foreground: var(--color-seagreen-700);
   --seagreen-shade: var(--color-seagreen-800);
   --forestgreen-main: var(--color-seagreen-400);
   --forestgreen-background: var(--color-seagreen-50);
@@ -124,7 +124,7 @@
   --torchred-main: var(--color-torchred-500);
   --torchred-background: var(--color-torchred-50);
   --torchred-tint: var(--color-torchred-100);
-  --torchred-foreground: var(--color-torchred-600);
+  --torchred-foreground: var(--color-torchred-700);
   --torchred-shade: var(--color-torchred-800);
   --blazeorange-main: var(--color-blazeorange-500);
   --blazeorange-background: var(--color-blazeorange-50);
@@ -215,7 +215,7 @@
   --seagreen-main: var(--color-seagreen-500);
   --seagreen-background: var(--color-seagreen-100);
   --seagreen-tint: var(--color-seagreen-200);
-  --seagreen-foreground: var(--color-seagreen-700);
+  --seagreen-foreground: var(--color-seagreen-800);
   --seagreen-shade: var(--color-seagreen-900);
   --forestgreen-main: var(--color-seagreen-500);
   --forestgreen-background: var(--color-seagreen-100);
@@ -234,7 +234,7 @@
   --torchred-main: var(--color-torchred-700);
   --torchred-background: var(--color-torchred-100);
   --torchred-tint: var(--color-torchred-200);
-  --torchred-foreground: var(--color-torchred-700);
+  --torchred-foreground: var(--color-torchred-800);
   --torchred-shade: var(--color-torchred-900);
   --blazeorange-main: var(--color-blazeorange-600);
   --blazeorange-background: var(--color-blazeorange-100);
