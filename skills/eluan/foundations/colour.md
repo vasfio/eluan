@@ -123,7 +123,7 @@ Values show the mode alias each token points to, then the resolved value in ligh
 | `--destructive-border-alt` | `--torchred-shade` → oklch(0.4695 0.1927 29.23) / dark oklch(0.8751 0.0665 18.51) | Destructive status and actions: subtle border |
 | `--destructive-border-disabled` | `--torchred-tint` → oklch(0.9322 0.0343 17.78) / dark oklch(0.4062 0.1665 28.83) | Destructive status and actions: border when disabled |
 | `--destructive-border-inverse` | `--torchred-background` → oklch(0.9691 0.0151 17.42) / dark oklch(0.2639 0.1083 29.23) | Destructive status and actions: border on an inverse surface |
-| `--destructive-fg` | `--torchred-foreground` → oklch(0.6242 0.2561 29.23) / dark oklch(0.9691 0.0151 17.42) | Destructive status and actions: text and icons |
+| `--destructive-fg` | `--torchred-foreground` → oklch(0.5444 0.2234 29.23) / dark oklch(0.9691 0.0151 17.42) | Destructive status and actions: text and icons |
 | `--destructive-fg-alt` | `--foregrounds-primary` → oklch(0.1448 0.0000 0.00) / dark oklch(1.0000 0.0000 0.00) | Destructive status and actions: muted text and icons |
 | `--destructive-fg-disabled` | `--foregrounds-quinary` → oklch(0.7090 0.0000 0.00) | Destructive status and actions: text when disabled |
 | `--destructive-fg-active` | `--backgrounds-primary` → oklch(1.0000 0.0000 0.00) / dark oklch(0.2686 0.0000 0.00) | Destructive status and actions: text while pressed |
@@ -144,7 +144,7 @@ Values show the mode alias each token points to, then the resolved value in ligh
 | `--positive-border` | `--seagreen-main` → oklch(0.7780 0.1777 159.41) | Positive status: border |
 | `--positive-border-alt` | `--seagreen-shade` → oklch(0.4389 0.0946 163.18) / dark oklch(0.9488 0.0579 162.90) | Positive status: subtle border |
 | `--positive-border-inverse` | `--seagreen-background` → oklch(0.9796 0.0247 164.47) / dark oklch(0.2646 0.0515 171.60) | Positive status: border on an inverse surface |
-| `--positive-fg` | `--seagreen-foreground` → oklch(0.6076 0.1406 158.63) / dark oklch(0.9796 0.0247 164.47) | Positive status: text and icons |
+| `--positive-fg` | `--seagreen-foreground` → oklch(0.5180 0.1144 161.56) / dark oklch(0.9796 0.0247 164.47) | Positive status: text and icons |
 | `--positive-fg-alt` | `--foregrounds-primary` → oklch(0.1448 0.0000 0.00) / dark oklch(1.0000 0.0000 0.00) | Positive status: muted text and icons |
 | `--positive-fg-inverse` | `--seagreen-background` → oklch(0.9796 0.0247 164.47) / dark oklch(0.2646 0.0515 171.60) | Positive status: text on an inverse surface |
 | `--informative-bg` | `--blueribbon-background` → oklch(0.9705 0.0142 254.60) / dark oklch(0.2795 0.0978 270.78) | Informative status: background |
