@@ -8,6 +8,7 @@ import { validateAccents, type ValidationWarning } from './input/validate.js';
 import { buildPrimitives } from './tokens/primitives.js';
 import { buildSemanticMap } from './tokens/semanticMap.js';
 import { autoCorrect } from './tokens/contrast.js';
+import { buildDarkPrimitives, DEFAULT_DARK_LIFT, MAX_DARK_LIFT } from './color/darkLift.js';
 import {
   compilePrimitivesCSS,
   compileModeCSS,
@@ -59,6 +60,8 @@ export function computeInputHash(config: GeneratorConfig): string {
     neutralTintRatio: config.neutralTintRatio,
     systemHues: config.systemHues,
     curve: config.curve,
+    // Only when set, so configs that predate the option keep their fingerprint
+    darkLift: config.darkLift,
   });
   // Take the high 48 bits: FNV-1a mixes upward through the multiply, so the high
   // nibbles are the better-distributed end of the digest.
@@ -81,6 +84,7 @@ function buildReport(
   lines.push(`**Accents:** ${config.accents.join(', ')}`);
   lines.push(`**Min contrast:** ${config.minContrast}:1`);
   lines.push(`**Neutral tint ratio:** ${config.neutralTintRatio}`);
+  lines.push(`**Dark lift:** ${config.darkLift ?? DEFAULT_DARK_LIFT}`);
   lines.push('');
 
   if (warnings.length > 0) {
@@ -147,13 +151,19 @@ export function generateTheme(config: GeneratorConfig): GeneratorResult {
 
   const primitives = buildPrimitives(accentInputs, config);
 
+  const darkLift = config.darkLift ?? DEFAULT_DARK_LIFT;
+  if (!Number.isFinite(darkLift) || darkLift < 0 || darkLift > MAX_DARK_LIFT) {
+    throw new Error(`darkLift must be between 0 and ${MAX_DARK_LIFT}, got ${config.darkLift}.`);
+  }
+  const primitivesDark = buildDarkPrimitives(primitives, darkLift);
+
   let semanticMap = buildSemanticMap();
 
   const lightResult = autoCorrect(semanticMap, primitives, 'light', config.minContrast);
   semanticMap = lightResult.correctedMap;
   const lightCorrections = lightResult.corrections;
 
-  const darkResult = autoCorrect(semanticMap, primitives, 'dark', config.minContrast);
+  const darkResult = autoCorrect(semanticMap, primitivesDark, 'dark', config.minContrast);
   semanticMap = darkResult.correctedMap;
   const darkCorrections = darkResult.corrections;
 
@@ -161,8 +171,8 @@ export function generateTheme(config: GeneratorConfig): GeneratorResult {
 
   const primitivesCSS = compilePrimitivesCSS(primitives, config.themeName);
   const lightModeCSS = compileModeCSS(semanticMap, primitives, 'light', config.themeName);
-  const darkModeCSS = compileModeCSS(semanticMap, primitives, 'dark', config.themeName);
-  const themeCSS = compileThemeCSS(semanticMap, primitives, config.themeName, inputHash);
+  const darkModeCSS = compileModeCSS(semanticMap, primitivesDark, 'dark', config.themeName);
+  const themeCSS = compileThemeCSS(semanticMap, primitives, config.themeName, inputHash, primitivesDark);
 
   const createThemeTokens: Record<string, string> = {};
   const lightTokens = compileCreateThemeTokens(semanticMap, primitives, 'light');
@@ -174,6 +184,7 @@ export function generateTheme(config: GeneratorConfig): GeneratorResult {
 
   return {
     primitives,
+    primitivesDark,
     semanticMap,
     corrections: allCorrections,
     css: {

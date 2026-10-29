@@ -184,7 +184,8 @@ export function compileThemeCSS(
   map: SemanticMap,
   primitives: PrimitiveTokens,
   themeName: string,
-  inputHash: string
+  inputHash: string,
+  darkPrimitives: PrimitiveTokens = primitives
 ): string {
   const lines: string[] = [];
 
@@ -198,7 +199,7 @@ export function compileThemeCSS(
 
   for (const [token, entry] of Object.entries(map)) {
     const lightHex = resolveHex(entry.light, primitives);
-    const darkHex = resolveHex(entry.dark, primitives);
+    const darkHex = resolveHex(entry.dark, darkPrimitives);
 
     lightLines.push(`  --${token}: ${lightHex}; /* ${entry.light} */`);
     darkLines.push(`  --${token}: ${darkHex}; /* ${entry.dark} */`);

@@ -1,5 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { generateTheme, computeInputHash } from './generate.js';
+import { compileCreateThemeTokens } from './compile/css.js';
+import { checkContrast } from './tokens/contrast.js';
 import type { GeneratorConfig } from './types.js';
 
 const ORANGE_CONFIG: GeneratorConfig = {
@@ -172,6 +174,64 @@ describe('minContrast floor semantics', () => {
     expect(aaa.semanticMap['interactive-fg-alt'].allowBelowDefault).toBe(true);
     expect(aaa.corrections.map((c) => c.token)).not.toContain('interactive-fg-alt');
     expect(aaa.semanticMap['interactive-fg-alt']).toEqual(aa.semanticMap['interactive-fg-alt']);
+  });
+});
+
+describe('dark lift', () => {
+  const ACCENTS = ['#2F6F5E', '#FF4A2C', '#FFD60A', '#1D4ED8', '#7C3AED'];
+
+  it('brightens dark-mode colours by default', () => {
+    const flat = generateTheme({ ...ORANGE_CONFIG, darkLift: 0 });
+    const lifted = generateTheme(ORANGE_CONFIG);
+    const l = (hex: string) => checkContrast(hex, '#000000');
+
+    const flatDark = compileCreateThemeTokens(flat.semanticMap, flat.primitivesDark, 'dark');
+    const liftedDark = compileCreateThemeTokens(lifted.semanticMap, lifted.primitivesDark, 'dark');
+    expect(l(liftedDark['--action-primary-bg'])).toBeGreaterThan(l(flatDark['--action-primary-bg']));
+    expect(l(liftedDark['--destructive-border'])).toBeGreaterThan(l(flatDark['--destructive-border']));
+    expect(l(liftedDark['--dataviz-1-main'])).toBeGreaterThan(l(flatDark['--dataviz-1-main']));
+  });
+
+  it('leaves light mode alone', () => {
+    const flat = generateTheme({ ...ORANGE_CONFIG, darkLift: 0 });
+    const lifted = generateTheme(ORANGE_CONFIG);
+
+    expect(lifted.css.lightMode).toBe(flat.css.lightMode);
+    expect(lifted.createThemeTokens).toEqual(flat.createThemeTokens);
+  });
+
+  it('resolves dark mode against the light primitives at 0', () => {
+    const flat = generateTheme({ ...ORANGE_CONFIG, darkLift: 0 });
+
+    expect(flat.primitivesDark).toBe(flat.primitives);
+  });
+
+  it('keeps every checked pair at its minimum in both modes', () => {
+    for (const accent of ACCENTS) {
+      const r = generateTheme({ ...ORANGE_CONFIG, accents: [accent] });
+      const modes = {
+        light: compileCreateThemeTokens(r.semanticMap, r.primitives, 'light'),
+        dark: compileCreateThemeTokens(r.semanticMap, r.primitivesDark, 'dark'),
+      };
+      for (const [token, entry] of Object.entries(r.semanticMap)) {
+        if (!entry.contrastAgainst) continue;
+        const floor = entry.allowBelowDefault ? entry.minContrast! : Math.max(entry.minContrast ?? 0, 4.5);
+        for (const map of Object.values(modes)) {
+          const ratio = checkContrast(map[`--${token}`], map[`--${entry.contrastAgainst}`]);
+          expect(ratio, `${accent} ${token}`).toBeGreaterThanOrEqual(floor - 1e-6);
+        }
+      }
+    }
+  });
+
+  it('rejects a lift out of range', () => {
+    expect(() => generateTheme({ ...ORANGE_CONFIG, darkLift: -0.1 })).toThrow(/darkLift/);
+    expect(() => generateTheme({ ...ORANGE_CONFIG, darkLift: 0.5 })).toThrow(/darkLift/);
+  });
+
+  it('fingerprints an explicit lift and reports the one used', () => {
+    expect(computeInputHash(ORANGE_CONFIG)).not.toBe(computeInputHash({ ...ORANGE_CONFIG, darkLift: 0.12 }));
+    expect(generateTheme(ORANGE_CONFIG).report).toContain('**Dark lift:** 0.08');
   });
 });
 

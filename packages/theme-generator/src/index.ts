@@ -3,6 +3,7 @@ export { validateAccents, normalizeHex, classifyAccent } from './input/validate.
 export { hexToOklch, oklchToHex, gamutMap } from './color/convert.js';
 export { DEFAULT_CURVE, validateCurve } from './color/curves.js';
 export { generateScale } from './color/scale.js';
+export { buildDarkPrimitives, liftScale, DEFAULT_DARK_LIFT, MAX_DARK_LIFT, DARK_LIFT_WEIGHTS } from './color/darkLift.js';
 export { generateSystemScales, DEFAULT_SYSTEM_HUES } from './color/systemHues.js';
 export { generateNeutralScale } from './color/neutral.js';
 export { buildSemanticMap } from './tokens/semanticMap.js';

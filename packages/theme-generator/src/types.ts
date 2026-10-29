@@ -60,6 +60,13 @@ export type GeneratorConfig = {
   neutralTintRatio: number;
   curve?: ScaleStep[];
   systemHues?: Partial<Record<SystemHueName, number>>;
+  /**
+   * OKLCH lightness added to the colour ramps dark mode uses, so accents and
+   * status colours read as vivid on a dark ground as they do on a light one.
+   * Full on the mid steps, tapering to 0 at 50 and 950; neutral is never
+   * lifted. 0 turns it off. Default 0.08, maximum 0.2.
+   */
+  darkLift?: number;
 };
 
 export type AccentClassification = 'normal' | 'low-chroma' | 'extreme-lightness';
@@ -82,6 +89,8 @@ export type ContrastCorrection = {
 
 export type GeneratorResult = {
   primitives: PrimitiveTokens;
+  /** The primitives dark mode resolves against: `primitives` with the colour ramps lifted by `darkLift`. */
+  primitivesDark: PrimitiveTokens;
   semanticMap: SemanticMap;
   corrections: ContrastCorrection[];
   css: {
