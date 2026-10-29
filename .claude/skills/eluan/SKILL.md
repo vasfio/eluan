@@ -148,6 +148,8 @@ Behind the scenes: `createTheme` returns `{ name, extends, css }` where `css` is
 
 `setTheme("acme")` then works exactly like `setTheme("minimal")`.
 
+For values that differ by mode, add `modes: { dark: { … } }` (or `dim`); each becomes a `[data-theme-custom="<name>"][data-mode="<mode>"]` rule layered after the base one. `@eluan/theme-generator` returns a generated theme in this shape already: `generateTheme(…).customTheme` goes straight into `customThemes` and covers light and dark (its dark colours are lifted brighter by `darkLift`), and `createThemeOptions` spreads into `createTheme()`.
+
 ---
 
 ## Component inventory (`@eluan/core`)
@@ -506,6 +508,7 @@ createTheme({
   name:     "acme",                         // starts with a letter; letters, digits, hyphens
   extends?: "minimal",                      // the only built-in; default "minimal"
   tokens:   { "--container-bg": "…", … },   // partial map of token overrides
+  modes?:   { dark?: { … }, dim?: { … } },    // per-mode overrides on top of tokens
 }): CustomTheme   // → { name, extends, css }
 
 // Font preloader (rarely needed — Provider calls this automatically)

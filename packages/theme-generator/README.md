@@ -33,6 +33,7 @@ Options:
 | `--out <dir>` | `./tokens` | Output directory |
 | `--min-contrast <num>` | `4.5` | Minimum contrast ratio to enforce |
 | `--neutral-tint <num>` | `0.04` | Neutral tint ratio |
+| `--dark-lift <num>` | `0.08` | OKLCH lightness added to dark-mode colours, 0–0.2 |
 | `--config <path>` | — | Path to a JSON config file |
 
 You can also drop a `eluan-theme.config.json` in your project root; CLI flags override its values.
@@ -41,7 +42,7 @@ You can also drop a `eluan-theme.config.json` in your project root; CLI flags ov
 { "name": "ocean", "accents": ["#FF4A2C"], "outDir": "./tokens" }
 ```
 
-The generator writes primitive + semantic token JSON, theme CSS, and a smoke-test preview HTML you can open to eyeball the result.
+The generator writes primitive + semantic token JSON, theme CSS, a smoke-test preview HTML you can open to eyeball the result, and the two files for applying the theme in both modes: `custom-theme.css` (register it like a `createTheme()` result) and `create-theme.json` (`{ name, tokens, modes }` for `createTheme()`).
 
 ## Programmatic API
 
@@ -53,14 +54,23 @@ const result = generateTheme({
   themeName: "ocean",
   minContrast: 4.5,
   neutralTintRatio: 0.04,
+  darkLift: 0.08,             // optional; brighter dark-mode colours (0 turns it off)
 })
 
-result.css.theme          // drop-in CSS for both modes, as a string
-result.createThemeTokens  // light-mode token map for createTheme()
+result.customTheme        // { name, extends, css }: pass to <EluanProvider customThemes={[…]} />
+result.createThemeOptions // { tokens, modes: { dark } }: spread into createTheme() from @eluan/core
 result.report             // markdown report: warnings, contrast corrections
+result.css.theme          // standalone CSS for both modes, scoped to [data-theme="ocean"]
+result.createThemeTokens  // light-mode token map only (kept for compatibility)
 ```
 
-Lower-level helpers are exported too — `generateScale`, `buildPrimitives`, `buildSemanticMap`, `checkContrast`, `autoCorrect`, `compileThemeCSS`, `compileCreateThemeTokens`, and the `hexToOklch` / `oklchToHex` color utilities. See the exported TypeScript types for the full shape of `GeneratorResult`.
+`customTheme` and `createThemeOptions` cover light and dark mode and layer on top of `minimal`, so its fonts and neutral ramp stay in place. `css.theme` replaces the theme instead, so it drops them; prefer the first two in apps that use `EluanProvider`.
+
+### Brighter dark mode
+
+Dark grounds swallow mid-tone colour, so dark mode resolves against `result.primitivesDark`: every colour ramp (accents and status hues, never neutral) lifted in OKLCH lightness by `darkLift`. The lift is full on steps 300–600 and tapers to nothing at 50 and 950, so surfaces and tints stay dark. Contrast is checked for every pair against the lifted ramp, and the report lists any corrections; on bright accents that usually means dark text on the primary button in dark mode. Light mode is unaffected.
+
+Lower-level helpers are exported too — `generateScale`, `buildPrimitives`, `buildDarkPrimitives`, `buildSemanticMap`, `checkContrast`, `autoCorrect`, `compileThemeCSS`, `compileCreateThemeTokens`, `compileCustomThemeCSS`, and the `hexToOklch` / `oklchToHex` color utilities. See the exported TypeScript types for the full shape of `GeneratorResult`.
 
 ## Use in the browser
 
@@ -69,26 +79,28 @@ The package entry pulls in nothing from Node — no `fs`, no `crypto` — so you
 ```tsx
 "use client"
 
-import { generateTheme, compileCreateThemeTokens } from "@eluan/theme-generator"
+import { generateTheme } from "@eluan/theme-generator"
 
 function applyTheme(accent: string) {
-  const result = generateTheme({
+  const { customTheme, createThemeOptions } = generateTheme({
     accents: [accent],
     themeName: "live",
     minContrast: 4.5,
     neutralTintRatio: 0.04,
   })
 
-  // Option A — inject the compiled CSS (both modes, scoped to data-theme="live")
-  const style = document.createElement("style")
-  style.textContent = result.css.theme
-  document.head.append(style)
-  document.documentElement.dataset.theme = "live"
+  // Option A — with EluanProvider: register it and switch to it
+  //   <EluanProvider customThemes={[customTheme]} /> … setTheme("live")
 
-  // Option B — take the raw token maps and hand them to createTheme()
-  const light = result.createThemeTokens
-  const dark = compileCreateThemeTokens(result.semanticMap, result.primitives, "dark")
-  return { light, dark }
+  // Option B — without the Provider: inject the CSS and set the attributes it targets
+  const style = document.createElement("style")
+  style.textContent = customTheme.css
+  document.head.append(style)
+  document.documentElement.dataset.theme = "minimal"
+  document.documentElement.dataset.themeCustom = "live"
+
+  // Option C — the token maps, for createTheme({ name: "live", ...createThemeOptions })
+  return createThemeOptions
 }
 ```
 

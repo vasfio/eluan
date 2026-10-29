@@ -59,7 +59,7 @@ These are the theme-level tokens a custom theme most often changes. The full sem
 
 ## Generating a theme
 
-From the CLI (writes `primitives.json`, `semantic.json`, `theme.css`, `preview.html` and `report.md` to the output directory):
+From the CLI (writes `custom-theme.css` and `create-theme.json` for applying the theme, plus `primitives.json`, `semantic.json`, `theme.css`, `preview.html` and `report.md`, to the output directory):
 
 ```bash
 pnpm dlx @eluan/theme-generator generate --accent "#2F6F5E" --name forest --out ./src/theme
@@ -77,10 +77,12 @@ const result = generateTheme({
   neutralTintRatio: 0.04,
 });
 
-result.createThemeTokens; // light-mode token map for createTheme()
-result.css.theme; // CSS for light and dark, scoped to [data-theme="forest"][data-mode]
+result.customTheme; // ready for EluanProvider's customThemes: light and dark, layered on minimal
+result.createThemeOptions; // { tokens, modes: { dark } } for createTheme()
 result.report; // markdown: warnings and contrast corrections
 ```
+
+Dark-mode colours come out brighter than light-mode ones: the generator lifts the colour ramps dark mode uses (`darkLift`, 0.08 by default) and still checks contrast for every pair. Don't brighten dark colours by hand. Dim mode uses the light values.
 
 The accent hex is the one place a raw colour belongs: it's generator input, not a token value. Keep the generator call or its output in the app's source, next to the code that registers the theme. <!-- REVIEW: the repo has no convention for where a generated theme lives in a consumer app; ./src/theme is a suggestion. -->
 
@@ -88,11 +90,10 @@ The accent hex is the one place a raw colour belongs: it's generator input, not 
 
 ```tsx
 import "@eluan/core/styles.css";
-import { EluanProvider, createTheme, useEluanTheme } from "@eluan/core";
+import { EluanProvider, useEluanTheme } from "@eluan/core";
 import { generateTheme } from "@eluan/theme-generator";
 
-const generated = generateTheme({ accents: ["#2F6F5E"], themeName: "forest", minContrast: 4.5, neutralTintRatio: 0.04 });
-const forest = createTheme({ name: "forest", tokens: generated.createThemeTokens });
+const { customTheme: forest } = generateTheme({ accents: ["#2F6F5E"], themeName: "forest", minContrast: 4.5, neutralTintRatio: 0.04 });
 
 export function App({ children }: { children: React.ReactNode }) {
   return (
@@ -112,9 +113,24 @@ export function ThemeSwitch() {
 }
 ```
 
-`createTheme` extends `minimal`, so you only pass the tokens that change. The Provider sets `data-theme="minimal"` plus `data-theme-custom="forest"` and injects the theme's CSS once.
+The Provider sets `data-theme="minimal"` plus `data-theme-custom="forest"`, injects the theme's CSS once, and applies its dark values whenever `data-mode="dark"`.
 
-<!-- REVIEW: createTheme takes one token map, and generateTheme's createThemeTokens is light-mode only, so a generated theme applied this way keeps its light values in dark mode. result.css.theme has both modes but targets [data-theme="forest"], which drops minimal's font and neutral-ramp aliases (eluan-docs works around this with data-eluan-generated-theme). There is no documented dual-mode consumer path yet. -->
+To mix generated colours with tokens of your own (fonts, say), use `createTheme`, which extends `minimal` and takes per-mode overrides under `modes`:
+
+```tsx
+import { createTheme } from "@eluan/core";
+import { generateTheme } from "@eluan/theme-generator";
+
+const { createThemeOptions } = generateTheme({ accents: ["#2F6F5E"], themeName: "forest", minContrast: 4.5, neutralTintRatio: 0.04 });
+
+export const forest = createTheme({
+  name: "forest",
+  ...createThemeOptions,
+  tokens: { ...createThemeOptions.tokens, "--font-heading": '"Fraunces", serif' },
+});
+```
+
+Don't apply `result.css.theme` or `createThemeTokens` alone: the first drops `minimal`'s fonts and neutral ramp, the second has no dark values.
 
 Dark mode, density and corner style are separate axes:
 
@@ -135,7 +151,7 @@ To theme one region, point an `EluanProvider` at that element with `target`, and
 
 | If you need… | Use |
 | --- | --- |
-| a brand colour | the theme generator, then `createTheme` |
+| a brand colour | the theme generator's `customTheme`, registered with `customThemes` |
 | rounder or sharper corners everywhere | `defaultCurves="sweeping"` or `"sharp"` |
 | a denser or roomier UI | `defaultSpacing="compact"` or `"wide"` |
 | a dark mode toggle | a Switch that calls `setMode` from `useEluanTheme()` |
@@ -148,7 +164,7 @@ To theme one region, point an `EluanProvider` at that element with `target`, and
 **Do:** change the look at the theme level.
 
 ```tsx
-const brand = createTheme({ name: "brand", tokens: generated.createThemeTokens });
+const { customTheme: brand } = generateTheme({ accents: ["#2F6F5E"], themeName: "brand", minContrast: 4.5, neutralTintRatio: 0.04 });
 
 <EluanProvider customThemes={[brand]} defaultTheme="brand" defaultCurves="sweeping">
   <App />
