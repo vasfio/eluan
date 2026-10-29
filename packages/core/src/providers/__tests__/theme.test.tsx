@@ -64,6 +64,28 @@ describe("createTheme", () => {
   it("rejects invalid theme names", () => {
     expect(() => createTheme({ name: "9lives", tokens: {} })).toThrow(/invalid theme name/);
   });
+
+  it("layers per-mode overrides after the base rule", () => {
+    const forest = createTheme({
+      name: "forest",
+      tokens: { "--action-primary-bg": "#2f6f5e" },
+      modes: { dark: { "--action-primary-bg": "#5fa38f" } },
+    });
+
+    const base = forest.css.indexOf('[data-theme-custom="forest"] {');
+    const dark = forest.css.indexOf('[data-theme-custom="forest"][data-mode="dark"],');
+    expect(base).toBe(0);
+    expect(dark).toBeGreaterThan(base);
+    expect(forest.css).toContain('[data-theme-custom="forest"][data-mode="Dark"] {');
+    expect(forest.css.slice(dark)).toContain("--action-primary-bg: #5fa38f;");
+    expect(forest.css.slice(0, dark)).toContain("--action-primary-bg: #2f6f5e;");
+  });
+
+  it("skips modes with no overrides", () => {
+    const forest = createTheme({ name: "forest", tokens: { "--container-bg": "#fafafa" }, modes: { dim: {} } });
+
+    expect(forest.css).not.toContain("data-mode");
+  });
 });
 
 describe("EluanProvider", () => {
@@ -92,6 +114,26 @@ describe("EluanProvider", () => {
     expect(screen.getByTestId("theme")).toHaveTextContent("acme");
     expect(document.documentElement).toHaveAttribute("data-theme", "minimal");
     expect(document.documentElement).toHaveAttribute("data-theme-custom", "acme");
+  });
+
+  it("injects a custom theme's per-mode rules", () => {
+    const forest = createTheme({
+      name: "forest",
+      tokens: { "--container-bg": "#f5f5f5" },
+      modes: { dark: { "--container-bg": "#3a3b3a" } },
+    });
+
+    render(
+      <EluanProvider customThemes={[forest]} defaultTheme="forest" defaultMode="dark" persist={false}>
+        <ThemeProbe />
+      </EluanProvider>,
+    );
+
+    expect(document.documentElement).toHaveAttribute("data-theme-custom", "forest");
+    expect(document.documentElement).toHaveAttribute("data-mode", "dark");
+    expect(document.getElementById("eluan-custom-themes")?.textContent).toContain(
+      '[data-theme-custom="forest"][data-mode="dark"]',
+    );
   });
 
   it("ignores unregistered theme names", async () => {

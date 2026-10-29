@@ -1,4 +1,4 @@
-import type { Theme } from "@eluan/tokens"
+import type { Mode, Theme } from "@eluan/tokens"
 
 // ============================================
 // createTheme — define a custom theme with token overrides
@@ -41,6 +41,15 @@ export interface CreateThemeOptions {
   extends?: Theme
   /** CSS variables to override. Everything else is inherited from `extends`. */
   tokens: ThemeTokenOverrides
+  /**
+   * Per-mode overrides, layered on `tokens` while `data-mode` matches. Use them
+   * when a theme needs different values in dark (or dim) mode, as a theme from
+   * `@eluan/theme-generator` does; modes you leave out use `tokens`.
+   *
+   * @example
+   * createTheme({ name: "forest", tokens: light, modes: { dark } })
+   */
+  modes?: Partial<Record<Mode, ThemeTokenOverrides>>
 }
 
 export interface CustomTheme {
@@ -71,7 +80,7 @@ export interface CustomTheme {
  * })
  */
 export function createTheme(options: CreateThemeOptions): CustomTheme {
-  const { name, extends: base = "minimal", tokens } = options
+  const { name, extends: base = "minimal", tokens, modes = {} } = options
 
   if (!/^[a-z][a-z0-9-]*$/i.test(name)) {
     throw new Error(
@@ -79,14 +88,27 @@ export function createTheme(options: CreateThemeOptions): CustomTheme {
     )
   }
 
-  const declarations = Object.entries(tokens)
-    .map(([prop, value]) => `  ${prop}: ${value};`)
-    .join("\n")
+  const declarations = (map: ThemeTokenOverrides) =>
+    Object.entries(map)
+      .map(([prop, value]) => `  ${prop}: ${value};`)
+      .join("\n")
 
   // Custom themes target a separate attribute so they layer on top of the
   // base theme without conflict. The Provider sets BOTH `data-theme=<base>`
   // and `data-theme-custom=<name>` on the target element.
-  const css = `[data-theme-custom="${name}"] {\n${declarations}\n}`
+  const blocks = [`[data-theme-custom="${name}"] {\n${declarations(tokens)}\n}`]
+
+  // Mode blocks add `[data-mode]` (specificity 0,2,0), so they win over the
+  // base block and over modes.css's own mode-aware tokens. Both casings, as
+  // modes.css matches them.
+  for (const [mode, map] of Object.entries(modes)) {
+    if (!map || Object.keys(map).length === 0) continue
+    const cased = mode[0].toUpperCase() + mode.slice(1)
+    blocks.push(
+      `[data-theme-custom="${name}"][data-mode="${mode}"],\n[data-theme-custom="${name}"][data-mode="${cased}"] {\n${declarations(map)}\n}`
+    )
+  }
+  const css = blocks.join("\n\n")
 
   return { name, extends: base, css }
 }
