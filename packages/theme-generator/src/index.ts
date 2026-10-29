@@ -16,6 +16,7 @@ export {
   compileModeCSS,
   compileThemeCSS,
   compileCreateThemeTokens,
+  compileCustomThemeCSS,
 } from './compile/css.js';
 export { generateSmokeHTML } from './preview/smoke.js';
 
@@ -36,4 +37,5 @@ export type {
   ValidatedAccent,
   ContrastCorrection,
   GeneratorResult,
+  GeneratedCustomTheme,
 } from './types.js';

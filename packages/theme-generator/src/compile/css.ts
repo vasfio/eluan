@@ -54,7 +54,8 @@ export function compilePrimitivesJSON(primitives: PrimitiveTokens): string {
 
 export function compileSemanticJSON(
   map: SemanticMap,
-  primitives: PrimitiveTokens
+  primitives: PrimitiveTokens,
+  darkPrimitives: PrimitiveTokens = primitives
 ): string {
   const doc: Record<string, unknown> = {};
   for (const [token, entry] of Object.entries(map)) {
@@ -65,7 +66,7 @@ export function compileSemanticJSON(
         $ref: entry.light,
       },
       dark: {
-        $value: resolveHex(entry.dark, primitives),
+        $value: resolveHex(entry.dark, darkPrimitives),
         $ref: entry.dark,
       },
       role: entry.role,
@@ -229,4 +230,27 @@ export function compileCreateThemeTokens(
     tokens[`--${token}`] = resolveHex(ref, primitives);
   }
   return tokens;
+}
+
+/**
+ * CSS for a custom theme layered on `minimal`, in the same shape `createTheme()`
+ * from @eluan/core emits: the light tokens on `[data-theme-custom="<name>"]`
+ * and the dark tokens on that plus `[data-mode="dark"]`. Because the theme sits
+ * on top of `minimal` instead of replacing it, `minimal`'s fonts and neutral
+ * ramp stay in place.
+ */
+export function compileCustomThemeCSS(
+  themeName: string,
+  light: Record<string, string>,
+  dark: Record<string, string>
+): string {
+  const name = themeName.replace(/["\\]/g, '\\$&');
+  const body = (tokens: Record<string, string>) =>
+    Object.entries(tokens)
+      .map(([prop, value]) => `  ${prop}: ${value};`)
+      .join('\n');
+  return [
+    `[data-theme-custom="${name}"] {\n${body(light)}\n}`,
+    `[data-theme-custom="${name}"][data-mode="dark"],\n[data-theme-custom="${name}"][data-mode="Dark"] {\n${body(dark)}\n}`,
+  ].join('\n\n');
 }

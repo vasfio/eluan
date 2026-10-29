@@ -14,6 +14,7 @@ import {
   compileModeCSS,
   compileThemeCSS,
   compileCreateThemeTokens,
+  compileCustomThemeCSS,
 } from './compile/css.js';
 
 /*
@@ -180,6 +181,14 @@ export function generateTheme(config: GeneratorConfig): GeneratorResult {
     createThemeTokens[k] = v;
   }
 
+  const darkTokens = compileCreateThemeTokens(semanticMap, primitivesDark, 'dark');
+  const createThemeOptions = { tokens: createThemeTokens, modes: { dark: darkTokens } };
+  const customTheme = {
+    name: config.themeName,
+    extends: 'minimal' as const,
+    css: compileCustomThemeCSS(config.themeName, createThemeTokens, darkTokens),
+  };
+
   const report = buildReport(config, warnings, allCorrections, primitives, inputHash);
 
   return {
@@ -194,6 +203,8 @@ export function generateTheme(config: GeneratorConfig): GeneratorResult {
       theme: themeCSS,
     },
     createThemeTokens,
+    createThemeOptions,
+    customTheme,
     report,
   };
 }

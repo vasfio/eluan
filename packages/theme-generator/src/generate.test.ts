@@ -235,6 +235,39 @@ describe('dark lift', () => {
   });
 });
 
+describe('dual-mode consumer outputs', () => {
+  it('returns createTheme options with light tokens and dark overrides', () => {
+    const r = generateTheme(ORANGE_CONFIG);
+
+    expect(r.createThemeOptions.tokens).toEqual(r.createThemeTokens);
+    expect(r.createThemeOptions.modes.dark).toEqual(
+      compileCreateThemeTokens(r.semanticMap, r.primitivesDark, 'dark'),
+    );
+    expect(r.createThemeOptions.modes.dark['--action-primary-bg']).not.toBe(r.createThemeTokens['--action-primary-bg']);
+  });
+
+  it('returns a ready custom theme layered on minimal', () => {
+    const r = generateTheme(ORANGE_CONFIG);
+    const { css } = r.customTheme;
+    const dark = css.indexOf('[data-theme-custom="test-orange"][data-mode="dark"],');
+
+    expect(r.customTheme.name).toBe('test-orange');
+    expect(r.customTheme.extends).toBe('minimal');
+    expect(css.startsWith('[data-theme-custom="test-orange"] {')).toBe(true);
+    expect(dark).toBeGreaterThan(0);
+    expect(css).toContain('[data-theme-custom="test-orange"][data-mode="Dark"] {');
+    expect(css.slice(0, dark)).toContain(`--action-primary-bg: ${r.createThemeTokens['--action-primary-bg']};`);
+    expect(css.slice(dark)).toContain(`--action-primary-bg: ${r.createThemeOptions.modes.dark['--action-primary-bg']};`);
+    expect(css).not.toContain('[data-theme=');
+  });
+
+  it('escapes quotes in the theme name', () => {
+    const r = generateTheme({ ...ORANGE_CONFIG, themeName: 'say "hi"' });
+
+    expect(r.customTheme.css).toContain('[data-theme-custom="say \\"hi\\""]');
+  });
+});
+
 describe('snapshot: orange theme', () => {
   const result = generateTheme(ORANGE_CONFIG);
 

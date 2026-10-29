@@ -99,6 +99,24 @@ export type GeneratorResult = {
     darkMode: string;
     theme: string;
   };
+  /** Light-mode token map for `createTheme({ tokens })`. Kept for compatibility; prefer `createThemeOptions`. */
   createThemeTokens: Record<string, string>;
+  /** Light and dark token maps for `createTheme({ name, ...createThemeOptions })` from @eluan/core. */
+  createThemeOptions: {
+    tokens: Record<string, string>;
+    modes: { dark: Record<string, string> };
+  };
+  /**
+   * A ready custom theme, the same shape `createTheme()` returns: pass it to
+   * `<EluanProvider customThemes={[customTheme]} />`. Covers light and dark mode.
+   */
+  customTheme: GeneratedCustomTheme;
   report: string;
+};
+
+/** Structurally identical to @eluan/core's `CustomTheme`. */
+export type GeneratedCustomTheme = {
+  name: string;
+  extends: 'minimal';
+  css: string;
 };

@@ -162,6 +162,24 @@ describe('CLI: generate command', () => {
     expect(existsSync(join(outDir, 'theme.css'))).toBe(true);
     expect(existsSync(join(outDir, 'preview.html'))).toBe(true);
     expect(existsSync(join(outDir, 'report.md'))).toBe(true);
+    expect(existsSync(join(outDir, 'custom-theme.css'))).toBe(true);
+    expect(existsSync(join(outDir, 'create-theme.json'))).toBe(true);
+  });
+
+  it('writes createTheme options with light and dark tokens', () => {
+    const { exitCode } = run(['generate', '--accent', '#FF4A2C', '--name', 'ember', '--out', outDir]);
+    expect(exitCode).toBe(0);
+    const options = JSON.parse(readFileSync(join(outDir, 'create-theme.json'), 'utf8'));
+    expect(options.name).toBe('ember');
+    expect(options.tokens['--action-primary-bg']).toMatch(/^#[0-9a-f]{6}$/);
+    expect(options.modes.dark['--action-primary-bg']).toMatch(/^#[0-9a-f]{6}$/);
+    expect(readFileSync(join(outDir, 'custom-theme.css'), 'utf8')).toContain('[data-theme-custom="ember"][data-mode="dark"]');
+  });
+
+  it('accepts --dark-lift', () => {
+    const { exitCode } = run(['generate', '--accent', '#FF4A2C', '--dark-lift', '0', '--out', outDir]);
+    expect(exitCode).toBe(0);
+    expect(readFileSync(join(outDir, 'report.md'), 'utf8')).toContain('**Dark lift:** 0');
   });
 
   it('supports multiple accents', () => {

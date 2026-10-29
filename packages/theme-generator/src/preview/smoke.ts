@@ -60,7 +60,8 @@ function semanticPairingHTML(
 export function generateSmokeHTML(
   primitives: PrimitiveTokens,
   semanticMap: SemanticMap,
-  themeName: string
+  themeName: string,
+  darkPrimitives: PrimitiveTokens = primitives
 ): string {
   const scaleNames = Object.keys(primitives) as ScaleName[];
   const scaleSection = scaleNames
@@ -79,8 +80,9 @@ export function generateSmokeHTML(
     for (const mode of ['light', 'dark'] as const) {
       const fgRef = entry[mode];
       const bgRef = bgEntry[mode];
-      const fgHex = resolveHex(fgRef, primitives);
-      const bgHex = resolveHex(bgRef, primitives);
+      const source = mode === 'dark' ? darkPrimitives : primitives;
+      const fgHex = resolveHex(fgRef, source);
+      const bgHex = resolveHex(bgRef, source);
       pairingRows.push(
         semanticPairingHTML(token, fgHex, bgHex, fgRef, bgRef, mode)
       );
