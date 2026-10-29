@@ -68,7 +68,7 @@ Input has no `variant` prop. These props change its look:
 | Disabled | `--interactive-bg-disabled` fill, `--interactive-fg-disabled` text, not-allowed cursor | Set `disabled` on the Label too so it greys out. |
 | Read-only | No distinct style | `readOnly` passes through, but nothing marks it visually. <!-- REVIEW: no read-only styling in source. --> |
 | Error | `aria-invalid` gives a `--destructive-border` border. With the boolean `aria-invalid={true}`, the focus border and outline stay destructive too | Pass the boolean, not the string `"true"`: the focus style checks `=== true`. Show the message in a FormMessage. |
-| Valid | `validationTone="positive"`: `--positive-fg` border, `--positive-bg-alt` focus outline | |
+| Valid | `validationTone="positive"`: `--positive-fg` border and focus outline. `validationTone="destructive"` does the same in `--destructive-fg` | |
 
 There's no hover style.
 
