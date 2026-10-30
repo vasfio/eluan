@@ -20,7 +20,7 @@ Eluan's look comes from CSS custom properties in three layers: primitives (raw v
 
 The theme generator controls colour only: one to three accent colours, the neutral tint (how much accent bleeds into the greys) and a minimum contrast ratio (default 4.5). Corner style, density and type scale are Provider axes, not generator output.
 
-Contrast is checked when the theme is generated. The generator auto-corrects any foreground and background pair that falls below the minimum and lists the corrections in its report. That's why you never override colour pairs by hand.
+Contrast is checked when the theme is generated. The generator auto-corrects any foreground and background pair that falls below the minimum, moving the foreground the fewest steps along its own ramp that pass, and lists the corrections in its report. That's why you never override colour pairs by hand.
 
 ## Rules
 

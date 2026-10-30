@@ -70,6 +70,10 @@ result.createThemeTokens  // light-mode token map only (kept for compatibility)
 
 `customTheme` and `createThemeOptions` cover light, dim and dark mode and layer on top of `minimal`, so its fonts and neutral ramp stay in place. `css.theme` replaces the theme instead, so it drops them; prefer the first two in apps that use `EluanProvider`.
 
+### Contrast correction
+
+When a foreground falls short of the minimum against its background, the generator moves it the fewest steps along its own ramp that pass: darker in light mode, lighter in dark mode, and in dim whichever way suits the ground. Brand-coloured text like Outline and Ghost button labels stays as close to its brand step as contrast allows. Only when no step on the ramp passes does it fall back to neutral, white or black. Every correction is listed in `result.report`.
+
 ### Brighter dark mode
 
 Dark grounds swallow mid-tone colour, so dark mode resolves against `result.primitivesDark`: every colour ramp (accents and status hues, never neutral) lifted in OKLCH lightness by `darkLift`. The lift is full on steps 300–600 and tapers to nothing at 50 and 950, so surfaces and tints stay dark. Contrast is checked for every pair against the lifted ramp, and the report lists any corrections; on bright accents that usually means dark text on the primary button in dark mode. Light mode is unaffected.
