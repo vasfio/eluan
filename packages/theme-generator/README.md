@@ -1,6 +1,6 @@
 # @eluan/theme-generator
 
-CLI and library that generates accessible, light + dark mode [Eluan](https://github.com/vasfio/eluan) theme token sets from one to three accent colors. Contrast is checked (and auto-corrected) against a configurable minimum ratio, so generated themes are WCAG-aware out of the box.
+CLI and library that generates accessible light, dim and dark mode [Eluan](https://github.com/vasfio/eluan) theme token sets from one to three accent colors. Contrast is checked (and auto-corrected) against a configurable minimum ratio, so generated themes are WCAG-aware out of the box.
 
 The programmatic entry point (`@eluan/theme-generator`) is pure color math with no Node built-ins, so it runs in the browser as well as in Node. Only the `eluan-theme` binary touches the filesystem.
 
@@ -34,6 +34,8 @@ Options:
 | `--min-contrast <num>` | `4.5` | Minimum contrast ratio to enforce |
 | `--neutral-tint <num>` | `0.04` | Neutral tint ratio |
 | `--dark-lift <num>` | `0.08` | OKLCH lightness added to dark-mode colours, 0–0.2 |
+| `--dim-chroma <num>` | `0.8` | Share of chroma dim-mode colours keep, 0.5–1 |
+| `--dim-warmth <num>` | `1` | How far dim-mode greys move toward warm teak, 0–1 |
 | `--config <path>` | — | Path to a JSON config file |
 
 You can also drop a `eluan-theme.config.json` in your project root; CLI flags override its values.
@@ -42,7 +44,7 @@ You can also drop a `eluan-theme.config.json` in your project root; CLI flags ov
 { "name": "ocean", "accents": ["#FF4A2C"], "outDir": "./tokens" }
 ```
 
-The generator writes primitive + semantic token JSON, theme CSS, a smoke-test preview HTML you can open to eyeball the result, and the two files for applying the theme in both modes: `custom-theme.css` (register it like a `createTheme()` result) and `create-theme.json` (`{ name, tokens, modes }` for `createTheme()`).
+The generator writes primitive + semantic token JSON, theme CSS, a smoke-test preview HTML you can open to eyeball the result, and the two files for applying the theme in every mode: `custom-theme.css` (register it like a `createTheme()` result) and `create-theme.json` (`{ name, tokens, modes }` for `createTheme()`).
 
 ## Programmatic API
 
@@ -55,22 +57,33 @@ const result = generateTheme({
   minContrast: 4.5,
   neutralTintRatio: 0.04,
   darkLift: 0.08,             // optional; brighter dark-mode colours (0 turns it off)
+  dimChroma: 0.8,             // optional; toned-down dim-mode colours (1 turns it off)
+  dimWarmth: 1,               // optional; warm teak greys in dim mode (0 keeps brand greys)
 })
 
 result.customTheme        // { name, extends, css }: pass to <EluanProvider customThemes={[…]} />
-result.createThemeOptions // { tokens, modes: { dark } }: spread into createTheme() from @eluan/core
+result.createThemeOptions // { tokens, modes: { dim, dark } }: spread into createTheme() from @eluan/core
 result.report             // markdown report: warnings, contrast corrections
-result.css.theme          // standalone CSS for both modes, scoped to [data-theme="ocean"]
+result.css.theme          // standalone CSS for every mode, scoped to [data-theme="ocean"]
 result.createThemeTokens  // light-mode token map only (kept for compatibility)
 ```
 
-`customTheme` and `createThemeOptions` cover light and dark mode and layer on top of `minimal`, so its fonts and neutral ramp stay in place. `css.theme` replaces the theme instead, so it drops them; prefer the first two in apps that use `EluanProvider`.
+`customTheme` and `createThemeOptions` cover light, dim and dark mode and layer on top of `minimal`, so its fonts and neutral ramp stay in place. `css.theme` replaces the theme instead, so it drops them; prefer the first two in apps that use `EluanProvider`.
 
 ### Brighter dark mode
 
 Dark grounds swallow mid-tone colour, so dark mode resolves against `result.primitivesDark`: every colour ramp (accents and status hues, never neutral) lifted in OKLCH lightness by `darkLift`. The lift is full on steps 300–600 and tapers to nothing at 50 and 950, so surfaces and tints stay dark. Contrast is checked for every pair against the lifted ramp, and the report lists any corrections; on bright accents that usually means dark text on the primary button in dark mode. Light mode is unaffected.
 
-Lower-level helpers are exported too — `generateScale`, `buildPrimitives`, `buildDarkPrimitives`, `buildSemanticMap`, `checkContrast`, `autoCorrect`, `compileThemeCSS`, `compileCreateThemeTokens`, `compileCustomThemeCSS`, and the `hexToOklch` / `oklchToHex` color utilities. See the exported TypeScript types for the full shape of `GeneratorResult`.
+### Toned-down dim mode
+
+Dim is light mode with the volume down, built the way `minimal`'s own dim is. Every semantic token resolves one step deeper on its ramp than in light (page ground 50 → 100, status tint 100 → 200, status text 700 → 800; 950 stays put), against `result.primitivesDim`:
+
+- **Colour ramps** (accents and status hues) keep `dimChroma` of their OKLCH chroma, 0.8 by default, so nothing shouts on the softer ground.
+- **Greys** move `dimWarmth` of the way toward the hue and chroma of `minimal`'s teak ramp, 1 by default. Lightness stays on the theme's curve, so step contrast holds. At 0 dim keeps the brand-tinted greys.
+
+Each entry's dim ref is pinned in the semantic map (`semanticMap[token].dim`) and gets its own contrast pass, so the report can list dim corrections too. Light and dark output don't change with either option.
+
+Lower-level helpers are exported too — `generateScale`, `buildPrimitives`, `buildDarkPrimitives`, `buildDimPrimitives`, `buildSemanticMap`, `dimRef`, `checkContrast`, `autoCorrect`, `compileThemeCSS`, `compileCreateThemeTokens`, `compileCustomThemeCSS`, and the `hexToOklch` / `oklchToHex` color utilities. See the exported TypeScript types for the full shape of `GeneratorResult`.
 
 ## Use in the browser
 

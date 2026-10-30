@@ -148,7 +148,7 @@ Behind the scenes: `createTheme` returns `{ name, extends, css }` where `css` is
 
 `setTheme("acme")` then works exactly like `setTheme("minimal")`.
 
-For values that differ by mode, add `modes: { dark: { … } }` (or `dim`); each becomes a `[data-theme-custom="<name>"][data-mode="<mode>"]` rule layered after the base one. `@eluan/theme-generator` returns a generated theme in this shape already: `generateTheme(…).customTheme` goes straight into `customThemes` and covers light and dark (its dark colours are lifted brighter by `darkLift`), and `createThemeOptions` spreads into `createTheme()`.
+For values that differ by mode, add `modes: { dark: { … } }` (or `dim`); each becomes a `[data-theme-custom="<name>"][data-mode="<mode>"]` rule layered after the base one. `@eluan/theme-generator` returns a generated theme in this shape already: `generateTheme(…).customTheme` goes straight into `customThemes` and covers light, dim and dark (dark colours lifted brighter by `darkLift`; dim one step deeper than light, toned down by `dimChroma` and warmed to teak by `dimWarmth`), and `createThemeOptions` spreads into `createTheme()`.
 
 ---
 

@@ -81,7 +81,7 @@ The hook returns `{ theme, mode, spacing, curves, typeset, setTheme, setMode, se
 
 Use `createTheme()` to define your own theme by overriding only the tokens you care about. Everything else is inherited from the `extends` theme (`minimal` by default) — you don't need to redeclare 150+ variables.
 
-> Starting from brand colors rather than individual tokens? [`@eluan/theme-generator`](../packages/theme-generator) turns one to three accent colors into a full, contrast-checked theme for light and dark mode. See [Generated themes in light and dark](#generated-themes-in-light-and-dark).
+> Starting from brand colors rather than individual tokens? [`@eluan/theme-generator`](../packages/theme-generator) turns one to three accent colors into a full, contrast-checked theme for light, dim and dark mode. See [Generated themes in every mode](#generated-themes-in-every-mode).
 
 ```tsx
 // theme/acme.ts
@@ -136,9 +136,9 @@ export const acmeTheme = createTheme({
 
 Each mode becomes a `[data-theme-custom="acme"][data-mode="dark"]` rule, which wins over the base rule while that mode is active.
 
-### Generated themes in light and dark
+### Generated themes in every mode
 
-`generateTheme()` returns the theme ready to register, covering both modes:
+`generateTheme()` returns the theme ready to register, covering light, dim and dark mode:
 
 ```tsx
 import { EluanProvider } from "@eluan/core"
@@ -172,7 +172,10 @@ const forest = createTheme({
 })
 ```
 
-Dark-mode colours come out brighter than their light-mode counterparts: the generator lifts the colour ramps dark mode uses (`darkLift`, 0.08 by default, 0 to turn it off) so accents and status colours stay as vivid on a dark ground. Contrast is still checked for every pair in both modes. Dim mode uses the light values.
+Each mode gets its own colours, and contrast is checked for every pair in all three:
+
+- **Dark** colours come out brighter than their light-mode counterparts: the generator lifts the colour ramps dark mode uses (`darkLift`, 0.08 by default, 0 to turn it off) so accents and status colours stay as vivid on a dark ground.
+- **Dim** is light mode toned down, the way `minimal`'s own dim is: every token sits one step deeper on its ramp, accents and status colours keep 80% of their saturation (`dimChroma`, 0.5–1), and the greys warm to the teak tone `minimal`'s dim uses (`dimWarmth`, 1 by default; 0 keeps the brand-tinted greys).
 
 The CLI writes the same two outputs as `custom-theme.css` and `create-theme.json`.
 

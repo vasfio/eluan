@@ -82,7 +82,7 @@ result.createThemeOptions; // { tokens, modes: { dark } } for createTheme()
 result.report; // markdown: warnings and contrast corrections
 ```
 
-Dark-mode colours come out brighter than light-mode ones: the generator lifts the colour ramps dark mode uses (`darkLift`, 0.08 by default) and still checks contrast for every pair. Don't brighten dark colours by hand. Dim mode uses the light values.
+Dark-mode colours come out brighter than light-mode ones: the generator lifts the colour ramps dark mode uses (`darkLift`, 0.08 by default) and still checks contrast for every pair. Don't brighten dark colours by hand. Dim mode is generated too: light one step deeper, with toned-down colour and greys warmed to `minimal`'s teak (`dimChroma`, `dimWarmth`). Don't tone dim down by hand either.
 
 The accent hex is the one place a raw colour belongs: it's generator input, not a token value. Keep the generator call or its output in the app's source, next to the code that registers the theme. <!-- REVIEW: the repo has no convention for where a generated theme lives in a consumer app; ./src/theme is a suggestion. -->
 
