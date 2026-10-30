@@ -78,7 +78,7 @@ Dark grounds swallow mid-tone colour, so dark mode resolves against `result.prim
 
 Dim is light mode with the volume down, built the way `minimal`'s own dim is. Every semantic token resolves one step deeper on its ramp than in light (page ground 50 → 100, status tint 100 → 200, status text 700 → 800; 950 stays put), against `result.primitivesDim`:
 
-- **Colour ramps** (accents and status hues) keep `dimChroma` of their OKLCH chroma, 0.8 by default, so nothing shouts on the softer ground.
+- **Colour ramps** (accents and status hues) keep `dimChroma` of the OKLCH chroma they have in light mode, 0.8 by default, so nothing shouts on the softer ground. Each dim step takes the chroma of its light counterpart, the step above, so tints get quieter rather than louder.
 - **Greys** move `dimWarmth` of the way toward the hue and chroma of `minimal`'s teak ramp, 1 by default. Lightness stays on the theme's curve, so step contrast holds. At 0 dim keeps the brand-tinted greys.
 
 Each entry's dim ref is pinned in the semantic map (`semanticMap[token].dim`) and gets its own contrast pass, so the report can list dim corrections too. Light and dark output don't change with either option.
