@@ -175,10 +175,18 @@ describe('autoCorrect', () => {
       expect(corrections).toHaveLength(0);
     });
 
-    it('interactive-fg-alt stays at its 3:1 tier when the config asks for AAA', () => {
+    it('the 3:1 UI tier stays put when the config asks for AAA', () => {
       const map = buildSemanticMap();
       const { corrections } = autoCorrect(map, primitives, 'light', 7);
-      expect(corrections.map(c => c.token)).not.toContain('interactive-fg-alt');
+      expect(corrections.map(c => c.token)).not.toContain('focus-ring');
+      expect(corrections.map(c => c.token)).not.toContain('foregrounds-quaternary');
+    });
+
+    it('muted text follows the config floor up to AAA', () => {
+      const map = buildSemanticMap();
+      const { corrections } = autoCorrect(map, primitives, 'light', 7);
+      const fix = corrections.find(c => c.token === 'interactive-fg-alt');
+      expect(fix?.correctedContrast).toBeGreaterThanOrEqual(7);
     });
   });
 

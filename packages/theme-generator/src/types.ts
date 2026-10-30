@@ -51,8 +51,8 @@ export type SemanticEntry = {
   /**
    * Honor `minContrast` as-is even when it is below the config-wide minimum.
    * For entries that deliberately target a lower WCAG tier (e.g. the 3:1
-   * large-text/UI tier for secondary text) and must not be raised by a
-   * stricter `GeneratorConfig.minContrast`.
+   * UI tier for the focus ring) and must not be raised by a stricter
+   * `GeneratorConfig.minContrast`.
    */
   allowBelowDefault?: boolean;
   role: SemanticRole;

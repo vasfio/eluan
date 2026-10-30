@@ -42,6 +42,14 @@ describe('contrastGrounds', () => {
     expect(contrastGrounds(map['action-secondary-fg'])).toEqual(['container-bg', 'container-bg-alt']);
     expect(contrastGrounds(map['action-tertiary-fg'])).toEqual(['action-tertiary-bg', 'action-tertiary-bg-alt']);
   });
+
+  it('holds muted text to the text floor on page and panel', () => {
+    const map = buildSemanticMap();
+
+    expect(contrastGrounds(map['interactive-fg-alt'])).toEqual(['interactive-bg', 'interactive-bg-alt', 'container-bg', 'container-bg-alt']);
+    expect(map['interactive-fg-alt'].minContrast).toBe(4.5);
+    expect(map['interactive-fg-alt'].allowBelowDefault).toBeUndefined();
+  });
 });
 
 describe('base grey aliases', () => {

@@ -174,9 +174,9 @@ describe('minContrast floor semantics', () => {
   it('allowBelowDefault entries keep their own tier under a stricter floor', () => {
     const aa = generateTheme(ORANGE_CONFIG);
     const aaa = generateTheme({ ...ORANGE_CONFIG, minContrast: 7 });
-    expect(aaa.semanticMap['interactive-fg-alt'].allowBelowDefault).toBe(true);
-    expect(aaa.corrections.map((c) => c.token)).not.toContain('interactive-fg-alt');
-    expect(aaa.semanticMap['interactive-fg-alt']).toEqual(aa.semanticMap['interactive-fg-alt']);
+    expect(aaa.semanticMap['focus-ring'].allowBelowDefault).toBe(true);
+    expect(aaa.corrections.map((c) => c.token)).not.toContain('focus-ring');
+    expect(aaa.semanticMap['focus-ring']).toEqual(aa.semanticMap['focus-ring']);
   });
 });
 
