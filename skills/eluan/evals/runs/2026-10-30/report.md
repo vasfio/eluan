@@ -83,6 +83,8 @@ Not applied. Each becomes a rule, a don't, or a section 15 entry once approved.
 > | Search by a typed query, or run a command | `components/search-input.md` | SearchInput, Command |
 > | Filter a list by fields (date range, status, tags) | `patterns/forms.md`, then the field's component | Select, MultiSelect, DateRangePicker, SegmentedControl |
 
+**Applied** on branch `fix/skill-eval-fixes`, with regression task t17 (assignee and label filters, no date or text query).
+
 (t03-b's other navigation point was minor: a few extra files read and not used. No fix proposed.)
 
 ## Gaps the B runs reported

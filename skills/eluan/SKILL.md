@@ -59,7 +59,8 @@ Style your own layout elements with CSS that reads tokens: a stylesheet, CSS mod
 | Pick a date or time | `components/date-picker.md` | DatePicker, DateRangePicker, DateTimePicker, TimeInput, Calendar |
 | Offer a menu of actions | `components/dropdown-menu.md` | DropdownMenu, ContextMenu, ActionPopover, Menubar |
 | Show more content without leaving the page | `components/sheet.md` | Sheet, Drawer, Popover, HoverCard, Tooltip |
-| Search, filter or run a command | `components/search-input.md` | SearchInput, Command, MultiSelect |
+| Search by a typed query, or run a command | `components/search-input.md` | SearchInput, Command |
+| Filter a list by fields (date range, status, tags) | `patterns/forms.md`, then the field's component | Select, MultiSelect, DateRangePicker, SegmentedControl |
 | Show status or progress | `components/badge.md` | Badge, Progress, Spinner, Skeleton |
 | Set text | `components/typography.md` | Typography |
 | Change the look of the product | `foundations/theming.md` | the theme generator output, `createTheme`, Provider axes |
