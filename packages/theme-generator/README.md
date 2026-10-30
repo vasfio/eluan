@@ -72,7 +72,7 @@ result.createThemeTokens  // light-mode token map only (kept for compatibility)
 
 ### Contrast correction
 
-When a foreground falls short of the minimum against its background, the generator moves it the fewest steps along its own ramp that pass: darker in light mode, lighter in dark mode, and in dim whichever way suits the ground. Brand-coloured text like Outline and Ghost button labels stays as close to its brand step as contrast allows. Only when no step on the ramp passes does it fall back to neutral, white or black. Every correction is listed in `result.report`.
+When a foreground falls short of the minimum against its background, the generator moves it the fewest steps along its own ramp that pass: darker in light mode, lighter in dark mode, and in dim whichever way suits the ground. Brand-coloured text like the Outline button label stays as close to its brand step as contrast allows. Only when no step on the ramp passes does it fall back to neutral, white or black. Every correction is listed in `result.report`.
 
 ### Brighter dark mode
 

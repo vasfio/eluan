@@ -182,7 +182,7 @@ describe('minContrast floor semantics', () => {
 describe('contrast corrections', () => {
   const ACCENTS = ['#2F6F5E', '#FF4A2C', '#FFD60A', '#1D4ED8', '#7C3AED'];
 
-  it('keeps Outline and Ghost text on the brand ramp in light mode', () => {
+  it('keeps secondary and tertiary action text on the brand ramp in light mode', () => {
     for (const accent of ACCENTS) {
       const r = generateTheme({ ...ORANGE_CONFIG, accents: [accent] });
       for (const token of ['action-secondary-fg', 'action-tertiary-fg']) {
