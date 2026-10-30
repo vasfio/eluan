@@ -44,6 +44,24 @@ describe('contrastGrounds', () => {
   });
 });
 
+describe('base grey aliases', () => {
+  const map = buildSemanticMap();
+
+  it("mirrors minimal's ramp aliases, one step deeper in dim", () => {
+    expect(map['backgrounds-primary']).toMatchObject({ light: 'neutral.50', dim: 'neutral.100', dark: 'neutral.800' });
+    expect(map['backgrounds-tertiary']).toMatchObject({ light: 'neutral.200', dim: 'neutral.300', dark: 'neutral.950' });
+    expect(map['foregrounds-primary']).toMatchObject({ light: 'neutral.950', dim: 'neutral.950', dark: 'neutral.50' });
+    expect(map['foregrounds-secondary']).toMatchObject({ light: 'neutral.800', dim: 'neutral.900', dark: 'neutral.100' });
+  });
+
+  it('checks the text aliases on the grounds they sit on', () => {
+    expect(contrastGrounds(map['foregrounds-primary'])).toEqual(['backgrounds-primary', 'backgrounds-secondary', 'backgrounds-tertiary']);
+    expect(contrastGrounds(map['foregrounds-secondary'])).toEqual(['backgrounds-primary', 'backgrounds-secondary']);
+    expect(map['foregrounds-quaternary']).toMatchObject({ minContrast: 3.0, allowBelowDefault: true });
+    expect(contrastGrounds(map['foregrounds-quinary'])).toEqual([]);
+  });
+});
+
 describe('buildSemanticMap', () => {
   it('pins a dim ref on every entry', () => {
     for (const [token, entry] of Object.entries(buildSemanticMap())) {

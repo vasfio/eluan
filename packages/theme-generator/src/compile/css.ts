@@ -169,15 +169,19 @@ export function compileModeCSS(
   if (!neutral) throw new Error('Neutral scale is required');
 
   const { bg: bgSteps, fg: fgSteps } = NEUTRAL_STEPS[mode];
+  // The semantic map's entries win when present, so this matches css.theme
+  // and the custom theme even after a contrast correction moves one.
+  const ramp = (token: string, step: ScaleStepValue) =>
+    map[token] ? resolveHex(modeRef(map[token], mode), primitives) : neutral[step].hex;
 
   lines.push(`  /* Backgrounds */`);
   for (const [level, step] of Object.entries(bgSteps)) {
-    lines.push(`  --backgrounds-${level}: ${neutral[step].hex};`);
+    lines.push(`  --backgrounds-${level}: ${ramp(`backgrounds-${level}`, step)};`);
   }
 
   lines.push(`\n  /* Foregrounds */`);
   for (const [level, step] of Object.entries(fgSteps)) {
-    lines.push(`  --foregrounds-${level}: ${neutral[step].hex};`);
+    lines.push(`  --foregrounds-${level}: ${ramp(`foregrounds-${level}`, step)};`);
   }
 
   const paletteScales: [ScaleName, string][] = [

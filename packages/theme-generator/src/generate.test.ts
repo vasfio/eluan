@@ -360,6 +360,57 @@ describe('dim mode', () => {
   });
 });
 
+describe('base grey aliases', () => {
+  const LEVELS = ['primary', 'secondary', 'tertiary', 'quaternary', 'quinary'] as const;
+  const STEPS = {
+    light: { bg: [50, 100, 200, 300, 400], fg: [950, 800, 600, 500, 400] },
+    dim: { bg: [100, 200, 300, 400, 500], fg: [950, 900, 700, 600, 500] },
+    dark: { bg: [800, 900, 950, 700, 600], fg: [50, 100, 200, 300, 400] },
+  } as const;
+
+  it('sets every ramp alias in every mode, from that mode\'s greys', () => {
+    const r = generateTheme(ORANGE_CONFIG);
+    const modes = {
+      light: [r.createThemeOptions.tokens, r.primitives],
+      dim: [r.createThemeOptions.modes.dim, r.primitivesDim],
+      dark: [r.createThemeOptions.modes.dark, r.primitivesDark],
+    } as const;
+    for (const [mode, [tokens, primitives]] of Object.entries(modes)) {
+      LEVELS.forEach((level, i) => {
+        const steps = STEPS[mode as keyof typeof STEPS];
+        expect(tokens[`--backgrounds-${level}`], `${mode} bg ${level}`).toBe(primitives.neutral![steps.bg[i]].hex);
+        expect(tokens[`--foregrounds-${level}`], `${mode} fg ${level}`).toBe(primitives.neutral![steps.fg[i]].hex);
+      });
+    }
+  });
+
+  it('writes them into each block of the custom theme', () => {
+    const r = generateTheme(ORANGE_CONFIG);
+    const { css } = r.customTheme;
+    const dim = css.indexOf('[data-mode="dim"]');
+    const dark = css.indexOf('[data-mode="dark"]');
+
+    expect(css.slice(0, dim)).toContain(`--backgrounds-tertiary: ${r.createThemeOptions.tokens['--backgrounds-tertiary']};`);
+    expect(css.slice(dim, dark)).toContain(`--backgrounds-tertiary: ${r.createThemeOptions.modes.dim['--backgrounds-tertiary']};`);
+    expect(css.slice(dark)).toContain(`--backgrounds-tertiary: ${r.createThemeOptions.modes.dark['--backgrounds-tertiary']};`);
+  });
+
+  it('follows the brand greys in dim at dimWarmth 0', () => {
+    const r = generateTheme({ ...ORANGE_CONFIG, dimWarmth: 0 });
+
+    expect(r.createThemeOptions.modes.dim['--backgrounds-tertiary']).toBe(r.primitives.neutral![300].hex);
+  });
+
+  it('keeps the mode CSS in step with the custom theme after a correction', () => {
+    // At 7:1 foregrounds-tertiary is corrected off its default step
+    const r = generateTheme({ ...ORANGE_CONFIG, minContrast: 7 });
+
+    expect(r.corrections.map((c) => c.token)).toContain('foregrounds-tertiary');
+    expect(r.css.lightMode).toContain(`--foregrounds-tertiary: ${r.createThemeOptions.tokens['--foregrounds-tertiary']};`);
+    expect(r.css.dimMode).toContain(`--foregrounds-tertiary: ${r.createThemeOptions.modes.dim['--foregrounds-tertiary']};`);
+  });
+});
+
 describe('dual-mode consumer outputs', () => {
   it('returns createTheme options with light tokens and dark overrides', () => {
     const r = generateTheme(ORANGE_CONFIG);

@@ -40,6 +40,23 @@ export function withDimRefs(map: SemanticMap): SemanticMap {
 
 export function buildSemanticMap(): SemanticMap {
   return withDimRefs({
+    // ── Base greys ─────────────────────────────────────────────
+    // The mode-level ramp aliases `minimal` defines in modes.css. Most tokens
+    // here supersede them, but some components read them directly (Secondary
+    // and Ghost-family buttons, Card, Progress, SegmentedControl), so a theme
+    // that leaves them alone shows `minimal`'s greys there.
+    'backgrounds-primary':      { light: 'neutral.50',   dark: 'neutral.800',  role: 'bg' },
+    'backgrounds-secondary':    { light: 'neutral.100',  dark: 'neutral.900',  role: 'bg' },
+    'backgrounds-tertiary':     { light: 'neutral.200',  dark: 'neutral.950',  role: 'bg' },
+    'backgrounds-quaternary':   { light: 'neutral.300',  dark: 'neutral.700',  role: 'bg' },
+    'backgrounds-quinary':      { light: 'neutral.400',  dark: 'neutral.600',  role: 'bg' },
+    // Secondary button text sits on the tertiary fill; the rest on page and panel.
+    'foregrounds-primary':      { light: 'neutral.950',  dark: 'neutral.50',   role: 'fg', contrastAgainst: ['backgrounds-primary', 'backgrounds-secondary', 'backgrounds-tertiary'], minContrast: 4.5 },
+    'foregrounds-secondary':    { light: 'neutral.800',  dark: 'neutral.100',  role: 'fg', contrastAgainst: ['backgrounds-primary', 'backgrounds-secondary'], minContrast: 4.5 },
+    'foregrounds-tertiary':     { light: 'neutral.600',  dark: 'neutral.200',  role: 'fg', contrastAgainst: ['backgrounds-primary', 'backgrounds-secondary'], minContrast: 4.5 },
+    'foregrounds-quaternary':   { light: 'neutral.500',  dark: 'neutral.300',  role: 'fg', contrastAgainst: ['backgrounds-primary', 'backgrounds-secondary'], minContrast: 3.0, allowBelowDefault: true },
+    'foregrounds-quinary':      { light: 'neutral.400',  dark: 'neutral.400',  role: 'fg' },
+
     // ── Container ──────────────────────────────────────────────
     'container-bg':             { light: 'neutral.50',   dark: 'neutral.800',  role: 'bg' },
     'container-bg-alt':         { light: 'neutral.100',  dark: 'neutral.900',  role: 'bg' },
