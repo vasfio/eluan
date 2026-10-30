@@ -182,7 +182,7 @@ var(--radius-radius-8)             /* 13 radius values (none-full) */
 var(--sizing-size-m)               /* 9 t-shirt sizing values (none-xxxl) + 14 numeric steps (12-240) */
 var(--viewports-screen-l)          /* 9 viewport breakpoints (xxs-4xl) */
 
-/* Layer 2: Modes (adapt to data-mode) */
+/* Layer 2: Modes (adapt to data-mode; theme tokens build on these, components don't read them) */
 var(--backgrounds-primary)         /* 5 background levels: primary-quinary */
 var(--foregrounds-primary)         /* 5 foreground levels: primary-quinary */
 var(--crimson-main)                /* Per palette: main, background, tint, foreground, shade */
@@ -193,6 +193,7 @@ var(--interactive-fg)              /* Interactive: 18 state variants */
 var(--action-primary-bg)           /* Action Primary: 11 variants */
 var(--action-secondary-fg)         /* Action Secondary: 15 variants */
 var(--action-tertiary-bg)          /* Action Tertiary: 17 variants */
+var(--action-neutral-bg)           /* Action Neutral: 3 variants */
 var(--destructive-fg)              /* Destructive: 15 variants */
 var(--cautionary-fg)               /* Cautionary: 9 variants */
 var(--informative-fg)              /* Informative: 9 variants */
@@ -683,6 +684,7 @@ These are the semantic token groups that each theme maps to its own color palett
 | `action-primary-*` | Primary buttons, CTAs | 11 |
 | `action-secondary-*` | Secondary/outline buttons | 15 |
 | `action-tertiary-*` | Ghost/subtle actions | 17 |
+| `action-neutral-*` | Secondary (grey fill) buttons | 3 |
 | `destructive-*` | Delete, remove, error | 15 |
 | `cautionary-*` | Warnings | 9 |
 | `informative-*` | Info, help | 9 |

@@ -68,7 +68,7 @@ result.css.theme          // standalone CSS for every mode, scoped to [data-them
 result.createThemeTokens  // light-mode token map only (kept for compatibility)
 ```
 
-`customTheme` and `createThemeOptions` cover light, dim and dark mode and layer on top of `minimal`, so its fonts stay in place. They also set the base grey aliases (`--backgrounds-*`, `--foregrounds-*`) for each mode, so components that read those directly, like the Secondary button and Ghost hover fills, follow the generated greys. `css.theme` replaces the theme instead, so it drops `minimal`'s fonts; prefer the first two in apps that use `EluanProvider`.
+`customTheme` and `createThemeOptions` cover light, dim and dark mode and layer on top of `minimal`, so its fonts stay in place. They also set the base grey aliases (`--backgrounds-*`, `--foregrounds-*`) for each mode, so any CSS of your own that reads them matches the generated greys; components only read theme tokens. `css.theme` replaces the theme instead, so it drops `minimal`'s fonts; prefer the first two in apps that use `EluanProvider`.
 
 ### Contrast correction
 

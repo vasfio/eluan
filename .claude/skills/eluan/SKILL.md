@@ -354,14 +354,14 @@ const styles = stylex.create({
 ### Action-primary (CTA buttons)
 `--action-primary-bg` · `-bg-hover` · `-bg-active` · `-bg-selected` · `-bg-disabled` · `-bg-inverse` · `--action-primary-fg` · `-fg-hover` · `-fg-active` · `-fg-selected` · `-fg-disabled` · `-fg-inverse`
 
-### Action-secondary (outline buttons) / Action-tertiary (ghost buttons)
-`--action-secondary-*` and `--action-tertiary-*` follow the same `bg / border / fg` families with `-hover`, `-active`, `-selected`, `-disabled`, `-alt`, `-inverse` suffixes.
+### Action-secondary (outline buttons) / Action-tertiary (ghost buttons) / Action-neutral (secondary buttons)
+`--action-secondary-*` and `--action-tertiary-*` follow the same `bg / border / fg` families with `-hover`, `-active`, `-selected`, `-disabled`, `-alt`, `-inverse` suffixes. `--action-neutral-bg`, `--action-neutral-bg-hover` and `--action-neutral-fg` are the `Button` `secondary` grey fill.
 
 ### Status / tone colors
 `--positive-*`, `--cautionary-*`, `--destructive-*`, `--informative-*`, `--important-*` (each with `bg` / `bg-alt` / `bg-inverse` / `border` / `border-alt` / `fg` / `fg-alt` / `fg-strong` where defined). Reminder: the `caution` tone → `--cautionary-*`.
 
 ### Base semantic aliases (mode layer)
-`--backgrounds-primary|secondary|tertiary|quaternary|quinary` and `--foregrounds-primary|secondary|tertiary|quaternary|quinary` — used by neutral surfaces (e.g. `Button` `secondary`/`ghost`).
+`--backgrounds-primary|secondary|tertiary|quaternary|quinary` and `--foregrounds-primary|secondary|tertiary|quaternary|quinary` — what theme tokens are built from. Components never read them: a custom theme sets the theme tokens, so a component on the mode layer would ignore it. Use the theme token instead, or add one.
 
 ### Data-viz palette
 `--dataviz-1-main` · `--dataviz-1-tint` · `--dataviz-1-shade` (and `-2-` through `-8-`)
