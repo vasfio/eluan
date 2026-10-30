@@ -177,6 +177,8 @@ Each mode gets its own colours, and contrast is checked for every pair in all th
 - **Dark** colours come out brighter than their light-mode counterparts: the generator lifts the colour ramps dark mode uses (`darkLift`, 0.08 by default, 0 to turn it off) so accents and status colours stay as vivid on a dark ground.
 - **Dim** is light mode toned down, the way `minimal`'s own dim is: every token sits one step deeper on its ramp, accents and status colours keep 80% of their saturation (`dimChroma`, 0.5–1), and the greys warm to the teak tone `minimal`'s dim uses (`dimWarmth`, 1 by default; 0 keeps the brand-tinted greys).
 
+The generated greys reach the base ramp aliases too (`--backgrounds-*`, `--foregrounds-*`), so components that read those directly, like the Secondary button and Ghost hover fills, follow the theme in every mode.
+
 The CLI writes the same two outputs as `custom-theme.css` and `create-theme.json`.
 
 ### How inheritance works

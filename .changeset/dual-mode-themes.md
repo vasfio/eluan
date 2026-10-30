@@ -12,7 +12,7 @@ carry its own dark values instead of reusing its light ones.
 `generateTheme()` returns the theme ready to use in both modes:
 `customTheme` goes straight into `<EluanProvider customThemes>`, and
 `createThemeOptions` (`{ tokens, modes: { dark } }`) spreads into
-`createTheme()`. Both layer on `minimal`, keeping its fonts and neutral ramp.
+`createTheme()`. Both layer on `minimal`, keeping its fonts.
 The CLI writes them as `custom-theme.css` and `create-theme.json`.
 
 Dark mode now resolves against a lifted copy of the colour ramps

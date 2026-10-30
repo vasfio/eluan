@@ -250,8 +250,8 @@ export function compileCreateThemeTokens(
  * CSS for a custom theme layered on `minimal`, in the same shape `createTheme()`
  * from @eluan/core emits: the light tokens on `[data-theme-custom="<name>"]`
  * and the dim and dark tokens on that plus `[data-mode]`. Because the theme
- * sits on top of `minimal` instead of replacing it, `minimal`'s fonts and
- * neutral ramp stay in place. Without `dim`, dim mode uses the light tokens.
+ * sits on top of `minimal` instead of replacing it, `minimal`'s fonts stay in
+ * place. Without `dim`, dim mode uses the light tokens.
  */
 export function compileCustomThemeCSS(
   themeName: string,

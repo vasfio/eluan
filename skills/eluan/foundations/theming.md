@@ -130,7 +130,7 @@ export const forest = createTheme({
 });
 ```
 
-Don't apply `result.css.theme` or `createThemeTokens` alone: the first drops `minimal`'s fonts and neutral ramp, the second has no dark values.
+Don't apply `result.css.theme` or `createThemeTokens` alone: the first drops `minimal`'s fonts, the second has no dark values.
 
 Dark mode, density and corner style are separate axes:
 
