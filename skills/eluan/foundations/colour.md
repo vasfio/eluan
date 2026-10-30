@@ -81,7 +81,7 @@ Values show the mode alias each token points to, then the resolved value in ligh
 | `--action-primary-fg-active` | `--backgrounds-primary` → oklch(1.0000 0.0000 0.00) / dark oklch(0.2686 0.0000 0.00) | Primary actions: text while pressed |
 | `--action-primary-fg-selected` | `--backgrounds-primary` → oklch(1.0000 0.0000 0.00) / dark oklch(0.2686 0.0000 0.00) | Primary actions: text when selected |
 | `--action-primary-fg-inverse` | `--foregrounds-primary` → oklch(0.1448 0.0000 0.00) / dark oklch(1.0000 0.0000 0.00) | Primary actions: text on an inverse surface |
-| `--action-secondary-bg-hover` | `--mono-tint` → oklch(0.9702 0.0000 0.00) / dark oklch(0.3715 0.0000 0.00) | Secondary (outline) actions: background on hover |
+| `--action-secondary-bg-hover` | `--backgrounds-tertiary` → oklch(0.9219 0.0000 0.00) / dark oklch(0.1448 0.0000 0.00) | Secondary (outline) actions: background on hover |
 | `--action-secondary-bg-active` | `--mono-background` → oklch(0.1448 0.0000 0.00) / dark oklch(0.9851 0.0000 0.00) | Secondary (outline) actions: background while pressed |
 | `--action-secondary-bg-selected` | `--mono-background` → oklch(0.1448 0.0000 0.00) / dark oklch(0.9851 0.0000 0.00) | Secondary (outline) actions: background when selected |
 | `--action-secondary-bg-disabled` | `--backgrounds-tertiary` → oklch(0.9219 0.0000 0.00) / dark oklch(0.1448 0.0000 0.00) | Secondary (outline) actions: background when disabled |

@@ -89,7 +89,7 @@
   --action-primary-fg-active: var(--backgrounds-primary);
   --action-primary-fg-selected: var(--backgrounds-primary);
   --action-primary-fg-inverse: var(--foregrounds-primary);
-  --action-secondary-bg-hover: var(--mono-tint);
+  --action-secondary-bg-hover: var(--backgrounds-tertiary);
   --action-secondary-bg-active: var(--mono-background);
   --action-secondary-bg-selected: var(--mono-background);
   --action-secondary-bg-disabled: var(--backgrounds-tertiary);
