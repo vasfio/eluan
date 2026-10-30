@@ -94,7 +94,7 @@ export const scaleSort = (a, b, prefix) =>
   SCALE_ORDER.indexOf(a.slice(prefix.length)) - SCALE_ORDER.indexOf(b.slice(prefix.length));
 
 export const COLOUR_FAMILIES = [
-  "container", "interactive", "action-primary", "action-secondary", "action-tertiary",
+  "container", "interactive", "action-primary", "action-secondary", "action-tertiary", "action-neutral",
   "destructive", "cautionary", "positive", "informative", "important",
 ];
 

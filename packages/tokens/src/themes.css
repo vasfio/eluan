@@ -118,6 +118,9 @@
   --action-tertiary-fg-active: var(--mono-shade);
   --action-tertiary-fg-selected: var(--mono-shade);
   --action-tertiary-fg-inverse: var(--backgrounds-primary);
+  --action-neutral-bg: var(--backgrounds-tertiary);
+  --action-neutral-bg-hover: var(--backgrounds-quaternary);
+  --action-neutral-fg: var(--foregrounds-primary);
   --destructive-bg: var(--torchred-background);
   --destructive-bg-alt: var(--torchred-tint);
   --destructive-bg-hover: var(--torchred-tint);

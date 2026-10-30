@@ -78,7 +78,8 @@ const SUFFIX = {
 const FAMILY = {
   container: "Surfaces (cards, panels, popovers)", interactive: "Inputs and selectable items",
   "action-primary": "Primary actions", "action-secondary": "Secondary (outline) actions",
-  "action-tertiary": "Tertiary (ghost) actions", destructive: "Destructive status and actions",
+  "action-tertiary": "Tertiary (ghost) actions", "action-neutral": "Neutral actions (the `secondary` button)",
+  destructive: "Destructive status and actions",
   cautionary: "Caution status (the `caution` tone)", positive: "Positive status",
   informative: "Informative status", important: "Important status",
 };

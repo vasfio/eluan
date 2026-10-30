@@ -1063,6 +1063,9 @@
     "cssPrefix": "--",
     "note": "Eluan tokens carry no namespace prefix. names lists every custom property defined in packages/tokens/src/*.css. Components should read the semantic layer (themes.css, spacing.css, curves.css, typeset.css), not primitives.",
     "names": [
+      "action-neutral-bg",
+      "action-neutral-bg-hover",
+      "action-neutral-fg",
       "action-primary-bg",
       "action-primary-bg-active",
       "action-primary-bg-disabled",

@@ -153,6 +153,14 @@ export function buildSemanticMap(): SemanticMap {
     'action-tertiary-fg-selected':   { light: 'primary.700',  dark: 'primary.200', role: 'fg', contrastAgainst: 'action-tertiary-bg-selected', minContrast: 4.5 },
     'action-tertiary-fg-inverse':    { light: 'neutral.50',   dark: 'neutral.950', role: 'fg' },
 
+    // ── Action Neutral ─────────────────────────────────────────
+    // The Secondary button: a grey fill that deepens on hover, on the same
+    // steps as backgrounds-tertiary and -quaternary. Its text is checked
+    // against both fills.
+    'action-neutral-bg':             { light: 'neutral.200',  dark: 'neutral.950', role: 'bg' },
+    'action-neutral-bg-hover':       { light: 'neutral.300',  dark: 'neutral.700', role: 'bg' },
+    'action-neutral-fg':             { light: 'neutral.950',  dark: 'neutral.50',  role: 'fg', contrastAgainst: ['action-neutral-bg', 'action-neutral-bg-hover'], minContrast: 4.5 },
+
     // ── Destructive ────────────────────────────────────────────
     'destructive-bg':           { light: 'error.50',  dark: 'error.950', role: 'bg' },
     'destructive-bg-alt':       { light: 'error.100', dark: 'error.900', role: 'bg' },

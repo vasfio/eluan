@@ -155,10 +155,10 @@ const styles = stylex.create({
     },
   },
   variantSecondary: {
-    backgroundColor: "var(--backgrounds-tertiary)",
-    color: "var(--foregrounds-primary)",
+    backgroundColor: "var(--action-neutral-bg)",
+    color: "var(--action-neutral-fg)",
     ":hover": {
-      backgroundColor: "var(--backgrounds-quaternary)",
+      backgroundColor: "var(--action-neutral-bg-hover)",
     },
   },
   variantGhost: {

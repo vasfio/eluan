@@ -62,6 +62,21 @@ describe('base grey aliases', () => {
   });
 });
 
+describe('action-neutral (the Secondary button)', () => {
+  const map = buildSemanticMap();
+
+  it('sits on the same steps as backgrounds-tertiary and -quaternary', () => {
+    for (const mode of ['light', 'dim', 'dark'] as const) {
+      expect(modeRef(map['action-neutral-bg'], mode), mode).toBe(modeRef(map['backgrounds-tertiary'], mode));
+      expect(modeRef(map['action-neutral-bg-hover'], mode), mode).toBe(modeRef(map['backgrounds-quaternary'], mode));
+    }
+  });
+
+  it('checks its text against the fill and the hover fill', () => {
+    expect(contrastGrounds(map['action-neutral-fg'])).toEqual(['action-neutral-bg', 'action-neutral-bg-hover']);
+  });
+});
+
 describe('buildSemanticMap', () => {
   it('pins a dim ref on every entry', () => {
     for (const [token, entry] of Object.entries(buildSemanticMap())) {

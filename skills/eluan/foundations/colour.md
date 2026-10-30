@@ -112,6 +112,9 @@ Values show the mode alias each token points to, then the resolved value in ligh
 | `--action-tertiary-fg-selected` | `--mono-shade` → oklch(0.3715 0.0000 0.00) / dark oklch(0.9702 0.0000 0.00) | Tertiary (ghost) actions: text when selected |
 | `--action-tertiary-fg-inverse` | `--backgrounds-primary` → oklch(1.0000 0.0000 0.00) / dark oklch(0.2686 0.0000 0.00) | Tertiary (ghost) actions: text on an inverse surface |
 | `--action-tertiary-fg` | `--mono-background` → oklch(0.1448 0.0000 0.00) / dark oklch(0.9851 0.0000 0.00) | Tertiary (ghost) actions: text and icons |
+| `--action-neutral-bg` | `--backgrounds-tertiary` → oklch(0.9219 0.0000 0.00) / dark oklch(0.1448 0.0000 0.00) | Neutral actions (the `secondary` button): background |
+| `--action-neutral-bg-hover` | `--backgrounds-quaternary` → oklch(0.8699 0.0000 0.00) / dark oklch(0.3715 0.0000 0.00) | Neutral actions (the `secondary` button): background on hover |
+| `--action-neutral-fg` | `--foregrounds-primary` → oklch(0.1448 0.0000 0.00) / dark oklch(1.0000 0.0000 0.00) | Neutral actions (the `secondary` button): text and icons |
 | `--destructive-bg` | `--torchred-background` → oklch(0.9691 0.0151 17.42) / dark oklch(0.2639 0.1083 29.23) | Destructive status and actions: background |
 | `--destructive-bg-alt` | `--torchred-tint` → oklch(0.9322 0.0343 17.78) / dark oklch(0.4062 0.1665 28.83) | Destructive status and actions: subtle alternate background |
 | `--destructive-bg-hover` | `--torchred-tint` → oklch(0.9322 0.0343 17.78) / dark oklch(0.4062 0.1665 28.83) | Destructive status and actions: background on hover |
