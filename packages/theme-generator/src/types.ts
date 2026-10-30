@@ -41,7 +41,12 @@ export type SemanticEntry = {
    * ramp (950 stays put), so dim reads as light mode toned down.
    */
   dim?: TokenRef;
-  contrastAgainst?: string;
+  /**
+   * The ground token(s) this fg/border must clear `minContrast` on. With
+   * several, the hardest of them decides, for text that sits on more than one
+   * surface (page and panel, say).
+   */
+  contrastAgainst?: string | string[];
   minContrast?: number;
   /**
    * Honor `minContrast` as-is even when it is below the config-wide minimum.

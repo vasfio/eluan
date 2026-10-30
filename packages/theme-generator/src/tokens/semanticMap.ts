@@ -21,6 +21,11 @@ export function modeRef(entry: SemanticEntry, mode: Mode): TokenRef {
   return entry[mode];
 }
 
+/** The ground tokens an entry is checked against, as a list. */
+export function contrastGrounds(entry: SemanticEntry): string[] {
+  return entry.contrastAgainst === undefined ? [] : ([] as string[]).concat(entry.contrastAgainst);
+}
+
 /**
  * Pins every entry's dim ref from its light ref, so later light-mode contrast
  * corrections can't move dim along with them.
@@ -119,7 +124,10 @@ export function buildSemanticMap(): SemanticMap {
     'action-tertiary-border-alt':    { light: 'primary.800',  dark: 'primary.300', role: 'border' },
     'action-tertiary-border-disabled': { light: 'neutral.300', dark: 'neutral.600', role: 'border' },
     'action-tertiary-border-inverse':  { light: 'primary.100', dark: 'primary.900', role: 'border' },
-    'action-tertiary-fg':            { light: 'primary.500',  dark: 'primary.400', role: 'fg', contrastAgainst: 'action-tertiary-bg', minContrast: 4.5 },
+    // Ghost button text sits on page and panel surfaces alike, so it is checked
+    // against both: -bg (the page) and -bg-alt (the panel, container-bg-alt's
+    // refs). Whichever is harder in a mode decides.
+    'action-tertiary-fg':            { light: 'primary.500',  dark: 'primary.400', role: 'fg', contrastAgainst: ['action-tertiary-bg', 'action-tertiary-bg-alt'], minContrast: 4.5 },
     'action-tertiary-fg-alt':        { light: 'neutral.950',  dark: 'neutral.50',  role: 'fg' },
     'action-tertiary-fg-disabled':   { light: 'neutral.400',  dark: 'neutral.500', role: 'fg' },
     'action-tertiary-fg-active':     { light: 'primary.700',  dark: 'primary.200', role: 'fg', contrastAgainst: 'action-tertiary-bg-active', minContrast: 4.5 },

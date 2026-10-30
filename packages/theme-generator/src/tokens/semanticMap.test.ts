@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { buildSemanticMap, dimRef, modeRef, withDimRefs } from './semanticMap.js';
+import { buildSemanticMap, contrastGrounds, dimRef, modeRef, withDimRefs } from './semanticMap.js';
 
 describe('dimRef', () => {
   it('moves one step deeper on the same ramp', () => {
@@ -26,6 +26,18 @@ describe('modeRef', () => {
 
   it('derives dim from light when none is set', () => {
     expect(modeRef({ light: 'primary.500', dark: 'primary.400', role: 'bg' }, 'dim')).toBe('primary.600');
+  });
+});
+
+describe('contrastGrounds', () => {
+  it('lists one, several or no grounds', () => {
+    expect(contrastGrounds({ light: 'neutral.950', dark: 'neutral.50', role: 'fg', contrastAgainst: 'bg' })).toEqual(['bg']);
+    expect(contrastGrounds({ light: 'neutral.950', dark: 'neutral.50', role: 'fg', contrastAgainst: ['bg', 'bg-alt'] })).toEqual(['bg', 'bg-alt']);
+    expect(contrastGrounds({ light: 'neutral.50', dark: 'neutral.800', role: 'bg' })).toEqual([]);
+  });
+
+  it('checks Ghost text against the page and the panel', () => {
+    expect(contrastGrounds(buildSemanticMap()['action-tertiary-fg'])).toEqual(['action-tertiary-bg', 'action-tertiary-bg-alt']);
   });
 });
 

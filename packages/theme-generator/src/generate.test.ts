@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { generateTheme, computeInputHash } from './generate.js';
 import { compileCreateThemeTokens, compileSemanticJSON } from './compile/css.js';
 import { checkContrast } from './tokens/contrast.js';
+import { contrastGrounds } from './tokens/semanticMap.js';
 import { hexToOklch } from './color/convert.js';
 import { TEAK_HUE_CHROMA } from './color/dim.js';
 import type { GeneratorConfig } from './types.js';
@@ -182,6 +183,19 @@ describe('minContrast floor semantics', () => {
 describe('contrast corrections', () => {
   const ACCENTS = ['#2F6F5E', '#FF4A2C', '#FFD60A', '#1D4ED8', '#7C3AED'];
 
+  it('keeps Ghost text at its minimum on panels in every mode', () => {
+    for (const accent of ACCENTS) {
+      const r = generateTheme({ ...ORANGE_CONFIG, accents: [accent] });
+      const modes = { light: r.createThemeOptions.tokens, ...r.createThemeOptions.modes };
+      for (const [mode, map] of Object.entries(modes)) {
+        for (const ground of ['--container-bg', '--container-bg-alt']) {
+          const ratio = checkContrast(map['--action-tertiary-fg'], map[ground]);
+          expect(ratio, `${accent} ${mode} on ${ground}`).toBeGreaterThanOrEqual(4.5);
+        }
+      }
+    }
+  });
+
   it('keeps secondary and tertiary action text on the brand ramp in light mode', () => {
     for (const accent of ACCENTS) {
       const r = generateTheme({ ...ORANGE_CONFIG, accents: [accent] });
@@ -230,11 +244,12 @@ describe('dark lift', () => {
         dark: compileCreateThemeTokens(r.semanticMap, r.primitivesDark, 'dark'),
       };
       for (const [token, entry] of Object.entries(r.semanticMap)) {
-        if (!entry.contrastAgainst) continue;
         const floor = entry.allowBelowDefault ? entry.minContrast! : Math.max(entry.minContrast ?? 0, 4.5);
-        for (const map of Object.values(modes)) {
-          const ratio = checkContrast(map[`--${token}`], map[`--${entry.contrastAgainst}`]);
-          expect(ratio, `${accent} ${token}`).toBeGreaterThanOrEqual(floor - 1e-6);
+        for (const ground of contrastGrounds(entry)) {
+          for (const map of Object.values(modes)) {
+            const ratio = checkContrast(map[`--${token}`], map[`--${ground}`]);
+            expect(ratio, `${accent} ${token} on ${ground}`).toBeGreaterThanOrEqual(floor - 1e-6);
+          }
         }
       }
     }
@@ -304,10 +319,11 @@ describe('dim mode', () => {
       const r = generateTheme({ ...ORANGE_CONFIG, accents: [accent] });
       const dim = compileCreateThemeTokens(r.semanticMap, r.primitivesDim, 'dim');
       for (const [token, entry] of Object.entries(r.semanticMap)) {
-        if (!entry.contrastAgainst) continue;
         const floor = entry.allowBelowDefault ? entry.minContrast! : Math.max(entry.minContrast ?? 0, 4.5);
-        const ratio = checkContrast(dim[`--${token}`], dim[`--${entry.contrastAgainst}`]);
-        expect(ratio, `${accent} ${token}`).toBeGreaterThanOrEqual(floor - 1e-6);
+        for (const ground of contrastGrounds(entry)) {
+          const ratio = checkContrast(dim[`--${token}`], dim[`--${ground}`]);
+          expect(ratio, `${accent} ${token} on ${ground}`).toBeGreaterThanOrEqual(floor - 1e-6);
+        }
       }
     }
   });

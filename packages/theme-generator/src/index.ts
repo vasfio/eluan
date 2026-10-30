@@ -15,7 +15,7 @@ export {
 } from './color/dim.js';
 export { generateSystemScales, DEFAULT_SYSTEM_HUES } from './color/systemHues.js';
 export { generateNeutralScale } from './color/neutral.js';
-export { buildSemanticMap, dimRef, modeRef, withDimRefs } from './tokens/semanticMap.js';
+export { buildSemanticMap, contrastGrounds, dimRef, modeRef, withDimRefs } from './tokens/semanticMap.js';
 export { buildPrimitives } from './tokens/primitives.js';
 export { checkContrast, autoCorrect } from './tokens/contrast.js';
 export {

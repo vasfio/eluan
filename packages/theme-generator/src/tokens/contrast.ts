@@ -8,12 +8,17 @@ import type {
   SemanticMap,
   TokenRef,
 } from '../types.js';
-import { modeRef } from './semanticMap.js';
+import { contrastGrounds, modeRef } from './semanticMap.js';
 
 const ORDERED_STEPS: ScaleStepValue[] = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 
 export function checkContrast(fgHex: string, bgHex: string): number {
   return wcagContrast(fgHex, bgHex);
+}
+
+/** Contrast against the hardest of several grounds. */
+function worstContrast(fgHex: string, bgHexes: string[]): number {
+  return Math.min(...bgHexes.map((bgHex) => checkContrast(fgHex, bgHex)));
 }
 
 function resolveTokenRef(
@@ -48,7 +53,7 @@ function parseRef(ref: TokenRef): { scaleName: ScaleName; step: ScaleStepValue }
  */
 function shiftFgTowardsContrast(
   originalRef: TokenRef,
-  bgHex: string,
+  bgHexes: string[],
   primitives: PrimitiveTokens,
   minContrast: number,
   direction: 'light' | 'dark'
@@ -68,7 +73,7 @@ function shiftFgTowardsContrast(
   for (const step of stepsToTry) {
     const entry = scale[step];
     if (!entry) continue;
-    const ratio = checkContrast(entry.hex, bgHex);
+    const ratio = worstContrast(entry.hex, bgHexes);
     if (ratio >= minContrast) {
       return {
         ref: `${scaleName}.${step}` as TokenRef,
@@ -92,7 +97,7 @@ function shiftFgTowardsContrast(
 
   let bestFallback: { ref: TokenRef; contrast: number } | null = null;
   for (const fb of hardFallbacks) {
-    const ratio = checkContrast(fb.hex, bgHex);
+    const ratio = worstContrast(fb.hex, bgHexes);
     if (ratio >= minContrast && (!bestFallback || ratio > bestFallback.contrast)) {
       bestFallback = { ref: fb.ref, contrast: ratio };
     }
@@ -102,8 +107,8 @@ function shiftFgTowardsContrast(
     return { ref: bestFallback.ref, contrast: bestFallback.contrast, kind: 'hard-fallback' };
   }
 
-  const whiteRatio = checkContrast('#ffffff', bgHex);
-  const blackRatio = checkContrast('#000000', bgHex);
+  const whiteRatio = worstContrast('#ffffff', bgHexes);
+  const blackRatio = worstContrast('#000000', bgHexes);
   const best = whiteRatio >= blackRatio ? { ref: 'white' as TokenRef, contrast: whiteRatio } : { ref: 'black' as TokenRef, contrast: blackRatio };
   return { ref: best.ref, contrast: best.contrast, kind: 'hard-fallback' };
 }
@@ -120,36 +125,33 @@ export function autoCorrect(
   for (const [tokenName, entry] of Object.entries(map)) {
     if (entry.role === 'decorative') continue;
     if (entry.role !== 'fg' && entry.role !== 'border') continue;
-    if (!entry.contrastAgainst) continue;
+    const bgHexes = contrastGrounds(entry)
+      .flatMap((ground) => (map[ground] ? [resolveTokenRef(modeRef(map[ground], mode), primitives)] : []))
+      .filter((hex): hex is string => hex !== null);
+    if (bgHexes.length === 0) continue;
 
-    const bgEntry = map[entry.contrastAgainst];
-    if (!bgEntry) continue;
-
-    const bgRef = modeRef(bgEntry, mode);
     const fgRef = modeRef(entry, mode);
-
-    const bgHex = resolveTokenRef(bgRef, primitives);
     const fgHex = resolveTokenRef(fgRef, primitives);
-    if (!bgHex || !fgHex) continue;
+    if (!fgHex) continue;
 
     // The config-wide minimum is a floor: per-entry values can raise it but
     // not lower it, except for entries that opt into a lower WCAG tier.
     const minContrast = entry.allowBelowDefault && entry.minContrast !== undefined
       ? entry.minContrast
       : Math.max(entry.minContrast ?? 0, defaultMinContrast);
-    const ratio = checkContrast(fgHex, bgHex);
+    const ratio = worstContrast(fgHex, bgHexes);
 
     if (ratio >= minContrast) continue;
 
     // Dim grounds run from near-white pages to mid-tone buttons, so its search
     // follows the ground: toward dark text where black reads better, else light.
     const direction = mode === 'dim'
-      ? (checkContrast('#000000', bgHex) >= checkContrast('#ffffff', bgHex) ? 'light' : 'dark')
+      ? (worstContrast('#000000', bgHexes) >= worstContrast('#ffffff', bgHexes) ? 'light' : 'dark')
       : mode;
 
     const correction = shiftFgTowardsContrast(
       fgRef,
-      bgHex,
+      bgHexes,
       primitives,
       minContrast,
       direction

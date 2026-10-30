@@ -71,6 +71,39 @@ describe('autoCorrect', () => {
     expect(result1.corrections).toEqual(result2.corrections);
   });
 
+  describe('several grounds', () => {
+    const primitives = makePrimitives('#FF4A2C');
+    const hex = (step: 50 | 300 | 600) => primitives.neutral![step].hex;
+
+    it('corrects against the hardest ground', () => {
+      const map: SemanticMap = {
+        page: { light: 'neutral.50', dark: 'neutral.800', role: 'bg' },
+        panel: { light: 'neutral.300', dark: 'neutral.900', role: 'bg' },
+        fg: { light: 'neutral.600', dark: 'neutral.300', role: 'fg', contrastAgainst: ['page', 'panel'], minContrast: 4.5 },
+      };
+      // Passes on the page, fails on the panel
+      expect(checkContrast(hex(600), hex(50))).toBeGreaterThanOrEqual(4.5);
+      expect(checkContrast(hex(600), hex(300))).toBeLessThan(4.5);
+
+      const { correctedMap, corrections } = autoCorrect(map, primitives, 'light', 4.5);
+      const fixed = primitives.neutral![Number(correctedMap.fg.light.split('.')[1]) as 600].hex;
+
+      expect(corrections).toHaveLength(1);
+      expect(corrections[0].originalContrast).toBeCloseTo(checkContrast(hex(600), hex(300)), 5);
+      expect(checkContrast(fixed, hex(50))).toBeGreaterThanOrEqual(4.5);
+      expect(checkContrast(fixed, hex(300))).toBeGreaterThanOrEqual(4.5);
+    });
+
+    it('leaves a single ground alone when only that one is listed', () => {
+      const map: SemanticMap = {
+        page: { light: 'neutral.50', dark: 'neutral.800', role: 'bg' },
+        fg: { light: 'neutral.600', dark: 'neutral.300', role: 'fg', contrastAgainst: 'page', minContrast: 4.5 },
+      };
+
+      expect(autoCorrect(map, primitives, 'light', 4.5).corrections).toHaveLength(0);
+    });
+  });
+
   describe('nearest passing step', () => {
     const primitives = makePrimitives('#FF4A2C');
     const steps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;
