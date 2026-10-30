@@ -114,7 +114,6 @@
   --action-tertiary-border-alt: var(--mono-tint);
   --action-tertiary-border-disabled: var(--backgrounds-quaternary);
   --action-tertiary-border-inverse: var(--backgrounds-secondary);
-  --action-tertiary-fg: var(--mono-background);
   --action-tertiary-fg-alt: var(--foregrounds-primary);
   --action-tertiary-fg-disabled: var(--foregrounds-quinary);
   --action-tertiary-fg-active: var(--mono-shade);

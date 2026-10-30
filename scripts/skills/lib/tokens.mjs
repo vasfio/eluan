@@ -103,9 +103,13 @@ export const modeNames = [...block("modes.css", '[data-mode="light"]').keys()].m
 export const spacingNames = [...block("spacing.css", '[data-spacing="standard"]').keys()].map((k) => k.slice(2));
 export const curveNames = [...block("curves.css", '[data-curves="slight"]').keys()].map((k) => k.slice(2));
 
+// Family tokens mostly live in themes.css; the few that differ by mode
+// (action-tertiary-fg) are declared per mode in modes.css instead.
+const familyNames = [...themeNames, ...modeNames.filter((n) => !themeNames.includes(n))];
+
 // Semantic colour tokens in display order (families, scrim and tooltip, then dataviz).
 export const colourNames = () =>
-  COLOUR_FAMILIES.flatMap((f) => themeNames.filter((n) => n.startsWith(`${f}-`)))
+  COLOUR_FAMILIES.flatMap((f) => familyNames.filter((n) => n.startsWith(`${f}-`)))
     .concat(modeNames.filter((n) => n === "focus-ring" || n === "overlay-bg" || n === "tooltip-bg"))
     .concat(themeNames.filter((n) => n.startsWith("dataviz-")));
 

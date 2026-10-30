@@ -37,6 +37,9 @@
    * ground while staying distinct from the near-black pressed fill
    * (--interactive-bg-active), so focus never reads as pressed. */
   --focus-ring: var(--foregrounds-quaternary);
+  /* Ghost button and Toast cancel text — mode-aware for the same reason as
+   * --tooltip-bg: dim needs a deeper step than --mono-background gives it. */
+  --action-tertiary-fg: var(--mono-background);
   --maitai-main: var(--color-maitai-500);
   --maitai-background: var(--color-maitai-50);
   --maitai-tint: var(--color-maitai-100);
@@ -147,6 +150,9 @@
   --tooltip-bg: var(--backgrounds-primary);
   --overlay-bg: var(--foregrounds-primary);
   --focus-ring: var(--foregrounds-quaternary);
+  /* teak-700 (--mono-background) is 4.36:1 on the dim panel ground, below AA
+   * for Ghost button text; teak-800 clears 6:1 on the page and panel. */
+  --action-tertiary-fg: var(--foregrounds-tertiary);
   --maitai-main: var(--color-maitai-600);
   --maitai-background: var(--color-maitai-100);
   --maitai-tint: var(--color-maitai-200);
@@ -262,6 +268,7 @@
   /* One step lighter than in light mode: --foregrounds-quaternary is too
    * close to the white pressed fill here, quinary still clears 3:1. */
   --focus-ring: var(--foregrounds-quinary);
+  --action-tertiary-fg: var(--mono-background);
   --maitai-main: var(--color-maitai-500);
   --maitai-background: var(--color-maitai-950);
   --maitai-tint: var(--color-maitai-900);
