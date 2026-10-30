@@ -19,5 +19,6 @@ Each task is a prompt given to an agent working in a fresh app that depends on E
 | t13 | Add an icon-only button to close a side panel. | icon button, aria-label, Lucide icon size token |
 | t14 | Show a warning across the top that the trial ends in 3 days. | banner, not toast |
 | t15 | Build a filter bar with a date range, a status select and a reset button. | select, date picker if available, secondary button for reset |
+| t16 | Let users turn email notifications on and off; each change saves to the server. | switch, focus stays on the switch while it saves (aria-busy, not disabled), revert and inline error on failure |
 
 Remove or adapt tasks for components Eluan doesn't have (for example t09 without a table, t15 without a date picker). An agent hitting a missing component should follow "When nothing fits", and that is part of what's scored.

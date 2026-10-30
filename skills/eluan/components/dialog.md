@@ -263,6 +263,7 @@ export function DeleteProjectDialog({
   const [deleting, setDeleting] = React.useState(false);
 
   async function handleDelete() {
+    if (deleting) return;
     setDeleting(true);
     try {
       await onDelete();
@@ -298,8 +299,8 @@ export function DeleteProjectDialog({
             type="button"
             variant="destructive"
             onClick={handleDelete}
-            disabled={deleting}
             aria-busy={deleting}
+            aria-disabled={deleting}
           >
             Delete project
           </Button>

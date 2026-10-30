@@ -102,7 +102,7 @@ Skeletons have no text. Make them look like the content they stand in for:
 **Do:** use a Spinner in the button for a running action.
 
 ```tsx
-<Button type="submit" disabled aria-busy>
+<Button type="submit" aria-busy aria-disabled>
   <Spinner size="sm" aria-hidden="true" />
   Saving…
 </Button>

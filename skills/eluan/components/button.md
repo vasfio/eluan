@@ -74,7 +74,7 @@ Button triggers an action. It renders a native `<button>` (or its child, with `a
 | Focus | 1px outline in `--focus-ring`, 1px offset | Never remove or restyle the focus ring. |
 | Active | Variant `-active` background; solid variants nudge down slightly | `destructive` and `dashed` lose label contrast while pressed. <!-- REVIEW: known source issue from the Paper audit; button.tsx sets a near-black :active background without a matching color. --> |
 | Disabled | 50% opacity, no pointer events | `input` variants switch to the disabled interactive tokens instead. |
-| Loading | No built-in loading state | Put a [Spinner](./spinner.md) before the label, keep the label, and set `disabled` and `aria-busy`. <!-- REVIEW: composition drafted; Button has no loading prop. --> |
+| Loading | No built-in loading state | Put a [Spinner](./spinner.md) before the label, keep the label, set `aria-busy` and `aria-disabled`, and ignore clicks until the work settles. Don't set `disabled` on the button that was pressed: it drops keyboard focus. <!-- REVIEW: composition drafted; Button has no loading prop. --> |
 
 ## 7. Content guidelines
 
@@ -213,4 +213,4 @@ export function ProjectToolbar({ onCreate }: { onCreate: () => void }) {
 
 ## 15. Common agent mistakes
 
-_Filled from evals._
+- Setting `disabled` on the button that started a save or delete. Focus drops to the page the moment it's pressed. Set `aria-busy` and `aria-disabled` and ignore clicks until the work settles; the Spinner and label show it's busy.

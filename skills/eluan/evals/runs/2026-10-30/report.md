@@ -74,6 +74,8 @@ Not applied. Each becomes a rule, a don't, or a section 15 entry once approved.
 - Section 15 in both files: "Disabling the control that started a save, which drops keyboard focus."
 - New regression task: "Let users toggle email notifications; the change saves to the server."
 
+**Applied** on branch `fix/skill-eval-fixes`, as t16. The same disable-while-busy advice also sat in the examples in `spinner.md` (rule 1 and three examples), `dialog.md`, `toast.md` and `skeleton.md`, so those changed too. The Dialog's Cancel button keeps `disabled`, because it isn't the control that was pressed.
+
 ### F2. t15 navigation: the router sends filter bars to SearchInput
 
 `SKILL.md` line 62, "Search, filter or run a command → `components/search-input.md`", sent a date-and-status filter bar to SearchInput first. Split the row:

@@ -207,6 +207,7 @@ export function NotificationSettingsForm({ save }: { save: () => Promise<void> }
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
+    if (saving) return;
     setSaving(true);
     setError(false);
     try {
@@ -231,7 +232,7 @@ export function NotificationSettingsForm({ save }: { save: () => Promise<void> }
         <Switch id="weekly-digest" name="weeklyDigest" defaultChecked />
       </div>
       <div style={{ display: "flex", justifyContent: "flex-end", gap: "var(--spacing-sm)" }}>
-        <Button type="submit" disabled={saving} aria-busy={saving}>
+        <Button type="submit" aria-busy={saving} aria-disabled={saving}>
           {saving ? "Saving…" : "Save changes"}
         </Button>
       </div>

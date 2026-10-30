@@ -46,7 +46,7 @@ Switch has no `size` prop. The track is `--size-lg` by `--size-xs` and follows d
 | On | Track and border in `--interactive-bg-selected`, thumb at the end | |
 | Focus | 1px outline in `--focus-ring`, 1px offset | Never remove or restyle the focus ring. |
 | Disabled | Track fill switches to `--interactive-bg-disabled`, not-allowed cursor; the thumb stays on its side | Disable its Label too. <!-- REVIEW: the light thumb on the pale disabled track may read poorly, like W2 #4; not in the fix plan and not checked visually. --> |
-| Loading | No built-in loading state | While a save is in flight, keep the new position, set `disabled` and `aria-busy`, and revert if the save fails. <!-- REVIEW: composition drafted; Switch has no loading prop. --> |
+| Loading | No built-in loading state | While a save is in flight, keep the new position, set `aria-busy` and `aria-disabled`, and ignore further toggles until it settles. Don't set `disabled`: it drops keyboard focus from the switch the user just pressed. Revert if the save fails. <!-- REVIEW: composition drafted; Switch has no loading prop. --> |
 
 There's no hover style.
 
@@ -170,6 +170,7 @@ export function EmailSettings({
   const [saving, setSaving] = React.useState<string | null>(null);
 
   async function handleChange(id: string, enabled: boolean) {
+    if (saving === id) return;
     setValues((current) => ({ ...current, [id]: enabled }));
     setSaving(id);
     try {
@@ -195,8 +196,8 @@ export function EmailSettings({
             id={setting.id}
             checked={values[setting.id] ?? false}
             onCheckedChange={(enabled) => handleChange(setting.id, enabled)}
-            disabled={saving === setting.id}
             aria-busy={saving === setting.id || undefined}
+            aria-disabled={saving === setting.id || undefined}
             aria-describedby={`${setting.id}-description`}
           />
         </div>
@@ -216,4 +217,4 @@ export function EmailSettings({
 
 ## 15. Common agent mistakes
 
-_Filled from evals._
+- Setting `disabled` on a switch while its change saves. Focus leaves the switch the user just toggled, so a keyboard user loses their place. Set `aria-busy` and `aria-disabled` and ignore toggles until the save settles.

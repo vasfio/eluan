@@ -66,7 +66,7 @@ Spinner has no variants. It draws in `currentColor`, so it takes the text colour
 
 ## 8. Rules
 
-1. In a Button, put the Spinner before the label, keep the label, and set `disabled` and `aria-busy` on the Button.
+1. In a Button, put the Spinner before the label, keep the label, and set `aria-busy` and `aria-disabled` on the Button, ignoring clicks while it's busy. Don't set `disabled`: it drops focus from the button the user just pressed.
 2. Mark a Spinner inside a labelled Button `aria-hidden="true"`, so the button's name stays "Saving…" instead of "Loading Saving…". <!-- REVIEW: drafted from the name computation; Spinner's role="status" and aria-label otherwise join the button's accessible name. -->
 3. Give a standalone Spinner a specific `aria-label` that says what's loading.
 4. Change its colour through the parent's `color`, using a token. Never pass `className` or `style`; they're dropped.
@@ -78,7 +78,7 @@ Spinner has no variants. It draws in `currentColor`, so it takes the text colour
 **Do:** keep the label in a busy button.
 
 ```tsx
-<Button type="submit" disabled={saving} aria-busy={saving}>
+<Button type="submit" aria-busy={saving} aria-disabled={saving}>
   {saving && <Spinner size="sm" aria-hidden="true" />}
   {saving ? "Saving…" : "Save changes"}
 </Button>
@@ -87,7 +87,7 @@ Spinner has no variants. It draws in `currentColor`, so it takes the text colour
 **Don't:** replace the label with a Spinner.
 
 ```tsx
-<Button type="submit" disabled={saving}>
+<Button type="submit" aria-busy={saving} aria-disabled={saving}>
   {saving ? <Spinner /> : "Save changes"}
 </Button>
 ```
@@ -143,6 +143,7 @@ export function ExportReportButton({ exportReport }: { exportReport: () => Promi
   const [exporting, setExporting] = useState(false);
 
   async function handleClick() {
+    if (exporting) return;
     setExporting(true);
     try {
       await exportReport();
@@ -152,7 +153,7 @@ export function ExportReportButton({ exportReport }: { exportReport: () => Promi
   }
 
   return (
-    <Button type="button" variant="outline" disabled={exporting} aria-busy={exporting} onClick={handleClick}>
+    <Button type="button" variant="outline" aria-busy={exporting} aria-disabled={exporting} onClick={handleClick}>
       {exporting && <Spinner size="sm" aria-hidden="true" />}
       {exporting ? "Exporting…" : "Export CSV"}
     </Button>
