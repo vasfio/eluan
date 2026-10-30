@@ -71,6 +71,46 @@ describe('autoCorrect', () => {
     expect(result1.corrections).toEqual(result2.corrections);
   });
 
+  describe('nearest passing step', () => {
+    const primitives = makePrimitives('#FF4A2C');
+    const steps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;
+    const hex = (ref: string) => {
+      const [scale, step] = ref.split('.');
+      return primitives[scale as 'primary']![Number(step) as 500].hex;
+    };
+
+    it('moves brand text the fewest steps that pass, not to the end of the ramp', () => {
+      const map: SemanticMap = {
+        bg: { light: 'neutral.50', dark: 'neutral.800', role: 'bg' },
+        fg: { light: 'primary.500', dark: 'primary.400', role: 'fg', contrastAgainst: 'bg', minContrast: 4.5 },
+      };
+      const [c] = autoCorrect(map, primitives, 'light', 4.5).corrections;
+      const step = Number(c.correctedRef.split('.')[1]);
+      const lighter = steps[steps.indexOf(step as 500) - 1];
+
+      expect(c.kind).toBe('step-shift');
+      expect(c.correctedRef).not.toBe('primary.950');
+      expect(step).toBeGreaterThan(500);
+      expect(c.correctedContrast).toBeGreaterThanOrEqual(4.5);
+      // Every step between the original and the correction fails
+      if (lighter > 500) expect(checkContrast(hex(`primary.${lighter}`), hex('neutral.50'))).toBeLessThan(4.5);
+    });
+
+    it('walks toward the light steps in dark mode', () => {
+      const map: SemanticMap = {
+        bg: { light: 'neutral.50', dark: 'neutral.800', role: 'bg' },
+        fg: { light: 'primary.500', dark: 'primary.600', role: 'fg', contrastAgainst: 'bg', minContrast: 4.5 },
+      };
+      const [c] = autoCorrect(map, primitives, 'dark', 4.5).corrections;
+      const step = Number(c.correctedRef.split('.')[1]);
+      const darker = steps[steps.indexOf(step as 500) + 1];
+
+      expect(step).toBeLessThan(600);
+      expect(c.correctedRef).not.toBe('primary.50');
+      if (darker < 600) expect(checkContrast(hex(`primary.${darker}`), hex('neutral.800'))).toBeLessThan(4.5);
+    });
+  });
+
   // For the orange primitives, neutral.600 on neutral.50 sits at ~5.5:1 —
   // above the 4.5 per-entry floor, below a 7:1 (AAA) config floor. That gap
   // is what makes these pairings discriminate the floor semantics.
@@ -127,7 +167,7 @@ describe('autoCorrect', () => {
       expect(correctedMap.fg.dark).toBe('neutral.50');
     });
 
-    it('searches toward the end that suits the ground', () => {
+    it('walks toward the end that suits the ground, stopping at the nearest pass', () => {
       const onLight: SemanticMap = {
         bg: { light: 'neutral.50', dark: 'neutral.800', dim: 'neutral.100', role: 'bg' },
         fg: { light: 'neutral.950', dark: 'neutral.50', dim: 'neutral.400', role: 'fg', contrastAgainst: 'bg', minContrast: 4.5 },
@@ -137,8 +177,8 @@ describe('autoCorrect', () => {
         fg: { light: 'neutral.950', dark: 'neutral.50', dim: 'neutral.600', role: 'fg', contrastAgainst: 'bg', minContrast: 4.5 },
       };
 
-      expect(autoCorrect(onLight, primitives, 'dim', 4.5).corrections[0].correctedRef).toBe('neutral.950');
-      expect(autoCorrect(onDark, primitives, 'dim', 4.5).corrections[0].correctedRef).toBe('neutral.50');
+      expect(autoCorrect(onLight, primitives, 'dim', 4.5).corrections[0].correctedRef).toBe('neutral.600');
+      expect(autoCorrect(onDark, primitives, 'dim', 4.5).corrections[0].correctedRef).toBe('neutral.400');
     });
 
     it('derives dim from light when an entry has no dim ref', () => {

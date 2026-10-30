@@ -39,8 +39,12 @@ function parseRef(ref: TokenRef): { scaleName: ScaleName; step: ScaleStepValue }
 }
 
 /**
- * `direction` is which end of the ramp to search from: 'light' tries the dark
- * steps first (text on a light ground), 'dark' the light steps first.
+ * Walks the fg's ramp one step at a time from `originalRef` in `direction`
+ * ('light' toward the dark steps, for text on a light ground; 'dark' toward
+ * the light steps) and takes the first step that passes: the smallest change
+ * that fixes the pair, so brand-coloured text stays as close to its brand
+ * step as contrast allows. Falls back to neutral, white or black when no step
+ * on the ramp passes.
  */
 function shiftFgTowardsContrast(
   originalRef: TokenRef,
@@ -52,17 +56,16 @@ function shiftFgTowardsContrast(
   const parsed = parseRef(originalRef);
   if (!parsed) return null;
 
-  const { scaleName } = parsed;
+  const { scaleName, step: originalStep } = parsed;
   const scale = primitives[scaleName];
   if (!scale) return null;
 
+  const index = ORDERED_STEPS.indexOf(originalStep);
   const stepsToTry = direction === 'light'
-    ? [...ORDERED_STEPS].reverse()
-    : [...ORDERED_STEPS];
+    ? ORDERED_STEPS.slice(index + 1)
+    : ORDERED_STEPS.slice(0, index).reverse();
 
-  let attempts = 0;
   for (const step of stepsToTry) {
-    if (attempts >= 3) break;
     const entry = scale[step];
     if (!entry) continue;
     const ratio = checkContrast(entry.hex, bgHex);
@@ -73,7 +76,6 @@ function shiftFgTowardsContrast(
         kind: 'step-shift',
       };
     }
-    attempts++;
   }
 
   const hardFallbacks: { ref: TokenRef; hex: string }[] = direction === 'light'
