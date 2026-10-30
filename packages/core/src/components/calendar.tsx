@@ -155,7 +155,7 @@ function Calendar({
         {...props}
         className={sx(styles.dayPicker)}
         classNames={{
-          months: sx(styles.months),
+          months: `${sx(styles.months)} eluan-calendar-months`,
           month: sx(styles.month),
           month_caption: sx(styles.monthCaption),
           caption_label: sx(styles.captionLabel),
@@ -358,7 +358,7 @@ const styles = stylex.create({
 
 const calendarStyles = `
 @media (min-width: 640px) {
-  .${sx(styles.months)} > div + div {
+  .eluan-calendar-months > div + div {
     border-left: 1px solid var(--container-border-alt);
     padding-left: var(--spacing-lg);
   }
