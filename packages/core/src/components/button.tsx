@@ -163,10 +163,10 @@ const styles = stylex.create({
   },
   variantGhost: {
     backgroundColor: "transparent",
-    color: "var(--foregrounds-secondary)",
+    color: "var(--action-tertiary-fg)",
     ":hover": {
       backgroundColor: "var(--backgrounds-tertiary)",
-      color: "var(--foregrounds-primary)",
+      color: "var(--action-tertiary-fg-alt)",
     },
   },
   variantMutedGhost: {
