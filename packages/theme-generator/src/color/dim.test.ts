@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { buildDimPrimitives, desaturateScale, warmScale, TEAK_HUE_CHROMA } from './dim.js';
+import { buildDimPrimitives, toneDownScale, warmScale, TEAK_HUE_CHROMA } from './dim.js';
 import { generateScale } from './scale.js';
 import { DEFAULT_CURVE } from './curves.js';
 import { buildPrimitives } from '../tokens/primitives.js';
@@ -9,15 +9,24 @@ import { SCALE_STEPS } from '../types.js';
 const scale = generateScale(150, 0.12, DEFAULT_CURVE);
 const grey = generateScale(250, 0.004, DEFAULT_CURVE);
 
-describe('desaturateScale', () => {
-  it('scales chroma and keeps lightness and hue', () => {
-    const toned = desaturateScale(scale, 0.8);
+describe('toneDownScale', () => {
+  it("gives each step its light counterpart's chroma, scaled", () => {
+    const toned = toneDownScale(scale, 0.8);
 
-    for (const step of SCALE_STEPS) {
-      expect(toned[step].oklch.c).toBeCloseTo(scale[step].oklch.c * 0.8, 3);
+    for (let i = 1; i < SCALE_STEPS.length; i++) {
+      const step = SCALE_STEPS[i];
+      expect(toned[step].oklch.c, String(step)).toBeCloseTo(scale[SCALE_STEPS[i - 1]].oklch.c * 0.8, 3);
       expect(toned[step].oklch.l).toBeCloseTo(scale[step].oklch.l, 5);
       expect(toned[step].oklch.h).toBeCloseTo(scale[step].oklch.h, 1);
     }
+    expect(toned[50].oklch.c).toBeCloseTo(scale[50].oklch.c * 0.8, 3);
+  });
+
+  it('leaves every dim tint quieter than the light one it replaces', () => {
+    const toned = toneDownScale(scale, 0.8);
+
+    expect(toned[200].oklch.c).toBeLessThan(scale[100].oklch.c);
+    expect(toned[100].oklch.c).toBeLessThan(scale[50].oklch.c);
   });
 });
 

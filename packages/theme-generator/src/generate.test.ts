@@ -250,8 +250,9 @@ describe('dim mode', () => {
     for (const token of ['--container-bg', '--container-bg-alt', '--action-primary-bg', '--destructive-bg-alt']) {
       expect(lightness(dim[token]), token).toBeLessThan(lightness(light[token]));
     }
-    expect(chroma(dim['--action-primary-bg'])).toBeLessThan(chroma(light['--action-primary-bg']));
-    expect(chroma(dim['--destructive-border'])).toBeLessThan(chroma(light['--destructive-border']));
+    for (const token of ['--action-primary-bg', '--destructive-border', '--destructive-bg-alt', '--informative-bg-alt', '--positive-bg', '--important-fg']) {
+      expect(chroma(dim[token]), token).toBeLessThan(chroma(light[token]));
+    }
   });
 
   it("warms the greys toward minimal's teak by default", () => {

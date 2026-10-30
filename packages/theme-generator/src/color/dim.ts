@@ -47,12 +47,19 @@ function mixHue(from: number, to: number, t: number): number {
   return (from + delta * t + 360) % 360;
 }
 
-export function desaturateScale(scale: Scale, factor: number): Scale {
+/**
+ * Dim refs sit one step deeper than light, and chroma climbs steeply toward
+ * the mid steps, so scaling each step's own chroma would still leave dim tints
+ * louder than light's (100 → 200 nearly doubles it). Each step instead takes
+ * the chroma of the step above, its light counterpart, times `factor`: every
+ * dim colour keeps `factor` of the saturation it had in light mode.
+ */
+export function toneDownScale(scale: Scale, factor: number): Scale {
   const toned = {} as Scale;
-  for (const step of SCALE_STEPS) {
-    const { oklch } = scale[step];
-    toned[step] = entry({ ...oklch, c: oklch.c * factor });
-  }
+  SCALE_STEPS.forEach((step, i) => {
+    const counterpart = scale[SCALE_STEPS[Math.max(i - 1, 0)]];
+    toned[step] = entry({ ...scale[step].oklch, c: counterpart.oklch.c * factor });
+  });
   return toned;
 }
 
@@ -71,8 +78,8 @@ export function warmScale(scale: Scale, warmth: number): Scale {
 }
 
 /**
- * The primitives dim mode resolves against: every colour ramp's chroma scaled
- * by `chroma`, and neutral pulled `warmth` of the way toward teak's hue and
+ * The primitives dim mode resolves against: every colour ramp toned down to
+ * `chroma` of its light-mode saturation, and neutral pulled `warmth` of the way toward teak's hue and
  * chroma. With chroma 1 and warmth 0 it returns the light primitives as-is.
  */
 export function buildDimPrimitives(
@@ -85,7 +92,7 @@ export function buildDimPrimitives(
   if (chroma !== 1) {
     for (const name of TONED) {
       const scale = primitives[name];
-      if (scale) dim[name] = desaturateScale(scale, chroma);
+      if (scale) dim[name] = toneDownScale(scale, chroma);
     }
   }
   if (warmth !== 0 && primitives.neutral) {

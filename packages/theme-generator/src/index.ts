@@ -6,7 +6,7 @@ export { generateScale } from './color/scale.js';
 export { buildDarkPrimitives, liftScale, DEFAULT_DARK_LIFT, MAX_DARK_LIFT, DARK_LIFT_WEIGHTS } from './color/darkLift.js';
 export {
   buildDimPrimitives,
-  desaturateScale,
+  toneDownScale,
   warmScale,
   DEFAULT_DIM_CHROMA,
   MIN_DIM_CHROMA,
