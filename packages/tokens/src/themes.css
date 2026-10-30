@@ -97,7 +97,6 @@
   --action-secondary-border-alt: var(--mono-shade);
   --action-secondary-border-disabled: var(--mono-tint);
   --action-secondary-border-inverse: var(--backgrounds-secondary);
-  --action-secondary-fg: var(--mono-background);
   --action-secondary-fg-alt: var(--foregrounds-primary);
   --action-secondary-fg-disabled: var(--foregrounds-quinary);
   --action-secondary-fg-active: var(--backgrounds-primary);

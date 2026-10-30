@@ -89,12 +89,12 @@ Values show the mode alias each token points to, then the resolved value in ligh
 | `--action-secondary-border-alt` | `--mono-shade` → oklch(0.3715 0.0000 0.00) / dark oklch(0.9702 0.0000 0.00) | Secondary (outline) actions: subtle border |
 | `--action-secondary-border-disabled` | `--mono-tint` → oklch(0.9702 0.0000 0.00) / dark oklch(0.3715 0.0000 0.00) | Secondary (outline) actions: border when disabled |
 | `--action-secondary-border-inverse` | `--backgrounds-secondary` → oklch(0.9702 0.0000 0.00) / dark oklch(0.2046 0.0000 0.00) | Secondary (outline) actions: border on an inverse surface |
-| `--action-secondary-fg` | `--mono-background` → oklch(0.1448 0.0000 0.00) / dark oklch(0.9851 0.0000 0.00) | Secondary (outline) actions: text and icons |
 | `--action-secondary-fg-alt` | `--foregrounds-primary` → oklch(0.1448 0.0000 0.00) / dark oklch(1.0000 0.0000 0.00) | Secondary (outline) actions: muted text and icons |
 | `--action-secondary-fg-disabled` | `--foregrounds-quinary` → oklch(0.7090 0.0000 0.00) | Secondary (outline) actions: text when disabled |
 | `--action-secondary-fg-active` | `--backgrounds-primary` → oklch(1.0000 0.0000 0.00) / dark oklch(0.2686 0.0000 0.00) | Secondary (outline) actions: text while pressed |
 | `--action-secondary-fg-selected` | `--backgrounds-primary` → oklch(1.0000 0.0000 0.00) / dark oklch(0.2686 0.0000 0.00) | Secondary (outline) actions: text when selected |
 | `--action-secondary-fg-inverse` | `--foregrounds-primary` → oklch(0.1448 0.0000 0.00) / dark oklch(1.0000 0.0000 0.00) | Secondary (outline) actions: text on an inverse surface |
+| `--action-secondary-fg` | `--mono-background` → oklch(0.1448 0.0000 0.00) / dark oklch(0.9851 0.0000 0.00) | Secondary (outline) actions: text and icons |
 | `--action-tertiary-bg` | `--backgrounds-primary` → oklch(1.0000 0.0000 0.00) / dark oklch(0.2686 0.0000 0.00) | Tertiary (ghost) actions: background |
 | `--action-tertiary-bg-alt` | `--backgrounds-secondary` → oklch(0.9702 0.0000 0.00) / dark oklch(0.2046 0.0000 0.00) | Tertiary (ghost) actions: subtle alternate background |
 | `--action-tertiary-bg-hover` | `--backgrounds-secondary` → oklch(0.9702 0.0000 0.00) / dark oklch(0.2046 0.0000 0.00) | Tertiary (ghost) actions: background on hover |

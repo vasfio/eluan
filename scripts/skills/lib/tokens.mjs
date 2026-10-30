@@ -104,7 +104,7 @@ export const spacingNames = [...block("spacing.css", '[data-spacing="standard"]'
 export const curveNames = [...block("curves.css", '[data-curves="slight"]').keys()].map((k) => k.slice(2));
 
 // Family tokens mostly live in themes.css; the few that differ by mode
-// (action-tertiary-fg) are declared per mode in modes.css instead.
+// (action-secondary-fg, action-tertiary-fg) are declared per mode in modes.css.
 const familyNames = [...themeNames, ...modeNames.filter((n) => !themeNames.includes(n))];
 
 // Semantic colour tokens in display order (families, scrim and tooltip, then dataviz).
