@@ -108,4 +108,47 @@ describe('autoCorrect', () => {
       expect(corrections.map(c => c.token)).not.toContain('interactive-fg-alt');
     });
   });
+
+  describe('dim mode', () => {
+    const primitives = makePrimitives('#FF4A2C');
+
+    it('corrects only the dim ref and records the mode', () => {
+      const map: SemanticMap = {
+        bg: { light: 'neutral.50', dark: 'neutral.800', dim: 'neutral.100', role: 'bg' },
+        fg: { light: 'neutral.950', dark: 'neutral.50', dim: 'neutral.400', role: 'fg', contrastAgainst: 'bg', minContrast: 4.5 },
+      };
+      const { correctedMap, corrections } = autoCorrect(map, primitives, 'dim', 4.5);
+
+      expect(corrections).toHaveLength(1);
+      expect(corrections[0].mode).toBe('dim');
+      expect(corrections[0].correctedContrast).toBeGreaterThanOrEqual(4.5);
+      expect(correctedMap.fg.dim).toBe(corrections[0].correctedRef);
+      expect(correctedMap.fg.light).toBe('neutral.950');
+      expect(correctedMap.fg.dark).toBe('neutral.50');
+    });
+
+    it('searches toward the end that suits the ground', () => {
+      const onLight: SemanticMap = {
+        bg: { light: 'neutral.50', dark: 'neutral.800', dim: 'neutral.100', role: 'bg' },
+        fg: { light: 'neutral.950', dark: 'neutral.50', dim: 'neutral.400', role: 'fg', contrastAgainst: 'bg', minContrast: 4.5 },
+      };
+      const onDark: SemanticMap = {
+        bg: { light: 'neutral.50', dark: 'neutral.800', dim: 'neutral.900', role: 'bg' },
+        fg: { light: 'neutral.950', dark: 'neutral.50', dim: 'neutral.600', role: 'fg', contrastAgainst: 'bg', minContrast: 4.5 },
+      };
+
+      expect(autoCorrect(onLight, primitives, 'dim', 4.5).corrections[0].correctedRef).toBe('neutral.950');
+      expect(autoCorrect(onDark, primitives, 'dim', 4.5).corrections[0].correctedRef).toBe('neutral.50');
+    });
+
+    it('derives dim from light when an entry has no dim ref', () => {
+      const map: SemanticMap = {
+        bg: { light: 'neutral.50', dark: 'neutral.800', role: 'bg' },
+        fg: { light: 'neutral.300', dark: 'neutral.50', role: 'fg', contrastAgainst: 'bg', minContrast: 4.5 },
+      };
+      const { corrections } = autoCorrect(map, primitives, 'dim', 4.5);
+
+      expect(corrections[0].originalRef).toBe('neutral.400');
+    });
+  });
 });

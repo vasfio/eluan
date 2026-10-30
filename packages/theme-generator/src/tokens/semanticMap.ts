@@ -1,7 +1,40 @@
-import type { SemanticMap } from '../types.js';
+import type { Mode, ScaleName, ScaleStepValue, SemanticEntry, SemanticMap, TokenRef } from '../types.js';
+import { SCALE_STEPS } from '../types.js';
+
+/**
+ * The dim ref for a light ref: one step deeper on the same ramp, 950 staying
+ * put. `minimal`'s own dim follows the same rule (page 0 → 100, tint 100 →
+ * 200, status text 700 → 800), which is what keeps dim a softer light mode
+ * rather than a lighter dark one.
+ */
+export function dimRef(light: TokenRef): TokenRef {
+  if (light === 'white' || light === 'black') return light;
+  const [scale, step] = light.split('.') as [ScaleName, string];
+  const index = SCALE_STEPS.indexOf(Number(step) as ScaleStepValue);
+  const deeper = SCALE_STEPS[Math.min(index + 1, SCALE_STEPS.length - 1)];
+  return `${scale}.${deeper}`;
+}
+
+/** The ref an entry resolves to in `mode`; dim falls back to `dimRef(entry.light)`. */
+export function modeRef(entry: SemanticEntry, mode: Mode): TokenRef {
+  if (mode === 'dim') return entry.dim ?? dimRef(entry.light);
+  return entry[mode];
+}
+
+/**
+ * Pins every entry's dim ref from its light ref, so later light-mode contrast
+ * corrections can't move dim along with them.
+ */
+export function withDimRefs(map: SemanticMap): SemanticMap {
+  const filled: SemanticMap = {};
+  for (const [token, entry] of Object.entries(map)) {
+    filled[token] = { ...entry, dim: modeRef(entry, 'dim') };
+  }
+  return filled;
+}
 
 export function buildSemanticMap(): SemanticMap {
-  return {
+  return withDimRefs({
     // ── Container ──────────────────────────────────────────────
     'container-bg':             { light: 'neutral.50',   dark: 'neutral.800',  role: 'bg' },
     'container-bg-alt':         { light: 'neutral.100',  dark: 'neutral.900',  role: 'bg' },
@@ -184,5 +217,5 @@ export function buildSemanticMap(): SemanticMap {
     'dataviz-8-main':  { light: 'info.600',    dark: 'info.300',    role: 'decorative' },
     'dataviz-8-tint':  { light: 'info.200',    dark: 'info.800',    role: 'decorative' },
     'dataviz-8-shade': { light: 'info.900',    dark: 'info.100',    role: 'decorative' },
-  };
+  });
 }

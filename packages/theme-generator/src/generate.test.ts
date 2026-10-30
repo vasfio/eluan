@@ -1,7 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import { generateTheme, computeInputHash } from './generate.js';
-import { compileCreateThemeTokens } from './compile/css.js';
+import { compileCreateThemeTokens, compileSemanticJSON } from './compile/css.js';
 import { checkContrast } from './tokens/contrast.js';
+import { hexToOklch } from './color/convert.js';
+import { TEAK_HUE_CHROMA } from './color/dim.js';
 import type { GeneratorConfig } from './types.js';
 
 const ORANGE_CONFIG: GeneratorConfig = {
@@ -235,6 +237,96 @@ describe('dark lift', () => {
   });
 });
 
+describe('dim mode', () => {
+  const ACCENTS = ['#2F6F5E', '#FF4A2C', '#FFD60A', '#1D4ED8', '#7C3AED'];
+  const lightness = (hex: string) => hexToOklch(hex).l;
+  const chroma = (hex: string) => hexToOklch(hex).c;
+
+  it('sits deeper than light mode with toned-down colour', () => {
+    const r = generateTheme(ORANGE_CONFIG);
+    const light = r.createThemeOptions.tokens;
+    const dim = r.createThemeOptions.modes.dim;
+
+    for (const token of ['--container-bg', '--container-bg-alt', '--action-primary-bg', '--destructive-bg-alt']) {
+      expect(lightness(dim[token]), token).toBeLessThan(lightness(light[token]));
+    }
+    expect(chroma(dim['--action-primary-bg'])).toBeLessThan(chroma(light['--action-primary-bg']));
+    expect(chroma(dim['--destructive-border'])).toBeLessThan(chroma(light['--destructive-border']));
+  });
+
+  it("warms the greys toward minimal's teak by default", () => {
+    const r = generateTheme({ ...ORANGE_CONFIG, accents: ['#1D4ED8'] });
+    const page = hexToOklch(r.createThemeOptions.modes.dim['--container-bg']);
+
+    expect(page.h).toBeCloseTo(TEAK_HUE_CHROMA[100].h, 0);
+    expect(page.c).toBeCloseTo(TEAK_HUE_CHROMA[100].c, 2);
+  });
+
+  it('keeps the brand greys at dimWarmth 0', () => {
+    const r = generateTheme({ ...ORANGE_CONFIG, dimWarmth: 0 });
+
+    expect(r.primitivesDim.neutral).toBe(r.primitives.neutral);
+  });
+
+  it('resolves dim against the light primitives with dimChroma 1 and dimWarmth 0', () => {
+    const r = generateTheme({ ...ORANGE_CONFIG, dimChroma: 1, dimWarmth: 0 });
+
+    expect(r.primitivesDim).toBe(r.primitives);
+  });
+
+  it('leaves light and dark mode alone', () => {
+    const plain = generateTheme({ ...ORANGE_CONFIG, dimChroma: 1, dimWarmth: 0 });
+    const toned = generateTheme(ORANGE_CONFIG);
+
+    expect(toned.css.lightMode).toBe(plain.css.lightMode);
+    expect(toned.css.darkMode).toBe(plain.css.darkMode);
+    expect(toned.createThemeOptions.tokens).toEqual(plain.createThemeOptions.tokens);
+    expect(toned.createThemeOptions.modes.dark).toEqual(plain.createThemeOptions.modes.dark);
+  });
+
+  it('keeps every checked pair at its minimum', () => {
+    for (const accent of ACCENTS) {
+      const r = generateTheme({ ...ORANGE_CONFIG, accents: [accent] });
+      const dim = compileCreateThemeTokens(r.semanticMap, r.primitivesDim, 'dim');
+      for (const [token, entry] of Object.entries(r.semanticMap)) {
+        if (!entry.contrastAgainst) continue;
+        const floor = entry.allowBelowDefault ? entry.minContrast! : Math.max(entry.minContrast ?? 0, 4.5);
+        const ratio = checkContrast(dim[`--${token}`], dim[`--${entry.contrastAgainst}`]);
+        expect(ratio, `${accent} ${token}`).toBeGreaterThanOrEqual(floor - 1e-6);
+      }
+    }
+  });
+
+  it('writes dim into the CSS and semantic JSON', () => {
+    const r = generateTheme(ORANGE_CONFIG);
+    const json = JSON.parse(compileSemanticJSON(r.semanticMap, r.primitives, r.primitivesDark, r.primitivesDim));
+
+    expect(r.css.dimMode).toContain('[data-theme="test-orange"][data-mode="dim"],');
+    expect(r.css.dimMode).toContain('[data-theme="test-orange"][data-mode="Dim"] {');
+    expect(r.css.dimMode).toContain(`--backgrounds-primary: ${r.primitivesDim.neutral![100].hex};`);
+    expect(r.css.dimMode).toContain(`--accent-main: ${r.primitivesDim.primary![600].hex};`);
+    expect(r.css.dimMode).toContain(`--error-foreground: ${r.primitivesDim.error![800].hex};`);
+    expect(r.css.theme).toContain(`--container-bg: ${r.createThemeOptions.modes.dim['--container-bg']}; /* neutral.100 */`);
+    expect(json['container-bg'].dim).toEqual({ $value: r.createThemeOptions.modes.dim['--container-bg'], $ref: 'neutral.100' });
+  });
+
+  it('rejects options out of range', () => {
+    expect(() => generateTheme({ ...ORANGE_CONFIG, dimChroma: 0.4 })).toThrow(/dimChroma/);
+    expect(() => generateTheme({ ...ORANGE_CONFIG, dimChroma: 1.1 })).toThrow(/dimChroma/);
+    expect(() => generateTheme({ ...ORANGE_CONFIG, dimWarmth: -0.1 })).toThrow(/dimWarmth/);
+    expect(() => generateTheme({ ...ORANGE_CONFIG, dimWarmth: Number.NaN })).toThrow(/dimWarmth/);
+  });
+
+  it('fingerprints explicit options and reports the ones used', () => {
+    const report = generateTheme(ORANGE_CONFIG).report;
+
+    expect(computeInputHash(ORANGE_CONFIG)).not.toBe(computeInputHash({ ...ORANGE_CONFIG, dimChroma: 0.9 }));
+    expect(computeInputHash(ORANGE_CONFIG)).not.toBe(computeInputHash({ ...ORANGE_CONFIG, dimWarmth: 0.5 }));
+    expect(report).toContain('**Dim chroma:** 0.8');
+    expect(report).toContain('**Dim warmth:** 1');
+  });
+});
+
 describe('dual-mode consumer outputs', () => {
   it('returns createTheme options with light tokens and dark overrides', () => {
     const r = generateTheme(ORANGE_CONFIG);
@@ -244,6 +336,9 @@ describe('dual-mode consumer outputs', () => {
       compileCreateThemeTokens(r.semanticMap, r.primitivesDark, 'dark'),
     );
     expect(r.createThemeOptions.modes.dark['--action-primary-bg']).not.toBe(r.createThemeTokens['--action-primary-bg']);
+    expect(r.createThemeOptions.modes.dim).toEqual(
+      compileCreateThemeTokens(r.semanticMap, r.primitivesDim, 'dim'),
+    );
   });
 
   it('returns a ready custom theme layered on minimal', () => {
@@ -258,6 +353,10 @@ describe('dual-mode consumer outputs', () => {
     expect(css).toContain('[data-theme-custom="test-orange"][data-mode="Dark"] {');
     expect(css.slice(0, dark)).toContain(`--action-primary-bg: ${r.createThemeTokens['--action-primary-bg']};`);
     expect(css.slice(dark)).toContain(`--action-primary-bg: ${r.createThemeOptions.modes.dark['--action-primary-bg']};`);
+    const dim = css.indexOf('[data-theme-custom="test-orange"][data-mode="dim"],');
+    expect(dim).toBeGreaterThan(0);
+    expect(css).toContain('[data-theme-custom="test-orange"][data-mode="Dim"] {');
+    expect(css.slice(dim, dark)).toContain(`--action-primary-bg: ${r.createThemeOptions.modes.dim['--action-primary-bg']};`);
     expect(css).not.toContain('[data-theme=');
   });
 

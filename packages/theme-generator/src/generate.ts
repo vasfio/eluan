@@ -9,6 +9,7 @@ import { buildPrimitives } from './tokens/primitives.js';
 import { buildSemanticMap } from './tokens/semanticMap.js';
 import { autoCorrect } from './tokens/contrast.js';
 import { buildDarkPrimitives, DEFAULT_DARK_LIFT, MAX_DARK_LIFT } from './color/darkLift.js';
+import { buildDimPrimitives, DEFAULT_DIM_CHROMA, DEFAULT_DIM_WARMTH, MIN_DIM_CHROMA } from './color/dim.js';
 import {
   compilePrimitivesCSS,
   compileModeCSS,
@@ -61,8 +62,10 @@ export function computeInputHash(config: GeneratorConfig): string {
     neutralTintRatio: config.neutralTintRatio,
     systemHues: config.systemHues,
     curve: config.curve,
-    // Only when set, so configs that predate the option keep their fingerprint
+    // Only when set, so configs that predate these options keep their fingerprint
     darkLift: config.darkLift,
+    dimChroma: config.dimChroma,
+    dimWarmth: config.dimWarmth,
   });
   // Take the high 48 bits: FNV-1a mixes upward through the multiply, so the high
   // nibbles are the better-distributed end of the digest.
@@ -86,6 +89,8 @@ function buildReport(
   lines.push(`**Min contrast:** ${config.minContrast}:1`);
   lines.push(`**Neutral tint ratio:** ${config.neutralTintRatio}`);
   lines.push(`**Dark lift:** ${config.darkLift ?? DEFAULT_DARK_LIFT}`);
+  lines.push(`**Dim chroma:** ${config.dimChroma ?? DEFAULT_DIM_CHROMA}`);
+  lines.push(`**Dim warmth:** ${config.dimWarmth ?? DEFAULT_DIM_WARMTH}`);
   lines.push('');
 
   if (warnings.length > 0) {
@@ -139,7 +144,7 @@ function buildReport(
   lines.push(`## Output Files`);
   lines.push('');
   lines.push(`- \`primitives.json\` — W3C Design Tokens format`);
-  lines.push(`- \`semantic.json\` — Semantic map with light/dark refs`);
+  lines.push(`- \`semantic.json\` — Semantic map with light/dim/dark refs`);
   lines.push(`- \`theme.css\` — Drop-in CSS for Eluan`);
   lines.push(`- \`preview.html\` — Visual smoke test`);
 
@@ -158,22 +163,44 @@ export function generateTheme(config: GeneratorConfig): GeneratorResult {
   }
   const primitivesDark = buildDarkPrimitives(primitives, darkLift);
 
+  const dimChroma = config.dimChroma ?? DEFAULT_DIM_CHROMA;
+  if (!Number.isFinite(dimChroma) || dimChroma < MIN_DIM_CHROMA || dimChroma > 1) {
+    throw new Error(`dimChroma must be between ${MIN_DIM_CHROMA} and 1, got ${config.dimChroma}.`);
+  }
+  const dimWarmth = config.dimWarmth ?? DEFAULT_DIM_WARMTH;
+  if (!Number.isFinite(dimWarmth) || dimWarmth < 0 || dimWarmth > 1) {
+    throw new Error(`dimWarmth must be between 0 and 1, got ${config.dimWarmth}.`);
+  }
+  const primitivesDim = buildDimPrimitives(primitives, dimChroma, dimWarmth);
+
   let semanticMap = buildSemanticMap();
 
   const lightResult = autoCorrect(semanticMap, primitives, 'light', config.minContrast);
   semanticMap = lightResult.correctedMap;
   const lightCorrections = lightResult.corrections;
 
+  const dimResult = autoCorrect(semanticMap, primitivesDim, 'dim', config.minContrast);
+  semanticMap = dimResult.correctedMap;
+  const dimCorrections = dimResult.corrections;
+
   const darkResult = autoCorrect(semanticMap, primitivesDark, 'dark', config.minContrast);
   semanticMap = darkResult.correctedMap;
   const darkCorrections = darkResult.corrections;
 
-  const allCorrections = [...lightCorrections, ...darkCorrections];
+  const allCorrections = [...lightCorrections, ...dimCorrections, ...darkCorrections];
 
   const primitivesCSS = compilePrimitivesCSS(primitives, config.themeName);
   const lightModeCSS = compileModeCSS(semanticMap, primitives, 'light', config.themeName);
+  const dimModeCSS = compileModeCSS(semanticMap, primitivesDim, 'dim', config.themeName);
   const darkModeCSS = compileModeCSS(semanticMap, primitivesDark, 'dark', config.themeName);
-  const themeCSS = compileThemeCSS(semanticMap, primitives, config.themeName, inputHash, primitivesDark);
+  const themeCSS = compileThemeCSS(
+    semanticMap,
+    primitives,
+    config.themeName,
+    inputHash,
+    primitivesDark,
+    primitivesDim
+  );
 
   const createThemeTokens: Record<string, string> = {};
   const lightTokens = compileCreateThemeTokens(semanticMap, primitives, 'light');
@@ -181,12 +208,13 @@ export function generateTheme(config: GeneratorConfig): GeneratorResult {
     createThemeTokens[k] = v;
   }
 
+  const dimTokens = compileCreateThemeTokens(semanticMap, primitivesDim, 'dim');
   const darkTokens = compileCreateThemeTokens(semanticMap, primitivesDark, 'dark');
-  const createThemeOptions = { tokens: createThemeTokens, modes: { dark: darkTokens } };
+  const createThemeOptions = { tokens: createThemeTokens, modes: { dim: dimTokens, dark: darkTokens } };
   const customTheme = {
     name: config.themeName,
     extends: 'minimal' as const,
-    css: compileCustomThemeCSS(config.themeName, createThemeTokens, darkTokens),
+    css: compileCustomThemeCSS(config.themeName, createThemeTokens, darkTokens, dimTokens),
   };
 
   const report = buildReport(config, warnings, allCorrections, primitives, inputHash);
@@ -194,11 +222,13 @@ export function generateTheme(config: GeneratorConfig): GeneratorResult {
   return {
     primitives,
     primitivesDark,
+    primitivesDim,
     semanticMap,
     corrections: allCorrections,
     css: {
       primitives: primitivesCSS,
       lightMode: lightModeCSS,
+      dimMode: dimModeCSS,
       darkMode: darkModeCSS,
       theme: themeCSS,
     },

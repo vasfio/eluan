@@ -1,12 +1,14 @@
 import { wcagContrast } from 'culori';
 import type {
   ContrastCorrection,
+  Mode,
   PrimitiveTokens,
   ScaleName,
   ScaleStepValue,
   SemanticMap,
   TokenRef,
 } from '../types.js';
+import { modeRef } from './semanticMap.js';
 
 const ORDERED_STEPS: ScaleStepValue[] = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 
@@ -36,12 +38,16 @@ function parseRef(ref: TokenRef): { scaleName: ScaleName; step: ScaleStepValue }
   return { scaleName, step: Number(stepStr) as ScaleStepValue };
 }
 
+/**
+ * `direction` is which end of the ramp to search from: 'light' tries the dark
+ * steps first (text on a light ground), 'dark' the light steps first.
+ */
 function shiftFgTowardsContrast(
   originalRef: TokenRef,
   bgHex: string,
   primitives: PrimitiveTokens,
   minContrast: number,
-  mode: 'light' | 'dark'
+  direction: 'light' | 'dark'
 ): { ref: TokenRef; contrast: number; kind: 'step-shift' | 'hard-fallback' } | null {
   const parsed = parseRef(originalRef);
   if (!parsed) return null;
@@ -50,7 +56,7 @@ function shiftFgTowardsContrast(
   const scale = primitives[scaleName];
   if (!scale) return null;
 
-  const stepsToTry = mode === 'light'
+  const stepsToTry = direction === 'light'
     ? [...ORDERED_STEPS].reverse()
     : [...ORDERED_STEPS];
 
@@ -70,7 +76,7 @@ function shiftFgTowardsContrast(
     attempts++;
   }
 
-  const hardFallbacks: { ref: TokenRef; hex: string }[] = mode === 'light'
+  const hardFallbacks: { ref: TokenRef; hex: string }[] = direction === 'light'
     ? [
         { ref: 'neutral.950' as TokenRef, hex: resolveTokenRef('neutral.950' as TokenRef, primitives) ?? '#000000' },
         { ref: 'white', hex: '#ffffff' },
@@ -103,7 +109,7 @@ function shiftFgTowardsContrast(
 export function autoCorrect(
   map: SemanticMap,
   primitives: PrimitiveTokens,
-  mode: 'light' | 'dark',
+  mode: Mode,
   defaultMinContrast: number
 ): { correctedMap: SemanticMap; corrections: ContrastCorrection[] } {
   const corrections: ContrastCorrection[] = [];
@@ -117,8 +123,8 @@ export function autoCorrect(
     const bgEntry = map[entry.contrastAgainst];
     if (!bgEntry) continue;
 
-    const bgRef = mode === 'light' ? bgEntry.light : bgEntry.dark;
-    const fgRef = mode === 'light' ? entry.light : entry.dark;
+    const bgRef = modeRef(bgEntry, mode);
+    const fgRef = modeRef(entry, mode);
 
     const bgHex = resolveTokenRef(bgRef, primitives);
     const fgHex = resolveTokenRef(fgRef, primitives);
@@ -133,22 +139,22 @@ export function autoCorrect(
 
     if (ratio >= minContrast) continue;
 
+    // Dim grounds run from near-white pages to mid-tone buttons, so its search
+    // follows the ground: toward dark text where black reads better, else light.
+    const direction = mode === 'dim'
+      ? (checkContrast('#000000', bgHex) >= checkContrast('#ffffff', bgHex) ? 'light' : 'dark')
+      : mode;
+
     const correction = shiftFgTowardsContrast(
       fgRef,
       bgHex,
       primitives,
       minContrast,
-      mode
+      direction
     );
 
     if (correction) {
-      const newEntry = { ...corrected[tokenName] };
-      if (mode === 'light') {
-        newEntry.light = correction.ref;
-      } else {
-        newEntry.dark = correction.ref;
-      }
-      corrected[tokenName] = newEntry;
+      corrected[tokenName] = { ...corrected[tokenName], [mode]: correction.ref };
 
       corrections.push({
         token: tokenName,

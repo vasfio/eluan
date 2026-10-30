@@ -1,5 +1,6 @@
-import type { PrimitiveTokens, ScaleName, ScaleStepValue, SemanticMap, TokenRef } from '../types.js';
+import type { Mode, PrimitiveTokens, ScaleName, ScaleStepValue, SemanticMap, TokenRef } from '../types.js';
 import { checkContrast } from '../tokens/contrast.js';
+import { modeRef } from '../tokens/semanticMap.js';
 
 const SCALE_STEPS: ScaleStepValue[] = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 
@@ -61,7 +62,8 @@ export function generateSmokeHTML(
   primitives: PrimitiveTokens,
   semanticMap: SemanticMap,
   themeName: string,
-  darkPrimitives: PrimitiveTokens = primitives
+  darkPrimitives: PrimitiveTokens = primitives,
+  dimPrimitives: PrimitiveTokens = primitives
 ): string {
   const scaleNames = Object.keys(primitives) as ScaleName[];
   const scaleSection = scaleNames
@@ -77,10 +79,11 @@ export function generateSmokeHTML(
     const bgEntry = semanticMap[entry.contrastAgainst!];
     if (!bgEntry) continue;
 
-    for (const mode of ['light', 'dark'] as const) {
-      const fgRef = entry[mode];
-      const bgRef = bgEntry[mode];
-      const source = mode === 'dark' ? darkPrimitives : primitives;
+    const sources: Record<Mode, PrimitiveTokens> = { light: primitives, dim: dimPrimitives, dark: darkPrimitives };
+    for (const mode of ['light', 'dim', 'dark'] as const) {
+      const fgRef = modeRef(entry, mode);
+      const bgRef = modeRef(bgEntry, mode);
+      const source = sources[mode];
       const fgHex = resolveHex(fgRef, source);
       const bgHex = resolveHex(bgRef, source);
       pairingRows.push(
