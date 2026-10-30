@@ -166,14 +166,41 @@ describe('CLI: generate command', () => {
     expect(existsSync(join(outDir, 'create-theme.json'))).toBe(true);
   });
 
-  it('writes createTheme options with light and dark tokens', () => {
+  it('writes createTheme options with light, dim and dark tokens', () => {
     const { exitCode } = run(['generate', '--accent', '#FF4A2C', '--name', 'ember', '--out', outDir]);
     expect(exitCode).toBe(0);
     const options = JSON.parse(readFileSync(join(outDir, 'create-theme.json'), 'utf8'));
     expect(options.name).toBe('ember');
     expect(options.tokens['--action-primary-bg']).toMatch(/^#[0-9a-f]{6}$/);
     expect(options.modes.dark['--action-primary-bg']).toMatch(/^#[0-9a-f]{6}$/);
-    expect(readFileSync(join(outDir, 'custom-theme.css'), 'utf8')).toContain('[data-theme-custom="ember"][data-mode="dark"]');
+    expect(options.modes.dim['--action-primary-bg']).toMatch(/^#[0-9a-f]{6}$/);
+    const css = readFileSync(join(outDir, 'custom-theme.css'), 'utf8');
+    expect(css).toContain('[data-theme-custom="ember"][data-mode="dark"]');
+    expect(css).toContain('[data-theme-custom="ember"][data-mode="dim"]');
+  });
+
+  it('writes dim into semantic.json, theme.css and the preview', () => {
+    const { exitCode } = run(['generate', '--accent', '#FF4A2C', '--name', 'ember', '--out', outDir]);
+    expect(exitCode).toBe(0);
+    const semantic = JSON.parse(readFileSync(join(outDir, 'semantic.json'), 'utf8'));
+    expect(semantic['container-bg'].dim.$ref).toBe('neutral.100');
+    expect(readFileSync(join(outDir, 'theme.css'), 'utf8')).toContain('[data-theme="ember"][data-mode="dim"]');
+    expect(readFileSync(join(outDir, 'preview.html'), 'utf8')).toContain('container-fg (dim)');
+  });
+
+  it('accepts --dim-chroma and --dim-warmth', () => {
+    const { exitCode } = run([
+      'generate', '--accent', '#FF4A2C', '--dim-chroma', '0.9', '--dim-warmth', '0', '--out', outDir,
+    ]);
+    expect(exitCode).toBe(0);
+    const report = readFileSync(join(outDir, 'report.md'), 'utf8');
+    expect(report).toContain('**Dim chroma:** 0.9');
+    expect(report).toContain('**Dim warmth:** 0');
+  });
+
+  it('exits 1 for a dim chroma out of range', () => {
+    const { exitCode } = run(['generate', '--accent', '#FF4A2C', '--dim-chroma', '0.2', '--out', outDir]);
+    expect(exitCode).toBe(1);
   });
 
   it('accepts --dark-lift', () => {

@@ -17,6 +17,8 @@ type ConfigFile = {
   minContrast?: number;
   neutralTintRatio?: number;
   darkLift?: number;
+  dimChroma?: number;
+  dimWarmth?: number;
 };
 
 function printUsage() {
@@ -34,6 +36,8 @@ Options:
   --min-contrast <num>    Minimum contrast ratio (default: 4.5)
   --neutral-tint <num>    Neutral tint ratio (default: 0.04)
   --dark-lift <num>       Lightness added to dark-mode colours, 0-0.2 (default: 0.08)
+  --dim-chroma <num>      Chroma kept in dim-mode colours, 0.5-1 (default: 0.8)
+  --dim-warmth <num>      How far dim-mode greys move toward warm teak, 0-1 (default: 1)
   --config <path>         Path to config file (JSON)
   --help                  Show this help
 
@@ -154,6 +158,8 @@ function parseCliArgs(): (GeneratorConfig & { outDir: string }) | null {
       'min-contrast': { type: 'string' },
       'neutral-tint': { type: 'string' },
       'dark-lift': { type: 'string' },
+      'dim-chroma': { type: 'string' },
+      'dim-warmth': { type: 'string' },
       config: { type: 'string' },
       help: { type: 'boolean', default: false },
     },
@@ -180,13 +186,19 @@ function parseCliArgs(): (GeneratorConfig & { outDir: string }) | null {
   const darkLift = values['dark-lift']
     ? parseFloat(values['dark-lift'] as string)
     : config?.darkLift;
+  const dimChroma = values['dim-chroma']
+    ? parseFloat(values['dim-chroma'] as string)
+    : config?.dimChroma;
+  const dimWarmth = values['dim-warmth']
+    ? parseFloat(values['dim-warmth'] as string)
+    : config?.dimWarmth;
   const outDir = (values.out as string | undefined) ?? config?.outDir ?? './tokens';
 
   if (accents.length === 0) {
     return null;
   }
 
-  return { accents, themeName, minContrast, neutralTintRatio, darkLift, outDir };
+  return { accents, themeName, minContrast, neutralTintRatio, darkLift, dimChroma, dimWarmth, outDir };
 }
 
 function generate(opts: GeneratorConfig & { outDir: string }) {
@@ -210,7 +222,7 @@ function generate(opts: GeneratorConfig & { outDir: string }) {
 
   writeFileSync(
     join(resolvedOut, 'semantic.json'),
-    compileSemanticJSON(result.semanticMap, result.primitives, result.primitivesDark)
+    compileSemanticJSON(result.semanticMap, result.primitives, result.primitivesDark, result.primitivesDim)
   );
 
   const fullCSS = [
@@ -232,7 +244,8 @@ function generate(opts: GeneratorConfig & { outDir: string }) {
     result.primitives,
     result.semanticMap,
     config.themeName,
-    result.primitivesDark
+    result.primitivesDark,
+    result.primitivesDim
   );
   writeFileSync(join(resolvedOut, 'preview.html'), previewHTML);
 
