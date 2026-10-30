@@ -114,7 +114,7 @@ export const Group: Story = {
     const ring: React.CSSProperties = {
       display: "inline-flex",
       borderRadius: "var(--radius-radius-full)",
-      boxShadow: "0 0 0 2px var(--backgrounds-primary)",
+      boxShadow: "0 0 0 2px var(--container-bg)",
     }
     const overlap: React.CSSProperties = { ...ring, marginLeft: "calc(var(--spacing-md) * -1)" }
     return (

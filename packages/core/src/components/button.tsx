@@ -165,7 +165,7 @@ const styles = stylex.create({
     backgroundColor: "transparent",
     color: "var(--action-tertiary-fg)",
     ":hover": {
-      backgroundColor: "var(--backgrounds-tertiary)",
+      backgroundColor: "var(--interactive-bg-hover)",
       color: "var(--action-tertiary-fg-alt)",
     },
   },
@@ -173,13 +173,13 @@ const styles = stylex.create({
     backgroundColor: "transparent",
     color: "var(--container-fg-alt)",
     ":hover": {
-      backgroundColor: "var(--backgrounds-tertiary)",
+      backgroundColor: "var(--interactive-bg-hover)",
       color: "var(--container-fg)",
     },
   },
   variantDangerGhost: {
     backgroundColor: "transparent",
-    color: "var(--foregrounds-secondary)",
+    color: "var(--container-fg-alt)",
     ":hover": {
       backgroundColor: "var(--destructive-bg-alt)",
       color: "var(--destructive-fg)",
@@ -187,11 +187,11 @@ const styles = stylex.create({
   },
   variantFadedGhost: {
     backgroundColor: "transparent",
-    color: "var(--foregrounds-secondary)",
+    color: "var(--container-fg-alt)",
     opacity: 0.6,
     ":hover": {
-      backgroundColor: "var(--backgrounds-tertiary)",
-      color: "var(--foregrounds-primary)",
+      backgroundColor: "var(--interactive-bg-hover)",
+      color: "var(--container-fg)",
       opacity: 1,
     },
   },
@@ -202,7 +202,7 @@ const styles = stylex.create({
     color: "var(--interactive-fg)",
     fontWeight: 400,
     ":hover": {
-      backgroundColor: "var(--backgrounds-tertiary)",
+      backgroundColor: "var(--interactive-bg-hover)",
     },
     ":disabled": {
       backgroundColor: "var(--interactive-bg-disabled)",
@@ -218,7 +218,7 @@ const styles = stylex.create({
     color: "var(--interactive-fg-alt)",
     fontWeight: 400,
     ":hover": {
-      backgroundColor: "var(--backgrounds-tertiary)",
+      backgroundColor: "var(--interactive-bg-hover)",
     },
     ":disabled": {
       backgroundColor: "var(--interactive-bg-disabled)",

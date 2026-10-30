@@ -359,7 +359,7 @@ const styles = stylex.create({
 const calendarStyles = `
 @media (min-width: 640px) {
   .${sx(styles.months)} > div + div {
-    border-left: 1px solid var(--backgrounds-quaternary);
+    border-left: 1px solid var(--container-border-alt);
     padding-left: var(--spacing-lg);
   }
 }
