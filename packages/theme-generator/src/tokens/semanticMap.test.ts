@@ -36,8 +36,11 @@ describe('contrastGrounds', () => {
     expect(contrastGrounds({ light: 'neutral.50', dark: 'neutral.800', role: 'bg' })).toEqual([]);
   });
 
-  it('checks Ghost text against the page and the panel', () => {
-    expect(contrastGrounds(buildSemanticMap()['action-tertiary-fg'])).toEqual(['action-tertiary-bg', 'action-tertiary-bg-alt']);
+  it('checks Outline and Ghost text against the page and the panel', () => {
+    const map = buildSemanticMap();
+
+    expect(contrastGrounds(map['action-secondary-fg'])).toEqual(['container-bg', 'container-bg-alt']);
+    expect(contrastGrounds(map['action-tertiary-fg'])).toEqual(['action-tertiary-bg', 'action-tertiary-bg-alt']);
   });
 });
 

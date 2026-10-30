@@ -105,7 +105,9 @@ export function buildSemanticMap(): SemanticMap {
     'action-secondary-border-alt':   { light: 'primary.800', dark: 'primary.300', role: 'border' },
     'action-secondary-border-disabled': { light: 'primary.100', dark: 'primary.900', role: 'border' },
     'action-secondary-border-inverse':  { light: 'primary.50',  dark: 'primary.950', role: 'border' },
-    'action-secondary-fg':           { light: 'primary.500', dark: 'primary.400', role: 'fg', contrastAgainst: 'container-bg', minContrast: 4.5 },
+    // Outline button text, on page and panel surfaces alike: checked against
+    // both, like action-tertiary-fg. Whichever is harder in a mode decides.
+    'action-secondary-fg':           { light: 'primary.500', dark: 'primary.400', role: 'fg', contrastAgainst: ['container-bg', 'container-bg-alt'], minContrast: 4.5 },
     'action-secondary-fg-alt':       { light: 'neutral.950', dark: 'neutral.50',  role: 'fg' },
     'action-secondary-fg-disabled':  { light: 'neutral.400', dark: 'neutral.500', role: 'fg' },
     'action-secondary-fg-active':    { light: 'neutral.50',  dark: 'neutral.50',  role: 'fg', contrastAgainst: 'action-secondary-bg-active', minContrast: 4.5 },

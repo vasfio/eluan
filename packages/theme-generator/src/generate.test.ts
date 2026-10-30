@@ -183,14 +183,16 @@ describe('minContrast floor semantics', () => {
 describe('contrast corrections', () => {
   const ACCENTS = ['#2F6F5E', '#FF4A2C', '#FFD60A', '#1D4ED8', '#7C3AED'];
 
-  it('keeps Ghost text at its minimum on panels in every mode', () => {
+  it('keeps Outline and Ghost text at their minimum on panels in every mode', () => {
     for (const accent of ACCENTS) {
       const r = generateTheme({ ...ORANGE_CONFIG, accents: [accent] });
       const modes = { light: r.createThemeOptions.tokens, ...r.createThemeOptions.modes };
       for (const [mode, map] of Object.entries(modes)) {
-        for (const ground of ['--container-bg', '--container-bg-alt']) {
-          const ratio = checkContrast(map['--action-tertiary-fg'], map[ground]);
-          expect(ratio, `${accent} ${mode} on ${ground}`).toBeGreaterThanOrEqual(4.5);
+        for (const token of ['--action-secondary-fg', '--action-tertiary-fg']) {
+          for (const ground of ['--container-bg', '--container-bg-alt']) {
+            const ratio = checkContrast(map[token], map[ground]);
+            expect(ratio, `${accent} ${mode} ${token} on ${ground}`).toBeGreaterThanOrEqual(4.5);
+          }
         }
       }
     }
