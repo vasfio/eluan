@@ -13,6 +13,7 @@
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r --filter \"./packages/*\" exec tsc --noEmit -p tsconfig.build.json",
     "storybook": "pnpm --filter @eluan/core storybook",
+    "evals:viewer": "pnpm --filter @eluan/core exec vite --config ../../skills/eluan/evals/viewer/vite.config.mjs",
     "test": "pnpm -r --filter './packages/core' --filter './packages/native' --filter './packages/theme-generator' run test",
     "test:coverage": "pnpm -r --filter './packages/core' --filter './packages/native' run test:coverage",
     "build:storybook": "pnpm --filter @eluan/tokens build && pnpm --filter @eluan/core build && pnpm --filter @eluan/core build-storybook && node scripts/assemble-storybook.mjs",
