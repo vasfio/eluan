@@ -25,6 +25,7 @@ import {
   TableHeader,
   TableRow,
   Typography,
+  useEluanTheme,
 } from "@eluan/core";
 import type { Mode } from "./fixtures";
 import {
@@ -193,6 +194,14 @@ function Scores({ task }: { task: Task }) {
 
 function RunPanel({ task, side, mode, height }: { task: Task; side: Side; mode: Mode; height?: number }) {
   const run = `${task.id}-${side}`;
+  // A frame that never reports its height didn't load; say so instead of
+  // leaving an empty box.
+  const [stalled, setStalled] = React.useState(false);
+  React.useEffect(() => {
+    setStalled(false);
+    const id = window.setTimeout(() => setStalled(true), 8000);
+    return () => window.clearTimeout(id);
+  }, [run, mode]);
   return (
     <Card>
       <CardHeader>
@@ -205,6 +214,11 @@ function RunPanel({ task, side, mode, height }: { task: Task; side: Side; mode: 
       </CardHeader>
       <CardContent>
         <div style={column("var(--spacing-md)")}>
+          {stalled && height === undefined && (
+            <Banner variant="caution" position="inline" role="status">
+              This run's frame didn't load here. Its source is below.
+            </Banner>
+          )}
           <iframe
             key={`${run}:${mode}`}
             src={`frame.html?run=${run}&mode=${mode}`}
@@ -291,7 +305,14 @@ function App() {
   }, []);
 
   return (
-    <main style={{ ...column("var(--spacing-xl)"), padding: "var(--spacing-xl)" }}>
+    <main
+      style={{
+        ...column("var(--spacing-xl)"),
+        paddingBlock: "var(--spacing-xl)",
+        paddingLeft: "max(16px, env(safe-area-inset-left, 0px))",
+        paddingRight: "max(16px, env(safe-area-inset-right, 0px))",
+      }}
+    >
       <div style={{ ...row("var(--spacing-lg)"), justifyContent: "space-between", flexWrap: "wrap" }}>
         <div style={column("var(--spacing-xxs)")}>
           <Typography as="h1" variant="title">Skill evals</Typography>
@@ -322,7 +343,7 @@ function App() {
         The skill's examples mirror 10 of these 15 prompts, so these scores show it on tasks it was written for. A held-out
         set is still needed to show it generalises.
       </Banner>
-      <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 4fr)", gap: "var(--spacing-xl)", alignItems: "start" }}>
+      <div className="eval-layout">
         <TaskList
           selected={taskId}
           onSelect={(id) => {
@@ -336,8 +357,34 @@ function App() {
   );
 }
 
+/**
+ * Follow the host's light or dark choice: an explicit `data-theme` on <html>
+ * when the artifact viewer sets one, otherwise the OS setting. Eluan's own
+ * attributes go on <body> so they don't collide with the host's.
+ */
+function HostMode() {
+  const { setMode } = useEluanTheme();
+  React.useEffect(() => {
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const sync = () => {
+      const host = document.documentElement.getAttribute("data-theme");
+      setMode(host === "dark" || host === "light" ? host : media.matches ? "dark" : "light");
+    };
+    sync();
+    const observer = new MutationObserver(sync);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    media.addEventListener("change", sync);
+    return () => {
+      observer.disconnect();
+      media.removeEventListener("change", sync);
+    };
+  }, [setMode]);
+  return null;
+}
+
 createRoot(document.getElementById("root")!).render(
-  <EluanProvider persist={false}>
+  <EluanProvider persist={false} target="body">
+    <HostMode />
     <App />
   </EluanProvider>,
 );

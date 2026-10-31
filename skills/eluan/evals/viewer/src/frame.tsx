@@ -56,7 +56,13 @@ function Frame() {
 // The theme runs replace the app-root provider, so they render without ours.
 // t11-b's provider doesn't take a mode; it reads the persisted one.
 const isProvider = PROVIDER_RUNS.has(run);
-if (run === "t11-b") window.localStorage.setItem("eluan:mode", mode);
+if (run === "t11-b") {
+  try {
+    window.localStorage.setItem("eluan:mode", mode);
+  } catch {
+    // Storage can be blocked; t11-b then follows the OS setting.
+  }
+}
 
 document.body.style.margin = "0";
 document.body.style.padding = "var(--spacing-lg)";

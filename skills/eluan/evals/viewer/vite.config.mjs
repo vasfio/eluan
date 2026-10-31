@@ -21,9 +21,23 @@ const { default: stylex } = await import(require.resolve("@stylexjs/unplugin"));
 // Bare imports in the viewer and in the eval runs point at these copies.
 const packages = ["react", "react-dom", "lucide-react", "sonner", "@stylexjs/stylex"];
 
+// The run logs name files by absolute path; show home directories as ~ so the
+// built viewer doesn't carry a username.
+const homeAsTilde = {
+  name: "eval-home-as-tilde",
+  enforce: "post",
+  transform(code, id) {
+    if (id.includes("/evals/runs/") && id.includes("?raw")) {
+      return code.replace(/\/Users\/[^/\s\\"]+\//g, "~/").replace(/-Users-[A-Za-z0-9_.]+-/g, "-~-");
+    }
+  },
+};
+
 export default {
   root: here,
-  plugins: [stylex.vite({ useCSSLayers: true }), react()],
+  // Relative asset URLs, so the build works wherever it is served from.
+  base: "./",
+  plugins: [stylex.vite({ useCSSLayers: true }), react(), homeAsTilde],
   resolve: {
     alias: [
       { find: "@eluan/core/styles.css", replacement: resolve(core, "dist/styles.css") },
