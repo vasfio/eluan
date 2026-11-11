@@ -156,6 +156,7 @@ Typography has no interactive states. With `asChild` around a link or button, th
 | `family` | `"heading" \| "body" \| "mono"` | variant's family | Reads `--font-heading`, `--font-body` or `--font-mono`. |
 | `align` | `"start" \| "center" \| "end"` | | Logical text alignment. |
 | `truncate` | `boolean` | `false` | One line with an ellipsis. |
+| `tabular` | `boolean` | `false` | Tabular figures: every digit the same width, so numbers line up in columns. |
 | `...props` | `HTMLAttributes<HTMLElement>` without `className`, `style` | | Native attributes: `id`, `lang`, `aria-*`. |
 <!-- api:end -->
 

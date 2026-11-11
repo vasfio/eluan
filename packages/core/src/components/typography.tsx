@@ -75,6 +75,8 @@ export interface TypographyProps
    * heading tracking stays matched to the size.
    */
   step?: TypographyStep
+  /** Tabular figures: every digit the same width, so numbers line up in columns. */
+  tabular?: boolean
   /** Foreground token. */
   tone?: TypographyTone
   /** Single-line ellipsis. */
@@ -174,6 +176,8 @@ const styles = stylex.create({
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
   },
+
+  tabular: { fontVariantNumeric: "tabular-nums" },
 })
 
 const stepStyles = {
@@ -273,6 +277,7 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
       asChild = false,
       family,
       step,
+      tabular = false,
       tone = "default",
       truncate = false,
       variant = "body",
@@ -303,7 +308,8 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
           weightStyles[weight ?? variantWeights[variant]],
           toneStyles[tone],
           align && alignStyles[align],
-          truncate && styles.truncate
+          truncate && styles.truncate,
+          tabular && styles.tabular
         )}
       />
     )

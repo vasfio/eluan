@@ -57,6 +57,7 @@ const meta: Meta<typeof Typography> = {
     tone: { control: "inline-radio", options: ["default", "muted", "inverse"] },
     align: { control: "inline-radio", options: ["start", "center", "end"] },
     truncate: { control: "boolean" },
+    tabular: { control: "boolean" },
   },
 }
 
@@ -227,6 +228,26 @@ export const Truncated: Story = {
       <Typography>
         This one wraps instead, because truncate is off.
       </Typography>
+    </div>
+  ),
+}
+
+/** Tabular figures keep every digit the same width, so a column of numbers lines up. */
+export const Tabular: Story = {
+  render: () => (
+    <div style={{ display: "flex", gap: "var(--spacing-3xl)" }}>
+      {[false, true].map((tabular) => (
+        <div key={String(tabular)} style={{ ...stack, gap: "var(--spacing-xs)" }}>
+          <Typography variant="label" tone="muted">
+            tabular={String(tabular)}
+          </Typography>
+          {["1,111.11", "8,888.88", "€410.07", "19:45"].map((value) => (
+            <Typography key={value} tabular={tabular} align="end">
+              {value}
+            </Typography>
+          ))}
+        </div>
+      ))}
     </div>
   ),
 }

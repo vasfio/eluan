@@ -1,3 +1,4 @@
+import type { ReactElement } from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { Typography } from "../typography";
@@ -158,6 +159,21 @@ describe("Typography", () => {
 
     rerender(<Typography truncate>Aligned</Typography>);
     expect(screen.getByText("Aligned")).toBeInTheDocument();
+  });
+
+  it("adds tabular figures as one extra style, off by default", () => {
+    const classesOf = (ui: ReactElement) => {
+      const { unmount } = render(ui);
+      const classes = [...screen.getByText("Figures").classList].sort();
+      unmount();
+      return classes;
+    };
+
+    const plain = classesOf(<Typography>Figures</Typography>);
+    const tabular = classesOf(<Typography tabular>Figures</Typography>);
+    expect(tabular).toHaveLength(plain.length + 1);
+    expect(tabular).toEqual(expect.arrayContaining(plain));
+    expect(classesOf(<Typography tabular={false}>Figures</Typography>)).toEqual(plain);
   });
 
   it("forwards arbitrary attributes and refs", () => {
