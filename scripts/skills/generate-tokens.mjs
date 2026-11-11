@@ -33,10 +33,12 @@ const GROUPS = {
   "colour.md": () => colourNames().map((n) => [n, colourValue(n)]),
   "typography.md": () => [
     ...themeNames.filter((n) => n.startsWith("font-")).map((n) => [n, value(n).split(",")[0]]),
-    ...spacingNames
-      .filter((n) => n.startsWith("font-size-"))
-      .sort((a, b) => scaleSort(a, b, "font-size-"))
-      .map((n) => [n, `\`${alias(n)}\` (density shifts one step)`]),
+    ...["font-size-", "line-height-", "letter-spacing-"].flatMap((p) =>
+      spacingNames
+        .filter((n) => n.startsWith(p))
+        .sort((a, b) => scaleSort(a, b, p))
+        .map((n) => [n, `\`${alias(n)}\` (density shifts one step)`]),
+    ),
     ...["font-size-step-", "line-height-step-", "letter-spacing-step-"].flatMap((p) =>
       steps.map((s) => `${p}${s}`).map((n) => [n, p === "font-size-step-" ? fluidValue(n) : value(n)]),
     ),
@@ -96,6 +98,8 @@ function defaultUse(name) {
   if (name.startsWith("line-height-step-")) return "Line height paired with the same step";
   if (name.startsWith("letter-spacing-step-")) return "Tracking paired with the same step";
   if (name.startsWith("font-size-")) return "Density-aware type size alias";
+  if (name.startsWith("line-height-")) return "Line height for the same-named --font-size-* alias";
+  if (name.startsWith("letter-spacing-")) return "Tracking for the same-named --font-size-* alias";
   if (name.startsWith("spacing-")) return "Gap, padding, margin";
   if (name.startsWith("size-")) return "Control height, icon size";
   if (name.startsWith("curves-")) return "Corner radius";

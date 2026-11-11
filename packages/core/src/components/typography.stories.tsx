@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { Banner } from "./banner"
 import { Typography } from "./typography"
 
 const meta: Meta<typeof Typography> = {
@@ -54,7 +55,11 @@ const meta: Meta<typeof Typography> = {
         "black",
       ],
     },
-    tone: { control: "inline-radio", options: ["default", "muted", "inverse"] },
+    tone: { control: "inline-radio", options: ["default", "muted", "inverse", "inherit"] },
+    size: {
+      control: "select",
+      options: [undefined, "xs", "sm", "base", "lg", "xl", "2xl", "3xl", "4xl", "5xl"],
+    },
     align: { control: "inline-radio", options: ["start", "center", "end"] },
     truncate: { control: "boolean" },
     tabular: { control: "boolean" },
@@ -153,6 +158,34 @@ export const Tones: Story = {
       >
         <Typography tone="inverse">Inverse — var(--container-fg-inverse)</Typography>
       </div>
+      <Banner variant="destructive" position="inline">
+        <Typography as="span" size="sm" tone="inherit">
+          Inherit — takes the Banner's own colour
+        </Typography>
+      </Banner>
+    </div>
+  ),
+}
+
+/**
+ * `size` follows the spacing density; `step` doesn't. Each column is the same
+ * markup under a different `data-spacing`: the `size` lines move a step, the
+ * `step` line stays put.
+ */
+export const DensitySizes: Story = {
+  render: () => (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--spacing-3xl)" }}>
+      {(["compact", "standard", "wide"] as const).map((density) => (
+        <div key={density} data-spacing={density} style={stack}>
+          <Typography variant="label" tone="muted">
+            data-spacing="{density}"
+          </Typography>
+          <Typography size="lg">size="lg"</Typography>
+          <Typography size="base">size="base"</Typography>
+          <Typography size="sm">size="sm"</Typography>
+          <Typography step="neg1">step="neg1"</Typography>
+        </div>
+      ))}
     </div>
   ),
 }

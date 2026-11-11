@@ -52,6 +52,24 @@ The `--font-size-xs` to `--font-size-5xl` aliases map onto steps and shift one s
 | `--font-size-3xl` | `--font-size-step-4` (density shifts one step) | Density-aware type size alias |
 | `--font-size-4xl` | `--font-size-step-5` (density shifts one step) | Density-aware type size alias |
 | `--font-size-5xl` | `--font-size-step-6` (density shifts one step) | Density-aware type size alias |
+| `--line-height-xs` | `--line-height-step-neg2` (density shifts one step) | Line height for the same-named --font-size-* alias |
+| `--line-height-sm` | `--line-height-step-neg1` (density shifts one step) | Line height for the same-named --font-size-* alias |
+| `--line-height-base` | `--line-height-step-0` (density shifts one step) | Line height for the same-named --font-size-* alias |
+| `--line-height-lg` | `--line-height-step-1` (density shifts one step) | Line height for the same-named --font-size-* alias |
+| `--line-height-xl` | `--line-height-step-2` (density shifts one step) | Line height for the same-named --font-size-* alias |
+| `--line-height-2xl` | `--line-height-step-3` (density shifts one step) | Line height for the same-named --font-size-* alias |
+| `--line-height-3xl` | `--line-height-step-4` (density shifts one step) | Line height for the same-named --font-size-* alias |
+| `--line-height-4xl` | `--line-height-step-5` (density shifts one step) | Line height for the same-named --font-size-* alias |
+| `--line-height-5xl` | `--line-height-step-6` (density shifts one step) | Line height for the same-named --font-size-* alias |
+| `--letter-spacing-xs` | `--letter-spacing-step-neg2` (density shifts one step) | Tracking for the same-named --font-size-* alias |
+| `--letter-spacing-sm` | `--letter-spacing-step-neg1` (density shifts one step) | Tracking for the same-named --font-size-* alias |
+| `--letter-spacing-base` | `--letter-spacing-step-0` (density shifts one step) | Tracking for the same-named --font-size-* alias |
+| `--letter-spacing-lg` | `--letter-spacing-step-1` (density shifts one step) | Tracking for the same-named --font-size-* alias |
+| `--letter-spacing-xl` | `--letter-spacing-step-2` (density shifts one step) | Tracking for the same-named --font-size-* alias |
+| `--letter-spacing-2xl` | `--letter-spacing-step-3` (density shifts one step) | Tracking for the same-named --font-size-* alias |
+| `--letter-spacing-3xl` | `--letter-spacing-step-4` (density shifts one step) | Tracking for the same-named --font-size-* alias |
+| `--letter-spacing-4xl` | `--letter-spacing-step-5` (density shifts one step) | Tracking for the same-named --font-size-* alias |
+| `--letter-spacing-5xl` | `--letter-spacing-step-6` (density shifts one step) | Tracking for the same-named --font-size-* alias |
 | `--font-size-step-6` | 41.81px → 68.66px, fluid | Type step; apply with its line-height and letter-spacing |
 | `--font-size-step-5` | 34.84px → 54.93px, fluid | Type step; apply with its line-height and letter-spacing |
 | `--font-size-step-4` | 29.03px → 43.95px, fluid | Type step; apply with its line-height and letter-spacing |

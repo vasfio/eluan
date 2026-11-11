@@ -50,7 +50,9 @@ Typography is the front door to Eluan's fluid type scale. One `variant` picks a 
 
 ## 5. Sizes
 
-Typography has no size prop; the variant sets the size. `step` moves any variant to another of the ten steps (`"6"` to `"neg3"`) and swaps size, line height and letter spacing together, keeping the variant's family, weight and element. Sizes are fluid between 480px and 1024px viewports. Pick a variant first; reach for `step` only when no variant fits.
+The variant sets the size. `step` moves any variant to another of the ten steps (`"6"` to `"neg3"`) and swaps size, line height and letter spacing together, keeping the variant's family, weight and element. Sizes are fluid between 480px and 1024px viewports. Pick a variant first; reach for `step` only when no variant fits.
+
+Steps don't change with the spacing density. For app UI text that should move with `data-spacing` like the controls beside it (table cells, form hints, toolbar labels), use `size` instead: `"xs"` to `"5xl"`, the `--font-size-*` aliases, one step lower in compact and one higher in wide. `size` takes precedence over `step`.
 
 ## 6. States
 
@@ -79,7 +81,7 @@ Typography has no interactive states. With `asChild` around a link or button, th
 4. Keep heading levels in order: one `h1`, then `h2` sections, then `h3`. Don't skip a level to get a smaller look; change the variant instead. <!-- REVIEW: level-order rule drafted to match page-layout.md rule 3. -->
 5. Use `tone="inverse"` only on a `--container-bg-inverse` surface.
 6. Don't wrap other components' text in Typography. Typography always sets a colour, so it overrides the colour a Button, Badge or Banner gives its content.
-7. If you style text yourself, apply all three tokens of one step together, for example `--font-size-step-1`, `--line-height-step-1` and `--letter-spacing-step-1`. Never write a font size, line height or letter spacing in px, rem or em.
+7. If you style text yourself, apply all three tokens of one step together, for example `--font-size-step-1`, `--line-height-step-1` and `--letter-spacing-step-1` (or, density-aware, `--font-size-sm`, `--line-height-sm` and `--letter-spacing-sm`). Never write a font size, line height or letter spacing in px, rem or em.
 8. Change fonts only in the theme. Use `family` to pick `heading`, `body` or `mono`, never a font name.
 9. Don't pin `data-typeset` unless a region must not resize (for example a fixed-size canvas).
 10. Never pass `className` or `style`; they're dropped, even through a cast.
@@ -151,7 +153,8 @@ Typography has no interactive states. With `asChild` around a link or button, th
 | `as` | `"h1" \| "h2" \| "h3" \| "h4" \| "h5" \| "h6" \| "p" \| "span" \| "div" \| "blockquote" \| "figcaption"` | variant's element | Element override; keeps the variant's look. |
 | `asChild` | `boolean` | `false` | Renders the child element with the styles (Radix Slot). |
 | `step` | `"6" \| "5" \| "4" \| "3" \| "2" \| "1" \| "0" \| "neg1" \| "neg2" \| "neg3"` | variant's step | Moves to another step; size, line height and letter spacing change together. |
-| `tone` | `"default" \| "muted" \| "inverse"` | `"default"` | `--container-fg`, `--container-fg-alt` or `--container-fg-inverse`. |
+| `size` | `"xs" \| "sm" \| "base" \| "lg" \| "xl" \| "2xl" \| "3xl" \| "4xl" \| "5xl"` | | Density-aware size: reads `--font-size-*` with its `--line-height-*` and `--letter-spacing-*`, so the text moves a step with `data-spacing`. Takes precedence over `step`. |
+| `tone` | `"default" \| "muted" \| "inverse" \| "inherit"` | `"default"` | `--container-fg`, `--container-fg-alt` or `--container-fg-inverse`; `inherit` takes the parent's colour, for text inside a Banner, Button or link. |
 | `weight` | `"thin" \| "extralight" \| "light" \| "normal" \| "medium" \| "semibold" \| "bold" \| "extrabold" \| "black"` | variant's weight | Weight override, 100 to 900. |
 | `family` | `"heading" \| "body" \| "mono"` | variant's family | Reads `--font-heading`, `--font-body` or `--font-mono`. |
 | `align` | `"start" \| "center" \| "end"` | | Logical text alignment. |

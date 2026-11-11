@@ -116,6 +116,62 @@ describe("Typography", () => {
 
     rerender(<Typography tone="inverse">Tone</Typography>);
     expect(screen.getByText("Tone")).toBeInTheDocument();
+
+    rerender(<Typography tone="inherit">Tone</Typography>);
+    expect(screen.getByText("Tone")).toBeInTheDocument();
+  });
+
+  it("gives every tone its own style, including inherit", () => {
+    const tones = ["default", "muted", "inverse", "inherit"] as const;
+    const seen = new Set(
+      tones.map((tone) => {
+        const { unmount } = render(<Typography tone={tone}>Tone</Typography>);
+        const classes = [...screen.getByText("Tone").classList].sort().join(" ");
+        unmount();
+        return classes;
+      }),
+    );
+    expect(seen.size).toBe(tones.length);
+  });
+
+  describe("density-aware size", () => {
+    const classesOf = (ui: ReactElement) => {
+      const { unmount } = render(ui);
+      const classes = [...screen.getByText("Sized").classList].sort().join(" ");
+      unmount();
+      return classes;
+    };
+    const sizes = ["xs", "sm", "base", "lg", "xl", "2xl", "3xl", "4xl", "5xl"] as const;
+
+    it("maps every size to its own style", () => {
+      expect(new Set(sizes.map((size) => classesOf(<Typography size={size}>Sized</Typography>))).size).toBe(
+        sizes.length,
+      );
+    });
+
+    it("replaces the variant's step, keeping its element", () => {
+      render(
+        <Typography variant="heading" size="sm">
+          Small heading
+        </Typography>,
+      );
+      expect(screen.getByRole("heading", { level: 3 })).toHaveTextContent("Small heading");
+      expect(classesOf(<Typography size="sm">Sized</Typography>)).not.toBe(classesOf(<Typography>Sized</Typography>));
+    });
+
+    it("takes precedence over step", () => {
+      expect(classesOf(<Typography size="sm" step="6">Sized</Typography>)).toBe(
+        classesOf(<Typography size="sm">Sized</Typography>),
+      );
+    });
+
+    it("isn't a step in disguise", () => {
+      // sm is step neg1 in standard spacing, but it must stay a separate
+      // style: the step is fixed, the alias follows the density.
+      expect(classesOf(<Typography size="sm">Sized</Typography>)).not.toBe(
+        classesOf(<Typography step="neg1">Sized</Typography>),
+      );
+    });
   });
 
   it("renders every weight on the Inter Variable axis", () => {

@@ -55,7 +55,14 @@ export type TypographyWeight =
 
 export type TypographyFamily = "heading" | "body" | "mono"
 
-export type TypographyTone = "default" | "muted" | "inverse"
+/** `inherit` takes the parent's colour, for text inside a Banner, Button or link. */
+export type TypographyTone = "default" | "muted" | "inverse" | "inherit"
+
+/**
+ * A density-aware size: the `--font-size-*` aliases, which sit one typeset
+ * step lower in compact spacing and one higher in wide.
+ */
+export type TypographySize = "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl"
 
 export type TypographyAlign = "start" | "center" | "end"
 
@@ -69,6 +76,13 @@ export interface TypographyProps
   as?: TypographyElement
   /** Font family override; each variant already picks a sensible one. */
   family?: TypographyFamily
+  /**
+   * Size the text by the spacing density instead of a fixed step, so it
+   * re-flows with `data-spacing` like the components around it. Reads the
+   * `--font-size-*`, `--line-height-*` and `--letter-spacing-*` aliases
+   * together. Takes precedence over `step`.
+   */
+  size?: TypographySize
   /**
    * Override the typeset step, keeping the variant's family and weight.
    * Swaps all three of size / line-height / letter-spacing together, so the
@@ -165,6 +179,7 @@ const styles = stylex.create({
   toneDefault: { color: "var(--container-fg)" },
   toneMuted: { color: "var(--container-fg-alt)" },
   toneInverse: { color: "var(--container-fg-inverse)" },
+  toneInherit: { color: "inherit" },
 
   /* Alignment */
   alignStart: { textAlign: "start" },
@@ -215,7 +230,57 @@ const toneStyles = {
   default: styles.toneDefault,
   muted: styles.toneMuted,
   inverse: styles.toneInverse,
+  inherit: styles.toneInherit,
 } satisfies Record<TypographyTone, stylex.StyleXStyles>
+
+/* Density-aware sizes — size, line height and tracking still travel together. */
+const sizeStyles = stylex.create({
+  xs: {
+    fontSize: "var(--font-size-xs)",
+    letterSpacing: "var(--letter-spacing-xs)",
+    lineHeight: "var(--line-height-xs)",
+  },
+  sm: {
+    fontSize: "var(--font-size-sm)",
+    letterSpacing: "var(--letter-spacing-sm)",
+    lineHeight: "var(--line-height-sm)",
+  },
+  base: {
+    fontSize: "var(--font-size-base)",
+    letterSpacing: "var(--letter-spacing-base)",
+    lineHeight: "var(--line-height-base)",
+  },
+  lg: {
+    fontSize: "var(--font-size-lg)",
+    letterSpacing: "var(--letter-spacing-lg)",
+    lineHeight: "var(--line-height-lg)",
+  },
+  xl: {
+    fontSize: "var(--font-size-xl)",
+    letterSpacing: "var(--letter-spacing-xl)",
+    lineHeight: "var(--line-height-xl)",
+  },
+  "2xl": {
+    fontSize: "var(--font-size-2xl)",
+    letterSpacing: "var(--letter-spacing-2xl)",
+    lineHeight: "var(--line-height-2xl)",
+  },
+  "3xl": {
+    fontSize: "var(--font-size-3xl)",
+    letterSpacing: "var(--letter-spacing-3xl)",
+    lineHeight: "var(--line-height-3xl)",
+  },
+  "4xl": {
+    fontSize: "var(--font-size-4xl)",
+    letterSpacing: "var(--letter-spacing-4xl)",
+    lineHeight: "var(--line-height-4xl)",
+  },
+  "5xl": {
+    fontSize: "var(--font-size-5xl)",
+    letterSpacing: "var(--letter-spacing-5xl)",
+    lineHeight: "var(--line-height-5xl)",
+  },
+})
 
 const alignStyles = {
   start: styles.alignStart,
@@ -276,6 +341,7 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
       as,
       asChild = false,
       family,
+      size,
       step,
       tabular = false,
       tone = "default",
@@ -303,7 +369,7 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
         {...rest}
         {...stylex.props(
           styles.base,
-          stepStyles[step ?? variantSteps[variant]],
+          size ? sizeStyles[size] : stepStyles[step ?? variantSteps[variant]],
           familyStyles[family ?? variantFamilies[variant]],
           weightStyles[weight ?? variantWeights[variant]],
           toneStyles[tone],
