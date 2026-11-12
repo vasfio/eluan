@@ -21,6 +21,9 @@ const styles = stylex.create({
     display: "inline-flex",
     flexShrink: 0,
     justifyContent: "center",
+    // In running text, centre on the x-height instead of sitting on the
+    // baseline, where the icon rides high. Flex parents ignore it.
+    verticalAlign: "middle",
   },
 })
 
