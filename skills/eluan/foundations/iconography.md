@@ -13,7 +13,7 @@ Icon boxes are sized with `--size-*` tokens, so they scale with density. Compone
 ## Rules
 
 1. Use `lucide-react` icons. Don't mix in other icon sets or inline SVGs, except brand logos.
-2. Size icons with `--size-*` tokens: `--size-xxs` inside controls and text, `--size-xs` or `--size-sm` for standalone icons. Never use Lucide's numeric `size` prop or px values.
+2. Size icons with `--size-*` tokens through the [Icon](../components/icon.md) component (`<Icon size="xxs"><Check /></Icon>`): `xxs` inside controls and text, `xs` or `sm` for standalone icons. Never use Lucide's numeric `size` prop or px values.
 3. Let icons inherit colour. Set `color` on the parent with a token if the icon must differ from the text.
 4. Mark decorative icons `aria-hidden="true"`.
 5. Give every icon-only control an accessible name: `aria-label` on the Button, not on the icon.
@@ -48,10 +48,12 @@ Icon boxes are sized with `--size-*` tokens, so they scale with density. Compone
 
 ```tsx
 import { X } from "lucide-react";
-import { Button } from "@eluan/core";
+import { Button, Icon } from "@eluan/core";
 
 <Button variant="ghost" size="icon" aria-label="Close panel">
-  <X aria-hidden="true" style={{ width: "var(--size-xxs)", height: "var(--size-xxs)" }} />
+  <Icon size="xxs">
+    <X />
+  </Icon>
 </Button>;
 ```
 

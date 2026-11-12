@@ -108,6 +108,19 @@
       ]
     },
     {
+      "name": "Box",
+      "module": "box",
+      "source": "packages/core/src/components/box.tsx",
+      "stories": "packages/core/src/components/box.stories.tsx",
+      "tests": "packages/core/src/components/__tests__/box.test.tsx",
+      "docs": null,
+      "docsPropsTable": false,
+      "exports": [
+        "Box"
+      ],
+      "note": "Layout primitive (2026-11). No docs-site page until a release ships it; see docs/layout.md."
+    },
+    {
       "name": "Breadcrumb",
       "module": "breadcrumb",
       "source": "packages/core/src/components/breadcrumb.tsx",
@@ -488,6 +501,19 @@
       "note": "FormLabel is a @deprecated alias of Label; guidelines import Label. File stays form-label.md to match the module and docs slug."
     },
     {
+      "name": "Grid",
+      "module": "grid",
+      "source": "packages/core/src/components/grid.tsx",
+      "stories": "packages/core/src/components/grid.stories.tsx",
+      "tests": "packages/core/src/components/__tests__/grid.test.tsx",
+      "docs": null,
+      "docsPropsTable": false,
+      "exports": [
+        "Grid"
+      ],
+      "note": "Layout primitive (2026-11). No docs-site page until a release ships it; see docs/layout.md."
+    },
+    {
       "name": "Header",
       "module": "header",
       "source": "packages/core/src/components/header.tsx",
@@ -512,6 +538,19 @@
         "HoverCardTrigger",
         "HoverCardContent"
       ]
+    },
+    {
+      "name": "Icon",
+      "module": "icon",
+      "source": "packages/core/src/components/icon.tsx",
+      "stories": "packages/core/src/components/icon.stories.tsx",
+      "tests": "packages/core/src/components/__tests__/icon.test.tsx",
+      "docs": null,
+      "docsPropsTable": false,
+      "exports": [
+        "Icon"
+      ],
+      "note": "Layout primitive (2026-11). No docs-site page until a release ships it; see docs/layout.md."
     },
     {
       "name": "Input",
@@ -760,6 +799,19 @@
       ]
     },
     {
+      "name": "Row",
+      "module": "row",
+      "source": "packages/core/src/components/row.tsx",
+      "stories": "packages/core/src/components/row.stories.tsx",
+      "tests": "packages/core/src/components/__tests__/row.test.tsx",
+      "docs": null,
+      "docsPropsTable": false,
+      "exports": [
+        "Row"
+      ],
+      "note": "Layout primitive (2026-11). No docs-site page until a release ships it; see docs/layout.md."
+    },
+    {
       "name": "ScrollArea",
       "module": "scroll-area",
       "source": "packages/core/src/components/scroll-area.tsx",
@@ -888,6 +940,19 @@
       "exports": [
         "Spinner"
       ]
+    },
+    {
+      "name": "Stack",
+      "module": "stack",
+      "source": "packages/core/src/components/stack.tsx",
+      "stories": "packages/core/src/components/stack.stories.tsx",
+      "tests": "packages/core/src/components/__tests__/stack.test.tsx",
+      "docs": null,
+      "docsPropsTable": false,
+      "exports": [
+        "Stack"
+      ],
+      "note": "Layout primitive (2026-11). No docs-site page until a release ships it; see docs/layout.md."
     },
     {
       "name": "Stepper",
@@ -1048,6 +1113,19 @@
       "exports": [
         "Typography"
       ]
+    },
+    {
+      "name": "VisuallyHidden",
+      "module": "visually-hidden",
+      "source": "packages/core/src/components/visually-hidden.tsx",
+      "stories": "packages/core/src/components/visually-hidden.stories.tsx",
+      "tests": "packages/core/src/components/__tests__/visually-hidden.test.tsx",
+      "docs": null,
+      "docsPropsTable": false,
+      "exports": [
+        "VisuallyHidden"
+      ],
+      "note": "Layout primitive (2026-11). No docs-site page until a release ships it; see docs/layout.md."
     }
   ],
   "tokens": {

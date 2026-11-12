@@ -15,7 +15,7 @@ Steps run `xxs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `4xl`.
 1. Use `--spacing-*` for every margin, padding and gap.
 2. Use `--size-*` for fixed widths and heights of small things: icons, avatars, control heights.
 3. Never write px, rem or em for space or size.
-4. Prefer `gap` on a flex or grid parent over margins on children.
+4. Prefer `gap` on a parent over margins on children. [Stack](../components/stack.md), [Row](../components/row.md) and [Grid](../components/grid.md) take these steps by name: `gap="md"`, `pad="xl"`.
 5. Never use `--spacing-xxs` for a border or line: it is 0 in compact density. Use a border token or the Separator component.
 6. Never divide or multiply spacing tokens with `calc()` to invent a new step. Pick the nearest step.
 7. Don't pad inside components. Card, Dialog, Fieldset and Popover already pad their content.

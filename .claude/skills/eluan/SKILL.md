@@ -154,7 +154,7 @@ For values that differ by mode, add `modes: { dark: { … } }` (or `dim`); each 
 
 ## Component inventory (`@eluan/core`)
 
-There are **68 component modules** in `packages/core/src/components`. Every module exports its `*Props` type(s) alongside the component, so `React.ComponentProps<typeof X>` is rarely needed. Import any of these from `@eluan/core` (or via the `@eluan/core/<name>` subpath):
+There are **74 component modules** in `packages/core/src/components`. Every module exports its `*Props` type(s) alongside the component, so `React.ComponentProps<typeof X>` is rarely needed. Import any of these from `@eluan/core` (or via the `@eluan/core/<name>` subpath):
 
 **Forms / inputs**
 `Button` · `Input` (auto-icon by `type="search|email|password|tel|url"`, plus `icon` and `trailing` props for custom leading/trailing; `validationTone="none|positive|destructive"`) · `Textarea` · `Select` (Radix-based) · `MultiSelect` · `Command` (cmdk-based — the Combobox / command-palette primitive) · `Checkbox` · `CheckboxGroup` (with `CheckboxGroupItem`) · `RadioGroup` (with `RadioGroupItem`) · `Switch` · `Slider` · `Toggle` · `ToggleGroup` (with `ToggleGroupItem`) · `SegmentedControl` (with `SegmentedControlItem`) · `Fieldset` · `FormLabel` (also exports `Label`, `FormDescription`, `FormMessage`) · `EmailInput` · `PasswordInput` · `PhoneInput` (uses the `countries-list` package — full country list, common short names, dial codes) · `NumberInput` · `DecimalInput` · `SearchInput` (with `CommandSearch` and `AutocompleteSearch` variants) · `FileInput` · `CreditCardInput` (sub-components `CreditCardNumberInput`, `CreditCardExpiryInput`, `CreditCardCVVInput` — card logos use `fill="currentColor"` + `fillRule="evenodd"` for transparent internal cutouts) · `InputOTP` · `RichText` (TipTap v3 — `useEditorState` for a reactive toolbar)
@@ -173,6 +173,9 @@ There are **68 component modules** in `packages/core/src/components`. Every modu
 
 **Overlays / popovers**
 `Dialog` (with `layout="command"` for command-palette content) · `Sheet` · `Drawer` (vaul-based) · `Popover` · `ActionPopover` · `Tooltip` · `HoverCard` · `DropdownMenu` · `ContextMenu` · `Toast` (Sonner-based toaster; Eluan token styling is applied through global class hooks — `eluan-toaster`, `eluan-toast`, … — owned by the stylesheet, plus an inline `--border-radius: var(--curves-md)`)
+
+**Layout primitives** (lay pages out from tokens; see `docs/layout.md`)
+`Stack` (vertical flow, `gap` default `md`) · `Row` (horizontal, centred, `justify="between"`, `wrap`, `inline`) · `Grid` (`cols`: a count 1–12, a raw template, or per breakpoint `{ base: 1, m: 2, l: 4 }` using the token breakpoint names) · `Box` (`pad`/`padX`/`padY`, `grow`) · `Icon` (sizes an svg child to a `--size-*` step, `after` for a trailing gap) · `VisuallyHidden`. `gap` and `pad*` take `--spacing-*` step names (`"none"`…`"4xl"`), never px; Stack/Row/Grid take Box's props; all take `as` and `asChild`. Child rules StyleX can't express (grid children `min-width: 0`, Icon's svg at 100%) live in `globals.css` `@layer base` behind `eluan-grid` / `eluan-icon` class hooks.
 
 **Layout / utilities**
 `Separator` (defaults to `decorative={true}` — pass `decorative={false}` to render with `role="separator"`) · `ScrollArea` · `AspectRatio` · `Collapsible`
@@ -450,7 +453,7 @@ pnpm --filter @eluan/core lint    # eslint v9, flat config at repo root
 
 ### Common test patterns
 
-There is one test suite per component (68 suites under `packages/core/src/components/__tests__/`). Tests use `vitest` + `@testing-library/react` and assert on stable semantics, not styling:
+There is one test suite per component (74 suites under `packages/core/src/components/__tests__/`). Tests use `vitest` + `@testing-library/react` and assert on stable semantics, not styling:
 
 - **Don't assert on the generated StyleX class names** — they're hashed and change on refactor. Assert on text content, `role`, `data-state`, or attributes. (Because components strip `className`, several suites also assert an override class is *not* present.)
 - For Radix open/close: `expect(trigger).toHaveAttribute("data-state", "open")`. `toBeVisible()` doesn't reliably reflect Radix's animated transitions under happy-dom.

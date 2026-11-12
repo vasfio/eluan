@@ -63,6 +63,24 @@ import { Typography } from "@eluan/core"
 
 See [the typeset axis](https://github.com/vasfio/eluan/blob/main/docs/theming.md#the-typeset-axis) for the step table and the `data-typeset` pinning attribute.
 
+## Layout
+
+`Stack`, `Row`, `Grid` and `Box` lay pages out from spacing tokens, so there's no utility framework to add and the layout re-flows with the spacing density:
+
+```tsx
+import { Button, Grid, Row, Stack, Typography } from "@eluan/core"
+
+<Stack as="main" gap="2xl" pad="xl">
+  <Row justify="between">
+    <Typography variant="title" as="h1">Studio</Typography>
+    <Button>New class</Button>
+  </Row>
+  <Grid cols={{ base: 1, m: 2, l: 4 }} gap="lg">{cards}</Grid>
+</Stack>
+```
+
+`Icon` sizes lucide icons to a size token and `VisuallyHidden` hides text from view but not from screen readers. See [the layout guide](https://github.com/vasfio/eluan/blob/main/docs/layout.md), including how to migrate from a utility framework.
+
 ## Using Eluan with agents
 
 The package ships an agent skill in `skills/eluan`: guidance that tells coding agents which component to use for a task, the rules each one follows, and which tokens to use. Install it for Claude Code:
@@ -79,7 +97,7 @@ Before writing UI, read `.claude/skills/eluan/SKILL.md` and follow it.
 
 ## What's included
 
-Components span layout (`Card`, `Sheet`, `Drawer`), typography (`Typography`), forms (`Input`, `Select`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`, etc.), data display (`Table`, `Tree View`, `Calendar`), navigation (`Tabs`, `Breadcrumb`, `Command`, `NavigationDrawer`), feedback (`Toast`, `Banner`, `Progress`), and overlays (`Dialog`, `Popover`, `Tooltip`, `ContextMenu`).
+Components span layout (`Stack`, `Row`, `Grid`, `Box`, `Card`, `Sheet`, `Drawer`), typography (`Typography`), forms (`Input`, `Select`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`, etc.), data display (`Table`, `Tree View`, `Calendar`), navigation (`Tabs`, `Breadcrumb`, `Command`, `NavigationDrawer`), feedback (`Toast`, `Banner`, `Progress`), and overlays (`Dialog`, `Popover`, `Tooltip`, `ContextMenu`).
 
 Full component list: see [Storybook](https://github.com/vasfio/eluan) or the source under `src/components/`.
 

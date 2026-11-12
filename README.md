@@ -10,7 +10,7 @@ A multi-package design system monorepo built with React, StyleX, and Radix UI pr
 
 **[Live Storybook →](https://eluan.vercel.app)**
 
-**Documentation:** [Theming guide](./docs/theming.md) · [Contributing](./CONTRIBUTING.md)
+**Documentation:** [Theming guide](./docs/theming.md) · [Layout guide](./docs/layout.md) · [Contributing](./CONTRIBUTING.md)
 
 ## Packages
 

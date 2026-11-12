@@ -13,3 +13,8 @@ with the components. `Grid` takes a column count (1–12), a raw
 breakpoint names: `cols={{ base: 1, m: 2, l: 4 }}`. Like every Eluan component
 they take `as` and `asChild` and no `className` or `style`. Nothing existing
 changes.
+
+The bundled agent skill has a guideline file for each and its page-layout
+pattern now builds pages from them; `docs/layout.md` covers the rule (an Eluan
+component first, layout primitives between them, tokens only) and how to
+migrate from a utility framework.
