@@ -102,13 +102,13 @@ VisuallyHidden has no size prop.
 ```tsx
 import { Button, Row, Stack, Typography, VisuallyHidden } from "@eluan/core";
 
-export function ClassList({ classes }: { classes: { id: string; name: string }[] }) {
+export function ProjectList({ projects }: { projects: { id: string; name: string }[] }) {
   return (
-    <Stack as="section" gap="md" aria-labelledby="classes-heading">
-      <VisuallyHidden as="h2" id="classes-heading">
-        Today's classes
+    <Stack as="section" gap="md" aria-labelledby="projects-heading">
+      <VisuallyHidden as="h2" id="projects-heading">
+        Your projects
       </VisuallyHidden>
-      {classes.map((item) => (
+      {projects.map((item) => (
         <Row key={item.id} justify="between">
           <Typography>{item.name}</Typography>
           <Button variant="outline" size="sm">

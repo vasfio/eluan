@@ -77,7 +77,7 @@ See [iconography](../foundations/iconography.md) for the token values per densit
   <Icon size="xs">
     <Plus />
   </Icon>
-  New class
+  New project
 </Button>
 ```
 
@@ -86,7 +86,7 @@ See [iconography](../foundations/iconography.md) for the token values per densit
 ```tsx
 <Button>
   <Plus size={16} color="#666" style={{ marginRight: 8 }} />
-  New class
+  New project
 </Button>
 ```
 
@@ -120,21 +120,21 @@ See [iconography](../foundations/iconography.md) for the token values per densit
 import { Calendar, Check, Clock } from "lucide-react";
 import { Button, Icon, Row, Stack, Typography } from "@eluan/core";
 
-export function BookingSummary() {
+export function PaymentSummary() {
   return (
     <Stack gap="md" align="start">
       <Typography>
         <Icon size="xxs" after="xs">
           <Check />
         </Icon>
-        Booking confirmed
+        Payment received
       </Typography>
 
       <Row gap="sm">
         <Icon size="xs">
           <Clock />
         </Icon>
-        <Typography variant="label">Tuesday, 07:00</Typography>
+        <Typography variant="label">Last synced 09:41</Typography>
       </Row>
 
       <Button variant="outline">

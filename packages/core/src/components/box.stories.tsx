@@ -62,10 +62,10 @@ export const Grow: Story = {
     <Row>
       <Box grow padY="sm">
         <Typography truncate>
-          A long class description that would otherwise push the button off the edge of the row.
+          A long project description that would otherwise push the button off the edge of the row.
         </Typography>
       </Box>
-      <Button>Book</Button>
+      <Button>Open</Button>
     </Row>
   ),
 }

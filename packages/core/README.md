@@ -72,8 +72,8 @@ import { Button, Grid, Row, Stack, Typography } from "@eluan/core"
 
 <Stack as="main" gap="2xl" pad="xl">
   <Row justify="between">
-    <Typography variant="title" as="h1">Studio</Typography>
-    <Button>New class</Button>
+    <Typography variant="title" as="h1">Dashboard</Typography>
+    <Button>New project</Button>
   </Row>
   <Grid cols={{ base: 1, m: 2, l: 4 }} gap="lg">{cards}</Grid>
 </Stack>

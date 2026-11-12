@@ -130,13 +130,13 @@ A level you don't set inherits the nearest level below it: `{ base: 2, l: 4 }` i
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, Grid, Stack, Typography } from "@eluan/core";
 
 const stats = [
-  { label: "Members", value: "214" },
-  { label: "Bookings this week", value: "1,380" },
-  { label: "Revenue", value: "€18.2k" },
-  { label: "Classes", value: "46" },
+  { label: "Revenue", value: "$48,210" },
+  { label: "Active users", value: "2,318" },
+  { label: "Open invoices", value: "14" },
+  { label: "Projects", value: "36" },
 ];
 
-export function StudioOverview() {
+export function DashboardOverview() {
   return (
     <Stack gap="2xl">
       <Grid cols={{ base: 2, l: 4 }} gap="lg">
@@ -153,10 +153,10 @@ export function StudioOverview() {
       <Grid cols={{ base: 1, l: "minmax(0, 2fr) minmax(0, 1fr)" }} gap="xl" align="start">
         <Card>
           <CardHeader>
-            <CardTitle>Today</CardTitle>
+            <CardTitle>Recent invoices</CardTitle>
           </CardHeader>
           <CardContent>
-            <Typography tone="muted">Four classes, two full.</Typography>
+            <Typography tone="muted">Two of four paid.</Typography>
           </CardContent>
         </Card>
         <Card>
@@ -164,7 +164,7 @@ export function StudioOverview() {
             <CardTitle>Notes</CardTitle>
           </CardHeader>
           <CardContent>
-            <Typography tone="muted">Studio B is closed on Friday.</Typography>
+            <Typography tone="muted">The billing run moves to Friday this month.</Typography>
           </CardContent>
         </Card>
       </Grid>

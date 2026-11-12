@@ -60,7 +60,7 @@ Box has no size prop. `pad` pads every side; `padX` (inline: left and right in L
 ```tsx
 <Row gap="sm">
   <Box grow>
-    <Input type="search" aria-label="Search classes" />
+    <Input type="search" aria-label="Search projects" />
   </Box>
   <Button variant="outline">Filters</Button>
 </Row>
@@ -71,7 +71,7 @@ Box has no size prop. `pad` pads every side; `padX` (inline: left and right in L
 ```tsx
 <div style={{ display: "flex", gap: 8 }}>
   <div style={{ flex: 1 }}>
-    <Input type="search" aria-label="Search classes" />
+    <Input type="search" aria-label="Search projects" />
   </div>
   <Button variant="outline">Filters</Button>
 </div>
@@ -108,16 +108,16 @@ Box has no size prop. `pad` pads every side; `padX` (inline: left and right in L
 ```tsx
 import { Box, Button, Row, Typography } from "@eluan/core";
 
-export function ClassRow({ title, time }: { title: string; time: string }) {
+export function ProjectRow({ title, updated }: { title: string; updated: string }) {
   return (
     <Row gap="md" padY="sm">
       <Box grow>
         <Typography truncate>{title}</Typography>
       </Box>
       <Typography variant="caption" tone="muted" tabular>
-        {time}
+        {updated}
       </Typography>
-      <Button size="sm">Book</Button>
+      <Button size="sm">Open</Button>
     </Row>
   );
 }

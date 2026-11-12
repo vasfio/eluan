@@ -274,7 +274,7 @@ export const Tabular: Story = {
           <Typography variant="label" tone="muted">
             tabular={String(tabular)}
           </Typography>
-          {["1,111.11", "8,888.88", "€410.07", "19:45"].map((value) => (
+          {["1,111.11", "8,888.88", "$410.07", "19:45"].map((value) => (
             <Typography key={value} tabular={tabular} align="end">
               {value}
             </Typography>

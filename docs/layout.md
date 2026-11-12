@@ -38,15 +38,15 @@ export function Dashboard() {
   return (
     <Stack as="main" gap="2xl" pad="xl">
       <Row justify="between" wrap gap="lg">
-        <Typography variant="title" as="h1">Studio</Typography>
-        <Button>New class</Button>
+        <Typography variant="title" as="h1">Dashboard</Typography>
+        <Button>New project</Button>
       </Row>
 
       <Grid cols={{ base: 2, l: 4 }} gap="lg">
         <Card>
           <CardHeader>
-            <CardDescription>Members</CardDescription>
-            <CardTitle>214</CardTitle>
+            <CardDescription>Revenue</CardDescription>
+            <CardTitle>$48,210</CardTitle>
           </CardHeader>
         </Card>
         {/* … */}
@@ -97,7 +97,7 @@ Grid children get `min-width: 0`, so long content can't stretch a column past it
 Text is `Typography`, not a layout primitive. For app UI text that should follow the spacing density like the controls around it, use `size` (`"xs"` to `"5xl"`) rather than `step`, which is fixed. `tone="inherit"` takes the parent's colour (text inside a Banner or a Button), and `tabular` lines numbers up in columns.
 
 ```tsx
-<Typography size="sm" tone="muted" tabular>€18,240.00</Typography>
+<Typography size="sm" tone="muted" tabular>$18,240.00</Typography>
 ```
 
 ## What stays in your app

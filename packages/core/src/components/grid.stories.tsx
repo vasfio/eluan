@@ -59,11 +59,11 @@ export const Default: Story = {
 export const Responsive: Story = {
   render: () => (
     <Grid cols={{ base: 1, m: 2, l: 4 }} gap="lg">
-      {["Members", "Bookings", "Revenue", "Classes"].map((label, i) => (
+      {["Revenue", "Subscriptions", "Active users", "Churn"].map((label, i) => (
         <Card key={label}>
           <CardHeader>
             <CardDescription>{label}</CardDescription>
-            <CardTitle>{[214, 1380, "€18.2k", 46][i]}</CardTitle>
+            <CardTitle>{["$48,210", "1,380", "2,318", "1.8%"][i]}</CardTitle>
           </CardHeader>
         </Card>
       ))}
@@ -76,9 +76,9 @@ export const Template: Story = {
   render: () => (
     <Grid cols={{ base: 1, m: "auto minmax(0, 1fr)" }} gap="lg" align="start">
       <Typography variant="label">Display name</Typography>
-      <Typography tone="muted">Shown on bookings and receipts.</Typography>
+      <Typography tone="muted">Shown to your team and on invoices.</Typography>
       <Typography variant="label">Email</Typography>
-      <Typography tone="muted">Where booking confirmations go.</Typography>
+      <Typography tone="muted">Where invoices and notifications go.</Typography>
     </Grid>
   ),
 }

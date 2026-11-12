@@ -19,7 +19,7 @@ Content for screen readers only: out of view, still in the accessibility tree. U
 import { VisuallyHidden } from "@eluan/core"
 
 <Button variant="outline">
-  Edit<VisuallyHidden> Morning Vinyasa</VisuallyHidden>
+  Edit<VisuallyHidden> Website redesign</VisuallyHidden>
 </Button>
 \`\`\`
         `,
@@ -31,19 +31,19 @@ import { VisuallyHidden } from "@eluan/core"
 export default meta
 type Story = StoryObj<typeof meta>
 
-const classes = ["Morning Vinyasa", "Yin & Breathwork", "Restorative"]
+const projects = ["Website redesign", "Mobile app", "Quarterly report"]
 
 /**
  * The region has a heading screen readers can jump to, and each button's
- * accessible name says which class it edits, though both read "Edit" on screen.
+ * accessible name says which project it edits, though both read "Edit" on screen.
  */
 export const RegionHeadingAndContext: Story = {
   render: () => (
-    <Stack as="section" gap="md" aria-labelledby="classes-heading">
-      <VisuallyHidden as="h2" id="classes-heading">
-        Today's classes
+    <Stack as="section" gap="md" aria-labelledby="projects-heading">
+      <VisuallyHidden as="h2" id="projects-heading">
+        Your projects
       </VisuallyHidden>
-      {classes.map((name) => (
+      {projects.map((name) => (
         <Row key={name} justify="between">
           <Typography>{name}</Typography>
           <Button variant="outline" size="sm">

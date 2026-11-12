@@ -147,8 +147,8 @@ export function MembersHeader() {
 
       <Row wrap gap="xs">
         <Badge variant="secondary">Active</Badge>
-        <Badge variant="secondary">Teachers</Badge>
-        <Badge variant="secondary">Joined this month</Badge>
+        <Badge variant="secondary">Admins</Badge>
+        <Badge variant="secondary">Invited</Badge>
       </Row>
     </Stack>
   );

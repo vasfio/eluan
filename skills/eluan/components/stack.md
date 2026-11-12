@@ -125,13 +125,13 @@ export function InviteForm() {
     <Stack as="section" gap="2xl" pad="xl" aria-labelledby="invite-heading">
       <Stack gap="xs">
         <Typography variant="heading" as="h2" id="invite-heading">
-          Invite a teacher
+          Invite a teammate
         </Typography>
         <Typography tone="muted">They get an email with a sign-up link.</Typography>
       </Stack>
 
       <Stack as="form" gap="lg" onSubmit={(event) => event.preventDefault()}>
-        <Input type="email" placeholder="name@studio.com" aria-label="Email" />
+        <Input type="email" placeholder="name@company.com" aria-label="Email" />
         <Button type="submit">Send invite</Button>
       </Stack>
     </Stack>

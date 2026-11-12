@@ -58,14 +58,14 @@ export const Default: Story = {
 export const Toolbar: Story = {
   render: () => (
     <Row justify="between" gap="lg">
-      <Typography variant="heading">Classes</Typography>
+      <Typography variant="heading">Projects</Typography>
       <Row gap="sm">
         <Button variant="outline">Export</Button>
         <Button>
           <Icon size="xs">
             <Plus />
           </Icon>
-          New class
+          New project
         </Button>
       </Row>
     </Row>
@@ -77,7 +77,7 @@ export const GrowingChild: Story = {
   render: () => (
     <Row gap="sm">
       <Box grow>
-        <Input type="search" placeholder="Search members" />
+        <Input type="search" placeholder="Search users" />
       </Box>
       <Button variant="outline">Filters</Button>
     </Row>
@@ -89,7 +89,7 @@ export const Wrapping: Story = {
   render: () => (
     <div style={{ maxWidth: 320 }}>
       <Row wrap gap="xs">
-        {["Vinyasa", "Yin", "Hatha", "Restorative", "Ashtanga", "Prenatal", "Breathwork"].map((tag) => (
+        {["Design", "Engineering", "Marketing", "Sales", "Support", "Finance", "Operations"].map((tag) => (
           <Badge key={tag} variant="secondary">
             {tag}
           </Badge>

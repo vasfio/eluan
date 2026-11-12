@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { Clock, Plus } from "lucide-react"
+import { CalendarDays, Plus } from "lucide-react"
 import { Badge } from "./badge"
 import { Button } from "./button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./card"
@@ -31,26 +31,26 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 const stats = [
-  ["Members", "214"],
-  ["Bookings this week", "1,380"],
-  ["Revenue", "€18.2k"],
-  ["Classes", "46"],
+  ["Revenue", "$48,210"],
+  ["Active users", "2,318"],
+  ["Open invoices", "14"],
+  ["Projects", "36"],
 ] as const
 
-const classes = [
-  ["Morning Vinyasa", "07:00", "Full", "caution"],
-  ["Yin & Breathwork", "12:30", "6 spots", "positive"],
-  ["Restorative", "18:00", "11 spots", "positive"],
-  ["Ashtanga Mysore", "19:30", "Cancelled", "destructive"],
+const invoices = [
+  ["INV001 · Acme Corp", "Due 4 Mar", "Paid", "positive"],
+  ["INV002 · Globex", "Due 11 Mar", "Pending", "caution"],
+  ["INV003 · Initech", "Due 18 Mar", "Overdue", "destructive"],
+  ["INV004 · Umbrella", "Due 25 Mar", "Paid", "positive"],
 ] as const
 
-function StudioPage() {
+function DashboardPage() {
   return (
     <Stack as="main" gap="2xl" pad="xl">
       <Row justify="between" align="end" wrap gap="lg">
         <Stack gap="xxs">
-          <Typography variant="title">Studio</Typography>
-          <Typography tone="muted">This week at a glance.</Typography>
+          <Typography variant="title">Dashboard</Typography>
+          <Typography tone="muted">Your workspace this month.</Typography>
         </Stack>
         <Row gap="sm">
           <Button variant="outline">Export</Button>
@@ -58,7 +58,7 @@ function StudioPage() {
             <Icon size="xs">
               <Plus />
             </Icon>
-            New class
+            New project
           </Button>
         </Row>
       </Row>
@@ -77,22 +77,22 @@ function StudioPage() {
       <Grid cols={{ base: 1, l: "minmax(0, 2fr) minmax(0, 1fr)" }} gap="xl" align="start">
         <Card>
           <CardHeader>
-            <CardTitle>Today</CardTitle>
+            <CardTitle>Recent invoices</CardTitle>
           </CardHeader>
           <CardContent>
             <Stack gap="md">
-              {classes.map(([name, time, spots, tone]) => (
+              {invoices.map(([name, due, status, tone]) => (
                 <Row key={name} justify="between" gap="md">
                   <Stack gap="xxs">
                     <Typography variant="label">{name}</Typography>
                     <Typography variant="caption" tone="muted">
                       <Icon size="xxs" after="xxs">
-                        <Clock />
+                        <CalendarDays />
                       </Icon>
-                      {time}
+                      {due}
                     </Typography>
                   </Stack>
-                  <Badge variant={tone}>{spots}</Badge>
+                  <Badge variant={tone}>{status}</Badge>
                 </Row>
               ))}
             </Stack>
@@ -101,12 +101,12 @@ function StudioPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Invite a teacher</CardTitle>
+            <CardTitle>Invite a teammate</CardTitle>
             <CardDescription>They get an email with a sign-up link.</CardDescription>
           </CardHeader>
           <CardContent>
             <Stack as="form" gap="md" onSubmit={(event) => event.preventDefault()}>
-              <Input type="email" placeholder="name@studio.com" aria-label="Email" />
+              <Input type="email" placeholder="name@company.com" aria-label="Email" />
               <Button type="submit">Send invite</Button>
             </Stack>
           </CardContent>
@@ -118,7 +118,7 @@ function StudioPage() {
 
 /** Follows the spacing toolbar. */
 export const PageLayout: Story = {
-  render: () => <StudioPage />,
+  render: () => <DashboardPage />,
 }
 
 /** The same page in compact, standard and wide, stacked. Every gap comes from the density. */
@@ -131,7 +131,7 @@ export const AllSpacingModes: Story = {
             <Row padX="xl" padY="sm">
               <Badge variant="outline">data-spacing="{density}"</Badge>
             </Row>
-            <StudioPage />
+            <DashboardPage />
           </Stack>
         </section>
       ))}

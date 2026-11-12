@@ -72,7 +72,7 @@ export const WithLabel: Story = {
         <Icon size="xxs" after="xs">
           <Check />
         </Icon>
-        Booking confirmed
+        Payment received
       </Typography>
       <Button variant="outline">
         <Icon size="xs">
