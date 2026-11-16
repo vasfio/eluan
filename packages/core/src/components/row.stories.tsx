@@ -6,6 +6,7 @@ import { Button } from "./button"
 import { Icon } from "./icon"
 import { Input } from "./input"
 import { Row, type LayoutSpacing } from "./row"
+import { Stack } from "./stack"
 import { Typography } from "./typography"
 
 const spacing: LayoutSpacing[] = ["none", "xxs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl"]
@@ -95,6 +96,35 @@ export const Wrapping: Story = {
           </Badge>
         ))}
       </Row>
+    </div>
+  ),
+}
+
+/**
+ * Flex children shrink by default, so a short label can wrap when its
+ * neighbour needs the room. `shrink={false}` holds it at its content size.
+ */
+export const NoShrink: Story = {
+  render: () => (
+    <div style={{ maxWidth: 320 }}>
+      <Stack gap="lg">
+        {[undefined, false].map((shrink) => (
+          <Stack key={String(shrink)} gap="xs">
+            <Typography variant="label" tone="muted">
+              {shrink === false ? "shrink={false}" : "default"}
+            </Typography>
+            <Row gap="md">
+              <Typography>A project name long enough to fill the row</Typography>
+              <Row gap="xs" shrink={shrink}>
+                <Badge variant="secondary">Pending</Badge>
+                <Typography size="sm" tone="muted">
+                  Due 4 Mar
+                </Typography>
+              </Row>
+            </Row>
+          </Stack>
+        ))}
+      </Stack>
     </div>
   ),
 }

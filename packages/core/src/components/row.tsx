@@ -2,10 +2,10 @@ import * as React from "react"
 import * as stylex from "@stylexjs/stylex"
 import {
   alignStyles,
-  boxStyle,
   gapStyles,
   justifyStyles,
   layoutElement,
+  splitBoxProps,
   withoutStyling,
   type LayoutAlign,
   type LayoutBoxProps,
@@ -51,23 +51,20 @@ const Row = React.forwardRef<HTMLElement, RowProps>(
       as,
       asChild = false,
       gap = "md",
-      grow,
       inline = false,
       justify,
-      pad,
-      padX,
-      padY,
       wrap = false,
       ...props
     },
     ref
   ) => {
     const Comp = layoutElement(as, asChild)
+    const [box, rest] = splitBoxProps(props)
 
     return (
       <Comp
         ref={ref}
-        {...withoutStyling(props)}
+        {...withoutStyling(rest)}
         {...stylex.props(
           styles.base,
           inline && styles.inline,
@@ -75,7 +72,7 @@ const Row = React.forwardRef<HTMLElement, RowProps>(
           gapStyles[gap],
           alignStyles[align],
           justify && justifyStyles[justify],
-          ...boxStyle({ pad, padX, padY, grow })
+          ...box
         )}
       />
     )

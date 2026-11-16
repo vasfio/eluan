@@ -149,6 +149,10 @@ export const Tones: Story = {
     <div style={stack}>
       <Typography tone="default">Default — var(--container-fg)</Typography>
       <Typography tone="muted">Muted — var(--container-fg-alt)</Typography>
+      <Typography tone="positive">Positive — var(--positive-fg)</Typography>
+      <Typography tone="destructive">Destructive — var(--destructive-fg)</Typography>
+      <Typography tone="interactive">Interactive — var(--interactive-fg)</Typography>
+      <Typography tone="interactive-muted">Interactive muted — var(--interactive-fg-alt)</Typography>
       <div
         style={{
           backgroundColor: "var(--container-bg-inverse)",

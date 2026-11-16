@@ -98,4 +98,17 @@ describe("Stack", () => {
     expect(classesOf(<Stack pad="sm" padY="lg" />)).toBe(classesOf(<Stack padX="sm" padY="lg" />));
     expect(classesOf(<Stack pad="sm" />)).toBe(classesOf(<Stack padX="sm" padY="sm" />));
   });
+
+  it("takes the flex, height, position and overflow props", () => {
+    const base = classesOf(<Stack />).split(" ");
+    const styled = classesOf(<Stack shrink={false} height="full" overflow="auto" position="relative" />).split(" ");
+    expect(styled).toHaveLength(base.length + 4);
+    render(
+      <Stack shrink={false} height="screen" inset="bottom" overflow="hidden">
+        Content
+      </Stack>,
+    );
+    const el = screen.getByText("Content");
+    for (const attr of ["shrink", "height", "inset", "overflow"]) expect(el).not.toHaveAttribute(attr);
+  });
 });

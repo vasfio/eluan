@@ -21,7 +21,7 @@ The `Typography` component is the front door to the scale. Its `variant` picks a
 | `label` | neg1 | body | `span` |
 | `caption` | neg2 | body | `span` |
 
-`tone` is `default`, `muted` (`--container-fg-alt`) or `inverse`.
+`tone` is `default`, `muted` (`--container-fg-alt`) or `inverse`; `positive` and `destructive` for status text; `interactive` and `interactive-muted` for text on a control you build; `inherit` for the parent's colour.
 
 The `--font-size-xs` to `--font-size-5xl` aliases map onto steps and shift one step with density (compact one down, wide one up). Components use these; app text should use `Typography`.
 

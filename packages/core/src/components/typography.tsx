@@ -1,6 +1,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import * as stylex from "@stylexjs/stylex"
+import { toneStyles, type Tone } from "./tone-shared"
 
 export type TypographyVariant =
   | "display"
@@ -55,8 +56,12 @@ export type TypographyWeight =
 
 export type TypographyFamily = "heading" | "body" | "mono"
 
-/** `inherit` takes the parent's colour, for text inside a Banner, Button or link. */
-export type TypographyTone = "default" | "muted" | "inverse" | "inherit"
+/**
+ * `inherit` takes the parent's colour, for text inside a Banner, Button or
+ * link; `positive` and `destructive` are status text; `interactive` and
+ * `interactive-muted` are text on a control you build yourself.
+ */
+export type TypographyTone = Tone
 
 /**
  * A density-aware size: the `--font-size-*` aliases, which sit one typeset
@@ -91,7 +96,7 @@ export interface TypographyProps
   step?: TypographyStep
   /** Tabular figures: every digit the same width, so numbers line up in columns. */
   tabular?: boolean
-  /** Foreground token. */
+  /** Foreground token. Defaults to `"default"`. */
   tone?: TypographyTone
   /** Single-line ellipsis. */
   truncate?: boolean
@@ -175,11 +180,6 @@ const styles = stylex.create({
   weightExtrabold: { fontWeight: 800 },
   weightBlack: { fontWeight: 900 },
 
-  /* Tones */
-  toneDefault: { color: "var(--container-fg)" },
-  toneMuted: { color: "var(--container-fg-alt)" },
-  toneInverse: { color: "var(--container-fg-inverse)" },
-  toneInherit: { color: "inherit" },
 
   /* Alignment */
   alignStart: { textAlign: "start" },
@@ -225,13 +225,6 @@ const weightStyles = {
   extrabold: styles.weightExtrabold,
   black: styles.weightBlack,
 } satisfies Record<TypographyWeight, stylex.StyleXStyles>
-
-const toneStyles = {
-  default: styles.toneDefault,
-  muted: styles.toneMuted,
-  inverse: styles.toneInverse,
-  inherit: styles.toneInherit,
-} satisfies Record<TypographyTone, stylex.StyleXStyles>
 
 /* Density-aware sizes — size, line height and tracking still travel together. */
 const sizeStyles = stylex.create({

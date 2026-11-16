@@ -3,9 +3,9 @@ import * as stylex from "@stylexjs/stylex"
 import type { BreakpointToken } from "@eluan/tokens"
 import {
   alignStyles,
-  boxStyle,
   gapStyles,
   layoutElement,
+  splitBoxProps,
   withClassHook,
   withoutStyling,
   type LayoutAlign,
@@ -296,13 +296,14 @@ function columnStyles(cols: GridProps["cols"]) {
  * a column past its share.
  */
 const Grid = React.forwardRef<HTMLElement, GridProps>(
-  ({ align, as, asChild = false, cols, gap = "md", grow, pad, padX, padY, ...props }, ref) => {
+  ({ align, as, asChild = false, cols, gap = "md", ...props }, ref) => {
     const Comp = layoutElement(as, asChild)
+    const [box, rest] = splitBoxProps(props)
 
     return (
       <Comp
         ref={ref}
-        {...withoutStyling(props)}
+        {...withoutStyling(rest)}
         {...withClassHook(
           "eluan-grid",
           stylex.props(
@@ -310,7 +311,7 @@ const Grid = React.forwardRef<HTMLElement, GridProps>(
             ...columnStyles(cols),
             gapStyles[gap],
             align && alignStyles[align],
-            ...boxStyle({ pad, padX, padY, grow })
+            ...box
           )
         )}
       />

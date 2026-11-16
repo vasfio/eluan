@@ -9,7 +9,7 @@ source: packages/core/src/components/grid.tsx
 
 ## 1. Overview
 
-Grid is CSS grid with a `--spacing-*` gap. `cols` takes a column count (1 to 12 equal tracks), a raw `grid-template-columns` value for uneven tracks, or an object per breakpoint, mobile first, keyed by Eluan's breakpoint names. Its children get `min-width: 0`, so long content can't stretch a column past its share. Like the other layout primitives it draws nothing, takes `Box`'s padding and `grow` props, `as` and `asChild`, and drops `className` and `style`.
+Grid is CSS grid with a `--spacing-*` gap. `cols` takes a column count (1 to 12 equal tracks), a raw `grid-template-columns` value for uneven tracks, or an object per breakpoint, mobile first, keyed by Eluan's breakpoint names. Its children get `min-width: 0`, so long content can't stretch a column past its share. Like the other layout primitives it draws nothing, takes `Box`'s props (padding, `grow`, `shrink`, `height`, `minHeight`, `position`, `inset`, `overflow`), `as` and `asChild`, and drops `className` and `style`.
 
 ## 2. When to use
 
@@ -117,6 +117,12 @@ A level you don't set inherits the nearest level below it: `{ base: 2, l: 4 }` i
 | `padX` | `"none" \| "xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl" \| "2xl" \| "3xl" \| "4xl"` | | Inline padding (left and right in LTR). |
 | `padY` | `"none" \| "xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl" \| "2xl" \| "3xl" \| "4xl"` | | Block padding (top and bottom). |
 | `grow` | `boolean` | | Take the remaining space in a flex parent: `flex: 1 1 0` with `min-width: 0`. |
+| `shrink` | `boolean` | | `false` keeps the element at its content size in a flex parent (`flex-shrink: 0`). |
+| `height` | `"full" \| "screen"` | | `full` fills the parent's height; `screen` fills the viewport (`100dvh`, so mobile browser bars don't cover the bottom). |
+| `minHeight` | `"full" \| "screen"` | | At least the parent's height (`full`) or the viewport's (`screen`). |
+| `position` | `"relative" \| "absolute"` | | `relative` makes this the anchor for `inset` children; `absolute` takes it out of flow. |
+| `inset` | `"fill" \| "top" \| "bottom"` | | Pin to the nearest positioned ancestor: `fill` covers it, `top` and `bottom` run along that edge at full width. Sets `position: absolute`. |
+| `overflow` | `"hidden" \| "auto"` | | `hidden` clips the content; `auto` scrolls it when it doesn't fit. |
 | `as` | `"div" \| "span" \| "section" \| "article" \| "aside" \| "header" \| "footer" \| "main" \| "nav" \| "form" \| "fieldset" \| "label" \| "p" \| "ul" \| "ol" \| "li" \| "dl" \| "dt" \| "dd"` | | Element override. Defaults to `div`. |
 | `asChild` | `boolean` | `false` | Render the child element instead (Radix Slot); the layout styles move onto it. |
 | `...props` | `HTMLAttributes<HTMLElement>` without `className`, `style` | | Native attributes: `id`, `role`, `aria-*`, `data-*`, event handlers. |

@@ -64,17 +64,24 @@ function propsOf(type) {
 
 const squash = (s) => s.replace(/\s+/g, " ").replace(/^\| /, "").replace(/;\s*}/g, " }").trim();
 
+// The literal union a local alias stands for, following aliases of aliases
+// (type TypographyTone = Tone; type Tone = "default" | …), or null.
+function literalUnion(node) {
+  if (!ts.isTypeReferenceNode(node)) return null;
+  const sym = checker.getSymbolAtLocation(node.typeName);
+  const decl = sym && realSymbol(sym).declarations?.find(ts.isTypeAliasDeclaration);
+  if (!decl || !decl.getSourceFile().fileName.startsWith(OWN)) return null;
+  if (ts.isUnionTypeNode(decl.type) && decl.type.types.every((m) => ts.isLiteralTypeNode(m))) {
+    return squash(decl.type.getText());
+  }
+  return literalUnion(decl.type);
+}
+
 // A local alias of a literal union (type ButtonVariant = "default" | …) expands to its
 // members in source order; anything else keeps the name the author wrote.
 function expandAlias(node) {
-  if (ts.isTypeReferenceNode(node)) {
-    const sym = checker.getSymbolAtLocation(node.typeName);
-    const decl = sym && realSymbol(sym).declarations?.find(ts.isTypeAliasDeclaration);
-    if (decl && decl.getSourceFile().fileName.startsWith(OWN) && ts.isUnionTypeNode(decl.type) &&
-        decl.type.types.every((m) => ts.isLiteralTypeNode(m))) {
-      return squash(decl.type.getText());
-    }
-  }
+  const union = literalUnion(node);
+  if (union) return union;
   if (ts.isUnionTypeNode(node)) return node.types.map(expandAlias).join(" | ");
   return squash(node.getText());
 }

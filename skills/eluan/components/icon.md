@@ -9,7 +9,7 @@ source: packages/core/src/components/icon.tsx
 
 ## 1. Overview
 
-Icon sizes an svg child to a `--size-*` token, so icons follow the spacing density like the controls around them. It wraps the svg in an `inline-flex` span that doesn't shrink, sets the span's width and height from `size`, and makes the svg fill it, overriding Lucide's 24px default. It's decorative by default (`aria-hidden`). `after` adds a trailing gap for an icon followed by text outside a gapped Row; `asChild` puts the sizing on the svg itself with no wrapping span. It drops `className` and `style`.
+Icon sizes an svg child to a `--size-*` token, so icons follow the spacing density like the controls around them. It wraps the svg in an `inline-flex` span that doesn't shrink, sets the span's width and height from `size`, and makes the svg fill it, overriding Lucide's 24px default. `tone` colours it from the same tones as Typography; by default it inherits the text colour. It's decorative by default (`aria-hidden`). `after` adds a trailing gap for an icon followed by text outside a gapped Row; `asChild` puts the sizing on the svg itself with no wrapping span. It drops `className` and `style`.
 
 ## 2. When to use
 
@@ -33,7 +33,7 @@ With `asChild` there is no span: the svg is the box.
 
 ## 4. Variants
 
-Icon has no `variant`. Colour comes from the surrounding text.
+Icon has no `variant`. Colour comes from the surrounding text unless `tone` sets one: `default`, `muted`, `inverse`, `positive`, `destructive`, `interactive` or `interactive-muted`, the same tones as Typography.
 
 ## 5. Sizes
 
@@ -62,7 +62,7 @@ See [iconography](../foundations/iconography.md) for the token values per densit
 ## 8. Rules
 
 1. Size every icon with Icon or a `--size-*` token. Never use Lucide's numeric `size` prop or a px width.
-2. Let the icon inherit colour. Set `color` with a token on the parent if it must differ from the text.
+2. Let the icon inherit colour. When it must differ from the text beside it, set `tone`; never a colour value.
 3. Leave it decorative (`aria-hidden`, the default) when a visible label or the control's `aria-label` already says what it means.
 4. In a Row, space the icon with the Row's `gap`. Use `after` only when the icon sits in running text or another element without a gap.
 5. Give it exactly one svg child.
@@ -95,7 +95,7 @@ See [iconography](../foundations/iconography.md) for the token values per densit
 - Role: none; the span is `aria-hidden` by default, so screen readers skip the icon.
 - Label: an icon-only control gets `aria-label` on the control (the Button), not on the Icon.
 - Meaningful icon: when the icon alone carries meaning outside a control (a status mark with no text), pass `aria-hidden={false}`, `role="img"` and `aria-label`.
-- Contrast: the icon takes the text colour, so it meets the same contrast as the text.
+- Contrast: the icon takes the text colour, or a theme tone, so it meets the same contrast as text in that tone. Don't let colour alone carry meaning: pair a `positive` or `destructive` icon with words.
 
 ## 11. Behaviour
 
@@ -111,6 +111,7 @@ See [iconography](../foundations/iconography.md) for the token values per densit
 | `size` | `"xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl" \| "2xl" \| "3xl" \| "4xl"` | `"xs"` | Width and height, as a `--size-*` step. |
 | `after` | `"none" \| "xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl" \| "2xl" \| "3xl" \| "4xl"` | | Trailing gap, for an icon followed by a label outside a gapped Row. |
 | `asChild` | `boolean` | `false` | Size the child svg itself instead of wrapping it in a span (Radix Slot). |
+| `tone` | `"default" \| "muted" \| "inverse" \| "inherit" \| "positive" \| "destructive" \| "interactive" \| "interactive-muted"` | `"inherit"` | Colour, from the same tones as Typography. Defaults to `"inherit"` (the text colour around it). |
 | `...props` | `HTMLAttributes<HTMLSpanElement>` without `className`, `style` | | Native attributes: `aria-*`, `role`, `data-*`. |
 <!-- api:end -->
 

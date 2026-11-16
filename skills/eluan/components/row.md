@@ -9,7 +9,7 @@ source: packages/core/src/components/row.tsx
 
 ## 1. Overview
 
-Row is horizontal flow: a flex row with a `--spacing-*` gap, children vertically centred by default. It draws nothing and only places what's inside it. `justify="between"` pushes the first and last child apart, `wrap` lets children flow onto further lines, and `inline` sits the row inside running text. It takes `Box`'s padding and `grow` props, `as` and `asChild`, and drops `className` and `style`.
+Row is horizontal flow: a flex row with a `--spacing-*` gap, children vertically centred by default. It draws nothing and only places what's inside it. `justify="between"` pushes the first and last child apart, `wrap` lets children flow onto further lines, and `inline` sits the row inside running text. It takes `Box`'s props (padding, `grow`, `shrink`, `height`, `minHeight`, `position`, `inset`, `overflow`), `as` and `asChild`, and drops `className` and `style`.
 
 ## 2. When to use
 
@@ -63,7 +63,7 @@ Row has no size prop. `gap` sets the space between children (and between lines w
 
 1. Space children with `gap`, never margins. For a gap after one child only, nest Rows or use [Icon](./icon.md)'s `after`.
 2. Use `--spacing-*` steps only, through `gap` and `pad*`. Never write px.
-3. Give the child that should absorb leftover space `grow`: wrap it in `<Box grow>` (or pass `grow` to a Stack or Row child).
+3. Give the child that should absorb leftover space `grow`: wrap it in `<Box grow>` (or pass `grow` to a Stack or Row child). Give a child that must stay on one line, such as a date or a badge group, `shrink={false}`.
 4. Use `wrap` whenever the number or width of children isn't fixed.
 5. Don't pass `className` or `style`; they're dropped.
 6. Don't use Row for a grid of cards. Rows don't align across lines; use Grid.
@@ -100,7 +100,7 @@ Row has no size prop. `gap` sets the space between children (and between lines w
 
 - Responsive: Row stays one line unless `wrap` is set. For a row that becomes a column on small screens, use Grid with `cols={{ base: 1, m: 2 }}`, or Stack at small widths.
 - Density: `gap` and padding follow `data-spacing`.
-- Shrinking: Row has `min-width: 0`; children don't shrink below their content unless they're a `Box grow` (or other `grow` child) with `truncate` text inside.
+- Shrinking: Row has `min-width: 0`, and its children shrink by default: when the row runs out of room, their text wraps. A `grow` child with `truncate` text gives up its space first; a `shrink={false}` child keeps its content size.
 - Motion: none.
 
 ## 12. API
@@ -117,6 +117,12 @@ Row has no size prop. `gap` sets the space between children (and between lines w
 | `padX` | `"none" \| "xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl" \| "2xl" \| "3xl" \| "4xl"` | | Inline padding (left and right in LTR). |
 | `padY` | `"none" \| "xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl" \| "2xl" \| "3xl" \| "4xl"` | | Block padding (top and bottom). |
 | `grow` | `boolean` | | Take the remaining space in a flex parent: `flex: 1 1 0` with `min-width: 0`. |
+| `shrink` | `boolean` | | `false` keeps the element at its content size in a flex parent (`flex-shrink: 0`). |
+| `height` | `"full" \| "screen"` | | `full` fills the parent's height; `screen` fills the viewport (`100dvh`, so mobile browser bars don't cover the bottom). |
+| `minHeight` | `"full" \| "screen"` | | At least the parent's height (`full`) or the viewport's (`screen`). |
+| `position` | `"relative" \| "absolute"` | | `relative` makes this the anchor for `inset` children; `absolute` takes it out of flow. |
+| `inset` | `"fill" \| "top" \| "bottom"` | | Pin to the nearest positioned ancestor: `fill` covers it, `top` and `bottom` run along that edge at full width. Sets `position: absolute`. |
+| `overflow` | `"hidden" \| "auto"` | | `hidden` clips the content; `auto` scrolls it when it doesn't fit. |
 | `as` | `"div" \| "span" \| "section" \| "article" \| "aside" \| "header" \| "footer" \| "main" \| "nav" \| "form" \| "fieldset" \| "label" \| "p" \| "ul" \| "ol" \| "li" \| "dl" \| "dt" \| "dd"` | | Element override. Defaults to `div`. |
 | `asChild` | `boolean` | `false` | Render the child element instead (Radix Slot); the layout styles move onto it. |
 | `...props` | `HTMLAttributes<HTMLElement>` without `className`, `style` | | Native attributes: `id`, `role`, `aria-*`, `data-*`, event handlers. |

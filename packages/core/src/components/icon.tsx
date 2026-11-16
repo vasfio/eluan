@@ -2,8 +2,12 @@ import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import * as stylex from "@stylexjs/stylex"
 import { withClassHook, withoutStyling, type LayoutSize, type LayoutSpacing } from "./layout-shared"
+import { toneStyles, type Tone } from "./tone-shared"
 
 export type { LayoutSize, LayoutSpacing } from "./layout-shared"
+
+/** The icon's colour. `inherit` (the default) takes the surrounding text colour. */
+export type IconTone = Tone
 
 export interface IconProps
   extends Omit<React.HTMLAttributes<HTMLSpanElement>, "className" | "style"> {
@@ -13,6 +17,8 @@ export interface IconProps
   asChild?: boolean
   /** Width and height, as a `--size-*` token name. */
   size?: LayoutSize
+  /** Colour, from the same tones as Typography. Defaults to `"inherit"` (the text colour around it). */
+  tone?: IconTone
 }
 
 const styles = stylex.create({
@@ -55,11 +61,13 @@ const afterStyles = stylex.create({
 /**
  * Sizes an svg child (a lucide icon, or any inline svg) to a `--size-*`
  * token, so icons follow the spacing density like the controls around them.
+ * Colours with `tone`; lucide icons draw in `currentColor`, so the default
+ * `inherit` matches the text beside the icon.
  * Decorative by default (`aria-hidden`); pass `aria-hidden={false}` plus a
  * label when the icon carries meaning on its own.
  */
 const Icon = React.forwardRef<HTMLSpanElement, IconProps>(
-  ({ after, asChild = false, size = "xs", ...props }, ref) => {
+  ({ after, asChild = false, size = "xs", tone = "inherit", ...props }, ref) => {
     const Comp = asChild ? Slot : "span"
 
     return (
@@ -69,7 +77,13 @@ const Icon = React.forwardRef<HTMLSpanElement, IconProps>(
         {...withoutStyling(props)}
         {...withClassHook(
           "eluan-icon",
-          stylex.props(styles.base, sizeStyles[size], after && afterStyles[after])
+          stylex.props(
+            styles.base,
+            sizeStyles[size],
+            // `inherit` adds no rule: the span already inherits its colour.
+            tone !== "inherit" && toneStyles[tone],
+            after && afterStyles[after]
+          )
         )}
       />
     )

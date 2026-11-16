@@ -9,7 +9,7 @@ source: packages/core/src/components/stack.tsx
 
 ## 1. Overview
 
-Stack is vertical flow: a flex column with a `--spacing-*` gap between its children. It draws nothing (no background, border or radius) and only places what's inside it, so a page can be laid out from tokens without a utility framework or hand-written CSS. It takes `Box`'s padding and `grow` props, `as` and `asChild`, and drops `className` and `style`.
+Stack is vertical flow: a flex column with a `--spacing-*` gap between its children. It draws nothing (no background, border or radius) and only places what's inside it, so a page can be laid out from tokens without a utility framework or hand-written CSS. It takes `Box`'s props (padding, `grow`, `shrink`, `height`, `minHeight`, `position`, `inset`, `overflow`), `as` and `asChild`, and drops `className` and `style`.
 
 ## 2. When to use
 
@@ -60,7 +60,7 @@ Stack has no size prop. `gap` sets the space between children and `pad`, `padX`,
 2. Use `--spacing-*` steps only, through `gap` and `pad*`. Never write px.
 3. Use `as` for the element's meaning (`main`, `section`, `form`, `nav`), not a wrapper `div` around the Stack.
 4. For list semantics, prefer `role="list"` on the Stack and `role="listitem"` on each child over `as="ul"`: a `ul` keeps the browser's list margin, which no prop resets.
-5. Don't pass `className` or `style`; they're dropped. Put positioning, overflow or fixed widths on an element you own and nest the Stack in it.
+5. Don't pass `className` or `style`; they're dropped. Position, height and overflow are props; fixed widths, hover effects and animation go on an element you own, with the Stack nested in it.
 6. Don't wrap a single child in a Stack to pad it. Use [Box](./box.md).
 
 ## 9. Dos and don'ts
@@ -110,6 +110,12 @@ Stack has no size prop. `gap` sets the space between children and `pad`, `padX`,
 | `padX` | `"none" \| "xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl" \| "2xl" \| "3xl" \| "4xl"` | | Inline padding (left and right in LTR). |
 | `padY` | `"none" \| "xxs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl" \| "2xl" \| "3xl" \| "4xl"` | | Block padding (top and bottom). |
 | `grow` | `boolean` | | Take the remaining space in a flex parent: `flex: 1 1 0` with `min-width: 0`. |
+| `shrink` | `boolean` | | `false` keeps the element at its content size in a flex parent (`flex-shrink: 0`). |
+| `height` | `"full" \| "screen"` | | `full` fills the parent's height; `screen` fills the viewport (`100dvh`, so mobile browser bars don't cover the bottom). |
+| `minHeight` | `"full" \| "screen"` | | At least the parent's height (`full`) or the viewport's (`screen`). |
+| `position` | `"relative" \| "absolute"` | | `relative` makes this the anchor for `inset` children; `absolute` takes it out of flow. |
+| `inset` | `"fill" \| "top" \| "bottom"` | | Pin to the nearest positioned ancestor: `fill` covers it, `top` and `bottom` run along that edge at full width. Sets `position: absolute`. |
+| `overflow` | `"hidden" \| "auto"` | | `hidden` clips the content; `auto` scrolls it when it doesn't fit. |
 | `as` | `"div" \| "span" \| "section" \| "article" \| "aside" \| "header" \| "footer" \| "main" \| "nav" \| "form" \| "fieldset" \| "label" \| "p" \| "ul" \| "ol" \| "li" \| "dl" \| "dt" \| "dd"` | | Element override. Defaults to `div`. |
 | `asChild` | `boolean` | `false` | Render the child element instead (Radix Slot); the layout styles move onto it. |
 | `...props` | `HTMLAttributes<HTMLElement>` without `className`, `style` | | Native attributes: `id`, `role`, `aria-*`, `data-*`, event handlers. |
@@ -143,7 +149,7 @@ export function InviteForm() {
 
 - [Row](./row.md): the horizontal counterpart, centred by default.
 - [Grid](./grid.md): columns, including responsive ones.
-- [Box](./box.md): padding and `grow` without flow.
+- [Box](./box.md): padding, `grow`, height, position and overflow without flow.
 - [Fieldset](./fieldset.md): a labelled group of form fields.
 - [Card](./card.md): a framed surface; Stacks go inside its content.
 

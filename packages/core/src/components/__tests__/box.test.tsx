@@ -82,4 +82,70 @@ describe("Box", () => {
     expect(classesOf(<Box grow />)).not.toBe("");
     expect(classesOf(<Box grow={false} />)).toBe("");
   });
+
+  describe("flex, height, position and overflow", () => {
+    const layoutAttrs = ["shrink", "height", "minheight", "position", "inset", "overflow"];
+
+    it("holds its size with shrink={false}, and shrink restores it", () => {
+      expect(classesOf(<Box shrink={false} />).split(" ")).toHaveLength(1);
+      expect(classesOf(<Box shrink={false} />)).not.toBe(classesOf(<Box shrink />));
+    });
+
+    it("lets a growing box keep its share with shrink={false}", () => {
+      const grow = classesOf(<Box grow />).split(" ");
+      const held = classesOf(<Box grow shrink={false} />).split(" ");
+      expect(held).toHaveLength(grow.length);
+      expect(held).toContain(classesOf(<Box shrink={false} />));
+    });
+
+    it("maps every height and minHeight value to its own style", () => {
+      const sized = [
+        <Box height="full" />,
+        <Box height="screen" />,
+        <Box minHeight="full" />,
+        <Box minHeight="screen" />,
+      ].map(classesOf);
+      expect(sized.every((classes) => classes !== "")).toBe(true);
+      expect(new Set(sized).size).toBe(sized.length);
+    });
+
+    it("maps every position, inset and overflow value to its own style", () => {
+      const placed = [
+        <Box position="relative" />,
+        <Box position="absolute" />,
+        <Box inset="fill" />,
+        <Box inset="top" />,
+        <Box inset="bottom" />,
+        <Box overflow="hidden" />,
+        <Box overflow="auto" />,
+      ].map(classesOf);
+      expect(placed.every((classes) => classes !== "")).toBe(true);
+      expect(new Set(placed).size).toBe(placed.length);
+    });
+
+    it("positions an inset box absolutely", () => {
+      const absolute = classesOf(<Box position="absolute" />);
+      for (const inset of ["fill", "top", "bottom"] as const) {
+        expect(classesOf(<Box inset={inset} />).split(" ")).toContain(absolute);
+      }
+    });
+
+    it("lets an explicit position win over the one inset implies", () => {
+      const fill = classesOf(<Box inset="fill" />).split(" ");
+      const relative = classesOf(<Box inset="fill" position="relative" />).split(" ");
+      expect(relative).toHaveLength(fill.length);
+      expect(relative).toContain(classesOf(<Box position="relative" />));
+      expect(relative).not.toContain(classesOf(<Box position="absolute" />));
+    });
+
+    it("keeps the layout props off the element", () => {
+      render(
+        <Box shrink={false} height="screen" minHeight="full" position="relative" inset="fill" overflow="auto">
+          Content
+        </Box>,
+      );
+      const el = screen.getByText("Content");
+      for (const attr of layoutAttrs) expect(el).not.toHaveAttribute(attr);
+    });
+  });
 });

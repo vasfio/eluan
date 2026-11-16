@@ -119,10 +119,22 @@ describe("Typography", () => {
 
     rerender(<Typography tone="inherit">Tone</Typography>);
     expect(screen.getByText("Tone")).toBeInTheDocument();
+
+    rerender(<Typography tone="positive">Tone</Typography>);
+    expect(screen.getByText("Tone")).toBeInTheDocument();
   });
 
   it("gives every tone its own style, including inherit", () => {
-    const tones = ["default", "muted", "inverse", "inherit"] as const;
+    const tones = [
+      "default",
+      "muted",
+      "inverse",
+      "inherit",
+      "positive",
+      "destructive",
+      "interactive",
+      "interactive-muted",
+    ] as const;
     const seen = new Set(
       tones.map((tone) => {
         const { unmount } = render(<Typography tone={tone}>Tone</Typography>);

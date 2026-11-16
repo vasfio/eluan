@@ -97,4 +97,16 @@ describe("Icon", () => {
     expect(classesOf(<Icon after="sm" />).split(" ")).toHaveLength(classesOf(<Icon />).split(" ").length + 1);
     expect(classesOf(<Icon after="sm" />)).not.toBe(classesOf(<Icon after="md" />));
   });
+
+  it("inherits the text colour by default", () => {
+    expect(classesOf(<Icon />)).toBe(classesOf(<Icon tone="inherit" />));
+  });
+
+  it("gives every other tone its own colour", () => {
+    const tones = ["default", "muted", "inverse", "positive", "destructive", "interactive", "interactive-muted"] as const;
+    const base = classesOf(<Icon />).split(" ").length;
+    const toned = tones.map((tone) => classesOf(<Icon tone={tone} />));
+    expect(toned.every((classes) => classes.split(" ").length === base + 1)).toBe(true);
+    expect(new Set(toned).size).toBe(tones.length);
+  });
 });

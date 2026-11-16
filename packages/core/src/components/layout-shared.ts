@@ -31,6 +31,18 @@ export type LayoutAlign = "start" | "center" | "end" | "stretch" | "baseline"
 /** Main-axis distribution of the children (`justify-content`). */
 export type LayoutJustify = "start" | "center" | "end" | "between"
 
+/** `full` is the parent's height (100%), `screen` the viewport's. */
+export type LayoutHeight = "full" | "screen"
+
+/** `relative` anchors overlays; `absolute` takes the element out of flow. */
+export type LayoutPosition = "relative" | "absolute"
+
+/** Where an overlay sits in its anchor: covering it, or along one edge. */
+export type LayoutInset = "fill" | "top" | "bottom"
+
+/** `hidden` clips content that doesn't fit; `auto` scrolls it. */
+export type LayoutOverflow = "hidden" | "auto"
+
 /** Elements a layout primitive can render as. `asChild` covers anything else. */
 export type LayoutElement =
   | "div"
@@ -68,7 +80,28 @@ export interface LayoutBoxProps
   padY?: LayoutSpacing
   /** Take the remaining space in a flex parent: `flex: 1 1 0` with `min-width: 0`. */
   grow?: boolean
+  /** `false` keeps the element at its content size in a flex parent (`flex-shrink: 0`). */
+  shrink?: boolean
+  /** `full` fills the parent's height; `screen` fills the viewport (`100dvh`, so mobile browser bars don't cover the bottom). */
+  height?: LayoutHeight
+  /** At least the parent's height (`full`) or the viewport's (`screen`). */
+  minHeight?: LayoutHeight
+  /** `relative` makes this the anchor for `inset` children; `absolute` takes it out of flow. */
+  position?: LayoutPosition
+  /**
+   * Pin to the nearest positioned ancestor: `fill` covers it, `top` and
+   * `bottom` run along that edge at full width. Sets `position: absolute`.
+   */
+  inset?: LayoutInset
+  /** `hidden` clips the content; `auto` scrolls it when it doesn't fit. */
+  overflow?: LayoutOverflow
 }
+
+/** The props `boxStyle` reads; every flow primitive passes them through. */
+export type LayoutBoxStyleProps = Pick<
+  LayoutBoxProps,
+  "pad" | "padX" | "padY" | "grow" | "shrink" | "height" | "minHeight" | "position" | "inset" | "overflow"
+>
 
 // Style maps are keyed by token name, so indexing one with a LayoutSpacing
 // value is type-checked: a missing step is a compile error.
@@ -134,21 +167,78 @@ const boxStyles = stylex.create({
     flexShrink: 1,
     minWidth: 0,
   },
+  shrink: { flexShrink: 1 },
+  noShrink: { flexShrink: 0 },
 })
 
-/** Padding and grow styles, in `stylex.props` order. */
+const heightStyles = stylex.create({
+  full: { height: "100%" },
+  screen: { height: "100dvh" },
+})
+
+const minHeightStyles = stylex.create({
+  full: { minHeight: "100%" },
+  screen: { minHeight: "100dvh" },
+})
+
+const positionStyles = stylex.create({
+  relative: { position: "relative" },
+  absolute: { position: "absolute" },
+})
+
+// Physical top/bottom with logical sides, so an edge bar spans the anchor
+// in either writing direction.
+const insetStyles = stylex.create({
+  fill: { bottom: 0, insetInlineEnd: 0, insetInlineStart: 0, position: "absolute", top: 0 },
+  top: { insetInlineEnd: 0, insetInlineStart: 0, position: "absolute", top: 0 },
+  bottom: { bottom: 0, insetInlineEnd: 0, insetInlineStart: 0, position: "absolute" },
+})
+
+const overflowStyles = stylex.create({
+  hidden: { overflow: "hidden" },
+  auto: { overflow: "auto" },
+})
+
+/** Padding, flex, size, position and overflow styles, in `stylex.props` order. */
 export function boxStyle({
   pad,
   padX,
   padY,
   grow,
-}: Pick<LayoutBoxProps, "pad" | "padX" | "padY" | "grow">) {
+  shrink,
+  height,
+  minHeight,
+  position,
+  inset,
+  overflow,
+}: LayoutBoxStyleProps) {
   const block = padY ?? pad
   const inline = padX ?? pad
   return [
     block !== undefined && padBlockStyles[block],
     inline !== undefined && padInlineStyles[inline],
     grow === true && boxStyles.grow,
+    // After grow, so `grow shrink={false}` takes the space without giving it back.
+    shrink !== undefined && (shrink ? boxStyles.shrink : boxStyles.noShrink),
+    height !== undefined && heightStyles[height],
+    minHeight !== undefined && minHeightStyles[minHeight],
+    inset !== undefined && insetStyles[inset],
+    // After inset, so an explicit position wins over the one inset implies.
+    position !== undefined && positionStyles[position],
+    overflow !== undefined && overflowStyles[overflow],
+  ] as const
+}
+
+/**
+ * Split the `boxStyle` props off the rest, so a primitive spreads only
+ * native attributes onto its element.
+ */
+export function splitBoxProps<P extends LayoutBoxStyleProps>(props: P) {
+  const { pad, padX, padY, grow, shrink, height, minHeight, position, inset, overflow, ...rest } =
+    props
+  return [
+    boxStyle({ pad, padX, padY, grow, shrink, height, minHeight, position, inset, overflow }),
+    rest,
   ] as const
 }
 

@@ -125,4 +125,17 @@ describe("Grid", () => {
     const queries = [...source.matchAll(/"@media \(min-width: (\d+)px\)": "var\(--eluan-grid-cols-([a-z0-9]+)\)"/g)];
     expect(Object.fromEntries(queries.map(([, px, name]) => [name, Number(px)]))).toEqual(breakpoints);
   });
+
+  it("takes the flex, height, position and overflow props", () => {
+    const base = classesOf(<Grid />).split(" ");
+    const styled = classesOf(<Grid shrink={false} height="full" overflow="auto" position="relative" />).split(" ");
+    expect(styled).toHaveLength(base.length + 4);
+    render(
+      <Grid shrink={false} height="screen" inset="bottom" overflow="hidden">
+        Content
+      </Grid>,
+    );
+    const el = screen.getByText("Content");
+    for (const attr of ["shrink", "height", "inset", "overflow"]) expect(el).not.toHaveAttribute(attr);
+  });
 });

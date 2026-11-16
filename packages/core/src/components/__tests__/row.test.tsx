@@ -84,4 +84,17 @@ describe("Row", () => {
     expect(classesOf(<Row pad="sm" padX="lg" />)).toBe(classesOf(<Row padY="sm" padX="lg" />));
     expect(classesOf(<Row grow />)).not.toBe(classesOf(<Row />));
   });
+
+  it("takes the flex, height, position and overflow props", () => {
+    const base = classesOf(<Row />).split(" ");
+    const styled = classesOf(<Row shrink={false} height="full" overflow="auto" position="relative" />).split(" ");
+    expect(styled).toHaveLength(base.length + 4);
+    render(
+      <Row shrink={false} height="screen" inset="bottom" overflow="hidden">
+        Content
+      </Row>,
+    );
+    const el = screen.getByText("Content");
+    for (const attr of ["shrink", "height", "inset", "overflow"]) expect(el).not.toHaveAttribute(attr);
+  });
 });

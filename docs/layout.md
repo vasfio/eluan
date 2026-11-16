@@ -7,8 +7,9 @@ Eluan components are styling-closed: they take no `className` or `style`. Since 
 3. [Spacing, sizes and density](#spacing-sizes-and-density)
 4. [Responsive columns](#responsive-columns)
 5. [Text](#text)
-6. [What stays in your app](#what-stays-in-your-app)
-7. [Migrating from a utility framework](#migrating-from-a-utility-framework)
+6. [Height, overlays and overflow](#height-overlays-and-overflow)
+7. [What stays in your app](#what-stays-in-your-app)
+8. [Migrating from a utility framework](#migrating-from-a-utility-framework)
 
 ---
 
@@ -25,11 +26,11 @@ Eluan components are styling-closed: they take no `className` or `style`. Since 
 | `Stack` | Vertical flow | `gap` (default `md`), `align`, `justify` |
 | `Row` | Horizontal flow, centred by default | `gap` (default `md`), `align` (default `center`), `justify`, `wrap`, `inline` |
 | `Grid` | Columns | `cols`, `gap` (default `md`), `align` |
-| `Box` | Padding, or "take the remaining space" | `pad`, `padX`, `padY`, `grow` |
-| `Icon` | Sizes an svg child to a size token | `size` (default `xs`), `after` |
+| `Box` | Padding, flex sizing, height, overlays, overflow | `pad`, `padX`, `padY`, `grow`, `shrink`, `height`, `minHeight`, `position`, `inset`, `overflow` |
+| `Icon` | Sizes an svg child to a size token | `size` (default `xs`), `after`, `tone` |
 | `VisuallyHidden` | Text for screen readers only | — |
 
-`Stack`, `Row` and `Grid` also take `Box`'s props, so `<Stack gap="lg" pad="xl">` pads and stacks in one element. Every primitive takes `as` (an element override such as `section`, `form`, `li` or `label`) and `asChild` (render your own child element with the layout styles), and like every Eluan component, none takes `className` or `style`.
+`Stack`, `Row` and `Grid` also take `Box`'s props, so `<Stack gap="lg" pad="xl">` pads and stacks in one element, and `<Stack height="full" align="center" justify="center">` centres an empty state in its panel. Every primitive takes `as` (an element override such as `section`, `form`, `li` or `label`) and `asChild` (render your own child element with the layout styles), and like every Eluan component, none takes `className` or `style`.
 
 ```tsx
 import { Button, Card, CardHeader, CardTitle, CardDescription, Grid, Row, Stack, Typography } from "@eluan/core"
@@ -94,17 +95,37 @@ Grid children get `min-width: 0`, so long content can't stretch a column past it
 
 ## Text
 
-Text is `Typography`, not a layout primitive. For app UI text that should follow the spacing density like the controls around it, use `size` (`"xs"` to `"5xl"`) rather than `step`, which is fixed. `tone="inherit"` takes the parent's colour (text inside a Banner or a Button), and `tabular` lines numbers up in columns.
+Text is `Typography`, not a layout primitive. For app UI text that should follow the spacing density like the controls around it, use `size` (`"xs"` to `"5xl"`) rather than `step`, which is fixed. `tone="inherit"` takes the parent's colour (text inside a Banner or a Button), `tone="positive"` and `tone="destructive"` colour status text, and `tabular` lines numbers up in columns. `Icon` takes the same tones; by default it inherits the text colour.
 
 ```tsx
 <Typography size="sm" tone="muted" tabular>$18,240.00</Typography>
 ```
 
+## Height, overlays and overflow
+
+The primitives also cover the layout around flow:
+
+- **`shrink={false}`** holds a child at its content size in a Row (a date, a badge group), so its neighbours wrap or truncate instead.
+- **`height` and `minHeight`** take `"full"` (the parent's height) or `"screen"` (the viewport's, `100dvh`).
+- **`position="relative"`** makes an anchor, and **`inset`** pins a child to it: `"fill"` covers it, `"top"` and `"bottom"` run along that edge. `inset` positions the child absolutely.
+- **`overflow`** clips (`"hidden"`) or scrolls (`"auto"`).
+
+```tsx
+<Box position="relative" overflow="hidden">
+  <img src={cover} alt="" />
+  {uploading && (
+    <Stack inset="fill" align="center" justify="center">
+      <Spinner />
+    </Stack>
+  )}
+</Box>
+```
+
 ## What stays in your app
 
-The primitives cover flow layout. Page furniture (page headers, panels, stat tiles, form field wrappers) is app-level: compose it from Eluan components and primitives in your own component.
+Page furniture (page headers, panels, stat tiles, form field wrappers) is app-level: compose it from Eluan components and primitives in your own component.
 
-Positioning, overflow, fixed or maximum widths and hover effects aren't primitive props. Put them on an element you own, styled with tokens (a CSS module, StyleX, or an inline style object), and nest the primitive inside it:
+Widths, sticky positioning, hover effects and animation aren't primitive props. Put them on an element you own, styled with tokens (a CSS module, StyleX, or an inline style object), and nest the primitive inside it, or render the primitive onto it with `asChild`:
 
 ```tsx
 // page.module.css
@@ -115,7 +136,13 @@ Positioning, overflow, fixed or maximum widths and hover effects aren't primitiv
 </aside>
 ```
 
-If you find yourself writing that wrapper for plain flow layout (a gap, padding, columns), that's a gap in the primitives; please open an issue.
+```tsx
+<Row asChild gap="md" padY="sm">
+  <label className={styles.pickerRow}>…</label>
+</Row>
+```
+
+If you find yourself writing that wrapper for plain flow layout (a gap, padding, columns, height, overflow), that's a gap in the primitives; please open an issue.
 
 ## Migrating from a utility framework
 
@@ -132,10 +159,15 @@ Replace layout classes with primitives screen by screen. In **compact** density 
 | `grid grid-cols-[auto_1fr]` | `<Grid cols="auto minmax(0, 1fr)">` |
 | `p-4`, `px-4 py-2` | `pad="xl"`, `padX="xl" padY="md"` |
 | `flex-1 min-w-0` | `<Box grow>` |
+| `shrink-0` | `shrink={false}` |
+| `h-full`, `min-h-screen` | `height="full"`, `minHeight="screen"` |
+| `relative`, `absolute inset-0` | `position="relative"`, `inset="fill"` |
+| `overflow-hidden`, `overflow-auto` | `overflow="hidden"`, `overflow="auto"` |
 | `w-4 h-4` on an icon | `<Icon size="xs">` (compact 16px) |
 | `mr-2` after an icon | `<Icon after="md">`, or put both in a `<Row gap="md">` |
 | `sr-only` | `<VisuallyHidden>` |
 | `text-sm text-muted-foreground` | `<Typography size="sm" tone="muted">` |
+| `text-green-700`, `text-red-600` on status text | `tone="positive"`, `tone="destructive"` (Typography or Icon) |
 | `tabular-nums`, `truncate` | `tabular`, `truncate` on Typography |
 
 Compact spacing steps: `gap-0.5` → `xs`, `gap-1` → `sm`, `gap-2` → `md`, `gap-3` → `lg`, `gap-4` → `xl`, `gap-5` → `2xl`, `gap-6` → `3xl`, `gap-8` → `4xl`. The half steps (`gap-1.5`, `gap-2.5`, 6px and 10px) have no compact step: snap to the nearest one.
@@ -146,5 +178,5 @@ A migration that worked:
 
 1. Replace page-level layout first (the outer Stack, the page header Row, the main Grid).
 2. Replace icon sizing with `Icon`, then body text with `Typography`.
-3. Move anything left (positioning, overflow, fixed widths) into a CSS module next to the page, written with tokens.
+3. Move anything left (widths, sticky positioning, hover effects) into a CSS module next to the page, written with tokens.
 4. Remove the framework, then switch `data-spacing` between compact, standard and wide on every page: layout and components should re-flow together.

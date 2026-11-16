@@ -46,7 +46,12 @@ Typography is the front door to Eluan's fluid type scale. One `variant` picks a 
 
 <!-- REVIEW: "Use for" for display, label and caption is drafted; the foundation's "Choosing a value" table covers title, heading, subheading, lead, body and caption. -->
 
-`tone` sets the colour: `default` (`--container-fg`), `muted` (`--container-fg-alt`) or `inverse` (`--container-fg-inverse`, only on a `--container-bg-inverse` surface).
+`tone` sets the colour:
+
+- `default` (`--container-fg`), `muted` (`--container-fg-alt`), or `inverse` (`--container-fg-inverse`, only on a `--container-bg-inverse` surface).
+- `positive` (`--positive-fg`) and `destructive` (`--destructive-fg`): status text such as "Payment received" or an error under a form. Both are held to 4.5:1.
+- `interactive` (`--interactive-fg`) and `interactive-muted` (`--interactive-fg-alt`): text on a control you build yourself, such as a custom menu trigger. Text inside an Eluan control needs no tone.
+- `inherit`: the parent's colour.
 
 ## 5. Sizes
 
@@ -154,7 +159,7 @@ Typography has no interactive states. With `asChild` around a link or button, th
 | `asChild` | `boolean` | `false` | Renders the child element with the styles (Radix Slot). |
 | `step` | `"6" \| "5" \| "4" \| "3" \| "2" \| "1" \| "0" \| "neg1" \| "neg2" \| "neg3"` | variant's step | Moves to another step; size, line height and letter spacing change together. |
 | `size` | `"xs" \| "sm" \| "base" \| "lg" \| "xl" \| "2xl" \| "3xl" \| "4xl" \| "5xl"` | | Density-aware size: reads `--font-size-*` with its `--line-height-*` and `--letter-spacing-*`, so the text moves a step with `data-spacing`. Takes precedence over `step`. |
-| `tone` | `"default" \| "muted" \| "inverse" \| "inherit"` | `"default"` | `--container-fg`, `--container-fg-alt` or `--container-fg-inverse`; `inherit` takes the parent's colour, for text inside a Banner, Button or link. |
+| `tone` | `"default" \| "muted" \| "inverse" \| "inherit" \| "positive" \| "destructive" \| "interactive" \| "interactive-muted"` | `"default"` | `--container-fg`, `--container-fg-alt` or `--container-fg-inverse`; `positive` and `destructive` for status text; `interactive` and `interactive-muted` for text on a control you build; `inherit` takes the parent's colour, for text inside a Banner, Button or link. |
 | `weight` | `"thin" \| "extralight" \| "light" \| "normal" \| "medium" \| "semibold" \| "bold" \| "extrabold" \| "black"` | variant's weight | Weight override, 100 to 900. |
 | `family` | `"heading" \| "body" \| "mono"` | variant's family | Reads `--font-heading`, `--font-body` or `--font-mono`. |
 | `align` | `"start" \| "center" \| "end"` | | Logical text alignment. |

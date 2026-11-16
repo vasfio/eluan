@@ -14,7 +14,7 @@ Icon boxes are sized with `--size-*` tokens, so they scale with density. Compone
 
 1. Use `lucide-react` icons. Don't mix in other icon sets or inline SVGs, except brand logos.
 2. Size icons with `--size-*` tokens through the [Icon](../components/icon.md) component (`<Icon size="xxs"><Check /></Icon>`): `xxs` inside controls and text, `xs` or `sm` for standalone icons. Never use Lucide's numeric `size` prop or px values.
-3. Let icons inherit colour. Set `color` on the parent with a token if the icon must differ from the text.
+3. Let icons inherit colour. If an icon must differ from the text beside it, wrap it in `Icon` and set `tone`.
 4. Mark decorative icons `aria-hidden="true"`.
 5. Give every icon-only control an accessible name: `aria-label` on the Button, not on the icon.
 6. Use Button with an `icon`, `iconSm`, `iconXs` or `iconInline` size for icon-only actions. There is no IconButton.

@@ -79,7 +79,7 @@ import { Button, Grid, Row, Stack, Typography } from "@eluan/core"
 </Stack>
 ```
 
-`Icon` sizes lucide icons to a size token and `VisuallyHidden` hides text from view but not from screen readers. See [the layout guide](https://github.com/vasfio/eluan/blob/main/docs/layout.md), including how to migrate from a utility framework.
+The same primitives hold a child's size (`shrink={false}`), fill a height (`height`, `minHeight`), pin overlays (`position`, `inset`) and clip or scroll (`overflow`). `Icon` sizes lucide icons to a size token and colours them with Typography's tones, and `VisuallyHidden` hides text from view but not from screen readers. See [the layout guide](https://github.com/vasfio/eluan/blob/main/docs/layout.md), including how to migrate from a utility framework.
 
 ## Using Eluan with agents
 

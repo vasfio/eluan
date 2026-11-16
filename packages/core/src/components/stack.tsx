@@ -2,10 +2,10 @@ import * as React from "react"
 import * as stylex from "@stylexjs/stylex"
 import {
   alignStyles,
-  boxStyle,
   gapStyles,
   justifyStyles,
   layoutElement,
+  splitBoxProps,
   withoutStyling,
   type LayoutAlign,
   type LayoutBoxProps,
@@ -39,22 +39,20 @@ const styles = stylex.create({
 
 /** Vertical flow: children stacked with a token gap. */
 const Stack = React.forwardRef<HTMLElement, StackProps>(
-  (
-    { align, as, asChild = false, gap = "md", grow, justify, pad, padX, padY, ...props },
-    ref
-  ) => {
+  ({ align, as, asChild = false, gap = "md", justify, ...props }, ref) => {
     const Comp = layoutElement(as, asChild)
+    const [box, rest] = splitBoxProps(props)
 
     return (
       <Comp
         ref={ref}
-        {...withoutStyling(props)}
+        {...withoutStyling(rest)}
         {...stylex.props(
           styles.base,
           gapStyles[gap],
           align && alignStyles[align],
           justify && justifyStyles[justify],
-          ...boxStyle({ pad, padX, padY, grow })
+          ...box
         )}
       />
     )
