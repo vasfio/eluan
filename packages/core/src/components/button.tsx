@@ -201,6 +201,8 @@ const styles = stylex.create({
     borderWidth: 1,
     color: "var(--interactive-fg)",
     fontWeight: 400,
+    // Field triggers (DatePicker) line their text up with Input and Select.
+    paddingInline: "var(--spacing-md)",
     ":hover": {
       backgroundColor: "var(--interactive-bg-hover)",
     },
@@ -217,6 +219,8 @@ const styles = stylex.create({
     borderWidth: 1,
     color: "var(--interactive-fg-alt)",
     fontWeight: 400,
+    // Field triggers (DatePicker) line their text up with Input and Select.
+    paddingInline: "var(--spacing-md)",
     ":hover": {
       backgroundColor: "var(--interactive-bg-hover)",
     },
@@ -238,16 +242,18 @@ const styles = stylex.create({
       textDecorationLine: "underline",
     },
   },
+  // Inline padding grows with the height, 0.33–0.43 of it across every size
+  // and density: sm → md, default → lg, lg → xl.
   sizeDefault: {
     height: "var(--size-lg)",
     paddingBlock: "var(--spacing-sm)",
-    paddingInline: "var(--spacing-md)",
+    paddingInline: "var(--spacing-lg)",
   },
   sizeSm: {
     borderRadius: "var(--curves-sm)",
     fontSize: "var(--font-size-xs)",
     height: "var(--size-md)",
-    paddingInline: "var(--spacing-sm)",
+    paddingInline: "var(--spacing-md)",
   },
   sizeLg: {
     borderRadius: "var(--curves-md)",
