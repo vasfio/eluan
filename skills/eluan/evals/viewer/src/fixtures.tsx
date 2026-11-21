@@ -227,5 +227,6 @@ export const FIXTURES: Record<string, Render> = {
   "t13-b": (Run) => <SidePanel><Run /></SidePanel>,
 };
 
+// `run` comes from the URL: only call a fixture FIXTURES defines itself.
 export const render = (run: string, Run: ComponentType<any>, mode: Mode) =>
-  (FIXTURES[run] ?? ((R: ComponentType<any>) => <R />))(Run, mode);
+  ((Object.hasOwn(FIXTURES, run) ? FIXTURES[run] : undefined) ?? ((R: ComponentType<any>) => <R />))(Run, mode);

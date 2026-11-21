@@ -33,7 +33,9 @@ function Frame() {
   const [missing, setMissing] = React.useState(false);
 
   React.useEffect(() => {
-    const load = runs[`../../runs/2026-10-30/${run}.tsx`];
+    // `run` comes from the URL: only call a loader the glob actually has.
+    const key = `../../runs/2026-10-30/${run}.tsx`;
+    const load = Object.hasOwn(runs, key) ? runs[key] : undefined;
     if (!load) return setMissing(true);
     load().then((module) => setRun(() => module.default));
   }, []);

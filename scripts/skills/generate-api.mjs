@@ -173,7 +173,8 @@ function defaultsOf(name, seen = new Set()) {
 
 // ---------- Markdown ----------
 
-const esc = (s) => s.replace(/\|/g, "\\|");
+// Escape backslashes first, so a `\` already in the text can't cancel the pipe escape.
+const esc = (s) => s.replace(/\\/g, "\\\\").replace(/\|/g, "\\|");
 const code = (s) => (s.includes("`") ? `\`\` ${esc(s)} \`\`` : `\`${esc(s)}\``);
 const splitRow = (line) => line.replace(/^\|/, "").replace(/\|\s*$/, "").split(/(?<!\\)\|/).map((c) => c.trim());
 const rowNames = (cell) => [...cell.matchAll(/`([A-Za-z_$][\w$-]*)`/g)].map((m) => m[1]);

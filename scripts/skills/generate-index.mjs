@@ -23,7 +23,8 @@ function frontmatter(text) {
   return out;
 }
 
-const cell = (s = "") => s.replace(/\|/g, "\\|");
+// Escape backslashes first, so a `\` already in the text can't cancel the pipe escape.
+const cell = (s = "") => s.replace(/\\/g, "\\\\").replace(/\|/g, "\\|");
 
 const rows = readdirSync(join(SKILL, "components"))
   .filter((f) => f.endsWith(".md"))
