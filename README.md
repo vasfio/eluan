@@ -10,7 +10,7 @@ A multi-package design system monorepo built with React, StyleX, and Radix UI pr
 
 **[Live Storybook →](https://eluan.vercel.app)**
 
-**Documentation:** [Theming guide](./docs/theming.md) · [Contributing](./CONTRIBUTING.md)
+**Documentation:** [Theming guide](./docs/theming.md) · [Layout guide](./docs/layout.md) · [Contributing](./CONTRIBUTING.md)
 
 ## Packages
 
@@ -60,6 +60,24 @@ function App() {
   )
 }
 ```
+
+---
+
+## Using Eluan with agents
+
+`@eluan/core` ships an agent skill in `skills/eluan`: guidance that tells coding agents which component to use for a task, the rules each one follows, and which tokens to use. Install it for Claude Code:
+
+```bash
+cp -r node_modules/@eluan/core/skills/eluan .claude/skills/eluan
+```
+
+For other agents, add one line to `AGENTS.md` (or `CLAUDE.md`):
+
+```md
+Before writing UI, read `.claude/skills/eluan/SKILL.md` and follow it.
+```
+
+The skill's source is [`skills/eluan`](skills/eluan). `pnpm skills:build` regenerates its token tables, component index, API tables and `DESIGN.md`; `pnpm skills:check` validates it and type-checks its examples (build the packages first).
 
 ---
 
@@ -164,7 +182,7 @@ var(--radius-radius-8)             /* 13 radius values (none-full) */
 var(--sizing-size-m)               /* 9 t-shirt sizing values (none-xxxl) + 14 numeric steps (12-240) */
 var(--viewports-screen-l)          /* 9 viewport breakpoints (xxs-4xl) */
 
-/* Layer 2: Modes (adapt to data-mode) */
+/* Layer 2: Modes (adapt to data-mode; theme tokens build on these, components don't read them) */
 var(--backgrounds-primary)         /* 5 background levels: primary-quinary */
 var(--foregrounds-primary)         /* 5 foreground levels: primary-quinary */
 var(--crimson-main)                /* Per palette: main, background, tint, foreground, shade */
@@ -175,6 +193,7 @@ var(--interactive-fg)              /* Interactive: 18 state variants */
 var(--action-primary-bg)           /* Action Primary: 11 variants */
 var(--action-secondary-fg)         /* Action Secondary: 15 variants */
 var(--action-tertiary-bg)          /* Action Tertiary: 17 variants */
+var(--action-neutral-bg)           /* Action Neutral: 3 variants */
 var(--destructive-fg)              /* Destructive: 15 variants */
 var(--cautionary-fg)               /* Cautionary: 9 variants */
 var(--informative-fg)              /* Informative: 9 variants */
@@ -665,6 +684,7 @@ These are the semantic token groups that each theme maps to its own color palett
 | `action-primary-*` | Primary buttons, CTAs | 11 |
 | `action-secondary-*` | Secondary/outline buttons | 15 |
 | `action-tertiary-*` | Ghost/subtle actions | 17 |
+| `action-neutral-*` | Secondary (grey fill) buttons | 3 |
 | `destructive-*` | Delete, remove, error | 15 |
 | `cautionary-*` | Warnings | 9 |
 | `informative-*` | Info, help | 9 |

@@ -29,7 +29,7 @@ Progress.displayName = ProgressPrimitive.Root.displayName
 
 const styles = stylex.create({
   root: {
-    backgroundColor: "var(--backgrounds-tertiary)",
+    backgroundColor: "var(--container-border)",
     borderRadius: "var(--radius-radius-full)",
     height: "var(--spacing-sm)",
     overflow: "hidden",

@@ -49,8 +49,8 @@ const styles = stylex.create({
     transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
     width: "var(--size-lg)",
     ":focus-visible": {
-      borderColor: "var(--interactive-border)",
-      outlineColor: "var(--interactive-border)",
+      borderColor: "var(--focus-ring)",
+      outlineColor: "var(--focus-ring)",
       outlineOffset: "1px",
       outlineStyle: "solid",
       outlineWidth: "1px",
@@ -104,8 +104,8 @@ const styles = stylex.create({
     },
   },
   slotActive: {
-    borderColor: "var(--interactive-border)",
-    outlineColor: "var(--interactive-border)",
+    borderColor: "var(--focus-ring)",
+    outlineColor: "var(--focus-ring)",
     outlineOffset: "1px",
     outlineStyle: "solid",
     outlineWidth: "1px",

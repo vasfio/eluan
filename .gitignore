@@ -37,3 +37,6 @@ coverage
 .claude/worktrees/
 .vercel
 .env*
+
+# Agent skill copied into @eluan/core at pack time
+packages/core/skills/

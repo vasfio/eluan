@@ -22,7 +22,7 @@ const styles = stylex.create({
     transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
     width: "var(--size-lg)",
     ":focus-visible": {
-      outlineColor: "var(--interactive-border)",
+      outlineColor: "var(--focus-ring)",
       outlineOffset: "1px",
       outlineStyle: "solid",
       outlineWidth: "1px",

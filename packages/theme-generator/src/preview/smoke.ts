@@ -1,5 +1,6 @@
-import type { PrimitiveTokens, ScaleName, ScaleStepValue, SemanticMap, TokenRef } from '../types.js';
+import type { Mode, PrimitiveTokens, ScaleName, ScaleStepValue, SemanticMap, TokenRef } from '../types.js';
 import { checkContrast } from '../tokens/contrast.js';
+import { contrastGrounds, modeRef } from '../tokens/semanticMap.js';
 
 const SCALE_STEPS: ScaleStepValue[] = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 
@@ -60,7 +61,9 @@ function semanticPairingHTML(
 export function generateSmokeHTML(
   primitives: PrimitiveTokens,
   semanticMap: SemanticMap,
-  themeName: string
+  themeName: string,
+  darkPrimitives: PrimitiveTokens = primitives,
+  dimPrimitives: PrimitiveTokens = primitives
 ): string {
   const scaleNames = Object.keys(primitives) as ScaleName[];
   const scaleSection = scaleNames
@@ -72,18 +75,24 @@ export function generateSmokeHTML(
   );
 
   const pairingRows: string[] = [];
+  const sources: Record<Mode, PrimitiveTokens> = { light: primitives, dim: dimPrimitives, dark: darkPrimitives };
   for (const [token, entry] of fgTokens) {
-    const bgEntry = semanticMap[entry.contrastAgainst!];
-    if (!bgEntry) continue;
+    const grounds = contrastGrounds(entry);
+    for (const ground of grounds) {
+      const bgEntry = semanticMap[ground];
+      if (!bgEntry) continue;
+      const label = grounds.length > 1 ? `${token} on ${ground}` : token;
 
-    for (const mode of ['light', 'dark'] as const) {
-      const fgRef = entry[mode];
-      const bgRef = bgEntry[mode];
-      const fgHex = resolveHex(fgRef, primitives);
-      const bgHex = resolveHex(bgRef, primitives);
-      pairingRows.push(
-        semanticPairingHTML(token, fgHex, bgHex, fgRef, bgRef, mode)
-      );
+      for (const mode of ['light', 'dim', 'dark'] as const) {
+        const fgRef = modeRef(entry, mode);
+        const bgRef = modeRef(bgEntry, mode);
+        const source = sources[mode];
+        const fgHex = resolveHex(fgRef, source);
+        const bgHex = resolveHex(bgRef, source);
+        pairingRows.push(
+          semanticPairingHTML(label, fgHex, bgHex, fgRef, bgRef, mode)
+        );
+      }
     }
   }
 

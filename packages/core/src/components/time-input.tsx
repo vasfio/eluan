@@ -427,8 +427,8 @@ const styles = stylex.create({
     transitionProperty: "background-color, border-color, color, box-shadow",
     transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
     ":focus-within": {
-      borderColor: "var(--interactive-border)",
-      outlineColor: "var(--interactive-border)",
+      borderColor: "var(--focus-ring)",
+      outlineColor: "var(--focus-ring)",
       outlineOffset: "1px",
       outlineStyle: "solid",
       outlineWidth: "1px",

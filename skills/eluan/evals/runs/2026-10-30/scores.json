@@ -1,0 +1,547 @@
+{
+ "map": {
+  "t01": {
+   "X": "a",
+   "Y": "b"
+  },
+  "t02": {
+   "X": "b",
+   "Y": "a"
+  },
+  "t03": {
+   "X": "b",
+   "Y": "a"
+  },
+  "t04": {
+   "X": "a",
+   "Y": "b"
+  },
+  "t05": {
+   "X": "b",
+   "Y": "a"
+  },
+  "t06": {
+   "X": "a",
+   "Y": "b"
+  },
+  "t07": {
+   "X": "b",
+   "Y": "a"
+  },
+  "t08": {
+   "X": "a",
+   "Y": "b"
+  },
+  "t09": {
+   "X": "b",
+   "Y": "a"
+  },
+  "t10": {
+   "X": "a",
+   "Y": "b"
+  },
+  "t11": {
+   "X": "b",
+   "Y": "a"
+  },
+  "t12": {
+   "X": "b",
+   "Y": "a"
+  },
+  "t13": {
+   "X": "b",
+   "Y": "a"
+  },
+  "t14": {
+   "X": "b",
+   "Y": "a"
+  },
+  "t15": {
+   "X": "b",
+   "Y": "a"
+  }
+ },
+ "rows": {
+  "t01": {
+   "a": {
+    "task": "t01",
+    "label": "X",
+    "tokens": 0,
+    "reuse": 1,
+    "choice": 1,
+    "a11y": 1,
+    "notes": {
+     "tokens": "Three raw lengths: formStyle maxWidth \"28rem\" (l.69), linkStyle textUnderlineOffset \"0.2em\" (l.102) and the Banner icon CircleAlert size={16} (l.249) where var(--size-xxs) exists (sr-only 1px boilerplate not counted).",
+     "reuse": "Custom FieldError <p> with hand-rolled destructive styles (l.92-124) reinvents Eluan's FormMessage; also uses the deprecated FormLabel alias instead of Label.",
+     "choice": "Right pattern overall, but PASSWORD_REQUIREMENTS omits requireSpecialChars:false so PasswordInput's checklist (source default true) shows a 'Special character' rule validation never enforces, and validationTone is smuggled via spread into EmailInput/PasswordInput whose props don't declare it.",
+     "a11y": "Spinner inside the submit button (l.290) keeps its role=\"status\"/aria-label=\"Loading\", nesting a live region in the button and making its name 'Loading Creating account…'; labels, aria-describedby errors and first-invalid focus are otherwise solid."
+    }
+   },
+   "b": {
+    "task": "t01",
+    "label": "Y",
+    "tokens": 2,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 2,
+    "notes": {
+     "tokens": "clean; all gaps/minHeight use var(--spacing-*)/var(--size-xxs).",
+     "reuse": "clean; Label, FormMessage, Input/EmailInput/PasswordInput, Checkbox, Banner, Button, Spinner only.",
+     "choice": "clean; inline destructive Banner for form error, FormMessage field errors, PasswordInput requirements match the validator (requireSpecialChars:false), single primary submit.",
+     "a11y": "clean; htmlFor labels, aria-invalid + aria-describedby to FormMessage, focus moves to first invalid field incl. Checkbox ref, Spinner aria-hidden with aria-busy on the button."
+    }
+   }
+  },
+  "t02": {
+   "b": {
+    "task": "t02",
+    "label": "X",
+    "tokens": 2,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 2,
+    "notes": {
+     "tokens": "clean; icons sized via iconStyle var(--size-xxs).",
+     "reuse": "clean; Dialog parts, DialogClose, Button, Banner, Spinner only.",
+     "choice": "clean; Eluan Dialog with DialogTrigger, dangerGhost trigger, variant=\"destructive\" confirm, outline Cancel via DialogClose, inline Banner for delete failure.",
+     "a11y": "clean; Radix trigger returns focus on close, Cancel is first focusable, dismissal blocked mid-delete, Spinner aria-hidden with aria-busy, failure Banner role=\"alert\"."
+    }
+   },
+   "a": {
+    "task": "t02",
+    "label": "Y",
+    "tokens": 1,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 2,
+    "notes": {
+     "tokens": "Trash2 size={16} (l.36) is a raw px icon size where var(--size-xxs) is the token.",
+     "reuse": "clean; Dialog parts, Button, Banner, Spinner only.",
+     "choice": "clean; Eluan Dialog via DialogTrigger, dangerGhost trigger, destructive confirm, inline Banner on failure.",
+     "a11y": "clean; controlled close still returns focus to the DialogTrigger, dismissal blocked while deleting, spinner wrapped aria-hidden, error Banner role=\"alert\"."
+    }
+   }
+  },
+  "t03": {
+   "b": {
+    "task": "t03",
+    "label": "X",
+    "tokens": 2,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 1,
+    "notes": {
+     "tokens": "clean; every gap/padding goes through column(var(--spacing-*)) and icons use var(--size-xxs).",
+     "reuse": "clean; Fieldset, Label, FormMessage/FormDescription, Switch, Card, Badge, Table, Banner, Separator, Typography; sonner toast() is the intended pair for Eluan's Toast Toaster.",
+     "choice": "clean; h1 + sectioned h2 layout with Separators, Switch rows for notifications, Fieldset (div, so role=\"group\" is correct) for profile, toast on profile save, inline Banner for failures.",
+     "a11y": "Switch gets disabled={isSaving} right after toggling (l.326), so a keyboard user who flips a switch loses focus on every change; labels, describedby, heading roles on CardTitle and error-dismiss focus restore are otherwise good."
+    }
+   },
+   "a": {
+    "task": "t03",
+    "label": "Y",
+    "tokens": 0,
+    "reuse": 1,
+    "choice": 1,
+    "a11y": 1,
+    "notes": {
+     "tokens": "Many raw values: page maxWidth \"64rem\", flex bases \"14rem\"/\"28rem\", avatar wrapper \"3.5rem\" x2, and lucide size={20}/{16} on User, Check, CreditCard and Download icons.",
+     "reuse": "Custom FieldError <p> with styles.errorText (l.303-310, 767-771) reinvents Eluan's FormMessage.",
+     "choice": "validationTone passed directly to EmailInput (l.251) is not an EmailInput prop and fails the typecheck, and profile save success is an inline role=\"status\" text rather than a toast; switches, Card grouping and section layout are right.",
+     "a11y": "past_due and caution Banners (l.441, 448) keep Eluan's default role=\"banner\", adding stray banner landmarks, and 'Discard changes' disables itself on click, dropping focus; labels, describedby, table caption and sr-only link text are good."
+    }
+   }
+  },
+  "t04": {
+   "a": {
+    "task": "t04",
+    "label": "X",
+    "tokens": 2,
+    "reuse": 2,
+    "choice": 1,
+    "a11y": 1,
+    "notes": {
+     "tokens": "clean; all layout styles use var(--spacing-*).",
+     "reuse": "clean; Card, Label, Input, Switch, Typography, Button and Eluan Toast only.",
+     "choice": "toast.success for the save is right, but the save failure also goes to toast.error (l.50) instead of an inline Banner, and the component mounts its own <Toast position=\"top-right\"/> Toaster (l.104), which duplicates an app-level one.",
+     "a11y": "CardTitle 'Settings' (l.62) renders a plain div with no heading semantics (no role=\"heading\"/aria-level), so the form has no programmatic heading; labels and Switch describedby are fine."
+    }
+   },
+   "b": {
+    "task": "t04",
+    "label": "Y",
+    "tokens": 2,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 2,
+    "notes": {
+     "tokens": "clean; gaps via var(--spacing-*).",
+     "reuse": "clean; Button, Banner, Spinner with sonner toast().",
+     "choice": "clean; toast(\"Settings saved\") with a dedupe id for success and an inline destructive Banner for failure, no local Toaster.",
+     "a11y": "clean; failure Banner role=\"alert\", Spinner aria-hidden, aria-busy on the submit button."
+    }
+   }
+  },
+  "t05": {
+   "b": {
+    "task": "t05",
+    "label": "X",
+    "tokens": 2,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 2,
+    "notes": {
+     "tokens": "clean; banner icon via bannerIconStyle var(--size-xxs), gaps via var(--spacing-*).",
+     "reuse": "clean; Banner, Label, EmailInput, PasswordInput, FormMessage, FormDescription, Button, Spinner.",
+     "choice": "clean; server rejection shown as inline destructive Banner (position=\"inline\") at the top of the form, field errors via FormMessage, no toast.",
+     "a11y": "clean; Banner role=\"alert\", labels, aria-invalid + describedby (hint and error), first-invalid focus, Spinner aria-hidden with aria-busy."
+    }
+   },
+   "a": {
+    "task": "t05",
+    "label": "Y",
+    "tokens": 1,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 2,
+    "notes": {
+     "tokens": "CircleAlert size={16} (l.96) is a raw px icon size where var(--size-xxs) is the token.",
+     "reuse": "clean; Banner, Label, EmailInput, PasswordInput, Button only.",
+     "choice": "clean; form-level server error rendered as an inline destructive Banner in the form (default position inline), not a toast.",
+     "a11y": "clean; Banner role=\"alert\", htmlFor labels, native required/email validation, aria-busy on the form and an in-flight guard with a 'Creating account…' label."
+    }
+   }
+  },
+  "t06": {
+   "a": {
+    "task": "t06",
+    "label": "X",
+    "tokens": 0,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 1,
+    "notes": {
+     "tokens": "Several hard-coded lengths where size tokens exist: maxWidth \"72rem\" (l.84), \"40rem\" (l.91), flexBasis calc((52rem - 100%) * 999) (l.104), and Check size=\"1em\" (l.187).",
+     "reuse": "clean: Card/CardHeader/CardTitle/CardDescription/CardContent, Badge, Button asChild, Separator and Typography, with only plain list/layout wrappers.",
+     "choice": "clean: three Cards, the recommended one gets the filled default Button and every other CTA is outline, so there is one primary action, and the CTAs are links via Button asChild.",
+     "a11y": "CardTitle renders a plain div (card.tsx), so the plan names at l.156 are not headings under the h2 and screen-reader users can't jump between plans; links are otherwise well described via aria-describedby."
+    }
+   },
+   "b": {
+    "task": "t06",
+    "label": "Y",
+    "tokens": 2,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 2,
+    "notes": {
+     "tokens": "clean: grid min uses calc(var(--size-4xl) * 2), icons use var(--size-xxs), all gaps are spacing tokens.",
+     "reuse": "clean: Card + CardFooter, Badge variant=\"important\", Button and Typography (step/weight props), with only layout wrappers.",
+     "choice": "clean: card grid where only the recommended plan gets the filled default Button and the others are outline, so there is one primary action.",
+     "a11y": "clean: Card role=article labelled by title+badge, CardTitle given role=heading aria-level=3, check icons aria-hidden, and distinct \"Choose {plan}\" button labels."
+    }
+   }
+  },
+  "t07": {
+   "b": {
+    "task": "t07",
+    "label": "X",
+    "tokens": 2,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 2,
+    "notes": {
+     "tokens": "clean: spacing and size tokens only (var(--spacing-*), var(--size-md), var(--container-fg-alt)).",
+     "reuse": "clean: Eluan has no EmptyState, and this is composed from Typography + Button + an icon.",
+     "choice": "clean: empty-state pattern with a single primary \"Create project\" Button.",
+     "a11y": "clean: icon aria-hidden, real heading with configurable level, text-labelled button."
+    }
+   },
+   "a": {
+    "task": "t07",
+    "label": "Y",
+    "tokens": 0,
+    "reuse": 1,
+    "choice": 1,
+    "a11y": 2,
+    "notes": {
+     "tokens": "Many raw values: minHeight \"20rem\" (l.16), borderWidth \"1px\" (l.19, l.32), maxWidth \"28rem\" (l.45), FolderPlus size={24} strokeWidth={1.75} (l.59), Plus size={16} (l.74).",
+     "reuse": "The section at l.10-25 hand-rolls a bordered, rounded, filled container (border/curves/container-bg/fg) that Card already provides, plus a custom icon tile.",
+     "choice": "Adds a second button-styled action (outline \"Learn about projects\", l.77-79) next to the primary, which dilutes the single clear action the brief asks for, though it is conditional and visually secondary.",
+     "a11y": "clean: section labelled by its h2, decorative icons aria-hidden, labelled buttons/link."
+    }
+   }
+  },
+  "t08": {
+   "a": {
+    "task": "t08",
+    "label": "X",
+    "tokens": 2,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 1,
+    "notes": {
+     "tokens": "clean: no custom styles.",
+     "reuse": "clean: Eluan Tabs family, with panels built from Card and Typography.",
+     "choice": "clean: Tabs/TabsList/TabsTrigger/TabsContent (Radix tabs), not buttons or links.",
+     "a11y": "TabsList at l.5 has no aria-label or aria-labelledby, so the tablist is unnamed; Radix still provides roles and arrow-key navigation."
+    }
+   },
+   "b": {
+    "task": "t08",
+    "label": "Y",
+    "tokens": 2,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 2,
+    "notes": {
+     "tokens": "clean: no custom styles.",
+     "reuse": "clean: only the Eluan Tabs family.",
+     "choice": "clean: Tabs/TabsList/TabsTrigger/TabsContent with panels passed in as props.",
+     "a11y": "clean: TabsList gets aria-label (default \"Sections\"), and Radix supplies the tab/tabpanel roles and keyboard support."
+    }
+   }
+  },
+  "t09": {
+   "b": {
+    "task": "t09",
+    "label": "X",
+    "tokens": 2,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 2,
+    "notes": {
+     "tokens": "clean: icons sized with var(--size-xxs), empty state uses spacing/size/container tokens, textAlign:right is a keyword.",
+     "reuse": "clean: Table, DropdownMenu (Sub/RadioGroup/Item tone=destructive), Dialog, Badge, Button and Typography; DropdownMenu is used over ActionPopover because the role submenu with radio items needs it.",
+     "choice": "clean: Table with sortable header Buttons, a DropdownMenu row action menu, and a confirmation Dialog for the destructive remove.",
+     "a11y": "clean: aria-sort on sortable th, sort buttons in the headers, per-row trigger aria-label, Radix menu keyboard support, and onCloseAutoFocus restores focus to the neighbouring row trigger or the empty state after removal."
+    }
+   },
+   "a": {
+    "task": "t09",
+    "label": "Y",
+    "tokens": 0,
+    "reuse": 1,
+    "choice": 2,
+    "a11y": 1,
+    "notes": {
+     "tokens": "Many raw values: hand-rolled visually-hidden style with 1px/1px/-1px (l.107-117) and lucide size={16} on the sort icon and all three menu icons (l.139, 180, 185, 193) where var(--size-xxs) exists.",
+     "reuse": "Muted text is a hand-styled span with color var(--container-fg-alt) (l.96, used l.122/214/221) instead of Typography tone=\"muted\", plus a hand-rolled sr-only span.",
+     "choice": "clean: Table with sortable header Buttons, the purpose-built ActionPopover row menu, and a confirmation Dialog for delete.",
+     "a11y": "The Dialog has no DialogTrigger and no onCloseAutoFocus, so Radix focuses a null triggerRef on close and keyboard focus is dropped to body after Cancel or Delete; aria-sort, row-menu labels and menu keyboard support are otherwise fine."
+    }
+   }
+  },
+  "t10": {
+   "a": {
+    "task": "t10",
+    "label": "X",
+    "tokens": 1,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 2,
+    "notes": {
+     "tokens": "One raw length: search wrapper width \"18rem\" (l.8).",
+     "reuse": "clean: Eluan Header with SearchInput in the actions slot, and only a StyleX sizing wrapper.",
+     "choice": "clean: SearchInput renders Input type=search, which auto-adds the leading Search icon.",
+     "a11y": "clean: aria-label=\"Search\" with no visible label, role=search landmark, Enter to search and Escape to clear come from SearchInput."
+    }
+   },
+   "b": {
+    "task": "t10",
+    "label": "Y",
+    "tokens": 2,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 2,
+    "notes": {
+     "tokens": "clean: the only inline style is color:inherit and textDecoration:none on the logo link (keywords, not raw values).",
+     "reuse": "clean: Eluan Header (items with active state) and SearchInput, with the logo set via Typography.",
+     "choice": "clean: SearchInput (auto search icon) in Header actions inside a form role=search, with mobileBreakpoint=\"lg\" to make room.",
+     "a11y": "clean: aria-label=\"Search projects\" with no visible label, role=search form landmark, nav items get aria-current via Header."
+    }
+   }
+  },
+  "t11": {
+   "b": {
+    "task": "t11",
+    "label": "X",
+    "tokens": 2,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 2,
+    "notes": {
+     "tokens": "Clean: the brand hex only goes into generateTheme({ accents: [BRAND_ACCENT] }); no colour or length is written into styles or overrides.",
+     "reuse": "Clean: generateTheme(...).customTheme is registered via EluanProvider customThemes, with no hand-rolled palette.",
+     "choice": "Clean: generator-built custom theme covering light/dim/dark plus defaultCurves=\"sweeping\" for rounder corners, with no per-component overrides.",
+     "a11y": "Clean: minContrast: 4.5 makes the generator check and auto-correct every fg/border pair in each mode."
+    }
+   },
+   "a": {
+    "task": "t11",
+    "label": "Y",
+    "tokens": 0,
+    "reuse": 1,
+    "choice": 1,
+    "a11y": 2,
+    "notes": {
+     "tokens": "Many raw colours: the BRAND object hand-picks #275D4F, #214F43, #FFFFFF and #3D8F79 (lines 4-10) and writes them straight into createTheme token overrides.",
+     "reuse": "Hand-derives the hover/active/on-fill shades that @eluan/theme-generator produces, and migrateStoredPreferences writes Eluan's internal eluan:theme / eluan:curves storage keys itself instead of leaving persistence to the provider.",
+     "choice": "Manual createTheme override of ~10 action/interactive tokens instead of the generator, with no dim/dark mode maps; also sets --interactive-border (the pale input-border token) as a \"focusRing\", which recolours every input border and leaves the focus ring alone (sweeping curves is right).",
+     "a11y": "Contrast holds in every mode (white on #2F6F5E is about 5.9:1) and --focus-ring is untouched."
+    }
+   }
+  },
+  "t12": {
+   "b": {
+    "task": "t12",
+    "label": "X",
+    "tokens": 2,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 2,
+    "notes": {
+     "tokens": "Clean: the only style value is gap: var(--spacing-sm).",
+     "reuse": "Clean: Eluan Switch + Label with useEluanTheme.",
+     "choice": "Clean: Switch driving setMode, and it restores the last non-dark mode (dim stays dim).",
+     "a11y": "Clean: Label htmlFor={id} is tied to the Switch id, so the role=switch control has a visible, programmatic name."
+    }
+   },
+   "a": {
+    "task": "t12",
+    "label": "Y",
+    "tokens": 1,
+    "reuse": 2,
+    "choice": 1,
+    "a11y": 2,
+    "notes": {
+     "tokens": "One raw length: <Moon size={16}> instead of sizing the icon with var(--size-xxs).",
+     "reuse": "Clean: Eluan Toggle with useEluanTheme.",
+     "choice": "An icon-only Toggle (pressed) instead of the preferred Switch, at the default text size rather than iconSm; defensible but not preferred.",
+     "a11y": "Clean: aria-label=\"Dark mode\" plus Radix's aria-pressed, with the icon aria-hidden."
+    }
+   }
+  },
+  "t13": {
+   "b": {
+    "task": "t13",
+    "label": "X",
+    "tokens": 2,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 2,
+    "notes": {
+     "tokens": "Clean: the X icon is sized with var(--size-xxs) for both width and height.",
+     "reuse": "Clean: Eluan Button inside DrawerClose asChild.",
+     "choice": "Clean: a ghost size=\"icon\" Button wired to Eluan's inline side-panel Drawer through DrawerClose, which also gets the Drawer's focus restore on close.",
+     "a11y": "Clean: aria-label on the button, aria-hidden on the icon, type=\"button\"."
+    }
+   },
+   "a": {
+    "task": "t13",
+    "label": "Y",
+    "tokens": 1,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 2,
+    "notes": {
+     "tokens": "One raw length: <X size={16}> instead of var(--size-xxs) (16px is not even on the density-driven --size-xxs scale).",
+     "reuse": "Clean: Eluan Button.",
+     "choice": "Clean: a ghost size=\"icon\" Button with a generic onClose, which suits any panel.",
+     "a11y": "Clean: aria-label={label}, aria-hidden icon, type=\"button\"."
+    }
+   }
+  },
+  "t14": {
+   "b": {
+    "task": "t14",
+    "label": "X",
+    "tokens": 2,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 2,
+    "notes": {
+     "tokens": "Clean: the icon uses var(--size-xxs); the spacer height is a measured value, not a hard-coded length.",
+     "reuse": "Clean: Eluan Banner + Button asChild; the useElementHeight hook and spacer div are layout glue, not a reinvented component.",
+     "choice": "Clean: Banner variant=\"caution\" position=\"top\" (not a toast), plus a spacer so the fixed bar doesn't cover the page.",
+     "a11y": "Clean: role=\"status\" replaces Banner's default role=\"banner\" landmark, the icon is aria-hidden, and the spacer stops the fixed bar hiding top content or focus."
+    }
+   },
+   "a": {
+    "task": "t14",
+    "label": "Y",
+    "tokens": 1,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 1,
+    "notes": {
+     "tokens": "One raw length: <TriangleAlert size={16}> instead of var(--size-xxs).",
+     "reuse": "Clean: Eluan Banner.",
+     "choice": "Clean: Banner variant=\"caution\" position=\"top\", not a toast.",
+     "a11y": "position=\"top\" makes the Banner fixed at top:0, and nothing offsets the page, so it covers the top of the app (and any focused header controls); it also keeps the component's default role=\"banner\" landmark for a status message."
+    }
+   }
+  },
+  "t15": {
+   "b": {
+    "task": "t15",
+    "label": "X",
+    "tokens": 2,
+    "reuse": 2,
+    "choice": 2,
+    "a11y": 2,
+    "notes": {
+     "tokens": "Clean: gaps use var(--spacing-md|sm); everything else is flex keywords and ratios.",
+     "reuse": "Clean: Eluan DateRangePicker, Select*, Label and Button only.",
+     "choice": "Clean: DateRangePicker, Select, and an outline (action-secondary tier) Button for reset.",
+     "a11y": "Clean: Label htmlFor is tied to the SelectTrigger id, a role=\"group\" with aria-labelledby names the date picker (which takes no id), and the reset button has visible text."
+    }
+   },
+   "a": {
+    "task": "t15",
+    "label": "Y",
+    "tokens": 0,
+    "reuse": 2,
+    "choice": 1,
+    "a11y": 2,
+    "notes": {
+     "tokens": "Many raw lengths in stylex.create (flexBasis \"16rem\"/\"12rem\", maxWidth \"22rem\", minWidth \"10rem\", lines 57-64) plus <RotateCcw size={16}>.",
+     "reuse": "Clean: Eluan DateRangePicker, Select*, Label and Button only.",
+     "choice": "Reset uses variant=\"ghost\" (the action-tertiary tier) rather than a secondary/outline button; DateRangePicker and Select are right.",
+     "a11y": "Clean: labelled Select and date group, aria-hidden icon, and when reset disables the button, focus moves to the status trigger instead of being stranded."
+    }
+   }
+  }
+ },
+ "nav": {
+  "t01": 2,
+  "t02": 2,
+  "t03": 1,
+  "t04": 2,
+  "t05": 2,
+  "t06": 2,
+  "t07": 2,
+  "t08": 2,
+  "t09": 2,
+  "t10": 2,
+  "t11": 2,
+  "t12": 2,
+  "t13": 2,
+  "t14": 2,
+  "t15": 1
+ },
+ "sum": {
+  "a": {
+   "tokens": 10,
+   "reuse": 25,
+   "choice": 23,
+   "a11y": 23
+  },
+  "b": {
+   "tokens": 30,
+   "reuse": 30,
+   "choice": 30,
+   "a11y": 29
+  }
+ }
+}

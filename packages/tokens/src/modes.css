@@ -32,6 +32,16 @@
    * --container-fg it used to borrow is near-white in dark mode, which washed
    * the page out behind a dark dialog. */
   --overlay-bg: var(--foregrounds-primary);
+  /* Keyboard focus outline — mode-aware for the same reason as --tooltip-bg.
+   * The mid-ramp step that clears 3:1 (WCAG 1.4.11) on every page and panel
+   * ground while staying distinct from the near-black pressed fill
+   * (--interactive-bg-active), so focus never reads as pressed. */
+  --focus-ring: var(--foregrounds-quaternary);
+  /* Outline and Ghost button text (and Toast cancel) — mode-aware for the
+   * same reason as --tooltip-bg: dim needs a deeper step than
+   * --mono-background gives it. */
+  --action-secondary-fg: var(--mono-background);
+  --action-tertiary-fg: var(--mono-background);
   --maitai-main: var(--color-maitai-500);
   --maitai-background: var(--color-maitai-50);
   --maitai-tint: var(--color-maitai-100);
@@ -100,7 +110,7 @@
   --seagreen-main: var(--color-seagreen-400);
   --seagreen-background: var(--color-seagreen-50);
   --seagreen-tint: var(--color-seagreen-100);
-  --seagreen-foreground: var(--color-seagreen-600);
+  --seagreen-foreground: var(--color-seagreen-700);
   --seagreen-shade: var(--color-seagreen-800);
   --forestgreen-main: var(--color-seagreen-400);
   --forestgreen-background: var(--color-seagreen-50);
@@ -119,7 +129,7 @@
   --torchred-main: var(--color-torchred-500);
   --torchred-background: var(--color-torchred-50);
   --torchred-tint: var(--color-torchred-100);
-  --torchred-foreground: var(--color-torchred-600);
+  --torchred-foreground: var(--color-torchred-700);
   --torchred-shade: var(--color-torchred-800);
   --blazeorange-main: var(--color-blazeorange-500);
   --blazeorange-background: var(--color-blazeorange-50);
@@ -141,6 +151,12 @@
   --foregrounds-quinary: var(--color-teak-600);
   --tooltip-bg: var(--backgrounds-primary);
   --overlay-bg: var(--foregrounds-primary);
+  --focus-ring: var(--foregrounds-quaternary);
+  /* teak-700 (--mono-background) is 4.36:1 on the dim panel ground, below AA
+   * for Outline and Ghost button text; teak-800 clears 6:1 on the page and
+   * panel. */
+  --action-secondary-fg: var(--foregrounds-tertiary);
+  --action-tertiary-fg: var(--foregrounds-tertiary);
   --maitai-main: var(--color-maitai-600);
   --maitai-background: var(--color-maitai-100);
   --maitai-tint: var(--color-maitai-200);
@@ -209,7 +225,7 @@
   --seagreen-main: var(--color-seagreen-500);
   --seagreen-background: var(--color-seagreen-100);
   --seagreen-tint: var(--color-seagreen-200);
-  --seagreen-foreground: var(--color-seagreen-700);
+  --seagreen-foreground: var(--color-seagreen-800);
   --seagreen-shade: var(--color-seagreen-900);
   --forestgreen-main: var(--color-seagreen-500);
   --forestgreen-background: var(--color-seagreen-100);
@@ -228,7 +244,7 @@
   --torchred-main: var(--color-torchred-700);
   --torchred-background: var(--color-torchred-100);
   --torchred-tint: var(--color-torchred-200);
-  --torchred-foreground: var(--color-torchred-700);
+  --torchred-foreground: var(--color-torchred-800);
   --torchred-shade: var(--color-torchred-900);
   --blazeorange-main: var(--color-blazeorange-600);
   --blazeorange-background: var(--color-blazeorange-100);
@@ -253,6 +269,11 @@
   /* The darkest step of the ramp, so the scrim dims the page rather than
    * lifting it. */
   --overlay-bg: var(--backgrounds-tertiary);
+  /* One step lighter than in light mode: --foregrounds-quaternary is too
+   * close to the white pressed fill here, quinary still clears 3:1. */
+  --focus-ring: var(--foregrounds-quinary);
+  --action-secondary-fg: var(--mono-background);
+  --action-tertiary-fg: var(--mono-background);
   --maitai-main: var(--color-maitai-500);
   --maitai-background: var(--color-maitai-950);
   --maitai-tint: var(--color-maitai-900);

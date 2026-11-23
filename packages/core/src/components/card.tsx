@@ -72,7 +72,7 @@ const styles = stylex.create({
     lineHeight: 1.375,
   },
   description: {
-    color: "var(--foregrounds-tertiary)",
+    color: "var(--interactive-fg-alt)",
     fontSize: "var(--font-size-sm)",
     lineHeight: 1.625,
   },

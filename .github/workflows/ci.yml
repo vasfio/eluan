@@ -39,6 +39,11 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
+      # Validates skills/eluan, checks its generated tables are current, and
+      # type-checks its examples against the packages built above
+      - name: Agent skill check
+        run: pnpm skills:check
+
       - name: Lint
         run: pnpm lint
 

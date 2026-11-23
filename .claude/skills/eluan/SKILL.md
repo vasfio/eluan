@@ -148,11 +148,13 @@ Behind the scenes: `createTheme` returns `{ name, extends, css }` where `css` is
 
 `setTheme("acme")` then works exactly like `setTheme("minimal")`.
 
+For values that differ by mode, add `modes: { dark: { … } }` (or `dim`); each becomes a `[data-theme-custom="<name>"][data-mode="<mode>"]` rule layered after the base one. `@eluan/theme-generator` returns a generated theme in this shape already: `generateTheme(…).customTheme` goes straight into `customThemes` and covers light, dim and dark (dark colours lifted brighter by `darkLift`; dim one step deeper than light, toned down by `dimChroma` and warmed to teak by `dimWarmth`), and `createThemeOptions` spreads into `createTheme()`.
+
 ---
 
 ## Component inventory (`@eluan/core`)
 
-There are **68 component modules** in `packages/core/src/components`. Every module exports its `*Props` type(s) alongside the component, so `React.ComponentProps<typeof X>` is rarely needed. Import any of these from `@eluan/core` (or via the `@eluan/core/<name>` subpath):
+There are **74 component modules** in `packages/core/src/components`. Every module exports its `*Props` type(s) alongside the component, so `React.ComponentProps<typeof X>` is rarely needed. Import any of these from `@eluan/core` (or via the `@eluan/core/<name>` subpath):
 
 **Forms / inputs**
 `Button` · `Input` (auto-icon by `type="search|email|password|tel|url"`, plus `icon` and `trailing` props for custom leading/trailing; `validationTone="none|positive|destructive"`) · `Textarea` · `Select` (Radix-based) · `MultiSelect` · `Command` (cmdk-based — the Combobox / command-palette primitive) · `Checkbox` · `CheckboxGroup` (with `CheckboxGroupItem`) · `RadioGroup` (with `RadioGroupItem`) · `Switch` · `Slider` · `Toggle` · `ToggleGroup` (with `ToggleGroupItem`) · `SegmentedControl` (with `SegmentedControlItem`) · `Fieldset` · `FormLabel` (also exports `Label`, `FormDescription`, `FormMessage`) · `EmailInput` · `PasswordInput` · `PhoneInput` (uses the `countries-list` package — full country list, common short names, dial codes) · `NumberInput` · `DecimalInput` · `SearchInput` (with `CommandSearch` and `AutocompleteSearch` variants) · `FileInput` · `CreditCardInput` (sub-components `CreditCardNumberInput`, `CreditCardExpiryInput`, `CreditCardCVVInput` — card logos use `fill="currentColor"` + `fillRule="evenodd"` for transparent internal cutouts) · `InputOTP` · `RichText` (TipTap v3 — `useEditorState` for a reactive toolbar)
@@ -164,13 +166,16 @@ There are **68 component modules** in `packages/core/src/components`. Every modu
 `Table` · `Card` · `Badge` (`microdot` size variant for status dots) · `Avatar` (with `AvatarBadge`, `AvatarStatus`, `AvatarWithStatus`) · `Progress` · `Skeleton` · `Spinner` · `Kbd` · `Banner` · `CodeBlock` · `Media` (with `Image`)
 
 **Typography**
-`Typography` — the front door to the fluid typeset. `variant` (`display|title|heading|subheading|lead|body|label|caption`) picks a step plus a family/weight and a default element (`h1`–`h4`, `p`, `span`); `step` re-sizes any variant to any of the 10 rungs; also `as`, `asChild`, `weight` (`thin|extralight|light|normal|medium|semibold|bold|extrabold|black` — Inter is loaded as a variable font, so every weight is a real face), `family`, `tone`, `align`, `truncate`. Every variant sets `font-size`, `line-height` and `letter-spacing` from the same step, so heading tracking always matches the size.
+`Typography` — the front door to the fluid typeset. `variant` (`display|title|heading|subheading|lead|body|label|caption`) picks a step plus a family/weight and a default element (`h1`–`h4`, `p`, `span`); `step` re-sizes any variant to any of the 10 rungs; `size` (`xs`–`5xl`) sizes it by the spacing density instead, via the `--font-size-*` aliases; `tone` is `default|muted|inverse`, `positive|destructive` for status text, `interactive|interactive-muted` for text on a control you build, or `inherit` for text inside a coloured parent; also `as`, `asChild`, `weight` (`thin|extralight|light|normal|medium|semibold|bold|extrabold|black` — Inter is loaded as a variable font, so every weight is a real face), `family`, `tone`, `align`, `truncate`, `tabular` (tabular figures for numbers in columns). Every variant sets `font-size`, `line-height` and `letter-spacing` from the same step, so heading tracking always matches the size.
 
 **Navigation / structure**
 `Accordion` · `Breadcrumb` · `Carousel` · `Pagination` · `Tabs` · `NavigationMenu` (Radix navigation-menu wrapper) · `NavigationDrawer` (requires `NavigationDrawerProvider`; `NavigationDrawerLayout` gives a sidebar+content shell) · `Stepper` · `TreeView` · `Menubar`
 
 **Overlays / popovers**
 `Dialog` (with `layout="command"` for command-palette content) · `Sheet` · `Drawer` (vaul-based) · `Popover` · `ActionPopover` · `Tooltip` · `HoverCard` · `DropdownMenu` · `ContextMenu` · `Toast` (Sonner-based toaster; Eluan token styling is applied through global class hooks — `eluan-toaster`, `eluan-toast`, … — owned by the stylesheet, plus an inline `--border-radius: var(--curves-md)`)
+
+**Layout primitives** (lay pages out from tokens; see `docs/layout.md`)
+`Stack` (vertical flow, `gap` default `md`) · `Row` (horizontal, centred, `justify="between"`, `wrap`, `inline`) · `Grid` (`cols`: a count 1–12, a raw template, or per breakpoint `{ base: 1, m: 2, l: 4 }` using the token breakpoint names) · `Box` (`pad`/`padX`/`padY`, `grow`, `shrink={false}`, `height`/`minHeight` `full|screen`, `position` `relative|absolute`, `inset` `fill|top|bottom` (implies absolute), `overflow` `hidden|auto`) · `Icon` (sizes an svg child to a `--size-*` step, `after` for a trailing gap, `tone` from Typography's tones, default `inherit`) · `VisuallyHidden`. `gap` and `pad*` take `--spacing-*` step names (`"none"`…`"4xl"`), never px; Stack/Row/Grid take Box's props (one shared `splitBoxProps` in `layout-shared.ts`); all take `as` and `asChild`. Widths, hover effects and animation aren't props: they go on the app's own element (nested, or through `asChild`). Typography and Icon share one tone map in `tone-shared.ts`. Child rules StyleX can't express (grid children `min-width: 0`, Icon's svg at 100%) live in `globals.css` `@layer base` behind `eluan-grid` / `eluan-icon` class hooks.
 
 **Layout / utilities**
 `Separator` (defaults to `decorative={true}` — pass `decorative={false}` to render with `role="separator"`) · `ScrollArea` · `AspectRatio` · `Collapsible`
@@ -215,7 +220,7 @@ const styles = stylex.create({
     fontSize: "var(--font-size-sm)",
     gap: "var(--spacing-xs)",
     ":focus-visible": {
-      outlineColor: "var(--interactive-border)",
+      outlineColor: "var(--focus-ring)",
       outlineOffset: "1px",
       outlineStyle: "solid",
       outlineWidth: "1px",
@@ -347,19 +352,19 @@ const styles = stylex.create({
 `--container-bg` · `--container-bg-alt` (subtle alternate) · `--container-fg` · `--container-fg-alt` (muted text) · `--container-fg-inverse` · `--container-border` · `--container-border-alt`
 
 ### Interactive surfaces (inputs, selectable rows, hoverable items)
-`--interactive-bg` · `--interactive-bg-hover` · `--interactive-bg-active` · `--interactive-bg-selected` · `--interactive-bg-disabled` · `--interactive-bg-alt` · `--interactive-bg-alt2` · `--interactive-bg-inverse` · `--interactive-fg` · `--interactive-fg-hover` · `--interactive-fg-alt` (muted/icon color — also the leading-icon color in `Input`) · `--interactive-fg-active` · `--interactive-fg-selected` · `--interactive-fg-disabled` · `--interactive-fg-inverse` · `--interactive-border` (default focus color, see below) · `--interactive-border-alt` · `--interactive-border-disabled`
+`--interactive-bg` · `--interactive-bg-hover` · `--interactive-bg-active` · `--interactive-bg-selected` · `--interactive-bg-disabled` · `--interactive-bg-alt` · `--interactive-bg-alt2` · `--interactive-bg-inverse` · `--interactive-fg` · `--interactive-fg-hover` · `--interactive-fg-alt` (muted/icon color — also the leading-icon color in `Input`) · `--interactive-fg-active` · `--interactive-fg-selected` · `--interactive-fg-disabled` · `--interactive-fg-inverse` · `--interactive-border` · `--interactive-border-alt` · `--interactive-border-disabled`
 
 ### Action-primary (CTA buttons)
 `--action-primary-bg` · `-bg-hover` · `-bg-active` · `-bg-selected` · `-bg-disabled` · `-bg-inverse` · `--action-primary-fg` · `-fg-hover` · `-fg-active` · `-fg-selected` · `-fg-disabled` · `-fg-inverse`
 
-### Action-secondary (outline buttons) / Action-tertiary (ghost buttons)
-`--action-secondary-*` and `--action-tertiary-*` follow the same `bg / border / fg` families with `-hover`, `-active`, `-selected`, `-disabled`, `-alt`, `-inverse` suffixes.
+### Action-secondary (outline buttons) / Action-tertiary (ghost buttons) / Action-neutral (secondary buttons)
+`--action-secondary-*` and `--action-tertiary-*` follow the same `bg / border / fg` families with `-hover`, `-active`, `-selected`, `-disabled`, `-alt`, `-inverse` suffixes. `--action-neutral-bg`, `--action-neutral-bg-hover` and `--action-neutral-fg` are the `Button` `secondary` grey fill.
 
 ### Status / tone colors
 `--positive-*`, `--cautionary-*`, `--destructive-*`, `--informative-*`, `--important-*` (each with `bg` / `bg-alt` / `bg-inverse` / `border` / `border-alt` / `fg` / `fg-alt` / `fg-strong` where defined). Reminder: the `caution` tone → `--cautionary-*`.
 
 ### Base semantic aliases (mode layer)
-`--backgrounds-primary|secondary|tertiary|quaternary|quinary` and `--foregrounds-primary|secondary|tertiary|quaternary|quinary` — used by neutral surfaces (e.g. `Button` `secondary`/`ghost`).
+`--backgrounds-primary|secondary|tertiary|quaternary|quinary` and `--foregrounds-primary|secondary|tertiary|quaternary|quinary` — what theme tokens are built from. Components never read them: a custom theme sets the theme tokens, so a component on the mode layer would ignore it. Use the theme token instead, or add one.
 
 ### Data-viz palette
 `--dataviz-1-main` · `--dataviz-1-tint` · `--dataviz-1-shade` (and `-2-` through `-8-`)
@@ -368,24 +373,24 @@ const styles = stylex.create({
 - Fonts: `--font-heading`, `--font-body`, `--font-mono` (theme-driven). Mono is **Paper Mono**, a variable font (wght 100–800) vendored inside `@eluan/tokens`; `minimal` uses Inter for heading + body.
 - Typeset (the fluid type scale): `--font-size-step-6` … `--font-size-step-0` … `--font-size-step-neg3`. Every step interpolates with the viewport via a two-segment `clamp()` anchored at 480px / 748px / 1024px, so type resizes with no media queries in app code. `data-typeset="small|medium|large"` pins the scale to one column; omitting the attribute keeps it fluid.
 - Per-step companions: `--line-height-step-*` (1.5 for neg3–0, 1.375 for 1–2, 1.2 for 3–6) and `--letter-spacing-step-*` (0 up to step 1, then tightening to `-0.03em` at step 6). Always apply all three tokens of a step together — that's what `Typography` does.
-- Font sizes: `--font-size-xs|sm|base|lg|xl|2xl|3xl|4xl|5xl`. These are **not** static values any more: each density selects a typeset *step* (compact = one step down, wide = one step up), and the step's value is itself viewport-fluid. The old numeric primitives (`--font-size-12` … `--font-size-60`) were removed.
+- Font sizes: `--font-size-xs|sm|base|lg|xl|2xl|3xl|4xl|5xl`. These are **not** static values any more: each density selects a typeset *step* (compact = one step down, wide = one step up), and the step's value is itself viewport-fluid. The old numeric primitives (`--font-size-12` … `--font-size-60`) were removed. Each alias has a `--line-height-*` and `--letter-spacing-*` companion on the same step (`--line-height-sm`, `--letter-spacing-sm`); apply the three together.
 - Spacing: `--spacing-xxs|xs|sm|md|lg|xl|2xl|3xl|4xl` (density-driven)
 - Sizes (component heights / icon dimensions): `--size-xxs|xs|sm|md|lg|xl|2xl|3xl|4xl` (density-driven)
 - Curves (border-radius): `--curves-xxs|xs|sm|md|lg|xl` (curves-axis-driven); full pill via `--radius-radius-full`
 
 ### Focus color (the system-wide focus indicator)
-`var(--interactive-border)` is the standard focus color. The system uses an **outline** (not a ring), applied in a `":focus-visible"` block:
+`var(--focus-ring)` is the standard focus color: a mode-aware token (set per mode in `modes.css`) that clears 3:1 on every page and panel ground. The system uses an **outline** (not a ring), applied in a `":focus-visible"` block:
 
 ```tsx
 ":focus-visible": {
-  outlineColor: "var(--interactive-border)",
+  outlineColor: "var(--focus-ring)",
   outlineOffset: "1px",
   outlineStyle: "solid",
   outlineWidth: "1px",
 },
 ```
 
-It's theme- and mode-aware. Only deviate (e.g. validation states → `--destructive-border`) when there's a real semantic reason.
+Only deviate when there's a real semantic reason: validation states ring in their tone's foreground, and a control on a coloured surface (Banner's dismiss button) rings in `currentColor`. Never use `--interactive-border` for focus; it's a pale border token.
 
 ---
 
@@ -448,7 +453,7 @@ pnpm --filter @eluan/core lint    # eslint v9, flat config at repo root
 
 ### Common test patterns
 
-There is one test suite per component (68 suites under `packages/core/src/components/__tests__/`). Tests use `vitest` + `@testing-library/react` and assert on stable semantics, not styling:
+There is one test suite per component (74 suites under `packages/core/src/components/__tests__/`). Tests use `vitest` + `@testing-library/react` and assert on stable semantics, not styling:
 
 - **Don't assert on the generated StyleX class names** — they're hashed and change on refactor. Assert on text content, `role`, `data-state`, or attributes. (Because components strip `className`, several suites also assert an override class is *not* present.)
 - For Radix open/close: `expect(trigger).toHaveAttribute("data-state", "open")`. `toBeVisible()` doesn't reliably reflect Radix's animated transitions under happy-dom.
@@ -506,6 +511,7 @@ createTheme({
   name:     "acme",                         // starts with a letter; letters, digits, hyphens
   extends?: "minimal",                      // the only built-in; default "minimal"
   tokens:   { "--container-bg": "…", … },   // partial map of token overrides
+  modes?:   { dark?: { … }, dim?: { … } },    // per-mode overrides on top of tokens
 }): CustomTheme   // → { name, extends, css }
 
 // Font preloader (rarely needed — Provider calls this automatically)

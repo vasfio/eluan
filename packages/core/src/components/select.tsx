@@ -76,8 +76,8 @@ const styles = stylex.create({
       outlineStyle: "none",
     },
     ":focus-visible": {
-      borderColor: "var(--interactive-border)",
-      outlineColor: "var(--interactive-border)",
+      borderColor: "var(--focus-ring)",
+      outlineColor: "var(--focus-ring)",
       outlineOffset: "1px",
       outlineStyle: "solid",
       outlineWidth: "1px",

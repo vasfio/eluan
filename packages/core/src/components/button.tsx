@@ -75,7 +75,7 @@ const styles = stylex.create({
     transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
     whiteSpace: "nowrap",
     ":focus-visible": {
-      outlineColor: "var(--interactive-border)",
+      outlineColor: "var(--focus-ring)",
       outlineOffset: "1px",
       outlineStyle: "solid",
       outlineWidth: "1px",
@@ -155,31 +155,31 @@ const styles = stylex.create({
     },
   },
   variantSecondary: {
-    backgroundColor: "var(--backgrounds-tertiary)",
-    color: "var(--foregrounds-primary)",
+    backgroundColor: "var(--action-neutral-bg)",
+    color: "var(--action-neutral-fg)",
     ":hover": {
-      backgroundColor: "var(--backgrounds-quaternary)",
+      backgroundColor: "var(--action-neutral-bg-hover)",
     },
   },
   variantGhost: {
     backgroundColor: "transparent",
-    color: "var(--foregrounds-secondary)",
+    color: "var(--action-tertiary-fg)",
     ":hover": {
-      backgroundColor: "var(--backgrounds-tertiary)",
-      color: "var(--foregrounds-primary)",
+      backgroundColor: "var(--interactive-bg-hover)",
+      color: "var(--action-tertiary-fg-alt)",
     },
   },
   variantMutedGhost: {
     backgroundColor: "transparent",
     color: "var(--container-fg-alt)",
     ":hover": {
-      backgroundColor: "var(--backgrounds-tertiary)",
+      backgroundColor: "var(--interactive-bg-hover)",
       color: "var(--container-fg)",
     },
   },
   variantDangerGhost: {
     backgroundColor: "transparent",
-    color: "var(--foregrounds-secondary)",
+    color: "var(--container-fg-alt)",
     ":hover": {
       backgroundColor: "var(--destructive-bg-alt)",
       color: "var(--destructive-fg)",
@@ -187,11 +187,11 @@ const styles = stylex.create({
   },
   variantFadedGhost: {
     backgroundColor: "transparent",
-    color: "var(--foregrounds-secondary)",
+    color: "var(--container-fg-alt)",
     opacity: 0.6,
     ":hover": {
-      backgroundColor: "var(--backgrounds-tertiary)",
-      color: "var(--foregrounds-primary)",
+      backgroundColor: "var(--interactive-bg-hover)",
+      color: "var(--container-fg)",
       opacity: 1,
     },
   },
@@ -201,8 +201,10 @@ const styles = stylex.create({
     borderWidth: 1,
     color: "var(--interactive-fg)",
     fontWeight: 400,
+    // Field triggers (DatePicker) line their text up with Input and Select.
+    paddingInline: "var(--spacing-md)",
     ":hover": {
-      backgroundColor: "var(--backgrounds-tertiary)",
+      backgroundColor: "var(--interactive-bg-hover)",
     },
     ":disabled": {
       backgroundColor: "var(--interactive-bg-disabled)",
@@ -217,8 +219,10 @@ const styles = stylex.create({
     borderWidth: 1,
     color: "var(--interactive-fg-alt)",
     fontWeight: 400,
+    // Field triggers (DatePicker) line their text up with Input and Select.
+    paddingInline: "var(--spacing-md)",
     ":hover": {
-      backgroundColor: "var(--backgrounds-tertiary)",
+      backgroundColor: "var(--interactive-bg-hover)",
     },
     ":disabled": {
       backgroundColor: "var(--interactive-bg-disabled)",
@@ -238,16 +242,18 @@ const styles = stylex.create({
       textDecorationLine: "underline",
     },
   },
+  // Inline padding grows with the height, 0.33–0.43 of it across every size
+  // and density: sm → md, default → lg, lg → xl.
   sizeDefault: {
     height: "var(--size-lg)",
     paddingBlock: "var(--spacing-sm)",
-    paddingInline: "var(--spacing-md)",
+    paddingInline: "var(--spacing-lg)",
   },
   sizeSm: {
     borderRadius: "var(--curves-sm)",
     fontSize: "var(--font-size-xs)",
     height: "var(--size-md)",
-    paddingInline: "var(--spacing-sm)",
+    paddingInline: "var(--spacing-md)",
   },
   sizeLg: {
     borderRadius: "var(--curves-md)",

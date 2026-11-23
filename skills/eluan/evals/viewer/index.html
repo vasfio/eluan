@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eluan skill evals</title>
+    <meta name="claude:viewport-fit-sides" content="cover" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+    <style>
+      /* Eluan's tokens drive every colour; these only follow the host's theme. */
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) { color-scheme: dark; }
+      }
+      :root[data-theme="dark"] { color-scheme: dark; }
+      body { background: var(--container-bg); color: var(--container-fg); }
+      .eval-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 4fr);
+        gap: var(--spacing-xl);
+        align-items: start;
+      }
+      @media (max-width: 760px) {
+        .eval-layout { grid-template-columns: minmax(0, 1fr); }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./src/main.tsx"></script>
+  </body>
+</html>

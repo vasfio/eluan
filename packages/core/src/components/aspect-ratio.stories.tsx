@@ -11,7 +11,7 @@ const MeshGradient = () => (
         radial-gradient(at 0% 50%, var(--positive-bg) 0px, transparent 50%),
         radial-gradient(at 80% 50%, var(--cautionary-bg) 0px, transparent 50%),
         radial-gradient(at 0% 100%, var(--action-primary-bg) 0px, transparent 50%),
-        var(--backgrounds-secondary)
+        var(--container-bg-alt)
       `,
       height: "100%",
       width: "100%",

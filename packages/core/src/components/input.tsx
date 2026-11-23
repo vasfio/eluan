@@ -82,8 +82,8 @@ const styles = stylex.create({
       fontWeight: 500,
     },
     ":focus-visible": {
-      borderColor: "var(--interactive-border)",
-      outlineColor: "var(--interactive-border)",
+      borderColor: "var(--focus-ring)",
+      outlineColor: "var(--focus-ring)",
       outlineOffset: "1px",
       outlineStyle: "solid",
       outlineWidth: "1px",
@@ -105,14 +105,16 @@ const styles = stylex.create({
   },
   inputPositive: {
     borderColor: "var(--positive-fg)",
+    // Ring in the tone's own colour, like the border; the pale tint it used
+    // measured under 1.6:1
     ":focus-visible": {
-      outlineColor: "var(--positive-bg-alt)",
+      outlineColor: "var(--positive-fg)",
     },
   },
   inputDestructive: {
     borderColor: "var(--destructive-fg)",
     ":focus-visible": {
-      outlineColor: "var(--destructive-bg-alt)",
+      outlineColor: "var(--destructive-fg)",
     },
   },
   textMono: {

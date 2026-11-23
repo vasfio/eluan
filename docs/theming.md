@@ -81,7 +81,7 @@ The hook returns `{ theme, mode, spacing, curves, typeset, setTheme, setMode, se
 
 Use `createTheme()` to define your own theme by overriding only the tokens you care about. Everything else is inherited from the `extends` theme (`minimal` by default) — you don't need to redeclare 150+ variables.
 
-> Starting from brand colors rather than individual tokens? [`@eluan/theme-generator`](../packages/theme-generator) turns one to three accent colors into a full, contrast-checked light + dark token set you can drop straight into `createTheme()`.
+> Starting from brand colors rather than individual tokens? [`@eluan/theme-generator`](../packages/theme-generator) turns one to three accent colors into a full, contrast-checked theme for light, dim and dark mode. See [Generated themes in every mode](#generated-themes-in-every-mode).
 
 ```tsx
 // theme/acme.ts
@@ -120,6 +120,67 @@ export default function App() {
 
 `setTheme("acme")` from `useEluanTheme()` works the same way as it does for `minimal`.
 
+### Different values per mode
+
+`tokens` apply in every mode. When a theme needs its own values in dark (or dim) mode, add them under `modes`; modes you leave out use `tokens`:
+
+```tsx
+export const acmeTheme = createTheme({
+  name: "acme",
+  tokens: { "--action-primary-bg": "#4f46e5", "--container-bg": "#fafafa" },
+  modes: {
+    dark: { "--action-primary-bg": "#818cf8", "--container-bg": "#1e1b2e" },
+  },
+})
+```
+
+Each mode becomes a `[data-theme-custom="acme"][data-mode="dark"]` rule, which wins over the base rule while that mode is active.
+
+### Generated themes in every mode
+
+`generateTheme()` returns the theme ready to register, covering light, dim and dark mode:
+
+```tsx
+import { EluanProvider } from "@eluan/core"
+import { generateTheme } from "@eluan/theme-generator"
+
+const { customTheme } = generateTheme({
+  accents: ["#2F6F5E"],
+  themeName: "forest",
+  minContrast: 4.5,
+  neutralTintRatio: 0.04,
+})
+
+export default function App() {
+  return (
+    <EluanProvider customThemes={[customTheme]} defaultTheme="forest">
+      <YourApp />
+    </EluanProvider>
+  )
+}
+```
+
+To combine generated colours with your own tokens (fonts, say), spread `createThemeOptions` into `createTheme()` instead:
+
+```tsx
+const { createThemeOptions } = generateTheme({ accents: ["#2F6F5E"], themeName: "forest", minContrast: 4.5, neutralTintRatio: 0.04 })
+
+const forest = createTheme({
+  name: "forest",
+  ...createThemeOptions,
+  tokens: { ...createThemeOptions.tokens, "--font-heading": '"Fraunces", serif' },
+})
+```
+
+Each mode gets its own colours, and contrast is checked for every pair in all three:
+
+- **Dark** colours come out brighter than their light-mode counterparts: the generator lifts the colour ramps dark mode uses (`darkLift`, 0.08 by default, 0 to turn it off) so accents and status colours stay as vivid on a dark ground.
+- **Dim** is light mode toned down, the way `minimal`'s own dim is: every token sits one step deeper on its ramp, accents and status colours keep 80% of their saturation (`dimChroma`, 0.5–1), and the greys warm to the teak tone `minimal`'s dim uses (`dimWarmth`, 1 by default; 0 keeps the brand-tinted greys).
+
+The generated greys reach the base ramp aliases too (`--backgrounds-*`, `--foregrounds-*`), so any CSS of your own that reads them matches the theme in every mode. Components only read theme tokens.
+
+The CLI writes the same two outputs as `custom-theme.css` and `create-theme.json`.
+
 ### How inheritance works
 
 CSS doesn't support selector-level inheritance, so a custom theme can't simply extend another theme by name. Behind the scenes the provider sets **two** attributes on the target element when a custom theme is active:
@@ -146,9 +207,11 @@ The full list lives in `packages/tokens/src/themes.css`. The most commonly custo
 | **Fonts** | `--font-heading`, `--font-body`, `--font-mono` (monospace is Paper Mono, a variable font vendored with `@eluan/tokens`) |
 | **Containers** (cards, popovers, tables, etc.) | `--container-bg`, `--container-fg`, `--container-bg-alt`, `--container-border`, `--container-border-alt` |
 | **Interactive surfaces** (inputs, list rows) | `--interactive-bg`, `--interactive-bg-hover`, `--interactive-bg-selected`, `--interactive-fg`, `--interactive-fg-alt`, `--interactive-fg-selected`, `--interactive-border`, `--interactive-border-alt` |
+| **Focus** | `--focus-ring`: the keyboard focus outline on every control. It's mode-aware (set per mode in `modes.css`), so override it only if your theme's grounds change, and keep it at 3:1 or more against `--container-bg` and `--container-bg-alt` |
 | **Action — primary** (CTA buttons) | `--action-primary-bg`, `--action-primary-bg-hover`, `--action-primary-bg-active`, `--action-primary-fg` |
-| **Action — secondary** (outline buttons) | `--action-secondary-bg`, `--action-secondary-border`, `--action-secondary-fg` |
-| **Action — tertiary** (ghost buttons) | `--action-tertiary-bg`, `--action-tertiary-bg-hover`, `--action-tertiary-fg` |
+| **Action — secondary** (outline buttons) | `--action-secondary-bg-hover`, `--action-secondary-border`, `--action-secondary-fg` |
+| **Action — tertiary** (ghost buttons) | `--action-tertiary-fg`, `--action-tertiary-fg-alt` (hover text; the hover fill is `--interactive-bg-hover`) |
+| **Action — neutral** (secondary buttons) | `--action-neutral-bg`, `--action-neutral-bg-hover`, `--action-neutral-fg` |
 | **Status colors** | `--positive-bg/fg`, `--cautionary-bg/fg`, `--destructive-bg/fg`, `--informative-bg/fg` |
 | **Data viz palette** | `--dataviz-1-main`/`-tint`/`-shade` … `--dataviz-8-main`/`-tint`/`-shade` |
 
@@ -378,7 +441,7 @@ For Next.js you can render this via `next/script` with `strategy="beforeInteract
 |---|---|
 | `<EluanProvider>` | Sets data-attrs, manages persistence, syncs OS mode |
 | `useEluanTheme()` | Hook returning the active theme + setters |
-| `createTheme({ name, extends, tokens })` | Define a custom theme |
+| `createTheme({ name, extends, tokens, modes })` | Define a custom theme, with optional per-mode overrides |
 | `loadThemeFonts(name)` | Manually preload a built-in theme's fonts |
 | `<PortalContainerProvider container>` | Scope where overlays portal to, so they inherit a scoped theme |
 | `usePortalContainer()` | Hook returning the active portal container (or `undefined`) |

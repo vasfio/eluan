@@ -1,0 +1,2 @@
+files/t03-a.tsx(389,17): error TS2322: Type '{ ref: RefObject<HTMLInputElement>; id: string; name: string; autoComplete: "email"; value: string; onChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void; ... 4 more ...; "aria-describedby": string | undefined; }' is not assignable to type 'IntrinsicAttributes & EmailInputProps & RefAttributes<HTMLInputElement>'.
+  Property 'validationTone' does not exist on type 'IntrinsicAttributes & EmailInputProps & RefAttributes<HTMLInputElement>'.

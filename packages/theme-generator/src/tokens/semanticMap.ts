@@ -1,7 +1,62 @@
-import type { SemanticMap } from '../types.js';
+import type { Mode, ScaleName, ScaleStepValue, SemanticEntry, SemanticMap, TokenRef } from '../types.js';
+import { SCALE_STEPS } from '../types.js';
+
+/**
+ * The dim ref for a light ref: one step deeper on the same ramp, 950 staying
+ * put. `minimal`'s own dim follows the same rule (page 0 → 100, tint 100 →
+ * 200, status text 700 → 800), which is what keeps dim a softer light mode
+ * rather than a lighter dark one.
+ */
+export function dimRef(light: TokenRef): TokenRef {
+  if (light === 'white' || light === 'black') return light;
+  const [scale, step] = light.split('.') as [ScaleName, string];
+  const index = SCALE_STEPS.indexOf(Number(step) as ScaleStepValue);
+  const deeper = SCALE_STEPS[Math.min(index + 1, SCALE_STEPS.length - 1)];
+  return `${scale}.${deeper}`;
+}
+
+/** The ref an entry resolves to in `mode`; dim falls back to `dimRef(entry.light)`. */
+export function modeRef(entry: SemanticEntry, mode: Mode): TokenRef {
+  if (mode === 'dim') return entry.dim ?? dimRef(entry.light);
+  return entry[mode];
+}
+
+/** The ground tokens an entry is checked against, as a list. */
+export function contrastGrounds(entry: SemanticEntry): string[] {
+  return entry.contrastAgainst === undefined ? [] : ([] as string[]).concat(entry.contrastAgainst);
+}
+
+/**
+ * Pins every entry's dim ref from its light ref, so later light-mode contrast
+ * corrections can't move dim along with them.
+ */
+export function withDimRefs(map: SemanticMap): SemanticMap {
+  const filled: SemanticMap = {};
+  for (const [token, entry] of Object.entries(map)) {
+    filled[token] = { ...entry, dim: modeRef(entry, 'dim') };
+  }
+  return filled;
+}
 
 export function buildSemanticMap(): SemanticMap {
-  return {
+  return withDimRefs({
+    // ── Base greys ─────────────────────────────────────────────
+    // The mode-level ramp aliases `minimal` defines in modes.css. Most tokens
+    // here supersede them, but some components read them directly (Secondary
+    // and Ghost-family buttons, Card, Progress, SegmentedControl), so a theme
+    // that leaves them alone shows `minimal`'s greys there.
+    'backgrounds-primary':      { light: 'neutral.50',   dark: 'neutral.800',  role: 'bg' },
+    'backgrounds-secondary':    { light: 'neutral.100',  dark: 'neutral.900',  role: 'bg' },
+    'backgrounds-tertiary':     { light: 'neutral.200',  dark: 'neutral.950',  role: 'bg' },
+    'backgrounds-quaternary':   { light: 'neutral.300',  dark: 'neutral.700',  role: 'bg' },
+    'backgrounds-quinary':      { light: 'neutral.400',  dark: 'neutral.600',  role: 'bg' },
+    // Secondary button text sits on the tertiary fill; the rest on page and panel.
+    'foregrounds-primary':      { light: 'neutral.950',  dark: 'neutral.50',   role: 'fg', contrastAgainst: ['backgrounds-primary', 'backgrounds-secondary', 'backgrounds-tertiary'], minContrast: 4.5 },
+    'foregrounds-secondary':    { light: 'neutral.800',  dark: 'neutral.100',  role: 'fg', contrastAgainst: ['backgrounds-primary', 'backgrounds-secondary'], minContrast: 4.5 },
+    'foregrounds-tertiary':     { light: 'neutral.600',  dark: 'neutral.200',  role: 'fg', contrastAgainst: ['backgrounds-primary', 'backgrounds-secondary'], minContrast: 4.5 },
+    'foregrounds-quaternary':   { light: 'neutral.500',  dark: 'neutral.300',  role: 'fg', contrastAgainst: ['backgrounds-primary', 'backgrounds-secondary'], minContrast: 3.0, allowBelowDefault: true },
+    'foregrounds-quinary':      { light: 'neutral.400',  dark: 'neutral.400',  role: 'fg' },
+
     // ── Container ──────────────────────────────────────────────
     'container-bg':             { light: 'neutral.50',   dark: 'neutral.800',  role: 'bg' },
     'container-bg-alt':         { light: 'neutral.100',  dark: 'neutral.900',  role: 'bg' },
@@ -18,6 +73,10 @@ export function buildSemanticMap(): SemanticMap {
     // Dialog/Sheet scrim, drawn at 0.8 opacity — the darkest step in both
     // modes so it dims the page behind an overlay instead of washing it out.
     'overlay-bg':               { light: 'neutral.950',  dark: 'neutral.950',  role: 'bg' },
+    // Keyboard focus outline — a non-text indicator, so it targets the WCAG
+    // 3:1 UI tier (1.4.11) against the page ground, like interactive-fg-alt.
+    // Mid-ramp rather than neutral.950/50 so focus never matches the pressed fill.
+    'focus-ring':               { light: 'neutral.500',  dark: 'neutral.400',  role: 'fg', contrastAgainst: 'container-bg', minContrast: 3.0, allowBelowDefault: true },
 
     // ── Interactive ────────────────────────────────────────────
     'interactive-bg':           { light: 'neutral.50',   dark: 'neutral.800',  role: 'bg' },
@@ -32,9 +91,10 @@ export function buildSemanticMap(): SemanticMap {
     'interactive-border-alt':   { light: 'neutral.300',  dark: 'neutral.600',  role: 'border' },
     'interactive-border-disabled': { light: 'neutral.300', dark: 'neutral.600', role: 'border' },
     'interactive-fg':           { light: 'neutral.950',  dark: 'neutral.50',   role: 'fg', contrastAgainst: 'interactive-bg', minContrast: 4.5 },
-    // Secondary text targets the WCAG 3:1 large-text/UI tier; allowBelowDefault
-    // keeps it there even when the config asks for a stricter floor (e.g. AAA).
-    'interactive-fg-alt':       { light: 'neutral.600',  dark: 'neutral.300',  role: 'fg', contrastAgainst: 'interactive-bg', minContrast: 3.0, allowBelowDefault: true },
+    // Muted text: placeholders, unselected tabs and segments, and the
+    // descriptions in Card, Dialog and Sheet. Body text, so it meets the text
+    // floor on the page and panel grounds it sits on.
+    'interactive-fg-alt':       { light: 'neutral.600',  dark: 'neutral.300',  role: 'fg', contrastAgainst: ['interactive-bg', 'interactive-bg-alt', 'container-bg', 'container-bg-alt'], minContrast: 4.5 },
     'interactive-fg-readonly':  { light: 'neutral.800',  dark: 'neutral.100',  role: 'fg', contrastAgainst: 'interactive-bg', minContrast: 4.5 },
     'interactive-fg-disabled':  { light: 'neutral.400',  dark: 'neutral.500',  role: 'fg' },
     'interactive-fg-active':    { light: 'primary.100',  dark: 'primary.900',  role: 'fg', contrastAgainst: 'interactive-bg-active', minContrast: 4.5 },
@@ -63,7 +123,9 @@ export function buildSemanticMap(): SemanticMap {
     'action-secondary-border-alt':   { light: 'primary.800', dark: 'primary.300', role: 'border' },
     'action-secondary-border-disabled': { light: 'primary.100', dark: 'primary.900', role: 'border' },
     'action-secondary-border-inverse':  { light: 'primary.50',  dark: 'primary.950', role: 'border' },
-    'action-secondary-fg':           { light: 'primary.500', dark: 'primary.400', role: 'fg', contrastAgainst: 'container-bg', minContrast: 4.5 },
+    // Outline button text, on page and panel surfaces alike: checked against
+    // both, like action-tertiary-fg. Whichever is harder in a mode decides.
+    'action-secondary-fg':           { light: 'primary.500', dark: 'primary.400', role: 'fg', contrastAgainst: ['container-bg', 'container-bg-alt'], minContrast: 4.5 },
     'action-secondary-fg-alt':       { light: 'neutral.950', dark: 'neutral.50',  role: 'fg' },
     'action-secondary-fg-disabled':  { light: 'neutral.400', dark: 'neutral.500', role: 'fg' },
     'action-secondary-fg-active':    { light: 'neutral.50',  dark: 'neutral.50',  role: 'fg', contrastAgainst: 'action-secondary-bg-active', minContrast: 4.5 },
@@ -82,12 +144,23 @@ export function buildSemanticMap(): SemanticMap {
     'action-tertiary-border-alt':    { light: 'primary.800',  dark: 'primary.300', role: 'border' },
     'action-tertiary-border-disabled': { light: 'neutral.300', dark: 'neutral.600', role: 'border' },
     'action-tertiary-border-inverse':  { light: 'primary.100', dark: 'primary.900', role: 'border' },
-    'action-tertiary-fg':            { light: 'primary.500',  dark: 'primary.400', role: 'fg', contrastAgainst: 'action-tertiary-bg', minContrast: 4.5 },
+    // Ghost button text sits on page and panel surfaces alike, so it is checked
+    // against both: -bg (the page) and -bg-alt (the panel, container-bg-alt's
+    // refs). Whichever is harder in a mode decides.
+    'action-tertiary-fg':            { light: 'primary.500',  dark: 'primary.400', role: 'fg', contrastAgainst: ['action-tertiary-bg', 'action-tertiary-bg-alt'], minContrast: 4.5 },
     'action-tertiary-fg-alt':        { light: 'neutral.950',  dark: 'neutral.50',  role: 'fg' },
     'action-tertiary-fg-disabled':   { light: 'neutral.400',  dark: 'neutral.500', role: 'fg' },
     'action-tertiary-fg-active':     { light: 'primary.700',  dark: 'primary.200', role: 'fg', contrastAgainst: 'action-tertiary-bg-active', minContrast: 4.5 },
     'action-tertiary-fg-selected':   { light: 'primary.700',  dark: 'primary.200', role: 'fg', contrastAgainst: 'action-tertiary-bg-selected', minContrast: 4.5 },
     'action-tertiary-fg-inverse':    { light: 'neutral.50',   dark: 'neutral.950', role: 'fg' },
+
+    // ── Action Neutral ─────────────────────────────────────────
+    // The Secondary button: a grey fill that deepens on hover, on the same
+    // steps as backgrounds-tertiary and -quaternary. Its text is checked
+    // against both fills.
+    'action-neutral-bg':             { light: 'neutral.200',  dark: 'neutral.950', role: 'bg' },
+    'action-neutral-bg-hover':       { light: 'neutral.300',  dark: 'neutral.700', role: 'bg' },
+    'action-neutral-fg':             { light: 'neutral.950',  dark: 'neutral.50',  role: 'fg', contrastAgainst: ['action-neutral-bg', 'action-neutral-bg-hover'], minContrast: 4.5 },
 
     // ── Destructive ────────────────────────────────────────────
     'destructive-bg':           { light: 'error.50',  dark: 'error.950', role: 'bg' },
@@ -101,7 +174,9 @@ export function buildSemanticMap(): SemanticMap {
     'destructive-border-alt':   { light: 'error.800', dark: 'error.300', role: 'border' },
     'destructive-border-disabled': { light: 'error.100', dark: 'error.900', role: 'border' },
     'destructive-border-inverse':  { light: 'error.50',  dark: 'error.950', role: 'border' },
-    'destructive-fg':           { light: 'error.700', dark: 'error.200', role: 'fg', contrastAgainst: 'destructive-bg', minContrast: 4.5 },
+    // Checked against -bg-alt, the harder of the two grounds it sits on (Banner
+    // uses the tint; Button and Badge the lighter -bg).
+    'destructive-fg':           { light: 'error.700', dark: 'error.200', role: 'fg', contrastAgainst: 'destructive-bg-alt', minContrast: 4.5 },
     'destructive-fg-alt':       { light: 'neutral.950', dark: 'neutral.50', role: 'fg' },
     'destructive-fg-disabled':  { light: 'neutral.400', dark: 'neutral.500', role: 'fg' },
     'destructive-fg-active':    { light: 'neutral.50',  dark: 'neutral.950', role: 'fg', contrastAgainst: 'destructive-bg-active', minContrast: 4.5 },
@@ -115,7 +190,8 @@ export function buildSemanticMap(): SemanticMap {
     'positive-border':         { light: 'success.500', dark: 'success.400', role: 'border' },
     'positive-border-alt':     { light: 'success.800', dark: 'success.300', role: 'border' },
     'positive-border-inverse': { light: 'success.50',  dark: 'success.950', role: 'border' },
-    'positive-fg':             { light: 'success.700', dark: 'success.200', role: 'fg', contrastAgainst: 'positive-bg', minContrast: 4.5 },
+    // Same as destructive-fg: checked against the tint Banner draws it on.
+    'positive-fg':             { light: 'success.700', dark: 'success.200', role: 'fg', contrastAgainst: 'positive-bg-alt', minContrast: 4.5 },
     'positive-fg-alt':         { light: 'neutral.950', dark: 'neutral.50',  role: 'fg' },
     'positive-fg-inverse':     { light: 'success.50',  dark: 'success.950', role: 'fg', contrastAgainst: 'positive-bg-inverse', minContrast: 4.5 },
 
@@ -177,5 +253,5 @@ export function buildSemanticMap(): SemanticMap {
     'dataviz-8-main':  { light: 'info.600',    dark: 'info.300',    role: 'decorative' },
     'dataviz-8-tint':  { light: 'info.200',    dark: 'info.800',    role: 'decorative' },
     'dataviz-8-shade': { light: 'info.900',    dark: 'info.100',    role: 'decorative' },
-  };
+  });
 }

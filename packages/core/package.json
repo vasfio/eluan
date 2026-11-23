@@ -42,7 +42,8 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "skills"
   ],
   "sideEffects": [
     "**/*.css"
@@ -53,6 +54,8 @@
   "scripts": {
     "dev": "vite build --watch",
     "build": "rm -rf dist && vite build && tsc -p tsconfig.build.json",
+    "prepack": "node ../../scripts/skills/pack.mjs",
+    "postpack": "node ../../scripts/skills/pack.mjs --clean",
     "lint": "eslint src --report-unused-disable-directives --max-warnings 0",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",

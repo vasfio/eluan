@@ -43,7 +43,7 @@ const styles = stylex.create({
   },
   track: {
     alignItems: "center",
-    backgroundColor: "var(--backgrounds-secondary)",
+    backgroundColor: "var(--interactive-bg-alt)",
     borderRadius: "var(--curves-md)",
     display: "inline-flex",
     gap: "var(--spacing-xs)",
@@ -75,7 +75,7 @@ const styles = stylex.create({
       color: "var(--interactive-fg)",
     },
     ":focus-visible": {
-      outlineColor: "var(--interactive-border)",
+      outlineColor: "var(--focus-ring)",
       outlineOffset: "1px",
       outlineStyle: "solid",
       outlineWidth: "1px",

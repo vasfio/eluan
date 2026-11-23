@@ -316,7 +316,7 @@ const navigationDrawerStyles = stylex.create({
       color: "var(--interactive-fg)",
     },
     ":focus-visible": {
-      boxShadow: "0 0 0 1px var(--interactive-border-alt)",
+      boxShadow: "0 0 0 1px var(--focus-ring)",
       outlineStyle: "none",
     },
   },

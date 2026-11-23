@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "target": "es2022",
+    "lib": ["es2022", "dom", "dom.iterable"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "types": [],
+    "baseUrl": ".",
+    "paths": {
+      "@eluan/core": ["../../../../packages/core/dist/index.d.ts"],
+      "@eluan/theme-generator": ["../../../../packages/theme-generator/dist/index.d.ts"],
+      "*": ["../../../../packages/core/node_modules/@types/*", "../../../../packages/core/node_modules/*"]
+    }
+  },
+  "include": ["src", "env.d.ts"]
+}

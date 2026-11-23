@@ -63,8 +63,8 @@ const styles = stylex.create({
       outlineStyle: "none",
     },
     ":focus-visible": {
-      borderColor: "var(--interactive-border)",
-      outlineColor: "var(--interactive-border)",
+      borderColor: "var(--focus-ring)",
+      outlineColor: "var(--focus-ring)",
       outlineOffset: "1px",
       outlineStyle: "solid",
       outlineWidth: "1px",
@@ -111,6 +111,14 @@ const styles = stylex.create({
     ":focus": {
       outlineStyle: "none",
     },
+    ":focus-visible": {
+      // Full opacity, as on :hover, so the focused button isn't faded
+      opacity: 1,
+      outlineColor: "var(--focus-ring)",
+      outlineOffset: "1px",
+      outlineStyle: "solid",
+      outlineWidth: "1px",
+    },
   },
   removeIcon: {
     height: "var(--font-size-xs)",
@@ -143,6 +151,12 @@ const styles = stylex.create({
     },
     ":focus": {
       outlineStyle: "none",
+    },
+    ":focus-visible": {
+      outlineColor: "var(--focus-ring)",
+      outlineOffset: "1px",
+      outlineStyle: "solid",
+      outlineWidth: "1px",
     },
   },
   clearIcon: {

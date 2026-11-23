@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { Banner } from "./banner"
 import { Typography } from "./typography"
 
 const meta: Meta<typeof Typography> = {
@@ -54,9 +55,14 @@ const meta: Meta<typeof Typography> = {
         "black",
       ],
     },
-    tone: { control: "inline-radio", options: ["default", "muted", "inverse"] },
+    tone: { control: "inline-radio", options: ["default", "muted", "inverse", "inherit"] },
+    size: {
+      control: "select",
+      options: [undefined, "xs", "sm", "base", "lg", "xl", "2xl", "3xl", "4xl", "5xl"],
+    },
     align: { control: "inline-radio", options: ["start", "center", "end"] },
     truncate: { control: "boolean" },
+    tabular: { control: "boolean" },
   },
 }
 
@@ -143,6 +149,10 @@ export const Tones: Story = {
     <div style={stack}>
       <Typography tone="default">Default — var(--container-fg)</Typography>
       <Typography tone="muted">Muted — var(--container-fg-alt)</Typography>
+      <Typography tone="positive">Positive — var(--positive-fg)</Typography>
+      <Typography tone="destructive">Destructive — var(--destructive-fg)</Typography>
+      <Typography tone="interactive">Interactive — var(--interactive-fg)</Typography>
+      <Typography tone="interactive-muted">Interactive muted — var(--interactive-fg-alt)</Typography>
       <div
         style={{
           backgroundColor: "var(--container-bg-inverse)",
@@ -152,6 +162,34 @@ export const Tones: Story = {
       >
         <Typography tone="inverse">Inverse — var(--container-fg-inverse)</Typography>
       </div>
+      <Banner variant="destructive" position="inline">
+        <Typography as="span" size="sm" tone="inherit">
+          Inherit — takes the Banner's own colour
+        </Typography>
+      </Banner>
+    </div>
+  ),
+}
+
+/**
+ * `size` follows the spacing density; `step` doesn't. Each column is the same
+ * markup under a different `data-spacing`: the `size` lines move a step, the
+ * `step` line stays put.
+ */
+export const DensitySizes: Story = {
+  render: () => (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--spacing-3xl)" }}>
+      {(["compact", "standard", "wide"] as const).map((density) => (
+        <div key={density} data-spacing={density} style={stack}>
+          <Typography variant="label" tone="muted">
+            data-spacing="{density}"
+          </Typography>
+          <Typography size="lg">size="lg"</Typography>
+          <Typography size="base">size="base"</Typography>
+          <Typography size="sm">size="sm"</Typography>
+          <Typography step="neg1">step="neg1"</Typography>
+        </div>
+      ))}
     </div>
   ),
 }
@@ -227,6 +265,26 @@ export const Truncated: Story = {
       <Typography>
         This one wraps instead, because truncate is off.
       </Typography>
+    </div>
+  ),
+}
+
+/** Tabular figures keep every digit the same width, so a column of numbers lines up. */
+export const Tabular: Story = {
+  render: () => (
+    <div style={{ display: "flex", gap: "var(--spacing-3xl)" }}>
+      {[false, true].map((tabular) => (
+        <div key={String(tabular)} style={{ ...stack, gap: "var(--spacing-xs)" }}>
+          <Typography variant="label" tone="muted">
+            tabular={String(tabular)}
+          </Typography>
+          {["1,111.11", "8,888.88", "$410.07", "19:45"].map((value) => (
+            <Typography key={value} tabular={tabular} align="end">
+              {value}
+            </Typography>
+          ))}
+        </div>
+      ))}
     </div>
   ),
 }

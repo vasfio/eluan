@@ -412,6 +412,16 @@ code[class*="language-"] .token.italic {
   strong, b {
     font-weight: 500;
   }
+
+  /* Layout primitives: the child rules StyleX can't express. In this layer
+   * they sit under every StyleX rule, so a child's own styles still win. */
+  .eluan-grid > * {
+    min-width: 0;
+  }
+  .eluan-icon > svg {
+    height: 100%;
+    width: 100%;
+  }
 }
 
 /* ============================================

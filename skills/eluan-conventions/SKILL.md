@@ -11,13 +11,13 @@ description: Eluan design system coding conventions for building, editing, or au
 - Each component has a `.tsx` and a `.stories.tsx` file
 
 ## Tokens (always use these, never hardcode)
-Use CSS custom properties exclusively:
-- Backgrounds: `var(--backgrounds-primary/secondary/tertiary/quaternary)`
-- Foregrounds: `var(--foregrounds-primary/secondary/tertiary/quaternary/quinary)`
-- Actions: `var(--action-primary-bg)`, `var(--action-primary-fg)`, `var(--action-primary-bg-hover)`
-- Interactive: `var(--interactive-bg)`, `var(--interactive-fg)`, `var(--interactive-bg-active)`, `var(--interactive-fg-active)`
+Components read theme tokens (`packages/tokens/src/themes.css`) only. Never the mode layer (`--backgrounds-*`, `--foregrounds-*`, colour families like `--mono-*`) or primitives (`--color-*`): custom themes set theme tokens, so anything else ignores the theme.
+- Container: `var(--container-bg)`, `var(--container-bg-alt)`, `var(--container-fg)`, `var(--container-fg-alt)`, `var(--container-border)`, `var(--container-border-alt)`
+- Interactive: `var(--interactive-bg)`, `var(--interactive-bg-hover)`, `var(--interactive-fg)`, `var(--interactive-fg-alt)`, `var(--interactive-bg-active)`, `var(--interactive-fg-active)`
+- Actions: `var(--action-primary-bg)`, `var(--action-primary-fg)`, `var(--action-primary-bg-hover)`; `--action-secondary-*` (outline), `--action-tertiary-*` (ghost), `--action-neutral-*` (grey fill)
 - Semantic: `var(--positive-bg/fg)`, `var(--destructive-bg/fg)`, `var(--cautionary-bg/fg)`, `var(--informative-bg/fg)`
-- Container: `var(--container-bg)`, `var(--container-fg)`, `var(--container-border)`, `var(--container-border-alt)`
+- Mode-aware: `var(--focus-ring)`, `var(--overlay-bg)`, `var(--tooltip-bg)`
+- No theme token fits? Add one to `themes.css` and the generator's `packages/theme-generator/src/tokens/semanticMap.ts` rather than reaching into the mode layer
 
 ## Component patterns
 - Style with StyleX only: `const styles = stylex.create({ ... })` applied by spreading `{...stylex.props(...)}` — no className-composition or variant-factory helpers; styling is entirely StyleX + semantic tokens
@@ -31,7 +31,7 @@ Use CSS custom properties exclusively:
 - No hardcoded hex/rgb colours or raw pixel values — reference tokens as `var(--...)` string values in StyleX
 - Font weight: use `fontWeight: 400`/`500`, avoid heavy weights except headings
 - Headings use `fontFamily: "var(--font-heading)"`
-- Focus rings: a `":focus-visible"` block with `outlineColor: "var(--interactive-border)"`, `outlineWidth: "1px"`, `outlineStyle: "solid"`, `outlineOffset: "1px"`
+- Focus rings: a `":focus-visible"` block with `outlineColor: "var(--focus-ring)"`, `outlineWidth: "1px"`, `outlineStyle: "solid"`, `outlineOffset: "1px"`
 - Borders: `borderColor: "var(--container-border)"` or `"var(--interactive-border)"` (with `borderWidth`/`borderStyle`)
 - Transitions: prefer a scoped `transitionProperty` list; use `"all"` sparingly
 

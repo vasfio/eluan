@@ -49,4 +49,17 @@ describe("Calendar", () => {
     await userEvent.click(screen.getByLabelText("Go to next month"));
     expect(screen.getByText("February")).toBeInTheDocument();
   });
+
+  it("draws the keyline between side-by-side months", () => {
+    const { container } = render(
+      <Calendar mode="range" defaultMonth={new Date(2024, 0, 1)} numberOfMonths={2} />
+    );
+    const css = document.getElementById("eluan-calendar-styles")?.textContent ?? "";
+    const selector = css.match(/([^{}]+)\{\s*border-left: 1px solid/)?.[1].trim();
+
+    // A selector built from a StyleX className (several classes joined by
+    // spaces) matched nothing, so the keyline never showed.
+    expect(selector).toBe(".eluan-calendar-months > div + div");
+    expect(container.querySelector(selector!)).toHaveTextContent("February");
+  });
 });
