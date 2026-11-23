@@ -1,5 +1,95 @@
 # @eluan/tokens
 
+## 0.5.0
+
+### Minor Changes
+
+- eae2cd3: New `--action-neutral-bg`, `--action-neutral-bg-hover` and `--action-neutral-fg`
+  theme tokens for the Secondary button, which was the last component reading
+  the grey aliases directly. `minimal` points them at `--backgrounds-tertiary`,
+  `--backgrounds-quaternary` and `--foregrounds-primary`, so the button looks the
+  same. Generated themes set them on the same steps and check the text against
+  both fills; at a 7:1 floor that moves dim Secondary text to black, since the
+  hover fill only reached 6.55:1 before.
+- 3fa660d: Density-aware text sizes and an inheriting tone for `Typography`.
+
+  - New `--line-height-*` and `--letter-spacing-*` aliases (`xs` to `5xl`) beside
+    the `--font-size-*` ones. In every spacing density each pair sits on the
+    same typeset step as its font size, so a density-aware size can still apply
+    size, line height and tracking together.
+  - `Typography` takes `size` (`"xs"` to `"5xl"`), which reads those three
+    aliases instead of a fixed step, so app text re-flows with `data-spacing`
+    like the components around it. It takes precedence over `step`.
+  - `Typography` `tone` gains `"inherit"`, for text inside a coloured parent
+    (a Banner, a Button, a link). The default stays `"default"`.
+
+  Nothing existing changes.
+
+### Patch Changes
+
+- 7e4814f: Dark scrim behind Dialog and Sheet in dark mode.
+
+  The Dialog and Sheet overlays painted `--container-fg` at 0.8 opacity. That
+  token is near-white in dark mode, so opening a dialog washed the page out light
+  behind a dark panel. Both overlays now read a new mode-aware `--overlay-bg`
+  token: light and dim keep `--foregrounds-primary` (unchanged), and dark resolves
+  to `--backgrounds-tertiary`, the darkest step of the neutral ramp.
+  `@eluan/theme-generator` emits the token for generated themes (`neutral.950` in
+  both modes).
+
+- 1da7431: Visible keyboard focus everywhere, from a new `--focus-ring` token.
+
+  Every focus outline read `--interactive-border`, a pale grey that measured
+  1.26:1 on white and 1.31:1 in dark mode, so keyboard focus was effectively
+  invisible across the library. A new mode-aware `--focus-ring` token clears 3:1
+  on every page and panel ground in light, dim and dark, and stays distinct from
+  the pressed fill. All focus outlines and box-shadow rings now use it; focused
+  fields darken their border instead of fading it; Badge and MultiSelect remove
+  buttons gained the focus ring they suppressed; Banner's dismiss button rings
+  in the banner's text colour. `@eluan/theme-generator` emits `--focus-ring` for
+  generated themes, contrast-checked at 3:1.
+
+- fa1c852: Ghost button text clears 4.5:1 on panels in dim mode.
+
+  In `minimal`, `--action-tertiary-fg` (Ghost and Toast cancel text) is now
+  declared per mode in modes.css: `--mono-background` in light and dark as before,
+  `--foregrounds-tertiary` (teak-800) in dim instead of teak-700, which was 4.36:1
+  on the panel ground. It's now 6.79:1 on the page and 6.19:1 on the panel.
+
+  In the theme generator, a semantic entry's `contrastAgainst` can list several
+  grounds, and the hardest decides. `action-tertiary-fg` is checked against both
+  `action-tertiary-bg` and `action-tertiary-bg-alt`, so in generated themes dim
+  Ghost text moves one step deeper (3.95–4.46:1 on the panel before, 5.57–6.31:1
+  now). `contrastAgainst` in `semantic.json` can therefore be an array;
+  `contrastGrounds()` reads it as a list. Light and dark output are unchanged at
+  the default floor.
+
+- 286e3a7: Outline button text clears 4.5:1 on panels in dim mode, the same fix Ghost text
+  got.
+
+  In `minimal`, `--action-secondary-fg` moves to modes.css beside
+  `--action-tertiary-fg`: `--mono-background` in light and dark as before,
+  `--foregrounds-tertiary` (teak-800) in dim instead of teak-700 (4.36:1 on the
+  panel before, 6.19:1 now). The Outline border keeps teak-700.
+
+  The theme generator checks `action-secondary-fg` against both `container-bg`
+  and `container-bg-alt`, so in generated themes dim Outline text moves one step
+  deeper (3.95–4.47:1 on the panel before, 5.57–6.31:1 now). Light and dark
+  output are unchanged at the default floor.
+
+- 5223554: Outline and Dashed button hover is visible in every mode. In `minimal`,
+  `--action-secondary-bg-hover` pointed at `--mono-tint`, which matched the
+  panel in light and the page in dim, so hovering changed nothing. It now points
+  at `--backgrounds-tertiary`, the fill Ghost hovers to.
+- e6eace1: Readable destructive and positive text, and visible validation focus rings.
+
+  `--destructive-fg` and `--positive-fg` now point one primitive step darker in
+  light and dim mode, so text on the tinted Banner fill clears 4.5:1 (it was
+  3.15–3.28:1 in light). `@eluan/theme-generator` checks both tokens against the
+  tint for generated themes. Input's `validationTone="positive"` and
+  `"destructive"` focus outlines ring in their tone colour instead of the pale
+  tint they used before.
+
 ## 0.4.0
 
 ### Minor Changes
