@@ -1,5 +1,180 @@
 # @eluan/core
 
+## 0.6.0
+
+### Minor Changes
+
+- c0b80d8: Ship the Eluan agent skill with the package.
+
+  `@eluan/core` now includes `skills/eluan`: a router `SKILL.md`, a `DESIGN.md`
+  token export, foundations, one guideline file per component and five patterns,
+  written for coding agents that build UI with Eluan. Install it for Claude Code
+  with `cp -r node_modules/@eluan/core/skills/eluan .claude/skills/eluan`.
+
+- 49fceb3: Generated themes work in light and dark mode, with brighter dark colours.
+
+  `createTheme()` takes per-mode overrides: `createTheme({ name, tokens, modes: { dark } })`
+  adds a `[data-theme-custom][data-mode]` rule per mode, so a custom theme can
+  carry its own dark values instead of reusing its light ones.
+
+  `generateTheme()` returns the theme ready to use in both modes:
+  `customTheme` goes straight into `<EluanProvider customThemes>`, and
+  `createThemeOptions` (`{ tokens, modes: { dark } }`) spreads into
+  `createTheme()`. Both layer on `minimal`, keeping its fonts.
+  The CLI writes them as `custom-theme.css` and `create-theme.json`.
+
+  Dark mode now resolves against a lifted copy of the colour ramps
+  (`primitivesDark`): a new `darkLift` option (default 0.08, 0 turns it off,
+  `--dark-lift` on the CLI) raises OKLCH lightness on the mid steps so accents
+  and status colours stay vivid on a dark ground. Contrast is still checked for
+  every pair in both modes; light-mode output is unchanged.
+
+- 263b801: Layout primitives: `Stack`, `Row`, `Grid`, `Box`, `Icon` and `VisuallyHidden`.
+
+  Apps can now lay out whole pages from Eluan tokens alone, with no utility
+  framework and no hand-written spacing. `gap` and `pad` / `padX` / `padY` take
+  `--spacing-*` token names (`"none"` to `"4xl"`), and `Icon` sizes an svg child
+  to a `--size-*` token, so switching `data-spacing` re-flows the layout along
+  with the components. `Grid` takes a column count (1–12), a raw
+  `grid-template-columns` value, or both per breakpoint, keyed by Eluan's
+  breakpoint names: `cols={{ base: 1, m: 2, l: 4 }}`. Like every Eluan component
+  they take `as` and `asChild` and no `className` or `style`. Nothing existing
+  changes.
+
+  The bundled agent skill has a guideline file for each and its page-layout
+  pattern now builds pages from them; `docs/layout.md` covers the rule (an Eluan
+  component first, layout primitives between them, tokens only) and how to
+  migrate from a utility framework.
+
+- 2502728: Layout props for size, overlays and overflow, and more text tones.
+
+  - `Box`, `Stack`, `Row` and `Grid` take:
+    - `shrink`: `shrink={false}` holds an element at its content size in a flex parent.
+    - `height` and `minHeight`: `"full"` (the parent's height) or `"screen"` (the viewport's, `100dvh`).
+    - `position`: `"relative"` for an anchor, or `"absolute"`.
+    - `inset`: `"fill"`, `"top"` or `"bottom"` pins an overlay to its anchor and positions it absolutely.
+    - `overflow`: `"hidden"` or `"auto"`.
+  - `Typography` `tone` gains `"positive"` and `"destructive"` for status text (`--positive-fg`, `--destructive-fg`), and `"interactive"` and `"interactive-muted"` for text on a control you build yourself (`--interactive-fg`, `--interactive-fg-alt`).
+  - `Icon` takes `tone`, with the same values as Typography. It defaults to `"inherit"`, so existing icons keep the text colour around them.
+
+  Nothing existing changes.
+
+- 0e10220: NavigationDrawer: the mobile sheet closes when an item is clicked, and `asChild` works with router links.
+
+  - **Mobile sheet state lives in the provider.** Below 768px the drawer was an
+    uncontrolled Radix Sheet, so an app had no way to close it after navigating —
+    `SheetClose` is skipped once a client-side router has called
+    `preventDefault()` on the click. `NavigationDrawerProvider` (and
+    `NavigationDrawerLayout`) now own the sheet's open state and accept
+    `mobileOpen`, `defaultMobileOpen` and `onMobileOpenChange` to control it.
+    `useNavigationDrawer()` exposes `mobileOpen` and `setMobileOpen`.
+  - **Clicking a `NavigationDrawerItem` on mobile closes the sheet**, whether or
+    not the click was default-prevented, so `next/link` and `router.push()`
+    handlers both work without workarounds such as dispatching an Escape keydown.
+  - **`asChild` works with an icon.** The item passed its icon and label as two
+    children to Radix `Slot`, which accepts only one, so
+    `<NavigationDrawerItem asChild icon={…}><Link /></NavigationDrawerItem>`
+    threw — and without an icon the item's styles landed on the label `<span>`
+    instead of the link. The child is now marked with `Slottable`: the link
+    receives the item styles, and the icon and truncating label render inside it.
+  - `NavigationDrawerProviderProps` and `NavigationDrawerLayoutProps` are now
+    exported types.
+
+- 3fa660d: Density-aware text sizes and an inheriting tone for `Typography`.
+
+  - New `--line-height-*` and `--letter-spacing-*` aliases (`xs` to `5xl`) beside
+    the `--font-size-*` ones. In every spacing density each pair sits on the
+    same typeset step as its font size, so a density-aware size can still apply
+    size, line height and tracking together.
+  - `Typography` takes `size` (`"xs"` to `"5xl"`), which reads those three
+    aliases instead of a fixed step, so app text re-flows with `data-spacing`
+    like the components around it. It takes precedence over `step`.
+  - `Typography` `tone` gains `"inherit"`, for text inside a coloured parent
+    (a Banner, a Button, a link). The default stays `"default"`.
+
+  Nothing existing changes.
+
+- 674a92e: `Typography` takes `tabular`, for tabular figures (`font-variant-numeric:
+tabular-nums`): every digit the same width, so prices, counts and times line
+  up in a column. Off by default.
+
+### Patch Changes
+
+- eae2cd3: New `--action-neutral-bg`, `--action-neutral-bg-hover` and `--action-neutral-fg`
+  theme tokens for the Secondary button, which was the last component reading
+  the grey aliases directly. `minimal` points them at `--backgrounds-tertiary`,
+  `--backgrounds-quaternary` and `--foregrounds-primary`, so the button looks the
+  same. Generated themes set them on the same steps and check the text against
+  both fills; at a 7:1 floor that moves dim Secondary text to black, since the
+  hover fill only reached 6.55:1 before.
+- c945a83: `Button` gets more room either side of its label at the small and default
+  sizes. Side padding moves up one spacing step (`sm` → `md` for `size="sm"`,
+  `md` → `lg` for the default size), so it grows with the height across the
+  three sizes and every density instead of jumping at `lg`. The `input` and
+  `inputMuted` variants keep `--spacing-md`, so DatePicker triggers still line
+  up with Input and Select.
+- 78a1ecc: Calendar draws its divider between side-by-side months again (two-month
+  calendars and `DateRangePicker`, from a 640px viewport). The rule's selector
+  was built from the months' StyleX className, several classes joined by spaces,
+  so it matched nothing; the months now carry a static `eluan-calendar-months`
+  class, like the calendar's other stable hooks.
+- 7e4814f: Dark scrim behind Dialog and Sheet in dark mode.
+
+  The Dialog and Sheet overlays painted `--container-fg` at 0.8 opacity. That
+  token is near-white in dark mode, so opening a dialog washed the page out light
+  behind a dark panel. Both overlays now read a new mode-aware `--overlay-bg`
+  token: light and dim keep `--foregrounds-primary` (unchanged), and dark resolves
+  to `--backgrounds-tertiary`, the darkest step of the neutral ramp.
+  `@eluan/theme-generator` emits the token for generated themes (`neutral.950` in
+  both modes).
+
+- 1da7431: Visible keyboard focus everywhere, from a new `--focus-ring` token.
+
+  Every focus outline read `--interactive-border`, a pale grey that measured
+  1.26:1 on white and 1.31:1 in dark mode, so keyboard focus was effectively
+  invisible across the library. A new mode-aware `--focus-ring` token clears 3:1
+  on every page and panel ground in light, dim and dark, and stays distinct from
+  the pressed fill. All focus outlines and box-shadow rings now use it; focused
+  fields darken their border instead of fading it; Badge and MultiSelect remove
+  buttons gained the focus ring they suppressed; Banner's dismiss button rings
+  in the banner's text colour. `@eluan/theme-generator` emits `--focus-ring` for
+  generated themes, contrast-checked at 3:1.
+
+- cb57896: Button's `ghost` variant reads `--action-tertiary-fg` (and
+  `--action-tertiary-fg-alt` on hover) instead of `--foregrounds-secondary` and
+  `--foregrounds-primary`, so custom and generated themes colour it like the rest
+  of their tertiary actions. In `minimal` the hover colour is unchanged and the
+  resting colour moves to `--mono-background`: near-black in light, near-white in
+  dark, teak-700 in dim.
+- e6eace1: Readable destructive and positive text, and visible validation focus rings.
+
+  `--destructive-fg` and `--positive-fg` now point one primitive step darker in
+  light and dim mode, so text on the tinted Banner fill clears 4.5:1 (it was
+  3.15–3.28:1 in light). `@eluan/theme-generator` checks both tokens against the
+  tint for generated themes. Input's `validationTone="positive"` and
+  `"destructive"` focus outlines ring in their tone colour instead of the pale
+  tint they used before.
+
+- 30592d7: Components read theme tokens only, never the mode layer's grey aliases
+  (`--backgrounds-*`, `--foregrounds-*`). Card's description uses
+  `--interactive-fg-alt` (as Dialog and Sheet do), the Progress track
+  `--container-border`, Calendar's month divider `--container-border-alt`, the
+  SegmentedControl track `--interactive-bg-alt`, and Button's Ghost-family and
+  input hovers `--interactive-bg-hover`. Faded and danger Ghost text use
+  `--container-fg-alt`, hovering to `--container-fg`, like muted Ghost. In
+  `minimal` every swap resolves to the same colour in every mode, so nothing
+  changes on screen; custom themes now restyle these through the theme tokens
+  they already set.
+- Updated dependencies [eae2cd3]
+- Updated dependencies [7e4814f]
+- Updated dependencies [1da7431]
+- Updated dependencies [fa1c852]
+- Updated dependencies [286e3a7]
+- Updated dependencies [5223554]
+- Updated dependencies [e6eace1]
+- Updated dependencies [3fa660d]
+  - @eluan/tokens@0.5.0
+
 ## 0.5.1
 
 ### Patch Changes
